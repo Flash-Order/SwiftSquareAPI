@@ -1,6 +1,8 @@
 typealias Content = Codable
 typealias Timestamp = String
 
+extension SquareAPI {
+
 struct ListDeviceCodesResponse: Codable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
@@ -9566,3 +9568,4 @@ struct SearchOrdersResponse: Codable {
 	var orders: [Order]?
 }
 
+}
