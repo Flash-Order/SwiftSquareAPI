@@ -2,8 +2,8 @@
 import Vapor
 #else
 import Foundation
-typealias Content = Codable
-enum HTTPMethod: String {
+public typealias Content = Codable
+public enum HTTPMethod: String {
 	case GET,POST,PUT
 }
 #endif
@@ -32,7 +32,7 @@ let kSquareHost = "connect.squareup.com"
 
 
 /// protocol for Square Endpoint definitions
-protocol SquareAPIEndpoint {
+public protocol SquareAPIEndpoint {
 	associatedtype inputType: Content
 	associatedtype outputType: Content
 	associatedtype paramType
