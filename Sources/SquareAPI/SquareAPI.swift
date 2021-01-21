@@ -42,10 +42,10 @@ public protocol SquareAPIEndpoint {
 }
 
 extension SquareAPIEndpoint {
-	static var method: HTTPMethod { return .POST }		// default method
+	public static var method: HTTPMethod { return .POST }		// default method
 }
 
-struct Empty: Content {}
+public struct Empty: Content {}
 
 /*
 extension SquareAPIEndpoint where paramType == Empty {
