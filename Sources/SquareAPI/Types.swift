@@ -1,13 +1,13 @@
 
 /// Defines the request parameters for the `AcceptDispute` endpoint.
-public struct AcceptDisputeRequest: Codable {
+public struct AcceptDisputeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields in an `AcceptDispute` response.
-public struct AcceptDisputeResponse: Codable {
+public struct AcceptDisputeResponse: SQCodable {
 	/// Details about the accepted dispute.
 	var dispute: Dispute?
 	/// Information about errors encountered during the request.
@@ -20,7 +20,7 @@ public struct AcceptDisputeResponse: Codable {
 }
 
 /// A request to accumulate points for a purchase.
-public struct AccumulateLoyaltyPointsRequest: Codable {
+public struct AccumulateLoyaltyPointsRequest: SQCodable {
 	/// The points to add to the account.  If you are using the Orders API to manage orders, you   specify the order ID. Otherwise, specify the  points to add.
 	var accumulate_points: LoyaltyEventAccumulatePoints
 	/// A unique string that identifies the `AccumulateLoyaltyPoints` request.  Keys can be any valid string but must be unique for every request.
@@ -36,7 +36,7 @@ public struct AccumulateLoyaltyPointsRequest: Codable {
 }
 
 /// A response containing the resulting loyalty event.
-public struct AccumulateLoyaltyPointsResponse: Codable {
+public struct AccumulateLoyaltyPointsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The resulting loyalty event.
@@ -49,7 +49,7 @@ public struct AccumulateLoyaltyPointsResponse: Codable {
 }
 
 /// 
-public enum ActionCancelReason: String, Codable {
+public enum ActionCancelReason: String, SQCodable {
 	/// A person canceled the `TerminalCheckout` from a Square device.
 	case BUYER_CANCELED
 	/// A client canceled the `TerminalCheckout` using the API.
@@ -59,14 +59,14 @@ public enum ActionCancelReason: String, Codable {
 }
 
 /// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](#endpoint-addgrouptocustomer) endpoint.
-public struct AddGroupToCustomerRequest: Codable {
+public struct AddGroupToCustomerRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](#endpoint-addgrouptocustomer) endpoint.
-public struct AddGroupToCustomerResponse: Codable {
+public struct AddGroupToCustomerResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -76,7 +76,7 @@ public struct AddGroupToCustomerResponse: Codable {
 }
 
 /// Represents an additional recipient (other than the merchant) receiving a portion of this tender.
-public struct AdditionalRecipient: Codable {
+public struct AdditionalRecipient: SQCodable {
 	/// The amount of money distributed to the recipient.
 	var amount_money: Money
 	/// The description of the additional recipient.
@@ -95,7 +95,7 @@ public struct AdditionalRecipient: Codable {
 }
 
 /// Represents a physical address.
-public struct Address: Codable {
+public struct Address: SQCodable {
 	/// The first line of the address.  Fields that start with `address_line` provide the address's most specific details, like street number, street name, and building name. They do *not* provide less specific details like city, state/province, or country (these details are provided in other fields).
 	var address_line_1: String?
 	/// The second line of the address, if any.
@@ -147,7 +147,7 @@ public struct Address: Codable {
 }
 
 /// A request to adjust (add or subtract) points manually.
-public struct AdjustLoyaltyPointsRequest: Codable {
+public struct AdjustLoyaltyPointsRequest: SQCodable {
 	/// The points to adjust (add or subtract) and the reason for the adjustment.
 	var adjust_points: LoyaltyEventAdjustPoints
 	/// A unique string that identifies this `AdjustLoyaltyPoints` request.  Keys can be any valid string, but must be unique for every request.
@@ -160,7 +160,7 @@ public struct AdjustLoyaltyPointsRequest: Codable {
 }
 
 /// A response that includes the loyalty event that  resulted from the successful API call.
-public struct AdjustLoyaltyPointsResponse: Codable {
+public struct AdjustLoyaltyPointsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The resulting event data for adjusting points.
@@ -173,7 +173,7 @@ public struct AdjustLoyaltyPointsResponse: Codable {
 }
 
 /// Defines an appointment segment of a booking.
-public struct AppointmentSegment: Codable {
+public struct AppointmentSegment: SQCodable {
 	/// The time span in minutes of an appointment segment.
 	var duration_minutes: Int
 	/// The ID of the `CatalogItemVariation` object representing the service booked in this segment.
@@ -192,7 +192,7 @@ public struct AppointmentSegment: Codable {
 }
 
 /// Describes a slot available for booking, encapsulating appointment segments, the location and starting time.
-public struct Availability: Codable {
+public struct Availability: SQCodable {
 	/// The list of appointment segments available for booking
 	var appointment_segments: [AppointmentSegment]?
 	/// The ID of the location available for booking.
@@ -208,7 +208,7 @@ public struct Availability: Codable {
 }
 
 /// Reflects the current status of a balance payment.
-public struct BalancePaymentDetails: Codable {
+public struct BalancePaymentDetails: SQCodable {
 	/// The ID of the account used to fund the payment.
 	var account_id: String?
 	/// The balance payment’s current state. The state can be COMPLETED or FAILED.
@@ -221,7 +221,7 @@ public struct BalancePaymentDetails: Codable {
 }
 
 /// Represents a bank account. For more information about  linking a bank account to a Square account, see  [Bank Accounts API](/docs/bank-accounts-api).
-public struct BankAccount: Codable {
+public struct BankAccount: SQCodable {
 	/// The last few digits of the account number.
 	var account_number_suffix: String
 	/// The financial purpose of the associated bank account. See [BankAccountType](#type-bankaccounttype) for possible values
@@ -279,7 +279,7 @@ public struct BankAccount: Codable {
 }
 
 /// Indicates the current verification status of a `BankAccount` object.
-public enum BankAccountStatus: String, Codable {
+public enum BankAccountStatus: String, SQCodable {
 	/// Indicates that the verification process has started. Some features (for example, creditable or debitable) may be provisionally enabled on the bank account.
 	case VERIFICATION_IN_PROGRESS
 	/// Indicates that the bank account was successfully verified.
@@ -289,7 +289,7 @@ public enum BankAccountStatus: String, Codable {
 }
 
 /// Indicates the financial purpose of the bank account.
-public enum BankAccountType: String, Codable {
+public enum BankAccountType: String, SQCodable {
 	/// An account at a financial institution against which checks can be drawn by the account depositor.
 	case CHECKING
 	/// An account at a financial institution that pays interest but cannot be used directly as money in the narrow sense of a medium of exchange.
@@ -302,7 +302,7 @@ public enum BankAccountType: String, Codable {
 	case BUSINESS_CHECKING
 }
 
-public struct BatchChangeInventoryRequest: Codable {
+public struct BatchChangeInventoryRequest: SQCodable {
 	/// The set of physical counts and inventory adjustments to be made. Changes are applied based on the client-supplied timestamp and may be sent out of order.
 	var changes: [InventoryChange]?
 	/// A client-supplied, universally unique identifier (UUID) for the request.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) in the [API Development 101](https://developer.squareup.com/docs/basics/api101/overview) section for more information.
@@ -317,7 +317,7 @@ public struct BatchChangeInventoryRequest: Codable {
 	}
 }
 
-public struct BatchChangeInventoryResponse: Codable {
+public struct BatchChangeInventoryResponse: SQCodable {
 	/// The current counts for all objects referenced in the request.
 	var counts: [InventoryCount]?
 	/// Any errors that occurred during the request.
@@ -329,7 +329,7 @@ public struct BatchChangeInventoryResponse: Codable {
 	}
 }
 
-public struct BatchDeleteCatalogObjectsRequest: Codable {
+public struct BatchDeleteCatalogObjectsRequest: SQCodable {
 	/// The IDs of the CatalogObjects to be deleted. When an object is deleted, other objects in the graph that depend on that object will be deleted as well (for example, deleting a CatalogItem will delete its CatalogItemVariation.
 	var object_ids: [String]?
 
@@ -338,7 +338,7 @@ public struct BatchDeleteCatalogObjectsRequest: Codable {
 	}
 }
 
-public struct BatchDeleteCatalogObjectsResponse: Codable {
+public struct BatchDeleteCatalogObjectsResponse: SQCodable {
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this deletion in RFC 3339 format, e.g., "2016-09-04T23:59:33.123Z".
 	var deleted_at: Timestamp?
 	/// The IDs of all CatalogObjects deleted by this request.
@@ -353,7 +353,7 @@ public struct BatchDeleteCatalogObjectsResponse: Codable {
 	}
 }
 
-public struct BatchRetrieveCatalogObjectsRequest: Codable {
+public struct BatchRetrieveCatalogObjectsRequest: SQCodable {
 	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the `CatalogObject`s' `version` attribute.
 	var catalog_version: Int?
 	/// If `true`, the response will include additional objects that are related to the requested objects, as follows:  If the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.
@@ -368,7 +368,7 @@ public struct BatchRetrieveCatalogObjectsRequest: Codable {
 	}
 }
 
-public struct BatchRetrieveCatalogObjectsResponse: Codable {
+public struct BatchRetrieveCatalogObjectsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// A list of `CatalogObject`s returned.
@@ -383,7 +383,7 @@ public struct BatchRetrieveCatalogObjectsResponse: Codable {
 	}
 }
 
-public struct BatchRetrieveInventoryChangesRequest: Codable {
+public struct BatchRetrieveInventoryChangesRequest: SQCodable {
 	/// The filter to return results by `CatalogObject` ID. The filter is only applicable when set. The default value is null.
 	var catalog_object_ids: [String]?
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -410,7 +410,7 @@ public struct BatchRetrieveInventoryChangesRequest: Codable {
 	}
 }
 
-public struct BatchRetrieveInventoryChangesResponse: Codable {
+public struct BatchRetrieveInventoryChangesResponse: SQCodable {
 	/// The current calculated inventory changes for the requested objects and locations.
 	var changes: [InventoryChange]?
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -425,7 +425,7 @@ public struct BatchRetrieveInventoryChangesResponse: Codable {
 	}
 }
 
-public struct BatchRetrieveInventoryCountsRequest: Codable {
+public struct BatchRetrieveInventoryCountsRequest: SQCodable {
 	/// The filter to return results by `CatalogObject` ID. The filter is applicable only when set.  The default is null.
 	var catalog_object_ids: [String]?
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -446,7 +446,7 @@ public struct BatchRetrieveInventoryCountsRequest: Codable {
 	}
 }
 
-public struct BatchRetrieveInventoryCountsResponse: Codable {
+public struct BatchRetrieveInventoryCountsResponse: SQCodable {
 	/// The current calculated inventory counts for the requested objects and locations.
 	var counts: [InventoryCount]?
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -462,7 +462,7 @@ public struct BatchRetrieveInventoryCountsResponse: Codable {
 }
 
 /// Defines the fields that are included in requests to the BatchRetrieveOrders endpoint.
-public struct BatchRetrieveOrdersRequest: Codable {
+public struct BatchRetrieveOrdersRequest: SQCodable {
 	/// The ID of the location for these orders. This field is optional: omit it to retrieve orders within the scope of the current authorization's merchant ID.
 	var location_id: String?
 	/// The IDs of the orders to retrieve. A maximum of 100 orders can be retrieved per request.
@@ -475,7 +475,7 @@ public struct BatchRetrieveOrdersRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the BatchRetrieveOrders endpoint.
-public struct BatchRetrieveOrdersResponse: Codable {
+public struct BatchRetrieveOrdersResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested orders. This will omit any requested orders that do not exist.
@@ -487,7 +487,7 @@ public struct BatchRetrieveOrdersResponse: Codable {
 	}
 }
 
-public struct BatchUpsertCatalogObjectsRequest: Codable {
+public struct BatchUpsertCatalogObjectsRequest: SQCodable {
 	/// A batch of CatalogObjects to be inserted/updated atomically. The objects within a batch will be inserted in an all-or-nothing fashion, i.e., if an error occurs attempting to insert or update an object within a batch, the entire batch will be rejected. However, an error in one batch will not affect other batches within the same request.  For each object, its `updated_at` field is ignored and replaced with a current [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates), and its `is_deleted` field must not be set to `true`.  To modify an existing object, supply its ID. To create a new object, use an ID starting with `#`. These IDs may be used to create relationships between an object and attributes of other objects that reference it. For example, you can create a CatalogItem with ID `#ABC` and a CatalogItemVariation with its `item_id` attribute set to `#ABC` in order to associate the CatalogItemVariation with its parent CatalogItem.  Any `#`-prefixed IDs are valid only within a single atomic batch, and will be replaced by server-generated IDs.  Each batch may contain up to 1,000 objects. The total number of objects across all batches for a single request may not exceed 10,000. If either of these limits is violated, an error will be returned and no objects will be inserted or updated.
 	var batches: [CatalogObjectBatch]
 	/// A value you specify that uniquely identifies this request among all your requests. A common way to create a valid idempotency key is to use a Universally unique identifier (UUID).  If you're unsure whether a particular request was successful, you can reattempt it with the same idempotency key without worrying about creating duplicate objects.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
@@ -499,7 +499,7 @@ public struct BatchUpsertCatalogObjectsRequest: Codable {
 	}
 }
 
-public struct BatchUpsertCatalogObjectsResponse: Codable {
+public struct BatchUpsertCatalogObjectsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The mapping between client and server IDs for this upsert.
@@ -518,7 +518,7 @@ public struct BatchUpsertCatalogObjectsResponse: Codable {
 }
 
 /// Represents a booking as a time-bound service contract for a seller's staff member to provide a specified service at a given location to a requesting customer in one or more appointment segments.
-public struct Booking: Codable {
+public struct Booking: SQCodable {
 	/// A list of appointment segments for this booking.
 	var appointment_segments: [AppointmentSegment]?
 	/// The timestamp specifying the creation time of this booking.
@@ -558,7 +558,7 @@ public struct Booking: Codable {
 }
 
 /// Supported booking statuses.
-public enum BookingStatus: String, Codable {
+public enum BookingStatus: String, SQCodable {
 	/// An unaccepted booking. It is visible to both sellers and customers.
 	case PENDING
 	/// A customer-cancelled booking. It is visible to both the seller and the customer.
@@ -574,7 +574,7 @@ public enum BookingStatus: String, Codable {
 }
 
 /// A record of an employee's break during a shift.
-public struct Break: Codable {
+public struct Break: SQCodable {
 	/// The `BreakType` this `Break` was templated on.
 	var break_type_id: String
 	/// RFC 3339; follows same timezone info as `Shift`. Precision up to the minute is respected; seconds are truncated.
@@ -602,7 +602,7 @@ public struct Break: Codable {
 }
 
 /// A defined break template that sets an expectation for possible `Break` instances on a `Shift`.
-public struct BreakType: Codable {
+public struct BreakType: SQCodable {
 	/// A human-readable name for this type of break. Will be displayed to employees in Square products.
 	var break_name: String
 	/// A read-only timestamp in RFC 3339 format.
@@ -633,7 +633,7 @@ public struct BreakType: Codable {
 }
 
 /// Represents a bulk create request for `TeamMember` objects.
-public struct BulkCreateTeamMembersRequest: Codable {
+public struct BulkCreateTeamMembersRequest: SQCodable {
 	/// The data which will be used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	var team_members: CreateTeamMemberRequest
 
@@ -643,7 +643,7 @@ public struct BulkCreateTeamMembersRequest: Codable {
 }
 
 /// Represents a response from a bulk create request, containing the created `TeamMember` objects or error messages.
-public struct BulkCreateTeamMembersResponse: Codable {
+public struct BulkCreateTeamMembersResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully created `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
@@ -656,7 +656,7 @@ public struct BulkCreateTeamMembersResponse: Codable {
 }
 
 /// Represents a bulk update request for `TeamMember` objects.
-public struct BulkUpdateTeamMembersRequest: Codable {
+public struct BulkUpdateTeamMembersRequest: SQCodable {
 	/// The data which will be used to update the `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	var team_members: UpdateTeamMemberRequest
 
@@ -666,7 +666,7 @@ public struct BulkUpdateTeamMembersRequest: Codable {
 }
 
 /// Represents a response from a bulk update request, containing the updated `TeamMember` objects or error messages.
-public struct BulkUpdateTeamMembersResponse: Codable {
+public struct BulkUpdateTeamMembersResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
@@ -679,7 +679,7 @@ public struct BulkUpdateTeamMembersResponse: Codable {
 }
 
 /// The service appointment settings, including where and how the service is provided.
-public struct BusinessAppointmentSettings: Codable {
+public struct BusinessAppointmentSettings: SQCodable {
 	/// The time unit of the service duration for bookings.
 	var alignment_time: BusinessAppointmentSettingsAlignmentTime?
 	/// Indicates whether a customer can choose from all available time slots and have a staff member assigned automatically (`true`) or not (`false`).
@@ -725,7 +725,7 @@ public struct BusinessAppointmentSettings: Codable {
 }
 
 /// Time units of a service duration for bookings.
-public enum BusinessAppointmentSettingsAlignmentTime: String, Codable {
+public enum BusinessAppointmentSettingsAlignmentTime: String, SQCodable {
 	/// The service duration unit is one visit of a fixed time interval specified by the seller.
 	case SERVICE_DURATION
 	/// The service duration unit is a 15-minute interval. Bookings can be scheduled every quarter hour.
@@ -737,7 +737,7 @@ public enum BusinessAppointmentSettingsAlignmentTime: String, Codable {
 }
 
 /// Types of location where service is provided.
-public enum BusinessAppointmentSettingsBookingLocationType: String, Codable {
+public enum BusinessAppointmentSettingsBookingLocationType: String, SQCodable {
 	/// The service is provided at a seller location.
 	case BUSINESS_LOCATION
 	/// The service is provided at a customer location.
@@ -747,7 +747,7 @@ public enum BusinessAppointmentSettingsBookingLocationType: String, Codable {
 }
 
 /// The category of the seller’s cancellation policy.
-public enum BusinessAppointmentSettingsCancellationPolicy: String, Codable {
+public enum BusinessAppointmentSettingsCancellationPolicy: String, SQCodable {
 	/// Cancellations are treated as no shows and may incur a fee as specified by `cancellation_fee_money`.
 	case CANCELLATION_TREATED_AS_NO_SHOW
 	/// Cancellations follow the seller-specified policy that is described in free-form text and not enforced automatically by Square.
@@ -755,14 +755,14 @@ public enum BusinessAppointmentSettingsCancellationPolicy: String, Codable {
 }
 
 /// Types of daily appointment limits.
-public enum BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType: String, Codable {
+public enum BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType: String, SQCodable {
 	/// The maximum number of daily appointments is set on a per team member basis.
 	case PER_TEAM_MEMBER
 	/// The maximum number of daily appointments is set on a per location basis.
 	case PER_LOCATION
 }
 
-public struct BusinessBookingProfile: Codable {
+public struct BusinessBookingProfile: SQCodable {
 	/// Indicates whether customers can cancel or reschedule their own bookings (`true`) or not (`false`).
 	var allow_user_cancel: Bool?
 	/// Indicates whether the seller is open for booking.
@@ -790,7 +790,7 @@ public struct BusinessBookingProfile: Codable {
 }
 
 /// Policies for accepting bookings.
-public enum BusinessBookingProfileBookingPolicy: String, Codable {
+public enum BusinessBookingProfileBookingPolicy: String, SQCodable {
 	/// The seller accepts all booking requests automatically.
 	case ACCEPT_ALL
 	/// The seller must accept requests to complete bookings.
@@ -798,7 +798,7 @@ public enum BusinessBookingProfileBookingPolicy: String, Codable {
 }
 
 /// Choices of customer-facing time zone used for bookings.
-public enum BusinessBookingProfileCustomerTimezoneChoice: String, Codable {
+public enum BusinessBookingProfileCustomerTimezoneChoice: String, SQCodable {
 	/// Use the time zone of the business location for bookings.
 	case BUSINESS_LOCATION_TIMEZONE
 	/// Use the customer-chosen time zone for bookings.
@@ -806,7 +806,7 @@ public enum BusinessBookingProfileCustomerTimezoneChoice: String, Codable {
 }
 
 /// Represents the hours of operation for a business location.
-public struct BusinessHours: Codable {
+public struct BusinessHours: SQCodable {
 	/// The list of time periods during which the business is open. There may be at most 10 periods per day.
 	var periods: [BusinessHoursPeriod]?
 
@@ -816,7 +816,7 @@ public struct BusinessHours: Codable {
 }
 
 /// Represents a period of time during which a business location is open.
-public struct BusinessHoursPeriod: Codable {
+public struct BusinessHoursPeriod: SQCodable {
 	/// The day of week for this time period. See [DayOfWeek](#type-dayofweek) for possible values
 	var day_of_week: DayOfWeek?
 	/// The end time of a business hours period, specified in local time using partial-time RFC 3339 format.
@@ -832,7 +832,7 @@ public struct BusinessHoursPeriod: Codable {
 }
 
 /// A request to calculate the points that a buyer can earn from  a specified purchase.
-public struct CalculateLoyaltyPointsRequest: Codable {
+public struct CalculateLoyaltyPointsRequest: SQCodable {
 	/// The `order` ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount`.
 	var order_id: String?
 	/// The purchase amount for which to calculate the points.  Specify this field if your application does not use the Orders API to process orders. Otherwise, specify the `order_id`.
@@ -845,7 +845,7 @@ public struct CalculateLoyaltyPointsRequest: Codable {
 }
 
 /// A response that includes the points that the buyer can earn from  a specified purchase.
-public struct CalculateLoyaltyPointsResponse: Codable {
+public struct CalculateLoyaltyPointsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The points that the buyer can earn from a specified purchase.
@@ -857,7 +857,7 @@ public struct CalculateLoyaltyPointsResponse: Codable {
 	}
 }
 
-public struct CalculateOrderRequest: Codable {
+public struct CalculateOrderRequest: SQCodable {
 	/// The order to be calculated. Expects the entire order, not a sparse update.
 	var order: Order
 	/// Identifies one or more loyalty reward tiers to apply during order calculation. The discounts defined by the reward tiers are added to the order only to preview the effect of applying the specified reward(s). The reward(s) do not correspond to actual redemptions, that is, no `reward`s are created. Therefore, the reward `id`s are random strings used only to reference the reward tier.
@@ -869,7 +869,7 @@ public struct CalculateOrderRequest: Codable {
 	}
 }
 
-public struct CalculateOrderResponse: Codable {
+public struct CalculateOrderResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The calculated version of the order provided in the request.
@@ -881,7 +881,7 @@ public struct CalculateOrderResponse: Codable {
 	}
 }
 
-public struct CancelBookingRequest: Codable {
+public struct CancelBookingRequest: SQCodable {
 	/// The revision number for the booking used for optimistic concurrency.
 	var booking_version: Int?
 	/// A unique key to make this request an idempotent operation.
@@ -893,7 +893,7 @@ public struct CancelBookingRequest: Codable {
 	}
 }
 
-public struct CancelBookingResponse: Codable {
+public struct CancelBookingResponse: SQCodable {
 	/// The booking that was cancelled.
 	var booking: Booking?
 	/// Any errors that occurred during the request.
@@ -906,7 +906,7 @@ public struct CancelBookingResponse: Codable {
 }
 
 /// Describes a `CancelInvoice` request.
-public struct CancelInvoiceRequest: Codable {
+public struct CancelInvoiceRequest: SQCodable {
 	/// The version of the `invoice` to cancel. If you do not know the version, you can call  `GetInvoice](#endpoint-Invoices-GetInvoice) or [ListInvoices`.
 	var version: Int
 
@@ -916,7 +916,7 @@ public struct CancelInvoiceRequest: Codable {
 }
 
 /// The response returned by the `CancelInvoice` request.
-public struct CancelInvoiceResponse: Codable {
+public struct CancelInvoiceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The canceled invoice.
@@ -929,7 +929,7 @@ public struct CancelInvoiceResponse: Codable {
 }
 
 /// Specifies the idempotency key of a payment to cancel.
-public struct CancelPaymentByIdempotencyKeyRequest: Codable {
+public struct CancelPaymentByIdempotencyKeyRequest: SQCodable {
 	/// The `idempotency_key` identifying the payment to be canceled.
 	var idempotency_key: String
 
@@ -939,7 +939,7 @@ public struct CancelPaymentByIdempotencyKeyRequest: Codable {
 }
 
 /// The return value from the [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey) endpoint. On success, `errors` is empty.
-public struct CancelPaymentByIdempotencyKeyResponse: Codable {
+public struct CancelPaymentByIdempotencyKeyResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -949,14 +949,14 @@ public struct CancelPaymentByIdempotencyKeyResponse: Codable {
 }
 
 /// Cancels (voids) a payment before it has been completed. Note: Only payments created with `autocomplete` set to `false` can be canceled.
-public struct CancelPaymentRequest: Codable {
+public struct CancelPaymentRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// The return value from the [CancelPayment](#endpoint-payments-cancelpayment) endpoint.
-public struct CancelPaymentResponse: Codable {
+public struct CancelPaymentResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The successfully canceled `Payment` object.
@@ -969,14 +969,14 @@ public struct CancelPaymentResponse: Codable {
 }
 
 /// Defines parameters in a  [CancelSubscription](#endpoint-subscriptions-cancelsubscription) endpoint request.
-public struct CancelSubscriptionRequest: Codable {
+public struct CancelSubscriptionRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines fields that are included in a  [CancelSubscription](#endpoint-subscriptions-cancelsubscription) response.
-public struct CancelSubscriptionResponse: Codable {
+public struct CancelSubscriptionResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The canceled subscription.
@@ -988,13 +988,13 @@ public struct CancelSubscriptionResponse: Codable {
 	}
 }
 
-public struct CancelTerminalCheckoutRequest: Codable {
+public struct CancelTerminalCheckoutRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct CancelTerminalCheckoutResponse: Codable {
+public struct CancelTerminalCheckoutResponse: SQCodable {
 	/// The canceled `TerminalCheckout`
 	var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
@@ -1006,13 +1006,13 @@ public struct CancelTerminalCheckoutResponse: Codable {
 	}
 }
 
-public struct CancelTerminalRefundRequest: Codable {
+public struct CancelTerminalRefundRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct CancelTerminalRefundResponse: Codable {
+public struct CancelTerminalRefundResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The updated `TerminalRefund`
@@ -1024,14 +1024,14 @@ public struct CancelTerminalRefundResponse: Codable {
 	}
 }
 
-public struct CaptureTransactionRequest: Codable {
+public struct CaptureTransactionRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [CaptureTransaction](#endpoint-capturetransaction) endpoint.
-public struct CaptureTransactionResponse: Codable {
+public struct CaptureTransactionResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -1041,7 +1041,7 @@ public struct CaptureTransactionResponse: Codable {
 }
 
 /// Represents the payment details of a card to be used for payments. These details are determined by the `card_nonce` generated by `SqPaymentForm`.
-public struct Card: Codable {
+public struct Card: SQCodable {
 	/// The billing address for this card.
 	var billing_address: Address?
 	/// The first six digits of the card number, known as the Bank Identification Number (BIN). Only the Payments API returns this field.
@@ -1081,7 +1081,7 @@ public struct Card: Codable {
 }
 
 /// Indicates a card's brand, such as `VISA` or `MASTERCARD`.
-public enum CardBrand: String, Codable {
+public enum CardBrand: String, SQCodable {
 	case OTHER_BRAND
 	case VISA
 	case MASTERCARD
@@ -1098,7 +1098,7 @@ public enum CardBrand: String, Codable {
 }
 
 /// Reflects the current status of a card payment.
-public struct CardPaymentDetails: Codable {
+public struct CardPaymentDetails: SQCodable {
 	/// For EMV payments, the cryptogram generated for the payment.
 	var application_cryptogram: String?
 	/// For EMV payments, the application ID identifies the EMV application used for the payment.
@@ -1150,14 +1150,14 @@ public struct CardPaymentDetails: Codable {
 }
 
 /// Indicates a card's prepaid type, such as `NOT_PREPAID` or `PREPAID`.
-public enum CardPrepaidType: String, Codable {
+public enum CardPrepaidType: String, SQCodable {
 	case UNKNOWN_PREPAID_TYPE
 	case NOT_PREPAID
 	case PREPAID
 }
 
 /// 
-public enum CardSquareProduct: String, Codable {
+public enum CardSquareProduct: String, SQCodable {
 	case UNKNOWN_SQUARE_PRODUCT
 	case CONNECT_API
 	case DASHBOARD
@@ -1171,13 +1171,13 @@ public enum CardSquareProduct: String, Codable {
 }
 
 /// Indicates a card's type, such as `CREDIT` or `DEBIT`.
-public enum CardType: String, Codable {
+public enum CardType: String, SQCodable {
 	case UNKNOWN_CARD_TYPE
 	case CREDIT
 	case DEBIT
 }
 
-public struct CashDrawerDevice: Codable {
+public struct CashDrawerDevice: SQCodable {
 	/// The device Square-issued ID
 	var id: String?
 	/// The device merchant-specified name.
@@ -1190,7 +1190,7 @@ public struct CashDrawerDevice: Codable {
 }
 
 /// The types of events on a CashDrawerShift. Each event type represents an employee action on the actual cash drawer represented by a CashDrawerShift.
-public enum CashDrawerEventType: String, Codable {
+public enum CashDrawerEventType: String, SQCodable {
 	/// Triggered when a no sale occurs on a cash drawer. A CashDrawerEvent of this type must have a zero money amount.
 	case NO_SALE
 	/// Triggered when a cash tender payment occurs on a cash drawer. A CashDrawerEvent of this type can must not have a negative amount.
@@ -1212,7 +1212,7 @@ public enum CashDrawerEventType: String, Codable {
 }
 
 /// This model gives the details of a cash drawer shift. The cash_payment_money, cash_refund_money, cash_paid_in_money, and cash_paid_out_money fields are all computed by summing their respective event types.
-public struct CashDrawerShift: Codable {
+public struct CashDrawerShift: SQCodable {
 	/// The amount of money added to the cash drawer for reasons other than cash payments. It is computed by summing the events of type PAID_IN. The amount is always greater than or equal to zero.
 	var cash_paid_in_money: Money?
 	/// The amount of money removed from the cash drawer for reasons other than cash refunds. It is computed by summing the events of type PAID_OUT. The amount is always greater than or equal to zero.
@@ -1272,7 +1272,7 @@ public struct CashDrawerShift: Codable {
 	}
 }
 
-public struct CashDrawerShiftEvent: Codable {
+public struct CashDrawerShiftEvent: SQCodable {
 	/// The event time in ISO 8601 format.
 	let created_at: String?
 	/// An optional description of the event, entered by the employee that created the event.
@@ -1297,7 +1297,7 @@ public struct CashDrawerShiftEvent: Codable {
 }
 
 /// The current state of a cash drawer shift.
-public enum CashDrawerShiftState: String, Codable {
+public enum CashDrawerShiftState: String, SQCodable {
 	/// An open cash drawer shift.
 	case OPEN
 	/// A cash drawer shift that is ended but has not yet had an employee content audit.
@@ -1307,7 +1307,7 @@ public enum CashDrawerShiftState: String, Codable {
 }
 
 /// The summary of a closed cash drawer shift. This model contains only the money counted to start a cash drawer shift, counted at the end of the shift, and the amount that should be in the drawer at shift end based on summing all cash drawer shift events.
-public struct CashDrawerShiftSummary: Codable {
+public struct CashDrawerShiftSummary: SQCodable {
 	/// The shift close time in ISO 8601 format.
 	var closed_at: String?
 	/// The amount of money found in the cash drawer at the end of the shift by an auditing employee. The amount must be greater than or equal to zero.
@@ -1341,7 +1341,7 @@ public struct CashDrawerShiftSummary: Codable {
 }
 
 /// A category to which a `CatalogItem` instance belongs.
-public struct CatalogCategory: Codable {
+public struct CatalogCategory: SQCodable {
 	/// The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	var name: String?
 
@@ -1351,7 +1351,7 @@ public struct CatalogCategory: Codable {
 }
 
 /// Contains information defining a custom attribute. Custom attributes are intended to store additional information about a catalog object or to associate a catalog object with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.). [Read more about custom attributes](/catalog-api/add-custom-attributes)
-public struct CatalogCustomAttributeDefinition: Codable {
+public struct CatalogCustomAttributeDefinition: SQCodable {
 	/// The set of Catalog Object Types that this Custom Attribute may be applied to. Currently, only `ITEM` and `ITEM_VARIATION` are allowed. At least one type must be included. See [CatalogObjectType](#type-catalogobjecttype) for possible values
 	var allowed_object_types: CatalogObjectType
 	/// The visibility of a custom attribute to applications other than the application that created the attribute. See [CatalogCustomAttributeDefinitionAppVisibility](#type-catalogcustomattributedefinitionappvisibility) for possible values
@@ -1394,7 +1394,7 @@ public struct CatalogCustomAttributeDefinition: Codable {
 }
 
 /// Defines the visibility of a custom attribute to applications other than their creating application.
-public enum CatalogCustomAttributeDefinitionAppVisibility: String, Codable {
+public enum CatalogCustomAttributeDefinitionAppVisibility: String, SQCodable {
 	/// Other applications cannot read this custom attribute.
 	case APP_VISIBILITY_HIDDEN
 	/// Other applications can read this custom attribute definition and values.
@@ -1403,7 +1403,7 @@ public enum CatalogCustomAttributeDefinitionAppVisibility: String, Codable {
 	case APP_VISIBILITY_READ_WRITE_VALUES
 }
 
-public struct CatalogCustomAttributeDefinitionNumberConfig: Codable {
+public struct CatalogCustomAttributeDefinitionNumberConfig: SQCodable {
 	/// An integer between 0 and 5 that represents the maximum number of positions allowed after the decimal in number custom attribute values For example:  - if the precision is 0, the quantity can be 1, 2, 3, etc. - if the precision is 1, the quantity can be 0.1, 0.2, etc. - if the precision is 2, the quantity can be 0.01, 0.12, etc.  Default: 5
 	var precision: Int?
 
@@ -1413,7 +1413,7 @@ public struct CatalogCustomAttributeDefinitionNumberConfig: Codable {
 }
 
 /// Configuration associated with `SELECTION`-type custom attribute definitions.
-public struct CatalogCustomAttributeDefinitionSelectionConfig: Codable {
+public struct CatalogCustomAttributeDefinitionSelectionConfig: SQCodable {
 	/// The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100 selections can be defined. Can be modified.
 	var allowed_selections: [CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection]?
 	/// The maximum number of selections that can be set. The maximum value for this attribute is 100. The default value is 1. The value can be modified, but changing the value will not affect existing custom attribute values on objects. Clients need to handle custom attributes with more selected values than allowed by this limit.
@@ -1426,7 +1426,7 @@ public struct CatalogCustomAttributeDefinitionSelectionConfig: Codable {
 }
 
 /// A named selection for this `SELECTION`-type custom attribute definition.
-public struct CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection: Codable {
+public struct CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection: SQCodable {
 	/// Selection name, unique within `allowed_selections`.
 	var name: String
 	/// Unique ID set by Square.
@@ -1439,7 +1439,7 @@ public struct CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSele
 }
 
 /// Defines the visibility of a custom attribute to sellers in Square client applications, Square APIs or in Square UIs (including Square Point of Sale applications and Square Dashboard).
-public enum CatalogCustomAttributeDefinitionSellerVisibility: String, Codable {
+public enum CatalogCustomAttributeDefinitionSellerVisibility: String, SQCodable {
 	/// Sellers cannot read this custom attribute in Square client applications or Square APIs.
 	case SELLER_VISIBILITY_HIDDEN
 	/// Sellers can read and write this custom attribute value in catalog objects, but cannot edit the custom attribute definition.
@@ -1447,7 +1447,7 @@ public enum CatalogCustomAttributeDefinitionSellerVisibility: String, Codable {
 }
 
 /// Configuration associated with Custom Attribute Definitions of type `STRING`.
-public struct CatalogCustomAttributeDefinitionStringConfig: Codable {
+public struct CatalogCustomAttributeDefinitionStringConfig: SQCodable {
 	/// If true, each Custom Attribute instance associated with this Custom Attribute Definition must have a unique value within the seller's catalog. For example, this may be used for a value like a SKU that should not be duplicated within a seller's catalog. May not be modified after the definition has been created.
 	var enforce_uniqueness: Bool?
 
@@ -1457,7 +1457,7 @@ public struct CatalogCustomAttributeDefinitionStringConfig: Codable {
 }
 
 /// Defines the possible types for a custom attribute.
-public enum CatalogCustomAttributeDefinitionType: String, Codable {
+public enum CatalogCustomAttributeDefinitionType: String, SQCodable {
 	/// A free-form string containing up to 255 characters.
 	case STRING
 	/// A `true` or `false` value.
@@ -1469,7 +1469,7 @@ public enum CatalogCustomAttributeDefinitionType: String, Codable {
 }
 
 /// An instance of a custom attribute. Custom attributes can be defined and added to `ITEM` and `ITEM_VARIATION` type catalog objects. [Read more about custom attributes](/catalog-api/add-custom-attributes).
-public struct CatalogCustomAttributeValue: Codable {
+public struct CatalogCustomAttributeValue: SQCodable {
 	/// A `true` or `false` value. Populated if `type` = `BOOLEAN`.
 	var boolean_value: Bool?
 	/// __Read-only.__ The id of the `CatalogCustomAttributeDefinition` this value belongs to.
@@ -1500,7 +1500,7 @@ public struct CatalogCustomAttributeValue: Codable {
 }
 
 /// A discount applicable to items.
-public struct CatalogDiscount: Codable {
+public struct CatalogDiscount: SQCodable {
 	/// The amount of the discount. Specify an amount of `0` if `discount_type` is `VARIABLE_AMOUNT`.  Do not use this field for percentage-based or variable discounts.
 	var amount_money: Money?
 	/// Indicates whether the discount is a fixed amount or percentage, or entered at the time of sale. See [CatalogDiscountType](#type-catalogdiscounttype) for possible values
@@ -1528,7 +1528,7 @@ public struct CatalogDiscount: Codable {
 }
 
 /// 
-public enum CatalogDiscountModifyTaxBasis: String, Codable {
+public enum CatalogDiscountModifyTaxBasis: String, SQCodable {
 	/// Application of the discount will modify the tax basis.
 	case MODIFY_TAX_BASIS
 	/// Application of the discount will not modify the tax basis.
@@ -1536,7 +1536,7 @@ public enum CatalogDiscountModifyTaxBasis: String, Codable {
 }
 
 /// How to apply a CatalogDiscount to a CatalogItem.
-public enum CatalogDiscountType: String, Codable {
+public enum CatalogDiscountType: String, SQCodable {
 	/// Apply the discount as a fixed percentage (e.g., 5%) off the item price.
 	case FIXED_PERCENTAGE
 	/// Apply the discount as a fixed amount (e.g., $1.00) off the item price.
@@ -1548,7 +1548,7 @@ public enum CatalogDiscountType: String, Codable {
 }
 
 /// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](#endpoint-Catalog-UpsertCatalogObject) or [BatchUpsertCatalogObjects](#endpoint-Catalog-BatchUpsertCatalogObjects) to create a [CatalogObject](#type-CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
-public struct CatalogIdMapping: Codable {
+public struct CatalogIdMapping: SQCodable {
 	/// The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
 	var client_object_id: String?
 	/// The permanent ID for the CatalogObject created by the server.
@@ -1561,7 +1561,7 @@ public struct CatalogIdMapping: Codable {
 }
 
 /// An image file to use in Square catalogs. It can be associated with catalog items, item variations, and categories.
-public struct CatalogImage: Codable {
+public struct CatalogImage: SQCodable {
 	/// A caption that describes what is shown in the image. Displayed in the Square Online Store. This is a searchable attribute for use in applicable query filters.
 	var caption: String?
 	/// The internal name to identify this image in calls to the Square API.
@@ -1576,13 +1576,13 @@ public struct CatalogImage: Codable {
 	}
 }
 
-public struct CatalogInfoRequest: Codable {
+public struct CatalogInfoRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct CatalogInfoResponse: Codable {
+public struct CatalogInfoResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// Limits that apply to this API.
@@ -1597,7 +1597,7 @@ public struct CatalogInfoResponse: Codable {
 	}
 }
 
-public struct CatalogInfoResponseLimits: Codable {
+public struct CatalogInfoResponseLimits: SQCodable {
 	/// The maximum number of object IDs that may be included in a single `/v2/catalog/batch-delete` request.
 	var batch_delete_max_object_ids: Int?
 	/// The maximum number of object IDs that may appear in a `/v2/catalog/batch-retrieve` request.
@@ -1637,7 +1637,7 @@ public struct CatalogInfoResponseLimits: Codable {
 }
 
 /// A [CatalogObject](#type-CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
-public struct CatalogItem: Codable {
+public struct CatalogItem: SQCodable {
 	/// The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
 	var abbreviation: String?
 	/// If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
@@ -1686,7 +1686,7 @@ public struct CatalogItem: Codable {
 }
 
 /// Options to control the properties of a `CatalogModifierList` applied to a `CatalogItem` instance.
-public struct CatalogItemModifierListInfo: Codable {
+public struct CatalogItemModifierListInfo: SQCodable {
 	/// If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	var enabled: Bool?
 	/// If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`.
@@ -1708,7 +1708,7 @@ public struct CatalogItemModifierListInfo: Codable {
 }
 
 /// A group of variations for a `CatalogItem`.
-public struct CatalogItemOption: Codable {
+public struct CatalogItemOption: SQCodable {
 	/// The item option's human-readable description. Displayed in the Square Point of Sale app for the seller and in the Online Store or on receipts for the buyer. This is a searchable attribute for use in applicable query filters.
 	var description: String?
 	/// The item option's display name for the customer. This is a searchable attribute for use in applicable query filters.
@@ -1730,7 +1730,7 @@ public struct CatalogItemOption: Codable {
 }
 
 ///  An option that can be assigned to an item. For example, a t-shirt item may offer a color option or a size option.
-public struct CatalogItemOptionForItem: Codable {
+public struct CatalogItemOptionForItem: SQCodable {
 	/// The unique id of the item option, used to form the dimensions of the item option matrix in a specified order.
 	var item_option_id: String?
 
@@ -1740,7 +1740,7 @@ public struct CatalogItemOptionForItem: Codable {
 }
 
 /// An enumerated value that can link a `CatalogItemVariation` to an item option as one of its item option values.
-public struct CatalogItemOptionValue: Codable {
+public struct CatalogItemOptionValue: SQCodable {
 	/// The HTML-supported hex color for the item option (e.g., "#ff8d4e85"). Only displayed if `show_colors` is enabled on the parent `ItemOption`. When left unset, `color` defaults to white ("#ffffff") when `show_colors` is enabled on the parent `ItemOption`.
 	var color: String?
 	/// A human-readable description for the option value. This is a searchable attribute for use in applicable query filters.
@@ -1762,7 +1762,7 @@ public struct CatalogItemOptionValue: Codable {
 }
 
 /// A `CatalogItemOptionValue` links an item variation to an item option as an item option value. For example, a t-shirt item may offer a color option and a size option. An item option value would represent each variation of t-shirt: For example, "Color:Red, Size:Small" or "Color:Blue, Size:Medium".
-public struct CatalogItemOptionValueForItemVariation: Codable {
+public struct CatalogItemOptionValueForItemVariation: SQCodable {
 	/// The unique id of an item option.
 	var item_option_id: String?
 	/// The unique id of the selected value for the item option.
@@ -1775,7 +1775,7 @@ public struct CatalogItemOptionValueForItemVariation: Codable {
 }
 
 /// The type of a CatalogItem. Connect V2 only allows the creation of `REGULAR` or `APPOINTMENTS_SERVICE` items.
-public enum CatalogItemProductType: String, Codable {
+public enum CatalogItemProductType: String, SQCodable {
 	/// An ordinary item.
 	case REGULAR
 	/// A Square gift card.
@@ -1785,7 +1785,7 @@ public enum CatalogItemProductType: String, Codable {
 }
 
 /// An item variation (i.e., product) in the Catalog object model. Each item may have a maximum of 250 item variations.
-public struct CatalogItemVariation: Codable {
+public struct CatalogItemVariation: SQCodable {
 	/// If the `CatalogItem` that owns this item variation is of type `APPOINTMENTS_SERVICE`, a bool representing whether this service is available for booking.
 	var available_for_booking: Bool?
 	/// If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard.  This value is always an integer.
@@ -1843,7 +1843,7 @@ public struct CatalogItemVariation: Codable {
 }
 
 /// Represents the unit used to measure a `CatalogItemVariation` and specifies the precision for decimal quantities.
-public struct CatalogMeasurementUnit: Codable {
+public struct CatalogMeasurementUnit: SQCodable {
 	/// Indicates the unit used to measure the quantity of a catalog item variation.
 	var measurement_unit: MeasurementUnit?
 	/// An integer between 0 and 5 that represents the maximum number of positions allowed after the decimal in quantities measured with this unit. For example:  - if the precision is 0, the quantity can be 1, 2, 3, etc. - if the precision is 1, the quantity can be 0.1, 0.2, etc. - if the precision is 2, the quantity can be 0.01, 0.12, etc.  Default: 3
@@ -1856,7 +1856,7 @@ public struct CatalogMeasurementUnit: Codable {
 }
 
 /// A modifier applicable to items at the time of sale.
-public struct CatalogModifier: Codable {
+public struct CatalogModifier: SQCodable {
 	/// The ID of the `CatalogModifierList` associated with this modifier.
 	var modifier_list_id: String?
 	/// The modifier name.  This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
@@ -1875,7 +1875,7 @@ public struct CatalogModifier: Codable {
 }
 
 /// A list of modifiers applicable to items at the time of sale.  For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers. Use the `selection_type` field to specify whether or not multiple selections from the modifier list are allowed.
-public struct CatalogModifierList: Codable {
+public struct CatalogModifierList: SQCodable {
 	/// The options included in the `CatalogModifierList`. You must include at least one `CatalogModifier`. Each CatalogObject must have type `MODIFIER` and contain `CatalogModifier` data.
 	var modifiers: [CatalogObject]?
 	/// The name for the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
@@ -1894,7 +1894,7 @@ public struct CatalogModifierList: Codable {
 }
 
 /// Indicates whether a CatalogModifierList supports multiple selections.
-public enum CatalogModifierListSelectionType: String, Codable {
+public enum CatalogModifierListSelectionType: String, SQCodable {
 	/// Indicates that a CatalogModifierList allows only a single CatalogModifier to be selected.
 	case SINGLE
 	/// Indicates that a CatalogModifierList allows multiple CatalogModifier to be selected.
@@ -1902,7 +1902,7 @@ public enum CatalogModifierListSelectionType: String, Codable {
 }
 
 /// Options to control how to override the default behavior of the specified modifier.
-public struct CatalogModifierOverride: Codable {
+public struct CatalogModifierOverride: SQCodable {
 	/// The ID of the `CatalogModifier` whose default behavior is being overridden.
 	var modifier_id: String
 	/// If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
@@ -1915,7 +1915,7 @@ public struct CatalogModifierOverride: Codable {
 }
 
 /// The wrapper object for the Catalog entries of a given object type.  The type of a particular `CatalogObject` is determined by the value of the `type` attribute and only the corresponding data attribute can be set on the `CatalogObject` instance. For example, the following list shows some instances of `CatalogObject` of a given `type` and their corresponding data atrribute that can be set: - For a `CatalogObject` of the `ITEM` type, set the `item_data` attribute to yield the `CatalogItem` object. - For a `CatalogObject` of the `ITEM_VARIATION` type, set the `item_variation_data` attribute to yield the `CatalogItemVariation` object. - For a `CatalogObject` of the `MODIFIER` type, set the `modifier_data` attribute to yield the `CatalogModifier` object. - For a `CatalogObject` of the `MODIFIER_LIST` type, set the `modifier_list_data` attribute to yield the `CatalogModifierList` object. - For a `CatalogObject` of the `CATEGORY` type, set the `category_data` attribute to yield the `CatalogCategory` object. - For a `CatalogObject` of the `DISCOUNT` type, set the `discount_data` attribute to yield the `CatalogDiscount` object. - For a `CatalogObject` of the `TAX` type, set the `tax_data` attribute to yield the `CatalogTax` object. - For a `CatalogObject` of the `IMAGE` type, set the `image_data` attribute to yield the `CatalogImageData`  object. - For a `CatalogObject` of the `QUICK_AMOUNTS_SETTINGS` type, set the `quick_amounts_settings_data` attribute to yield the `CatalogQuickAmountsSettings` object. - For a `CatalogObject` of the `PRICING_RULE` type, set the `pricing_rule_data` attribute to yield the `CatalogPricingRule` object. - For a `CatalogObject` of the `TIME_PERIOD` type, set the `time_period_data` attribute to yield the `CatalogTimePeriod` object. - For a `CatalogObject` of the `PRODUCT_SET` type, set the `product_set_data` attribute to yield the `CatalogProductSet`  object. - For a `CatalogObject` of the `SUBSCRIPTION_PLAN` type, set the `subscription_plan_data` attribute to yield the `CatalogSubscriptionPlan` object.   For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](/catalog-api/design-a-catalog) guide.
-public struct CatalogObject: Codable {
+public struct CatalogObject: SQCodable {
 	/// A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
 	var absent_at_location_ids: [String]?
 	/// The Connect v1 IDs for this object at each location where it is present, where they differ from the object's Connect V2 ID. The field will only be present for objects that have been created or modified by legacy APIs.
@@ -2006,7 +2006,7 @@ public struct CatalogObject: Codable {
 }
 
 /// A batch of catalog objects.
-public struct CatalogObjectBatch: Codable {
+public struct CatalogObjectBatch: SQCodable {
 	/// A list of CatalogObjects belonging to this batch.
 	var objects: [CatalogObject]
 
@@ -2016,7 +2016,7 @@ public struct CatalogObjectBatch: Codable {
 }
 
 /// A reference to a Catalog object at a specific version. In general this is used as an entry point into a graph of catalog objects, where the objects exist at a specific version.
-public struct CatalogObjectReference: Codable {
+public struct CatalogObjectReference: SQCodable {
 	/// The version of the object.
 	var catalog_version: Int?
 	/// The ID of the referenced object.
@@ -2029,7 +2029,7 @@ public struct CatalogObjectReference: Codable {
 }
 
 /// Possible types of CatalogObjects returned from the Catalog, each containing type-specific properties in the `*_data` field corresponding to the object type.
-public enum CatalogObjectType: String, Codable {
+public enum CatalogObjectType: String, SQCodable {
 	/// An item, corresponding to `CatalogItem`. The item-specific data will be stored in the `item_data` field.
 	case ITEM
 	/// An image, corresponding to `CatalogImage`. The image-specific data will be stored in the `image_data` field.
@@ -2067,7 +2067,7 @@ public enum CatalogObjectType: String, Codable {
 }
 
 /// Defines how discounts are automatically applied to a set of items that match the pricing rule during the active time period.
-public struct CatalogPricingRule: Codable {
+public struct CatalogPricingRule: SQCodable {
 	/// __Deprecated__: Please use the `exclude_products_id` field to apply an exclude set instead. Exclude sets allow better control over quantity ranges and offer more flexibility for which matched items receive a discount.  `CatalogProductSet` to apply the pricing to. An apply rule matches within the subset of the cart that fits the match rules (the match set). An apply rule can only match once in the match set. If not supplied, the pricing will be applied to all products in the match set. Other products retain their base price, or a price generated by other rules.
 	var apply_products_id: String?
 	/// Unique ID for the `CatalogDiscount` to take off the price of all matched items.
@@ -2107,7 +2107,7 @@ public struct CatalogPricingRule: Codable {
 }
 
 /// Indicates whether the price of a CatalogItemVariation should be entered manually at the time of sale.
-public enum CatalogPricingType: String, Codable {
+public enum CatalogPricingType: String, SQCodable {
 	/// The catalog item variation's price is fixed.
 	case FIXED_PRICING
 	/// The catalog item variation's price is entered at the time of sale.
@@ -2115,7 +2115,7 @@ public enum CatalogPricingType: String, Codable {
 }
 
 /// Represents a collection of catalog objects for the purpose of applying a `PricingRule`. Including a catalog object will include all of its subtypes. For example, including a category in a product set will include all of its items and associated item variations in the product set. Including an item in a product set will also include its item variations.
-public struct CatalogProductSet: Codable {
+public struct CatalogProductSet: SQCodable {
 	/// If set to `true`, the product set will include every item in the catalog.  Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.
 	var all_products: Bool?
 	/// User-defined name for the product set. For example, "Clearance Items" or "Winter Sale Items".
@@ -2143,7 +2143,7 @@ public struct CatalogProductSet: Codable {
 }
 
 /// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](#type-CatalogExactQuery) - [prefix_query](#type-CatalogPrefixQuery) - [range_query](#type-CatalogRangeQuery) - [sorted_attribute_query](#type-CatalogSortedAttribute) - [text_query](#type-CatalogTextQuery) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatelogCatogry`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](#type-CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
-public struct CatalogQuery: Codable {
+public struct CatalogQuery: SQCodable {
 	/// An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	var exact_query: CatalogQueryExact?
 	/// A query expression to return item variations (of the `CatalogItemVariation` that contain all of the specified `CatalogItemOption` IDs.
@@ -2180,7 +2180,7 @@ public struct CatalogQuery: Codable {
 }
 
 /// The query filter to return the search result by exact match of the specified attribute name and value.
-public struct CatalogQueryExact: Codable {
+public struct CatalogQueryExact: SQCodable {
 	/// The name of the attribute to be searched. Matching of the attribute name is exact.
 	var attribute_name: String
 	/// The desired value of the search attribute. Matching of the attribute value is case insensitive and can be partial. For example, if a specified value of "sma", objects with the named attribute value of "Small", "small" are both matched.
@@ -2193,7 +2193,7 @@ public struct CatalogQueryExact: Codable {
 }
 
 /// The query filter to return the item variations containing the specified item option value IDs.
-public struct CatalogQueryItemVariationsForItemOptionValues: Codable {
+public struct CatalogQueryItemVariationsForItemOptionValues: SQCodable {
 	/// A set of `CatalogItemOptionValue` IDs to be used to find associated `CatalogItemVariation`s. All ItemVariations that contain all of the given Item Option Values (in any order) will be returned.
 	var item_option_value_ids: [String]?
 
@@ -2203,7 +2203,7 @@ public struct CatalogQueryItemVariationsForItemOptionValues: Codable {
 }
 
 /// The query filter to return the items containing the specified item option IDs.
-public struct CatalogQueryItemsForItemOptions: Codable {
+public struct CatalogQueryItemsForItemOptions: SQCodable {
 	/// A set of `CatalogItemOption` IDs to be used to find associated `CatalogItem`s. All Items that contain all of the given Item Options (in any order) will be returned.
 	var item_option_ids: [String]?
 
@@ -2213,7 +2213,7 @@ public struct CatalogQueryItemsForItemOptions: Codable {
 }
 
 /// The query filter to return the items containing the specified modifier list IDs.
-public struct CatalogQueryItemsForModifierList: Codable {
+public struct CatalogQueryItemsForModifierList: SQCodable {
 	/// A set of `CatalogModifierList` IDs to be used to find associated `CatalogItem`s.
 	var modifier_list_ids: [String]
 
@@ -2223,7 +2223,7 @@ public struct CatalogQueryItemsForModifierList: Codable {
 }
 
 /// The query filter to return the items containing the specified tax IDs.
-public struct CatalogQueryItemsForTax: Codable {
+public struct CatalogQueryItemsForTax: SQCodable {
 	/// A set of `CatalogTax` IDs to be used to find associated `CatalogItem`s.
 	var tax_ids: [String]
 
@@ -2233,7 +2233,7 @@ public struct CatalogQueryItemsForTax: Codable {
 }
 
 /// The query filter to return the search result whose named attribute values are prefixed by the specified attribute value.
-public struct CatalogQueryPrefix: Codable {
+public struct CatalogQueryPrefix: SQCodable {
 	/// The name of the attribute to be searched.
 	var attribute_name: String
 	/// The desired prefix of the search attribute value.
@@ -2246,7 +2246,7 @@ public struct CatalogQueryPrefix: Codable {
 }
 
 /// The query filter to return the search result whose named attribute values fall between the specified range.
-public struct CatalogQueryRange: Codable {
+public struct CatalogQueryRange: SQCodable {
 	/// The desired maximum value for the search attribute (inclusive).
 	var attribute_max_value: Int?
 	/// The desired minimum value for the search attribute (inclusive).
@@ -2262,7 +2262,7 @@ public struct CatalogQueryRange: Codable {
 }
 
 /// The query filter to return the search result(s) by exact match of the specified `attribute_name` and any of the `attribute_values`.
-public struct CatalogQuerySet: Codable {
+public struct CatalogQuerySet: SQCodable {
 	/// The name of the attribute to be searched. Matching of the attribute name is exact.
 	var attribute_name: String
 	/// The desired values of the search attribute. Matching of the attribute values is exact and case insensitive. A maximum of 250 values may be searched in a request.
@@ -2275,7 +2275,7 @@ public struct CatalogQuerySet: Codable {
 }
 
 /// The query expression to specify the key to sort search results.
-public struct CatalogQuerySortedAttribute: Codable {
+public struct CatalogQuerySortedAttribute: SQCodable {
 	/// The attribute whose value is used as the sort key.
 	var attribute_name: String
 	/// The first attribute value to be returned by the query. Ascending sorts will return only objects with this value or greater, while descending sorts will return only objects with this value or less. If unset, start at the beginning (for ascending sorts) or end (for descending sorts).
@@ -2291,7 +2291,7 @@ public struct CatalogQuerySortedAttribute: Codable {
 }
 
 /// The query filter to return the search result whose searchable attribute values contain all of the specified keywords or tokens, independent of the token order or case.
-public struct CatalogQueryText: Codable {
+public struct CatalogQueryText: SQCodable {
 	/// A list of 1, 2, or 3 search keywords. Keywords with fewer than 3 characters are ignored.
 	var keywords: [String]
 
@@ -2301,7 +2301,7 @@ public struct CatalogQueryText: Codable {
 }
 
 /// Represents a Quick Amount in the Catalog.
-public struct CatalogQuickAmount: Codable {
+public struct CatalogQuickAmount: SQCodable {
 	/// Represents the actual amount of the Quick Amount with Money type.
 	var amount: Money
 	/// The order in which this Quick Amount should be displayed.
@@ -2320,7 +2320,7 @@ public struct CatalogQuickAmount: Codable {
 }
 
 /// Determines the type of a specific Quick Amount.
-public enum CatalogQuickAmountType: String, Codable {
+public enum CatalogQuickAmountType: String, SQCodable {
 	/// Quick Amount is created manually by the seller.
 	case QUICK_AMOUNT_TYPE_MANUAL
 	/// Quick Amount is generated automatically by machine learning algorithms.
@@ -2328,7 +2328,7 @@ public enum CatalogQuickAmountType: String, Codable {
 }
 
 /// A parent Catalog Object model represents a set of Quick Amounts and the settings control the amounts.
-public struct CatalogQuickAmountsSettings: Codable {
+public struct CatalogQuickAmountsSettings: SQCodable {
 	/// Represents a set of Quick Amounts at this location.
 	var amounts: [CatalogQuickAmount]?
 	/// Represents location's eligibility for auto amounts The boolean should be consistent with whether there are AUTO amounts in the `amounts`.
@@ -2344,7 +2344,7 @@ public struct CatalogQuickAmountsSettings: Codable {
 }
 
 /// Determines a seller's option on Quick Amounts feature.
-public enum CatalogQuickAmountsSettingsOption: String, Codable {
+public enum CatalogQuickAmountsSettingsOption: String, SQCodable {
 	/// Option for seller to disable Quick Amounts.
 	case DISABLED
 	/// Option for seller to choose manually created Quick Amounts.
@@ -2354,7 +2354,7 @@ public enum CatalogQuickAmountsSettingsOption: String, Codable {
 }
 
 /// Describes a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](/docs/subscriptions-api/setup-plan).
-public struct CatalogSubscriptionPlan: Codable {
+public struct CatalogSubscriptionPlan: SQCodable {
 	/// The name of the plan.
 	var name: String?
 	/// A list of SubscriptionPhase containing the `SubscriptionPhase` for this plan.
@@ -2367,7 +2367,7 @@ public struct CatalogSubscriptionPlan: Codable {
 }
 
 /// A tax applicable to an item.
-public struct CatalogTax: Codable {
+public struct CatalogTax: SQCodable {
 	/// If `true`, the fee applies to custom amounts entered into the Square Point of Sale app that are not associated with a particular `CatalogItem`.
 	var applies_to_custom_amounts: Bool?
 	/// Whether the tax is calculated based on a payment's subtotal or total. See [TaxCalculationPhase](#type-taxcalculationphase) for possible values
@@ -2392,7 +2392,7 @@ public struct CatalogTax: Codable {
 }
 
 /// Represents a time period - either a single period or a repeating period.
-public struct CatalogTimePeriod: Codable {
+public struct CatalogTimePeriod: SQCodable {
 	/// An iCalendar (RFC 5545) [event](https://tools.ietf.org/html/rfc5545#section-3.6.1), which specifies the name, timing, duration and recurrence of this time period.  Example:  ``` DTSTART:20190707T180000 DURATION:P2H RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR ```  Only `SUMMARY`, `DTSTART`, `DURATION` and `RRULE` fields are supported. `DTSTART` must be in local (unzoned) time format. Note that while `BEGIN:VEVENT` and `END:VEVENT` is not required in the request. The response will always include them.
 	var event: String?
 
@@ -2402,7 +2402,7 @@ public struct CatalogTimePeriod: Codable {
 }
 
 /// A Square API V1 identifier of an item, including the object ID and its associated location ID.
-public struct CatalogV1Id: Codable {
+public struct CatalogV1Id: SQCodable {
 	/// The ID for an object used in the Square API V1, if the object ID differs from the Square API V2 object ID.
 	var catalog_v1_id: String?
 	/// The ID of the `Location` this Connect V1 ID is associated with.
@@ -2415,7 +2415,7 @@ public struct CatalogV1Id: Codable {
 }
 
 /// Defines the parameters that can be included in the body of a request to the [Charge](#endpoint-charge) endpoint.  Deprecated - recommend using [CreatePayment](#endpoint-payments-createpayment)
-public struct ChargeRequest: Codable {
+public struct ChargeRequest: SQCodable {
 	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `amount_money` value in the charge request. The `location_id` must be the valid location of the app owner merchant.  This field requires the `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
 	var additional_recipients: [AdditionalRecipient]?
 	/// The amount of money to charge.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  The value of `currency` must match the currency associated with the business that is charging the card.
@@ -2464,7 +2464,7 @@ public struct ChargeRequest: Codable {
 }
 
 /// Represents an additional recipient (other than the merchant) entitled to a portion of the tender. Support is currently limited to USD, CAD and GBP currencies
-public struct ChargeRequestAdditionalRecipient: Codable {
+public struct ChargeRequestAdditionalRecipient: SQCodable {
 	/// The amount of money distributed to the recipient.
 	var amount_money: Money
 	/// The description of the additional recipient.
@@ -2480,7 +2480,7 @@ public struct ChargeRequestAdditionalRecipient: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [Charge](#endpoint-charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
-public struct ChargeResponse: Codable {
+public struct ChargeResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The created transaction.
@@ -2492,13 +2492,13 @@ public struct ChargeResponse: Codable {
 	}
 }
 
-public struct CheckAppointmentsOnboardedRequest: Codable {
+public struct CheckAppointmentsOnboardedRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct CheckAppointmentsOnboardedResponse: Codable {
+public struct CheckAppointmentsOnboardedResponse: SQCodable {
 	/// Indicates whether the seller has enabled the Square Appointments service (`true`) or not (`false`).
 	var appointments_onboarded: Bool?
 	/// Any errors that occurred during the request.
@@ -2511,7 +2511,7 @@ public struct CheckAppointmentsOnboardedResponse: Codable {
 }
 
 /// Square Checkout lets merchants accept online payments for supported payment types using a checkout workflow hosted on squareup.com.
-public struct Checkout: Codable {
+public struct Checkout: SQCodable {
 	/// Additional recipients (other than the merchant) receiving a portion of this checkout. For example, fees assessed on the purchase by a third party integration.
 	var additional_recipients: [AdditionalRecipient]?
 	/// If `true`, Square Checkout will collect shipping information on your behalf and store that information with the transaction information in your Square Dashboard.  Default: `false`.
@@ -2548,14 +2548,14 @@ public struct Checkout: Codable {
 }
 
 /// Completes (captures) a payment.  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
-public struct CompletePaymentRequest: Codable {
+public struct CompletePaymentRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// The return value from a [CompletePayment](#endpoint-payments-completepayment) call.
-public struct CompletePaymentResponse: Codable {
+public struct CompletePaymentResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The successfully completed payment.
@@ -2568,7 +2568,7 @@ public struct CompletePaymentResponse: Codable {
 }
 
 /// Latitude and longitude coordinates.
-public struct Coordinates: Codable {
+public struct Coordinates: SQCodable {
 	/// The latitude of the coordinate expressed in degrees.
 	var latitude: Float?
 	/// The longitude of the coordinate expressed in degrees.
@@ -2581,7 +2581,7 @@ public struct Coordinates: Codable {
 }
 
 /// Indicates the country associated with another entity, such as a business. Values are in [ISO 3166-1-alpha-2 format](http://www.iso.org/iso/home/standards/country_codes.htm).
-public enum Country: String, Codable {
+public enum Country: String, SQCodable {
 	/// Unknown
 	case ZZ
 	/// Andorra
@@ -3084,7 +3084,7 @@ public enum Country: String, Codable {
 	case ZW
 }
 
-public struct CreateBookingRequest: Codable {
+public struct CreateBookingRequest: SQCodable {
 	/// The details of the booking to be created.
 	var booking: Booking
 	/// A unique key to make this request an idempotent operation.
@@ -3096,7 +3096,7 @@ public struct CreateBookingRequest: Codable {
 	}
 }
 
-public struct CreateBookingResponse: Codable {
+public struct CreateBookingResponse: SQCodable {
 	/// The booking that was created.
 	var booking: Booking?
 	/// Any errors that occurred during the request.
@@ -3109,7 +3109,7 @@ public struct CreateBookingResponse: Codable {
 }
 
 /// A request to create a new `BreakType`
-public struct CreateBreakTypeRequest: Codable {
+public struct CreateBreakTypeRequest: SQCodable {
 	/// The `BreakType` to be created.
 	var break_type: BreakType
 	/// Unique string value to insure idempotency of the operation
@@ -3122,7 +3122,7 @@ public struct CreateBreakTypeRequest: Codable {
 }
 
 /// The response to the request to create a `BreakType`. Contains the created `BreakType` object. May contain a set of `Error` objects if the request resulted in errors.
-public struct CreateBreakTypeResponse: Codable {
+public struct CreateBreakTypeResponse: SQCodable {
 	/// The `BreakType` that was created by the request.
 	var break_type: BreakType?
 	/// Any errors that occurred during the request.
@@ -3135,7 +3135,7 @@ public struct CreateBreakTypeResponse: Codable {
 }
 
 /// Defines the parameters that can be included in the body of a request to the __CreateCheckout__ endpoint.
-public struct CreateCheckoutRequest: Codable {
+public struct CreateCheckoutRequest: SQCodable {
 	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be the valid location of the app owner merchant.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
 	var additional_recipients: [ChargeRequestAdditionalRecipient]?
 	/// If `true`, Square Checkout will collect shipping information on your behalf and store that information with the transaction information in your Square Dashboard.  Default: `false`.
@@ -3169,7 +3169,7 @@ public struct CreateCheckoutRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the __CreateCheckout__ endpoint.
-public struct CreateCheckoutResponse: Codable {
+public struct CreateCheckoutResponse: SQCodable {
 	/// The newly created checkout. If the same request was made with the same idempotency_key, this will be the checkout created with the idempotency_key.
 	var checkout: Checkout?
 	/// Any errors that occurred during the request.
@@ -3182,7 +3182,7 @@ public struct CreateCheckoutResponse: Codable {
 }
 
 /// Defines the fields that are included in the request body of a request to the CreateCustomerCard endpoint.
-public struct CreateCustomerCardRequest: Codable {
+public struct CreateCustomerCardRequest: SQCodable {
 	/// Address information for the card on file. Only the `postal_code` field is required for payments in the US and Canada.
 	var billing_address: Address?
 	/// A card nonce representing the credit card to link to the customer.  Card nonces are generated by the Square Payment Form when customers enter their card information. See [Embedding the payment form](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough) for more information.  __NOTE:__ Card nonces generated by digital wallets (e.g., Apple Pay) cannot be used to create a customer card.
@@ -3201,7 +3201,7 @@ public struct CreateCustomerCardRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the CreateCustomerCard endpoint.  One of `errors` or `card` is present in a given response (never both).
-public struct CreateCustomerCardResponse: Codable {
+public struct CreateCustomerCardResponse: SQCodable {
 	/// The created card on file.
 	var card: Card?
 	/// Any errors that occurred during the request.
@@ -3214,7 +3214,7 @@ public struct CreateCustomerCardResponse: Codable {
 }
 
 /// Defines the body parameters that can be provided in a request to the [CreateCustomerGroup](#endpoint-createcustomegroup) endpoint.
-public struct CreateCustomerGroupRequest: Codable {
+public struct CreateCustomerGroupRequest: SQCodable {
 	/// The customer group to create.
 	var group: CustomerGroup
 	/// The idempotency key for the request. See the [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) guide for more information.
@@ -3227,7 +3227,7 @@ public struct CreateCustomerGroupRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](#endpoint-createcustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
-public struct CreateCustomerGroupResponse: Codable {
+public struct CreateCustomerGroupResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully created customer group.
@@ -3240,7 +3240,7 @@ public struct CreateCustomerGroupResponse: Codable {
 }
 
 /// Defines the body parameters that can be provided in a request to the CreateCustomer endpoint.
-public struct CreateCustomerRequest: Codable {
+public struct CreateCustomerRequest: SQCodable {
 	/// The physical address associated with the customer profile.
 	var address: Address?
 	/// The birthday associated with the customer profile, in RFC 3339 format. Year is optional, timezone and times are not allowed. For example: `0000-09-01T00:00:00-00:00` indicates a birthday on September 1st. `1998-09-01T00:00:00-00:00` indications a birthday on September 1st __1998__.
@@ -3280,7 +3280,7 @@ public struct CreateCustomerRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the CreateCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
-public struct CreateCustomerResponse: Codable {
+public struct CreateCustomerResponse: SQCodable {
 	/// The created customer.
 	var customer: Customer?
 	/// Any errors that occurred during the request.
@@ -3292,7 +3292,7 @@ public struct CreateCustomerResponse: Codable {
 	}
 }
 
-public struct CreateDeviceCodeRequest: Codable {
+public struct CreateDeviceCodeRequest: SQCodable {
 	/// The device code to create.
 	var device_code: DeviceCode
 	/// A unique string that identifies this CreateCheckout request. Keys can be any valid string but must be unique for every CreateCheckout request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
@@ -3304,7 +3304,7 @@ public struct CreateDeviceCodeRequest: Codable {
 	}
 }
 
-public struct CreateDeviceCodeResponse: Codable {
+public struct CreateDeviceCodeResponse: SQCodable {
 	/// The created DeviceCode object containing the device code string.
 	var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
@@ -3317,7 +3317,7 @@ public struct CreateDeviceCodeResponse: Codable {
 }
 
 /// Defines the parameters for a `CreateDisputeEvidenceText` request.
-public struct CreateDisputeEvidenceTextRequest: Codable {
+public struct CreateDisputeEvidenceTextRequest: SQCodable {
 	/// The evidence string.
 	var evidence_text: String
 	/// The type of evidence you are uploading. See [DisputeEvidenceType](#type-disputeevidencetype) for possible values
@@ -3333,7 +3333,7 @@ public struct CreateDisputeEvidenceTextRequest: Codable {
 }
 
 /// Defines the fields in a `CreateDisputeEvidenceText` response.
-public struct CreateDisputeEvidenceTextResponse: Codable {
+public struct CreateDisputeEvidenceTextResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The newly uploaded dispute evidence metadata.
@@ -3346,7 +3346,7 @@ public struct CreateDisputeEvidenceTextResponse: Codable {
 }
 
 /// Describes a `CreateInvoice` request.
-public struct CreateInvoiceRequest: Codable {
+public struct CreateInvoiceRequest: SQCodable {
 	/// A unique string that identifies the `CreateInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/docs/working-with-apis/idempotency).
 	var idempotency_key: String?
 	/// The invoice to create.
@@ -3359,7 +3359,7 @@ public struct CreateInvoiceRequest: Codable {
 }
 
 /// The response returned by the `CreateInvoice` request.
-public struct CreateInvoiceResponse: Codable {
+public struct CreateInvoiceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created invoice.
@@ -3372,7 +3372,7 @@ public struct CreateInvoiceResponse: Codable {
 }
 
 /// Request object for the [CreateLocation](#endpoint-createlocation) endpoint.
-public struct CreateLocationRequest: Codable {
+public struct CreateLocationRequest: SQCodable {
 	/// The initial values of the location being created. The `name` field is required. All other fields are optional. Unspecified fields will be set to default values using existing location data.
 	var location: Location?
 
@@ -3382,7 +3382,7 @@ public struct CreateLocationRequest: Codable {
 }
 
 /// Response object returned by the [CreateLocation](#endpoint-createlocation) endpoint.
-public struct CreateLocationResponse: Codable {
+public struct CreateLocationResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created `Location`.
@@ -3395,7 +3395,7 @@ public struct CreateLocationResponse: Codable {
 }
 
 /// A request to create a new loyalty account.
-public struct CreateLoyaltyAccountRequest: Codable {
+public struct CreateLoyaltyAccountRequest: SQCodable {
 	/// A unique string that identifies this `CreateLoyaltyAccount` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
 	/// The loyalty account to create.
@@ -3408,7 +3408,7 @@ public struct CreateLoyaltyAccountRequest: Codable {
 }
 
 /// A response that includes loyalty account created.
-public struct CreateLoyaltyAccountResponse: Codable {
+public struct CreateLoyaltyAccountResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The newly created loyalty account.
@@ -3421,7 +3421,7 @@ public struct CreateLoyaltyAccountResponse: Codable {
 }
 
 /// A request to create a loyalty reward.
-public struct CreateLoyaltyRewardRequest: Codable {
+public struct CreateLoyaltyRewardRequest: SQCodable {
 	/// A unique string that identifies this `CreateLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
 	/// The reward to create.
@@ -3434,7 +3434,7 @@ public struct CreateLoyaltyRewardRequest: Codable {
 }
 
 /// A response that includes the loyalty reward created.
-public struct CreateLoyaltyRewardResponse: Codable {
+public struct CreateLoyaltyRewardResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The loyalty reward created.
@@ -3447,7 +3447,7 @@ public struct CreateLoyaltyRewardResponse: Codable {
 }
 
 /// Defines the body parameters that can be provided in a request to the __CreateMobileAuthorizationCode__ endpoint.
-public struct CreateMobileAuthorizationCodeRequest: Codable {
+public struct CreateMobileAuthorizationCodeRequest: SQCodable {
 	/// The Square location ID the authorization code should be tied to.
 	var location_id: String?
 
@@ -3457,7 +3457,7 @@ public struct CreateMobileAuthorizationCodeRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the __CreateMobileAuthorizationCode__ endpoint.
-public struct CreateMobileAuthorizationCodeResponse: Codable {
+public struct CreateMobileAuthorizationCodeResponse: SQCodable {
 	/// Generated authorization code that connects a mobile application instance to a Square account.
 	var authorization_code: String?
 	/// An error object that provides details about how creation of authorization code failed.
@@ -3472,7 +3472,7 @@ public struct CreateMobileAuthorizationCodeResponse: Codable {
 	}
 }
 
-public struct CreateOrderRequest: Codable {
+public struct CreateOrderRequest: SQCodable {
 	/// A value you specify that uniquely identifies this order among orders you've created.  If you're unsure whether a particular order was created successfully, you can reattempt it with the same idempotency key without worrying about creating duplicate orders.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	var idempotency_key: String?
 	/// The ID of the business location to associate the order with.
@@ -3488,7 +3488,7 @@ public struct CreateOrderRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the CreateOrder endpoint.  One of `errors` or `order` is present in a given response (never both).
-public struct CreateOrderResponse: Codable {
+public struct CreateOrderResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The newly created order.
@@ -3501,7 +3501,7 @@ public struct CreateOrderResponse: Codable {
 }
 
 /// Creates a payment from a provided source (such as a nonce or a card on file).  The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.  For more information, see [Payments and Refunds APIs Overview](/payments-api/overview).  For information about application fees in a payment, see [Take Payments and Collect Fees](/payments-api/take-payments-and-collect-fees).
-public struct CreatePaymentRequest: Codable {
+public struct CreatePaymentRequest: SQCodable {
 	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	var accept_partial_authorization: Bool?
 	/// The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
@@ -3562,7 +3562,7 @@ public struct CreatePaymentRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [CreatePayment](#endpoint-payments-createpayment) endpoint.  Note: If there are errors processing the request, the payment field might not be present, or it might be present with a status of `FAILED`.
-public struct CreatePaymentResponse: Codable {
+public struct CreatePaymentResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created payment.
@@ -3575,7 +3575,7 @@ public struct CreatePaymentResponse: Codable {
 }
 
 /// Defines the body parameters that can be included in a request to the [CreateRefund](#endpoint-createrefund) endpoint.  Deprecated - recommend using [RefundPayment](#endpoint-refunds-refundpayment)
-public struct CreateRefundRequest: Codable {
+public struct CreateRefundRequest: SQCodable {
 	/// The amount of money to refund.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  This amount cannot exceed the amount that was originally charged to the tender that corresponds to `tender_id`.
 	var amount_money: Money
 	/// A value you specify that uniquely identifies this refund among refunds you've created for the tender.  If you're unsure whether a particular refund succeeded, you can reattempt it with the same idempotency key without worrying about duplicating the refund.  See [Idempotency keys](#idempotencykeys) for more information.
@@ -3594,7 +3594,7 @@ public struct CreateRefundRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [CreateRefund](#endpoint-createrefund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
-public struct CreateRefundResponse: Codable {
+public struct CreateRefundResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The created refund.
@@ -3607,7 +3607,7 @@ public struct CreateRefundResponse: Codable {
 }
 
 /// Represents a request to create a `Shift`
-public struct CreateShiftRequest: Codable {
+public struct CreateShiftRequest: SQCodable {
 	/// Unique string value to insure the idempotency of the operation.
 	var idempotency_key: String?
 	/// The `Shift` to be created
@@ -3620,7 +3620,7 @@ public struct CreateShiftRequest: Codable {
 }
 
 /// The response to the request to create a `Shift`. Contains the created `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
-public struct CreateShiftResponse: Codable {
+public struct CreateShiftResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The `Shift` that was created on the request.
@@ -3633,7 +3633,7 @@ public struct CreateShiftResponse: Codable {
 }
 
 /// Defines parameters in a  [CreateSubscription](#endpoint-subscriptions-createsubscription) endpoint request.
-public struct CreateSubscriptionRequest: Codable {
+public struct CreateSubscriptionRequest: SQCodable {
 	/// The date when the subscription should be canceled, in  YYYY-MM-DD format (for example, 2025-02-29). This overrides the plan configuration  if it comes before the date the subscription would otherwise end.
 	var canceled_date: String?
 	/// The ID of the `customer](#type-customer) [card` to charge. If not specified, Square sends an invoice via email. For an example to create a customer and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/docs/subscriptions-api/walkthrough).
@@ -3670,7 +3670,7 @@ public struct CreateSubscriptionRequest: Codable {
 }
 
 /// Defines the fields that are included in the response from the [CreateSubscription](#endpoint-subscriptions-createsubscription) endpoint.
-public struct CreateSubscriptionResponse: Codable {
+public struct CreateSubscriptionResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created subscription.   For more information, see  [Subscription object](https://developer.squareup.com/docs/docs/subscriptions-api/overview#subscription-object).
@@ -3683,7 +3683,7 @@ public struct CreateSubscriptionResponse: Codable {
 }
 
 /// Represents a create request for a `TeamMember` object.
-public struct CreateTeamMemberRequest: Codable {
+public struct CreateTeamMemberRequest: SQCodable {
 	/// A unique string that identifies this CreateTeamMember request. Keys can be any valid string but must be unique for every request. See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information. <br> <b>Min Length 1    Max Length 45</b>
 	var idempotency_key: String?
 	/// <b>Required</b> The data which will be used to create the `TeamMember` object.
@@ -3696,7 +3696,7 @@ public struct CreateTeamMemberRequest: Codable {
 }
 
 /// Represents a response from a create request, containing the created `TeamMember` object or error messages.
-public struct CreateTeamMemberResponse: Codable {
+public struct CreateTeamMemberResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully created `TeamMember` object.
@@ -3708,7 +3708,7 @@ public struct CreateTeamMemberResponse: Codable {
 	}
 }
 
-public struct CreateTerminalCheckoutRequest: Codable {
+public struct CreateTerminalCheckoutRequest: SQCodable {
 	/// The checkout to create.
 	var checkout: TerminalCheckout
 	/// A unique string that identifies this `CreateCheckout` request. Keys can be any valid string but must be unique for every `CreateCheckout` request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
@@ -3720,7 +3720,7 @@ public struct CreateTerminalCheckoutRequest: Codable {
 	}
 }
 
-public struct CreateTerminalCheckoutResponse: Codable {
+public struct CreateTerminalCheckoutResponse: SQCodable {
 	/// The created `TerminalCheckout`
 	var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
@@ -3732,7 +3732,7 @@ public struct CreateTerminalCheckoutResponse: Codable {
 	}
 }
 
-public struct CreateTerminalRefundRequest: Codable {
+public struct CreateTerminalRefundRequest: SQCodable {
 	/// A unique string that identifies this `CreateRefund` request. Keys can be any valid string but must be unique for every `CreateRefund` request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	var idempotency_key: String
 	/// The refund to create.
@@ -3744,7 +3744,7 @@ public struct CreateTerminalRefundRequest: Codable {
 	}
 }
 
-public struct CreateTerminalRefundResponse: Codable {
+public struct CreateTerminalRefundResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The created `TerminalRefund`
@@ -3757,7 +3757,7 @@ public struct CreateTerminalRefundResponse: Codable {
 }
 
 /// Indicates the associated currency for an amount of money. Values correspond to [ISO 4217](https://wikipedia.org/wiki/ISO_4217).
-public enum Currency: String, Codable {
+public enum Currency: String, SQCodable {
 	/// Unknown currency
 	case UNKNOWN_CURRENCY
 	/// United Arab Emirates dirham
@@ -4123,7 +4123,7 @@ public enum Currency: String, Codable {
 }
 
 /// Supported custom attribute query expressions for calling the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint to search for items or item variations.
-public struct CustomAttributeFilter: Codable {
+public struct CustomAttributeFilter: SQCodable {
 	/// A query expression to filter items or item variations by matching their custom attributes' `boolean_value` property values against the specified Boolean expression.
 	var bool_filter: Bool?
 	/// A query expression to filter items or item variations by matching their custom attributes' `custom_attribute_definition_id` property value against the the specified id.
@@ -4148,7 +4148,7 @@ public struct CustomAttributeFilter: Codable {
 }
 
 /// Represents a Square customer profile, which can have one or more cards on file associated with it.
-public struct Customer: Codable {
+public struct Customer: SQCodable {
 	/// The physical address associated with the customer profile.
 	var address: Address?
 	/// The birthday associated with the customer profile, in RFC 3339 format. Year is optional, timezone and times are not allowed. For example: `0000-09-01T00:00:00-00:00` indicates a birthday on September 1st. `1998-09-01T00:00:00-00:00` indications a birthday on September 1st __1998__.
@@ -4212,7 +4212,7 @@ public struct Customer: Codable {
 }
 
 /// Indicates the method used to create the customer profile.
-public enum CustomerCreationSource: String, Codable {
+public enum CustomerCreationSource: String, SQCodable {
 	/// Default creation source. Typically used for backward/future compatibility when the original source of a customer profile is unrecognized. For example, when older clients do not support newer source types.
 	case OTHER
 	/// Customer profile created automatically when an appointment was scheduled.
@@ -4254,7 +4254,7 @@ public enum CustomerCreationSource: String, Codable {
 }
 
 /// Creation source filter.  If one or more creation sources are set, customer profiles are included in, or excluded from, the result if they match at least one of the filter criteria.
-public struct CustomerCreationSourceFilter: Codable {
+public struct CustomerCreationSourceFilter: SQCodable {
 	/// Indicates whether a customer profile matching the filter criteria should be included in the result or excluded from the result.  Default: `INCLUDE`. See [CustomerInclusionExclusion](#type-customerinclusionexclusion) for possible values
 	var rule: CustomerInclusionExclusion?
 	/// The list of creation sources used as filtering criteria. See [CustomerCreationSource](#type-customercreationsource) for possible values
@@ -4267,7 +4267,7 @@ public struct CustomerCreationSourceFilter: Codable {
 }
 
 /// Represents a set of `CustomerQuery` filters used to limit the set of `Customers` returned by `SearchCustomers`.
-public struct CustomerFilter: Codable {
+public struct CustomerFilter: SQCodable {
 	/// A filter to select customers based on when they were created.
 	var created_at: TimeRange?
 	/// A filter to select customers based on their creation source.
@@ -4295,7 +4295,7 @@ public struct CustomerFilter: Codable {
 }
 
 /// Represents a group of customer profiles.   Customer groups can be created, modified, and have their membership defined either via  the Customers API or within Customer Directory in the Square Dashboard or Point of Sale.
-public struct CustomerGroup: Codable {
+public struct CustomerGroup: SQCodable {
 	/// The timestamp when the customer group was created, in RFC 3339 format.
 	let created_at: Timestamp?
 	/// Unique Square-generated ID for the customer group.
@@ -4314,7 +4314,7 @@ public struct CustomerGroup: Codable {
 }
 
 /// Contains some brief information about a Customer Group with its identifier included.
-public struct CustomerGroupInfo: Codable {
+public struct CustomerGroupInfo: SQCodable {
 	/// The ID of the Customer Group.
 	var id: String
 	/// The name of the Customer Group.
@@ -4327,7 +4327,7 @@ public struct CustomerGroupInfo: Codable {
 }
 
 /// Indicates whether customers should be included in, or excluded from, the result set when they match the filtering criteria.
-public enum CustomerInclusionExclusion: String, Codable {
+public enum CustomerInclusionExclusion: String, SQCodable {
 	/// Customers should be included in the result set when they match the filtering criteria.
 	case INCLUDE
 	/// Customers should be excluded from the result set when they match the filtering criteria.
@@ -4335,7 +4335,7 @@ public enum CustomerInclusionExclusion: String, Codable {
 }
 
 /// Represents communication preferences for the customer profile.
-public struct CustomerPreferences: Codable {
+public struct CustomerPreferences: SQCodable {
 	/// The customer has unsubscribed from receiving marketing campaign emails.
 	var email_unsubscribed: Bool?
 
@@ -4345,7 +4345,7 @@ public struct CustomerPreferences: Codable {
 }
 
 /// Represents a query (including filtering criteria, sorting criteria, or both) used to search for customer profiles.
-public struct CustomerQuery: Codable {
+public struct CustomerQuery: SQCodable {
 	/// A list of filtering criteria.
 	var filter: CustomerFilter?
 	/// Sorting criteria for query results. The default behavior is to sort  customers alphabetically by `given_name` and `family_name`.
@@ -4358,7 +4358,7 @@ public struct CustomerQuery: Codable {
 }
 
 /// Represents a group of customer profiles that match one or more predefined filter criteria.   Segments (also known as Smart Groups) are defined and created within Customer Directory in the Square Dashboard or Point of Sale.
-public struct CustomerSegment: Codable {
+public struct CustomerSegment: SQCodable {
 	/// The timestamp when the segment was created, in RFC 3339 format.
 	let created_at: Timestamp?
 	/// Unique Square-generated ID for the segment.
@@ -4372,7 +4372,7 @@ public struct CustomerSegment: Codable {
 }
 
 /// Specifies how searched customers profiles are sorted, including the sort key and sort order.
-public struct CustomerSort: Codable {
+public struct CustomerSort: SQCodable {
 	///  Use one or more customer attributes as the sort key to sort searched customer profiles.  For example, use creation date (`created_at`) of customers or default attributes as the sort key.   Default: `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
 	var field: CustomerSortField?
 	/// Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  Default: `ASC`. See [SortOrder](#type-sortorder) for possible values
@@ -4385,7 +4385,7 @@ public struct CustomerSort: Codable {
 }
 
 /// Specifies customer attributes as the sort key to customer profiles returned from a search.
-public enum CustomerSortField: String, Codable {
+public enum CustomerSortField: String, SQCodable {
 	/// Use the default sort key. By default, customers are sorted alphanumerically by concatenating their `given_name` and `family_name`. If neither name field is set, string comparison is performed using one of the remaining fields in the following order: `company_name`, `email`, `phone_number`.
 	case DEFAULT
 	/// Use the creation date attribute (`created_at`) of customer profiles as the sort key.
@@ -4393,7 +4393,7 @@ public enum CustomerSortField: String, Codable {
 }
 
 /// A filter to select customers based on exact or fuzzy matching of customer attributes against a specified query. Depending on customer attributes,  the filter can be case sensitive. This filter can be either exact or fuzzy. It cannot be both.
-public struct CustomerTextFilter: Codable {
+public struct CustomerTextFilter: SQCodable {
 	/// Use the exact filter to select customers whose attributes match exactly the specified query.
 	var exact: String?
 	/// Use the fuzzy filter to select customers whose attributes match the specified query  in a fuzzy manner. When the fuzzy option is used, search queries are tokenized, and then  each query token must be matched somewhere in the searched attribute. For single token queries,  this is effectively the same behavior as a partial match operation.
@@ -4406,7 +4406,7 @@ public struct CustomerTextFilter: Codable {
 }
 
 /// A range defined by two dates. Used for filtering a query for Connect v2 objects that have date properties.
-public struct DateRange: Codable {
+public struct DateRange: SQCodable {
 	/// String in `YYYY-MM-DD` format, e.g. `2017-10-31` per the ISO 8601 extended format for calendar dates. The end of a date range (inclusive)
 	var end_date: String?
 	/// String in `YYYY-MM-DD` format, e.g. `2017-10-31` per the ISO 8601 extended format for calendar dates. The beginning of a date range (inclusive)
@@ -4419,7 +4419,7 @@ public struct DateRange: Codable {
 }
 
 /// Indicates the specific day  of the week.
-public enum DayOfWeek: String, Codable {
+public enum DayOfWeek: String, SQCodable {
 	/// Sunday
 	case SUN
 	/// Monday
@@ -4437,14 +4437,14 @@ public enum DayOfWeek: String, Codable {
 }
 
 /// A request to delete a `BreakType`
-public struct DeleteBreakTypeRequest: Codable {
+public struct DeleteBreakTypeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// The response to a request to delete a `BreakType`. May contain a set  of `Error` objects if the request resulted in errors.
-public struct DeleteBreakTypeResponse: Codable {
+public struct DeleteBreakTypeResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -4453,13 +4453,13 @@ public struct DeleteBreakTypeResponse: Codable {
 	}
 }
 
-public struct DeleteCatalogObjectRequest: Codable {
+public struct DeleteCatalogObjectRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct DeleteCatalogObjectResponse: Codable {
+public struct DeleteCatalogObjectResponse: SQCodable {
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this deletion in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
 	var deleted_at: Timestamp?
 	/// The IDs of all catalog objects deleted by this request. Multiple IDs may be returned when associated objects are also deleted, for example a catalog item variation will be deleted (and its ID included in this field) when its parent catalog item is deleted.
@@ -4475,14 +4475,14 @@ public struct DeleteCatalogObjectResponse: Codable {
 }
 
 /// Defines the fields that are included in requests to the DeleteCustomerCard endpoint.
-public struct DeleteCustomerCardRequest: Codable {
+public struct DeleteCustomerCardRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the DeleteCustomerCard endpoint.
-public struct DeleteCustomerCardResponse: Codable {
+public struct DeleteCustomerCardResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -4492,14 +4492,14 @@ public struct DeleteCustomerCardResponse: Codable {
 }
 
 /// Defines the fields that can be provided in a request to the [DeleteCustomerGroup](#endpoint-deletecustomergroup) endpoint.
-public struct DeleteCustomerGroupRequest: Codable {
+public struct DeleteCustomerGroupRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](#endpoint-deletecustomergroup) endpoint.
-public struct DeleteCustomerGroupResponse: Codable {
+public struct DeleteCustomerGroupResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -4509,14 +4509,14 @@ public struct DeleteCustomerGroupResponse: Codable {
 }
 
 /// Defines the fields that are included in a request to the DeleteCustomer endpoint.
-public struct DeleteCustomerRequest: Codable {
+public struct DeleteCustomerRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the DeleteCustomer endpoint.
-public struct DeleteCustomerResponse: Codable {
+public struct DeleteCustomerResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -4526,7 +4526,7 @@ public struct DeleteCustomerResponse: Codable {
 }
 
 /// Describes a `DeleteInvoice` request.
-public struct DeleteInvoiceRequest: Codable {
+public struct DeleteInvoiceRequest: SQCodable {
 	/// The version of the `invoice` to delete. If you do not know the version, you can call `GetInvoice` or  `ListInvoices`.
 	var version: Int?
 
@@ -4536,7 +4536,7 @@ public struct DeleteInvoiceRequest: Codable {
 }
 
 /// Describes a `DeleteInvoice` response.
-public struct DeleteInvoiceResponse: Codable {
+public struct DeleteInvoiceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 
@@ -4546,14 +4546,14 @@ public struct DeleteInvoiceResponse: Codable {
 }
 
 /// A request to delete a loyalty reward.
-public struct DeleteLoyaltyRewardRequest: Codable {
+public struct DeleteLoyaltyRewardRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response returned by the API call.
-public struct DeleteLoyaltyRewardResponse: Codable {
+public struct DeleteLoyaltyRewardResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -4563,14 +4563,14 @@ public struct DeleteLoyaltyRewardResponse: Codable {
 }
 
 /// A request to delete a `Shift`
-public struct DeleteShiftRequest: Codable {
+public struct DeleteShiftRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// The response to a request to delete a `Shift`. May contain a set of  `Error` objects if the request resulted in errors.
-public struct DeleteShiftResponse: Codable {
+public struct DeleteShiftResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -4579,7 +4579,7 @@ public struct DeleteShiftResponse: Codable {
 	}
 }
 
-public struct Device: Codable {
+public struct Device: SQCodable {
 	/// The device's Square-issued ID.
 	var id: String?
 	/// The device's merchant-specified name.
@@ -4591,7 +4591,7 @@ public struct Device: Codable {
 	}
 }
 
-public struct DeviceCheckoutOptions: Codable {
+public struct DeviceCheckoutOptions: SQCodable {
 	/// The unique ID of the device intended for this `TerminalCheckout`. A list of `DeviceCode` objects can be retrieved from the /v2/devices/codes endpoint. Match a `DeviceCode.device_id` value with `device_id` to get the associated device code.
 	var device_id: String
 	/// Instruct the device to skip the receipt screen. Defaults to false.
@@ -4606,7 +4606,7 @@ public struct DeviceCheckoutOptions: Codable {
 	}
 }
 
-public struct DeviceCode: Codable {
+public struct DeviceCode: SQCodable {
 	/// The unique code that can be used to login.
 	let code: String?
 	/// When this DeviceCode was created. Timestamp in RFC 3339 format.
@@ -4646,7 +4646,7 @@ public struct DeviceCode: Codable {
 }
 
 /// DeviceCode.Status enum.
-public enum DeviceCodeStatus: String, Codable {
+public enum DeviceCodeStatus: String, SQCodable {
 	/// The status cannot be determined or does not exist.
 	case UNKNOWN
 	/// The device code is just created and unpaired.
@@ -4658,7 +4658,7 @@ public enum DeviceCodeStatus: String, Codable {
 }
 
 /// Details about the device that took the payment.
-public struct DeviceDetails: Codable {
+public struct DeviceDetails: SQCodable {
 	/// The Square-issued ID of the device.
 	var device_id: String?
 	/// The Square-issued installation ID for the device.
@@ -4674,7 +4674,7 @@ public struct DeviceDetails: Codable {
 }
 
 /// Represents a dispute a cardholder initiated with their bank.
-public struct Dispute: Codable {
+public struct Dispute: SQCodable {
 	/// The disputed amount. The amount can be less than the entire transaction amount. For example, a cardholder purchased multiple items, however initiated dispute only for some of the items.
 	var amount_money: Money?
 	/// The ID of the dispute in the card brand system, generated by the card brand.
@@ -4722,7 +4722,7 @@ public struct Dispute: Codable {
 	}
 }
 
-public struct DisputeEvidence: Codable {
+public struct DisputeEvidence: SQCodable {
 	/// The ID of the dispute the evidence is associated with.
 	var dispute_id: String?
 	/// The Square-generated ID of the evidence.
@@ -4741,7 +4741,7 @@ public struct DisputeEvidence: Codable {
 }
 
 /// A file to be uploaded as dispute evidence.
-public struct DisputeEvidenceFile: Codable {
+public struct DisputeEvidenceFile: SQCodable {
 	/// The file name including the file extension. For example: "receipt.tiff".
 	var filename: String?
 	/// Dispute evidence files must be application/pdf, image/heic, image/heif, image/jpeg, image/png, or image/tiff formats.
@@ -4754,7 +4754,7 @@ public struct DisputeEvidenceFile: Codable {
 }
 
 /// The type of the dispute evidence.
-public enum DisputeEvidenceType: String, Codable {
+public enum DisputeEvidenceType: String, SQCodable {
 	/// Square assumes this evidence type if you do not provide a type when uploading evidence.  Use when uploading evidence as a file or string.
 	case GENERIC_EVIDENCE
 	/// Server or activity logs that show proof of the cardholder’s identity and that the cardholder successfully ordered and received the goods (digitally or otherwise). Example evidence includes IP addresses, corresponding timestamps/dates, cardholder’s name and email address linked to a cardholder profile held by the seller, proof the same device and card (used in dispute) were previously used in prior undisputed transaction, and any related detailed activity.  Use when uploading evidence as a file or string.
@@ -4788,7 +4788,7 @@ public enum DisputeEvidenceType: String, Codable {
 }
 
 /// The list of possible reasons why a cardholder might initiate a dispute with their bank.
-public enum DisputeReason: String, Codable {
+public enum DisputeReason: String, SQCodable {
 	/// The cardholder claims that they were charged the wrong amount for the purchase. To challenge this dispute, provide specific and concrete evidence that the cardholder agreed to the amount charged.
 	case AMOUNT_DIFFERS
 	/// The cardholder claims that they attempted to return the goods or cancel the service. To challenge this dispute, provide specific and concrete evidence to prove that the cardholder is not due a refund and that the cardholder acknowledged your cancellation policy.
@@ -4810,7 +4810,7 @@ public enum DisputeReason: String, Codable {
 }
 
 /// The list of possible dispute states.
-public enum DisputeState: String, Codable {
+public enum DisputeState: String, SQCodable {
 	case UNKNOWN_STATE
 	case INQUIRY_EVIDENCE_REQUIRED
 	case INQUIRY_PROCESSING
@@ -4824,7 +4824,7 @@ public enum DisputeState: String, Codable {
 }
 
 /// The payment the cardholder disputed.
-public struct DisputedPayment: Codable {
+public struct DisputedPayment: SQCodable {
 	/// Square-generated unique ID of the payment being disputed.
 	var payment_id: String?
 
@@ -4834,7 +4834,7 @@ public struct DisputedPayment: Codable {
 }
 
 /// Determines item visibility in Ecom (Online Store) and Online Checkout.
-public enum EcomVisibility: String, Codable {
+public enum EcomVisibility: String, SQCodable {
 	/// Item is not synced with Ecom (Weebly). This is the default state
 	case UNINDEXED
 	/// Item is synced but is unavailable within Ecom (Weebly) and Online Checkout
@@ -4846,7 +4846,7 @@ public enum EcomVisibility: String, Codable {
 }
 
 /// An employee object that is used by the external API.
-public struct Employee: Codable {
+public struct Employee: SQCodable {
 	/// A read-only timestamp in RFC 3339 format.
 	let created_at: Timestamp?
 	/// The employee's email address
@@ -4883,7 +4883,7 @@ public struct Employee: Codable {
 }
 
 /// The status of the Employee being retrieved.
-public enum EmployeeStatus: String, Codable {
+public enum EmployeeStatus: String, SQCodable {
 	/// Specifies that the employee is in the Active state.
 	case ACTIVE
 	/// Specifies that the employee is in the Inactive state.
@@ -4891,7 +4891,7 @@ public enum EmployeeStatus: String, Codable {
 }
 
 /// The hourly wage rate that an employee will earn on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at verison 2020-08-26. Use `TeamMemberWage` instead.
-public struct EmployeeWage: Codable {
+public struct EmployeeWage: SQCodable {
 	/// The `Employee` that this wage is assigned to.
 	var employee_id: String?
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on annual wage and hours worked per week.
@@ -4910,7 +4910,7 @@ public struct EmployeeWage: Codable {
 }
 
 /// Represents an error encountered during a request to the Connect API.  See [Handling errors](#handlingerrors) for more information.
-public struct Error: Codable {
+public struct Error: SQCodable {
 	/// The high-level category for the error. See [ErrorCategory](#type-errorcategory) for possible values
 	var category: ErrorCategory
 	/// The specific code of the error. See [ErrorCode](#type-errorcode) for possible values
@@ -4929,7 +4929,7 @@ public struct Error: Codable {
 }
 
 /// Indicates which high-level category of error has occurred during a request to the Connect API.
-public enum ErrorCategory: String, Codable {
+public enum ErrorCategory: String, SQCodable {
 	/// An error occurred with the Connect API itself.
 	case API_ERROR
 	/// An authentication error occurred. Most commonly, the request had a missing, malformed, or otherwise invalid `Authorization` header.
@@ -4945,7 +4945,7 @@ public enum ErrorCategory: String, Codable {
 }
 
 /// Indicates the specific error that occurred during a request to a Square API.
-public enum ErrorCode: String, Codable {
+public enum ErrorCode: String, SQCodable {
 	/// A general server error occurred.
 	case INTERNAL_SERVER_ERROR
 	/// A general authorization error occurred.
@@ -5205,7 +5205,7 @@ public enum ErrorCode: String, Codable {
 }
 
 /// Indicates which products matched by a CatalogPricingRule will be excluded if the pricing rule uses an exclude set.
-public enum ExcludeStrategy: String, Codable {
+public enum ExcludeStrategy: String, SQCodable {
 	/// The least expensive matched products are excluded from the pricing. If the pricing rule is set to exclude one product and multiple products in the match set qualify as least expensive, then one will be excluded at random.  Excluding the least expensive product gives the best discount value to the buyer.
 	case LEAST_EXPENSIVE
 	/// The most expensive matched product is excluded from the pricing rule. If multiple products have the same price and all qualify as least expensive, one will be excluded at random.  This guarantees that the most expensive product is purchased at full price.
@@ -5213,7 +5213,7 @@ public enum ExcludeStrategy: String, Codable {
 }
 
 /// A filter to select resources based on an exact field value. For any given value, the value can only be in one property. Depending on the field, either all properties can be set or only a subset will be available.  Refer to the documentation of the field.
-public struct FilterValue: Codable {
+public struct FilterValue: SQCodable {
 	/// A list of terms that must be present on the field of the resource.
 	var all: [String]?
 	/// A list of terms where at least one of them must be present on the field of the resource.
@@ -5229,14 +5229,14 @@ public struct FilterValue: Codable {
 }
 
 /// Request object for fetching a specific `BankAccount` by the object ID.
-public struct GetBankAccountByV1IdRequest: Codable {
+public struct GetBankAccountByV1IdRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Response object returned by GetBankAccountByV1Id.
-public struct GetBankAccountByV1IdResponse: Codable {
+public struct GetBankAccountByV1IdResponse: SQCodable {
 	/// The requested `BankAccount` object.
 	var bank_account: BankAccount?
 	/// Information on errors encountered during the request.
@@ -5249,14 +5249,14 @@ public struct GetBankAccountByV1IdResponse: Codable {
 }
 
 /// Request object to fetch a specific `BankAccount` by the object ID.
-public struct GetBankAccountRequest: Codable {
+public struct GetBankAccountRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Response object returned by `GetBankAccount`.
-public struct GetBankAccountResponse: Codable {
+public struct GetBankAccountResponse: SQCodable {
 	/// The requested `BankAccount` object.
 	var bank_account: BankAccount?
 	/// Information on errors encountered during the request.
@@ -5269,14 +5269,14 @@ public struct GetBankAccountResponse: Codable {
 }
 
 /// A request to GET a `BreakType` by ID
-public struct GetBreakTypeRequest: Codable {
+public struct GetBreakTypeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// The response to a request to get a `BreakType`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct GetBreakTypeResponse: Codable {
+public struct GetBreakTypeResponse: SQCodable {
 	/// The response object.
 	var break_type: BreakType?
 	/// Any errors that occurred during the request.
@@ -5288,13 +5288,13 @@ public struct GetBreakTypeResponse: Codable {
 	}
 }
 
-public struct GetDeviceCodeRequest: Codable {
+public struct GetDeviceCodeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct GetDeviceCodeResponse: Codable {
+public struct GetDeviceCodeResponse: SQCodable {
 	/// The queried DeviceCode.
 	var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
@@ -5307,14 +5307,14 @@ public struct GetDeviceCodeResponse: Codable {
 }
 
 /// A request to get an `EmployeeWage`
-public struct GetEmployeeWageRequest: Codable {
+public struct GetEmployeeWageRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response to a request to get an `EmployeeWage`. Contains the requested `EmployeeWage` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct GetEmployeeWageResponse: Codable {
+public struct GetEmployeeWageResponse: SQCodable {
 	/// The requested `EmployeeWage` object.
 	var employee_wage: EmployeeWage?
 	/// Any errors that occurred during the request.
@@ -5327,14 +5327,14 @@ public struct GetEmployeeWageResponse: Codable {
 }
 
 /// Describes a `GetInvoice` request.
-public struct GetInvoiceRequest: Codable {
+public struct GetInvoiceRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Describes a `GetInvoice` response.
-public struct GetInvoiceResponse: Codable {
+public struct GetInvoiceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The invoice requested.
@@ -5347,14 +5347,14 @@ public struct GetInvoiceResponse: Codable {
 }
 
 /// Retrieves a specific `Refund` using the `refund_id`.
-public struct GetPaymentRefundRequest: Codable {
+public struct GetPaymentRefundRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [GetRefund](#endpoint-refunds-getpaymentrefund) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
-public struct GetPaymentRefundResponse: Codable {
+public struct GetPaymentRefundResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `PaymentRefund`.
@@ -5367,14 +5367,14 @@ public struct GetPaymentRefundResponse: Codable {
 }
 
 /// Retrieve details for a specific payment.
-public struct GetPaymentRequest: Codable {
+public struct GetPaymentRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [GetPayment](#endpoint-payments-getpayment) endpoint.
-public struct GetPaymentResponse: Codable {
+public struct GetPaymentResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `Payment`.
@@ -5387,14 +5387,14 @@ public struct GetPaymentResponse: Codable {
 }
 
 /// A request to get a `Shift` by ID
-public struct GetShiftRequest: Codable {
+public struct GetShiftRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response to request to get a `Shift`. Contains the requested `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
-public struct GetShiftResponse: Codable {
+public struct GetShiftResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested `Shift`.
@@ -5407,14 +5407,14 @@ public struct GetShiftResponse: Codable {
 }
 
 /// A request to get an `TeamMemberWage`
-public struct GetTeamMemberWageRequest: Codable {
+public struct GetTeamMemberWageRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response to a request to get a `TeamMemberWage`. Contains the requested `TeamMemberWage` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct GetTeamMemberWageResponse: Codable {
+public struct GetTeamMemberWageResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested `TeamMemberWage` object.
@@ -5426,13 +5426,13 @@ public struct GetTeamMemberWageResponse: Codable {
 	}
 }
 
-public struct GetTerminalCheckoutRequest: Codable {
+public struct GetTerminalCheckoutRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct GetTerminalCheckoutResponse: Codable {
+public struct GetTerminalCheckoutResponse: SQCodable {
 	/// The requested `TerminalCheckout`
 	var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
@@ -5444,13 +5444,13 @@ public struct GetTerminalCheckoutResponse: Codable {
 	}
 }
 
-public struct GetTerminalRefundRequest: Codable {
+public struct GetTerminalRefundRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct GetTerminalRefundResponse: Codable {
+public struct GetTerminalRefundResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `Refund`
@@ -5463,14 +5463,14 @@ public struct GetTerminalRefundResponse: Codable {
 }
 
 /// Object types to inline under their respective parent object in certain connect v2 responses
-public enum InlineTypes: String, Codable {
+public enum InlineTypes: String, SQCodable {
 	case INLINE_NONE
 	case INLINE_VARIATIONS
 	case INLINE_ALL
 }
 
 /// Represents a change in state or quantity of product inventory at a particular time and location.
-public struct InventoryAdjustment: Codable {
+public struct InventoryAdjustment: SQCodable {
 	/// The Square generated ID of the `CatalogObject` being tracked.
 	var catalog_object_id: String?
 	/// The `CatalogObjectType` of the `CatalogObject` being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
@@ -5528,7 +5528,7 @@ public struct InventoryAdjustment: Codable {
 }
 
 /// Indicates whether Square should alert the merchant when the inventory quantity of a CatalogItemVariation is low.
-public enum InventoryAlertType: String, Codable {
+public enum InventoryAlertType: String, SQCodable {
 	/// The variation does not display an alert.
 	case NONE
 	/// The variation generates an alert when its quantity is low.
@@ -5536,7 +5536,7 @@ public enum InventoryAlertType: String, Codable {
 }
 
 /// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular `CatalogObject`.
-public struct InventoryChange: Codable {
+public struct InventoryChange: SQCodable {
 	/// Contains details about the inventory adjustment when `type` is `ADJUSTMENT` and unset for all other types.
 	var adjustment: InventoryAdjustment?
 	/// Contains details about the physical count when `type` is `PHYSICAL_COUNT` and unset for all other types.
@@ -5555,7 +5555,7 @@ public struct InventoryChange: Codable {
 }
 
 /// Indicates how the inventory change was applied to a tracked quantity of items.
-public enum InventoryChangeType: String, Codable {
+public enum InventoryChangeType: String, SQCodable {
 	/// The change occurred as part of a physical count update.
 	case PHYSICAL_COUNT
 	/// The change occurred as part of the normal lifecycle of goods (e.g., as an inventory adjustment).
@@ -5565,7 +5565,7 @@ public enum InventoryChangeType: String, Codable {
 }
 
 /// Represents Square's estimated quantity of items in a particular state at a particular location based on the known history of physical counts and inventory adjustments.
-public struct InventoryCount: Codable {
+public struct InventoryCount: SQCodable {
 	/// A read-only timestamp in RFC 3339 format that indicates when Square received the most recent physical count or adjustment that had an affect on the estimated count.
 	var calculated_at: Timestamp?
 	/// The Square generated ID of the `CatalogObject` being tracked.
@@ -5590,7 +5590,7 @@ public struct InventoryCount: Codable {
 }
 
 /// Represents the quantity of an item variation that is physically present at a specific location, verified by a seller or a seller's employee. For example, a physical count might come from an employee counting the item variations on hand or from syncing with an external system.
-public struct InventoryPhysicalCount: Codable {
+public struct InventoryPhysicalCount: SQCodable {
 	/// The Square generated ID of the `CatalogObject` being tracked.
 	var catalog_object_id: String?
 	/// The `CatalogObjectType` of the `CatalogObject` being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
@@ -5630,7 +5630,7 @@ public struct InventoryPhysicalCount: Codable {
 }
 
 /// Indicates the state of a tracked item quantity in the lifecycle of goods.
-public enum InventoryState: String, Codable {
+public enum InventoryState: String, SQCodable {
 	/// The related quantity of items are in a custom state. **READ-ONLY**: the Inventory API cannot move quantities to or from this state.
 	case CUSTOM
 	/// The related quantity of items are on hand and available for sale.
@@ -5658,7 +5658,7 @@ public enum InventoryState: String, Codable {
 }
 
 /// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
-public struct InventoryTransfer: Codable {
+public struct InventoryTransfer: SQCodable {
 	/// The Square generated ID of the `CatalogObject` being tracked.
 	var catalog_object_id: String?
 	/// The `CatalogObjectType` of the `CatalogObject` being tracked.Tracking is only supported for the `ITEM_VARIATION` type.
@@ -5701,7 +5701,7 @@ public struct InventoryTransfer: Codable {
 }
 
 /// Stores information about an invoice. You use the Invoices API to create and process invoices. For more information, see [Manage Invoices Using the Invoices API](/docs/invoices-api/overview).
-public struct Invoice: Codable {
+public struct Invoice: SQCodable {
 	/// The timestamp when the invoice was created, in RFC 3339 format.
 	let created_at: Timestamp?
 	/// Additional seller-defined fields to render on the invoice. These fields are visible to sellers and buyers on the Square-hosted invoice page and in emailed or PDF copies of invoices. For more information, see [Custom fields](https://developer.squareup.com/docs/docs/invoices-api/overview#custom-fields).  Max: 2 custom fields
@@ -5759,7 +5759,7 @@ public struct Invoice: Codable {
 }
 
 /// An additional seller-defined and customer-facing field to include on the invoice. For more information,  see [Custom fields](/docs/invoices-api/overview#custom-fields).
-public struct InvoiceCustomField: Codable {
+public struct InvoiceCustomField: SQCodable {
 	/// The label or title of the custom field. This field is required for a custom field.
 	var label: String?
 	/// The location of the custom field on the invoice. This field is required for a custom field. See [InvoiceCustomFieldPlacement](#type-invoicecustomfieldplacement) for possible values
@@ -5775,7 +5775,7 @@ public struct InvoiceCustomField: Codable {
 }
 
 /// Indicates where to render a custom field on the Square-hosted invoice page and in emailed or PDF  copies of the invoice.
-public enum InvoiceCustomFieldPlacement: String, Codable {
+public enum InvoiceCustomFieldPlacement: String, SQCodable {
 	/// Render the custom field above the invoice line items.
 	case ABOVE_LINE_ITEMS
 	/// Render the custom field below the invoice line items.
@@ -5783,7 +5783,7 @@ public enum InvoiceCustomFieldPlacement: String, Codable {
 }
 
 /// Describes query filters to apply.
-public struct InvoiceFilter: Codable {
+public struct InvoiceFilter: SQCodable {
 	/// Limits the search to the specified customers, within the specified locations.  Specifying a customer is optional. In the current implementation,  a maximum of one customer can be specified.
 	var customer_ids: [String]?
 	/// Limits the search to the specified locations. A location is required.  In the current implementation, only one location can be specified.
@@ -5796,7 +5796,7 @@ public struct InvoiceFilter: Codable {
 }
 
 /// Describes a payment request reminder (automatic notification) that Square sends to the customer. You configure a reminder relative to the payment request `due_date`.
-public struct InvoicePaymentReminder: Codable {
+public struct InvoicePaymentReminder: SQCodable {
 	/// The reminder message.
 	var message: String?
 	/// The number of days before (a negative number) or after (a positive number) the payment request `due_date` when the reminder is sent. For example, -3 indicates that the reminder should be sent 3 days before the payment request `due_date`.
@@ -5818,7 +5818,7 @@ public struct InvoicePaymentReminder: Codable {
 }
 
 /// The status of a payment request reminder.
-public enum InvoicePaymentReminderStatus: String, Codable {
+public enum InvoicePaymentReminderStatus: String, SQCodable {
 	/// The reminder is to be sent on the `relative_scheduled_date` (if the invoice is published).
 	case PENDING
 	/// The reminder is not applicable and is not sent. The following are examples of when reminders are not applicable and are not sent: - You schedule a reminder to be sent before the invoice is published. - The invoice is configured with multiple payment requests and a payment request reminder is configured to be sent after the next payment request `due_date`. - Two reminders (for different payment requests) are configured to be sent on the same date. Therefore, only one reminder is sent. - You configure a reminder to be sent on the date that the invoice is scheduled to be sent. - The payment request is already paid. - The invoice status is `CANCELED` or `FAILED`.
@@ -5828,7 +5828,7 @@ public enum InvoicePaymentReminderStatus: String, Codable {
 }
 
 /// Represents a payment request for an [invoice](#type-Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](/docs/invoices-api/overview#payment-requests).
-public struct InvoicePaymentRequest: Codable {
+public struct InvoicePaymentRequest: SQCodable {
 	/// The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call `RetrieveCustomer` in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
 	var card_id: String?
 	/// The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`,  `fixed_amount_requested_money`, and `percentage_requested`).
@@ -5871,7 +5871,7 @@ public struct InvoicePaymentRequest: Codable {
 }
 
 /// Describes query criteria for searching invoices.
-public struct InvoiceQuery: Codable {
+public struct InvoiceQuery: SQCodable {
 	/// Query filters to apply in  searching invoices.  For more information, see [Retrieve invoices](https://developer.squareup.com/docs/docs/invoices-api/overview#retrieve-invoices).
 	var filter: InvoiceFilter
 	/// Describes the sort order for the search result.
@@ -5884,7 +5884,7 @@ public struct InvoiceQuery: Codable {
 }
 
 /// Provides customer data that Square uses to deliver an invoice.
-public struct InvoiceRecipient: Codable {
+public struct InvoiceRecipient: SQCodable {
 	/// The recipient's physical address.
 	let address: Address?
 	/// The name of the recipient's company.
@@ -5912,7 +5912,7 @@ public struct InvoiceRecipient: Codable {
 }
 
 /// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing.
-public enum InvoiceRequestMethod: String, Codable {
+public enum InvoiceRequestMethod: String, SQCodable {
 	/// Directs Square to email the invoice to the customer after the invoice is published  (either immediately or at the `scheduled_at` time, if specified in the `invoice`.
 	case EMAIL
 	/// Directs Square to charge the card on file on the `due_date` specified in the payment request,  after the invoice is published.
@@ -5924,7 +5924,7 @@ public enum InvoiceRequestMethod: String, Codable {
 }
 
 /// Indicates the type of the payment request. An invoice supports the following payment request combinations: - 1 balance - 1 deposit with 1 balance - 2 - 12 installments - 1 deposit with 2 - 12 installments  For more information,  see [Payment requests](https://developer.squareup.com/docs/docs/invoices-api/overview#payment-requests).
-public enum InvoiceRequestType: String, Codable {
+public enum InvoiceRequestType: String, SQCodable {
 	/// Identifies that the payment request is for the balance amount, after accounting for any  other payment requests in the invoice:   - If the invoice specifies only a balance payment request, it refers to the  total amount identified by the associated order.  - If the invoice also specifies a deposit request, the balance payment request refers to  the remaining amount. - `INSTALLMENT` and `BALANCE` are not allowed together.
 	case BALANCE
 	/// Identifies that the payment request is for a deposit. You have the option of specifying  an exact amount or a percentage of the total order amount. If you request a deposit,  it must be due before any other payment requests.
@@ -5934,7 +5934,7 @@ public enum InvoiceRequestType: String, Codable {
 }
 
 /// Identifies the  sort field and sort order.
-public struct InvoiceSort: Codable {
+public struct InvoiceSort: SQCodable {
 	/// The field to sort on. See [InvoiceSortField](#type-invoicesortfield) for possible values
 	var field: InvoiceSortField
 	/// The order to use for sorting the results. See [SortOrder](#type-sortorder) for possible values
@@ -5947,13 +5947,13 @@ public struct InvoiceSort: Codable {
 }
 
 /// Field to use for sorting.
-public enum InvoiceSortField: String, Codable {
+public enum InvoiceSortField: String, SQCodable {
 	/// The field works as follows:  - If the invoice is a draft, it uses the invoice `created_at` date. - If the invoice is scheduled for publication, it uses the `scheduled_at` date. - If the invoice is published, it uses the invoice publication date.
 	case INVOICE_SORT_DATE
 }
 
 /// Indicates the status of an invoice.
-public enum InvoiceStatus: String, Codable {
+public enum InvoiceStatus: String, SQCodable {
 	/// The invoice is a draft. You must publish a draft invoice before Square can process it. A draft invoice has no `public_url`, so it is not available to customers.
 	case DRAFT
 	/// The invoice is published but not yet paid.
@@ -5977,7 +5977,7 @@ public enum InvoiceStatus: String, Codable {
 }
 
 /// Price and inventory alerting overrides for a `CatalogItemVariation` at a specific `Location`.
-public struct ItemVariationLocationOverrides: Codable {
+public struct ItemVariationLocationOverrides: SQCodable {
 	/// If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard.  This value is always an integer.
 	var inventory_alert_threshold: Int?
 	/// Indicates whether the `CatalogItemVariation` displays an alert when its inventory quantity is less than or equal to its `inventory_alert_threshold`. See [InventoryAlertType](#type-inventoryalerttype) for possible values
@@ -6002,7 +6002,7 @@ public struct ItemVariationLocationOverrides: Codable {
 }
 
 /// An object describing a job that a team member is assigned to.
-public struct JobAssignment: Codable {
+public struct JobAssignment: SQCodable {
 	/// The total pay amount for a 12 month period on the job. Set if the job `PayType` is `SALARY`.
 	var annual_rate: Money?
 	/// The hourly pay rate of the job.
@@ -6024,7 +6024,7 @@ public struct JobAssignment: Codable {
 }
 
 /// Enumerates the possible pay types that a job can be assigned.
-public enum JobAssignmentPayType: String, Codable {
+public enum JobAssignmentPayType: String, SQCodable {
 	/// The job does not have a defined pay type.
 	case NONE
 	/// The job pays on an hourly basis.
@@ -6034,7 +6034,7 @@ public enum JobAssignmentPayType: String, Codable {
 }
 
 /// Request object for fetching all `BankAccount` objects linked to a account.
-public struct ListBankAccountsRequest: Codable {
+public struct ListBankAccountsRequest: SQCodable {
 	/// The pagination cursor returned by a previous call to this endpoint. Use it in the next `ListBankAccounts` request to retrieve the next set  of results.  See the [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) guide for more information.
 	var cursor: String?
 	/// Upper limit on the number of bank accounts to return in the response.  Currently, 1000 is the largest supported limit. You can specify a limit  of up to 1000 bank accounts. This is also the default limit.
@@ -6050,7 +6050,7 @@ public struct ListBankAccountsRequest: Codable {
 }
 
 /// Response object returned by ListBankAccounts.
-public struct ListBankAccountsResponse: Codable {
+public struct ListBankAccountsResponse: SQCodable {
 	/// List of BankAccounts associated with this account.
 	var bank_accounts: [BankAccount]?
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch next set of bank accounts. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
@@ -6066,7 +6066,7 @@ public struct ListBankAccountsResponse: Codable {
 }
 
 /// A request for a filtered set of `BreakType` objects
-public struct ListBreakTypesRequest: Codable {
+public struct ListBreakTypesRequest: SQCodable {
 	/// Pointer to the next page of Break Type results to fetch.
 	var cursor: String?
 	/// Maximum number of Break Types to return per page. Can range between 1 and 200. The default is the maximum at 200.
@@ -6082,7 +6082,7 @@ public struct ListBreakTypesRequest: Codable {
 }
 
 /// The response to a request for a set of `BreakTypes`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct ListBreakTypesResponse: Codable {
+public struct ListBreakTypesResponse: SQCodable {
 	///  A page of `BreakType` results.
 	var break_types: [BreakType]?
 	/// Value supplied in the subsequent request to fetch the next next page of Break Type results.
@@ -6097,7 +6097,7 @@ public struct ListBreakTypesResponse: Codable {
 	}
 }
 
-public struct ListCashDrawerShiftEventsRequest: Codable {
+public struct ListCashDrawerShiftEventsRequest: SQCodable {
 	/// Opaque cursor for fetching the next page of results.
 	var cursor: String?
 	/// Number of resources to be returned in a page of results (200 by default, 1000 max).
@@ -6112,7 +6112,7 @@ public struct ListCashDrawerShiftEventsRequest: Codable {
 	}
 }
 
-public struct ListCashDrawerShiftEventsResponse: Codable {
+public struct ListCashDrawerShiftEventsResponse: SQCodable {
 	/// Opaque cursor for fetching the next page. Cursor is not present in the last page of results.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6127,7 +6127,7 @@ public struct ListCashDrawerShiftEventsResponse: Codable {
 	}
 }
 
-public struct ListCashDrawerShiftsRequest: Codable {
+public struct ListCashDrawerShiftsRequest: SQCodable {
 	/// The inclusive start time of the query on opened_at, in ISO 8601 format.
 	var begin_time: String?
 	/// Opaque cursor for fetching the next page of results.
@@ -6151,7 +6151,7 @@ public struct ListCashDrawerShiftsRequest: Codable {
 	}
 }
 
-public struct ListCashDrawerShiftsResponse: Codable {
+public struct ListCashDrawerShiftsResponse: SQCodable {
 	/// Opaque cursor for fetching the next page of results. Cursor is not present in the last page of results.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6166,7 +6166,7 @@ public struct ListCashDrawerShiftsResponse: Codable {
 	}
 }
 
-public struct ListCatalogRequest: Codable {
+public struct ListCatalogRequest: SQCodable {
 	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the `CatalogObject`s' `version` attribute.
 	var catalog_version: Int?
 	/// The pagination cursor returned in the previous response. Leave unset for an initial request. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
@@ -6181,7 +6181,7 @@ public struct ListCatalogRequest: Codable {
 	}
 }
 
-public struct ListCatalogResponse: Codable {
+public struct ListCatalogResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6197,7 +6197,7 @@ public struct ListCatalogResponse: Codable {
 }
 
 /// Defines the query parameters that can be provided in a request to the [ListCustomerGroups](#endpoint-listcustomergroups) endpoint.
-public struct ListCustomerGroupsRequest: Codable {
+public struct ListCustomerGroupsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 
@@ -6207,7 +6207,7 @@ public struct ListCustomerGroupsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](#endpoint-listcustomergroups) endpoint.  One of `errors` or `groups` is present in a given response (never both).
-public struct ListCustomerGroupsResponse: Codable {
+public struct ListCustomerGroupsResponse: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6223,7 +6223,7 @@ public struct ListCustomerGroupsResponse: Codable {
 }
 
 /// Defines the valid parameters for requests to __ListCustomerSegments__.
-public struct ListCustomerSegmentsRequest: Codable {
+public struct ListCustomerSegmentsRequest: SQCodable {
 	/// A pagination cursor returned by previous calls to __ListCustomerSegments__. Used to retrieve the next set of query results.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 
@@ -6233,7 +6233,7 @@ public struct ListCustomerSegmentsRequest: Codable {
 }
 
 /// Defines the fields included in the response body for requests to __ListCustomerSegments__.  One of `errors` or `segments` is present in a given response (never both).
-public struct ListCustomerSegmentsResponse: Codable {
+public struct ListCustomerSegmentsResponse: SQCodable {
 	/// A pagination cursor to be used in subsequent calls to __ListCustomerSegments__ to retrieve the next set of query results. Only present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6249,7 +6249,7 @@ public struct ListCustomerSegmentsResponse: Codable {
 }
 
 /// Defines the query parameters that can be provided in a request to the ListCustomers endpoint.
-public struct ListCustomersRequest: Codable {
+public struct ListCustomersRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 	/// Indicates how Customers should be sorted.  Default: `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
@@ -6265,7 +6265,7 @@ public struct ListCustomersRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the ListCustomers endpoint.  One of `errors` or `customers` is present in a given response (never both).
-public struct ListCustomersResponse: Codable {
+public struct ListCustomersResponse: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for the original query. Only present if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 	/// An array of `Customer` objects that match the provided query.
@@ -6280,7 +6280,7 @@ public struct ListCustomersResponse: Codable {
 	}
 }
 
-public struct ListDeviceCodesRequest: Codable {
+public struct ListDeviceCodesRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
 	/// If specified, only returns DeviceCodes of the specified location. Returns DeviceCodes of all locations if empty.
@@ -6298,7 +6298,7 @@ public struct ListDeviceCodesRequest: Codable {
 	}
 }
 
-public struct ListDeviceCodesResponse: Codable {
+public struct ListDeviceCodesResponse: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
 	/// The queried DeviceCode.
@@ -6314,14 +6314,14 @@ public struct ListDeviceCodesResponse: Codable {
 }
 
 /// Defines the parameters for a `ListDisputeEvidence` request.
-public struct ListDisputeEvidenceRequest: Codable {
+public struct ListDisputeEvidenceRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields in a `ListDisputeEvidence` response.
-public struct ListDisputeEvidenceResponse: Codable {
+public struct ListDisputeEvidenceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The list of evidence previously uploaded to the specified dispute.
@@ -6334,7 +6334,7 @@ public struct ListDisputeEvidenceResponse: Codable {
 }
 
 /// Defines the request parameters for the `ListDisputes` endpoint.
-public struct ListDisputesRequest: Codable {
+public struct ListDisputesRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
 	/// The ID of the location for which to return a list of disputes. If not specified, the endpoint returns all open disputes (the dispute status is not `INQUIRY_CLOSED`, `WON`, or `LOST`) associated with all locations.
@@ -6350,7 +6350,7 @@ public struct ListDisputesRequest: Codable {
 }
 
 /// Defines fields in a `ListDisputes` response.
-public struct ListDisputesResponse: Codable {
+public struct ListDisputesResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
 	/// The list of disputes.
@@ -6366,7 +6366,7 @@ public struct ListDisputesResponse: Codable {
 }
 
 /// A request for a set of `EmployeeWage` objects
-public struct ListEmployeeWagesRequest: Codable {
+public struct ListEmployeeWagesRequest: SQCodable {
 	/// Pointer to the next page of Employee Wage results to fetch.
 	var cursor: String?
 	/// Filter wages returned to only those that are associated with the specified employee.
@@ -6382,7 +6382,7 @@ public struct ListEmployeeWagesRequest: Codable {
 }
 
 /// The response to a request for a set of `EmployeeWage` objects. Contains  a set of `EmployeeWage`.
-public struct ListEmployeeWagesResponse: Codable {
+public struct ListEmployeeWagesResponse: SQCodable {
 	/// Value supplied in the subsequent request to fetch the next next page of Employee Wage results.
 	var cursor: String?
 	/// A page of Employee Wage results.
@@ -6397,7 +6397,7 @@ public struct ListEmployeeWagesResponse: Codable {
 	}
 }
 
-public struct ListEmployeesRequest: Codable {
+public struct ListEmployeesRequest: SQCodable {
 	/// The token required to retrieve the specified page of results.
 	var cursor: String?
 	/// The number of employees to be returned on each page.
@@ -6414,7 +6414,7 @@ public struct ListEmployeesRequest: Codable {
 	}
 }
 
-public struct ListEmployeesResponse: Codable {
+public struct ListEmployeesResponse: SQCodable {
 	/// The token to be used to retrieve the next page of results.
 	var cursor: String?
 	var employees: [Employee]?
@@ -6429,7 +6429,7 @@ public struct ListEmployeesResponse: Codable {
 }
 
 /// Describes a `ListInvoice` request.
-public struct ListInvoicesRequest: Codable {
+public struct ListInvoicesRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// The maximum number of invoices to return (200 is the maximum `limit`).  If not provided, the server  uses a default limit of 100 invoices.
@@ -6445,7 +6445,7 @@ public struct ListInvoicesRequest: Codable {
 }
 
 /// Describes a `ListInvoice` response.
-public struct ListInvoicesResponse: Codable {
+public struct ListInvoicesResponse: SQCodable {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// Information about errors encountered during the request.
@@ -6461,14 +6461,14 @@ public struct ListInvoicesResponse: Codable {
 }
 
 /// Defines the fields that are included in requests to the __ListLocations__ endpoint.
-public struct ListLocationsRequest: Codable {
+public struct ListLocationsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the __ListLocations__ endpoint.  One of `errors` or `locations` is present in a given response (never both).
-public struct ListLocationsResponse: Codable {
+public struct ListLocationsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The business locations.
@@ -6481,14 +6481,14 @@ public struct ListLocationsResponse: Codable {
 }
 
 /// A request to list `LoyaltyProgram`.
-public struct ListLoyaltyProgramsRequest: Codable {
+public struct ListLoyaltyProgramsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response that contains all loyalty programs.
-public struct ListLoyaltyProgramsResponse: Codable {
+public struct ListLoyaltyProgramsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// A list of `LoyaltyProgram` for the merchant.
@@ -6501,7 +6501,7 @@ public struct ListLoyaltyProgramsResponse: Codable {
 }
 
 /// Request object for the [ListMerchant](#endpoint-listmerchant) endpoint.
-public struct ListMerchantsRequest: Codable {
+public struct ListMerchantsRequest: SQCodable {
 	/// The cursor generated by the previous response.
 	var cursor: Int?
 
@@ -6511,7 +6511,7 @@ public struct ListMerchantsRequest: Codable {
 }
 
 /// The response object returned by the [ListMerchant](#endpoint-listmerchant) endpoint.
-public struct ListMerchantsResponse: Codable {
+public struct ListMerchantsResponse: SQCodable {
 	/// If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	var cursor: Int?
 	/// Information on errors encountered during the request.
@@ -6527,7 +6527,7 @@ public struct ListMerchantsResponse: Codable {
 }
 
 /// Retrieves a list of refunds for the account making the request.  The maximum results per page is 100.
-public struct ListPaymentRefundsRequest: Codable {
+public struct ListPaymentRefundsRequest: SQCodable {
 	/// The timestamp for the beginning of the requested reporting period, in RFC 3339 format.  Default: The current time minus one year.
 	var begin_time: Timestamp?
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
@@ -6558,7 +6558,7 @@ public struct ListPaymentRefundsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [ListPaymentRefunds](#endpoint-refunds-listpaymentrefunds) endpoint.  Either `errors` or `refunds` is present in a given response (never both).
-public struct ListPaymentRefundsResponse: Codable {
+public struct ListPaymentRefundsResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
 	/// Information about errors encountered during the request.
@@ -6574,7 +6574,7 @@ public struct ListPaymentRefundsResponse: Codable {
 }
 
 /// Retrieves a list of payments taken by the account making the request.  The maximum results per page is 100.
-public struct ListPaymentsRequest: Codable {
+public struct ListPaymentsRequest: SQCodable {
 	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 	var begin_time: Timestamp?
 	/// The brand of the payment card (for example, VISA).
@@ -6608,7 +6608,7 @@ public struct ListPaymentsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [ListPayments](#endpoint-payments-listpayments) endpoint.
-public struct ListPaymentsResponse: Codable {
+public struct ListPaymentsResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
 	/// Information about errors encountered during the request.
@@ -6624,7 +6624,7 @@ public struct ListPaymentsResponse: Codable {
 }
 
 /// Defines the query parameters that can be included in a request to the [ListRefunds](#endpoint-listrefunds) endpoint.  Deprecated - recommend using [SearchOrders](#endpoint-orders-searchorders)
-public struct ListRefundsRequest: Codable {
+public struct ListRefundsRequest: SQCodable {
 	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	var begin_time: Timestamp?
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](#paginatingresults) for more information.
@@ -6643,7 +6643,7 @@ public struct ListRefundsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [ListRefunds](#endpoint-listrefunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
-public struct ListRefundsResponse: Codable {
+public struct ListRefundsResponse: SQCodable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6659,7 +6659,7 @@ public struct ListRefundsResponse: Codable {
 }
 
 /// Defines parameters in a  [ListSubscriptionEvents](#endpoint-subscriptions-listsubscriptionevents) endpoint request.
-public struct ListSubscriptionEventsRequest: Codable {
+public struct ListSubscriptionEventsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// The upper limit on the number of subscription events to return  in the response.   Default: `200`
@@ -6672,7 +6672,7 @@ public struct ListSubscriptionEventsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response from the [ListSubscriptionEvents](#endpoint-subscriptions-listsubscriptionevents) endpoint.
-public struct ListSubscriptionEventsResponse: Codable {
+public struct ListSubscriptionEventsResponse: SQCodable {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of events.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// Information about errors encountered during the request.
@@ -6687,7 +6687,7 @@ public struct ListSubscriptionEventsResponse: Codable {
 	}
 }
 
-public struct ListTeamMemberBookingProfilesRequest: Codable {
+public struct ListTeamMemberBookingProfilesRequest: SQCodable {
 	/// Indicates whether to include only bookable team members in the returned result (`true`) or not (`false`).
 	var bookable_only: Bool?
 	/// The cursor for paginating through the results.
@@ -6705,7 +6705,7 @@ public struct ListTeamMemberBookingProfilesRequest: Codable {
 	}
 }
 
-public struct ListTeamMemberBookingProfilesResponse: Codable {
+public struct ListTeamMemberBookingProfilesResponse: SQCodable {
 	/// The cursor for paginating through the results.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6721,7 +6721,7 @@ public struct ListTeamMemberBookingProfilesResponse: Codable {
 }
 
 /// A request for a set of `TeamMemberWage` objects
-public struct ListTeamMemberWagesRequest: Codable {
+public struct ListTeamMemberWagesRequest: SQCodable {
 	/// Pointer to the next page of Employee Wage results to fetch.
 	var cursor: String?
 	/// Maximum number of Team Member Wages to return per page. Can range between 1 and 200. The default is the maximum at 200.
@@ -6737,7 +6737,7 @@ public struct ListTeamMemberWagesRequest: Codable {
 }
 
 /// The response to a request for a set of `TeamMemberWage` objects. Contains a set of `TeamMemberWage`.
-public struct ListTeamMemberWagesResponse: Codable {
+public struct ListTeamMemberWagesResponse: SQCodable {
 	/// Value supplied in the subsequent request to fetch the next next page of Team Member Wage results.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6753,7 +6753,7 @@ public struct ListTeamMemberWagesResponse: Codable {
 }
 
 /// Defines the query parameters that can be included in a request to the [ListTransactions](#endpoint-listtransactions) endpoint.  Deprecated - recommend using [SearchOrders](#endpoint-orders-searchorders)
-public struct ListTransactionsRequest: Codable {
+public struct ListTransactionsRequest: SQCodable {
 	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	var begin_time: Timestamp?
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](#paginatingresults) for more information.
@@ -6772,7 +6772,7 @@ public struct ListTransactionsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [ListTransactions](#endpoint-listtransactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
-public struct ListTransactionsResponse: Codable {
+public struct ListTransactionsResponse: SQCodable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6788,7 +6788,7 @@ public struct ListTransactionsResponse: Codable {
 }
 
 /// A request for a set of `WorkweekConfig` objects
-public struct ListWorkweekConfigsRequest: Codable {
+public struct ListWorkweekConfigsRequest: SQCodable {
 	/// Pointer to the next page of Workweek Config results to fetch.
 	var cursor: String?
 	/// Maximum number of Workweek Configs to return per page.
@@ -6801,7 +6801,7 @@ public struct ListWorkweekConfigsRequest: Codable {
 }
 
 /// The response to a request for a set of `WorkweekConfig` objects. Contains the requested `WorkweekConfig` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct ListWorkweekConfigsResponse: Codable {
+public struct ListWorkweekConfigsResponse: SQCodable {
 	/// Value supplied in the subsequent request to fetch the next page of Employee Wage results.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -6816,7 +6816,7 @@ public struct ListWorkweekConfigsResponse: Codable {
 	}
 }
 
-public struct Location: Codable {
+public struct Location: SQCodable {
 	/// The physical address of the location.
 	var address: Address?
 	/// The email of the location. This email is visible to the customers of the location. For example, the email appears on customer receipts.
@@ -6901,13 +6901,13 @@ public struct Location: Codable {
 }
 
 /// The capabilities a location may have.
-public enum LocationCapability: String, Codable {
+public enum LocationCapability: String, SQCodable {
 	/// The permission to process credit card transactions with Square.  The location can process credit cards if this value is present in the `capabilities` array of the `Location`.
 	case CREDIT_CARD_PROCESSING
 }
 
 /// The status of the location, whether a location is active or inactive.
-public enum LocationStatus: String, Codable {
+public enum LocationStatus: String, SQCodable {
 	/// A location that is active for business.
 	case ACTIVE
 	/// A location that is not active for business. Inactive locations just provide historical information, so typically clients limit interaction with or hide these locations.
@@ -6915,7 +6915,7 @@ public enum LocationStatus: String, Codable {
 }
 
 /// A location's physical or mobile type.
-public enum LocationType: String, Codable {
+public enum LocationType: String, SQCodable {
 	/// A place of business with a physical location.
 	case PHYSICAL
 	/// A place of business that is mobile, such as a food truck or online store.
@@ -6923,7 +6923,7 @@ public enum LocationType: String, Codable {
 }
 
 /// Describes a loyalty account. For more information, see  [Loyalty Overview](/docs/loyalty/overview).
-public struct LoyaltyAccount: Codable {
+public struct LoyaltyAccount: SQCodable {
 	/// The available point balance in the loyalty account.    Your application should be able to handle loyalty accounts that have a negative point balance (`balance` is less than 0). This might occur if a seller makes a manual adjustment or as a result of a refund or exchange.
 	let balance: Int?
 	/// The timestamp when the loyalty account was created, in RFC 3339 format.
@@ -6957,7 +6957,7 @@ public struct LoyaltyAccount: Codable {
 }
 
 /// Associates a loyalty account with the buyer's phone number. For more information, see  [Loyalty Overview](/docs/loyalty/overview).
-public struct LoyaltyAccountMapping: Codable {
+public struct LoyaltyAccountMapping: SQCodable {
 	/// The timestamp when the mapping was created, in RFC 3339 format.
 	let created_at: Timestamp?
 	/// The Square-assigned ID of the mapping.
@@ -6976,13 +6976,13 @@ public struct LoyaltyAccountMapping: Codable {
 }
 
 /// The type of mapping.
-public enum LoyaltyAccountMappingType: String, Codable {
+public enum LoyaltyAccountMappingType: String, SQCodable {
 	/// The loyalty account is mapped by phone.
 	case PHONE
 }
 
 /// Provides information about a loyalty event.  For more information, see [Loyalty events](/docs/loyalty-api/overview/#loyalty-events).
-public struct LoyaltyEvent: Codable {
+public struct LoyaltyEvent: SQCodable {
 	/// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 	let accumulate_points: LoyaltyEventAccumulatePoints?
 	/// Provides metadata when the event `type` is `ADJUST_POINTS`.
@@ -7014,7 +7014,7 @@ public struct LoyaltyEvent: Codable {
 }
 
 /// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
-public struct LoyaltyEventAccumulatePoints: Codable {
+public struct LoyaltyEventAccumulatePoints: SQCodable {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String?
 	/// The ID of the `order` for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
@@ -7030,7 +7030,7 @@ public struct LoyaltyEventAccumulatePoints: Codable {
 }
 
 /// Provides metadata when the event `type` is `ADJUST_POINTS`.
-public struct LoyaltyEventAdjustPoints: Codable {
+public struct LoyaltyEventAdjustPoints: SQCodable {
 	/// The Square-assigned ID of the `loyalty program`.
 	let loyalty_program_id: String?
 	/// The number of points added or removed.
@@ -7046,7 +7046,7 @@ public struct LoyaltyEventAdjustPoints: Codable {
 }
 
 /// Provides metadata when the event `type` is `CREATE_REWARD`.
-public struct LoyaltyEventCreateReward: Codable {
+public struct LoyaltyEventCreateReward: SQCodable {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The loyalty points used to create the reward.
@@ -7058,7 +7058,7 @@ public struct LoyaltyEventCreateReward: Codable {
 }
 
 /// Filter events by date time range.
-public struct LoyaltyEventDateTimeFilter: Codable {
+public struct LoyaltyEventDateTimeFilter: SQCodable {
 	/// The `created_at` date time range used to filter the result.
 	var created_at: TimeRange
 
@@ -7068,7 +7068,7 @@ public struct LoyaltyEventDateTimeFilter: Codable {
 }
 
 /// Provides metadata when the event `type` is `DELETE_REWARD`.
-public struct LoyaltyEventDeleteReward: Codable {
+public struct LoyaltyEventDeleteReward: SQCodable {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The number of points returned to the loyalty account.
@@ -7080,7 +7080,7 @@ public struct LoyaltyEventDeleteReward: Codable {
 }
 
 /// Provides metadata when the event `type` is `EXPIRE_POINTS`.
-public struct LoyaltyEventExpirePoints: Codable {
+public struct LoyaltyEventExpirePoints: SQCodable {
 	/// The Square-assigned ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The number of points expired.
@@ -7090,7 +7090,7 @@ public struct LoyaltyEventExpirePoints: Codable {
 }
 
 /// The filtering criteria. If the request specifies multiple filters,  the endpoint uses a logical AND to evaluate them.
-public struct LoyaltyEventFilter: Codable {
+public struct LoyaltyEventFilter: SQCodable {
 	/// Filter events by date time range.  For each range, the start time is inclusive and the end time  is exclusive.
 	var date_time_filter: LoyaltyEventDateTimeFilter?
 	/// Filter events by location.
@@ -7112,7 +7112,7 @@ public struct LoyaltyEventFilter: Codable {
 }
 
 /// Filter events by location.
-public struct LoyaltyEventLocationFilter: Codable {
+public struct LoyaltyEventLocationFilter: SQCodable {
 	/// The `location` IDs for loyalty events to query. If multiple values are specified, the endpoint uses  a logical OR to combine them.
 	var location_ids: [String]
 
@@ -7122,7 +7122,7 @@ public struct LoyaltyEventLocationFilter: Codable {
 }
 
 /// Filter events by loyalty account.
-public struct LoyaltyEventLoyaltyAccountFilter: Codable {
+public struct LoyaltyEventLoyaltyAccountFilter: SQCodable {
 	/// The ID of the `loyalty account` associated with loyalty events.
 	var loyalty_account_id: String
 
@@ -7132,7 +7132,7 @@ public struct LoyaltyEventLoyaltyAccountFilter: Codable {
 }
 
 /// Filter events by the order associated with the event.
-public struct LoyaltyEventOrderFilter: Codable {
+public struct LoyaltyEventOrderFilter: SQCodable {
 	/// The ID of the `order` associated with the event.
 	var order_id: String
 
@@ -7142,7 +7142,7 @@ public struct LoyaltyEventOrderFilter: Codable {
 }
 
 /// Provides metadata when the event `type` is `OTHER`.
-public struct LoyaltyEventOther: Codable {
+public struct LoyaltyEventOther: SQCodable {
 	/// The Square-assigned ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The number of points added or removed.
@@ -7152,7 +7152,7 @@ public struct LoyaltyEventOther: Codable {
 }
 
 /// Represents a query used to search for loyalty events.
-public struct LoyaltyEventQuery: Codable {
+public struct LoyaltyEventQuery: SQCodable {
 	/// The query filter criteria.
 	var filter: LoyaltyEventFilter?
 
@@ -7162,7 +7162,7 @@ public struct LoyaltyEventQuery: Codable {
 }
 
 /// Provides metadata when the event `type` is `REDEEM_REWARD`.
-public struct LoyaltyEventRedeemReward: Codable {
+public struct LoyaltyEventRedeemReward: SQCodable {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The ID of the `order` that redeemed the reward. This field is returned only if the Orders API is used to process orders.
@@ -7174,7 +7174,7 @@ public struct LoyaltyEventRedeemReward: Codable {
 }
 
 /// Defines whether the event was generated by the Square Point of Sale.
-public enum LoyaltyEventSource: String, Codable {
+public enum LoyaltyEventSource: String, SQCodable {
 	/// The event is generated by the Square Point of Sale (POS).
 	case SQUARE
 	/// The event is generated by something other than the Square Point of Sale that used the Loyalty API.
@@ -7182,7 +7182,7 @@ public enum LoyaltyEventSource: String, Codable {
 }
 
 /// The type of the loyalty event.
-public enum LoyaltyEventType: String, Codable {
+public enum LoyaltyEventType: String, SQCodable {
 	/// Points are added to a loyalty account for a purchase.
 	case ACCUMULATE_POINTS
 	/// A loyalty reward is created. For more information, see   [Loyalty rewards](https://developer.squareup.com/docs/loyalty-api/overview/#loyalty-overview-loyalty-rewards).
@@ -7200,7 +7200,7 @@ public enum LoyaltyEventType: String, Codable {
 }
 
 /// Filter events by event type.
-public struct LoyaltyEventTypeFilter: Codable {
+public struct LoyaltyEventTypeFilter: SQCodable {
 	/// The loyalty event types used to filter the result. If multiple values are specified, the endpoint uses a  logical OR to combine them. See [LoyaltyEventType](#type-loyaltyeventtype) for possible values
 	var types: LoyaltyEventType
 
@@ -7209,7 +7209,7 @@ public struct LoyaltyEventTypeFilter: Codable {
 	}
 }
 
-public struct LoyaltyProgram: Codable {
+public struct LoyaltyProgram: SQCodable {
 	/// Defines how buyers can earn loyalty points.
 	let accrual_rules: [LoyaltyProgramAccrualRule]
 	/// The timestamp when the program was created, in RFC 3339 format.
@@ -7233,7 +7233,7 @@ public struct LoyaltyProgram: Codable {
 }
 
 /// Defines an accrual rule, which is how buyers can earn points.
-public struct LoyaltyProgramAccrualRule: Codable {
+public struct LoyaltyProgramAccrualRule: SQCodable {
 	/// The type of the accrual rule that defines how buyers can earn points. See [LoyaltyProgramAccrualRuleType](#type-loyaltyprogramaccrualruletype) for possible values
 	let accrual_type: LoyaltyProgramAccrualRuleType
 	/// The ID of the `catalog object` to purchase to earn the number of points defined by the rule. This is either an item variation or a category, depending on the type. This is defined on `ITEM_VARIATION` rules and `CATEGORY` rules.
@@ -7249,7 +7249,7 @@ public struct LoyaltyProgramAccrualRule: Codable {
 }
 
 /// The type of the accrual rule that defines how buyers can earn points.
-public enum LoyaltyProgramAccrualRuleType: String, Codable {
+public enum LoyaltyProgramAccrualRuleType: String, SQCodable {
 	/// A visit-based accrual rule. A buyer earns points for each visit.  You can specify the minimum purchase required.
 	case VISIT
 	/// A spend-based accrual rule. A buyer earns points based on the amount  spent.
@@ -7261,7 +7261,7 @@ public enum LoyaltyProgramAccrualRuleType: String, Codable {
 }
 
 /// Describes when the loyalty program expires.
-public struct LoyaltyProgramExpirationPolicy: Codable {
+public struct LoyaltyProgramExpirationPolicy: SQCodable {
 	/// The duration of time before points expire, in RFC 3339 format.
 	let expiration_duration: Timestamp
 
@@ -7269,7 +7269,7 @@ public struct LoyaltyProgramExpirationPolicy: Codable {
 }
 
 /// Provides details about the reward tier discount. DEPRECATED at version 2020-12-16. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Get discount details for the reward](/docs/loyalty-api/overview#get-discount-details).
-public struct LoyaltyProgramRewardDefinition: Codable {
+public struct LoyaltyProgramRewardDefinition: SQCodable {
 	/// The list of catalog objects to which this reward can be applied. They are either all item-variation ids or category ids, depending on the `type` field. DEPRECATED at version 2020-12-16. You can find this information in the `product_set_data.product_ids_any` field of the `PRODUCT_SET` catalog object referenced by the pricing rule.
 	let catalog_object_ids: [String]?
 	/// The type of discount the reward tier offers. DEPRECATED at version 2020-12-16. You can find this information in the `discount_data.discount_type` field of the `DISCOUNT` catalog object referenced by the pricing rule. See [LoyaltyProgramRewardDefinitionType](#type-loyaltyprogramrewarddefinitiontype) for possible values
@@ -7287,7 +7287,7 @@ public struct LoyaltyProgramRewardDefinition: Codable {
 }
 
 /// Indicates the scope of the reward tier. DEPRECATED at version 2020-12-16. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Get discount details for the reward](https://developer.squareup.com/docs/docs/loyalty-api/overview#get-discount-details).
-public enum LoyaltyProgramRewardDefinitionScope: String, Codable {
+public enum LoyaltyProgramRewardDefinitionScope: String, SQCodable {
 	/// The discount applies to the entire order.
 	case ORDER
 	/// The discount applies only to specific item variations.
@@ -7297,7 +7297,7 @@ public enum LoyaltyProgramRewardDefinitionScope: String, Codable {
 }
 
 /// The type of discount the reward tier offers. DEPRECATED at version 2020-12-16. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Get discount details for the reward](https://developer.squareup.com/docs/docs/loyalty-api/overview#get-discount-details).
-public enum LoyaltyProgramRewardDefinitionType: String, Codable {
+public enum LoyaltyProgramRewardDefinitionType: String, SQCodable {
 	/// The fixed amount discounted.
 	case FIXED_AMOUNT
 	/// The fixed percentage discounted.
@@ -7305,7 +7305,7 @@ public enum LoyaltyProgramRewardDefinitionType: String, Codable {
 }
 
 /// Describes a loyalty program reward tier.
-public struct LoyaltyProgramRewardTier: Codable {
+public struct LoyaltyProgramRewardTier: SQCodable {
 	/// The timestamp when the reward tier was created, in RFC 3339 format.
 	let created_at: Timestamp
 	/// Provides details about the reward tier definition. DEPRECATED at version 2020-12-16. Replaced by the `pricing_rule_reference` field.
@@ -7323,14 +7323,14 @@ public struct LoyaltyProgramRewardTier: Codable {
 }
 
 /// Indicates whether the program is currently active.
-public enum LoyaltyProgramStatus: String, Codable {
+public enum LoyaltyProgramStatus: String, SQCodable {
 	/// The loyalty program does not have an active subscription.  Loyalty API requests fail.
 	case INACTIVE
 	/// The program is fully functional. The program has an active subscription.
 	case ACTIVE
 }
 
-public struct LoyaltyProgramTerminology: Codable {
+public struct LoyaltyProgramTerminology: SQCodable {
 	/// A singular unit for a point (for example, 1 point is called 1 star).
 	let one: String
 	/// A plural unit for point (for example, 10 points is called 10 stars).
@@ -7339,7 +7339,7 @@ public struct LoyaltyProgramTerminology: Codable {
 	// no init-- this struct is read-only
 }
 
-public struct LoyaltyReward: Codable {
+public struct LoyaltyReward: SQCodable {
 	/// The timestamp when the reward was created, in RFC 3339 format.
 	let created_at: Timestamp?
 	/// The Square-assigned ID of the loyalty reward.
@@ -7373,7 +7373,7 @@ public struct LoyaltyReward: Codable {
 }
 
 /// The status of the loyalty reward.
-public enum LoyaltyRewardStatus: String, Codable {
+public enum LoyaltyRewardStatus: String, SQCodable {
 	/// The reward is issued.
 	case ISSUED
 	/// The reward is redeemed.
@@ -7383,7 +7383,7 @@ public enum LoyaltyRewardStatus: String, Codable {
 }
 
 /// Represents a unit of measurement to use with a quantity, such as ounces or inches. Exactly one of the following fields are required: `custom_unit`, `area_unit`, `length_unit`, `volume_unit`, and `weight_unit`.
-public struct MeasurementUnit: Codable {
+public struct MeasurementUnit: SQCodable {
 	/// Represents a standard area unit. See [MeasurementUnitArea](#type-measurementunitarea) for possible values
 	var area_unit: MeasurementUnitArea?
 	/// A custom unit of measurement defined by the seller using the Point of Sale app or ad-hoc as an order line item.
@@ -7414,7 +7414,7 @@ public struct MeasurementUnit: Codable {
 }
 
 /// Unit of area used to measure a quantity.
-public enum MeasurementUnitArea: String, Codable {
+public enum MeasurementUnitArea: String, SQCodable {
 	/// The area is measured in acres.
 	case IMPERIAL_ACRE
 	/// The area is measured in square inches.
@@ -7434,7 +7434,7 @@ public enum MeasurementUnitArea: String, Codable {
 }
 
 /// The information needed to define a custom unit, provided by the seller.
-public struct MeasurementUnitCustom: Codable {
+public struct MeasurementUnitCustom: SQCodable {
 	/// The abbreviation of the custom unit, such as "bsh" (bushel). This appears in the cart for the Point of Sale app, and in reports.
 	var abbreviation: String
 	/// The name of the custom unit, for example "bushel".
@@ -7447,13 +7447,13 @@ public struct MeasurementUnitCustom: Codable {
 }
 
 /// 
-public enum MeasurementUnitGeneric: String, Codable {
+public enum MeasurementUnitGeneric: String, SQCodable {
 	/// The generic unit.
 	case UNIT
 }
 
 /// The unit of length used to measure a quantity.
-public enum MeasurementUnitLength: String, Codable {
+public enum MeasurementUnitLength: String, SQCodable {
 	/// The length is measured in inches.
 	case IMPERIAL_INCH
 	/// The length is measured in feet.
@@ -7473,7 +7473,7 @@ public enum MeasurementUnitLength: String, Codable {
 }
 
 /// Unit of time used to measure a quantity (a duration).
-public enum MeasurementUnitTime: String, Codable {
+public enum MeasurementUnitTime: String, SQCodable {
 	/// The time is measured in milliseconds.
 	case GENERIC_MILLISECOND
 	/// The time is measured in seconds.
@@ -7487,7 +7487,7 @@ public enum MeasurementUnitTime: String, Codable {
 }
 
 /// Describes the type of this unit and indicates which field contains the unit information. This is an ‘open’ enum.
-public enum MeasurementUnitUnitType: String, Codable {
+public enum MeasurementUnitUnitType: String, SQCodable {
 	/// The unit details are contained in the custom_unit field.
 	case TYPE_CUSTOM
 	/// The unit details are contained in the area_unit field.
@@ -7503,7 +7503,7 @@ public enum MeasurementUnitUnitType: String, Codable {
 }
 
 /// The unit of volume used to measure a quantity.
-public enum MeasurementUnitVolume: String, Codable {
+public enum MeasurementUnitVolume: String, SQCodable {
 	/// The volume is measured in ounces.
 	case GENERIC_FLUID_OUNCE
 	/// The volume is measured in shots.
@@ -7529,7 +7529,7 @@ public enum MeasurementUnitVolume: String, Codable {
 }
 
 /// Unit of weight used to measure a quantity.
-public enum MeasurementUnitWeight: String, Codable {
+public enum MeasurementUnitWeight: String, SQCodable {
 	/// The weight is measured in ounces.
 	case IMPERIAL_WEIGHT_OUNCE
 	/// The weight is measured in pounds.
@@ -7545,7 +7545,7 @@ public enum MeasurementUnitWeight: String, Codable {
 }
 
 /// Represents a Square seller.
-public struct Merchant: Codable {
+public struct Merchant: SQCodable {
 	/// The business name of the merchant.
 	var business_name: String?
 	/// The country code associated with the merchant account, in ISO 3166 format. See [Country](#type-country) for possible values
@@ -7573,7 +7573,7 @@ public struct Merchant: Codable {
 }
 
 /// 
-public enum MerchantStatus: String, Codable {
+public enum MerchantStatus: String, SQCodable {
 	/// A fully operational merchant account. The merchant can interact with Square products and APIs.
 	case ACTIVE
 	/// A functionally limited merchant account. The merchant can only have limited interaction via Square APIs. The merchant cannot access the seller dashboard.
@@ -7581,7 +7581,7 @@ public enum MerchantStatus: String, Codable {
 }
 
 /// Represents an amount of money. `Money` fields can be signed or unsigned. Fields that do not explicitly define whether they are signed or unsigned are considered unsigned and can only hold positive amounts. For signed fields, the sign of the value indicates the purpose of the money transfer. See [Working with Monetary Amounts](/build-basics/working-with-monetary-amounts) for more information.
-public struct Money: Codable {
+public struct Money: SQCodable {
 	/// The amount of money, in the smallest denomination of the currency indicated by `currency`. For example, when `currency` is `USD`, `amount` is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.
 	var amount: Int?
 	/// The type of currency, in __ISO 4217 format__. For example, the currency code for US dollars is `USD`.  See `Currency` for possible values. See [Currency](#type-currency) for possible values
@@ -7593,7 +7593,7 @@ public struct Money: Codable {
 	}
 }
 
-public struct ObtainTokenRequest: Codable {
+public struct ObtainTokenRequest: SQCodable {
 	/// The Square-issued ID of your application, available from the [application dashboard](https://connect.squareup.com/apps).
 	var client_id: String
 	/// The Square-issued application secret for your application, available from the [application dashboard](https://connect.squareup.com/apps).
@@ -7626,7 +7626,7 @@ public struct ObtainTokenRequest: Codable {
 	}
 }
 
-public struct ObtainTokenResponse: Codable {
+public struct ObtainTokenResponse: SQCodable {
 	/// A valid OAuth access token. OAuth access tokens are 64 bytes long. Provide the access token in a header with every request to Connect API endpoints. See [OAuth API: Walkthrough](https://developer.squareup.com/docs/oauth-api/walkthrough) for more information.
 	var access_token: String?
 	/// The date when access_token expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
@@ -7659,13 +7659,13 @@ public struct ObtainTokenResponse: Codable {
 	}
 }
 
-public struct OnboardAppointmentsRequest: Codable {
+public struct OnboardAppointmentsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct OnboardAppointmentsResponse: Codable {
+public struct OnboardAppointmentsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -7675,7 +7675,7 @@ public struct OnboardAppointmentsResponse: Codable {
 }
 
 /// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. Order objects also include information on any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
-public struct Order: Codable {
+public struct Order: SQCodable {
 	/// Timestamp for when the order reached a terminal [state](#property-state). In RFC 3339 format, e.g., "2016-09-04T23:59:33.123Z".
 	let closed_at: Timestamp?
 	/// Timestamp for when the order was created. In RFC 3339 format, e.g., "2016-09-04T23:59:33.123Z".
@@ -7768,7 +7768,7 @@ public struct Order: Codable {
 	}
 }
 
-public struct OrderCreated: Codable {
+public struct OrderCreated: SQCodable {
 	/// Timestamp for when the order was created in RFC 3339 format.
 	let created_at: Timestamp?
 	/// The ID of the merchant location this order is associated with.
@@ -7789,7 +7789,7 @@ public struct OrderCreated: Codable {
 	}
 }
 
-public struct OrderCreatedObject: Codable {
+public struct OrderCreatedObject: SQCodable {
 	/// Information about the created order.
 	var order_created: OrderCreated?
 
@@ -7799,7 +7799,7 @@ public struct OrderCreatedObject: Codable {
 }
 
 /// A lightweight description of an [Order](#type-order) that is returned when `returned_entries` is true on a [SearchOrderRequest](#type-searchorderrequest)
-public struct OrderEntry: Codable {
+public struct OrderEntry: SQCodable {
 	/// The location id the Order belongs to.
 	var location_id: String?
 	/// The id of the Order
@@ -7815,7 +7815,7 @@ public struct OrderEntry: Codable {
 }
 
 /// Contains details on how to fulfill this order.
-public struct OrderFulfillment: Codable {
+public struct OrderFulfillment: SQCodable {
 	/// Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (personally identifiable information, card details, etc.).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries may also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a max length of 255 characters.  An application may have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  See [Metadata](https://developer.squareup.com/docs/build-basics/metadata) for more information.
 	var metadata: String?
 	/// Contains details for a pickup fulfillment. Required when fulfillment type is `PICKUP`.
@@ -7840,7 +7840,7 @@ public struct OrderFulfillment: Codable {
 }
 
 /// Contains details necessary to fulfill a pickup order.
-public struct OrderFulfillmentPickupDetails: Codable {
+public struct OrderFulfillmentPickupDetails: SQCodable {
 	/// The [timestamp](#workingwithdates) indicating when the fulfillment was accepted. In RFC3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
 	let accepted_at: Timestamp?
 	/// The duration of time after which an open and accepted pickup fulfillment will automatically move to the `COMPLETED` state. Must be in RFC3339 duration format e.g., "P1W3D".  If not set, this pickup fulfillment will remain accepted until it is canceled or completed.
@@ -7901,7 +7901,7 @@ public struct OrderFulfillmentPickupDetails: Codable {
 }
 
 /// Specific details for curbside pickup.
-public struct OrderFulfillmentPickupDetailsCurbsidePickupDetails: Codable {
+public struct OrderFulfillmentPickupDetailsCurbsidePickupDetails: SQCodable {
 	/// The [timestamp](#workingwithdates) in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z", indicating when the buyer arrived and is waiting for pickup.
 	var buyer_arrived_at: Timestamp?
 	/// Specific details for curbside pickup, such as parking number, vehicle model, etc.
@@ -7914,7 +7914,7 @@ public struct OrderFulfillmentPickupDetailsCurbsidePickupDetails: Codable {
 }
 
 /// The schedule type of the pickup fulfillment.
-public enum OrderFulfillmentPickupDetailsScheduleType: String, Codable {
+public enum OrderFulfillmentPickupDetailsScheduleType: String, SQCodable {
 	/// Indicates the fulfillment will be picked up at a scheduled pickup time.
 	case SCHEDULED
 	/// Indicates the fulfillment will be picked up as soon as possible and should be prepared immediately.
@@ -7922,7 +7922,7 @@ public enum OrderFulfillmentPickupDetailsScheduleType: String, Codable {
 }
 
 /// Contains information on the recipient of a fulfillment.
-public struct OrderFulfillmentRecipient: Codable {
+public struct OrderFulfillmentRecipient: SQCodable {
 	/// The address of the fulfillment recipient.  If provided, overrides the value pulled from the customer profile indicated by `customer_id`.
 	var address: Address?
 	/// The Customer ID of the customer associated with the fulfillment.  If `customer_id` is provided, the fulfillment recipient's `display_name`, `email_address`, and `phone_number` are automatically populated from the targeted customer profile. If these fields are set in the request, the request values will override the information from the customer profile. If the targeted customer profile does not contain the necessary information and these fields are left unset, the request will result in an error.
@@ -7944,7 +7944,7 @@ public struct OrderFulfillmentRecipient: Codable {
 }
 
 /// Contains details necessary to fulfill a shipment order.
-public struct OrderFulfillmentShipmentDetails: Codable {
+public struct OrderFulfillmentShipmentDetails: SQCodable {
 	/// A description of why the shipment was canceled.
 	var cancel_reason: String?
 	/// The [timestamp](#workingwithdates) indicating the shipment was canceled. Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
@@ -7996,7 +7996,7 @@ public struct OrderFulfillmentShipmentDetails: Codable {
 }
 
 /// The current state of this fulfillment.
-public enum OrderFulfillmentState: String, Codable {
+public enum OrderFulfillmentState: String, SQCodable {
 	/// Indicates the fulfillment has been proposed.
 	case PROPOSED
 	/// Indicates the fulfillment has been reserved.
@@ -8012,14 +8012,14 @@ public enum OrderFulfillmentState: String, Codable {
 }
 
 /// The type of fulfillment.
-public enum OrderFulfillmentType: String, Codable {
+public enum OrderFulfillmentType: String, SQCodable {
 	/// A fulfillment to be picked up from a physical `location` by a recipient.
 	case PICKUP
 	/// A fulfillment to be shipped by a shipping carrier.
 	case SHIPMENT
 }
 
-public struct OrderFulfillmentUpdated: Codable {
+public struct OrderFulfillmentUpdated: SQCodable {
 	/// Timestamp for when the order was created in RFC 3339 format.
 	let created_at: Timestamp?
 	/// The fulfillments that were updated with this version change.
@@ -8046,7 +8046,7 @@ public struct OrderFulfillmentUpdated: Codable {
 	}
 }
 
-public struct OrderFulfillmentUpdatedObject: Codable {
+public struct OrderFulfillmentUpdatedObject: SQCodable {
 	/// Information about the updated order fulfillment.
 	var order_fulfillment_updated: OrderFulfillmentUpdated?
 
@@ -8056,7 +8056,7 @@ public struct OrderFulfillmentUpdatedObject: Codable {
 }
 
 /// Information about fulfillment updates.
-public struct OrderFulfillmentUpdatedUpdate: Codable {
+public struct OrderFulfillmentUpdatedUpdate: SQCodable {
 	/// Unique ID that identifies the fulfillment only within this order.
 	var fulfillment_uid: String?
 	/// The state of the fulfillment after the change. May be equal to old_state if a non-state field was changed on the fulfillment (e.g. tracking number). See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
@@ -8072,7 +8072,7 @@ public struct OrderFulfillmentUpdatedUpdate: Codable {
 }
 
 /// Represents a line item in an order. Each line item describes a different product to purchase, with its own quantity and price details.
-public struct OrderLineItem: Codable {
+public struct OrderLineItem: SQCodable {
 	/// The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` will be automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
 	var applied_discounts: [OrderLineItemAppliedDiscount]?
 	/// The list of references to taxes applied to this line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderLineItemTax` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedTax` will be automatically created on every line item for all `ORDER` scoped taxes added to the order. `OrderLineItemAppliedTax` records for `LINE_ITEM` scoped taxes must be added in requests for the tax to apply to any line items.  To change the amount of a tax, modify the referenced top-level tax.
@@ -8133,7 +8133,7 @@ public struct OrderLineItem: Codable {
 }
 
 /// Represents an applied portion of a discount to a line item in an order.  Order scoped discounts will automatically have applied discounts present for each line item. Line item scoped discounts must have applied discounts added manually for any applicable line items. The corresponding applied money will automatically be computed based on participating line items.
-public struct OrderLineItemAppliedDiscount: Codable {
+public struct OrderLineItemAppliedDiscount: SQCodable {
 	/// The amount of money applied by the discount to the line item.
 	let applied_money: Money?
 	/// The `uid` of the discount the applied discount represents. Must reference a discount present in the `order.discounts` field.  This field is immutable. To change which discounts apply to a line item, you must delete the discount and re-add it as a new `OrderLineItemAppliedDiscount`.
@@ -8149,7 +8149,7 @@ public struct OrderLineItemAppliedDiscount: Codable {
 }
 
 /// Represents an applied portion of a tax to a line item in an order.  Order-scoped taxes automatically include the applied taxes in each line item. Line item taxes must be referenced from any applicable line items. The corresponding applied money is automatically computed, based on the set of participating line items.
-public struct OrderLineItemAppliedTax: Codable {
+public struct OrderLineItemAppliedTax: SQCodable {
 	/// The amount of money applied by the tax to the line item.
 	let applied_money: Money?
 	/// The `uid` of the tax for which this applied tax represents.  Must reference a tax present in the `order.taxes` field.  This field is immutable. To change which taxes apply to a line item, delete and add new `OrderLineItemAppliedTax`s.
@@ -8165,7 +8165,7 @@ public struct OrderLineItemAppliedTax: Codable {
 }
 
 /// Represents a discount that applies to one or more line items in an order.  Fixed-amount, order-scoped discounts are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount contributed by the item to the order subtotal.
-public struct OrderLineItemDiscount: Codable {
+public struct OrderLineItemDiscount: SQCodable {
 	/// The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	var amount_money: Money?
 	/// The amount of discount actually applied to the line item.  Represents the amount of money applied as a line item-scoped discount. When an amount-based discount is scoped to the entire order, the value of `applied_money` is different from `amount_money` because the total amount of the discount is distributed across all line items.
@@ -8205,7 +8205,7 @@ public struct OrderLineItemDiscount: Codable {
 }
 
 /// Indicates whether this is a line item or order level discount.
-public enum OrderLineItemDiscountScope: String, Codable {
+public enum OrderLineItemDiscountScope: String, SQCodable {
 	/// Used for reporting only. The original transaction discount scope is currently not supported by the API.
 	case OTHER_DISCOUNT_SCOPE
 	/// The discount should be applied to only line items specified by `OrderLineItemAppliedDiscount` reference records.
@@ -8215,7 +8215,7 @@ public enum OrderLineItemDiscountScope: String, Codable {
 }
 
 /// Indicates how the discount is applied to the associated line item or order.
-public enum OrderLineItemDiscountType: String, Codable {
+public enum OrderLineItemDiscountType: String, SQCodable {
 	/// Used for reporting only. The original transaction discount type is currently not supported by the API.
 	case UNKNOWN_DISCOUNT
 	/// Apply the discount as a fixed percentage (e.g., 5%) off the item price.
@@ -8229,7 +8229,7 @@ public enum OrderLineItemDiscountType: String, Codable {
 }
 
 /// A [CatalogModifier](#type-catalogmodifier).
-public struct OrderLineItemModifier: Codable {
+public struct OrderLineItemModifier: SQCodable {
 	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined `CatalogModifier` price.
 	var base_price_money: Money?
 	/// The catalog object id referencing `CatalogModifier`.
@@ -8251,7 +8251,7 @@ public struct OrderLineItemModifier: Codable {
 }
 
 /// Describes pricing adjustments that are blocked from manual and  automatic application to a line item. For more information, see  [Apply Taxes and Discounts](/docs/orders-api/apply-taxes-and-discounts).
-public struct OrderLineItemPricingBlocklists: Codable {
+public struct OrderLineItemPricingBlocklists: SQCodable {
 	/// A list of discounts blocked from applying to the line item.  Discounts can be blocked by the `discount_uid` (for ad-hoc discounts) or  the `discount_catalog_object_id` (for catalog discounts).
 	var blocked_discounts: [OrderLineItemPricingBlocklistsBlockedDiscount]?
 	/// A list of taxes blocked from applying to the line item.  Taxes can be blocked by the `tax_uid` (for ad-hoc taxes) or  the `tax_catalog_object_id` (for catalog taxes).
@@ -8264,7 +8264,7 @@ public struct OrderLineItemPricingBlocklists: Codable {
 }
 
 /// A discount to block from applying to a line item. The discount must be  identified by either `discount_uid` or `discount_catalog_object_id`, but not both.
-public struct OrderLineItemPricingBlocklistsBlockedDiscount: Codable {
+public struct OrderLineItemPricingBlocklistsBlockedDiscount: SQCodable {
 	/// The `catalog_object_id` of the discount that should be blocked.  Use this field to block catalog discounts. For ad-hoc discounts use the  `discount_uid` field.
 	var discount_catalog_object_id: String?
 	/// The `uid` of the discount that should be blocked. Use this field to block  ad-hoc discounts. For catalog discounts use the `discount_catalog_object_id` field.
@@ -8280,7 +8280,7 @@ public struct OrderLineItemPricingBlocklistsBlockedDiscount: Codable {
 }
 
 /// A tax to block from applying to a line item. The tax must be  identified by either `tax_uid` or `tax_catalog_object_id`, but not both.
-public struct OrderLineItemPricingBlocklistsBlockedTax: Codable {
+public struct OrderLineItemPricingBlocklistsBlockedTax: SQCodable {
 	/// The `catalog_object_id` of the tax that should be blocked.  Use this field to block catalog taxes. For ad-hoc taxes use the  `tax_uid` field.
 	var tax_catalog_object_id: String?
 	/// The `uid` of the tax that should be blocked. Use this field to block  ad-hoc taxes. For catalog taxes use the `tax_catalog_object_id` field.
@@ -8296,7 +8296,7 @@ public struct OrderLineItemPricingBlocklistsBlockedTax: Codable {
 }
 
 /// Represents a tax that applies to one or more line item in the order.  Fixed-amount, order-scoped taxes are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount the item contributes to the order subtotal.
-public struct OrderLineItemTax: Codable {
+public struct OrderLineItemTax: SQCodable {
 	/// The amount of the money applied by the tax in the order.
 	var applied_money: Money?
 	/// Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see  [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
@@ -8330,7 +8330,7 @@ public struct OrderLineItemTax: Codable {
 }
 
 /// Indicates whether this is a line item or order level tax.
-public enum OrderLineItemTaxScope: String, Codable {
+public enum OrderLineItemTaxScope: String, SQCodable {
 	/// Used for reporting only. The original transaction tax scope is currently not supported by the API.
 	case OTHER_TAX_SCOPE
 	/// The tax should be applied only to line items specified by the `OrderLineItemAppliedTax` reference records.
@@ -8340,7 +8340,7 @@ public enum OrderLineItemTaxScope: String, Codable {
 }
 
 /// Indicates how the tax is applied to the associated line item or order.
-public enum OrderLineItemTaxType: String, Codable {
+public enum OrderLineItemTaxType: String, SQCodable {
 	/// Used for reporting only. The original transaction tax type is currently not supported by the API.
 	case UNKNOWN_TAX
 	/// The tax is an additive tax. The tax amount is added on top of the price. For example, an item with a cost of 1.00 USD and a 10% additive tax would have a total cost to the buyer of 1.10 USD.
@@ -8350,7 +8350,7 @@ public enum OrderLineItemTaxType: String, Codable {
 }
 
 /// A collection of various money amounts.
-public struct OrderMoneyAmounts: Codable {
+public struct OrderMoneyAmounts: SQCodable {
 	/// Money associated with discounts.
 	var discount_money: Money?
 	/// Money associated with service charges.
@@ -8372,7 +8372,7 @@ public struct OrderMoneyAmounts: Codable {
 }
 
 /// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on pre-configured [pricing rules](/reference/square/objects/CatalogPricingRule).
-public struct OrderPricingOptions: Codable {
+public struct OrderPricingOptions: SQCodable {
 	/// The option to determine whether pricing rule-based discounts are automatically applied to an order.
 	var auto_apply_discounts: Bool?
 	/// The option to determine whether rule-based taxes are automatically applied to an order when the criteria of the corresponding rules are met.
@@ -8385,7 +8385,7 @@ public struct OrderPricingOptions: Codable {
 }
 
 /// Contains the measurement unit for a quantity and a precision which specifies the number of digits after the decimal point for decimal quantities.
-public struct OrderQuantityUnit: Codable {
+public struct OrderQuantityUnit: SQCodable {
 	/// A `MeasurementUnit` that represents the unit of measure for the quantity.
 	var measurement_unit: MeasurementUnit?
 	/// For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities like `"1.0"` and `"1.1"`, but not `"1.01"`.  Min: 0. Max: 5.
@@ -8398,7 +8398,7 @@ public struct OrderQuantityUnit: Codable {
 }
 
 /// The set of line items, service charges, taxes, discounts, tips, etc. being returned in an Order.
-public struct OrderReturn: Codable {
+public struct OrderReturn: SQCodable {
 	/// Aggregate monetary value being returned by this Return entry.
 	var return_amounts: OrderMoneyAmounts?
 	/// Collection of references to discounts being returned for an order, including the total applied discount amount to be returned. The discounts must reference a top-level discount ID from the source order.
@@ -8429,7 +8429,7 @@ public struct OrderReturn: Codable {
 }
 
 /// Represents a discount being returned that applies to one or more return line items in an order.  Fixed-amount, order-scoped discounts are distributed across all non-zero return line item totals. The amount distributed to each return line item is relative to that item’s contribution to the order subtotal.
-public struct OrderReturnDiscount: Codable {
+public struct OrderReturnDiscount: SQCodable {
 	/// The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	var amount_money: Money?
 	/// The amount of discount actually applied to this line item. When an amount-based discount is at order-level, this value is different from `amount_money` because the discount is distributed across the line items.
@@ -8463,7 +8463,7 @@ public struct OrderReturnDiscount: Codable {
 }
 
 /// The line item being returned in an Order.
-public struct OrderReturnLineItem: Codable {
+public struct OrderReturnLineItem: SQCodable {
 	/// The list of references to `OrderReturnDiscount` entities applied to the returned line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderReturnDiscount` applied to the returned line item. On reads, the amount applied is populated.
 	var applied_discounts: [OrderLineItemAppliedDiscount]?
 	/// The list of references to `OrderReturnTax` entities applied to the returned line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderReturnTax` applied to the returned line item. On reads, the amount applied is populated.
@@ -8521,7 +8521,7 @@ public struct OrderReturnLineItem: Codable {
 }
 
 /// A line item modifier being returned.
-public struct OrderReturnLineItemModifier: Codable {
+public struct OrderReturnLineItemModifier: SQCodable {
 	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined `CatalogModifier` price.
 	var base_price_money: Money?
 	/// The catalog object id referencing `CatalogModifier`.
@@ -8546,7 +8546,7 @@ public struct OrderReturnLineItemModifier: Codable {
 }
 
 /// Represents the service charge applied to the original order.
-public struct OrderReturnServiceCharge: Codable {
+public struct OrderReturnServiceCharge: SQCodable {
 	/// The amount of a non-percentage based service charge.  Exactly one of `percentage` or `amount_money` should be set.
 	var amount_money: Money?
 	/// The amount of money applied to the order by the service charge, including any inclusive tax amounts, as calculated by Square.  - For fixed-amount service charges, `applied_money` is equal to `amount_money`. - For percentage-based service charges, `applied_money` is the money calculated using the percentage.
@@ -8589,7 +8589,7 @@ public struct OrderReturnServiceCharge: Codable {
 }
 
 /// Represents a tax being returned that applies to one or more return line items in an order.  Fixed-amount, order-scoped taxes are distributed across all non-zero return line item totals. The amount distributed to each return line item is relative to that item’s contribution to the order subtotal.
-public struct OrderReturnTax: Codable {
+public struct OrderReturnTax: SQCodable {
 	/// The amount of the money applied by the tax in an order.
 	var applied_money: Money?
 	/// The catalog object id referencing `CatalogTax`.
@@ -8620,7 +8620,7 @@ public struct OrderReturnTax: Codable {
 }
 
 /// Represents a reward that may be applied to an order if the necessary reward tier criteria are met. Rewards are created through the Loyalty API.
-public struct OrderReward: Codable {
+public struct OrderReward: SQCodable {
 	/// The identifier of the reward.
 	var id: String
 	/// The identifier of the reward tier corresponding to this reward.
@@ -8633,7 +8633,7 @@ public struct OrderReward: Codable {
 }
 
 /// A rounding adjustment of the money being returned. Commonly used to apply Cash Rounding when the minimum unit of account is smaller than the lowest physical denomination of currency.
-public struct OrderRoundingAdjustment: Codable {
+public struct OrderRoundingAdjustment: SQCodable {
 	/// Actual rounding adjustment amount.
 	var amount_money: Money?
 	/// The name of the rounding adjustment from the original sale Order.
@@ -8649,7 +8649,7 @@ public struct OrderRoundingAdjustment: Codable {
 }
 
 /// Represents a service charge applied to an order.
-public struct OrderServiceCharge: Codable {
+public struct OrderServiceCharge: SQCodable {
 	/// The amount of a non-percentage based service charge.  Exactly one of `percentage` or `amount_money` should be set.
 	var amount_money: Money?
 	/// The amount of money applied to the order by the service charge, including any inclusive tax amounts, as calculated by Square.  - For fixed-amount service charges, `applied_money` is equal to `amount_money`. - For percentage-based service charges, `applied_money` is the money calculated using the percentage.
@@ -8692,7 +8692,7 @@ public struct OrderServiceCharge: Codable {
 }
 
 /// Represents a phase in the process of calculating order totals. Service charges are applied __after__ the indicated phase.  [Read more about how order totals are calculated.](https://developer.squareup.com/docs/docs/orders-api/how-it-works#how-totals-are-calculated)
-public enum OrderServiceChargeCalculationPhase: String, Codable {
+public enum OrderServiceChargeCalculationPhase: String, SQCodable {
 	/// The service charge will be applied after discounts, but before taxes.
 	case SUBTOTAL_PHASE
 	/// The service charge will be applied after all discounts and taxes are applied.
@@ -8700,7 +8700,7 @@ public enum OrderServiceChargeCalculationPhase: String, Codable {
 }
 
 /// Represents the origination details of an order.
-public struct OrderSource: Codable {
+public struct OrderSource: SQCodable {
 	/// The name used to identify the place (physical or digital) that an order originates. If unset, the name defaults to the name of the application that created the order.
 	var name: String?
 
@@ -8710,7 +8710,7 @@ public struct OrderSource: Codable {
 }
 
 /// The state of the order.
-public enum OrderState: String, Codable {
+public enum OrderState: String, SQCodable {
 	/// Indicates the order is open. Open orders may be updated.
 	case OPEN
 	/// Indicates the order is completed. Completed orders are fully paid. This is a terminal state.
@@ -8719,7 +8719,7 @@ public enum OrderState: String, Codable {
 	case CANCELED
 }
 
-public struct OrderUpdated: Codable {
+public struct OrderUpdated: SQCodable {
 	/// Timestamp for when the order was created in RFC 3339 format.
 	let created_at: Timestamp?
 	/// The ID of the merchant location this order is associated with.
@@ -8743,7 +8743,7 @@ public struct OrderUpdated: Codable {
 	}
 }
 
-public struct OrderUpdatedObject: Codable {
+public struct OrderUpdatedObject: SQCodable {
 	/// Information about the updated order.
 	var order_updated: OrderUpdated?
 
@@ -8753,7 +8753,7 @@ public struct OrderUpdatedObject: Codable {
 }
 
 /// Defines the fields that are included in requests to the [PayOrder](#endpoint-payorder) endpoint.
-public struct PayOrderRequest: Codable {
+public struct PayOrderRequest: SQCodable {
 	/// A value you specify that uniquely identifies this request among requests you've sent. If you're unsure whether a particular payment request was completed successfully, you can reattempt it with the same idempotency key without worrying about duplicate payments.  See [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
 	var idempotency_key: String
 	/// The version of the order being paid. If not supplied, the latest version will be paid.
@@ -8769,7 +8769,7 @@ public struct PayOrderRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [PayOrder](#endpoint-payorder) endpoint.
-public struct PayOrderResponse: Codable {
+public struct PayOrderResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The paid, updated `order`.
@@ -8782,7 +8782,7 @@ public struct PayOrderResponse: Codable {
 }
 
 /// Represents a payment processed by the Square API.
-public struct Payment: Codable {
+public struct Payment: SQCodable {
 	/// The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	var amount_money: Money?
 	/// The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.
@@ -8875,7 +8875,7 @@ public struct Payment: Codable {
 	}
 }
 
-public struct PaymentOptions: Codable {
+public struct PaymentOptions: SQCodable {
 	/// Indicates whether the Payment objects created from this `TerminalCheckout` will automatically be `COMPLETED` or left in an `APPROVED` state for later modification.
 	var autocomplete: Bool?
 
@@ -8885,7 +8885,7 @@ public struct PaymentOptions: Codable {
 }
 
 /// Represents a refund of a payment made using Square. Contains information about the original payment and the amount of money refunded.
-public struct PaymentRefund: Codable {
+public struct PaymentRefund: SQCodable {
 	/// The amount of money refunded. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).
 	var amount_money: Money
 	/// The amount of money the application developer contributed to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
@@ -8925,7 +8925,7 @@ public struct PaymentRefund: Codable {
 }
 
 /// Represents the Square processing fee.
-public struct ProcessingFee: Codable {
+public struct ProcessingFee: SQCodable {
 	/// The fee amount, which might be negative, that is assessed or adjusted by Square.  Positive values represent funds being assessed, while negative values represent funds being returned.
 	var amount_money: Money?
 	/// The timestamp of when the fee takes effect, in RFC 3339 format.
@@ -8941,7 +8941,7 @@ public struct ProcessingFee: Codable {
 }
 
 /// Indicates the Square product used to generate an inventory change.
-public enum Product: String, Codable {
+public enum Product: String, SQCodable {
 	/// Square Point of Sale application.
 	case SQUARE_POS
 	/// Square Connect APIs (Transactions API, Checkout API).
@@ -8965,12 +8965,12 @@ public enum Product: String, Codable {
 }
 
 /// 
-public enum ProductType: String, Codable {
+public enum ProductType: String, SQCodable {
 	case TERMINAL_API
 }
 
 /// Describes a `PublishInvoice` request.
-public struct PublishInvoiceRequest: Codable {
+public struct PublishInvoiceRequest: SQCodable {
 	/// A unique string that identifies the `PublishInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/docs/working-with-apis/idempotency).
 	var idempotency_key: String?
 	/// The version of the `Invoice` to publish. This must match the current version of the invoice, otherwise the request is rejected.
@@ -8983,7 +8983,7 @@ public struct PublishInvoiceRequest: Codable {
 }
 
 /// Describes a `PublishInvoice` response.
-public struct PublishInvoiceResponse: Codable {
+public struct PublishInvoiceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The published invoice.
@@ -8996,7 +8996,7 @@ public struct PublishInvoiceResponse: Codable {
 }
 
 /// The range of a number value between the specified lower and upper bounds.
-public struct Range: Codable {
+public struct Range: SQCodable {
 	/// The upper bound of the number range.
 	var max: String?
 	/// The lower bound of the number range.
@@ -9009,7 +9009,7 @@ public struct Range: Codable {
 }
 
 /// A request to redeem a loyalty reward.
-public struct RedeemLoyaltyRewardRequest: Codable {
+public struct RedeemLoyaltyRewardRequest: SQCodable {
 	/// A unique string that identifies this `RedeemLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
 	/// The ID of the `location` where the reward is redeemed.
@@ -9022,7 +9022,7 @@ public struct RedeemLoyaltyRewardRequest: Codable {
 }
 
 /// A response that includes the `LoyaltyEvent` published for redeeming the reward.
-public struct RedeemLoyaltyRewardResponse: Codable {
+public struct RedeemLoyaltyRewardResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The `LoyaltyEvent` for redeeming the reward.
@@ -9035,7 +9035,7 @@ public struct RedeemLoyaltyRewardResponse: Codable {
 }
 
 /// Represents a refund processed for a Square transaction.
-public struct Refund: Codable {
+public struct Refund: SQCodable {
 	/// Additional recipients (other than the merchant) receiving a portion of this refund. For example, fees assessed on a refund of a purchase by a third party integration.
 	var additional_recipients: [AdditionalRecipient]?
 	/// The amount of money refunded to the buyer.
@@ -9072,7 +9072,7 @@ public struct Refund: Codable {
 }
 
 /// Refunds a payment.
-public struct RefundPaymentRequest: Codable {
+public struct RefundPaymentRequest: SQCodable {
 	/// The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	var amount_money: Money
 	/// The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example,  US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included  when taking the payment. This is part of the application fee scenario the API supports. For more  information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).
@@ -9094,7 +9094,7 @@ public struct RefundPaymentRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [RefundPayment](#endpoint-refunds-refundpayment) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
-public struct RefundPaymentResponse: Codable {
+public struct RefundPaymentResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The successfully created `PaymentRefund`.
@@ -9107,7 +9107,7 @@ public struct RefundPaymentResponse: Codable {
 }
 
 /// Indicates a refund's current status.
-public enum RefundStatus: String, Codable {
+public enum RefundStatus: String, SQCodable {
 	/// The refund is pending.
 	case PENDING
 	/// The refund has been approved by Square.
@@ -9119,7 +9119,7 @@ public enum RefundStatus: String, Codable {
 }
 
 /// Defines the parameters that can be included in the body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.
-public struct RegisterDomainRequest: Codable {
+public struct RegisterDomainRequest: SQCodable {
 	/// A domain name as described in RFC-1034 that will be registered with ApplePay
 	var domain_name: String
 
@@ -9129,7 +9129,7 @@ public struct RegisterDomainRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` will be present in a given response (never both).
-public struct RegisterDomainResponse: Codable {
+public struct RegisterDomainResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// Status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
@@ -9142,7 +9142,7 @@ public struct RegisterDomainResponse: Codable {
 }
 
 /// The status of domain registration.
-public enum RegisterDomainResponseStatus: String, Codable {
+public enum RegisterDomainResponseStatus: String, SQCodable {
 	/// The domain is added, but not verified.
 	case PENDING
 	/// The domain is added and verified. It can be used to accept Apple Pay transactions.
@@ -9150,14 +9150,14 @@ public enum RegisterDomainResponseStatus: String, Codable {
 }
 
 /// Defines the parameters for a `RemoveDisputeEvidence` request.
-public struct RemoveDisputeEvidenceRequest: Codable {
+public struct RemoveDisputeEvidenceRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields in a `RemoveDisputeEvidence` response.
-public struct RemoveDisputeEvidenceResponse: Codable {
+public struct RemoveDisputeEvidenceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 
@@ -9167,14 +9167,14 @@ public struct RemoveDisputeEvidenceResponse: Codable {
 }
 
 /// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](#endpoint-removegroupfromcustomer) endpoint.
-public struct RemoveGroupFromCustomerRequest: Codable {
+public struct RemoveGroupFromCustomerRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](#endpoint-removegroupfromcustomer) endpoint.
-public struct RemoveGroupFromCustomerResponse: Codable {
+public struct RemoveGroupFromCustomerResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -9183,7 +9183,7 @@ public struct RemoveGroupFromCustomerResponse: Codable {
 	}
 }
 
-public struct RenewTokenRequest: Codable {
+public struct RenewTokenRequest: SQCodable {
 	/// The token you want to renew.
 	var access_token: String?
 
@@ -9192,7 +9192,7 @@ public struct RenewTokenRequest: Codable {
 	}
 }
 
-public struct RenewTokenResponse: Codable {
+public struct RenewTokenResponse: SQCodable {
 	/// The renewed access token. This value might be different from the `access_token` you provided in your request. You provide this token in a header with every request to Connect API endpoints. See [Request and response headers](https://developer.squareup.com/docs/api/connect/v2/#requestandresponseheaders) for the format of this header.
 	var access_token: String?
 	/// The date when access_token expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
@@ -9216,13 +9216,13 @@ public struct RenewTokenResponse: Codable {
 	}
 }
 
-public struct RetrieveBookingRequest: Codable {
+public struct RetrieveBookingRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveBookingResponse: Codable {
+public struct RetrieveBookingResponse: SQCodable {
 	/// The booking that was requested.
 	var booking: Booking?
 	/// Any errors that occurred during the request.
@@ -9234,13 +9234,13 @@ public struct RetrieveBookingResponse: Codable {
 	}
 }
 
-public struct RetrieveBusinessBookingProfileRequest: Codable {
+public struct RetrieveBusinessBookingProfileRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveBusinessBookingProfileResponse: Codable {
+public struct RetrieveBusinessBookingProfileResponse: SQCodable {
 	/// The seller's booking profile.
 	var business_booking_profile: BusinessBookingProfile?
 	/// Any errors that occurred during the request.
@@ -9252,7 +9252,7 @@ public struct RetrieveBusinessBookingProfileResponse: Codable {
 	}
 }
 
-public struct RetrieveCashDrawerShiftRequest: Codable {
+public struct RetrieveCashDrawerShiftRequest: SQCodable {
 	/// The ID of the location to retrieve cash drawer shifts from.
 	var location_id: String
 
@@ -9261,7 +9261,7 @@ public struct RetrieveCashDrawerShiftRequest: Codable {
 	}
 }
 
-public struct RetrieveCashDrawerShiftResponse: Codable {
+public struct RetrieveCashDrawerShiftResponse: SQCodable {
 	/// The cash drawer shift queried for.
 	var cash_drawer_shift: CashDrawerShift?
 	/// Any errors that occurred during the request.
@@ -9273,7 +9273,7 @@ public struct RetrieveCashDrawerShiftResponse: Codable {
 	}
 }
 
-public struct RetrieveCatalogObjectRequest: Codable {
+public struct RetrieveCatalogObjectRequest: SQCodable {
 	/// Requests objects as of a specific version of the catalog. This allows you to retrieve historical versions of objects. The value to retrieve a specific version of an object can be found in the version field of `CatalogObject`s.
 	var catalog_version: Int?
 	/// If `true`, the response will include additional objects that are related to the requested object, as follows:  If the `object` field of the response contains a `CatalogItem`, its associated `CatalogCategory`, `CatalogTax`, `CatalogImage` and `CatalogModifierList` objects will be returned in the `related_objects` field of the response. If the `object` field of the response contains a `CatalogItemVariation`, its parent `CatalogItem` will be returned in the `related_objects` field of the response.  Default value: `false`
@@ -9285,7 +9285,7 @@ public struct RetrieveCatalogObjectRequest: Codable {
 	}
 }
 
-public struct RetrieveCatalogObjectResponse: Codable {
+public struct RetrieveCatalogObjectResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The `CatalogObject`s returned.
@@ -9301,14 +9301,14 @@ public struct RetrieveCatalogObjectResponse: Codable {
 }
 
 /// Defines the fields that can be provided in a request to the [RetrieveCustomerGroup](#endpoint-retrievecustomergroup) endpoint.
-public struct RetrieveCustomerGroupRequest: Codable {
+public struct RetrieveCustomerGroupRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](#endpoint-retrievecustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
-public struct RetrieveCustomerGroupResponse: Codable {
+public struct RetrieveCustomerGroupResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The retrieved customer group.
@@ -9321,14 +9321,14 @@ public struct RetrieveCustomerGroupResponse: Codable {
 }
 
 /// Defines the fields that are included in requests to the RetrieveCustomer endpoint.
-public struct RetrieveCustomerRequest: Codable {
+public struct RetrieveCustomerRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the RetrieveCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
-public struct RetrieveCustomerResponse: Codable {
+public struct RetrieveCustomerResponse: SQCodable {
 	/// The requested customer.
 	var customer: Customer?
 	/// Any errors that occurred during the request.
@@ -9341,14 +9341,14 @@ public struct RetrieveCustomerResponse: Codable {
 }
 
 /// Defines the valid parameters for requests to __RetrieveCustomerSegmentRequest__.
-public struct RetrieveCustomerSegmentRequest: Codable {
+public struct RetrieveCustomerSegmentRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields included in the response body for requests to __RetrieveCustomerSegment__.  One of `errors` or `segment` is present in a given response (never both).
-public struct RetrieveCustomerSegmentResponse: Codable {
+public struct RetrieveCustomerSegmentResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The retrieved customer segment.
@@ -9361,14 +9361,14 @@ public struct RetrieveCustomerSegmentResponse: Codable {
 }
 
 /// Defines the parameters for a `RetrieveDisputeEvidence` request.
-public struct RetrieveDisputeEvidenceRequest: Codable {
+public struct RetrieveDisputeEvidenceRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields in a `RetrieveDisputeEvidence` response.
-public struct RetrieveDisputeEvidenceResponse: Codable {
+public struct RetrieveDisputeEvidenceResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// Metadata about the dispute evidence file.
@@ -9381,14 +9381,14 @@ public struct RetrieveDisputeEvidenceResponse: Codable {
 }
 
 /// Defines the request parameters for the `RetrieveDispute` endpoint.
-public struct RetrieveDisputeRequest: Codable {
+public struct RetrieveDisputeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines fields in a `RetrieveDispute` response.
-public struct RetrieveDisputeResponse: Codable {
+public struct RetrieveDisputeResponse: SQCodable {
 	/// Details about the requested `Dispute`.
 	var dispute: Dispute?
 	/// Information about errors encountered during the request.
@@ -9400,13 +9400,13 @@ public struct RetrieveDisputeResponse: Codable {
 	}
 }
 
-public struct RetrieveEmployeeRequest: Codable {
+public struct RetrieveEmployeeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveEmployeeResponse: Codable {
+public struct RetrieveEmployeeResponse: SQCodable {
 	var employee: Employee?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
@@ -9417,13 +9417,13 @@ public struct RetrieveEmployeeResponse: Codable {
 	}
 }
 
-public struct RetrieveInventoryAdjustmentRequest: Codable {
+public struct RetrieveInventoryAdjustmentRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveInventoryAdjustmentResponse: Codable {
+public struct RetrieveInventoryAdjustmentResponse: SQCodable {
 	/// The requested `InventoryAdjustment`.
 	var adjustment: InventoryAdjustment?
 	/// Any errors that occurred during the request.
@@ -9435,7 +9435,7 @@ public struct RetrieveInventoryAdjustmentResponse: Codable {
 	}
 }
 
-public struct RetrieveInventoryChangesRequest: Codable {
+public struct RetrieveInventoryChangesRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	var cursor: String?
 	/// The `Location` IDs to look up as a comma-separated list. An empty list queries all locations.
@@ -9447,7 +9447,7 @@ public struct RetrieveInventoryChangesRequest: Codable {
 	}
 }
 
-public struct RetrieveInventoryChangesResponse: Codable {
+public struct RetrieveInventoryChangesResponse: SQCodable {
 	/// The set of inventory changes for the requested object and locations.
 	var changes: [InventoryChange]?
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -9462,7 +9462,7 @@ public struct RetrieveInventoryChangesResponse: Codable {
 	}
 }
 
-public struct RetrieveInventoryCountRequest: Codable {
+public struct RetrieveInventoryCountRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) guide for more information.
 	var cursor: String?
 	/// The `Location` IDs to look up as a comma-separated list. An empty list queries all locations.
@@ -9474,7 +9474,7 @@ public struct RetrieveInventoryCountRequest: Codable {
 	}
 }
 
-public struct RetrieveInventoryCountResponse: Codable {
+public struct RetrieveInventoryCountResponse: SQCodable {
 	/// The current calculated inventory counts for the requested object and locations.
 	var counts: [InventoryCount]?
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) guide for more information.
@@ -9489,13 +9489,13 @@ public struct RetrieveInventoryCountResponse: Codable {
 	}
 }
 
-public struct RetrieveInventoryPhysicalCountRequest: Codable {
+public struct RetrieveInventoryPhysicalCountRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveInventoryPhysicalCountResponse: Codable {
+public struct RetrieveInventoryPhysicalCountResponse: SQCodable {
 	/// The requested `InventoryPhysicalCount`.
 	var count: InventoryPhysicalCount?
 	/// Any errors that occurred during the request.
@@ -9508,14 +9508,14 @@ public struct RetrieveInventoryPhysicalCountResponse: Codable {
 }
 
 /// Defines the fields that are included in the request body for the __RetrieveLocation__ endpoint.
-public struct RetrieveLocationRequest: Codable {
+public struct RetrieveLocationRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that the [RetrieveLocation](#endpoint-retrievelocation) endpoint returns in a response.
-public struct RetrieveLocationResponse: Codable {
+public struct RetrieveLocationResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The requested location.
@@ -9528,14 +9528,14 @@ public struct RetrieveLocationResponse: Codable {
 }
 
 /// A request to retrieve a loyalty account.
-public struct RetrieveLoyaltyAccountRequest: Codable {
+public struct RetrieveLoyaltyAccountRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response that includes the loyalty account.
-public struct RetrieveLoyaltyAccountResponse: Codable {
+public struct RetrieveLoyaltyAccountResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The loyalty account.
@@ -9548,14 +9548,14 @@ public struct RetrieveLoyaltyAccountResponse: Codable {
 }
 
 /// A request to retrieve a loyalty reward.
-public struct RetrieveLoyaltyRewardRequest: Codable {
+public struct RetrieveLoyaltyRewardRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// A response that includes the loyalty reward.
-public struct RetrieveLoyaltyRewardResponse: Codable {
+public struct RetrieveLoyaltyRewardResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The loyalty reward retrieved.
@@ -9568,14 +9568,14 @@ public struct RetrieveLoyaltyRewardResponse: Codable {
 }
 
 /// Request object for the [RetrieveMerchant](#endpoint-retrievemerchant) endpoint.
-public struct RetrieveMerchantRequest: Codable {
+public struct RetrieveMerchantRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// The response object returned by the [RetrieveMerchant](#endpoint-retrieveMerchant) endpoint.
-public struct RetrieveMerchantResponse: Codable {
+public struct RetrieveMerchantResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `Merchant` object.
@@ -9587,13 +9587,13 @@ public struct RetrieveMerchantResponse: Codable {
 	}
 }
 
-public struct RetrieveObsMigrationProfileRequest: Codable {
+public struct RetrieveObsMigrationProfileRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveObsMigrationProfileResponse: Codable {
+public struct RetrieveObsMigrationProfileResponse: SQCodable {
 	/// The text of the label of the CTA button beneath the banner.
 	var banner_cta_text: String?
 	/// The URL to link to when the CTA button is clicked.
@@ -9614,13 +9614,13 @@ public struct RetrieveObsMigrationProfileResponse: Codable {
 	}
 }
 
-public struct RetrieveOrderRequest: Codable {
+public struct RetrieveOrderRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveOrderResponse: Codable {
+public struct RetrieveOrderResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested order.
@@ -9633,14 +9633,14 @@ public struct RetrieveOrderResponse: Codable {
 }
 
 /// Defines parameters in a  [RetrieveSubscription](#endpoint-subscriptions-retrievesubscription) endpoint request.
-public struct RetrieveSubscriptionRequest: Codable {
+public struct RetrieveSubscriptionRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response from the [RetrieveSubscription](#endpoint-subscriptions-retrievesubscription) endpoint.
-public struct RetrieveSubscriptionResponse: Codable {
+public struct RetrieveSubscriptionResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The subscription retrieved.
@@ -9652,13 +9652,13 @@ public struct RetrieveSubscriptionResponse: Codable {
 	}
 }
 
-public struct RetrieveTeamMemberBookingProfileRequest: Codable {
+public struct RetrieveTeamMemberBookingProfileRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct RetrieveTeamMemberBookingProfileResponse: Codable {
+public struct RetrieveTeamMemberBookingProfileResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The returned team member booking profile.
@@ -9671,14 +9671,14 @@ public struct RetrieveTeamMemberBookingProfileResponse: Codable {
 }
 
 /// Represents a retrieve request for a `TeamMember` object.
-public struct RetrieveTeamMemberRequest: Codable {
+public struct RetrieveTeamMemberRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Represents a response from a retrieve request, containing a `TeamMember` object or error messages.
-public struct RetrieveTeamMemberResponse: Codable {
+public struct RetrieveTeamMemberResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully retrieved `TeamMember` object.
@@ -9690,14 +9690,14 @@ public struct RetrieveTeamMemberResponse: Codable {
 	}
 }
 
-public struct RetrieveTransactionRequest: Codable {
+public struct RetrieveTransactionRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](#endpont-retrievetransaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
-public struct RetrieveTransactionResponse: Codable {
+public struct RetrieveTransactionResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested transaction.
@@ -9710,14 +9710,14 @@ public struct RetrieveTransactionResponse: Codable {
 }
 
 /// Represents a retrieve request for the wage setting of a team member
-public struct RetrieveWageSettingRequest: Codable {
+public struct RetrieveWageSettingRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Represents a response from a retrieve request, containing the specified `WageSetting` object or error messages.
-public struct RetrieveWageSettingResponse: Codable {
+public struct RetrieveWageSettingResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully retrieved `WageSetting` object.
@@ -9729,7 +9729,7 @@ public struct RetrieveWageSettingResponse: Codable {
 	}
 }
 
-public struct RevokeTokenRequest: Codable {
+public struct RevokeTokenRequest: SQCodable {
 	/// The access token of the merchant whose token you want to revoke. Do not provide a value for merchant_id if you provide this parameter.
 	var access_token: String?
 	/// The Square issued ID for your application, available from the [application dashboard](https://connect.squareup.com/apps).
@@ -9747,7 +9747,7 @@ public struct RevokeTokenRequest: Codable {
 	}
 }
 
-public struct RevokeTokenResponse: Codable {
+public struct RevokeTokenResponse: SQCodable {
 	/// If the request is successful, this is true.
 	var success: Bool?
 
@@ -9757,7 +9757,7 @@ public struct RevokeTokenResponse: Codable {
 }
 
 /// Represents fraud risk information for the associated payment.  When you take a payment through Square's Payments API (using the `CreatePayment` endpoint), Square evaluates it and assigns a risk level to the payment. Sellers can use this information to determine the course of action (for example, provide the goods/services or refund the payment).
-public struct RiskEvaluation: Codable {
+public struct RiskEvaluation: SQCodable {
 	/// The timestamp when payment risk was evaluated, in RFC3339 format.
 	var created_at: Timestamp?
 	/// The risk level associated with the payment
@@ -9770,7 +9770,7 @@ public struct RiskEvaluation: Codable {
 }
 
 /// 
-public enum RiskEvaluationRiskLevel: String, Codable {
+public enum RiskEvaluationRiskLevel: String, SQCodable {
 	/// Indicates Square is still evaluating the payment.
 	case PENDING
 	/// Indicates payment risk is within the normal range.
@@ -9782,7 +9782,7 @@ public enum RiskEvaluationRiskLevel: String, Codable {
 }
 
 /// A query filter to search for availabilities by.
-public struct SearchAvailabilityFilter: Codable {
+public struct SearchAvailabilityFilter: SQCodable {
 	/// The query expression to search for availabilities for an existing booking by matching the specified `booking_id` value. This is commonly used to reschedule an appointment. If this expression is specified, the `location_id` and `segment_filters` expressions are not allowed.
 	var booking_id: String?
 	/// The query expression to search for availabilities matching the specified seller location IDs. This query expression is not applicable when `booking_id` is present.
@@ -9801,7 +9801,7 @@ public struct SearchAvailabilityFilter: Codable {
 }
 
 /// Query conditions to search for availabilities of bookings.
-public struct SearchAvailabilityQuery: Codable {
+public struct SearchAvailabilityQuery: SQCodable {
 	/// The query filter to search for availabilities of existing bookings.
 	var filter: SearchAvailabilityFilter
 
@@ -9810,7 +9810,7 @@ public struct SearchAvailabilityQuery: Codable {
 	}
 }
 
-public struct SearchAvailabilityRequest: Codable {
+public struct SearchAvailabilityRequest: SQCodable {
 	/// Query conditions used to filter results.
 	var query: SearchAvailabilityQuery
 
@@ -9819,7 +9819,7 @@ public struct SearchAvailabilityRequest: Codable {
 	}
 }
 
-public struct SearchAvailabilityResponse: Codable {
+public struct SearchAvailabilityResponse: SQCodable {
 	/// List of slots available for booking.
 	var availabilities: [Availability]?
 	/// Any errors that occurred during the request.
@@ -9832,7 +9832,7 @@ public struct SearchAvailabilityResponse: Codable {
 }
 
 /// Defines the request body for the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint.
-public struct SearchCatalogItemsRequest: Codable {
+public struct SearchCatalogItemsRequest: SQCodable {
 	/// The category id query expression to return items containing the specified category IDs.
 	var category_ids: [String]?
 	/// The pagination token, returned in the previous response, used to fetch the next batch of pending results.
@@ -9866,7 +9866,7 @@ public struct SearchCatalogItemsRequest: Codable {
 }
 
 /// Defines supported stock levels of the item inventory.
-public enum SearchCatalogItemsRequestStockLevel: String, Codable {
+public enum SearchCatalogItemsRequestStockLevel: String, SQCodable {
 	/// The item inventory is empty.
 	case OUT
 	/// The item inventory is low.
@@ -9874,7 +9874,7 @@ public enum SearchCatalogItemsRequestStockLevel: String, Codable {
 }
 
 /// Defines the response body returned from the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint.
-public struct SearchCatalogItemsResponse: Codable {
+public struct SearchCatalogItemsResponse: SQCodable {
 	/// Pagination token used in the next request to return more of the search result.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -9892,7 +9892,7 @@ public struct SearchCatalogItemsResponse: Codable {
 	}
 }
 
-public struct SearchCatalogObjectsRequest: Codable {
+public struct SearchCatalogObjectsRequest: SQCodable {
 	/// Return objects modified after this [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates), in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`. The timestamp is exclusive - objects with a timestamp equal to `begin_time` will not be included in the response.
 	var begin_time: Timestamp?
 	/// The pagination cursor returned in the previous response. Leave unset for an initial request. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
@@ -9919,7 +9919,7 @@ public struct SearchCatalogObjectsRequest: Codable {
 	}
 }
 
-public struct SearchCatalogObjectsResponse: Codable {
+public struct SearchCatalogObjectsResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -9941,7 +9941,7 @@ public struct SearchCatalogObjectsResponse: Codable {
 }
 
 /// Defines the fields included in the request body for the SearchCustomers endpoint.
-public struct SearchCustomersRequest: Codable {
+public struct SearchCustomersRequest: SQCodable {
 	/// Include the pagination cursor in subsequent calls to this endpoint to retrieve the next set of results associated with the original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 	/// A limit on the number of results to be returned in a single page. The limit is advisory - the implementation may return more or fewer results. If the supplied limit is negative, zero, or is higher than the maximum limit of 100, it will be ignored.
@@ -9957,7 +9957,7 @@ public struct SearchCustomersRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the SearchCustomers endpoint.  One of `errors` or `customers` is present in a given response (never both).
-public struct SearchCustomersResponse: Codable {
+public struct SearchCustomersResponse: SQCodable {
 	/// A pagination cursor that can be used during subsequent calls to SearchCustomers to retrieve the next set of results associated with the original query. Pagination cursors are only present when a request succeeds and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
 	/// An array of `Customer` objects that match a query.
@@ -9973,7 +9973,7 @@ public struct SearchCustomersResponse: Codable {
 }
 
 /// Describes a `SearchInvoices` request.
-public struct SearchInvoicesRequest: Codable {
+public struct SearchInvoicesRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// The maximum number of invoices to return (200 is the maximum `limit`).  If not provided, the server  uses a default limit of 100 invoices.
@@ -9989,7 +9989,7 @@ public struct SearchInvoicesRequest: Codable {
 }
 
 /// Describes a `SearchInvoices` response.
-public struct SearchInvoicesResponse: Codable {
+public struct SearchInvoicesResponse: SQCodable {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// Information about errors encountered during the request.
@@ -10005,7 +10005,7 @@ public struct SearchInvoicesResponse: Codable {
 }
 
 /// A request to search for loyalty accounts.
-public struct SearchLoyaltyAccountsRequest: Codable {
+public struct SearchLoyaltyAccountsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to  this endpoint. Provide this to retrieve the next set of  results for the original query.  For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
 	/// The maximum number of results to include in the response.
@@ -10021,7 +10021,7 @@ public struct SearchLoyaltyAccountsRequest: Codable {
 }
 
 /// The search criteria for the loyalty accounts.
-public struct SearchLoyaltyAccountsRequestLoyaltyAccountQuery: Codable {
+public struct SearchLoyaltyAccountsRequestLoyaltyAccountQuery: SQCodable {
 	/// The set of customer IDs to use in the loyalty account search.    This cannot be combined with `mappings`.    Max: 30 customer IDs
 	var customer_ids: [String]?
 	/// The set of mappings to use in the loyalty account search.    This cannot be combined with `customer_ids`.    Max: 30 mappings
@@ -10034,7 +10034,7 @@ public struct SearchLoyaltyAccountsRequestLoyaltyAccountQuery: Codable {
 }
 
 /// A response that includes loyalty accounts that satisfy the search criteria.
-public struct SearchLoyaltyAccountsResponse: Codable {
+public struct SearchLoyaltyAccountsResponse: SQCodable {
 	/// The pagination cursor to use in a subsequent  request. If empty, this is the final response. For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -10050,7 +10050,7 @@ public struct SearchLoyaltyAccountsResponse: Codable {
 }
 
 /// A request to search for loyalty events.
-public struct SearchLoyaltyEventsRequest: Codable {
+public struct SearchLoyaltyEventsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. For more information, see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
 	/// The maximum number of results to include in the response.  The last page might contain fewer events.  The default is 30 events.
@@ -10066,7 +10066,7 @@ public struct SearchLoyaltyEventsRequest: Codable {
 }
 
 /// A response that contains loyalty events that satisfy the search  criteria, in order by the `created_at` date.
-public struct SearchLoyaltyEventsResponse: Codable {
+public struct SearchLoyaltyEventsResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent  request. If empty, this is the final response.  For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -10082,7 +10082,7 @@ public struct SearchLoyaltyEventsResponse: Codable {
 }
 
 /// A request to search for loyalty rewards.
-public struct SearchLoyaltyRewardsRequest: Codable {
+public struct SearchLoyaltyRewardsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to  this endpoint. Provide this to retrieve the next set of  results for the original query. For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
 	/// The maximum number of results to return in the response.
@@ -10098,7 +10098,7 @@ public struct SearchLoyaltyRewardsRequest: Codable {
 }
 
 /// The set of search requirements.
-public struct SearchLoyaltyRewardsRequestLoyaltyRewardQuery: Codable {
+public struct SearchLoyaltyRewardsRequestLoyaltyRewardQuery: SQCodable {
 	/// The ID of the `loyalty account` to which the loyalty reward belongs.
 	var loyalty_account_id: String
 	/// The status of the loyalty reward. See [LoyaltyRewardStatus](#type-loyaltyrewardstatus) for possible values
@@ -10111,7 +10111,7 @@ public struct SearchLoyaltyRewardsRequestLoyaltyRewardQuery: Codable {
 }
 
 /// A response that includes the loyalty rewards satisfying the search criteria.
-public struct SearchLoyaltyRewardsResponse: Codable {
+public struct SearchLoyaltyRewardsResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent  request. If empty, this is the final response.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -10127,7 +10127,7 @@ public struct SearchLoyaltyRewardsResponse: Codable {
 }
 
 /// Filter based on Order `customer_id` and any Tender `customer_id` associated with the Order. Does not filter based on the [FulfillmentRecipient](#type-orderfulfillmentrecipient) `customer_id`.
-public struct SearchOrdersCustomerFilter: Codable {
+public struct SearchOrdersCustomerFilter: SQCodable {
 	/// List of customer IDs to filter by.  Max: 10 customer IDs.
 	var customer_ids: [String]?
 
@@ -10137,7 +10137,7 @@ public struct SearchOrdersCustomerFilter: Codable {
 }
 
 /// Filter for `Order` objects based on whether their `CREATED_AT`, `CLOSED_AT` or `UPDATED_AT` timestamps fall within a specified time range. You can specify the time range and which timestamp to filter for. You can filter for only one time range at a time.  For each time range, the start time and end time are inclusive. If the end time is absent, it defaults to the time of the first request for the cursor.  __Important:__ If you use the DateTimeFilter in a SearchOrders query, you must also set the `sort_field` in [OrdersSort](#type-searchorderordersort) to the same field you filter for. For example, if you set the `CLOSED_AT` field in DateTimeFilter, you must also set the `sort_field` in SearchOrdersSort to `CLOSED_AT`. Otherwise, SearchOrders will throw an error. [Learn more about filtering orders by time range](/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range).
-public struct SearchOrdersDateTimeFilter: Codable {
+public struct SearchOrdersDateTimeFilter: SQCodable {
 	/// Time range for filtering on the `closed_at` timestamp. If you use this value, you must also set the `sort_field` in the OrdersSearchSort object to `CLOSED_AT`.
 	var closed_at: TimeRange?
 	/// Time range for filtering on the `created_at` timestamp. If you use this value, you must also set the `sort_field` in the OrdersSearchSort object to `CREATED_AT`.
@@ -10153,7 +10153,7 @@ public struct SearchOrdersDateTimeFilter: Codable {
 }
 
 /// Filtering criteria to use for a SearchOrders request. Multiple filters will be ANDed together.
-public struct SearchOrdersFilter: Codable {
+public struct SearchOrdersFilter: SQCodable {
 	/// Filter by customers associated with the order.
 	var customer_filter: SearchOrdersCustomerFilter?
 	/// Filter for results within a time range.  __Important:__ If you filter for orders by time range, you must set SearchOrdersSort to sort by the same field. [Learn more about filtering orders by time range](https://developer.squareup.com/docs/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range)
@@ -10175,7 +10175,7 @@ public struct SearchOrdersFilter: Codable {
 }
 
 /// Filter based on [Order Fulfillment](#type-orderfulfillment) information.
-public struct SearchOrdersFulfillmentFilter: Codable {
+public struct SearchOrdersFulfillmentFilter: SQCodable {
 	/// List of `fulfillment states` to filter for. Will return orders if any of its fulfillments match any of the fulfillment states listed in this field. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
 	var fulfillment_states: OrderFulfillmentState?
 	/// List of `fulfillment types` to filter for. Will return orders if any of its fulfillments match any of the fulfillment types listed in this field. See [OrderFulfillmentType](#type-orderfulfillmenttype) for possible values
@@ -10188,7 +10188,7 @@ public struct SearchOrdersFulfillmentFilter: Codable {
 }
 
 /// Contains query criteria for the search.
-public struct SearchOrdersQuery: Codable {
+public struct SearchOrdersQuery: SQCodable {
 	/// Criteria to filter results by.
 	var filter: SearchOrdersFilter?
 	/// Criteria to sort results by.
@@ -10201,7 +10201,7 @@ public struct SearchOrdersQuery: Codable {
 }
 
 /// The request does not have any required fields. When given no query criteria, SearchOrders will return all results for all of the merchant’s locations. When fetching additional pages using a `cursor`, the `query` must be equal to the `query` used to fetch the first page of results.
-public struct SearchOrdersRequest: Codable {
+public struct SearchOrdersRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
 	/// Maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page.  Default: `500`
@@ -10223,7 +10223,7 @@ public struct SearchOrdersRequest: Codable {
 }
 
 /// Only one of `order_entries` or `orders` fields will be set, depending on whether `return_entries` was set on the [SearchOrdersRequest](#type-searchorderrequest).
-public struct SearchOrdersResponse: Codable {
+public struct SearchOrdersResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
 	/// `Errors` encountered during the search.
@@ -10242,7 +10242,7 @@ public struct SearchOrdersResponse: Codable {
 }
 
 /// Sorting criteria for a SearchOrders request. Results can only be sorted by a timestamp field.
-public struct SearchOrdersSort: Codable {
+public struct SearchOrdersSort: SQCodable {
 	/// The field to sort by.  __Important:__ When using a `DateTimeFilter`, `sort_field` must match the timestamp field that the DateTimeFilter uses to filter. For example, If you set your `sort_field` to `CLOSED_AT` and you use a DateTimeFilter, your DateTimeFilter must filter for orders by their `CLOSED_AT` date. If this field does not match the timestamp field in `DateTimeFilter`, SearchOrders will return an error.  Default: `CREATED_AT`. See [SearchOrdersSortField](#type-searchorderssortfield) for possible values
 	var sort_field: SearchOrdersSortField
 	/// The chronological order in which results are returned. Defaults to `DESC`. See [SortOrder](#type-sortorder) for possible values
@@ -10255,7 +10255,7 @@ public struct SearchOrdersSort: Codable {
 }
 
 /// Specifies which timestamp to use to sort SearchOrder results.
-public enum SearchOrdersSortField: String, Codable {
+public enum SearchOrdersSortField: String, SQCodable {
 	/// Time when the order was created in RFC-3339 format. If you are also filtering for a time range in this query, you must set the `CREATED_AT` field in your DateTimeFilter.
 	case CREATED_AT
 	/// Time when the order last updated in RFC-3339 format. If you are also filtering for a time range in this query, you must set the `UPDATED_AT` field in your DateTimeFilter.
@@ -10265,7 +10265,7 @@ public enum SearchOrdersSortField: String, Codable {
 }
 
 /// Filter based on order `source` information.
-public struct SearchOrdersSourceFilter: Codable {
+public struct SearchOrdersSourceFilter: SQCodable {
 	/// Filters by `Source` `name`. Will return any orders with with a `source.name` that matches any of the listed source names.  Max: 10 source names.
 	var source_names: [String]?
 
@@ -10275,7 +10275,7 @@ public struct SearchOrdersSourceFilter: Codable {
 }
 
 /// Filter by current Order `state`.
-public struct SearchOrdersStateFilter: Codable {
+public struct SearchOrdersStateFilter: SQCodable {
 	/// States to filter for. See [OrderState](#type-orderstate) for possible values
 	var states: OrderState
 
@@ -10285,7 +10285,7 @@ public struct SearchOrdersStateFilter: Codable {
 }
 
 /// A request for a filtered and sorted set of `Shift` objects.
-public struct SearchShiftsRequest: Codable {
+public struct SearchShiftsRequest: SQCodable {
 	/// opaque cursor for fetching the next page.
 	var cursor: String?
 	/// number of resources in a page (200 by default).
@@ -10301,7 +10301,7 @@ public struct SearchShiftsRequest: Codable {
 }
 
 /// The response to a request for `Shift` objects. Contains the requested `Shift` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct SearchShiftsResponse: Codable {
+public struct SearchShiftsResponse: SQCodable {
 	/// Opaque cursor for fetching the next page.
 	var cursor: String?
 	/// Any errors that occurred during the request.
@@ -10317,7 +10317,7 @@ public struct SearchShiftsResponse: Codable {
 }
 
 /// Represents a set of SearchSubscriptionsQuery filters used to limit the set of Subscriptions returned by SearchSubscriptions.
-public struct SearchSubscriptionsFilter: Codable {
+public struct SearchSubscriptionsFilter: SQCodable {
 	/// A filter to select subscriptions based on the customer.
 	var customer_ids: [String]?
 	/// A filter to select subscriptions based the location.
@@ -10330,7 +10330,7 @@ public struct SearchSubscriptionsFilter: Codable {
 }
 
 /// Represents a query (including filtering criteria) used to search for subscriptions.
-public struct SearchSubscriptionsQuery: Codable {
+public struct SearchSubscriptionsQuery: SQCodable {
 	/// A list of filtering criteria.
 	var filter: SearchSubscriptionsFilter?
 
@@ -10340,7 +10340,7 @@ public struct SearchSubscriptionsQuery: Codable {
 }
 
 /// Defines parameters in a [SearchSubscriptions](#endpoint-subscriptions-searchsubscriptions) endpoint  request.
-public struct SearchSubscriptionsRequest: Codable {
+public struct SearchSubscriptionsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// The upper limit on the number of subscriptions to return  in the response.   Default: `200`
@@ -10356,7 +10356,7 @@ public struct SearchSubscriptionsRequest: Codable {
 }
 
 /// Defines the fields that are included in the response from the [SearchSubscriptions](#endpoint-subscriptions-searchsubscriptions) endpoint.
-public struct SearchSubscriptionsResponse: Codable {
+public struct SearchSubscriptionsResponse: SQCodable {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of subscriptions.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// Information about errors encountered during the request.
@@ -10372,7 +10372,7 @@ public struct SearchSubscriptionsResponse: Codable {
 }
 
 /// Represents a filter used in a search for `TeamMember` objects. `AND` logic is applied between the individual fields, and `OR` logic is applied within list-based fields. For example, setting this filter value, ``` filter = (locations_ids = ["A", "B"], status = ACTIVE) ``` returns only active team members assigned to either location "A" or "B".
-public struct SearchTeamMembersFilter: Codable {
+public struct SearchTeamMembersFilter: SQCodable {
 	/// When present, filter by team members assigned to the specified locations. When empty, include team members assigned to any location.
 	var location_ids: [String]?
 	/// When present, filter by team members who match the given status. When empty, include team members of all statuses. See [TeamMemberStatus](#type-teammemberstatus) for possible values
@@ -10385,7 +10385,7 @@ public struct SearchTeamMembersFilter: Codable {
 }
 
 /// Represents the parameters in a search for `TeamMember` objects.
-public struct SearchTeamMembersQuery: Codable {
+public struct SearchTeamMembersQuery: SQCodable {
 	/// The options to filter by.
 	var filter: SearchTeamMembersFilter?
 
@@ -10395,7 +10395,7 @@ public struct SearchTeamMembersQuery: Codable {
 }
 
 /// Represents a search request for a filtered list of `TeamMember` objects.
-public struct SearchTeamMembersRequest: Codable {
+public struct SearchTeamMembersRequest: SQCodable {
 	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) with Square APIs for more information.
 	var cursor: String?
 	/// The maximum number of `TeamMember` objects in a page (25 by default).
@@ -10411,7 +10411,7 @@ public struct SearchTeamMembersRequest: Codable {
 }
 
 /// Represents a response from a search request, containing a filtered list of `TeamMember` objects.
-public struct SearchTeamMembersResponse: Codable {
+public struct SearchTeamMembersResponse: SQCodable {
 	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) with Square APIs for more information.
 	var cursor: String?
 	/// The errors that occurred during the request.
@@ -10426,7 +10426,7 @@ public struct SearchTeamMembersResponse: Codable {
 	}
 }
 
-public struct SearchTerminalCheckoutsRequest: Codable {
+public struct SearchTerminalCheckoutsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
 	/// Limit the number of results returned for a single request.
@@ -10441,7 +10441,7 @@ public struct SearchTerminalCheckoutsRequest: Codable {
 	}
 }
 
-public struct SearchTerminalCheckoutsResponse: Codable {
+public struct SearchTerminalCheckoutsResponse: SQCodable {
 	/// The requested search result of `TerminalCheckout`s.
 	var checkouts: [TerminalCheckout]?
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
@@ -10456,7 +10456,7 @@ public struct SearchTerminalCheckoutsResponse: Codable {
 	}
 }
 
-public struct SearchTerminalRefundsRequest: Codable {
+public struct SearchTerminalRefundsRequest: SQCodable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.
 	var cursor: String?
 	/// Limit the number of results returned for a single request.
@@ -10471,7 +10471,7 @@ public struct SearchTerminalRefundsRequest: Codable {
 	}
 }
 
-public struct SearchTerminalRefundsResponse: Codable {
+public struct SearchTerminalRefundsResponse: SQCodable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
 	/// Information on errors encountered during the request.
@@ -10487,7 +10487,7 @@ public struct SearchTerminalRefundsResponse: Codable {
 }
 
 /// A query filter to search for appointment segments by.
-public struct SegmentFilter: Codable {
+public struct SegmentFilter: SQCodable {
 	/// The ID of the `CatalogItemVariation` representing the service booked in this segment.
 	var service_variation_id: String
 	/// A query expression specifying which team members satisfy the condition. Supported expressions are - `ANY`: include team members whose IDs match any member of the specified list. - `NONE`: exclude team members whose IDs match members of the specified list.  The `ALL` expression is not supported in the Bookings API. When no expression is specified, any service-providing team member is eligible to fulfill the Booking.
@@ -10500,7 +10500,7 @@ public struct SegmentFilter: Codable {
 }
 
 /// A record of the hourly rate, start, and end times for a single work shift for an employee. May include a record of the start and end times for breaks taken during the shift.
-public struct Shift: Codable {
+public struct Shift: SQCodable {
 	/// A list of any paid or unpaid breaks that were taken during this shift.
 	var breaks: [Break]?
 	/// A read-only timestamp in RFC 3339 format; presented in UTC.
@@ -10546,7 +10546,7 @@ public struct Shift: Codable {
 }
 
 /// Defines a filter used in a search for `Shift` records. `AND` logic is used by Square's servers to apply each filter property specified.
-public struct ShiftFilter: Codable {
+public struct ShiftFilter: SQCodable {
 	/// Fetch shifts for the specified employees. DEPRECATED at version 2020-08-26. Use `team_member_ids` instead
 	var employee_ids: [String]?
 	/// Fetch the `Shift`s that end in the time range - Inclusive.
@@ -10574,7 +10574,7 @@ public struct ShiftFilter: Codable {
 }
 
 /// Specifies the `status` of `Shift` records to be returned.
-public enum ShiftFilterStatus: String, Codable {
+public enum ShiftFilterStatus: String, SQCodable {
 	/// Shifts that have been started and not ended.
 	case OPEN
 	/// Shifts that have been started and ended.
@@ -10582,7 +10582,7 @@ public enum ShiftFilterStatus: String, Codable {
 }
 
 /// The parameters of a `Shift` search query. Includes filter and sort options.
-public struct ShiftQuery: Codable {
+public struct ShiftQuery: SQCodable {
 	/// Query filter options
 	var filter: ShiftFilter?
 	/// Sort order details
@@ -10595,7 +10595,7 @@ public struct ShiftQuery: Codable {
 }
 
 /// Sets the sort order of search results.
-public struct ShiftSort: Codable {
+public struct ShiftSort: SQCodable {
 	/// The field to sort on. See [ShiftSortField](#type-shiftsortfield) for possible values
 	var field: ShiftSortField?
 	/// The order in which results are returned. Defaults to DESC. See [SortOrder](#type-sortorder) for possible values
@@ -10608,7 +10608,7 @@ public struct ShiftSort: Codable {
 }
 
 /// Enumerates the `Shift` fields to sort on.
-public enum ShiftSortField: String, Codable {
+public enum ShiftSortField: String, SQCodable {
 	/// The start date/time of a `Shift`
 	case START_AT
 	/// The end date/time of a `Shift`
@@ -10620,7 +10620,7 @@ public enum ShiftSortField: String, Codable {
 }
 
 /// Enumerates the possible status of a `Shift`
-public enum ShiftStatus: String, Codable {
+public enum ShiftStatus: String, SQCodable {
 	/// Employee started a work shift and the shift is not complete
 	case OPEN
 	/// Employee started and ended a work shift.
@@ -10628,7 +10628,7 @@ public enum ShiftStatus: String, Codable {
 }
 
 /// The hourly wage rate used to compensate an employee for this shift.
-public struct ShiftWage: Codable {
+public struct ShiftWage: SQCodable {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on annual wage and hours worked per week.
 	var hourly_rate: Money?
 	/// The name of the job performed during this shift. Square labor-reporting UIs may group shifts together by title.
@@ -10641,7 +10641,7 @@ public struct ShiftWage: Codable {
 }
 
 /// A `Shift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
-public struct ShiftWorkday: Codable {
+public struct ShiftWorkday: SQCodable {
 	/// Dates for fetching the shifts
 	var date_range: DateRange?
 	/// Location-specific timezones convert workdays to datetime filters. Every location included in the query must have a timezone, or this field must be provided as a fallback. Format: the IANA timezone database identifier for the relevant timezone.
@@ -10657,7 +10657,7 @@ public struct ShiftWorkday: Codable {
 }
 
 /// Defines the logic used to apply a workday filter.
-public enum ShiftWorkdayMatcher: String, Codable {
+public enum ShiftWorkdayMatcher: String, SQCodable {
 	/// All shifts that start on or after the specified workday
 	case START_AT
 	/// All shifts that end on or before the specified workday
@@ -10667,7 +10667,7 @@ public enum ShiftWorkdayMatcher: String, Codable {
 }
 
 /// The order (e.g., chronological or alphabetical) in which results from a request are returned.
-public enum SortOrder: String, Codable {
+public enum SortOrder: String, SQCodable {
 	/// The results are returned in descending (e.g., newest-first or Z-A) order.
 	case DESC
 	/// The results are returned in ascending (e.g., oldest-first or A-Z) order.
@@ -10675,7 +10675,7 @@ public enum SortOrder: String, Codable {
 }
 
 /// Provides information about the application used to generate a change.
-public struct SourceApplication: Codable {
+public struct SourceApplication: SQCodable {
 	/// Read-only Square ID assigned to the application. Only used for `Product` type `EXTERNAL_API`.
 	var application_id: String?
 	/// Read-only display name assigned to the application (e.g. `"Custom Application"`, `"Square POS 4.74 for Android"`).
@@ -10691,7 +10691,7 @@ public struct SourceApplication: Codable {
 }
 
 /// Contains the name and abbreviation for standard measurement unit.
-public struct StandardUnitDescription: Codable {
+public struct StandardUnitDescription: SQCodable {
 	/// UI display abbreviation for the measurement unit. For example, 'lb'.
 	var abbreviation: String?
 	/// UI display name of the measurement unit. For example, 'Pound'.
@@ -10707,7 +10707,7 @@ public struct StandardUnitDescription: Codable {
 }
 
 /// Group of standard measurement units.
-public struct StandardUnitDescriptionGroup: Codable {
+public struct StandardUnitDescriptionGroup: SQCodable {
 	/// IETF language tag.
 	var language_code: String?
 	/// List of standard (non-custom) measurement units in this description group.
@@ -10720,14 +10720,14 @@ public struct StandardUnitDescriptionGroup: Codable {
 }
 
 /// Defines the parameters for a `SubmitEvidence` request.
-public struct SubmitEvidenceRequest: Codable {
+public struct SubmitEvidenceRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields in a `SubmitEvidence` response.
-public struct SubmitEvidenceResponse: Codable {
+public struct SubmitEvidenceResponse: SQCodable {
 	/// The `Dispute` for which evidence was submitted.
 	var dispute: Dispute?
 	/// Information about errors encountered during the request.
@@ -10740,7 +10740,7 @@ public struct SubmitEvidenceResponse: Codable {
 }
 
 /// Represents a customer subscription to a subscription plan. For an overview of the `Subscription` type, see  [Subscription object](/docs/subscriptions-api/overview#subscription-object-overview).
-public struct Subscription: Codable {
+public struct Subscription: SQCodable {
 	/// The subscription cancellation date, in YYYY-MM-DD format (for example, 2013-01-15). On this date, the subscription status changes  to `CANCELED` and the subscription billing stops.  If you don't set this field, the subscription plan dictates if and  when subscription ends.   You cannot update this field, you can only clear it.
 	var canceled_date: String?
 	/// The ID of the `customer](#type-customer) [card` that is charged for the subscription.
@@ -10792,7 +10792,7 @@ public struct Subscription: Codable {
 }
 
 /// Determines the billing cadence of a `Subscription`
-public enum SubscriptionCadence: String, Codable {
+public enum SubscriptionCadence: String, SQCodable {
 	/// Once per day
 	case DAILY
 	/// Once per week
@@ -10822,7 +10822,7 @@ public enum SubscriptionCadence: String, Codable {
 }
 
 /// Describes changes to subscription and billing states.
-public struct SubscriptionEvent: Codable {
+public struct SubscriptionEvent: SQCodable {
 	/// The date, in YYYY-MM-DD format (for example, 2013-01-15), when the subscription event went into effect.
 	var effective_date: String
 	/// The ID of the subscription event.
@@ -10841,7 +10841,7 @@ public struct SubscriptionEvent: Codable {
 }
 
 /// The possible subscription event types.
-public enum SubscriptionEventSubscriptionEventType: String, Codable {
+public enum SubscriptionEventSubscriptionEventType: String, SQCodable {
 	/// The subscription started.
 	case START_SUBSCRIPTION
 	/// The subscription plan changed.
@@ -10851,7 +10851,7 @@ public enum SubscriptionEventSubscriptionEventType: String, Codable {
 }
 
 /// Describes a phase in a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](/docs/subscriptions-api/setup-plan).
-public struct SubscriptionPhase: Codable {
+public struct SubscriptionPhase: SQCodable {
 	/// The billing cadence of the phase. For example, weekly or monthly. This field cannot be changed after a `SubscriptionPhase` is created. See [SubscriptionCadence](#type-subscriptioncadence) for possible values
 	var cadence: SubscriptionCadence
 	/// The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This field cannot be changed after a `SubscriptionPhase` is created.
@@ -10873,7 +10873,7 @@ public struct SubscriptionPhase: Codable {
 }
 
 /// Possible subscription status values.
-public enum SubscriptionStatus: String, Codable {
+public enum SubscriptionStatus: String, SQCodable {
 	case DEFAULT_SUBSCRIPTION_STATUS_DO_NOT_USE
 	/// The subscription starts in the future.
 	case PENDING
@@ -10884,7 +10884,7 @@ public enum SubscriptionStatus: String, Codable {
 }
 
 /// When to calculate the taxes due on a cart.
-public enum TaxCalculationPhase: String, Codable {
+public enum TaxCalculationPhase: String, SQCodable {
 	/// The fee is calculated based on the payment's subtotal.
 	case TAX_SUBTOTAL_PHASE
 	/// The fee is calculated based on the payment's total.
@@ -10892,7 +10892,7 @@ public enum TaxCalculationPhase: String, Codable {
 }
 
 /// Whether to the tax amount should be additional to or included in the CatalogItem price.
-public enum TaxInclusionType: String, Codable {
+public enum TaxInclusionType: String, SQCodable {
 	/// The tax is an additive tax. The tax amount is added on top of the CatalogItemVariation price. For example, a $1.00 item with a 10% additive tax would have a total cost to the buyer of $1.10.
 	case ADDITIVE
 	/// The tax is an inclusive tax. The tax amount is included in the CatalogItemVariation price. For example, a $1.00 item with a 10% inclusive tax would have a total cost to the buyer of $1.00, with $0.91 (91 cents) of that total being the cost of the item and $0.09 (9 cents) being tax.
@@ -10900,7 +10900,7 @@ public enum TaxInclusionType: String, Codable {
 }
 
 /// A record representing an individual team member for a business.
-public struct TeamMember: Codable {
+public struct TeamMember: SQCodable {
 	/// Describes the team member's assigned locations.
 	var assigned_locations: TeamMemberAssignedLocations?
 	/// The timestamp in RFC 3339 format describing when the team member was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
@@ -10940,7 +10940,7 @@ public struct TeamMember: Codable {
 }
 
 /// An object that represents a team member's assignment to locations.
-public struct TeamMemberAssignedLocations: Codable {
+public struct TeamMemberAssignedLocations: SQCodable {
 	/// The current assignment type of the team member. See [TeamMemberAssignedLocationsAssignmentType](#type-teammemberassignedlocationsassignmenttype) for possible values
 	var assignment_type: TeamMemberAssignedLocationsAssignmentType?
 	/// The locations that the team member is assigned to.
@@ -10953,7 +10953,7 @@ public struct TeamMemberAssignedLocations: Codable {
 }
 
 /// Enumerates the possible assignment types the team member can have
-public enum TeamMemberAssignedLocationsAssignmentType: String, Codable {
+public enum TeamMemberAssignedLocationsAssignmentType: String, SQCodable {
 	/// The team member is assigned to all curent and future locations - the location_ids field is empty if the team member has this assignment type.
 	case ALL_CURRENT_AND_FUTURE_LOCATIONS
 	/// The team member is assigned to an explicit subset of locations - the location_ids field is the list of locations that the team member is assigned to.
@@ -10961,7 +10961,7 @@ public enum TeamMemberAssignedLocationsAssignmentType: String, Codable {
 }
 
 /// The booking profile of a seller's team member, including the team member's ID, display name, description and whether the team member can be booked as a service provider.
-public struct TeamMemberBookingProfile: Codable {
+public struct TeamMemberBookingProfile: SQCodable {
 	/// The description of the team member.
 	var description: String?
 	/// The display name of the team member.
@@ -10983,7 +10983,7 @@ public struct TeamMemberBookingProfile: Codable {
 }
 
 /// Enumerates the possible statuses the team member can have within a business.
-public enum TeamMemberStatus: String, Codable {
+public enum TeamMemberStatus: String, SQCodable {
 	/// The team member can log in to Point of Sale and Dashboard.
 	case ACTIVE
 	/// The team member can no longer log in to Point of Sale or Dashboard, but their sales reports remain available.
@@ -10991,7 +10991,7 @@ public enum TeamMemberStatus: String, Codable {
 }
 
 /// The hourly wage rate that a team member will earn on a `Shift` for doing the job specified by the `title` property of this object.
-public struct TeamMemberWage: Codable {
+public struct TeamMemberWage: SQCodable {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on annual wage and hours worked per week.
 	var hourly_rate: Money?
 	/// UUID for this object.
@@ -11010,7 +11010,7 @@ public struct TeamMemberWage: Codable {
 }
 
 /// Represents a tender (i.e., a method of payment) used in a Square transaction.
-public struct Tender: Codable {
+public struct Tender: SQCodable {
 	/// Additional recipients (other than the merchant) receiving a portion of this tender. For example, fees assessed on the purchase by a third party integration.
 	var additional_recipients: [AdditionalRecipient]?
 	/// The total amount of the tender, including `tip_money`. If the tender has a `payment_id`, the `total_money` of the corresponding `Payment` will be equal to the `amount_money` of the tender.
@@ -11059,7 +11059,7 @@ public struct Tender: Codable {
 }
 
 /// Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
-public struct TenderCardDetails: Codable {
+public struct TenderCardDetails: SQCodable {
 	/// The credit card's non-confidential details.
 	var card: Card?
 	/// The method used to enter the card's details for the transaction. See [TenderCardDetailsEntryMethod](#type-tendercarddetailsentrymethod) for possible values
@@ -11075,7 +11075,7 @@ public struct TenderCardDetails: Codable {
 }
 
 /// Indicates the method used to enter the card's details.
-public enum TenderCardDetailsEntryMethod: String, Codable {
+public enum TenderCardDetailsEntryMethod: String, SQCodable {
 	/// The card was swiped through a Square reader or Square stand.
 	case SWIPED
 	/// The card information was keyed manually into Square Point of Sale or a Square-hosted web form.
@@ -11089,7 +11089,7 @@ public enum TenderCardDetailsEntryMethod: String, Codable {
 }
 
 /// Indicates the card transaction's current status.
-public enum TenderCardDetailsStatus: String, Codable {
+public enum TenderCardDetailsStatus: String, SQCodable {
 	/// The card transaction has been authorized but not yet captured.
 	case AUTHORIZED
 	/// The card transaction was authorized and subsequently captured (i.e., completed).
@@ -11101,7 +11101,7 @@ public enum TenderCardDetailsStatus: String, Codable {
 }
 
 /// Represents the details of a tender with `type` `CASH`.
-public struct TenderCashDetails: Codable {
+public struct TenderCashDetails: SQCodable {
 	/// The total amount of cash provided by the buyer, before change is given.
 	var buyer_tendered_money: Money?
 	/// The amount of change returned to the buyer.
@@ -11114,7 +11114,7 @@ public struct TenderCashDetails: Codable {
 }
 
 /// Indicates a tender's type.
-public enum TenderType: String, Codable {
+public enum TenderType: String, SQCodable {
 	/// A credit card.
 	case CARD
 	/// Cash.
@@ -11131,7 +11131,7 @@ public enum TenderType: String, Codable {
 	case OTHER
 }
 
-public struct TerminalCheckout: Codable {
+public struct TerminalCheckout: SQCodable {
 	/// The amount of money (including tax amount) that the Square Terminal device should try to collect.
 	var amount_money: Money
 	/// Present if the status is `CANCELED`. See [ActionCancelReason](#type-actioncancelreason) for possible values
@@ -11170,7 +11170,7 @@ public struct TerminalCheckout: Codable {
 	}
 }
 
-public struct TerminalCheckoutQuery: Codable {
+public struct TerminalCheckoutQuery: SQCodable {
 	/// Options for filtering returned `TerminalCheckout`s
 	var filter: TerminalCheckoutQueryFilter?
 	/// Option for sorting returned `TerminalCheckout`s
@@ -11182,7 +11182,7 @@ public struct TerminalCheckoutQuery: Codable {
 	}
 }
 
-public struct TerminalCheckoutQueryFilter: Codable {
+public struct TerminalCheckoutQueryFilter: SQCodable {
 	/// Time range for the beginning of the reporting period. Inclusive. Default: The current time minus one day.
 	var created_at: TimeRange?
 	/// `TerminalCheckout`s associated with a specific device. If no device is specified then all `TerminalCheckout`s for the merchant will be displayed.
@@ -11197,7 +11197,7 @@ public struct TerminalCheckoutQueryFilter: Codable {
 	}
 }
 
-public struct TerminalCheckoutQuerySort: Codable {
+public struct TerminalCheckoutQuerySort: SQCodable {
 	/// The order in which results are listed. - `ASC` - oldest to newest - `DESC` - newest to oldest (default).
 	var sort_order: String?
 
@@ -11206,7 +11206,7 @@ public struct TerminalCheckoutQuerySort: Codable {
 	}
 }
 
-public struct TerminalRefund: Codable {
+public struct TerminalRefund: SQCodable {
 	/// The amount of money, inclusive of `tax_money`, that the `TerminalRefund` should return. This value is limited to the amount taken in the original payment minus any completed or pending refunds.
 	var amount_money: Money
 	/// Present if the status is `CANCELED`. See [ActionCancelReason](#type-actioncancelreason) for possible values
@@ -11248,7 +11248,7 @@ public struct TerminalRefund: Codable {
 	}
 }
 
-public struct TerminalRefundQuery: Codable {
+public struct TerminalRefundQuery: SQCodable {
 	var filter: TerminalRefundQueryFilter?
 	var sort: TerminalRefundQuerySort?
 
@@ -11258,7 +11258,7 @@ public struct TerminalRefundQuery: Codable {
 	}
 }
 
-public struct TerminalRefundQueryFilter: Codable {
+public struct TerminalRefundQueryFilter: SQCodable {
 	/// Timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one day.
 	var created_at: TimeRange?
 	/// `TerminalRefund`s associated with a specific device. If no device is specified then all `TerminalRefund`s for the signed in account will be displayed.
@@ -11273,7 +11273,7 @@ public struct TerminalRefundQueryFilter: Codable {
 	}
 }
 
-public struct TerminalRefundQuerySort: Codable {
+public struct TerminalRefundQuerySort: SQCodable {
 	/// The order in which results are listed. - `ASC` - oldest to newest - `DESC` - newest to oldest (default).
 	var sort_order: String?
 
@@ -11283,7 +11283,7 @@ public struct TerminalRefundQuerySort: Codable {
 }
 
 /// Represents a generic time range. The start and end values are represented in RFC 3339 format. Time ranges are customized to be inclusive or exclusive based on the needs of a particular endpoint. Refer to the relevant endpoint-specific documentation to determine how time ranges are handled.
-public struct TimeRange: Codable {
+public struct TimeRange: SQCodable {
 	/// A datetime value in RFC 3339 format indicating when the time range ends.
 	var end_at: Timestamp?
 	/// A datetime value in RFC 3339 format indicating when the time range starts.
@@ -11295,7 +11295,7 @@ public struct TimeRange: Codable {
 	}
 }
 
-public struct TipSettings: Codable {
+public struct TipSettings: SQCodable {
 	/// Indicates whether tipping is enabled for this checkout. Defaults to false.
 	var allow_tipping: Bool?
 	/// Indicates whether custom tip amounts are allowed during the checkout flow. Defaults to false.
@@ -11317,7 +11317,7 @@ public struct TipSettings: Codable {
 }
 
 /// Represents a transaction processed with Square, either with the Connect API or with Square Point of Sale.  The `tenders` field of this object lists all methods of payment used to pay in the transaction.
-public struct Transaction: Codable {
+public struct Transaction: SQCodable {
 	/// If the transaction was created in the Square Point of Sale app, this value is the ID generated for the transaction by Square Point of Sale.  This ID has no relationship to the transaction's canonical `id`, which is generated by Square's backend servers. This value is generated for bookkeeping purposes, in case the transaction cannot immediately be completed (for example, if the transaction is processed in offline mode).  It is not currently possible with the Connect API to perform a transaction lookup by this value.
 	var client_id: String?
 	/// The timestamp for when the transaction was created, in RFC 3339 format.
@@ -11354,7 +11354,7 @@ public struct Transaction: Codable {
 }
 
 /// Indicates the Square product used to process a transaction.
-public enum TransactionProduct: String, Codable {
+public enum TransactionProduct: String, SQCodable {
 	/// Square Point of Sale.
 	case REGISTER
 	/// The Square Connect API.
@@ -11374,12 +11374,12 @@ public enum TransactionProduct: String, Codable {
 }
 
 /// The transaction type used in the disputed payment.
-public enum TransactionType: String, Codable {
+public enum TransactionType: String, SQCodable {
 	case DEBIT
 	case CREDIT
 }
 
-public struct UpdateBookingRequest: Codable {
+public struct UpdateBookingRequest: SQCodable {
 	/// The booking to be updated. Individual attributes explicitly specified here override the corresponding values of the existing booking.
 	var booking: Booking
 	/// A unique key to make this request an idempotent operation.
@@ -11391,7 +11391,7 @@ public struct UpdateBookingRequest: Codable {
 	}
 }
 
-public struct UpdateBookingResponse: Codable {
+public struct UpdateBookingResponse: SQCodable {
 	/// The booking that was updated.
 	var booking: Booking?
 	/// Any errors that occurred during the request.
@@ -11404,7 +11404,7 @@ public struct UpdateBookingResponse: Codable {
 }
 
 /// A request to update a `BreakType`
-public struct UpdateBreakTypeRequest: Codable {
+public struct UpdateBreakTypeRequest: SQCodable {
 	/// The updated `BreakType`.
 	var break_type: BreakType
 
@@ -11414,7 +11414,7 @@ public struct UpdateBreakTypeRequest: Codable {
 }
 
 /// A response to a request to update a `BreakType`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
-public struct UpdateBreakTypeResponse: Codable {
+public struct UpdateBreakTypeResponse: SQCodable {
 	/// The response object.
 	var break_type: BreakType?
 	/// Any errors that occurred during the request.
@@ -11427,7 +11427,7 @@ public struct UpdateBreakTypeResponse: Codable {
 }
 
 /// Defines the body parameters that can be provided in a request to the [UpdateCustomerGroup](#endpoint-updatecustomergroup) endpoint.
-public struct UpdateCustomerGroupRequest: Codable {
+public struct UpdateCustomerGroupRequest: SQCodable {
 	/// The `CustomerGroup` object including all the updates you want to make.
 	var group: CustomerGroup
 
@@ -11437,7 +11437,7 @@ public struct UpdateCustomerGroupRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](#endpoint-updatecustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
-public struct UpdateCustomerGroupResponse: Codable {
+public struct UpdateCustomerGroupResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated customer group.
@@ -11450,7 +11450,7 @@ public struct UpdateCustomerGroupResponse: Codable {
 }
 
 /// Defines the body parameters that can be provided in a request to the UpdateCustomer endpoint.
-public struct UpdateCustomerRequest: Codable {
+public struct UpdateCustomerRequest: SQCodable {
 	/// The physical address associated with the customer profile.
 	var address: Address?
 	/// The birthday associated with the customer profile, in RFC 3339 format. Year is optional, timezone and times are not allowed. For example: `0000-09-01T00:00:00-00:00` indicates a birthday on September 1st. `1998-09-01T00:00:00-00:00` indications a birthday on September 1st __1998__.
@@ -11487,7 +11487,7 @@ public struct UpdateCustomerRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the UpdateCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
-public struct UpdateCustomerResponse: Codable {
+public struct UpdateCustomerResponse: SQCodable {
 	/// The updated customer.
 	var customer: Customer?
 	/// Any errors that occurred during the request.
@@ -11500,7 +11500,7 @@ public struct UpdateCustomerResponse: Codable {
 }
 
 /// Describes a `UpdateInvoice` request.
-public struct UpdateInvoiceRequest: Codable {
+public struct UpdateInvoiceRequest: SQCodable {
 	/// The list of fields to clear. For examples, see [Update an invoice](https://developer.squareup.com/docs/docs/invoices-api/overview#update-an-invoice).
 	var fields_to_clear: [String]?
 	/// A unique string that identifies the `UpdateInvoice` request. If you do not provide `idempotency_key` (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/docs/working-with-apis/idempotency).
@@ -11516,7 +11516,7 @@ public struct UpdateInvoiceRequest: Codable {
 }
 
 /// Describes a `UpdateInvoice` response.
-public struct UpdateInvoiceResponse: Codable {
+public struct UpdateInvoiceResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The updated invoice.
@@ -11528,7 +11528,7 @@ public struct UpdateInvoiceResponse: Codable {
 	}
 }
 
-public struct UpdateItemModifierListsRequest: Codable {
+public struct UpdateItemModifierListsRequest: SQCodable {
 	/// The IDs of the catalog items associated with the CatalogModifierList objects being updated.
 	var item_ids: [String]
 	/// The IDs of the CatalogModifierList objects to disable for the CatalogItem.
@@ -11543,7 +11543,7 @@ public struct UpdateItemModifierListsRequest: Codable {
 	}
 }
 
-public struct UpdateItemModifierListsResponse: Codable {
+public struct UpdateItemModifierListsResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-date) of this update in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
@@ -11555,7 +11555,7 @@ public struct UpdateItemModifierListsResponse: Codable {
 	}
 }
 
-public struct UpdateItemTaxesRequest: Codable {
+public struct UpdateItemTaxesRequest: SQCodable {
 	/// IDs for the CatalogItems associated with the CatalogTax objects being updated.
 	var item_ids: [String]
 	/// IDs of the CatalogTax objects to disable.
@@ -11570,7 +11570,7 @@ public struct UpdateItemTaxesRequest: Codable {
 	}
 }
 
-public struct UpdateItemTaxesResponse: Codable {
+public struct UpdateItemTaxesResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this update in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
@@ -11583,7 +11583,7 @@ public struct UpdateItemTaxesResponse: Codable {
 }
 
 /// Request object for the [UpdateLocation](#endpoint-updatelocation) endpoint.
-public struct UpdateLocationRequest: Codable {
+public struct UpdateLocationRequest: SQCodable {
 	/// The `Location` object with only the fields to update.
 	var location: Location?
 
@@ -11593,7 +11593,7 @@ public struct UpdateLocationRequest: Codable {
 }
 
 /// Response object returned by the [UpdateLocation](#endpoint-updatelocation) endpoint.
-public struct UpdateLocationResponse: Codable {
+public struct UpdateLocationResponse: SQCodable {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The updated `Location`.
@@ -11606,7 +11606,7 @@ public struct UpdateLocationResponse: Codable {
 }
 
 /// Defines the fields that are included in requests to the [UpdateOrder](#endpoint-orders-updateorder) endpoint.
-public struct UpdateOrderRequest: Codable {
+public struct UpdateOrderRequest: SQCodable {
 	/// The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders#on-dot-notation) fields to clear. For example, `line_items[uid].note` [Read more about Deleting fields](https://developer.squareup.com/docs/orders-api/manage-orders#delete-fields).
 	var fields_to_clear: [String]?
 	/// A value you specify that uniquely identifies this update request  If you're unsure whether a particular update was applied to an order successfully, you can reattempt it with the same idempotency key without worrying about creating duplicate updates to the order. The latest order version will be returned.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
@@ -11622,7 +11622,7 @@ public struct UpdateOrderRequest: Codable {
 }
 
 /// Defines the fields that are included in the response body of a request to the [UpdateOrder](#endpoint-orders-updateorder) endpoint.
-public struct UpdateOrderResponse: Codable {
+public struct UpdateOrderResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The updated Order.
@@ -11635,7 +11635,7 @@ public struct UpdateOrderResponse: Codable {
 }
 
 /// A request to update a `Shift` object.
-public struct UpdateShiftRequest: Codable {
+public struct UpdateShiftRequest: SQCodable {
 	/// The updated `Shift` object.
 	var shift: Shift
 
@@ -11645,7 +11645,7 @@ public struct UpdateShiftRequest: Codable {
 }
 
 /// The response to a request to update a `Shift`. Contains the updated `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
-public struct UpdateShiftResponse: Codable {
+public struct UpdateShiftResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The updated `Shift`.
@@ -11658,7 +11658,7 @@ public struct UpdateShiftResponse: Codable {
 }
 
 /// Defines parameters in a [UpdateSubscription](#endpoint-subscriptions-updatesubscription) endpoint  request.
-public struct UpdateSubscriptionRequest: Codable {
+public struct UpdateSubscriptionRequest: SQCodable {
 	/// The subscription object containing the current version, and fields to update. Unset fields will be left at their current server values, and JSON `null` values will be treated as a request to clear the relevant data.
 	var subscription: Subscription?
 
@@ -11668,7 +11668,7 @@ public struct UpdateSubscriptionRequest: Codable {
 }
 
 /// Defines the fields that are included in the response from the [UpdateSubscription](#endpoint-subscriptions-updatesubscription) endpoint.
-public struct UpdateSubscriptionResponse: Codable {
+public struct UpdateSubscriptionResponse: SQCodable {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The modified `Subscription` object.
@@ -11681,7 +11681,7 @@ public struct UpdateSubscriptionResponse: Codable {
 }
 
 /// Represents an update request for a `TeamMember` object.
-public struct UpdateTeamMemberRequest: Codable {
+public struct UpdateTeamMemberRequest: SQCodable {
 	/// The data which will be used to update the `TeamMember` object.
 	var team_member: TeamMember?
 
@@ -11691,7 +11691,7 @@ public struct UpdateTeamMemberRequest: Codable {
 }
 
 /// Represents a response from an update request, containing the updated `TeamMember` object or error messages.
-public struct UpdateTeamMemberResponse: Codable {
+public struct UpdateTeamMemberResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated `TeamMember` object.
@@ -11704,7 +11704,7 @@ public struct UpdateTeamMemberResponse: Codable {
 }
 
 /// Represents an update request for the `WageSetting` object describing a `TeamMember`.
-public struct UpdateWageSettingRequest: Codable {
+public struct UpdateWageSettingRequest: SQCodable {
 	/// The new `WageSetting` object that will completely replace the existing one.
 	var wage_setting: WageSetting
 
@@ -11714,7 +11714,7 @@ public struct UpdateWageSettingRequest: Codable {
 }
 
 /// Represents a response from an update request, containing the updated `WageSetting` object or error messages.
-public struct UpdateWageSettingResponse: Codable {
+public struct UpdateWageSettingResponse: SQCodable {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated `WageSetting` object.
@@ -11727,7 +11727,7 @@ public struct UpdateWageSettingResponse: Codable {
 }
 
 /// A request to update a `WorkweekConfig` object
-public struct UpdateWorkweekConfigRequest: Codable {
+public struct UpdateWorkweekConfigRequest: SQCodable {
 	/// The updated `WorkweekConfig` object.
 	var workweek_config: WorkweekConfig
 
@@ -11737,7 +11737,7 @@ public struct UpdateWorkweekConfigRequest: Codable {
 }
 
 /// The response to a request to update a `WorkweekConfig` object. Contains the updated `WorkweekConfig` object. May contain a set of `Error` objects if the request resulted in errors.
-public struct UpdateWorkweekConfigResponse: Codable {
+public struct UpdateWorkweekConfigResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The response object.
@@ -11749,7 +11749,7 @@ public struct UpdateWorkweekConfigResponse: Codable {
 	}
 }
 
-public struct UpsertCatalogObjectRequest: Codable {
+public struct UpsertCatalogObjectRequest: SQCodable {
 	/// A value you specify that uniquely identifies this request among all your requests. A common way to create a valid idempotency key is to use a Universally unique identifier (UUID).  If you're unsure whether a particular request was successful, you can reattempt it with the same idempotency key without worrying about creating duplicate objects.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	var idempotency_key: String
 	/// A CatalogObject to be created or updated.  - For updates, the object must be active (the `is_deleted` field is not `true`). - For creates, the object ID must start with `#`. The provided ID is replaced with a server-generated ID.
@@ -11761,7 +11761,7 @@ public struct UpsertCatalogObjectRequest: Codable {
 	}
 }
 
-public struct UpsertCatalogObjectResponse: Codable {
+public struct UpsertCatalogObjectResponse: SQCodable {
 	/// The successfully created or updated CatalogObject.
 	var catalog_object: CatalogObject?
 	/// Any errors that occurred during the request.
@@ -11777,7 +11777,7 @@ public struct UpsertCatalogObjectResponse: Codable {
 }
 
 /// V1AdjustInventoryRequest
-public struct V1AdjustInventoryRequest: Codable {
+public struct V1AdjustInventoryRequest: SQCodable {
 	/// The reason for the inventory adjustment. See [V1AdjustInventoryRequestAdjustmentType](#type-v1adjustinventoryrequestadjustmenttype) for possible values
 	var adjustment_type: V1AdjustInventoryRequestAdjustmentType?
 	/// A note about the inventory adjustment.
@@ -11793,26 +11793,26 @@ public struct V1AdjustInventoryRequest: Codable {
 }
 
 /// 
-public enum V1AdjustInventoryRequestAdjustmentType: String, Codable {
+public enum V1AdjustInventoryRequestAdjustmentType: String, SQCodable {
 	case SALE
 	case RECEIVE_STOCK
 	case MANUAL_ADJUST
 }
 
-public struct V1ApplyFeeRequest: Codable {
+public struct V1ApplyFeeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ApplyModifierListRequest: Codable {
+public struct V1ApplyModifierListRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// V1BankAccount
-public struct V1BankAccount: Codable {
+public struct V1BankAccount: SQCodable {
 	/// The last few digits of the bank account number.
 	var account_number_suffix: String?
 	/// The name of the bank that manages the account.
@@ -11843,7 +11843,7 @@ public struct V1BankAccount: Codable {
 }
 
 /// 
-public enum V1BankAccountType: String, Codable {
+public enum V1BankAccountType: String, SQCodable {
 	case BUSINESS_CHECKING
 	case CHECKING
 	case INVESTMENT
@@ -11853,7 +11853,7 @@ public enum V1BankAccountType: String, Codable {
 }
 
 /// V1CashDrawerEvent
-public struct V1CashDrawerEvent: Codable {
+public struct V1CashDrawerEvent: SQCodable {
 	/// The time when the event occurred, in ISO 8601 format.
 	var created_at: String?
 	/// An optional description of the event, entered by the employee that created it.
@@ -11878,7 +11878,7 @@ public struct V1CashDrawerEvent: Codable {
 }
 
 /// 
-public enum V1CashDrawerEventEventType: String, Codable {
+public enum V1CashDrawerEventEventType: String, SQCodable {
 	case NO_SALE
 	case CASH_TENDER_PAYMENT
 	case OTHER_TENDER_PAYMENT
@@ -11891,7 +11891,7 @@ public enum V1CashDrawerEventEventType: String, Codable {
 }
 
 /// Contains details for a single cash drawer shift.
-public struct V1CashDrawerShift: Codable {
+public struct V1CashDrawerShift: SQCodable {
 	/// The amount of money added to the cash drawer for reasons other than cash payments.
 	var cash_paid_in_money: V1Money?
 	/// The amount of money removed from the cash drawer for reasons other than cash refunds.
@@ -11955,14 +11955,14 @@ public struct V1CashDrawerShift: Codable {
 }
 
 /// 
-public enum V1CashDrawerShiftEventType: String, Codable {
+public enum V1CashDrawerShiftEventType: String, SQCodable {
 	case OPEN
 	case ENDED
 	case CLOSED
 }
 
 /// V1Category
-public struct V1Category: Codable {
+public struct V1Category: SQCodable {
 	/// The category's unique ID.
 	var id: String?
 	/// The category's name.
@@ -11977,7 +11977,7 @@ public struct V1Category: Codable {
 	}
 }
 
-public struct V1CreateCategoryRequest: Codable {
+public struct V1CreateCategoryRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Category?
 
@@ -11986,7 +11986,7 @@ public struct V1CreateCategoryRequest: Codable {
 	}
 }
 
-public struct V1CreateDiscountRequest: Codable {
+public struct V1CreateDiscountRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Discount?
 
@@ -11995,7 +11995,7 @@ public struct V1CreateDiscountRequest: Codable {
 	}
 }
 
-public struct V1CreateEmployeeRoleRequest: Codable {
+public struct V1CreateEmployeeRoleRequest: SQCodable {
 	/// An EmployeeRole object with a name and permissions, and an optional owner flag.
 	var employee_role: V1EmployeeRole?
 
@@ -12004,7 +12004,7 @@ public struct V1CreateEmployeeRoleRequest: Codable {
 	}
 }
 
-public struct V1CreateFeeRequest: Codable {
+public struct V1CreateFeeRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Fee?
 
@@ -12013,7 +12013,7 @@ public struct V1CreateFeeRequest: Codable {
 	}
 }
 
-public struct V1CreateItemRequest: Codable {
+public struct V1CreateItemRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Item?
 
@@ -12022,7 +12022,7 @@ public struct V1CreateItemRequest: Codable {
 	}
 }
 
-public struct V1CreateModifierListRequest: Codable {
+public struct V1CreateModifierListRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1ModifierList?
 
@@ -12031,7 +12031,7 @@ public struct V1CreateModifierListRequest: Codable {
 	}
 }
 
-public struct V1CreateModifierOptionRequest: Codable {
+public struct V1CreateModifierOptionRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1ModifierOption?
 
@@ -12040,7 +12040,7 @@ public struct V1CreateModifierOptionRequest: Codable {
 	}
 }
 
-public struct V1CreatePageRequest: Codable {
+public struct V1CreatePageRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Page?
 
@@ -12050,7 +12050,7 @@ public struct V1CreatePageRequest: Codable {
 }
 
 /// V1CreateRefundRequest
-public struct V1CreateRefundRequest: Codable {
+public struct V1CreateRefundRequest: SQCodable {
 	/// The ID of the payment to refund. If you are creating a `PARTIAL` refund for a split tender payment, instead provide the id of the particular tender you want to refund.
 	var payment_id: String
 	/// The reason for the refund.
@@ -12072,12 +12072,12 @@ public struct V1CreateRefundRequest: Codable {
 }
 
 /// 
-public enum V1CreateRefundRequestType: String, Codable {
+public enum V1CreateRefundRequestType: String, SQCodable {
 	case FULL
 	case PARTIAL
 }
 
-public struct V1CreateVariationRequest: Codable {
+public struct V1CreateVariationRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Variation?
 
@@ -12086,43 +12086,43 @@ public struct V1CreateVariationRequest: Codable {
 	}
 }
 
-public struct V1DeleteCategoryRequest: Codable {
+public struct V1DeleteCategoryRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteDiscountRequest: Codable {
+public struct V1DeleteDiscountRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteFeeRequest: Codable {
+public struct V1DeleteFeeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteItemRequest: Codable {
+public struct V1DeleteItemRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteModifierListRequest: Codable {
+public struct V1DeleteModifierListRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteModifierOptionRequest: Codable {
+public struct V1DeleteModifierOptionRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeletePageCellRequest: Codable {
+public struct V1DeletePageCellRequest: SQCodable {
 	/// The column of the cell to clear. Always an integer between 0 and 4, inclusive. Column 0 is the leftmost column.
 	var column: String?
 	/// The row of the cell to clear. Always an integer between 0 and 4, inclusive. Row 0 is the top row.
@@ -12134,32 +12134,32 @@ public struct V1DeletePageCellRequest: Codable {
 	}
 }
 
-public struct V1DeletePageRequest: Codable {
+public struct V1DeletePageRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteTimecardRequest: Codable {
+public struct V1DeleteTimecardRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteTimecardResponse: Codable {
+public struct V1DeleteTimecardResponse: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1DeleteVariationRequest: Codable {
+public struct V1DeleteVariationRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// V1Discount
-public struct V1Discount: Codable {
+public struct V1Discount: SQCodable {
 	/// The amount of the discount. This amount is 0 if discount_type is VARIABLE_AMOUNT. This field is not included for rate-based discounts.
 	var amount_money: V1Money?
 	/// The color of the discount's display label in Square Point of Sale, if not the default color. The default color is 9da2a6. See [V1DiscountColor](#type-v1discountcolor) for possible values
@@ -12190,7 +12190,7 @@ public struct V1Discount: Codable {
 }
 
 /// 
-public enum V1DiscountColor: String, Codable {
+public enum V1DiscountColor: String, SQCodable {
 	case x_9da2a6 = "9da2a6"
 	case x_4ab200 = "4ab200"
 	case x_0b8000 = "0b8000"
@@ -12203,14 +12203,14 @@ public enum V1DiscountColor: String, Codable {
 }
 
 /// 
-public enum V1DiscountDiscountType: String, Codable {
+public enum V1DiscountDiscountType: String, SQCodable {
 	case FIXED
 	case VARIABLE_PERCENTAGE
 	case VARIABLE_AMOUNT
 }
 
 /// Represents one of a business's employees.
-public struct V1Employee: Codable {
+public struct V1Employee: SQCodable {
 	/// The IDs of the locations the employee is allowed to clock in at.
 	var authorized_location_ids: [String]?
 	/// The time when the employee entity was created, in ISO 8601 format.
@@ -12247,7 +12247,7 @@ public struct V1Employee: Codable {
 }
 
 /// V1EmployeeRole
-public struct V1EmployeeRole: Codable {
+public struct V1EmployeeRole: SQCodable {
 	/// The time when the employee entity was created, in ISO 8601 format. Is set by Square when the Role is created.
 	var created_at: String?
 	/// The role's unique ID, Can only be set by Square.
@@ -12272,7 +12272,7 @@ public struct V1EmployeeRole: Codable {
 }
 
 /// 
-public enum V1EmployeeRolePermissions: String, Codable {
+public enum V1EmployeeRolePermissions: String, SQCodable {
 	case REGISTER_ACCESS_SALES_HISTORY
 	case REGISTER_APPLY_RESTRICTED_DISCOUNTS
 	case REGISTER_CHANGE_SETTINGS
@@ -12283,13 +12283,13 @@ public enum V1EmployeeRolePermissions: String, Codable {
 }
 
 /// 
-public enum V1EmployeeStatus: String, Codable {
+public enum V1EmployeeStatus: String, SQCodable {
 	case ACTIVE
 	case INACTIVE
 }
 
 /// V1Fee
-public struct V1Fee: Codable {
+public struct V1Fee: SQCodable {
 	/// The type of adjustment the fee applies to a payment. Currently, this value is TAX for all fees. See [V1FeeAdjustmentType](#type-v1feeadjustmenttype) for possible values
 	var adjustment_type: V1FeeAdjustmentType?
 	/// If true, the fee applies to custom amounts entered into Square Point of Sale that are not associated with a particular item.
@@ -12326,25 +12326,25 @@ public struct V1Fee: Codable {
 }
 
 /// 
-public enum V1FeeAdjustmentType: String, Codable {
+public enum V1FeeAdjustmentType: String, SQCodable {
 	case TAX
 }
 
 /// 
-public enum V1FeeCalculationPhase: String, Codable {
+public enum V1FeeCalculationPhase: String, SQCodable {
 	case FEE_SUBTOTAL_PHASE
 	case OTHER
 	case FEE_TOTAL_PHASE
 }
 
 /// 
-public enum V1FeeInclusionType: String, Codable {
+public enum V1FeeInclusionType: String, SQCodable {
 	case ADDITIVE
 	case INCLUSIVE
 }
 
 /// 
-public enum V1FeeType: String, Codable {
+public enum V1FeeType: String, SQCodable {
 	case CA_GST
 	case CA_HST
 	case CA_PST
@@ -12356,7 +12356,7 @@ public enum V1FeeType: String, Codable {
 }
 
 /// V1InventoryEntry
-public struct V1InventoryEntry: Codable {
+public struct V1InventoryEntry: SQCodable {
 	/// The current available quantity of the item variation.
 	var quantity_on_hand: Float?
 	/// The variation that the entry corresponds to.
@@ -12369,7 +12369,7 @@ public struct V1InventoryEntry: Codable {
 }
 
 /// V1Item
-public struct V1Item: Codable {
+public struct V1Item: SQCodable {
 	/// The text of the item's display label in Square Point of Sale. Only up to the first five characters of the string are used.
 	var abbreviation: String?
 	/// If true, the item can be added to pickup orders from the merchant's online store. Default value: false
@@ -12427,7 +12427,7 @@ public struct V1Item: Codable {
 }
 
 /// 
-public enum V1ItemColor: String, Codable {
+public enum V1ItemColor: String, SQCodable {
 	case x_9da2a6 = "9da2a6"
 	case x_4ab200 = "4ab200"
 	case x_0b8000 = "0b8000"
@@ -12440,7 +12440,7 @@ public enum V1ItemColor: String, Codable {
 }
 
 /// V1ItemImage
-public struct V1ItemImage: Codable {
+public struct V1ItemImage: SQCodable {
 	/// The image's unique ID.
 	var id: String?
 	/// The image's publicly accessible URL.
@@ -12453,25 +12453,25 @@ public struct V1ItemImage: Codable {
 }
 
 /// 
-public enum V1ItemType: String, Codable {
+public enum V1ItemType: String, SQCodable {
 	case NORMAL
 	case GIFT_CARD
 	case OTHER
 }
 
 /// 
-public enum V1ItemVisibility: String, Codable {
+public enum V1ItemVisibility: String, SQCodable {
 	case PUBLIC
 	case PRIVATE
 }
 
-public struct V1ListBankAccountsRequest: Codable {
+public struct V1ListBankAccountsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListBankAccountsResponse: Codable {
+public struct V1ListBankAccountsResponse: SQCodable {
 	var items: [V1BankAccount]?
 
 	public init(items: [V1BankAccount]? = nil) {
@@ -12479,7 +12479,7 @@ public struct V1ListBankAccountsResponse: Codable {
 	}
 }
 
-public struct V1ListCashDrawerShiftsRequest: Codable {
+public struct V1ListCashDrawerShiftsRequest: SQCodable {
 	/// The beginning of the requested reporting period, in ISO 8601 format. Default value: The current time minus 90 days.
 	var begin_time: String?
 	/// The beginning of the requested reporting period, in ISO 8601 format. Default value: The current time.
@@ -12494,7 +12494,7 @@ public struct V1ListCashDrawerShiftsRequest: Codable {
 	}
 }
 
-public struct V1ListCashDrawerShiftsResponse: Codable {
+public struct V1ListCashDrawerShiftsResponse: SQCodable {
 	var items: [V1CashDrawerShift]?
 
 	public init(items: [V1CashDrawerShift]? = nil) {
@@ -12502,13 +12502,13 @@ public struct V1ListCashDrawerShiftsResponse: Codable {
 	}
 }
 
-public struct V1ListCategoriesRequest: Codable {
+public struct V1ListCategoriesRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListCategoriesResponse: Codable {
+public struct V1ListCategoriesResponse: SQCodable {
 	var items: [V1Category]?
 
 	public init(items: [V1Category]? = nil) {
@@ -12516,13 +12516,13 @@ public struct V1ListCategoriesResponse: Codable {
 	}
 }
 
-public struct V1ListDiscountsRequest: Codable {
+public struct V1ListDiscountsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListDiscountsResponse: Codable {
+public struct V1ListDiscountsResponse: SQCodable {
 	var items: [V1Discount]?
 
 	public init(items: [V1Discount]? = nil) {
@@ -12530,7 +12530,7 @@ public struct V1ListDiscountsResponse: Codable {
 	}
 }
 
-public struct V1ListEmployeeRolesRequest: Codable {
+public struct V1ListEmployeeRolesRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// The maximum integer number of employee entities to return in a single response. Default 100, maximum 200.
@@ -12545,7 +12545,7 @@ public struct V1ListEmployeeRolesRequest: Codable {
 	}
 }
 
-public struct V1ListEmployeeRolesResponse: Codable {
+public struct V1ListEmployeeRolesResponse: SQCodable {
 	var items: [V1EmployeeRole]?
 
 	public init(items: [V1EmployeeRole]? = nil) {
@@ -12553,7 +12553,7 @@ public struct V1ListEmployeeRolesResponse: Codable {
 	}
 }
 
-public struct V1ListEmployeesRequest: Codable {
+public struct V1ListEmployeesRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// If filtering results by their created_at field, the beginning of the requested reporting period, in ISO 8601 format.
@@ -12587,12 +12587,12 @@ public struct V1ListEmployeesRequest: Codable {
 }
 
 /// 
-public enum V1ListEmployeesRequestStatus: String, Codable {
+public enum V1ListEmployeesRequestStatus: String, SQCodable {
 	case ACTIVE
 	case INACTIVE
 }
 
-public struct V1ListEmployeesResponse: Codable {
+public struct V1ListEmployeesResponse: SQCodable {
 	var items: [V1Employee]?
 
 	public init(items: [V1Employee]? = nil) {
@@ -12600,13 +12600,13 @@ public struct V1ListEmployeesResponse: Codable {
 	}
 }
 
-public struct V1ListFeesRequest: Codable {
+public struct V1ListFeesRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListFeesResponse: Codable {
+public struct V1ListFeesResponse: SQCodable {
 	var items: [V1Fee]?
 
 	public init(items: [V1Fee]? = nil) {
@@ -12614,7 +12614,7 @@ public struct V1ListFeesResponse: Codable {
 	}
 }
 
-public struct V1ListInventoryRequest: Codable {
+public struct V1ListInventoryRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// The maximum number of inventory entries to return in a single response. This value cannot exceed 1000.
@@ -12626,7 +12626,7 @@ public struct V1ListInventoryRequest: Codable {
 	}
 }
 
-public struct V1ListInventoryResponse: Codable {
+public struct V1ListInventoryResponse: SQCodable {
 	var items: [V1InventoryEntry]?
 
 	public init(items: [V1InventoryEntry]? = nil) {
@@ -12634,7 +12634,7 @@ public struct V1ListInventoryResponse: Codable {
 	}
 }
 
-public struct V1ListItemsRequest: Codable {
+public struct V1ListItemsRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 
@@ -12643,7 +12643,7 @@ public struct V1ListItemsRequest: Codable {
 	}
 }
 
-public struct V1ListItemsResponse: Codable {
+public struct V1ListItemsResponse: SQCodable {
 	var items: [V1Item]?
 
 	public init(items: [V1Item]? = nil) {
@@ -12651,13 +12651,13 @@ public struct V1ListItemsResponse: Codable {
 	}
 }
 
-public struct V1ListModifierListsRequest: Codable {
+public struct V1ListModifierListsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListModifierListsResponse: Codable {
+public struct V1ListModifierListsResponse: SQCodable {
 	var items: [V1ModifierList]?
 
 	public init(items: [V1ModifierList]? = nil) {
@@ -12665,7 +12665,7 @@ public struct V1ListModifierListsResponse: Codable {
 	}
 }
 
-public struct V1ListOrdersRequest: Codable {
+public struct V1ListOrdersRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// The maximum number of payments to return in a single response. This value cannot exceed 200.
@@ -12680,7 +12680,7 @@ public struct V1ListOrdersRequest: Codable {
 	}
 }
 
-public struct V1ListOrdersResponse: Codable {
+public struct V1ListOrdersResponse: SQCodable {
 	var items: [V1Order]?
 
 	public init(items: [V1Order]? = nil) {
@@ -12688,13 +12688,13 @@ public struct V1ListOrdersResponse: Codable {
 	}
 }
 
-public struct V1ListPagesRequest: Codable {
+public struct V1ListPagesRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListPagesResponse: Codable {
+public struct V1ListPagesResponse: SQCodable {
 	var items: [V1Page]?
 
 	public init(items: [V1Page]? = nil) {
@@ -12702,7 +12702,7 @@ public struct V1ListPagesResponse: Codable {
 	}
 }
 
-public struct V1ListPaymentsRequest: Codable {
+public struct V1ListPaymentsRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
@@ -12726,7 +12726,7 @@ public struct V1ListPaymentsRequest: Codable {
 	}
 }
 
-public struct V1ListPaymentsResponse: Codable {
+public struct V1ListPaymentsResponse: SQCodable {
 	var items: [V1Payment]?
 
 	public init(items: [V1Payment]? = nil) {
@@ -12734,7 +12734,7 @@ public struct V1ListPaymentsResponse: Codable {
 	}
 }
 
-public struct V1ListRefundsRequest: Codable {
+public struct V1ListRefundsRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
@@ -12755,7 +12755,7 @@ public struct V1ListRefundsRequest: Codable {
 	}
 }
 
-public struct V1ListRefundsResponse: Codable {
+public struct V1ListRefundsResponse: SQCodable {
 	var items: [V1Refund]?
 
 	public init(items: [V1Refund]? = nil) {
@@ -12763,7 +12763,7 @@ public struct V1ListRefundsResponse: Codable {
 	}
 }
 
-public struct V1ListSettlementsRequest: Codable {
+public struct V1ListSettlementsRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
@@ -12788,12 +12788,12 @@ public struct V1ListSettlementsRequest: Codable {
 }
 
 /// 
-public enum V1ListSettlementsRequestStatus: String, Codable {
+public enum V1ListSettlementsRequestStatus: String, SQCodable {
 	case SENT
 	case FAILED
 }
 
-public struct V1ListSettlementsResponse: Codable {
+public struct V1ListSettlementsResponse: SQCodable {
 	var items: [V1Settlement]?
 
 	public init(items: [V1Settlement]? = nil) {
@@ -12801,13 +12801,13 @@ public struct V1ListSettlementsResponse: Codable {
 	}
 }
 
-public struct V1ListTimecardEventsRequest: Codable {
+public struct V1ListTimecardEventsRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1ListTimecardEventsResponse: Codable {
+public struct V1ListTimecardEventsResponse: SQCodable {
 	var items: [V1TimecardEvent]?
 
 	public init(items: [V1TimecardEvent]? = nil) {
@@ -12815,7 +12815,7 @@ public struct V1ListTimecardEventsResponse: Codable {
 	}
 }
 
-public struct V1ListTimecardsRequest: Codable {
+public struct V1ListTimecardsRequest: SQCodable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
 	/// If filtering results by their clockin_time field, the beginning of the requested reporting period, in ISO 8601 format.
@@ -12854,7 +12854,7 @@ public struct V1ListTimecardsRequest: Codable {
 	}
 }
 
-public struct V1ListTimecardsResponse: Codable {
+public struct V1ListTimecardsResponse: SQCodable {
 	var items: [V1Timecard]?
 
 	public init(items: [V1Timecard]? = nil) {
@@ -12863,7 +12863,7 @@ public struct V1ListTimecardsResponse: Codable {
 }
 
 /// V1ModifierList
-public struct V1ModifierList: Codable {
+public struct V1ModifierList: SQCodable {
 	/// The modifier list's unique ID.
 	var id: String?
 	/// The options included in the modifier list.
@@ -12885,13 +12885,13 @@ public struct V1ModifierList: Codable {
 }
 
 /// 
-public enum V1ModifierListSelectionType: String, Codable {
+public enum V1ModifierListSelectionType: String, SQCodable {
 	case SINGLE
 	case MULTIPLE
 }
 
 /// V1ModifierOption
-public struct V1ModifierOption: Codable {
+public struct V1ModifierOption: SQCodable {
 	/// The modifier option's unique ID.
 	var id: String?
 	/// The ID of the modifier list the option belongs to.
@@ -12918,7 +12918,7 @@ public struct V1ModifierOption: Codable {
 	}
 }
 
-public struct V1Money: Codable {
+public struct V1Money: SQCodable {
 	/// Amount in the lowest denominated value of this Currency. E.g. in USD these are cents, in JPY they are Yen (which do not have a 'cent' concept).
 	var amount: Int?
 	///  See [Currency](#type-currency) for possible values
@@ -12931,7 +12931,7 @@ public struct V1Money: Codable {
 }
 
 /// V1Order
-public struct V1Order: Codable {
+public struct V1Order: SQCodable {
 	/// For Bitcoin transactions, the price of the buyer's order in satoshi (100 million satoshi equals 1 BTC).
 	var btc_price_satoshi: Float?
 	/// For Bitcoin transactions, the address that the buyer sent Bitcoin to.
@@ -13013,7 +13013,7 @@ public struct V1Order: Codable {
 }
 
 /// V1OrderHistoryEntry
-public struct V1OrderHistoryEntry: Codable {
+public struct V1OrderHistoryEntry: SQCodable {
 	/// The type of action performed on the order. See [V1OrderHistoryEntryAction](#type-v1orderhistoryentryaction) for possible values
 	var action: V1OrderHistoryEntryAction?
 	/// The time when the action was performed, in ISO 8601 format.
@@ -13026,7 +13026,7 @@ public struct V1OrderHistoryEntry: Codable {
 }
 
 /// 
-public enum V1OrderHistoryEntryAction: String, Codable {
+public enum V1OrderHistoryEntryAction: String, SQCodable {
 	case ORDER_PLACED
 	case DECLINED
 	case PAYMENT_RECEIVED
@@ -13037,7 +13037,7 @@ public enum V1OrderHistoryEntryAction: String, Codable {
 }
 
 /// 
-public enum V1OrderState: String, Codable {
+public enum V1OrderState: String, SQCodable {
 	case PENDING
 	case OPEN
 	case COMPLETED
@@ -13047,7 +13047,7 @@ public enum V1OrderState: String, Codable {
 }
 
 /// V1Page
-public struct V1Page: Codable {
+public struct V1Page: SQCodable {
 	/// The cells included on the page.
 	var cells: [V1PageCell]?
 	/// The page's unique identifier.
@@ -13066,7 +13066,7 @@ public struct V1Page: Codable {
 }
 
 /// V1PageCell
-public struct V1PageCell: Codable {
+public struct V1PageCell: SQCodable {
 	/// The column of the cell. Always an integer between 0 and 4, inclusive.
 	var column: Int?
 	/// The unique identifier of the entity represented in the cell. Not present for cells with an object_type of PLACEHOLDER.
@@ -13091,7 +13091,7 @@ public struct V1PageCell: Codable {
 }
 
 /// 
-public enum V1PageCellObjectType: String, Codable {
+public enum V1PageCellObjectType: String, SQCodable {
 	case ITEM
 	case DISCOUNT
 	case CATEGORY
@@ -13099,14 +13099,14 @@ public enum V1PageCellObjectType: String, Codable {
 }
 
 /// 
-public enum V1PageCellPlaceholderType: String, Codable {
+public enum V1PageCellPlaceholderType: String, SQCodable {
 	case ALL_ITEMS
 	case DISCOUNTS_CATEGORY
 	case REWARDS_FINDER
 }
 
 /// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
-public struct V1Payment: Codable {
+public struct V1Payment: SQCodable {
 	/// All of the additive taxes associated with the payment.
 	var additive_tax: [V1PaymentTax]?
 	/// The sum of all additive taxes associated with the payment.
@@ -13194,7 +13194,7 @@ public struct V1Payment: Codable {
 }
 
 /// V1PaymentDiscount
-public struct V1PaymentDiscount: Codable {
+public struct V1PaymentDiscount: SQCodable {
 	/// The amount of money that this discount adds to the payment (note that this value is always negative or zero).
 	var applied_money: V1Money?
 	/// The ID of the applied discount, if available. Discounts applied in older versions of Square Register might not have an ID.
@@ -13210,7 +13210,7 @@ public struct V1PaymentDiscount: Codable {
 }
 
 /// V1PaymentItemDetail
-public struct V1PaymentItemDetail: Codable {
+public struct V1PaymentItemDetail: SQCodable {
 	/// The name of the item's merchant-defined category, if any.
 	var category_name: String?
 	/// The unique ID of the item purchased, if any.
@@ -13229,7 +13229,7 @@ public struct V1PaymentItemDetail: Codable {
 }
 
 /// Payment include an` itemizations` field that lists the items purchased, along with associated fees, modifiers, and discounts. Each itemization has an `itemization_type` field that indicates which of the following the itemization represents:  <ul> <li>An item variation from the merchant's item library</li> <li>A custom monetary amount</li> <li> An action performed on a Square gift card, such as activating or reloading it. </li> </ul>  *Note**: itemization information included in a `Payment` object reflects details collected **at the time of the payment**. Details such as the name or price of items might have changed since the payment was processed.
-public struct V1PaymentItemization: Codable {
+public struct V1PaymentItemization: SQCodable {
 	/// The total of all discounts applied to the itemization. This value is always negative or zero.
 	var discount_money: V1Money?
 	/// All discounts applied to this itemization.
@@ -13278,7 +13278,7 @@ public struct V1PaymentItemization: Codable {
 }
 
 /// 
-public enum V1PaymentItemizationItemizationType: String, Codable {
+public enum V1PaymentItemizationItemizationType: String, SQCodable {
 	case ITEM
 	case CUSTOM_AMOUNT
 	case GIFT_CARD_ACTIVATION
@@ -13288,7 +13288,7 @@ public enum V1PaymentItemizationItemizationType: String, Codable {
 }
 
 /// V1PaymentModifier
-public struct V1PaymentModifier: Codable {
+public struct V1PaymentModifier: SQCodable {
 	/// The amount of money that this modifier option adds to the payment.
 	var applied_money: V1Money?
 	/// TThe ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
@@ -13304,7 +13304,7 @@ public struct V1PaymentModifier: Codable {
 }
 
 /// V1PaymentSurcharge
-public struct V1PaymentSurcharge: Codable {
+public struct V1PaymentSurcharge: SQCodable {
 	/// The amount of the surcharge as a Money object. Exactly one of rate or amount_money should be set.
 	var amount_money: V1Money?
 	/// The amount of money applied to the order as a result of the surcharge.
@@ -13335,14 +13335,14 @@ public struct V1PaymentSurcharge: Codable {
 }
 
 /// 
-public enum V1PaymentSurchargeType: String, Codable {
+public enum V1PaymentSurchargeType: String, SQCodable {
 	case UNKNOWN
 	case AUTO_GRATUITY
 	case CUSTOM
 }
 
 /// V1PaymentTax
-public struct V1PaymentTax: Codable {
+public struct V1PaymentTax: SQCodable {
 	/// The amount of money that this tax adds to the payment.
 	var applied_money: V1Money?
 	/// Any errors that occurred during the request.
@@ -13367,13 +13367,13 @@ public struct V1PaymentTax: Codable {
 }
 
 /// 
-public enum V1PaymentTaxInclusionType: String, Codable {
+public enum V1PaymentTaxInclusionType: String, SQCodable {
 	case ADDITIVE
 	case INCLUSIVE
 }
 
 /// Represents a phone number.
-public struct V1PhoneNumber: Codable {
+public struct V1PhoneNumber: SQCodable {
 	/// The phone number's international calling code. For US phone numbers, this value is +1.
 	var calling_code: String
 	/// The phone number.
@@ -13386,7 +13386,7 @@ public struct V1PhoneNumber: Codable {
 }
 
 /// V1Refund
-public struct V1Refund: Codable {
+public struct V1Refund: SQCodable {
 	/// The time when the merchant initiated the refund for Square to process, in ISO 8601 format.
 	var created_at: String?
 	/// Indicates whether or not the refund is associated with an exchange. If is_exchange is true, the refund reflects the value of goods returned in the exchange not the total money refunded.
@@ -13446,85 +13446,85 @@ public struct V1Refund: Codable {
 }
 
 /// 
-public enum V1RefundType: String, Codable {
+public enum V1RefundType: String, SQCodable {
 	case FULL
 	case PARTIAL
 }
 
-public struct V1RemoveFeeRequest: Codable {
+public struct V1RemoveFeeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RemoveModifierListRequest: Codable {
+public struct V1RemoveModifierListRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveBankAccountRequest: Codable {
+public struct V1RetrieveBankAccountRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveCashDrawerShiftRequest: Codable {
+public struct V1RetrieveCashDrawerShiftRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveEmployeeRequest: Codable {
+public struct V1RetrieveEmployeeRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveEmployeeRoleRequest: Codable {
+public struct V1RetrieveEmployeeRoleRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveItemRequest: Codable {
+public struct V1RetrieveItemRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveModifierListRequest: Codable {
+public struct V1RetrieveModifierListRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveOrderRequest: Codable {
+public struct V1RetrieveOrderRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrievePaymentRequest: Codable {
+public struct V1RetrievePaymentRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveSettlementRequest: Codable {
+public struct V1RetrieveSettlementRequest: SQCodable {
 
 	public init() {
 	}
 }
 
-public struct V1RetrieveTimecardRequest: Codable {
+public struct V1RetrieveTimecardRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// V1Settlement
-public struct V1Settlement: Codable {
+public struct V1Settlement: SQCodable {
 	/// The Square-issued unique identifier for the bank account associated with the settlement.
 	var bank_account_id: String?
 	/// The entries included in this settlement.
@@ -13549,7 +13549,7 @@ public struct V1Settlement: Codable {
 }
 
 /// V1SettlementEntry
-public struct V1SettlementEntry: Codable {
+public struct V1SettlementEntry: SQCodable {
 	/// The total amount of money this entry contributes to the total settlement amount.
 	var amount_money: V1Money?
 	/// The amount of all Square fees associated with this settlement entry. This value is always negative or zero.
@@ -13568,7 +13568,7 @@ public struct V1SettlementEntry: Codable {
 }
 
 /// 
-public enum V1SettlementEntryType: String, Codable {
+public enum V1SettlementEntryType: String, SQCodable {
 	/// A manual adjustment applied to the merchant's account by Square
 	case ADJUSTMENT
 	/// A payment from an existing Square balance, such as a gift card
@@ -13613,13 +13613,13 @@ public enum V1SettlementEntryType: String, Codable {
 }
 
 /// 
-public enum V1SettlementStatus: String, Codable {
+public enum V1SettlementStatus: String, SQCodable {
 	case FAILED
 	case SENT
 }
 
 /// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
-public struct V1Tender: Codable {
+public struct V1Tender: SQCodable {
 	/// The brand of credit card provided. See [V1TenderCardBrand](#type-v1tendercardbrand) for possible values
 	var card_brand: V1TenderCardBrand?
 	/// The amount of total_money returned to the buyer as change.
@@ -13674,7 +13674,7 @@ public struct V1Tender: Codable {
 }
 
 /// The brand of a credit card.
-public enum V1TenderCardBrand: String, Codable {
+public enum V1TenderCardBrand: String, SQCodable {
 	case OTHER_BRAND
 	case VISA
 	case MASTER_CARD
@@ -13687,7 +13687,7 @@ public enum V1TenderCardBrand: String, Codable {
 }
 
 /// 
-public enum V1TenderEntryMethod: String, Codable {
+public enum V1TenderEntryMethod: String, SQCodable {
 	case MANUAL
 	case SCANNED
 	case SQUARE_CASH
@@ -13698,7 +13698,7 @@ public enum V1TenderEntryMethod: String, Codable {
 }
 
 /// 
-public enum V1TenderType: String, Codable {
+public enum V1TenderType: String, SQCodable {
 	case CREDIT_CARD
 	case CASH
 	case THIRD_PARTY_CARD
@@ -13710,7 +13710,7 @@ public enum V1TenderType: String, Codable {
 }
 
 /// Represents a timecard for an employee.
-public struct V1Timecard: Codable {
+public struct V1Timecard: SQCodable {
 	/// The ID of the location the employee clocked in from. We strongly reccomend providing a clockin_location_id. Square uses the clockin_location_id to determine a timecard’s timezone and overtime rules.
 	var clockin_location_id: String?
 	/// The clock-in time for the timecard, in ISO 8601 format.
@@ -13753,7 +13753,7 @@ public struct V1Timecard: Codable {
 }
 
 /// V1TimecardEvent
-public struct V1TimecardEvent: Codable {
+public struct V1TimecardEvent: SQCodable {
 	/// The time the employee clocked in, in ISO 8601 format.
 	var clockin_time: String?
 	/// The time the employee clocked out, in ISO 8601 format.
@@ -13775,7 +13775,7 @@ public struct V1TimecardEvent: Codable {
 }
 
 /// Actions that resulted in a change to a timecard. All timecard events created with the Connect API have an event type that begins with `API`.
-public enum V1TimecardEventEventType: String, Codable {
+public enum V1TimecardEventEventType: String, SQCodable {
 	/// The timecard was created by a request to the `CreateTimecard` endpoint.
 	case API_CREATE
 	/// The timecard was edited by a request to the `UpdateTimecard` endpoint.
@@ -13794,7 +13794,7 @@ public enum V1TimecardEventEventType: String, Codable {
 	case DASHBOARD_DELETE
 }
 
-public struct V1UpdateCategoryRequest: Codable {
+public struct V1UpdateCategoryRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Category
 
@@ -13803,7 +13803,7 @@ public struct V1UpdateCategoryRequest: Codable {
 	}
 }
 
-public struct V1UpdateDiscountRequest: Codable {
+public struct V1UpdateDiscountRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Discount
 
@@ -13812,7 +13812,7 @@ public struct V1UpdateDiscountRequest: Codable {
 	}
 }
 
-public struct V1UpdateEmployeeRequest: Codable {
+public struct V1UpdateEmployeeRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Employee
 
@@ -13821,7 +13821,7 @@ public struct V1UpdateEmployeeRequest: Codable {
 	}
 }
 
-public struct V1UpdateEmployeeRoleRequest: Codable {
+public struct V1UpdateEmployeeRoleRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1EmployeeRole
 
@@ -13830,7 +13830,7 @@ public struct V1UpdateEmployeeRoleRequest: Codable {
 	}
 }
 
-public struct V1UpdateFeeRequest: Codable {
+public struct V1UpdateFeeRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Fee
 
@@ -13839,7 +13839,7 @@ public struct V1UpdateFeeRequest: Codable {
 	}
 }
 
-public struct V1UpdateItemRequest: Codable {
+public struct V1UpdateItemRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Item
 
@@ -13849,7 +13849,7 @@ public struct V1UpdateItemRequest: Codable {
 }
 
 /// V1UpdateModifierListRequest
-public struct V1UpdateModifierListRequest: Codable {
+public struct V1UpdateModifierListRequest: SQCodable {
 	/// The modifier list's name.
 	var name: String?
 	/// Indicates whether multiple options from the modifier list can be applied to a single item. See [V1UpdateModifierListRequestSelectionType](#type-v1updatemodifierlistrequestselectiontype) for possible values
@@ -13862,12 +13862,12 @@ public struct V1UpdateModifierListRequest: Codable {
 }
 
 /// 
-public enum V1UpdateModifierListRequestSelectionType: String, Codable {
+public enum V1UpdateModifierListRequestSelectionType: String, SQCodable {
 	case SINGLE
 	case MULTIPLE
 }
 
-public struct V1UpdateModifierOptionRequest: Codable {
+public struct V1UpdateModifierOptionRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1ModifierOption
 
@@ -13877,7 +13877,7 @@ public struct V1UpdateModifierOptionRequest: Codable {
 }
 
 /// V1UpdateOrderRequest
-public struct V1UpdateOrderRequest: Codable {
+public struct V1UpdateOrderRequest: SQCodable {
 	/// The action to perform on the order (COMPLETE, CANCEL, or REFUND). See [V1UpdateOrderRequestAction](#type-v1updateorderrequestaction) for possible values
 	var action: V1UpdateOrderRequestAction
 	/// A merchant-specified note about the canceling of the order. Only valid if action is CANCEL.
@@ -13899,13 +13899,13 @@ public struct V1UpdateOrderRequest: Codable {
 }
 
 /// 
-public enum V1UpdateOrderRequestAction: String, Codable {
+public enum V1UpdateOrderRequestAction: String, SQCodable {
 	case COMPLETE
 	case CANCEL
 	case REFUND
 }
 
-public struct V1UpdatePageCellRequest: Codable {
+public struct V1UpdatePageCellRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1PageCell
 
@@ -13914,7 +13914,7 @@ public struct V1UpdatePageCellRequest: Codable {
 	}
 }
 
-public struct V1UpdatePageRequest: Codable {
+public struct V1UpdatePageRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Page
 
@@ -13923,7 +13923,7 @@ public struct V1UpdatePageRequest: Codable {
 	}
 }
 
-public struct V1UpdateTimecardRequest: Codable {
+public struct V1UpdateTimecardRequest: SQCodable {
 	/// An object containing the fields to POST for the request. See the corresponding object definition for field details.
 	var body: V1Timecard
 
@@ -13932,7 +13932,7 @@ public struct V1UpdateTimecardRequest: Codable {
 	}
 }
 
-public struct V1UpdateVariationRequest: Codable {
+public struct V1UpdateVariationRequest: SQCodable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Variation
 
@@ -13942,7 +13942,7 @@ public struct V1UpdateVariationRequest: Codable {
 }
 
 /// V1Variation
-public struct V1Variation: Codable {
+public struct V1Variation: SQCodable {
 	/// The item variation's unique ID.
 	var id: String?
 	/// If the inventory quantity for the variation is less than or equal to this value and inventory_alert_type is LOW_QUANTITY, the variation displays an alert in the merchant dashboard.
@@ -13985,7 +13985,7 @@ public struct V1Variation: Codable {
 }
 
 /// 
-public enum V1VariationInventoryAlertType: String, Codable {
+public enum V1VariationInventoryAlertType: String, SQCodable {
 	case LOW_QUANTITY
 	case NONE
 	case INVESTMENT
@@ -13995,19 +13995,19 @@ public enum V1VariationInventoryAlertType: String, Codable {
 }
 
 /// 
-public enum V1VariationPricingType: String, Codable {
+public enum V1VariationPricingType: String, SQCodable {
 	case FIXED_PRICING
 	case VARIABLE_PRICING
 }
 
-public struct VoidTransactionRequest: Codable {
+public struct VoidTransactionRequest: SQCodable {
 
 	public init() {
 	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [VoidTransaction](#endpoint-voidtransaction) endpoint.
-public struct VoidTransactionResponse: Codable {
+public struct VoidTransactionResponse: SQCodable {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 
@@ -14017,7 +14017,7 @@ public struct VoidTransactionResponse: Codable {
 }
 
 /// An object representing a team member's wage information.
-public struct WageSetting: Codable {
+public struct WageSetting: SQCodable {
 	/// The timestamp in RFC 3339 format describing when the wage setting object was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
 	let created_at: Timestamp?
 	/// Whether the team member is exempt from the overtime rules of the seller country.
@@ -14042,7 +14042,7 @@ public struct WageSetting: Codable {
 }
 
 /// The days of the week.
-public enum Weekday: String, Codable {
+public enum Weekday: String, SQCodable {
 	/// Monday
 	case MON
 	/// Tuesday
@@ -14060,7 +14060,7 @@ public enum Weekday: String, Codable {
 }
 
 /// Sets the Day of the week and hour of the day that a business starts a work week. Used for the calculation of overtime pay.
-public struct WorkweekConfig: Codable {
+public struct WorkweekConfig: SQCodable {
 	/// A read-only timestamp in RFC 3339 format; presented in UTC
 	let created_at: Timestamp?
 	/// UUID for this object

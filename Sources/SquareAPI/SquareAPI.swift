@@ -2,7 +2,7 @@
 import Vapor
 #else
 import Foundation
-public typealias Content = Codable
+///public typealias Content = Codable
 public enum HTTPMethod: String {
 	case GET,POST,PUT
 }
@@ -30,11 +30,12 @@ extension Duration {
 
 let kSquareHost = "connect.squareup.com"
 
+public protocol SQCodable: Codable {}
 
 /// protocol for Square Endpoint definitions
 public protocol SquareAPIEndpoint {
-	associatedtype inputType: Content
-	associatedtype outputType: Content
+	associatedtype inputType: SQCodable
+	associatedtype outputType: SQCodable
 	associatedtype paramType
 	static func endpoint(for inputs: paramType) throws -> String
 	//static func post(_ inputs: inputType, token: String, req: Request) -> EventLoopFuture<outputType>
@@ -45,7 +46,7 @@ extension SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .POST }		// default method
 }
 
-public struct Empty: Content {
+public struct Empty: SQCodable {
 	public init() { }
 }
 
