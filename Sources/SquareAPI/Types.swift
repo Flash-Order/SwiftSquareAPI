@@ -3156,15 +3156,15 @@ public struct CompletePaymentResponse: Codable {
 /// Latitude and longitude coordinates.
 public struct Coordinates: Codable {
 	/// The latitude of the coordinate expressed in degrees.
-	public var latitude: Float?
+	public var latitude: StringNumber?
 	/// The longitude of the coordinate expressed in degrees.
-	public var longitude: Float?
+	public var longitude: StringNumber?
 
 	/// Latitude and longitude coordinates.
 	/// - Parameters:
 	///   - latitude: The latitude of the coordinate expressed in degrees.
 	///   - longitude: The longitude of the coordinate expressed in degrees.
-	public init(latitude: Float? = nil, longitude: Float? = nil) {
+	public init(latitude: StringNumber? = nil, longitude: StringNumber? = nil) {
 		self.latitude = latitude
 		self.longitude = longitude
 	}
@@ -14050,14 +14050,14 @@ public struct V1AdjustInventoryRequest: Codable {
 	/// A note about the inventory adjustment.
 	public var memo: String?
 	/// The number to adjust the variation's quantity by.
-	public var quantity_delta: Float?
+	public var quantity_delta: StringNumber?
 
 	/// V1AdjustInventoryRequest
 	/// - Parameters:
 	///   - adjustment_type: The reason for the inventory adjustment. See [V1AdjustInventoryRequestAdjustmentType](#type-v1adjustinventoryrequestadjustmenttype) for possible values
 	///   - memo: A note about the inventory adjustment.
 	///   - quantity_delta: The number to adjust the variation's quantity by.
-	public init(adjustment_type: V1AdjustInventoryRequestAdjustmentType? = nil, memo: String? = nil, quantity_delta: Float? = nil) {
+	public init(adjustment_type: V1AdjustInventoryRequestAdjustmentType? = nil, memo: String? = nil, quantity_delta: StringNumber? = nil) {
 		self.adjustment_type = adjustment_type
 		self.memo = memo
 		self.quantity_delta = quantity_delta
@@ -14723,7 +14723,7 @@ public enum V1FeeType: String, Codable {
 /// V1InventoryEntry
 public struct V1InventoryEntry: Codable {
 	/// The current available quantity of the item variation.
-	public var quantity_on_hand: Float?
+	public var quantity_on_hand: StringNumber?
 	/// The variation that the entry corresponds to.
 	public var variation_id: String?
 
@@ -14731,7 +14731,7 @@ public struct V1InventoryEntry: Codable {
 	/// - Parameters:
 	///   - quantity_on_hand: The current available quantity of the item variation.
 	///   - variation_id: The variation that the entry corresponds to.
-	public init(quantity_on_hand: Float? = nil, variation_id: String? = nil) {
+	public init(quantity_on_hand: StringNumber? = nil, variation_id: String? = nil) {
 		self.quantity_on_hand = quantity_on_hand
 		self.variation_id = variation_id
 	}
@@ -15341,7 +15341,7 @@ public struct V1Money: Codable {
 /// V1Order
 public struct V1Order: Codable {
 	/// For Bitcoin transactions, the price of the buyer's order in satoshi (100 million satoshi equals 1 BTC).
-	public var btc_price_satoshi: Float?
+	public var btc_price_satoshi: StringNumber?
 	/// For Bitcoin transactions, the address that the buyer sent Bitcoin to.
 	public var btc_receive_address: String?
 	/// The email address of the order's buyer.
@@ -15418,7 +15418,7 @@ public struct V1Order: Codable {
 	///   - total_shipping_money: The shipping cost for the order.
 	///   - total_tax_money: The total of all taxes applied to the order.
 	///   - updated_at: The time when the order was last modified, in ISO 8601 format.
-	public init(btc_price_satoshi: Float? = nil, btc_receive_address: String? = nil, buyer_email: String? = nil, buyer_note: String? = nil, canceled_note: String? = nil, completed_note: String? = nil, created_at: String? = nil, errors: [Error]? = nil, expires_at: String? = nil, id: String? = nil, order_history: [V1OrderHistoryEntry]? = nil, payment_id: String? = nil, promo_code: String? = nil, recipient_name: String? = nil, recipient_phone_number: String? = nil, refunded_note: String? = nil, shipping_address: Address? = nil, state: V1OrderState? = nil, subtotal_money: V1Money? = nil, tender: V1Tender? = nil, total_discount_money: V1Money? = nil, total_price_money: V1Money? = nil, total_shipping_money: V1Money? = nil, total_tax_money: V1Money? = nil, updated_at: String? = nil) {
+	public init(btc_price_satoshi: StringNumber? = nil, btc_receive_address: String? = nil, buyer_email: String? = nil, buyer_note: String? = nil, canceled_note: String? = nil, completed_note: String? = nil, created_at: String? = nil, errors: [Error]? = nil, expires_at: String? = nil, id: String? = nil, order_history: [V1OrderHistoryEntry]? = nil, payment_id: String? = nil, promo_code: String? = nil, recipient_name: String? = nil, recipient_phone_number: String? = nil, refunded_note: String? = nil, shipping_address: Address? = nil, state: V1OrderState? = nil, subtotal_money: V1Money? = nil, tender: V1Tender? = nil, total_discount_money: V1Money? = nil, total_price_money: V1Money? = nil, total_shipping_money: V1Money? = nil, total_tax_money: V1Money? = nil, updated_at: String? = nil) {
 		self.btc_price_satoshi = btc_price_satoshi
 		self.btc_receive_address = btc_receive_address
 		self.buyer_email = buyer_email
@@ -15744,7 +15744,7 @@ public struct V1PaymentItemization: Codable {
 	/// Notes entered by the merchant about the item at the time of payment, if any.
 	public var notes: String?
 	/// The quantity of the item purchased. This can be a decimal value.
-	public var quantity: Float?
+	public var quantity: StringNumber?
 	/// The cost of a single unit of this item.
 	public var single_quantity_money: V1Money?
 	/// All taxes applied to this itemization.
@@ -15768,7 +15768,7 @@ public struct V1PaymentItemization: Codable {
 	///   - single_quantity_money: The cost of a single unit of this item.
 	///   - taxes: All taxes applied to this itemization.
 	///   - total_money: The total cost of the item, including all taxes and discounts.
-	public init(discount_money: V1Money? = nil, discounts: [V1PaymentDiscount]? = nil, gross_sales_money: V1Money? = nil, item_detail: V1PaymentItemDetail? = nil, item_variation_name: String? = nil, itemization_type: V1PaymentItemizationItemizationType? = nil, modifiers: [V1PaymentModifier]? = nil, name: String? = nil, net_sales_money: V1Money? = nil, notes: String? = nil, quantity: Float? = nil, single_quantity_money: V1Money? = nil, taxes: [V1PaymentTax]? = nil, total_money: V1Money? = nil) {
+	public init(discount_money: V1Money? = nil, discounts: [V1PaymentDiscount]? = nil, gross_sales_money: V1Money? = nil, item_detail: V1PaymentItemDetail? = nil, item_variation_name: String? = nil, itemization_type: V1PaymentItemizationItemizationType? = nil, modifiers: [V1PaymentModifier]? = nil, name: String? = nil, net_sales_money: V1Money? = nil, notes: String? = nil, quantity: StringNumber? = nil, single_quantity_money: V1Money? = nil, taxes: [V1PaymentTax]? = nil, total_money: V1Money? = nil) {
 		self.discount_money = discount_money
 		self.discounts = discounts
 		self.gross_sales_money = gross_sales_money
@@ -16312,15 +16312,15 @@ public struct V1Timecard: Codable {
 	/// If true, the timecard was deleted by the merchant, and it is no longer valid.
 	public var deleted: Bool?
 	/// The total number of doubletime seconds worked in the timecard.
-	public var doubletime_seconds_worked: Float?
+	public var doubletime_seconds_worked: StringNumber?
 	/// The ID of the employee the timecard is associated with.
 	public var employee_id: String
 	/// The timecard's unique ID.
 	public var id: String?
 	/// The total number of overtime seconds worked in the timecard.
-	public var overtime_seconds_worked: Float?
+	public var overtime_seconds_worked: StringNumber?
 	/// The total number of regular (non-overtime) seconds worked in the timecard.
-	public var regular_seconds_worked: Float?
+	public var regular_seconds_worked: StringNumber?
 	/// The time when the timecard was most recently updated, in ISO 8601 format.
 	public var updated_at: String?
 
@@ -16338,7 +16338,7 @@ public struct V1Timecard: Codable {
 	///   - overtime_seconds_worked: The total number of overtime seconds worked in the timecard.
 	///   - regular_seconds_worked: The total number of regular (non-overtime) seconds worked in the timecard.
 	///   - updated_at: The time when the timecard was most recently updated, in ISO 8601 format.
-	public init(employee_id: String, clockin_location_id: String? = nil, clockin_time: String? = nil, clockout_location_id: String? = nil, clockout_time: String? = nil, created_at: String? = nil, deleted: Bool? = nil, doubletime_seconds_worked: Float? = nil, id: String? = nil, overtime_seconds_worked: Float? = nil, regular_seconds_worked: Float? = nil, updated_at: String? = nil) {
+	public init(employee_id: String, clockin_location_id: String? = nil, clockin_time: String? = nil, clockout_location_id: String? = nil, clockout_time: String? = nil, created_at: String? = nil, deleted: Bool? = nil, doubletime_seconds_worked: StringNumber? = nil, id: String? = nil, overtime_seconds_worked: StringNumber? = nil, regular_seconds_worked: StringNumber? = nil, updated_at: String? = nil) {
 		self.employee_id = employee_id
 		self.clockin_location_id = clockin_location_id
 		self.clockin_time = clockin_time

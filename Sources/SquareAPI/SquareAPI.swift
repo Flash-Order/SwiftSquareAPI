@@ -27,7 +27,39 @@ public extension Duration {
 //extension Timestamp {
 //	var date3339: Date? { return iso3339.date(from: self) }
 //}
+public struct StringNumber: Codable {
+	public var rawValue: String
+	
+	public var floatValue: Float? {
+		set {
+			if let nv = newValue { rawValue = "\(nv)" }
+			else { rawValue = "" }
+		}
+		get {
+			return Float(rawValue)
+		}
+	}
 
+	public var intValue: Int? {
+		set {
+			if let nv = newValue { rawValue = "\(nv)" }
+			else { rawValue = "" }
+		}
+		get {
+			return Int(rawValue)
+		}
+	}
+
+	public init(from decoder: Decoder) throws {
+		let container = try decoder.singleValueContainer()
+		rawValue = try container.decode(String.self)
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(rawValue)
+	}
+}
 
 
 /// protocol for Square Endpoint definitions
