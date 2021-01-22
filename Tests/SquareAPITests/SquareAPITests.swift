@@ -6,7 +6,7 @@ final class SquareAPITests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-		XCTAssertEqual(SquareAPI.version, "2020-12-16")
+		XCTAssertEqual(SquareAPIInfo.version, "2021-01-21")
     }
 
     static var allTests = [

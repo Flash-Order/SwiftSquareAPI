@@ -122,7 +122,7 @@ public struct V1ListTimecards: SquareAPIEndpoint {
 	}
 }
 
-/// Provides the details for a single timecard.   <aside> Only approved accounts can manage their employees with Square. Unapproved accounts cannot use employee management features with the API. </aside>
+/// Provides the details for a single timecard.   Only approved accounts can manage their employees with Square. Unapproved accounts cannot use employee management features with the API.
 @available(*,deprecated)
 public struct V1RetrieveTimecard: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -131,7 +131,7 @@ public struct V1RetrieveTimecard: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let timecard_id: String
-		/// Provides the details for a single timecard.   <aside> Only approved accounts can manage their employees with Square. Unapproved accounts cannot use employee management features with the API. </aside>
+		/// Provides the details for a single timecard.   Only approved accounts can manage their employees with Square. Unapproved accounts cannot use employee management features with the API.
 		/// - Parameters:
 		///   - timecard_id: The timecard's ID.
 		public init(timecard_id: String) {
@@ -962,7 +962,7 @@ public struct RetrieveCatalogObject: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for [CatalogObject](#type-CatalogObject) of any types against supported search attribute values, excluding custom attribute values on items or item variations, against one or more of the specified query expressions,  This (`SearchCatalogObjects`) endpoint differs from the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint in the following aspects:  - `SearchCatalogItems` can only search for items or item variations, whereas `SearchCatalogObjects` can search for any type of catalog objects. - `SearchCatalogItems` supports the custom attribute query filters to return items or item variations that contain custom attribute values, where `SearchCatalogObjects` does not. - `SearchCatalogItems` does not support the `include_deleted_objects` filter to search for deleted items or item variations, whereas `SearchCatalogObjects` does. - The both endpoints have different call conventions, including the query filter formats.
+/// Searches for [CatalogObject](#type-CatalogObject) of any type by matching supported search attribute values, excluding custom attribute values on items or item variations, against one or more of the specified query expressions.  This (`SearchCatalogObjects`) endpoint differs from the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint in the following aspects:  - `SearchCatalogItems` can only search for items or item variations, whereas `SearchCatalogObjects` can search for any type of catalog objects. - `SearchCatalogItems` supports the custom attribute query filters to return items or item variations that contain custom attribute values, where `SearchCatalogObjects` does not. - `SearchCatalogItems` does not support the `include_deleted_objects` filter to search for deleted items or item variations, whereas `SearchCatalogObjects` does. - The both endpoints have different call conventions, including the query filter formats.
 public struct SearchCatalogObjects: SquareAPIEndpoint {
 	public typealias inputType = SearchCatalogObjectsRequest
 	public typealias outputType = SearchCatalogObjectsResponse
@@ -972,7 +972,7 @@ public struct SearchCatalogObjects: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for catalog items or item variations by matching supported search attribute values, including custom attribute values, against one or more of the specified query expressions,  This (`SearchCatalogItems`) endpoint differs from the [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects) endpoint in the following aspects:  - `SearchCatalogItems` can only search for items or item variations, whereas `SearchCatalogObjects` can search for any type of catalog objects. - `SearchCatalogItems` supports the custom attribute query filters to return items or item variations that contain custom attribute values, where `SearchCatalogObjects` does not. - `SearchCatalogItems` does not support the `include_deleted_objects` filter to search for deleted items or item variations, whereas `SearchCatalogObjects` does. - The both endpoints use different call conventions, including the query filter formats.
+/// Searches for catalog items or item variations by matching supported search attribute values, including custom attribute values, against one or more of the specified query expressions.  This (`SearchCatalogItems`) endpoint differs from the [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects) endpoint in the following aspects:  - `SearchCatalogItems` can only search for items or item variations, whereas `SearchCatalogObjects` can search for any type of catalog objects. - `SearchCatalogItems` supports the custom attribute query filters to return items or item variations that contain custom attribute values, where `SearchCatalogObjects` does not. - `SearchCatalogItems` does not support the `include_deleted_objects` filter to search for deleted items or item variations, whereas `SearchCatalogObjects` does. - The both endpoints use different call conventions, including the query filter formats.
 public struct SearchCatalogItems: SquareAPIEndpoint {
 	public typealias inputType = SearchCatalogItemsRequest
 	public typealias outputType = SearchCatalogItemsResponse
@@ -1465,14 +1465,14 @@ public struct GetInvoice: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
+/// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
 public struct CancelInvoice: SquareAPIEndpoint {
 	public typealias inputType = CancelInvoiceRequest
 	public typealias outputType = CancelInvoiceResponse
 	public typealias paramType = Params
 	public struct Params {
 		let invoice_id: String
-		/// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
+		/// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
 		/// - Parameters:
 		///   - invoice_id: The ID of the `invoice` to cancel.
 		public init(invoice_id: String) {

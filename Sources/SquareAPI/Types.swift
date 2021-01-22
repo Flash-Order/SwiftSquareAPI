@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2020-12-16" }
+	public static var version: String { return "2021-01-21" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -829,23 +829,23 @@ public struct BulkUpdateTeamMembersResponse: Codable {
 
 /// The service appointment settings, including where and how the service is provided.
 public struct BusinessAppointmentSettings: Codable {
-	/// The time unit of the service duration for bookings.
+	/// The time unit of the service duration for bookings. See [BusinessAppointmentSettingsAlignmentTime](#type-businessappointmentsettingsalignmenttime) for possible values
 	public var alignment_time: BusinessAppointmentSettingsAlignmentTime?
 	/// Indicates whether a customer can choose from all available time slots and have a staff member assigned automatically (`true`) or not (`false`).
 	public var any_team_member_booking_enabled: Bool?
-	/// The flat-fee ammount charged for a no-show booking.
+	/// The flat-fee amount charged for a no-show booking.
 	public var cancellation_fee_money: Money?
-	/// The cancellation policy adopted by the seller.
+	/// The cancellation policy adopted by the seller. See [BusinessAppointmentSettingsCancellationPolicy](#type-businessappointmentsettingscancellationpolicy) for possible values
 	public var cancellation_policy: BusinessAppointmentSettingsCancellationPolicy?
 	/// The free-form text of the seller's cancellation policy.
 	public var cancellation_policy_text: String?
 	/// The cut-off time in seconds for allowing clients to cancel or reschedule an appointment.
 	public var cancellation_window_seconds: Int?
-	/// Types of the location allowed for bookings.
-	public var location_types: [BusinessAppointmentSettingsBookingLocationType]?
+	/// Types of the location allowed for bookings. See [BusinessAppointmentSettingsBookingLocationType](#type-businessappointmentsettingsbookinglocationtype) for possible values
+	public var location_types: BusinessAppointmentSettingsBookingLocationType?
 	/// The maximum number of daily appointments per team member or per location.
 	public var max_appointments_per_day_limit: Int?
-	/// Indicates whether the daily appointment limit applies to team members or to business locations.
+	/// Indicates whether the daily appointment limit applies to team members or to business locations. See [BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType](#type-businessappointmentsettingsmaxappointmentsperdaylimittype) for possible values
 	public var max_appointments_per_day_limit_type: BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType?
 	/// The maximum lead time in seconds before a service can be booked. Bookings must be created at most this far ahead of the booking's starting time.
 	public var max_booking_lead_time_seconds: Int?
@@ -858,20 +858,20 @@ public struct BusinessAppointmentSettings: Codable {
 
 	/// The service appointment settings, including where and how the service is provided.
 	/// - Parameters:
-	///   - alignment_time: The time unit of the service duration for bookings.
+	///   - alignment_time: The time unit of the service duration for bookings. See [BusinessAppointmentSettingsAlignmentTime](#type-businessappointmentsettingsalignmenttime) for possible values
 	///   - any_team_member_booking_enabled: Indicates whether a customer can choose from all available time slots and have a staff member assigned automatically (`true`) or not (`false`).
-	///   - cancellation_fee_money: The flat-fee ammount charged for a no-show booking.
-	///   - cancellation_policy: The cancellation policy adopted by the seller.
+	///   - cancellation_fee_money: The flat-fee amount charged for a no-show booking.
+	///   - cancellation_policy: The cancellation policy adopted by the seller. See [BusinessAppointmentSettingsCancellationPolicy](#type-businessappointmentsettingscancellationpolicy) for possible values
 	///   - cancellation_policy_text: The free-form text of the seller's cancellation policy.
 	///   - cancellation_window_seconds: The cut-off time in seconds for allowing clients to cancel or reschedule an appointment.
-	///   - location_types: Types of the location allowed for bookings.
+	///   - location_types: Types of the location allowed for bookings. See [BusinessAppointmentSettingsBookingLocationType](#type-businessappointmentsettingsbookinglocationtype) for possible values
 	///   - max_appointments_per_day_limit: The maximum number of daily appointments per team member or per location.
-	///   - max_appointments_per_day_limit_type: Indicates whether the daily appointment limit applies to team members or to business locations.
+	///   - max_appointments_per_day_limit_type: Indicates whether the daily appointment limit applies to team members or to business locations. See [BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType](#type-businessappointmentsettingsmaxappointmentsperdaylimittype) for possible values
 	///   - max_booking_lead_time_seconds: The maximum lead time in seconds before a service can be booked. Bookings must be created at most this far ahead of the booking's starting time.
 	///   - min_booking_lead_time_seconds: The minimum lead time in seconds before a service can be booked. Bookings must be created at least this far ahead of the booking's starting time.
 	///   - multiple_service_booking_enabled: Indicates whether a customer can book multiple services in a single online booking.
 	///   - skip_booking_flow_staff_selection: Indicates whether customers has an assigned staff member (`true`) or can select s staff member of their choice (`false`).
-	public init(alignment_time: BusinessAppointmentSettingsAlignmentTime? = nil, any_team_member_booking_enabled: Bool? = nil, cancellation_fee_money: Money? = nil, cancellation_policy: BusinessAppointmentSettingsCancellationPolicy? = nil, cancellation_policy_text: String? = nil, cancellation_window_seconds: Int? = nil, location_types: [BusinessAppointmentSettingsBookingLocationType]? = nil, max_appointments_per_day_limit: Int? = nil, max_appointments_per_day_limit_type: BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType? = nil, max_booking_lead_time_seconds: Int? = nil, min_booking_lead_time_seconds: Int? = nil, multiple_service_booking_enabled: Bool? = nil, skip_booking_flow_staff_selection: Bool? = nil) {
+	public init(alignment_time: BusinessAppointmentSettingsAlignmentTime? = nil, any_team_member_booking_enabled: Bool? = nil, cancellation_fee_money: Money? = nil, cancellation_policy: BusinessAppointmentSettingsCancellationPolicy? = nil, cancellation_policy_text: String? = nil, cancellation_window_seconds: Int? = nil, location_types: BusinessAppointmentSettingsBookingLocationType? = nil, max_appointments_per_day_limit: Int? = nil, max_appointments_per_day_limit_type: BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType? = nil, max_booking_lead_time_seconds: Int? = nil, min_booking_lead_time_seconds: Int? = nil, multiple_service_booking_enabled: Bool? = nil, skip_booking_flow_staff_selection: Bool? = nil) {
 		self.alignment_time = alignment_time
 		self.any_team_member_booking_enabled = any_team_member_booking_enabled
 		self.cancellation_fee_money = cancellation_fee_money
@@ -931,13 +931,13 @@ public struct BusinessBookingProfile: Codable {
 	public var allow_user_cancel: Bool?
 	/// Indicates whether the seller is open for booking.
 	public var booking_enabled: Bool?
-	/// The policy for the seller to automatically accept booking requests (`ACCEPT_ALL`) or not (`REQUIRES_ACCEPTANCE`).
+	/// The policy for the seller to automatically accept booking requests (`ACCEPT_ALL`) or not (`REQUIRES_ACCEPTANCE`). See [BusinessBookingProfileBookingPolicy](#type-businessbookingprofilebookingpolicy) for possible values
 	public var booking_policy: BusinessBookingProfileBookingPolicy?
 	/// Settings for appointment-type bookings.
 	public var business_appointment_settings: BusinessAppointmentSettings?
 	/// The RFC-3339 timestamp specifying the booking's creation time.
 	public let created_at: Timestamp?
-	/// The choice of customer's time zone information of a booking. The Square online booking site and all notifications to customers uses either the seller location’s time zone or the time zone the customer chooses at booking.
+	/// The choice of customer's time zone information of a booking. The Square online booking site and all notifications to customers uses either the seller location’s time zone or the time zone the customer chooses at booking. See [BusinessBookingProfileCustomerTimezoneChoice](#type-businessbookingprofilecustomertimezonechoice) for possible values
 	public var customer_timezone_choice: BusinessBookingProfileCustomerTimezoneChoice?
 	/// The ID of the seller, obtainable using the Merchants API.
 	public var seller_id: String?
@@ -2320,7 +2320,7 @@ public struct CatalogModifierOverride: Codable {
 	}
 }
 
-/// The wrapper object for the Catalog entries of a given object type.  The type of a particular `CatalogObject` is determined by the value of the `type` attribute and only the corresponding data attribute can be set on the `CatalogObject` instance. For example, the following list shows some instances of `CatalogObject` of a given `type` and their corresponding data atrribute that can be set: - For a `CatalogObject` of the `ITEM` type, set the `item_data` attribute to yield the `CatalogItem` object. - For a `CatalogObject` of the `ITEM_VARIATION` type, set the `item_variation_data` attribute to yield the `CatalogItemVariation` object. - For a `CatalogObject` of the `MODIFIER` type, set the `modifier_data` attribute to yield the `CatalogModifier` object. - For a `CatalogObject` of the `MODIFIER_LIST` type, set the `modifier_list_data` attribute to yield the `CatalogModifierList` object. - For a `CatalogObject` of the `CATEGORY` type, set the `category_data` attribute to yield the `CatalogCategory` object. - For a `CatalogObject` of the `DISCOUNT` type, set the `discount_data` attribute to yield the `CatalogDiscount` object. - For a `CatalogObject` of the `TAX` type, set the `tax_data` attribute to yield the `CatalogTax` object. - For a `CatalogObject` of the `IMAGE` type, set the `image_data` attribute to yield the `CatalogImageData`  object. - For a `CatalogObject` of the `QUICK_AMOUNTS_SETTINGS` type, set the `quick_amounts_settings_data` attribute to yield the `CatalogQuickAmountsSettings` object. - For a `CatalogObject` of the `PRICING_RULE` type, set the `pricing_rule_data` attribute to yield the `CatalogPricingRule` object. - For a `CatalogObject` of the `TIME_PERIOD` type, set the `time_period_data` attribute to yield the `CatalogTimePeriod` object. - For a `CatalogObject` of the `PRODUCT_SET` type, set the `product_set_data` attribute to yield the `CatalogProductSet`  object. - For a `CatalogObject` of the `SUBSCRIPTION_PLAN` type, set the `subscription_plan_data` attribute to yield the `CatalogSubscriptionPlan` object.   For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](/catalog-api/design-a-catalog) guide.
+/// The wrapper object for the Catalog entries of a given object type.  The type of a particular `CatalogObject` is determined by the value of the `type` attribute and only the corresponding data attribute can be set on the `CatalogObject` instance. For example, the following list shows some instances of `CatalogObject` of a given `type` and their corresponding data attribute that can be set: - For a `CatalogObject` of the `ITEM` type, set the `item_data` attribute to yield the `CatalogItem` object. - For a `CatalogObject` of the `ITEM_VARIATION` type, set the `item_variation_data` attribute to yield the `CatalogItemVariation` object. - For a `CatalogObject` of the `MODIFIER` type, set the `modifier_data` attribute to yield the `CatalogModifier` object. - For a `CatalogObject` of the `MODIFIER_LIST` type, set the `modifier_list_data` attribute to yield the `CatalogModifierList` object. - For a `CatalogObject` of the `CATEGORY` type, set the `category_data` attribute to yield the `CatalogCategory` object. - For a `CatalogObject` of the `DISCOUNT` type, set the `discount_data` attribute to yield the `CatalogDiscount` object. - For a `CatalogObject` of the `TAX` type, set the `tax_data` attribute to yield the `CatalogTax` object. - For a `CatalogObject` of the `IMAGE` type, set the `image_data` attribute to yield the `CatalogImageData`  object. - For a `CatalogObject` of the `QUICK_AMOUNTS_SETTINGS` type, set the `quick_amounts_settings_data` attribute to yield the `CatalogQuickAmountsSettings` object. - For a `CatalogObject` of the `PRICING_RULE` type, set the `pricing_rule_data` attribute to yield the `CatalogPricingRule` object. - For a `CatalogObject` of the `TIME_PERIOD` type, set the `time_period_data` attribute to yield the `CatalogTimePeriod` object. - For a `CatalogObject` of the `PRODUCT_SET` type, set the `product_set_data` attribute to yield the `CatalogProductSet`  object. - For a `CatalogObject` of the `SUBSCRIPTION_PLAN` type, set the `subscription_plan_data` attribute to yield the `CatalogSubscriptionPlan` object.   For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](/catalog-api/design-a-catalog) guide.
 public struct CatalogObject: Codable {
 	/// A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
 	public var absent_at_location_ids: [String]?
@@ -2379,7 +2379,7 @@ public struct CatalogObject: Codable {
 	/// The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
 	public var version: Int?
 
-	/// The wrapper object for the Catalog entries of a given object type.  The type of a particular `CatalogObject` is determined by the value of the `type` attribute and only the corresponding data attribute can be set on the `CatalogObject` instance. For example, the following list shows some instances of `CatalogObject` of a given `type` and their corresponding data atrribute that can be set: - For a `CatalogObject` of the `ITEM` type, set the `item_data` attribute to yield the `CatalogItem` object. - For a `CatalogObject` of the `ITEM_VARIATION` type, set the `item_variation_data` attribute to yield the `CatalogItemVariation` object. - For a `CatalogObject` of the `MODIFIER` type, set the `modifier_data` attribute to yield the `CatalogModifier` object. - For a `CatalogObject` of the `MODIFIER_LIST` type, set the `modifier_list_data` attribute to yield the `CatalogModifierList` object. - For a `CatalogObject` of the `CATEGORY` type, set the `category_data` attribute to yield the `CatalogCategory` object. - For a `CatalogObject` of the `DISCOUNT` type, set the `discount_data` attribute to yield the `CatalogDiscount` object. - For a `CatalogObject` of the `TAX` type, set the `tax_data` attribute to yield the `CatalogTax` object. - For a `CatalogObject` of the `IMAGE` type, set the `image_data` attribute to yield the `CatalogImageData`  object. - For a `CatalogObject` of the `QUICK_AMOUNTS_SETTINGS` type, set the `quick_amounts_settings_data` attribute to yield the `CatalogQuickAmountsSettings` object. - For a `CatalogObject` of the `PRICING_RULE` type, set the `pricing_rule_data` attribute to yield the `CatalogPricingRule` object. - For a `CatalogObject` of the `TIME_PERIOD` type, set the `time_period_data` attribute to yield the `CatalogTimePeriod` object. - For a `CatalogObject` of the `PRODUCT_SET` type, set the `product_set_data` attribute to yield the `CatalogProductSet`  object. - For a `CatalogObject` of the `SUBSCRIPTION_PLAN` type, set the `subscription_plan_data` attribute to yield the `CatalogSubscriptionPlan` object.   For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](/catalog-api/design-a-catalog) guide.
+	/// The wrapper object for the Catalog entries of a given object type.  The type of a particular `CatalogObject` is determined by the value of the `type` attribute and only the corresponding data attribute can be set on the `CatalogObject` instance. For example, the following list shows some instances of `CatalogObject` of a given `type` and their corresponding data attribute that can be set: - For a `CatalogObject` of the `ITEM` type, set the `item_data` attribute to yield the `CatalogItem` object. - For a `CatalogObject` of the `ITEM_VARIATION` type, set the `item_variation_data` attribute to yield the `CatalogItemVariation` object. - For a `CatalogObject` of the `MODIFIER` type, set the `modifier_data` attribute to yield the `CatalogModifier` object. - For a `CatalogObject` of the `MODIFIER_LIST` type, set the `modifier_list_data` attribute to yield the `CatalogModifierList` object. - For a `CatalogObject` of the `CATEGORY` type, set the `category_data` attribute to yield the `CatalogCategory` object. - For a `CatalogObject` of the `DISCOUNT` type, set the `discount_data` attribute to yield the `CatalogDiscount` object. - For a `CatalogObject` of the `TAX` type, set the `tax_data` attribute to yield the `CatalogTax` object. - For a `CatalogObject` of the `IMAGE` type, set the `image_data` attribute to yield the `CatalogImageData`  object. - For a `CatalogObject` of the `QUICK_AMOUNTS_SETTINGS` type, set the `quick_amounts_settings_data` attribute to yield the `CatalogQuickAmountsSettings` object. - For a `CatalogObject` of the `PRICING_RULE` type, set the `pricing_rule_data` attribute to yield the `CatalogPricingRule` object. - For a `CatalogObject` of the `TIME_PERIOD` type, set the `time_period_data` attribute to yield the `CatalogTimePeriod` object. - For a `CatalogObject` of the `PRODUCT_SET` type, set the `product_set_data` attribute to yield the `CatalogProductSet`  object. - For a `CatalogObject` of the `SUBSCRIPTION_PLAN` type, set the `subscription_plan_data` attribute to yield the `CatalogSubscriptionPlan` object.   For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](/catalog-api/design-a-catalog) guide.
 	/// - Parameters:
 	///   - absent_at_location_ids: A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
 	///   - catalog_v1_ids: The Connect v1 IDs for this object at each location where it is present, where they differ from the object's Connect V2 ID. The field will only be present for objects that have been created or modified by legacy APIs.
@@ -2572,7 +2572,7 @@ public enum CatalogPricingType: String, Codable {
 
 /// Represents a collection of catalog objects for the purpose of applying a `PricingRule`. Including a catalog object will include all of its subtypes. For example, including a category in a product set will include all of its items and associated item variations in the product set. Including an item in a product set will also include its item variations.
 public struct CatalogProductSet: Codable {
-	/// If set to `true`, the product set will include every item in the catalog.  Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.
+	/// If set to `true`, the product set will include every item in the catalog. Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.
 	public var all_products: Bool?
 	/// User-defined name for the product set. For example, "Clearance Items" or "Winter Sale Items".
 	public var name: String?
@@ -2589,7 +2589,7 @@ public struct CatalogProductSet: Codable {
 
 	/// Represents a collection of catalog objects for the purpose of applying a `PricingRule`. Including a catalog object will include all of its subtypes. For example, including a category in a product set will include all of its items and associated item variations in the product set. Including an item in a product set will also include its item variations.
 	/// - Parameters:
-	///   - all_products: If set to `true`, the product set will include every item in the catalog.  Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.
+	///   - all_products: If set to `true`, the product set will include every item in the catalog. Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.
 	///   - name: User-defined name for the product set. For example, "Clearance Items" or "Winter Sale Items".
 	///   - product_ids_all: Unique IDs for any `CatalogObject` included in this product set. All objects in this set must be included in an order for a pricing rule to apply.  Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.  Max: 500 catalog object IDs.
 	///   - product_ids_any:  Unique IDs for any `CatalogObject` included in this product set. Any number of these catalog objects can be in an order for a pricing rule to apply.  This can be used with `product_ids_all` in a parent `CatalogProductSet` to match groups of products for a bulk discount, such as a discount for an entree and side combo.  Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.  Max: 500 catalog object IDs.
@@ -2607,7 +2607,7 @@ public struct CatalogProductSet: Codable {
 	}
 }
 
-/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](#type-CatalogExactQuery) - [prefix_query](#type-CatalogPrefixQuery) - [range_query](#type-CatalogRangeQuery) - [sorted_attribute_query](#type-CatalogSortedAttribute) - [text_query](#type-CatalogTextQuery) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatelogCatogry`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](#type-CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
+/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](#type-CatalogExactQuery) - [prefix_query](#type-CatalogPrefixQuery) - [range_query](#type-CatalogRangeQuery) - [sorted_attribute_query](#type-CatalogSortedAttribute) - [text_query](#type-CatalogTextQuery) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](#type-CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 public struct CatalogQuery: Codable {
 	/// An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	public var exact_query: CatalogQueryExact?
@@ -2615,33 +2615,33 @@ public struct CatalogQuery: Codable {
 	public var item_variations_for_item_option_values_query: CatalogQueryItemVariationsForItemOptionValues?
 	/// A query expression to return items that contains the specified item options (as identified the corresponding `CatalogItemOption` IDs).
 	public var items_for_item_options_query: CatalogQueryItemsForItemOptions?
-	/// A query expression to return items that have any of the given modifier list (as identifieid by the coresponding `CatalogModifierList`s IDs) enabled.
+	/// A query expression to return items that have any of the given modifier list (as identified by the corresponding `CatalogModifierList`s IDs) enabled.
 	public var items_for_modifier_list_query: CatalogQueryItemsForModifierList?
 	/// A query expression to return items that have any of the specified taxes (as identified by the corresponding `CatalogTax` object IDs) enabled.
 	public var items_for_tax_query: CatalogQueryItemsForTax?
-	/// A prefix query expression to return objects with attribute values that have a prefix matching the specified string value. Value maching is case insensitive.
+	/// A prefix query expression to return objects with attribute values that have a prefix matching the specified string value. Value matching is case insensitive.
 	public var prefix_query: CatalogQueryPrefix?
-	/// A range query expression to return objects with numberic values that lie in the specified range.
+	/// A range query expression to return objects with numeric values that lie in the specified range.
 	public var range_query: CatalogQueryRange?
 	/// A set query expression to return objects with attribute name and value matching the specified attribute name and any of the specified attribute values exactly. Value matching is case insensitive.
 	public var set_query: CatalogQuerySet?
 	/// A query expression to sort returned query result by the given attribute.
 	public var sorted_attribute_query: CatalogQuerySortedAttribute?
-	/// A text query expression to return objectd whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
+	/// A text query expression to return objects whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
 	public var text_query: CatalogQueryText?
 
-	/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](#type-CatalogExactQuery) - [prefix_query](#type-CatalogPrefixQuery) - [range_query](#type-CatalogRangeQuery) - [sorted_attribute_query](#type-CatalogSortedAttribute) - [text_query](#type-CatalogTextQuery) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatelogCatogry`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](#type-CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
+	/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](#type-CatalogExactQuery) - [prefix_query](#type-CatalogPrefixQuery) - [range_query](#type-CatalogRangeQuery) - [sorted_attribute_query](#type-CatalogSortedAttribute) - [text_query](#type-CatalogTextQuery) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](#type-CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 	/// - Parameters:
 	///   - exact_query: An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	///   - item_variations_for_item_option_values_query: A query expression to return item variations (of the `CatalogItemVariation` that contain all of the specified `CatalogItemOption` IDs.
 	///   - items_for_item_options_query: A query expression to return items that contains the specified item options (as identified the corresponding `CatalogItemOption` IDs).
-	///   - items_for_modifier_list_query: A query expression to return items that have any of the given modifier list (as identifieid by the coresponding `CatalogModifierList`s IDs) enabled.
+	///   - items_for_modifier_list_query: A query expression to return items that have any of the given modifier list (as identified by the corresponding `CatalogModifierList`s IDs) enabled.
 	///   - items_for_tax_query: A query expression to return items that have any of the specified taxes (as identified by the corresponding `CatalogTax` object IDs) enabled.
-	///   - prefix_query: A prefix query expression to return objects with attribute values that have a prefix matching the specified string value. Value maching is case insensitive.
-	///   - range_query: A range query expression to return objects with numberic values that lie in the specified range.
+	///   - prefix_query: A prefix query expression to return objects with attribute values that have a prefix matching the specified string value. Value matching is case insensitive.
+	///   - range_query: A range query expression to return objects with numeric values that lie in the specified range.
 	///   - set_query: A set query expression to return objects with attribute name and value matching the specified attribute name and any of the specified attribute values exactly. Value matching is case insensitive.
 	///   - sorted_attribute_query: A query expression to sort returned query result by the given attribute.
-	///   - text_query: A text query expression to return objectd whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
+	///   - text_query: A text query expression to return objects whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
 	public init(exact_query: CatalogQueryExact? = nil, item_variations_for_item_option_values_query: CatalogQueryItemVariationsForItemOptionValues? = nil, items_for_item_options_query: CatalogQueryItemsForItemOptions? = nil, items_for_modifier_list_query: CatalogQueryItemsForModifierList? = nil, items_for_tax_query: CatalogQueryItemsForTax? = nil, prefix_query: CatalogQueryPrefix? = nil, range_query: CatalogQueryRange? = nil, set_query: CatalogQuerySet? = nil, sorted_attribute_query: CatalogQuerySortedAttribute? = nil, text_query: CatalogQueryText? = nil) {
 		self.exact_query = exact_query
 		self.item_variations_for_item_option_values_query = item_variations_for_item_option_values_query
@@ -3943,7 +3943,7 @@ public struct CreateCustomerResponse: Codable {
 public struct CreateDeviceCodeRequest: Codable {
 	/// The device code to create.
 	public var device_code: DeviceCode
-	/// A unique string that identifies this CreateCheckout request. Keys can be any valid string but must be unique for every CreateCheckout request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
+	/// A unique string that identifies this CreateDeviceCode request. Keys can be any valid string but must be unique for every CreateDeviceCode request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	public var idempotency_key: String
 
 	public init(device_code: DeviceCode, idempotency_key: String) {
@@ -5075,7 +5075,7 @@ public struct CustomerFilter: Codable {
 	public var email_address: CustomerTextFilter?
 	/// A filter to select customers based on their group membership.  The `group_ids` is a JSON object of the following general format: ``` "group_ids": { "any":  ["{group_a_id}", "{group_b_id}", ...], "all":  ["{group_1_id}", "{group_2_id}", ...], 'none": ["{group_i_id}", "{group_ii_id}", ...] } ```  You can use any combination of the above `group_ids` fields (also known as `FilterValue` properties)  to specify how customers are selected based on their group membership.   With the `any` option, the search returns customers in Groups `A` or `B` or ... of the list. With the `all` option, the search returns customers in Groups `1` and `2` and ... of the list. With the `none` option, the search returns customers not in Groups `i` and not in `ii` and not in ... of the list.  If any of the search conditions are not met, including when an invalid or non-existent group ID is provided, the result is an empty list.   You can use the `group_ids` search filter with other available filters.   You cannot use the `group_ids` filter to select customers based on segment membership.
 	public var group_ids: FilterValue?
-	/// A filter to [select customers by their phone numbers](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-phone-number) visible to the seller.  This filter is case insensitive.   For [exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-phone-number),  this filter causes the search to return customers whose phone number matches the specified query expression. The number in the query must be of an E.164-compliant form. In particular, it must include the leading `+` sign followed by a contry code and then a subscriber number. The standard E.614 form of a US phone number is `+12061112222` of the domestic version or `+0012061112222` of the international version. The E.164-compliant variations include `+1 (206) 111-2222` or `+001 (206) 111-2222`, respectively. To match the query expression, stored customers' phone numbers are converted to the standard E.164 form of the national and internationalized versions.   For [fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-phone-number),  this filter causes the search to return customers whose phone number matches partially  the token or tokens provided in the query expression. For example, if the search query contains  `415-123-45`, the filter selects those customers with phone numbers of `415-123-4567` or  `234-151-2345`. The search does not return customers with the phone number of `415-123-4678`. Similarly, if the search query contains `415` as part of the phone number, the search returns those customers with phone numbers of `(415)-123-4567`, `(123) 415-1567`, and `1 (415) 123-4567`.
+	/// A filter to [select customers by their phone numbers](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-phone-number) visible to the seller.  This filter is case insensitive.   For [exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-phone-number),  this filter causes the search to return customers whose phone number matches the specified query expression. The number in the query must be of an E.164-compliant form. In particular, it must include the leading `+` sign followed by a country code and then a subscriber number. The standard E.614 form of a US phone number is `+12061112222` of the domestic version or `+0012061112222` of the international version. The E.164-compliant variations include `+1 (206) 111-2222` or `+001 (206) 111-2222`, respectively. To match the query expression, stored customers' phone numbers are converted to the standard E.164 form of the national and internationalized versions.   For [fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-phone-number),  this filter causes the search to return customers whose phone number matches partially  the token or tokens provided in the query expression. For example, if the search query contains  `415-123-45`, the filter selects those customers with phone numbers of `415-123-4567` or  `234-151-2345`. The search does not return customers with the phone number of `415-123-4678`. Similarly, if the search query contains `415` as part of the phone number, the search returns those customers with phone numbers of `(415)-123-4567`, `(123) 415-1567`, and `1 (415) 123-4567`.
 	public var phone_number: CustomerTextFilter?
 	/// A filter to [select customers by their reference IDs](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-reference-id). This filter is case insensitive.  [Exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-reference-id)  of a customer's reference ID against a query's reference ID is evaluated as exact match between two strings, character by character in the given order.  [Fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-reference-id) of stored reference IDs against queried reference IDs works  exactly the same as fuzzy matching on email addresses. Non-alphanumeric characters  are replaced by spaces to tokenize stored and queried reference IDs. A match is found if a tokenized stored reference ID contains all tokens specified in any order in the query. For example, a query of `NYC M` will match customer profiles with the `reference_id` value of `NYC_M_35_JOHNSON` and `NYC_27_MURRAY`.
 	public var reference_id: CustomerTextFilter?
@@ -5088,7 +5088,7 @@ public struct CustomerFilter: Codable {
 	///   - creation_source: A filter to select customers based on their creation source.
 	///   - email_address: A filter to [select customers by email address](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-email-address)  visible to the seller.  This filter is case insensitive.  For [exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-email-address), this filter causes the search to return customer profiles  whose `email_address` field value are identical to the email address provided in the query.  For [fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-email-address),  this filter causes the search to return customer profiles  whose `email_address` field value has a token-wise partial match against the filtering  expression in the query. For example, with `Steven gmail` provided in a search query, the search returns customers whose email address can be `steven.johnson&#64;gmail.com`  or `mygmail&#64;stevensbakery.com`. Email addresses are tokenized by replacing, by spaces,  punctuations including periods (`.`), underscores (`_`), and the `&#64;` symbols. A match is found if a tokenized email address contains all the tokens in the search query,  irrespective of the token order.
 	///   - group_ids: A filter to select customers based on their group membership.  The `group_ids` is a JSON object of the following general format: ``` "group_ids": { "any":  ["{group_a_id}", "{group_b_id}", ...], "all":  ["{group_1_id}", "{group_2_id}", ...], 'none": ["{group_i_id}", "{group_ii_id}", ...] } ```  You can use any combination of the above `group_ids` fields (also known as `FilterValue` properties)  to specify how customers are selected based on their group membership.   With the `any` option, the search returns customers in Groups `A` or `B` or ... of the list. With the `all` option, the search returns customers in Groups `1` and `2` and ... of the list. With the `none` option, the search returns customers not in Groups `i` and not in `ii` and not in ... of the list.  If any of the search conditions are not met, including when an invalid or non-existent group ID is provided, the result is an empty list.   You can use the `group_ids` search filter with other available filters.   You cannot use the `group_ids` filter to select customers based on segment membership.
-	///   - phone_number: A filter to [select customers by their phone numbers](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-phone-number) visible to the seller.  This filter is case insensitive.   For [exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-phone-number),  this filter causes the search to return customers whose phone number matches the specified query expression. The number in the query must be of an E.164-compliant form. In particular, it must include the leading `+` sign followed by a contry code and then a subscriber number. The standard E.614 form of a US phone number is `+12061112222` of the domestic version or `+0012061112222` of the international version. The E.164-compliant variations include `+1 (206) 111-2222` or `+001 (206) 111-2222`, respectively. To match the query expression, stored customers' phone numbers are converted to the standard E.164 form of the national and internationalized versions.   For [fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-phone-number),  this filter causes the search to return customers whose phone number matches partially  the token or tokens provided in the query expression. For example, if the search query contains  `415-123-45`, the filter selects those customers with phone numbers of `415-123-4567` or  `234-151-2345`. The search does not return customers with the phone number of `415-123-4678`. Similarly, if the search query contains `415` as part of the phone number, the search returns those customers with phone numbers of `(415)-123-4567`, `(123) 415-1567`, and `1 (415) 123-4567`.
+	///   - phone_number: A filter to [select customers by their phone numbers](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-phone-number) visible to the seller.  This filter is case insensitive.   For [exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-phone-number),  this filter causes the search to return customers whose phone number matches the specified query expression. The number in the query must be of an E.164-compliant form. In particular, it must include the leading `+` sign followed by a country code and then a subscriber number. The standard E.614 form of a US phone number is `+12061112222` of the domestic version or `+0012061112222` of the international version. The E.164-compliant variations include `+1 (206) 111-2222` or `+001 (206) 111-2222`, respectively. To match the query expression, stored customers' phone numbers are converted to the standard E.164 form of the national and internationalized versions.   For [fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-phone-number),  this filter causes the search to return customers whose phone number matches partially  the token or tokens provided in the query expression. For example, if the search query contains  `415-123-45`, the filter selects those customers with phone numbers of `415-123-4567` or  `234-151-2345`. The search does not return customers with the phone number of `415-123-4678`. Similarly, if the search query contains `415` as part of the phone number, the search returns those customers with phone numbers of `(415)-123-4567`, `(123) 415-1567`, and `1 (415) 123-4567`.
 	///   - reference_id: A filter to [select customers by their reference IDs](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#search-by-reference-id). This filter is case insensitive.  [Exact matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#exact-search-by-reference-id)  of a customer's reference ID against a query's reference ID is evaluated as exact match between two strings, character by character in the given order.  [Fuzzy matching](https://developer.squareup.com/docs/docs/customers-api/cookbook/search-customers#fuzzy-search-by-reference-id) of stored reference IDs against queried reference IDs works  exactly the same as fuzzy matching on email addresses. Non-alphanumeric characters  are replaced by spaces to tokenize stored and queried reference IDs. A match is found if a tokenized stored reference ID contains all tokens specified in any order in the query. For example, a query of `NYC M` will match customer profiles with the `reference_id` value of `NYC_M_35_JOHNSON` and `NYC_27_MURRAY`.
 	///   - updated_at: A filter to select customers based on when they were updated.
 	public init(created_at: TimeRange? = nil, creation_source: CustomerCreationSourceFilter? = nil, email_address: CustomerTextFilter? = nil, group_ids: FilterValue? = nil, phone_number: CustomerTextFilter? = nil, reference_id: CustomerTextFilter? = nil, updated_at: TimeRange? = nil) {
@@ -5110,7 +5110,7 @@ public struct CustomerGroup: Codable {
 	public let id: String?
 	/// Name of the customer group.
 	public var name: String
-	/// The timesamp when the customer group was last updated, in RFC 3339 format.
+	/// The timestamp when the customer group was last updated, in RFC 3339 format.
 	public let updated_at: Timestamp?
 
 	/// Represents a group of customer profiles.   Customer groups can be created, modified, and have their membership defined either via  the Customers API or within Customer Directory in the Square Dashboard or Point of Sale.
@@ -5118,7 +5118,7 @@ public struct CustomerGroup: Codable {
 	///   - created_at: The timestamp when the customer group was created, in RFC 3339 format.
 	///   - id: Unique Square-generated ID for the customer group.
 	///   - name: Name of the customer group.
-	///   - updated_at: The timesamp when the customer group was last updated, in RFC 3339 format.
+	///   - updated_at: The timestamp when the customer group was last updated, in RFC 3339 format.
 	public init(name: String, created_at: Timestamp? = nil, id: String? = nil, updated_at: Timestamp? = nil) {
 		self.name = name
 		self.created_at = created_at
@@ -6729,12 +6729,14 @@ public struct InventoryTransfer: Codable {
 	}
 }
 
-/// Stores information about an invoice. You use the Invoices API to create and process invoices. For more information, see [Manage Invoices Using the Invoices API](/docs/invoices-api/overview).
+/// Stores information about an invoice. You use the Invoices API to create and manage invoices. For more information, see [Manage Invoices Using the Invoices API](/docs/invoices-api/overview).
 public struct Invoice: Codable {
 	/// The timestamp when the invoice was created, in RFC 3339 format.
 	public let created_at: Timestamp?
 	/// Additional seller-defined fields to render on the invoice. These fields are visible to sellers and buyers on the Square-hosted invoice page and in emailed or PDF copies of invoices. For more information, see [Custom fields](https://developer.squareup.com/docs/docs/invoices-api/overview#custom-fields).  Max: 2 custom fields
 	public var custom_fields: [InvoiceCustomField]?
+	/// The delivery method that Square uses to send the invoice, reminders, and receipts to the customer. After the invoice is published, Square processes the invoice based on the delivery method and payment request settings, either immediately or at the `scheduled_at` date, if specified. For example, Square might send the invoice or receipt for an automatic payment. For invoices with automatic payments, this field must be set to `EMAIL`.  One of the following is required when creating an invoice: - (Recommended) This `delivery_method` field. To configure an automatic payment, the `automatic_payment_source` field of the payment request is also required. - The deprecated `request_method` field of the payment request. Note that `invoice` objects returned in responses do not include `request_method`.
+	public var delivery_method: InvoiceDeliveryMethod?
 	/// The description of the invoice. This is visible to the customer receiving the invoice.
 	public var description: String?
 	/// The Square-assigned ID of the invoice.
@@ -6753,7 +6755,7 @@ public struct Invoice: Codable {
 	public var primary_recipient: InvoiceRecipient?
 	/// The URL of the Square-hosted invoice page. After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice page and returns the page URL in the response.
 	public let public_url: String?
-	/// The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, based on the settings for the invoice payment requests.  If the field is not set, Square processes the invoice immediately after it is published.
+	/// The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, according to the delivery method and payment request settings.  If the field is not set, Square processes the invoice immediately after it is published.
 	public var scheduled_at: Timestamp?
 	/// The status of the invoice. See [InvoiceStatus](#type-invoicestatus) for possible values
 	public let status: InvoiceStatus?
@@ -6766,10 +6768,11 @@ public struct Invoice: Codable {
 	/// The Square-assigned version number, which is incremented each time an update is committed to the invoice.
 	public var version: Int?
 
-	/// Stores information about an invoice. You use the Invoices API to create and process invoices. For more information, see [Manage Invoices Using the Invoices API](/docs/invoices-api/overview).
+	/// Stores information about an invoice. You use the Invoices API to create and manage invoices. For more information, see [Manage Invoices Using the Invoices API](/docs/invoices-api/overview).
 	/// - Parameters:
 	///   - created_at: The timestamp when the invoice was created, in RFC 3339 format.
 	///   - custom_fields: Additional seller-defined fields to render on the invoice. These fields are visible to sellers and buyers on the Square-hosted invoice page and in emailed or PDF copies of invoices. For more information, see [Custom fields](https://developer.squareup.com/docs/docs/invoices-api/overview#custom-fields).  Max: 2 custom fields
+	///   - delivery_method: The delivery method that Square uses to send the invoice, reminders, and receipts to the customer. After the invoice is published, Square processes the invoice based on the delivery method and payment request settings, either immediately or at the `scheduled_at` date, if specified. For example, Square might send the invoice or receipt for an automatic payment. For invoices with automatic payments, this field must be set to `EMAIL`.  One of the following is required when creating an invoice: - (Recommended) This `delivery_method` field. To configure an automatic payment, the `automatic_payment_source` field of the payment request is also required. - The deprecated `request_method` field of the payment request. Note that `invoice` objects returned in responses do not include `request_method`.
 	///   - description: The description of the invoice. This is visible to the customer receiving the invoice.
 	///   - id: The Square-assigned ID of the invoice.
 	///   - invoice_number: A user-friendly invoice number. The value is unique within a location. If not provided when creating an invoice, Square assigns a value. It increments from 1 and padded with zeros making it 7 characters long for example, 0000001, 0000002.
@@ -6779,15 +6782,16 @@ public struct Invoice: Codable {
 	///   - payment_requests: The payment schedule for the invoice, represented by one or more payment requests that define payment settings, such as amount due and due date. You can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types. For more information, see [Payment requests](https://developer.squareup.com/docs/docs/invoices-api/overview#payment-requests).  This field is required when creating an invoice. It must contain at least one payment request.
 	///   - primary_recipient: The customer who gets the invoice. Square uses the contact information to deliver the invoice. This field is required to publish an invoice.
 	///   - public_url: The URL of the Square-hosted invoice page. After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice page and returns the page URL in the response.
-	///   - scheduled_at: The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, based on the settings for the invoice payment requests.  If the field is not set, Square processes the invoice immediately after it is published.
+	///   - scheduled_at: The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, according to the delivery method and payment request settings.  If the field is not set, Square processes the invoice immediately after it is published.
 	///   - status: The status of the invoice. See [InvoiceStatus](#type-invoicestatus) for possible values
 	///   - timezone: The time zone of the date values (for example, `due_date`) specified in the invoice.
 	///   - title: The title of the invoice.
 	///   - updated_at: The timestamp when the invoice was last updated, in RFC 3339 format.
 	///   - version: The Square-assigned version number, which is incremented each time an update is committed to the invoice.
-	public init(created_at: Timestamp? = nil, custom_fields: [InvoiceCustomField]? = nil, description: String? = nil, id: String? = nil, invoice_number: String? = nil, location_id: String? = nil, next_payment_amount_money: Money? = nil, order_id: String? = nil, payment_requests: [InvoicePaymentRequest]? = nil, primary_recipient: InvoiceRecipient? = nil, public_url: String? = nil, scheduled_at: Timestamp? = nil, status: InvoiceStatus? = nil, timezone: String? = nil, title: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(created_at: Timestamp? = nil, custom_fields: [InvoiceCustomField]? = nil, delivery_method: InvoiceDeliveryMethod? = nil, description: String? = nil, id: String? = nil, invoice_number: String? = nil, location_id: String? = nil, next_payment_amount_money: Money? = nil, order_id: String? = nil, payment_requests: [InvoicePaymentRequest]? = nil, primary_recipient: InvoiceRecipient? = nil, public_url: String? = nil, scheduled_at: Timestamp? = nil, status: InvoiceStatus? = nil, timezone: String? = nil, title: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.created_at = created_at
 		self.custom_fields = custom_fields
+		self.delivery_method = delivery_method
 		self.description = description
 		self.id = id
 		self.invoice_number = invoice_number
@@ -6804,6 +6808,16 @@ public struct Invoice: Codable {
 		self.updated_at = updated_at
 		self.version = version
 	}
+}
+
+/// Indicates the automatic payment method for an `invoice payment request`.
+public enum InvoiceAutomaticPaymentSource: String, Codable {
+	/// An automatic payment is not configured for the payment request.
+	case NONE
+	/// Use a card on file as the automatic payment method. On the due date, Square charges the card for the amount of the payment request.  For `CARD_ON_FILE` payments, the invoice delivery method must be `EMAIL` and `card_id` must be specified for the payment request before the invoice can be published.
+	case CARD_ON_FILE
+	/// Use a bank account on file as the automatic payment method. On the due date, Square charges the bank account for the amount of the payment request.  This payment method applies only to recurring invoices that sellers create in the Seller Dashboard or other Square first-party application. The bank account is provided by the customer during the payment flow.   You cannot set `BANK_ON_FILE` as a payment method using the Invoices API, but you can change a `BANK_ON_FILE` payment method to `NONE` or `CARD_ON_FILE`. For `BANK_ON_FILE` payments, the invoice delivery method must be `EMAIL`.
+	case BANK_ON_FILE
 }
 
 /// An additional seller-defined and customer-facing field to include on the invoice. For more information,  see [Custom fields](/docs/invoices-api/overview#custom-fields).
@@ -6833,6 +6847,14 @@ public enum InvoiceCustomFieldPlacement: String, Codable {
 	case ABOVE_LINE_ITEMS
 	/// Render the custom field below the invoice line items.
 	case BELOW_LINE_ITEMS
+}
+
+/// Indicates how Square delivers the `invoice` to the customer.
+public enum InvoiceDeliveryMethod: String, Codable {
+	/// Directs Square to send the invoice, reminders, and receipts to the customer using email.
+	case EMAIL
+	/// Directs Square to take no action on the invoice. In this case, the seller or application developer follows up with the customer for payment. For example, a seller might collect a payment in the Seller Dashboard or Point of Sale (POS) application. The seller might also share the URL of the Square-hosted invoice page (`public_url`) with the customer to request payment.
+	case SHARE_MANUALLY
 }
 
 /// Describes query filters to apply.
@@ -6893,11 +6915,13 @@ public enum InvoicePaymentReminderStatus: String, Codable {
 
 /// Represents a payment request for an [invoice](#type-Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](/docs/invoices-api/overview#payment-requests).
 public struct InvoicePaymentRequest: Codable {
+	/// The payment method for an automatic payment.  The default value is `NONE`. See [InvoiceAutomaticPaymentSource](#type-invoiceautomaticpaymentsource) for possible values
+	public var automatic_payment_source: InvoiceAutomaticPaymentSource?
 	/// The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call `RetrieveCustomer` in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
 	public var card_id: String?
 	/// The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`,  `fixed_amount_requested_money`, and `percentage_requested`).
 	public let computed_amount_money: Money?
-	/// The due date (in the invoice location's time zone) for the payment request.  After this date, the invoice becomes overdue.
+	/// The due date (in the invoice location's time zone) for the payment request, in `YYYY-MM-DD` format.  After this date, the invoice becomes overdue. This field is required to create a payment request.
 	public var due_date: String?
 	/// If the payment request specifies `DEPOSIT` or `INSTALLMENT` as the  `request_type`,  this indicates the request amount. You cannot specify this when `request_type` is `BALANCE` or when the  payment request includes the `percentage_requested` field.
 	public var fixed_amount_requested_money: Money?
@@ -6905,9 +6929,9 @@ public struct InvoicePaymentRequest: Codable {
 	public var percentage_requested: String?
 	/// A list of one or more reminders to send for the payment request.
 	public var reminders: [InvoicePaymentReminder]?
-	/// Indicates how Square processes the payment request. See [InvoiceRequestMethod](#type-invoicerequestmethod) for possible values
+	/// Indicates how Square processes the payment request. DEPRECATED at version 2021-01-21. Replaced by the `Invoice.delivery_method` and `InvoicePaymentRequest.automatic_payment_source` fields.  One of the following is required when creating an invoice: - (Recommended) The `delivery_method` field of the invoice. To configure an automatic payment, the `automatic_payment_source` field of the payment request is also required. - This `request_method` field. Note that `invoice` objects returned in responses do not include `request_method`. See [InvoiceRequestMethod](#type-invoicerequestmethod) for possible values
 	public var request_method: InvoiceRequestMethod?
-	/// Identifies the payment request type. This type defines how the payment request amount is determined. See [InvoiceRequestType](#type-invoicerequesttype) for possible values
+	/// Identifies the payment request type. This type defines how the payment request amount is determined. This field is required to create a payment request. See [InvoiceRequestType](#type-invoicerequesttype) for possible values
 	public var request_type: InvoiceRequestType?
 	/// If the most recent payment was a cash payment  in a currency that rounds cash payments (such as, `CAD` or `AUD`) and the payment  is rounded from `computed_amount_money` in the payment request, then this  field specifies the rounding adjustment applied. This amount  might be negative.
 	public let rounding_adjustment_included_money: Money?
@@ -6920,19 +6944,21 @@ public struct InvoicePaymentRequest: Codable {
 
 	/// Represents a payment request for an [invoice](#type-Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](/docs/invoices-api/overview#payment-requests).
 	/// - Parameters:
+	///   - automatic_payment_source: The payment method for an automatic payment.  The default value is `NONE`. See [InvoiceAutomaticPaymentSource](#type-invoiceautomaticpaymentsource) for possible values
 	///   - card_id: The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call `RetrieveCustomer` in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
 	///   - computed_amount_money: The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`,  `fixed_amount_requested_money`, and `percentage_requested`).
-	///   - due_date: The due date (in the invoice location's time zone) for the payment request.  After this date, the invoice becomes overdue.
+	///   - due_date: The due date (in the invoice location's time zone) for the payment request, in `YYYY-MM-DD` format.  After this date, the invoice becomes overdue. This field is required to create a payment request.
 	///   - fixed_amount_requested_money: If the payment request specifies `DEPOSIT` or `INSTALLMENT` as the  `request_type`,  this indicates the request amount. You cannot specify this when `request_type` is `BALANCE` or when the  payment request includes the `percentage_requested` field.
 	///   - percentage_requested: Specifies the amount for the payment request in percentage:  - When the payment `request_type` is `DEPOSIT`, it is the percentage of the order total amount. - When the payment `request_type` is `INSTALLMENT`, it is the percentage of the order total less  the deposit, if requested. The sum of the `percentage_requested` in all installment  payment requests must be equal to 100.  You cannot specify this when the payment `request_type` is `BALANCE` or when the  payment request specifies the `fixed_amount_requested_money` field.
 	///   - reminders: A list of one or more reminders to send for the payment request.
-	///   - request_method: Indicates how Square processes the payment request. See [InvoiceRequestMethod](#type-invoicerequestmethod) for possible values
-	///   - request_type: Identifies the payment request type. This type defines how the payment request amount is determined. See [InvoiceRequestType](#type-invoicerequesttype) for possible values
+	///   - request_method: Indicates how Square processes the payment request. DEPRECATED at version 2021-01-21. Replaced by the `Invoice.delivery_method` and `InvoicePaymentRequest.automatic_payment_source` fields.  One of the following is required when creating an invoice: - (Recommended) The `delivery_method` field of the invoice. To configure an automatic payment, the `automatic_payment_source` field of the payment request is also required. - This `request_method` field. Note that `invoice` objects returned in responses do not include `request_method`. See [InvoiceRequestMethod](#type-invoicerequestmethod) for possible values
+	///   - request_type: Identifies the payment request type. This type defines how the payment request amount is determined. This field is required to create a payment request. See [InvoiceRequestType](#type-invoicerequesttype) for possible values
 	///   - rounding_adjustment_included_money: If the most recent payment was a cash payment  in a currency that rounds cash payments (such as, `CAD` or `AUD`) and the payment  is rounded from `computed_amount_money` in the payment request, then this  field specifies the rounding adjustment applied. This amount  might be negative.
 	///   - tipping_enabled: If set to true, the Square-hosted invoice page (the `public_url` field of the invoice)  provides a place for the customer to pay a tip.   This field is allowed only on the final payment request   and the payment `request_type` must be `BALANCE` or `INSTALLMENT`.
 	///   - total_completed_amount_money: The amount of money already paid for the specific payment request.  This amount might include a rounding adjustment if the most recent invoice payment  was in cash in a currency that rounds cash payments (such as, `CAD` or `AUD`).
 	///   - uid: The Square-generated ID of the payment request in an `invoice`.
-	public init(card_id: String? = nil, computed_amount_money: Money? = nil, due_date: String? = nil, fixed_amount_requested_money: Money? = nil, percentage_requested: String? = nil, reminders: [InvoicePaymentReminder]? = nil, request_method: InvoiceRequestMethod? = nil, request_type: InvoiceRequestType? = nil, rounding_adjustment_included_money: Money? = nil, tipping_enabled: Bool? = nil, total_completed_amount_money: Money? = nil, uid: String? = nil) {
+	public init(automatic_payment_source: InvoiceAutomaticPaymentSource? = nil, card_id: String? = nil, computed_amount_money: Money? = nil, due_date: String? = nil, fixed_amount_requested_money: Money? = nil, percentage_requested: String? = nil, reminders: [InvoicePaymentReminder]? = nil, request_method: InvoiceRequestMethod? = nil, request_type: InvoiceRequestType? = nil, rounding_adjustment_included_money: Money? = nil, tipping_enabled: Bool? = nil, total_completed_amount_money: Money? = nil, uid: String? = nil) {
+		self.automatic_payment_source = automatic_payment_source
 		self.card_id = card_id
 		self.computed_amount_money = computed_amount_money
 		self.due_date = due_date
@@ -7002,7 +7028,7 @@ public struct InvoiceRecipient: Codable {
 	}
 }
 
-/// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing.
+/// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing. DEPRECATED at version 2021-01-21. The corresponding `request_method` field is replaced by the `Invoice.delivery_method` and `InvoicePaymentRequest.automatic_payment_source` fields.
 public enum InvoiceRequestMethod: String, Codable {
 	/// Directs Square to email the invoice to the customer after the invoice is published  (either immediately or at the `scheduled_at` time, if specified in the `invoice`.
 	case EMAIL
@@ -7053,7 +7079,7 @@ public enum InvoiceStatus: String, Codable {
 	case DRAFT
 	/// The invoice is published but not yet paid.
 	case UNPAID
-	/// The invoice is scheduled to be processed. On the scheduled date, Square sends the invoice, initiates an automatic payment, or takes no action, depending on the settings for the invoice payment requests. Square also sets the invoice status to the appropriate state: `UNPAID`, `PAID`, `PARTIALLY_PAID`, or `PAYMENT_PENDING`.
+	/// The invoice is scheduled to be processed. On the scheduled date, Square sends the invoice, initiates an automatic payment, or takes no action, depending on the delivery method and payment request settings. Square also sets the invoice status to the appropriate state: `UNPAID`, `PAID`, `PARTIALLY_PAID`, or `PAYMENT_PENDING`.
 	case SCHEDULED
 	/// A partial payment is received for the invoice.
 	case PARTIALLY_PAID
@@ -10592,7 +10618,7 @@ public struct PaymentRefund: Codable {
 	public var location_id: String?
 	/// The ID of the order associated with the refund.
 	public var order_id: String?
-	/// The ID of the payment assocated with this refund.
+	/// The ID of the payment associated with this refund.
 	public var payment_id: String?
 	/// Processing fees and fee adjustments assessed by Square for this refund.
 	public var processing_fee: [ProcessingFee]?
@@ -10611,7 +10637,7 @@ public struct PaymentRefund: Codable {
 	///   - id: The unique ID for this refund, generated by Square.
 	///   - location_id: The location ID associated with the payment this refund is attached to.
 	///   - order_id: The ID of the order associated with the refund.
-	///   - payment_id: The ID of the payment assocated with this refund.
+	///   - payment_id: The ID of the payment associated with this refund.
 	///   - processing_fee: Processing fees and fee adjustments assessed by Square for this refund.
 	///   - reason: The reason for the refund.
 	///   - status: The refund's status: - `PENDING` - Awaiting approval. - `COMPLETED` - Successfully completed. - `REJECTED` - The refund was rejected. - `FAILED` - An error occurred.
@@ -11592,15 +11618,15 @@ public struct RevokeTokenResponse: Codable {
 
 /// Represents fraud risk information for the associated payment.  When you take a payment through Square's Payments API (using the `CreatePayment` endpoint), Square evaluates it and assigns a risk level to the payment. Sellers can use this information to determine the course of action (for example, provide the goods/services or refund the payment).
 public struct RiskEvaluation: Codable {
-	/// The timestamp when payment risk was evaluated, in RFC3339 format.
-	public var created_at: Timestamp?
-	/// The risk level associated with the payment
+	/// The timestamp when payment risk was evaluated, in RFC 3339 format.
+	public let created_at: Timestamp?
+	/// The risk level associated with the payment See [RiskEvaluationRiskLevel](#type-riskevaluationrisklevel) for possible values
 	public var risk_level: RiskEvaluationRiskLevel?
 
 	/// Represents fraud risk information for the associated payment.  When you take a payment through Square's Payments API (using the `CreatePayment` endpoint), Square evaluates it and assigns a risk level to the payment. Sellers can use this information to determine the course of action (for example, provide the goods/services or refund the payment).
 	/// - Parameters:
-	///   - created_at: The timestamp when payment risk was evaluated, in RFC3339 format.
-	///   - risk_level: The risk level associated with the payment
+	///   - created_at: The timestamp when payment risk was evaluated, in RFC 3339 format.
+	///   - risk_level: The risk level associated with the payment See [RiskEvaluationRiskLevel](#type-riskevaluationrisklevel) for possible values
 	public init(created_at: Timestamp? = nil, risk_level: RiskEvaluationRiskLevel? = nil) {
 		self.created_at = created_at
 		self.risk_level = risk_level
@@ -13410,7 +13436,9 @@ public struct TerminalRefund: Codable {
 }
 
 public struct TerminalRefundQuery: Codable {
+	/// Filter for terminal refund query.
 	public var filter: TerminalRefundQueryFilter?
+	/// Sort order for terminal refund query.
 	public var sort: TerminalRefundQuerySort?
 
 	public init(filter: TerminalRefundQueryFilter? = nil, sort: TerminalRefundQuerySort? = nil) {
