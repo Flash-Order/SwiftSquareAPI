@@ -8,8 +8,8 @@ public enum HTTPMethod: String {
 }
 #endif
 
-typealias Timestamp = String		// for now we'll do strings but later make dates
-typealias Duration = String
+public typealias Timestamp = String		// for now we'll do strings but later make dates
+public typealias Duration = String
 
 extension Duration {
 	static func fromSeconds(_ seconds: Int) -> Duration {
@@ -45,7 +45,9 @@ extension SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .POST }		// default method
 }
 
-public struct Empty: Content {}
+public struct Empty: Content {
+	public init() { }
+}
 
 /*
 extension SquareAPIEndpoint where paramType == Empty {
@@ -62,37 +64,7 @@ extension SquareAPIEndpoint {
 struct SquareAPI {
     var text = "Hello, World!"
 	
-	//var order = Order(closed_at: <#T##Timestamp?#>, created_at: <#T##Timestamp?#>, customer_id: <#T##String?#>, discounts: <#T##[OrderLineItemDiscount]?#>, fulfillments: <#T##[OrderFulfillment]?#>, id: <#T##String?#>, line_items: <#T##[OrderLineItem]?#>, location_id: <#T##String#>, metadata: <#T##String?#>, net_amounts: <#T##OrderMoneyAmounts?#>, pricing_options: <#T##OrderPricingOptions?#>, reference_id: <#T##String?#>, refunds: <#T##[Refund]?#>, return_amounts: <#T##OrderMoneyAmounts?#>, returns: <#T##[OrderReturn]?#>, rewards: <#T##[OrderReward]?#>, rounding_adjustment: <#T##OrderRoundingAdjustment?#>, service_charges: <#T##[OrderServiceCharge]?#>, source: <#T##OrderSource?#>, state: <#T##OrderState?#>, taxes: <#T##[OrderLineItemTax]?#>, tenders: <#T##[Tender]?#>, total_discount_money: <#T##Money?#>, total_money: <#T##Money?#>, total_service_charge_money: <#T##Money?#>, total_tax_money: <#T##Money?#>, total_tip_money: <#T##Money?#>, updated_at: <#T##Timestamp?#>, version: <#T##Int?#>)
-	var order = Order(
-		closed_at: nil,
-		created_at: nil,
-		customer_id: nil,
-		discounts: nil,
-		fulfillments: nil,
-		id: nil,
-		line_items: nil,
-		location_id: "asdf",
-		metadata: nil,
-		net_amounts: nil,
-		pricing_options: nil,
-		reference_id: nil,
-		refunds: nil,
-		return_amounts: nil,
-		returns: nil,
-		rewards: nil,
-		rounding_adjustment: nil,
-		service_charges: nil,
-		source: nil,
-		state: nil,
-		taxes: nil,
-		tenders: nil,
-		total_discount_money: nil,
-		total_money: nil,
-		total_service_charge_money: nil,
-		total_tax_money: nil,
-		total_tip_money: nil,
-		updated_at: nil,
-		version: nil)
+	var order = Order(location_id: "asdf", closed_at: "asfa", version: 5)
 
 	func a() {
 //		var fup = OrderFulfillmentUpdated()
@@ -101,31 +73,3 @@ struct SquareAPI {
 		
 	}
 }
-
-/*
-public struct CancelTerminalRefund: SquareAPIEndpoint {
-static func endpoint(for inputs: Empty) throws -> String {
-return "asdfasf"
-}
-
-typealias inputType = Empty
-typealias outputType = Empty
-typealias paramType = Empty
-}
-
-public struct CancelTerminalRefund2: SquareAPIEndpoint {
-static func endpoint(for inputs: Input) throws -> String {
-return "asfafda/\(inputs.a)/\(inputs.b)"
-}
-
-typealias inputType = Empty
-typealias outputType = Empty
-typealias paramType = Input
-
-struct Input {
-let a: String
-let b: String
-}
-}
-
-*/

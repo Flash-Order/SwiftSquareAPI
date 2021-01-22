@@ -1,14 +1,25 @@
 
+/// Defines the request parameters for the `AcceptDispute` endpoint.
 public struct AcceptDisputeRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields in an `AcceptDispute` response.
 public struct AcceptDisputeResponse: Content {
 	/// Details about the accepted dispute.
 	var dispute: Dispute?
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
+
+	public init(dispute: Dispute? = nil, errors: [Error]? = nil) {
+		self.dispute = dispute
+		self.errors = errors
+	}
 }
 
+/// A request to accumulate points for a purchase.
 public struct AccumulateLoyaltyPointsRequest: Content {
 	/// The points to add to the account.  If you are using the Orders API to manage orders, you   specify the order ID. Otherwise, specify the  points to add.
 	var accumulate_points: LoyaltyEventAccumulatePoints
@@ -16,13 +27,25 @@ public struct AccumulateLoyaltyPointsRequest: Content {
 	var idempotency_key: String
 	/// The `location` where the purchase was made.
 	var location_id: String
+
+	public init(accumulate_points: LoyaltyEventAccumulatePoints, idempotency_key: String, location_id: String) {
+		self.accumulate_points = accumulate_points
+		self.idempotency_key = idempotency_key
+		self.location_id = location_id
+	}
 }
 
+/// A response containing the resulting loyalty event.
 public struct AccumulateLoyaltyPointsResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The resulting loyalty event.
 	var event: LoyaltyEvent?
+
+	public init(errors: [Error]? = nil, event: LoyaltyEvent? = nil) {
+		self.errors = errors
+		self.event = event
+	}
 }
 
 /// 
@@ -35,14 +58,24 @@ public enum ActionCancelReason: String, Content {
 	case TIMED_OUT
 }
 
+/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](#endpoint-addgrouptocustomer) endpoint.
 public struct AddGroupToCustomerRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](#endpoint-addgrouptocustomer) endpoint.
 public struct AddGroupToCustomerResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Represents an additional recipient (other than the merchant) receiving a portion of this tender.
 public struct AdditionalRecipient: Content {
 	/// The amount of money distributed to the recipient.
 	var amount_money: Money
@@ -52,8 +85,16 @@ public struct AdditionalRecipient: Content {
 	var location_id: String
 	/// The unique ID for this `AdditionalRecipientReceivable`, assigned by the server.
 	var receivable_id: String?
+
+	public init(amount_money: Money, description: String, location_id: String, receivable_id: String? = nil) {
+		self.amount_money = amount_money
+		self.description = description
+		self.location_id = location_id
+		self.receivable_id = receivable_id
+	}
 }
 
+/// Represents a physical address.
 public struct Address: Content {
 	/// The first line of the address.  Fields that start with `address_line` provide the address's most specific details, like street number, street name, and building name. They do *not* provide less specific details like city, state/province, or country (these details are provided in other fields).
 	var address_line_1: String?
@@ -85,22 +126,53 @@ public struct Address: Content {
 	var sublocality_2: String?
 	/// A civil region within the address's `sublocality_2`, if any.
 	var sublocality_3: String?
+
+	public init(address_line_1: String? = nil, address_line_2: String? = nil, address_line_3: String? = nil, administrative_district_level_1: String? = nil, administrative_district_level_2: String? = nil, administrative_district_level_3: String? = nil, country: Country? = nil, first_name: String? = nil, last_name: String? = nil, locality: String? = nil, organization: String? = nil, postal_code: String? = nil, sublocality: String? = nil, sublocality_2: String? = nil, sublocality_3: String? = nil) {
+		self.address_line_1 = address_line_1
+		self.address_line_2 = address_line_2
+		self.address_line_3 = address_line_3
+		self.administrative_district_level_1 = administrative_district_level_1
+		self.administrative_district_level_2 = administrative_district_level_2
+		self.administrative_district_level_3 = administrative_district_level_3
+		self.country = country
+		self.first_name = first_name
+		self.last_name = last_name
+		self.locality = locality
+		self.organization = organization
+		self.postal_code = postal_code
+		self.sublocality = sublocality
+		self.sublocality_2 = sublocality_2
+		self.sublocality_3 = sublocality_3
+	}
 }
 
+/// A request to adjust (add or subtract) points manually.
 public struct AdjustLoyaltyPointsRequest: Content {
 	/// The points to adjust (add or subtract) and the reason for the adjustment.
 	var adjust_points: LoyaltyEventAdjustPoints
 	/// A unique string that identifies this `AdjustLoyaltyPoints` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
+
+	public init(adjust_points: LoyaltyEventAdjustPoints, idempotency_key: String) {
+		self.adjust_points = adjust_points
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// A response that includes the loyalty event that  resulted from the successful API call.
 public struct AdjustLoyaltyPointsResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The resulting event data for adjusting points.
 	var event: LoyaltyEvent?
+
+	public init(errors: [Error]? = nil, event: LoyaltyEvent? = nil) {
+		self.errors = errors
+		self.event = event
+	}
 }
 
+/// Defines an appointment segment of a booking.
 public struct AppointmentSegment: Content {
 	/// The time span in minutes of an appointment segment.
 	var duration_minutes: Int
@@ -110,8 +182,16 @@ public struct AppointmentSegment: Content {
 	var service_variation_version: Int
 	/// The ID of the `TeamMember` object representing the team member booked in this segment.
 	var team_member_id: String
+
+	public init(duration_minutes: Int, service_variation_id: String, service_variation_version: Int, team_member_id: String) {
+		self.duration_minutes = duration_minutes
+		self.service_variation_id = service_variation_id
+		self.service_variation_version = service_variation_version
+		self.team_member_id = team_member_id
+	}
 }
 
+/// Describes a slot available for booking, encapsulating appointment segments, the location and starting time.
 public struct Availability: Content {
 	/// The list of appointment segments available for booking
 	var appointment_segments: [AppointmentSegment]?
@@ -119,15 +199,28 @@ public struct Availability: Content {
 	var location_id: String?
 	/// The RFC-3339 timestamp specifying the beginning time of the slot available for booking.
 	var start_at: Timestamp?
+
+	public init(appointment_segments: [AppointmentSegment]? = nil, location_id: String? = nil, start_at: Timestamp? = nil) {
+		self.appointment_segments = appointment_segments
+		self.location_id = location_id
+		self.start_at = start_at
+	}
 }
 
+/// Reflects the current status of a balance payment.
 public struct BalancePaymentDetails: Content {
 	/// The ID of the account used to fund the payment.
 	var account_id: String?
 	/// The balance payment’s current state. The state can be COMPLETED or FAILED.
 	var status: String?
+
+	public init(account_id: String? = nil, status: String? = nil) {
+		self.account_id = account_id
+		self.status = status
+	}
 }
 
+/// Represents a bank account. For more information about  linking a bank account to a Square account, see  [Bank Accounts API](/docs/bank-accounts-api).
 public struct BankAccount: Content {
 	/// The last few digits of the account number.
 	var account_number_suffix: String
@@ -163,6 +256,26 @@ public struct BankAccount: Content {
 	var status: BankAccountStatus
 	/// The current version of the `BankAccount`.
 	var version: Int?
+
+	public init(account_number_suffix: String, account_type: BankAccountType, country: Country, creditable: Bool, currency: Currency, debitable: Bool, holder_name: String, id: String, primary_bank_identification_number: String, status: BankAccountStatus, bank_name: String? = nil, debit_mandate_reference_id: String? = nil, fingerprint: String? = nil, location_id: String? = nil, reference_id: String? = nil, secondary_bank_identification_number: String? = nil, version: Int? = nil) {
+		self.account_number_suffix = account_number_suffix
+		self.account_type = account_type
+		self.country = country
+		self.creditable = creditable
+		self.currency = currency
+		self.debitable = debitable
+		self.holder_name = holder_name
+		self.id = id
+		self.primary_bank_identification_number = primary_bank_identification_number
+		self.status = status
+		self.bank_name = bank_name
+		self.debit_mandate_reference_id = debit_mandate_reference_id
+		self.fingerprint = fingerprint
+		self.location_id = location_id
+		self.reference_id = reference_id
+		self.secondary_bank_identification_number = secondary_bank_identification_number
+		self.version = version
+	}
 }
 
 /// Indicates the current verification status of a `BankAccount` object.
@@ -196,6 +309,12 @@ public struct BatchChangeInventoryRequest: Content {
 	var idempotency_key: String?
 	/// Indicates whether the current physical count should be ignored if the quantity is unchanged since the last physical count. Default: `true`.
 	var ignore_unchanged_counts: Bool?
+
+	public init(changes: [InventoryChange]? = nil, idempotency_key: String? = nil, ignore_unchanged_counts: Bool? = nil) {
+		self.changes = changes
+		self.idempotency_key = idempotency_key
+		self.ignore_unchanged_counts = ignore_unchanged_counts
+	}
 }
 
 public struct BatchChangeInventoryResponse: Content {
@@ -203,11 +322,20 @@ public struct BatchChangeInventoryResponse: Content {
 	var counts: [InventoryCount]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(counts: [InventoryCount]? = nil, errors: [Error]? = nil) {
+		self.counts = counts
+		self.errors = errors
+	}
 }
 
 public struct BatchDeleteCatalogObjectsRequest: Content {
 	/// The IDs of the CatalogObjects to be deleted. When an object is deleted, other objects in the graph that depend on that object will be deleted as well (for example, deleting a CatalogItem will delete its CatalogItemVariation.
 	var object_ids: [String]?
+
+	public init(object_ids: [String]? = nil) {
+		self.object_ids = object_ids
+	}
 }
 
 public struct BatchDeleteCatalogObjectsResponse: Content {
@@ -217,6 +345,12 @@ public struct BatchDeleteCatalogObjectsResponse: Content {
 	var deleted_object_ids: [String]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(deleted_at: Timestamp? = nil, deleted_object_ids: [String]? = nil, errors: [Error]? = nil) {
+		self.deleted_at = deleted_at
+		self.deleted_object_ids = deleted_object_ids
+		self.errors = errors
+	}
 }
 
 public struct BatchRetrieveCatalogObjectsRequest: Content {
@@ -226,6 +360,12 @@ public struct BatchRetrieveCatalogObjectsRequest: Content {
 	var include_related_objects: Bool?
 	/// The IDs of the CatalogObjects to be retrieved.
 	var object_ids: [String]
+
+	public init(object_ids: [String], catalog_version: Int? = nil, include_related_objects: Bool? = nil) {
+		self.object_ids = object_ids
+		self.catalog_version = catalog_version
+		self.include_related_objects = include_related_objects
+	}
 }
 
 public struct BatchRetrieveCatalogObjectsResponse: Content {
@@ -235,6 +375,12 @@ public struct BatchRetrieveCatalogObjectsResponse: Content {
 	var objects: [CatalogObject]?
 	/// A list of `CatalogObject`s referenced by the object in the `objects` field.
 	var related_objects: [CatalogObject]?
+
+	public init(errors: [Error]? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
+		self.errors = errors
+		self.objects = objects
+		self.related_objects = related_objects
+	}
 }
 
 public struct BatchRetrieveInventoryChangesRequest: Content {
@@ -252,6 +398,16 @@ public struct BatchRetrieveInventoryChangesRequest: Content {
 	var updated_after: Timestamp?
 	/// The filter to return results with their `created_at` or `calculated_at` value   strictly before the given time as specified in an RFC 3339 timestamp.  The default value is the UNIX epoch of (`1970-01-01T00:00:00Z`).
 	var updated_before: Timestamp?
+
+	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, location_ids: [String]? = nil, states: InventoryState? = nil, types: InventoryChangeType? = nil, updated_after: Timestamp? = nil, updated_before: Timestamp? = nil) {
+		self.catalog_object_ids = catalog_object_ids
+		self.cursor = cursor
+		self.location_ids = location_ids
+		self.states = states
+		self.types = types
+		self.updated_after = updated_after
+		self.updated_before = updated_before
+	}
 }
 
 public struct BatchRetrieveInventoryChangesResponse: Content {
@@ -261,6 +417,12 @@ public struct BatchRetrieveInventoryChangesResponse: Content {
 	var cursor: String?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(changes: [InventoryChange]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.changes = changes
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
 public struct BatchRetrieveInventoryCountsRequest: Content {
@@ -274,6 +436,14 @@ public struct BatchRetrieveInventoryCountsRequest: Content {
 	var states: InventoryState?
 	/// The filter to return results with their `calculated_at` value  after the given time as specified in an RFC 3339 timestamp.  The default value is the UNIX epoch of (`1970-01-01T00:00:00Z`).
 	var updated_after: Timestamp?
+
+	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, location_ids: [String]? = nil, states: InventoryState? = nil, updated_after: Timestamp? = nil) {
+		self.catalog_object_ids = catalog_object_ids
+		self.cursor = cursor
+		self.location_ids = location_ids
+		self.states = states
+		self.updated_after = updated_after
+	}
 }
 
 public struct BatchRetrieveInventoryCountsResponse: Content {
@@ -283,20 +453,38 @@ public struct BatchRetrieveInventoryCountsResponse: Content {
 	var cursor: String?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(counts: [InventoryCount]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.counts = counts
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that are included in requests to the BatchRetrieveOrders endpoint.
 public struct BatchRetrieveOrdersRequest: Content {
 	/// The ID of the location for these orders. This field is optional: omit it to retrieve orders within the scope of the current authorization's merchant ID.
 	var location_id: String?
 	/// The IDs of the orders to retrieve. A maximum of 100 orders can be retrieved per request.
 	var order_ids: [String]
+
+	public init(order_ids: [String], location_id: String? = nil) {
+		self.order_ids = order_ids
+		self.location_id = location_id
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the BatchRetrieveOrders endpoint.
 public struct BatchRetrieveOrdersResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested orders. This will omit any requested orders that do not exist.
 	var orders: [Order]?
+
+	public init(errors: [Error]? = nil, orders: [Order]? = nil) {
+		self.errors = errors
+		self.orders = orders
+	}
 }
 
 public struct BatchUpsertCatalogObjectsRequest: Content {
@@ -304,6 +492,11 @@ public struct BatchUpsertCatalogObjectsRequest: Content {
 	var batches: [CatalogObjectBatch]
 	/// A value you specify that uniquely identifies this request among all your requests. A common way to create a valid idempotency key is to use a Universally unique identifier (UUID).  If you're unsure whether a particular request was successful, you can reattempt it with the same idempotency key without worrying about creating duplicate objects.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	var idempotency_key: String
+
+	public init(batches: [CatalogObjectBatch], idempotency_key: String) {
+		self.batches = batches
+		self.idempotency_key = idempotency_key
+	}
 }
 
 public struct BatchUpsertCatalogObjectsResponse: Content {
@@ -315,8 +508,16 @@ public struct BatchUpsertCatalogObjectsResponse: Content {
 	var objects: [CatalogObject]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this update in RFC 3339 format, e.g., "2016-09-04T23:59:33.123Z".
 	var updated_at: Timestamp?
+
+	public init(errors: [Error]? = nil, id_mappings: [CatalogIdMapping]? = nil, objects: [CatalogObject]? = nil, updated_at: Timestamp? = nil) {
+		self.errors = errors
+		self.id_mappings = id_mappings
+		self.objects = objects
+		self.updated_at = updated_at
+	}
 }
 
+/// Represents a booking as a time-bound service contract for a seller's staff member to provide a specified service at a given location to a requesting customer in one or more appointment segments.
 public struct Booking: Content {
 	/// A list of appointment segments for this booking.
 	var appointment_segments: [AppointmentSegment]?
@@ -340,6 +541,20 @@ public struct Booking: Content {
 	let updated_at: Timestamp?
 	/// The revision number for the booking used for optimistic concurrency.
 	var version: Int?
+
+	public init(appointment_segments: [AppointmentSegment]? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, customer_note: String? = nil, id: String? = nil, location_id: String? = nil, seller_note: String? = nil, start_at: Timestamp? = nil, status: BookingStatus? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.appointment_segments = appointment_segments
+		self.created_at = created_at
+		self.customer_id = customer_id
+		self.customer_note = customer_note
+		self.id = id
+		self.location_id = location_id
+		self.seller_note = seller_note
+		self.start_at = start_at
+		self.status = status
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
 /// Supported booking statuses.
@@ -358,6 +573,7 @@ public enum BookingStatus: String, Content {
 	case NO_SHOW
 }
 
+/// A record of an employee's break during a shift.
 public struct Break: Content {
 	/// The `BreakType` this `Break` was templated on.
 	var break_type_id: String
@@ -373,8 +589,19 @@ public struct Break: Content {
 	var name: String
 	/// RFC 3339; follows same timezone info as `Shift`. Precision up to the minute is respected; seconds are truncated.
 	var start_at: Timestamp
+
+	public init(break_type_id: String, expected_duration: Timestamp, is_paid: Bool, name: String, start_at: Timestamp, end_at: Timestamp? = nil, id: String? = nil) {
+		self.break_type_id = break_type_id
+		self.expected_duration = expected_duration
+		self.is_paid = is_paid
+		self.name = name
+		self.start_at = start_at
+		self.end_at = end_at
+		self.id = id
+	}
 }
 
+/// A defined break template that sets an expectation for possible `Break` instances on a `Shift`.
 public struct BreakType: Content {
 	/// A human-readable name for this type of break. Will be displayed to employees in Square products.
 	var break_name: String
@@ -392,32 +619,66 @@ public struct BreakType: Content {
 	let updated_at: Timestamp?
 	/// Used for resolving concurrency issues; request will fail if version provided does not match server version at time of request. If a value is not provided, Square's servers execute a "blind" write; potentially overwriting another writer's data.
 	var version: Int?
+
+	public init(break_name: String, expected_duration: Timestamp, is_paid: Bool, location_id: String, created_at: Timestamp? = nil, id: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.break_name = break_name
+		self.expected_duration = expected_duration
+		self.is_paid = is_paid
+		self.location_id = location_id
+		self.created_at = created_at
+		self.id = id
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
+/// Represents a bulk create request for `TeamMember` objects.
 public struct BulkCreateTeamMembersRequest: Content {
 	/// The data which will be used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	var team_members: CreateTeamMemberRequest
+
+	public init(team_members: CreateTeamMemberRequest) {
+		self.team_members = team_members
+	}
 }
 
+/// Represents a response from a bulk create request, containing the created `TeamMember` objects or error messages.
 public struct BulkCreateTeamMembersResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully created `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	var team_members: CreateTeamMemberResponse?
+
+	public init(errors: [Error]? = nil, team_members: CreateTeamMemberResponse? = nil) {
+		self.errors = errors
+		self.team_members = team_members
+	}
 }
 
+/// Represents a bulk update request for `TeamMember` objects.
 public struct BulkUpdateTeamMembersRequest: Content {
 	/// The data which will be used to update the `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	var team_members: UpdateTeamMemberRequest
+
+	public init(team_members: UpdateTeamMemberRequest) {
+		self.team_members = team_members
+	}
 }
 
+/// Represents a response from a bulk update request, containing the updated `TeamMember` objects or error messages.
 public struct BulkUpdateTeamMembersResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	var team_members: UpdateTeamMemberResponse?
+
+	public init(errors: [Error]? = nil, team_members: UpdateTeamMemberResponse? = nil) {
+		self.errors = errors
+		self.team_members = team_members
+	}
 }
 
+/// The service appointment settings, including where and how the service is provided.
 public struct BusinessAppointmentSettings: Content {
 	/// The time unit of the service duration for bookings.
 	var alignment_time: BusinessAppointmentSettingsAlignmentTime?
@@ -445,6 +706,22 @@ public struct BusinessAppointmentSettings: Content {
 	var multiple_service_booking_enabled: Bool?
 	/// Indicates whether customers has an assigned staff member (`true`) or can select s staff member of their choice (`false`).
 	var skip_booking_flow_staff_selection: Bool?
+
+	public init(alignment_time: BusinessAppointmentSettingsAlignmentTime? = nil, any_team_member_booking_enabled: Bool? = nil, cancellation_fee_money: Money? = nil, cancellation_policy: BusinessAppointmentSettingsCancellationPolicy? = nil, cancellation_policy_text: String? = nil, cancellation_window_seconds: Int? = nil, location_types: [BusinessAppointmentSettingsBookingLocationType]? = nil, max_appointments_per_day_limit: Int? = nil, max_appointments_per_day_limit_type: BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType? = nil, max_booking_lead_time_seconds: Int? = nil, min_booking_lead_time_seconds: Int? = nil, multiple_service_booking_enabled: Bool? = nil, skip_booking_flow_staff_selection: Bool? = nil) {
+		self.alignment_time = alignment_time
+		self.any_team_member_booking_enabled = any_team_member_booking_enabled
+		self.cancellation_fee_money = cancellation_fee_money
+		self.cancellation_policy = cancellation_policy
+		self.cancellation_policy_text = cancellation_policy_text
+		self.cancellation_window_seconds = cancellation_window_seconds
+		self.location_types = location_types
+		self.max_appointments_per_day_limit = max_appointments_per_day_limit
+		self.max_appointments_per_day_limit_type = max_appointments_per_day_limit_type
+		self.max_booking_lead_time_seconds = max_booking_lead_time_seconds
+		self.min_booking_lead_time_seconds = min_booking_lead_time_seconds
+		self.multiple_service_booking_enabled = multiple_service_booking_enabled
+		self.skip_booking_flow_staff_selection = skip_booking_flow_staff_selection
+	}
 }
 
 /// Time units of a service duration for bookings.
@@ -500,6 +777,16 @@ public struct BusinessBookingProfile: Content {
 	var customer_timezone_choice: BusinessBookingProfileCustomerTimezoneChoice?
 	/// The ID of the seller, obtainable using the Merchants API.
 	var seller_id: String?
+
+	public init(allow_user_cancel: Bool? = nil, booking_enabled: Bool? = nil, booking_policy: BusinessBookingProfileBookingPolicy? = nil, business_appointment_settings: BusinessAppointmentSettings? = nil, created_at: Timestamp? = nil, customer_timezone_choice: BusinessBookingProfileCustomerTimezoneChoice? = nil, seller_id: String? = nil) {
+		self.allow_user_cancel = allow_user_cancel
+		self.booking_enabled = booking_enabled
+		self.booking_policy = booking_policy
+		self.business_appointment_settings = business_appointment_settings
+		self.created_at = created_at
+		self.customer_timezone_choice = customer_timezone_choice
+		self.seller_id = seller_id
+	}
 }
 
 /// Policies for accepting bookings.
@@ -518,11 +805,17 @@ public enum BusinessBookingProfileCustomerTimezoneChoice: String, Content {
 	case CUSTOMER_CHOICE
 }
 
+/// Represents the hours of operation for a business location.
 public struct BusinessHours: Content {
 	/// The list of time periods during which the business is open. There may be at most 10 periods per day.
 	var periods: [BusinessHoursPeriod]?
+
+	public init(periods: [BusinessHoursPeriod]? = nil) {
+		self.periods = periods
+	}
 }
 
+/// Represents a period of time during which a business location is open.
 public struct BusinessHoursPeriod: Content {
 	/// The day of week for this time period. See [DayOfWeek](#type-dayofweek) for possible values
 	var day_of_week: DayOfWeek?
@@ -530,20 +823,38 @@ public struct BusinessHoursPeriod: Content {
 	var end_local_time: Timestamp?
 	/// The start time of a business hours period, specified in local time using partial-time RFC 3339 format.
 	var start_local_time: Timestamp?
+
+	public init(day_of_week: DayOfWeek? = nil, end_local_time: Timestamp? = nil, start_local_time: Timestamp? = nil) {
+		self.day_of_week = day_of_week
+		self.end_local_time = end_local_time
+		self.start_local_time = start_local_time
+	}
 }
 
+/// A request to calculate the points that a buyer can earn from  a specified purchase.
 public struct CalculateLoyaltyPointsRequest: Content {
 	/// The `order` ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount`.
 	var order_id: String?
 	/// The purchase amount for which to calculate the points.  Specify this field if your application does not use the Orders API to process orders. Otherwise, specify the `order_id`.
 	var transaction_amount_money: Money?
+
+	public init(order_id: String? = nil, transaction_amount_money: Money? = nil) {
+		self.order_id = order_id
+		self.transaction_amount_money = transaction_amount_money
+	}
 }
 
+/// A response that includes the points that the buyer can earn from  a specified purchase.
 public struct CalculateLoyaltyPointsResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The points that the buyer can earn from a specified purchase.
 	var points: Int?
+
+	public init(errors: [Error]? = nil, points: Int? = nil) {
+		self.errors = errors
+		self.points = points
+	}
 }
 
 public struct CalculateOrderRequest: Content {
@@ -551,6 +862,11 @@ public struct CalculateOrderRequest: Content {
 	var order: Order
 	/// Identifies one or more loyalty reward tiers to apply during order calculation. The discounts defined by the reward tiers are added to the order only to preview the effect of applying the specified reward(s). The reward(s) do not correspond to actual redemptions, that is, no `reward`s are created. Therefore, the reward `id`s are random strings used only to reference the reward tier.
 	var proposed_rewards: [OrderReward]?
+
+	public init(order: Order, proposed_rewards: [OrderReward]? = nil) {
+		self.order = order
+		self.proposed_rewards = proposed_rewards
+	}
 }
 
 public struct CalculateOrderResponse: Content {
@@ -558,6 +874,11 @@ public struct CalculateOrderResponse: Content {
 	var errors: [Error]?
 	/// The calculated version of the order provided in the request.
 	var order: Order?
+
+	public init(errors: [Error]? = nil, order: Order? = nil) {
+		self.errors = errors
+		self.order = order
+	}
 }
 
 public struct CancelBookingRequest: Content {
@@ -565,6 +886,11 @@ public struct CancelBookingRequest: Content {
 	var booking_version: Int?
 	/// A unique key to make this request an idempotent operation.
 	var idempotency_key: String?
+
+	public init(booking_version: Int? = nil, idempotency_key: String? = nil) {
+		self.booking_version = booking_version
+		self.idempotency_key = idempotency_key
+	}
 }
 
 public struct CancelBookingResponse: Content {
@@ -572,51 +898,100 @@ public struct CancelBookingResponse: Content {
 	var booking: Booking?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+		self.booking = booking
+		self.errors = errors
+	}
 }
 
+/// Describes a `CancelInvoice` request.
 public struct CancelInvoiceRequest: Content {
 	/// The version of the `invoice` to cancel. If you do not know the version, you can call  `GetInvoice](#endpoint-Invoices-GetInvoice) or [ListInvoices`.
 	var version: Int
+
+	public init(version: Int) {
+		self.version = version
+	}
 }
 
+/// The response returned by the `CancelInvoice` request.
 public struct CancelInvoiceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The canceled invoice.
 	var invoice: Invoice?
+
+	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+		self.errors = errors
+		self.invoice = invoice
+	}
 }
 
+/// Specifies the idempotency key of a payment to cancel.
 public struct CancelPaymentByIdempotencyKeyRequest: Content {
 	/// The `idempotency_key` identifying the payment to be canceled.
 	var idempotency_key: String
+
+	public init(idempotency_key: String) {
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// The return value from the [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey) endpoint. On success, `errors` is empty.
 public struct CancelPaymentByIdempotencyKeyResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Cancels (voids) a payment before it has been completed. Note: Only payments created with `autocomplete` set to `false` can be canceled.
 public struct CancelPaymentRequest: Content {
+
+	public init() {
+	}
 }
 
+/// The return value from the [CancelPayment](#endpoint-payments-cancelpayment) endpoint.
 public struct CancelPaymentResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The successfully canceled `Payment` object.
 	var payment: Payment?
+
+	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+		self.errors = errors
+		self.payment = payment
+	}
 }
 
+/// Defines parameters in a  [CancelSubscription](#endpoint-subscriptions-cancelsubscription) endpoint request.
 public struct CancelSubscriptionRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines fields that are included in a  [CancelSubscription](#endpoint-subscriptions-cancelsubscription) response.
 public struct CancelSubscriptionResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The canceled subscription.
 	var subscription: Subscription?
+
+	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+		self.errors = errors
+		self.subscription = subscription
+	}
 }
 
 public struct CancelTerminalCheckoutRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct CancelTerminalCheckoutResponse: Content {
@@ -624,9 +999,17 @@ public struct CancelTerminalCheckoutResponse: Content {
 	var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(checkout: TerminalCheckout? = nil, errors: [Error]? = nil) {
+		self.checkout = checkout
+		self.errors = errors
+	}
 }
 
 public struct CancelTerminalRefundRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct CancelTerminalRefundResponse: Content {
@@ -634,16 +1017,30 @@ public struct CancelTerminalRefundResponse: Content {
 	var errors: [Error]?
 	/// The updated `TerminalRefund`
 	var refund: TerminalRefund?
+
+	public init(errors: [Error]? = nil, refund: TerminalRefund? = nil) {
+		self.errors = errors
+		self.refund = refund
+	}
 }
 
 public struct CaptureTransactionRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](#endpoint-capturetransaction) endpoint.
 public struct CaptureTransactionResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Represents the payment details of a card to be used for payments. These details are determined by the `card_nonce` generated by `SqPaymentForm`.
 public struct Card: Content {
 	/// The billing address for this card.
 	var billing_address: Address?
@@ -667,38 +1064,40 @@ public struct Card: Content {
 	let last_4: String?
 	/// Indicates whether the Card is prepaid or not. The Card object includes this field only in response to Payments API calls. See [CardPrepaidType](#type-cardprepaidtype) for possible values
 	let prepaid_type: CardPrepaidType?
+
+	public init(billing_address: Address? = nil, bin: String? = nil, card_brand: CardBrand? = nil, card_type: CardType? = nil, cardholder_name: String? = nil, exp_month: Int? = nil, exp_year: Int? = nil, fingerprint: String? = nil, id: String? = nil, last_4: String? = nil, prepaid_type: CardPrepaidType? = nil) {
+		self.billing_address = billing_address
+		self.bin = bin
+		self.card_brand = card_brand
+		self.card_type = card_type
+		self.cardholder_name = cardholder_name
+		self.exp_month = exp_month
+		self.exp_year = exp_year
+		self.fingerprint = fingerprint
+		self.id = id
+		self.last_4 = last_4
+		self.prepaid_type = prepaid_type
+	}
 }
 
 /// Indicates a card's brand, such as `VISA` or `MASTERCARD`.
 public enum CardBrand: String, Content {
-	/// 
 	case OTHER_BRAND
-	/// 
 	case VISA
-	/// 
 	case MASTERCARD
-	/// 
 	case AMERICAN_EXPRESS
-	/// 
 	case DISCOVER
-	/// 
 	case DISCOVER_DINERS
-	/// 
 	case JCB
-	/// 
 	case CHINA_UNIONPAY
-	/// 
 	case SQUARE_GIFT_CARD
-	/// 
 	case SQUARE_CAPITAL_CARD
-	/// 
 	case INTERAC
-	/// 
 	case EFTPOS
-	/// 
 	case FELICA
 }
 
+/// Reflects the current status of a card payment.
 public struct CardPaymentDetails: Content {
 	/// For EMV payments, the cryptogram generated for the payment.
 	var application_cryptogram: String?
@@ -730,49 +1129,51 @@ public struct CardPaymentDetails: Content {
 	var verification_method: String?
 	/// For EMV payments, the results of the cardholder verification. The result can be `SUCCESS`, `FAILURE`, or `UNKNOWN`.
 	var verification_results: String?
+
+	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [Error]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil) {
+		self.application_cryptogram = application_cryptogram
+		self.application_identifier = application_identifier
+		self.application_name = application_name
+		self.auth_result_code = auth_result_code
+		self.avs_status = avs_status
+		self.card = card
+		self.cvv_status = cvv_status
+		self.device_details = device_details
+		self.entry_method = entry_method
+		self.errors = errors
+		self.refund_requires_card_presence = refund_requires_card_presence
+		self.statement_description = statement_description
+		self.status = status
+		self.verification_method = verification_method
+		self.verification_results = verification_results
+	}
 }
 
 /// Indicates a card's prepaid type, such as `NOT_PREPAID` or `PREPAID`.
 public enum CardPrepaidType: String, Content {
-	/// 
 	case UNKNOWN_PREPAID_TYPE
-	/// 
 	case NOT_PREPAID
-	/// 
 	case PREPAID
 }
 
 /// 
 public enum CardSquareProduct: String, Content {
-	/// 
 	case UNKNOWN_SQUARE_PRODUCT
-	/// 
 	case CONNECT_API
-	/// 
 	case DASHBOARD
-	/// 
 	case REGISTER_CLIENT
-	/// 
 	case BUYER_DASHBOARD
-	/// 
 	case WEB
-	/// 
 	case INVOICES
-	/// 
 	case GIFT_CARD
-	/// 
 	case VIRTUAL_TERMINAL
-	/// 
 	case READER_SDK
 }
 
 /// Indicates a card's type, such as `CREDIT` or `DEBIT`.
 public enum CardType: String, Content {
-	/// 
 	case UNKNOWN_CARD_TYPE
-	/// 
 	case CREDIT
-	/// 
 	case DEBIT
 }
 
@@ -781,6 +1182,11 @@ public struct CashDrawerDevice: Content {
 	var id: String?
 	/// The device merchant-specified name.
 	var name: String?
+
+	public init(id: String? = nil, name: String? = nil) {
+		self.id = id
+		self.name = name
+	}
 }
 
 /// The types of events on a CashDrawerShift. Each event type represents an employee action on the actual cash drawer represented by a CashDrawerShift.
@@ -805,6 +1211,7 @@ public enum CashDrawerEventType: String, Content {
 	case PAID_OUT
 }
 
+/// This model gives the details of a cash drawer shift. The cash_payment_money, cash_refund_money, cash_paid_in_money, and cash_paid_out_money fields are all computed by summing their respective event types.
 public struct CashDrawerShift: Content {
 	/// The amount of money added to the cash drawer for reasons other than cash payments. It is computed by summing the events of type PAID_IN. The amount is always greater than or equal to zero.
 	var cash_paid_in_money: Money?
@@ -842,6 +1249,27 @@ public struct CashDrawerShift: Content {
 	var opening_employee_id: String?
 	/// The shift current state. See [CashDrawerShiftState](#type-cashdrawershiftstate) for possible values
 	var state: CashDrawerShiftState?
+
+	public init(cash_paid_in_money: Money? = nil, cash_paid_out_money: Money? = nil, cash_payment_money: Money? = nil, cash_refunds_money: Money? = nil, closed_at: String? = nil, closed_cash_money: Money? = nil, closing_employee_id: String? = nil, description: String? = nil, device: CashDrawerDevice? = nil, employee_ids: [String]? = nil, ended_at: String? = nil, ending_employee_id: String? = nil, expected_cash_money: Money? = nil, id: String? = nil, opened_at: String? = nil, opened_cash_money: Money? = nil, opening_employee_id: String? = nil, state: CashDrawerShiftState? = nil) {
+		self.cash_paid_in_money = cash_paid_in_money
+		self.cash_paid_out_money = cash_paid_out_money
+		self.cash_payment_money = cash_payment_money
+		self.cash_refunds_money = cash_refunds_money
+		self.closed_at = closed_at
+		self.closed_cash_money = closed_cash_money
+		self.closing_employee_id = closing_employee_id
+		self.description = description
+		self.device = device
+		self.employee_ids = employee_ids
+		self.ended_at = ended_at
+		self.ending_employee_id = ending_employee_id
+		self.expected_cash_money = expected_cash_money
+		self.id = id
+		self.opened_at = opened_at
+		self.opened_cash_money = opened_cash_money
+		self.opening_employee_id = opening_employee_id
+		self.state = state
+	}
 }
 
 public struct CashDrawerShiftEvent: Content {
@@ -857,6 +1285,15 @@ public struct CashDrawerShiftEvent: Content {
 	var event_type: CashDrawerEventType?
 	/// The unique ID of the event.
 	var id: String?
+
+	public init(created_at: String? = nil, description: String? = nil, employee_id: String? = nil, event_money: Money? = nil, event_type: CashDrawerEventType? = nil, id: String? = nil) {
+		self.created_at = created_at
+		self.description = description
+		self.employee_id = employee_id
+		self.event_money = event_money
+		self.event_type = event_type
+		self.id = id
+	}
 }
 
 /// The current state of a cash drawer shift.
@@ -869,6 +1306,7 @@ public enum CashDrawerShiftState: String, Content {
 	case CLOSED
 }
 
+/// The summary of a closed cash drawer shift. This model contains only the money counted to start a cash drawer shift, counted at the end of the shift, and the amount that should be in the drawer at shift end based on summing all cash drawer shift events.
 public struct CashDrawerShiftSummary: Content {
 	/// The shift close time in ISO 8601 format.
 	var closed_at: String?
@@ -888,13 +1326,31 @@ public struct CashDrawerShiftSummary: Content {
 	var opened_cash_money: Money?
 	/// The shift current state. See [CashDrawerShiftState](#type-cashdrawershiftstate) for possible values
 	var state: CashDrawerShiftState?
+
+	public init(closed_at: String? = nil, closed_cash_money: Money? = nil, description: String? = nil, ended_at: String? = nil, expected_cash_money: Money? = nil, id: String? = nil, opened_at: String? = nil, opened_cash_money: Money? = nil, state: CashDrawerShiftState? = nil) {
+		self.closed_at = closed_at
+		self.closed_cash_money = closed_cash_money
+		self.description = description
+		self.ended_at = ended_at
+		self.expected_cash_money = expected_cash_money
+		self.id = id
+		self.opened_at = opened_at
+		self.opened_cash_money = opened_cash_money
+		self.state = state
+	}
 }
 
+/// A category to which a `CatalogItem` instance belongs.
 public struct CatalogCategory: Content {
 	/// The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	var name: String?
+
+	public init(name: String? = nil) {
+		self.name = name
+	}
 }
 
+/// Contains information defining a custom attribute. Custom attributes are intended to store additional information about a catalog object or to associate a catalog object with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.). [Read more about custom attributes](/catalog-api/add-custom-attributes)
 public struct CatalogCustomAttributeDefinition: Content {
 	/// The set of Catalog Object Types that this Custom Attribute may be applied to. Currently, only `ITEM` and `ITEM_VARIATION` are allowed. At least one type must be included. See [CatalogObjectType](#type-catalogobjecttype) for possible values
 	var allowed_object_types: CatalogObjectType
@@ -920,6 +1376,21 @@ public struct CatalogCustomAttributeDefinition: Content {
 	var string_config: CatalogCustomAttributeDefinitionStringConfig?
 	/// The type of this custom attribute. Cannot be modified after creation. Required. See [CatalogCustomAttributeDefinitionType](#type-catalogcustomattributedefinitiontype) for possible values
 	var type: CatalogCustomAttributeDefinitionType
+
+	public init(allowed_object_types: CatalogObjectType, name: String, type: CatalogCustomAttributeDefinitionType, app_visibility: CatalogCustomAttributeDefinitionAppVisibility? = nil, custom_attribute_usage_count: Int? = nil, description: String? = nil, key: String? = nil, number_config: CatalogCustomAttributeDefinitionNumberConfig? = nil, selection_config: CatalogCustomAttributeDefinitionSelectionConfig? = nil, seller_visibility: CatalogCustomAttributeDefinitionSellerVisibility? = nil, source_application: SourceApplication? = nil, string_config: CatalogCustomAttributeDefinitionStringConfig? = nil) {
+		self.allowed_object_types = allowed_object_types
+		self.name = name
+		self.type = type
+		self.app_visibility = app_visibility
+		self.custom_attribute_usage_count = custom_attribute_usage_count
+		self.description = description
+		self.key = key
+		self.number_config = number_config
+		self.selection_config = selection_config
+		self.seller_visibility = seller_visibility
+		self.source_application = source_application
+		self.string_config = string_config
+	}
 }
 
 /// Defines the visibility of a custom attribute to applications other than their creating application.
@@ -935,20 +1406,36 @@ public enum CatalogCustomAttributeDefinitionAppVisibility: String, Content {
 public struct CatalogCustomAttributeDefinitionNumberConfig: Content {
 	/// An integer between 0 and 5 that represents the maximum number of positions allowed after the decimal in number custom attribute values For example:  - if the precision is 0, the quantity can be 1, 2, 3, etc. - if the precision is 1, the quantity can be 0.1, 0.2, etc. - if the precision is 2, the quantity can be 0.01, 0.12, etc.  Default: 5
 	var precision: Int?
+
+	public init(precision: Int? = nil) {
+		self.precision = precision
+	}
 }
 
+/// Configuration associated with `SELECTION`-type custom attribute definitions.
 public struct CatalogCustomAttributeDefinitionSelectionConfig: Content {
 	/// The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100 selections can be defined. Can be modified.
 	var allowed_selections: [CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection]?
 	/// The maximum number of selections that can be set. The maximum value for this attribute is 100. The default value is 1. The value can be modified, but changing the value will not affect existing custom attribute values on objects. Clients need to handle custom attributes with more selected values than allowed by this limit.
 	var max_allowed_selections: Int?
+
+	public init(allowed_selections: [CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection]? = nil, max_allowed_selections: Int? = nil) {
+		self.allowed_selections = allowed_selections
+		self.max_allowed_selections = max_allowed_selections
+	}
 }
 
+/// A named selection for this `SELECTION`-type custom attribute definition.
 public struct CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection: Content {
 	/// Selection name, unique within `allowed_selections`.
 	var name: String
 	/// Unique ID set by Square.
 	var uid: String?
+
+	public init(name: String, uid: String? = nil) {
+		self.name = name
+		self.uid = uid
+	}
 }
 
 /// Defines the visibility of a custom attribute to sellers in Square client applications, Square APIs or in Square UIs (including Square Point of Sale applications and Square Dashboard).
@@ -959,9 +1446,14 @@ public enum CatalogCustomAttributeDefinitionSellerVisibility: String, Content {
 	case SELLER_VISIBILITY_READ_WRITE_VALUES
 }
 
+/// Configuration associated with Custom Attribute Definitions of type `STRING`.
 public struct CatalogCustomAttributeDefinitionStringConfig: Content {
 	/// If true, each Custom Attribute instance associated with this Custom Attribute Definition must have a unique value within the seller's catalog. For example, this may be used for a value like a SKU that should not be duplicated within a seller's catalog. May not be modified after the definition has been created.
 	var enforce_uniqueness: Bool?
+
+	public init(enforce_uniqueness: Bool? = nil) {
+		self.enforce_uniqueness = enforce_uniqueness
+	}
 }
 
 /// Defines the possible types for a custom attribute.
@@ -976,6 +1468,7 @@ public enum CatalogCustomAttributeDefinitionType: String, Content {
 	case SELECTION
 }
 
+/// An instance of a custom attribute. Custom attributes can be defined and added to `ITEM` and `ITEM_VARIATION` type catalog objects. [Read more about custom attributes](/catalog-api/add-custom-attributes).
 public struct CatalogCustomAttributeValue: Content {
 	/// A `true` or `false` value. Populated if `type` = `BOOLEAN`.
 	var boolean_value: Bool?
@@ -993,8 +1486,20 @@ public struct CatalogCustomAttributeValue: Content {
 	var string_value: String?
 	/// __Read-only.__ A copy of type from the associated `CatalogCustomAttributeDefinition`. See [CatalogCustomAttributeDefinitionType](#type-catalogcustomattributedefinitiontype) for possible values
 	let type: CatalogCustomAttributeDefinitionType?
+
+	public init(boolean_value: Bool? = nil, custom_attribute_definition_id: String? = nil, key: String? = nil, name: String? = nil, number_value: String? = nil, selection_uid_values: [String]? = nil, string_value: String? = nil, type: CatalogCustomAttributeDefinitionType? = nil) {
+		self.boolean_value = boolean_value
+		self.custom_attribute_definition_id = custom_attribute_definition_id
+		self.key = key
+		self.name = name
+		self.number_value = number_value
+		self.selection_uid_values = selection_uid_values
+		self.string_value = string_value
+		self.type = type
+	}
 }
 
+/// A discount applicable to items.
 public struct CatalogDiscount: Content {
 	/// The amount of the discount. Specify an amount of `0` if `discount_type` is `VARIABLE_AMOUNT`.  Do not use this field for percentage-based or variable discounts.
 	var amount_money: Money?
@@ -1010,6 +1515,16 @@ public struct CatalogDiscount: Content {
 	var percentage: String?
 	/// Indicates whether a mobile staff member needs to enter their PIN to apply the discount to a payment in the Square Point of Sale app.
 	var pin_required: Bool?
+
+	public init(amount_money: Money? = nil, discount_type: CatalogDiscountType? = nil, label_color: String? = nil, modify_tax_basis: CatalogDiscountModifyTaxBasis? = nil, name: String? = nil, percentage: String? = nil, pin_required: Bool? = nil) {
+		self.amount_money = amount_money
+		self.discount_type = discount_type
+		self.label_color = label_color
+		self.modify_tax_basis = modify_tax_basis
+		self.name = name
+		self.percentage = percentage
+		self.pin_required = pin_required
+	}
 }
 
 /// 
@@ -1032,13 +1547,20 @@ public enum CatalogDiscountType: String, Content {
 	case VARIABLE_AMOUNT
 }
 
+/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](#endpoint-Catalog-UpsertCatalogObject) or [BatchUpsertCatalogObjects](#endpoint-Catalog-BatchUpsertCatalogObjects) to create a [CatalogObject](#type-CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
 public struct CatalogIdMapping: Content {
 	/// The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
 	var client_object_id: String?
 	/// The permanent ID for the CatalogObject created by the server.
 	var object_id: String?
+
+	public init(client_object_id: String? = nil, object_id: String? = nil) {
+		self.client_object_id = client_object_id
+		self.object_id = object_id
+	}
 }
 
+/// An image file to use in Square catalogs. It can be associated with catalog items, item variations, and categories.
 public struct CatalogImage: Content {
 	/// A caption that describes what is shown in the image. Displayed in the Square Online Store. This is a searchable attribute for use in applicable query filters.
 	var caption: String?
@@ -1046,9 +1568,18 @@ public struct CatalogImage: Content {
 	var name: String?
 	/// The URL of this image, generated by Square after an image is uploaded using the `CreateCatalogImage` endpoint.
 	var url: String?
+
+	public init(caption: String? = nil, name: String? = nil, url: String? = nil) {
+		self.caption = caption
+		self.name = name
+		self.url = url
+	}
 }
 
 public struct CatalogInfoRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct CatalogInfoResponse: Content {
@@ -1058,6 +1589,12 @@ public struct CatalogInfoResponse: Content {
 	var limits: CatalogInfoResponseLimits?
 	/// Names and abbreviations for standard units.
 	var standard_unit_description_group: StandardUnitDescriptionGroup?
+
+	public init(errors: [Error]? = nil, limits: CatalogInfoResponseLimits? = nil, standard_unit_description_group: StandardUnitDescriptionGroup? = nil) {
+		self.errors = errors
+		self.limits = limits
+		self.standard_unit_description_group = standard_unit_description_group
+	}
 }
 
 public struct CatalogInfoResponseLimits: Content {
@@ -1083,8 +1620,23 @@ public struct CatalogInfoResponseLimits: Content {
 	var update_item_taxes_max_taxes_to_disable: Int?
 	/// The maximum number of tax IDs to be enabled that may be included in a single `/v2/catalog/update-item-taxes` request.
 	var update_item_taxes_max_taxes_to_enable: Int?
+
+	public init(batch_delete_max_object_ids: Int? = nil, batch_retrieve_max_object_ids: Int? = nil, batch_upsert_max_objects_per_batch: Int? = nil, batch_upsert_max_total_objects: Int? = nil, search_max_page_limit: Int? = nil, update_item_modifier_lists_max_item_ids: Int? = nil, update_item_modifier_lists_max_modifier_lists_to_disable: Int? = nil, update_item_modifier_lists_max_modifier_lists_to_enable: Int? = nil, update_item_taxes_max_item_ids: Int? = nil, update_item_taxes_max_taxes_to_disable: Int? = nil, update_item_taxes_max_taxes_to_enable: Int? = nil) {
+		self.batch_delete_max_object_ids = batch_delete_max_object_ids
+		self.batch_retrieve_max_object_ids = batch_retrieve_max_object_ids
+		self.batch_upsert_max_objects_per_batch = batch_upsert_max_objects_per_batch
+		self.batch_upsert_max_total_objects = batch_upsert_max_total_objects
+		self.search_max_page_limit = search_max_page_limit
+		self.update_item_modifier_lists_max_item_ids = update_item_modifier_lists_max_item_ids
+		self.update_item_modifier_lists_max_modifier_lists_to_disable = update_item_modifier_lists_max_modifier_lists_to_disable
+		self.update_item_modifier_lists_max_modifier_lists_to_enable = update_item_modifier_lists_max_modifier_lists_to_enable
+		self.update_item_taxes_max_item_ids = update_item_taxes_max_item_ids
+		self.update_item_taxes_max_taxes_to_disable = update_item_taxes_max_taxes_to_disable
+		self.update_item_taxes_max_taxes_to_enable = update_item_taxes_max_taxes_to_enable
+	}
 }
 
+/// A [CatalogObject](#type-CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
 public struct CatalogItem: Content {
 	/// The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
 	var abbreviation: String?
@@ -1114,8 +1666,26 @@ public struct CatalogItem: Content {
 	var tax_ids: [String]?
 	/// A list of CatalogObjects containing the `CatalogItemVariation`s for this item.
 	var variations: [CatalogObject]?
+
+	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, category_id: String? = nil, description: String? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: CatalogItemProductType? = nil, skip_modifier_screen: Bool? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
+		self.abbreviation = abbreviation
+		self.available_electronically = available_electronically
+		self.available_for_pickup = available_for_pickup
+		self.available_online = available_online
+		self.category_id = category_id
+		self.description = description
+		self.item_options = item_options
+		self.label_color = label_color
+		self.modifier_list_info = modifier_list_info
+		self.name = name
+		self.product_type = product_type
+		self.skip_modifier_screen = skip_modifier_screen
+		self.tax_ids = tax_ids
+		self.variations = variations
+	}
 }
 
+/// Options to control the properties of a `CatalogModifierList` applied to a `CatalogItem` instance.
 public struct CatalogItemModifierListInfo: Content {
 	/// If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	var enabled: Bool?
@@ -1127,8 +1697,17 @@ public struct CatalogItemModifierListInfo: Content {
 	var modifier_list_id: String
 	/// A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
 	var modifier_overrides: [CatalogModifierOverride]?
+
+	public init(modifier_list_id: String, enabled: Bool? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil) {
+		self.modifier_list_id = modifier_list_id
+		self.enabled = enabled
+		self.max_selected_modifiers = max_selected_modifiers
+		self.min_selected_modifiers = min_selected_modifiers
+		self.modifier_overrides = modifier_overrides
+	}
 }
 
+/// A group of variations for a `CatalogItem`.
 public struct CatalogItemOption: Content {
 	/// The item option's human-readable description. Displayed in the Square Point of Sale app for the seller and in the Online Store or on receipts for the buyer. This is a searchable attribute for use in applicable query filters.
 	var description: String?
@@ -1140,13 +1719,27 @@ public struct CatalogItemOption: Content {
 	var show_colors: Bool?
 	/// A list of CatalogObjects containing the `CatalogItemOptionValue`s for this item.
 	var values: [CatalogObject]?
+
+	public init(description: String? = nil, display_name: String? = nil, name: String? = nil, show_colors: Bool? = nil, values: [CatalogObject]? = nil) {
+		self.description = description
+		self.display_name = display_name
+		self.name = name
+		self.show_colors = show_colors
+		self.values = values
+	}
 }
 
+///  An option that can be assigned to an item. For example, a t-shirt item may offer a color option or a size option.
 public struct CatalogItemOptionForItem: Content {
 	/// The unique id of the item option, used to form the dimensions of the item option matrix in a specified order.
 	var item_option_id: String?
+
+	public init(item_option_id: String? = nil) {
+		self.item_option_id = item_option_id
+	}
 }
 
+/// An enumerated value that can link a `CatalogItemVariation` to an item option as one of its item option values.
 public struct CatalogItemOptionValue: Content {
 	/// The HTML-supported hex color for the item option (e.g., "#ff8d4e85"). Only displayed if `show_colors` is enabled on the parent `ItemOption`. When left unset, `color` defaults to white ("#ffffff") when `show_colors` is enabled on the parent `ItemOption`.
 	var color: String?
@@ -1158,13 +1751,27 @@ public struct CatalogItemOptionValue: Content {
 	var name: String?
 	/// Determines where this option value appears in a list of option values.
 	var ordinal: Int?
+
+	public init(color: String? = nil, description: String? = nil, item_option_id: String? = nil, name: String? = nil, ordinal: Int? = nil) {
+		self.color = color
+		self.description = description
+		self.item_option_id = item_option_id
+		self.name = name
+		self.ordinal = ordinal
+	}
 }
 
+/// A `CatalogItemOptionValue` links an item variation to an item option as an item option value. For example, a t-shirt item may offer a color option and a size option. An item option value would represent each variation of t-shirt: For example, "Color:Red, Size:Small" or "Color:Blue, Size:Medium".
 public struct CatalogItemOptionValueForItemVariation: Content {
 	/// The unique id of an item option.
 	var item_option_id: String?
 	/// The unique id of the selected value for the item option.
 	var item_option_value_id: String?
+
+	public init(item_option_id: String? = nil, item_option_value_id: String? = nil) {
+		self.item_option_id = item_option_id
+		self.item_option_value_id = item_option_value_id
+	}
 }
 
 /// The type of a CatalogItem. Connect V2 only allows the creation of `REGULAR` or `APPOINTMENTS_SERVICE` items.
@@ -1177,6 +1784,7 @@ public enum CatalogItemProductType: String, Content {
 	case APPOINTMENTS_SERVICE
 }
 
+/// An item variation (i.e., product) in the Catalog object model. Each item may have a maximum of 250 item variations.
 public struct CatalogItemVariation: Content {
 	/// If the `CatalogItem` that owns this item variation is of type `APPOINTMENTS_SERVICE`, a bool representing whether this service is available for booking.
 	var available_for_booking: Bool?
@@ -1212,15 +1820,42 @@ public struct CatalogItemVariation: Content {
 	var upc: String?
 	/// Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
 	var user_data: String?
+
+	public init(available_for_booking: Bool? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: InventoryAlertType? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: CatalogPricingType? = nil, service_duration: Int? = nil, sku: String? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
+		self.available_for_booking = available_for_booking
+		self.inventory_alert_threshold = inventory_alert_threshold
+		self.inventory_alert_type = inventory_alert_type
+		self.item_id = item_id
+		self.item_option_values = item_option_values
+		self.location_overrides = location_overrides
+		self.measurement_unit_id = measurement_unit_id
+		self.name = name
+		self.ordinal = ordinal
+		self.price_money = price_money
+		self.pricing_type = pricing_type
+		self.service_duration = service_duration
+		self.sku = sku
+		self.team_member_ids = team_member_ids
+		self.track_inventory = track_inventory
+		self.upc = upc
+		self.user_data = user_data
+	}
 }
 
+/// Represents the unit used to measure a `CatalogItemVariation` and specifies the precision for decimal quantities.
 public struct CatalogMeasurementUnit: Content {
 	/// Indicates the unit used to measure the quantity of a catalog item variation.
 	var measurement_unit: MeasurementUnit?
 	/// An integer between 0 and 5 that represents the maximum number of positions allowed after the decimal in quantities measured with this unit. For example:  - if the precision is 0, the quantity can be 1, 2, 3, etc. - if the precision is 1, the quantity can be 0.1, 0.2, etc. - if the precision is 2, the quantity can be 0.01, 0.12, etc.  Default: 3
 	var precision: Int?
+
+	public init(measurement_unit: MeasurementUnit? = nil, precision: Int? = nil) {
+		self.measurement_unit = measurement_unit
+		self.precision = precision
+	}
 }
 
+/// A modifier applicable to items at the time of sale.
 public struct CatalogModifier: Content {
 	/// The ID of the `CatalogModifierList` associated with this modifier.
 	var modifier_list_id: String?
@@ -1230,8 +1865,16 @@ public struct CatalogModifier: Content {
 	var ordinal: Int?
 	/// The modifier price.
 	var price_money: Money?
+
+	public init(modifier_list_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
+		self.modifier_list_id = modifier_list_id
+		self.name = name
+		self.ordinal = ordinal
+		self.price_money = price_money
+	}
 }
 
+/// A list of modifiers applicable to items at the time of sale.  For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers. Use the `selection_type` field to specify whether or not multiple selections from the modifier list are allowed.
 public struct CatalogModifierList: Content {
 	/// The options included in the `CatalogModifierList`. You must include at least one `CatalogModifier`. Each CatalogObject must have type `MODIFIER` and contain `CatalogModifier` data.
 	var modifiers: [CatalogObject]?
@@ -1241,6 +1884,13 @@ public struct CatalogModifierList: Content {
 	var ordinal: Int?
 	/// Indicates whether multiple options from the modifier list can be applied to a single `CatalogItem`. See [CatalogModifierListSelectionType](#type-catalogmodifierlistselectiontype) for possible values
 	var selection_type: CatalogModifierListSelectionType?
+
+	public init(modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: CatalogModifierListSelectionType? = nil) {
+		self.modifiers = modifiers
+		self.name = name
+		self.ordinal = ordinal
+		self.selection_type = selection_type
+	}
 }
 
 /// Indicates whether a CatalogModifierList supports multiple selections.
@@ -1251,13 +1901,20 @@ public enum CatalogModifierListSelectionType: String, Content {
 	case MULTIPLE
 }
 
+/// Options to control how to override the default behavior of the specified modifier.
 public struct CatalogModifierOverride: Content {
 	/// The ID of the `CatalogModifier` whose default behavior is being overridden.
 	var modifier_id: String
 	/// If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
 	var on_by_default: Bool?
+
+	public init(modifier_id: String, on_by_default: Bool? = nil) {
+		self.modifier_id = modifier_id
+		self.on_by_default = on_by_default
+	}
 }
 
+/// The wrapper object for the Catalog entries of a given object type.  The type of a particular `CatalogObject` is determined by the value of the `type` attribute and only the corresponding data attribute can be set on the `CatalogObject` instance. For example, the following list shows some instances of `CatalogObject` of a given `type` and their corresponding data atrribute that can be set: - For a `CatalogObject` of the `ITEM` type, set the `item_data` attribute to yield the `CatalogItem` object. - For a `CatalogObject` of the `ITEM_VARIATION` type, set the `item_variation_data` attribute to yield the `CatalogItemVariation` object. - For a `CatalogObject` of the `MODIFIER` type, set the `modifier_data` attribute to yield the `CatalogModifier` object. - For a `CatalogObject` of the `MODIFIER_LIST` type, set the `modifier_list_data` attribute to yield the `CatalogModifierList` object. - For a `CatalogObject` of the `CATEGORY` type, set the `category_data` attribute to yield the `CatalogCategory` object. - For a `CatalogObject` of the `DISCOUNT` type, set the `discount_data` attribute to yield the `CatalogDiscount` object. - For a `CatalogObject` of the `TAX` type, set the `tax_data` attribute to yield the `CatalogTax` object. - For a `CatalogObject` of the `IMAGE` type, set the `image_data` attribute to yield the `CatalogImageData`  object. - For a `CatalogObject` of the `QUICK_AMOUNTS_SETTINGS` type, set the `quick_amounts_settings_data` attribute to yield the `CatalogQuickAmountsSettings` object. - For a `CatalogObject` of the `PRICING_RULE` type, set the `pricing_rule_data` attribute to yield the `CatalogPricingRule` object. - For a `CatalogObject` of the `TIME_PERIOD` type, set the `time_period_data` attribute to yield the `CatalogTimePeriod` object. - For a `CatalogObject` of the `PRODUCT_SET` type, set the `product_set_data` attribute to yield the `CatalogProductSet`  object. - For a `CatalogObject` of the `SUBSCRIPTION_PLAN` type, set the `subscription_plan_data` attribute to yield the `CatalogSubscriptionPlan` object.   For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](/catalog-api/design-a-catalog) guide.
 public struct CatalogObject: Content {
 	/// A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
 	var absent_at_location_ids: [String]?
@@ -1315,18 +1972,60 @@ public struct CatalogObject: Content {
 	let updated_at: Timestamp?
 	/// The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
 	var version: Int?
+
+	public init(id: String, type: CatalogObjectType, absent_at_location_ids: [String]? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: CatalogCustomAttributeDefinition? = nil, custom_attribute_values: CatalogCustomAttributeValue? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, image_id: String? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.id = id
+		self.type = type
+		self.absent_at_location_ids = absent_at_location_ids
+		self.catalog_v1_ids = catalog_v1_ids
+		self.category_data = category_data
+		self.custom_attribute_definition_data = custom_attribute_definition_data
+		self.custom_attribute_values = custom_attribute_values
+		self.discount_data = discount_data
+		self.image_data = image_data
+		self.image_id = image_id
+		self.is_deleted = is_deleted
+		self.item_data = item_data
+		self.item_option_data = item_option_data
+		self.item_option_value_data = item_option_value_data
+		self.item_variation_data = item_variation_data
+		self.measurement_unit_data = measurement_unit_data
+		self.modifier_data = modifier_data
+		self.modifier_list_data = modifier_list_data
+		self.present_at_all_locations = present_at_all_locations
+		self.present_at_location_ids = present_at_location_ids
+		self.pricing_rule_data = pricing_rule_data
+		self.product_set_data = product_set_data
+		self.quick_amounts_settings_data = quick_amounts_settings_data
+		self.subscription_plan_data = subscription_plan_data
+		self.tax_data = tax_data
+		self.time_period_data = time_period_data
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
+/// A batch of catalog objects.
 public struct CatalogObjectBatch: Content {
 	/// A list of CatalogObjects belonging to this batch.
 	var objects: [CatalogObject]
+
+	public init(objects: [CatalogObject]) {
+		self.objects = objects
+	}
 }
 
+/// A reference to a Catalog object at a specific version. In general this is used as an entry point into a graph of catalog objects, where the objects exist at a specific version.
 public struct CatalogObjectReference: Content {
 	/// The version of the object.
 	var catalog_version: Int?
 	/// The ID of the referenced object.
 	var object_id: String?
+
+	public init(catalog_version: Int? = nil, object_id: String? = nil) {
+		self.catalog_version = catalog_version
+		self.object_id = object_id
+	}
 }
 
 /// Possible types of CatalogObjects returned from the Catalog, each containing type-specific properties in the `*_data` field corresponding to the object type.
@@ -1367,6 +2066,7 @@ public enum CatalogObjectType: String, Content {
 	case QUICK_AMOUNTS_SETTINGS
 }
 
+/// Defines how discounts are automatically applied to a set of items that match the pricing rule during the active time period.
 public struct CatalogPricingRule: Content {
 	/// __Deprecated__: Please use the `exclude_products_id` field to apply an exclude set instead. Exclude sets allow better control over quantity ranges and offer more flexibility for which matched items receive a discount.  `CatalogProductSet` to apply the pricing to. An apply rule matches within the subset of the cart that fits the match rules (the match set). An apply rule can only match once in the match set. If not supplied, the pricing will be applied to all products in the match set. Other products retain their base price, or a price generated by other rules.
 	var apply_products_id: String?
@@ -1390,6 +2090,20 @@ public struct CatalogPricingRule: Content {
 	var valid_until_date: Timestamp?
 	/// Represents the local time the pricing rule should be valid until. Represented in RFC 3339 partial-time format (HH:MM:SS). Partial seconds will be truncated.
 	var valid_until_local_time: Timestamp?
+
+	public init(apply_products_id: String? = nil, discount_id: String? = nil, exclude_products_id: String? = nil, exclude_strategy: ExcludeStrategy? = nil, match_products_id: String? = nil, name: String? = nil, time_period_ids: [String]? = nil, valid_from_date: Timestamp? = nil, valid_from_local_time: Timestamp? = nil, valid_until_date: Timestamp? = nil, valid_until_local_time: Timestamp? = nil) {
+		self.apply_products_id = apply_products_id
+		self.discount_id = discount_id
+		self.exclude_products_id = exclude_products_id
+		self.exclude_strategy = exclude_strategy
+		self.match_products_id = match_products_id
+		self.name = name
+		self.time_period_ids = time_period_ids
+		self.valid_from_date = valid_from_date
+		self.valid_from_local_time = valid_from_local_time
+		self.valid_until_date = valid_until_date
+		self.valid_until_local_time = valid_until_local_time
+	}
 }
 
 /// Indicates whether the price of a CatalogItemVariation should be entered manually at the time of sale.
@@ -1400,6 +2114,7 @@ public enum CatalogPricingType: String, Content {
 	case VARIABLE_PRICING
 }
 
+/// Represents a collection of catalog objects for the purpose of applying a `PricingRule`. Including a catalog object will include all of its subtypes. For example, including a category in a product set will include all of its items and associated item variations in the product set. Including an item in a product set will also include its item variations.
 public struct CatalogProductSet: Content {
 	/// If set to `true`, the product set will include every item in the catalog.  Only one of `product_ids_all`, `product_ids_any`, or `all_products` can be set.
 	var all_products: Bool?
@@ -1415,8 +2130,19 @@ public struct CatalogProductSet: Content {
 	var quantity_max: Int?
 	/// If set, there must be at least this many items from `products_any` or `products_all` in a cart for the discount to apply. See `quantity_exact`. Defaults to 0 if `quantity_exact`, `quantity_min` and `quantity_max` are all unspecified.
 	var quantity_min: Int?
+
+	public init(all_products: Bool? = nil, name: String? = nil, product_ids_all: [String]? = nil, product_ids_any: [String]? = nil, quantity_exact: Int? = nil, quantity_max: Int? = nil, quantity_min: Int? = nil) {
+		self.all_products = all_products
+		self.name = name
+		self.product_ids_all = product_ids_all
+		self.product_ids_any = product_ids_any
+		self.quantity_exact = quantity_exact
+		self.quantity_max = quantity_max
+		self.quantity_min = quantity_min
+	}
 }
 
+/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](#type-CatalogExactQuery) - [prefix_query](#type-CatalogPrefixQuery) - [range_query](#type-CatalogRangeQuery) - [sorted_attribute_query](#type-CatalogSortedAttribute) - [text_query](#type-CatalogTextQuery) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatelogCatogry`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](#type-CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 public struct CatalogQuery: Content {
 	/// An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	var exact_query: CatalogQueryExact?
@@ -1438,42 +2164,88 @@ public struct CatalogQuery: Content {
 	var sorted_attribute_query: CatalogQuerySortedAttribute?
 	/// A text query expression to return objectd whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
 	var text_query: CatalogQueryText?
+
+	public init(exact_query: CatalogQueryExact? = nil, item_variations_for_item_option_values_query: CatalogQueryItemVariationsForItemOptionValues? = nil, items_for_item_options_query: CatalogQueryItemsForItemOptions? = nil, items_for_modifier_list_query: CatalogQueryItemsForModifierList? = nil, items_for_tax_query: CatalogQueryItemsForTax? = nil, prefix_query: CatalogQueryPrefix? = nil, range_query: CatalogQueryRange? = nil, set_query: CatalogQuerySet? = nil, sorted_attribute_query: CatalogQuerySortedAttribute? = nil, text_query: CatalogQueryText? = nil) {
+		self.exact_query = exact_query
+		self.item_variations_for_item_option_values_query = item_variations_for_item_option_values_query
+		self.items_for_item_options_query = items_for_item_options_query
+		self.items_for_modifier_list_query = items_for_modifier_list_query
+		self.items_for_tax_query = items_for_tax_query
+		self.prefix_query = prefix_query
+		self.range_query = range_query
+		self.set_query = set_query
+		self.sorted_attribute_query = sorted_attribute_query
+		self.text_query = text_query
+	}
 }
 
+/// The query filter to return the search result by exact match of the specified attribute name and value.
 public struct CatalogQueryExact: Content {
 	/// The name of the attribute to be searched. Matching of the attribute name is exact.
 	var attribute_name: String
 	/// The desired value of the search attribute. Matching of the attribute value is case insensitive and can be partial. For example, if a specified value of "sma", objects with the named attribute value of "Small", "small" are both matched.
 	var attribute_value: String
+
+	public init(attribute_name: String, attribute_value: String) {
+		self.attribute_name = attribute_name
+		self.attribute_value = attribute_value
+	}
 }
 
+/// The query filter to return the item variations containing the specified item option value IDs.
 public struct CatalogQueryItemVariationsForItemOptionValues: Content {
 	/// A set of `CatalogItemOptionValue` IDs to be used to find associated `CatalogItemVariation`s. All ItemVariations that contain all of the given Item Option Values (in any order) will be returned.
 	var item_option_value_ids: [String]?
+
+	public init(item_option_value_ids: [String]? = nil) {
+		self.item_option_value_ids = item_option_value_ids
+	}
 }
 
+/// The query filter to return the items containing the specified item option IDs.
 public struct CatalogQueryItemsForItemOptions: Content {
 	/// A set of `CatalogItemOption` IDs to be used to find associated `CatalogItem`s. All Items that contain all of the given Item Options (in any order) will be returned.
 	var item_option_ids: [String]?
+
+	public init(item_option_ids: [String]? = nil) {
+		self.item_option_ids = item_option_ids
+	}
 }
 
+/// The query filter to return the items containing the specified modifier list IDs.
 public struct CatalogQueryItemsForModifierList: Content {
 	/// A set of `CatalogModifierList` IDs to be used to find associated `CatalogItem`s.
 	var modifier_list_ids: [String]
+
+	public init(modifier_list_ids: [String]) {
+		self.modifier_list_ids = modifier_list_ids
+	}
 }
 
+/// The query filter to return the items containing the specified tax IDs.
 public struct CatalogQueryItemsForTax: Content {
 	/// A set of `CatalogTax` IDs to be used to find associated `CatalogItem`s.
 	var tax_ids: [String]
+
+	public init(tax_ids: [String]) {
+		self.tax_ids = tax_ids
+	}
 }
 
+/// The query filter to return the search result whose named attribute values are prefixed by the specified attribute value.
 public struct CatalogQueryPrefix: Content {
 	/// The name of the attribute to be searched.
 	var attribute_name: String
 	/// The desired prefix of the search attribute value.
 	var attribute_prefix: String
+
+	public init(attribute_name: String, attribute_prefix: String) {
+		self.attribute_name = attribute_name
+		self.attribute_prefix = attribute_prefix
+	}
 }
 
+/// The query filter to return the search result whose named attribute values fall between the specified range.
 public struct CatalogQueryRange: Content {
 	/// The desired maximum value for the search attribute (inclusive).
 	var attribute_max_value: Int?
@@ -1481,15 +2253,28 @@ public struct CatalogQueryRange: Content {
 	var attribute_min_value: Int?
 	/// The name of the attribute to be searched.
 	var attribute_name: String
+
+	public init(attribute_name: String, attribute_max_value: Int? = nil, attribute_min_value: Int? = nil) {
+		self.attribute_name = attribute_name
+		self.attribute_max_value = attribute_max_value
+		self.attribute_min_value = attribute_min_value
+	}
 }
 
+/// The query filter to return the search result(s) by exact match of the specified `attribute_name` and any of the `attribute_values`.
 public struct CatalogQuerySet: Content {
 	/// The name of the attribute to be searched. Matching of the attribute name is exact.
 	var attribute_name: String
 	/// The desired values of the search attribute. Matching of the attribute values is exact and case insensitive. A maximum of 250 values may be searched in a request.
 	var attribute_values: [String]
+
+	public init(attribute_name: String, attribute_values: [String]) {
+		self.attribute_name = attribute_name
+		self.attribute_values = attribute_values
+	}
 }
 
+/// The query expression to specify the key to sort search results.
 public struct CatalogQuerySortedAttribute: Content {
 	/// The attribute whose value is used as the sort key.
 	var attribute_name: String
@@ -1497,13 +2282,25 @@ public struct CatalogQuerySortedAttribute: Content {
 	var initial_attribute_value: String?
 	/// The desired sort order, `"ASC"` (ascending) or `"DESC"` (descending). See [SortOrder](#type-sortorder) for possible values
 	var sort_order: SortOrder?
+
+	public init(attribute_name: String, initial_attribute_value: String? = nil, sort_order: SortOrder? = nil) {
+		self.attribute_name = attribute_name
+		self.initial_attribute_value = initial_attribute_value
+		self.sort_order = sort_order
+	}
 }
 
+/// The query filter to return the search result whose searchable attribute values contain all of the specified keywords or tokens, independent of the token order or case.
 public struct CatalogQueryText: Content {
 	/// A list of 1, 2, or 3 search keywords. Keywords with fewer than 3 characters are ignored.
 	var keywords: [String]
+
+	public init(keywords: [String]) {
+		self.keywords = keywords
+	}
 }
 
+/// Represents a Quick Amount in the Catalog.
 public struct CatalogQuickAmount: Content {
 	/// Represents the actual amount of the Quick Amount with Money type.
 	var amount: Money
@@ -1513,6 +2310,13 @@ public struct CatalogQuickAmount: Content {
 	var score: Int?
 	/// Represents the type of the Quick Amount. See [CatalogQuickAmountType](#type-catalogquickamounttype) for possible values
 	var type: CatalogQuickAmountType
+
+	public init(amount: Money, type: CatalogQuickAmountType, ordinal: Int? = nil, score: Int? = nil) {
+		self.amount = amount
+		self.type = type
+		self.ordinal = ordinal
+		self.score = score
+	}
 }
 
 /// Determines the type of a specific Quick Amount.
@@ -1523,6 +2327,7 @@ public enum CatalogQuickAmountType: String, Content {
 	case QUICK_AMOUNT_TYPE_AUTO
 }
 
+/// A parent Catalog Object model represents a set of Quick Amounts and the settings control the amounts.
 public struct CatalogQuickAmountsSettings: Content {
 	/// Represents a set of Quick Amounts at this location.
 	var amounts: [CatalogQuickAmount]?
@@ -1530,6 +2335,12 @@ public struct CatalogQuickAmountsSettings: Content {
 	var eligible_for_auto_amounts: Bool?
 	/// Represents the option seller currently uses on Quick Amounts. See [CatalogQuickAmountsSettingsOption](#type-catalogquickamountssettingsoption) for possible values
 	var option: CatalogQuickAmountsSettingsOption
+
+	public init(option: CatalogQuickAmountsSettingsOption, amounts: [CatalogQuickAmount]? = nil, eligible_for_auto_amounts: Bool? = nil) {
+		self.option = option
+		self.amounts = amounts
+		self.eligible_for_auto_amounts = eligible_for_auto_amounts
+	}
 }
 
 /// Determines a seller's option on Quick Amounts feature.
@@ -1542,13 +2353,20 @@ public enum CatalogQuickAmountsSettingsOption: String, Content {
 	case AUTO
 }
 
+/// Describes a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](/docs/subscriptions-api/setup-plan).
 public struct CatalogSubscriptionPlan: Content {
 	/// The name of the plan.
 	var name: String?
 	/// A list of SubscriptionPhase containing the `SubscriptionPhase` for this plan.
 	var phases: [SubscriptionPhase]?
+
+	public init(name: String? = nil, phases: [SubscriptionPhase]? = nil) {
+		self.name = name
+		self.phases = phases
+	}
 }
 
+/// A tax applicable to an item.
 public struct CatalogTax: Content {
 	/// If `true`, the fee applies to custom amounts entered into the Square Point of Sale app that are not associated with a particular `CatalogItem`.
 	var applies_to_custom_amounts: Bool?
@@ -1562,20 +2380,41 @@ public struct CatalogTax: Content {
 	var name: String?
 	/// The percentage of the tax in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. A value of `7.5` corresponds to 7.5%.
 	var percentage: String?
+
+	public init(applies_to_custom_amounts: Bool? = nil, calculation_phase: TaxCalculationPhase? = nil, enabled: Bool? = nil, inclusion_type: TaxInclusionType? = nil, name: String? = nil, percentage: String? = nil) {
+		self.applies_to_custom_amounts = applies_to_custom_amounts
+		self.calculation_phase = calculation_phase
+		self.enabled = enabled
+		self.inclusion_type = inclusion_type
+		self.name = name
+		self.percentage = percentage
+	}
 }
 
+/// Represents a time period - either a single period or a repeating period.
 public struct CatalogTimePeriod: Content {
 	/// An iCalendar (RFC 5545) [event](https://tools.ietf.org/html/rfc5545#section-3.6.1), which specifies the name, timing, duration and recurrence of this time period.  Example:  ``` DTSTART:20190707T180000 DURATION:P2H RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR ```  Only `SUMMARY`, `DTSTART`, `DURATION` and `RRULE` fields are supported. `DTSTART` must be in local (unzoned) time format. Note that while `BEGIN:VEVENT` and `END:VEVENT` is not required in the request. The response will always include them.
 	var event: String?
+
+	public init(event: String? = nil) {
+		self.event = event
+	}
 }
 
+/// A Square API V1 identifier of an item, including the object ID and its associated location ID.
 public struct CatalogV1Id: Content {
 	/// The ID for an object used in the Square API V1, if the object ID differs from the Square API V2 object ID.
 	var catalog_v1_id: String?
 	/// The ID of the `Location` this Connect V1 ID is associated with.
 	var location_id: String?
+
+	public init(catalog_v1_id: String? = nil, location_id: String? = nil) {
+		self.catalog_v1_id = catalog_v1_id
+		self.location_id = location_id
+	}
 }
 
+/// Defines the parameters that can be included in the body of a request to the [Charge](#endpoint-charge) endpoint.  Deprecated - recommend using [CreatePayment](#endpoint-payments-createpayment)
 public struct ChargeRequest: Content {
 	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `amount_money` value in the charge request. The `location_id` must be the valid location of the app owner merchant.  This field requires the `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
 	var additional_recipients: [AdditionalRecipient]?
@@ -1605,8 +2444,26 @@ public struct ChargeRequest: Content {
 	var shipping_address: Address?
 	/// A token generated by SqPaymentForm's verifyBuyer() that represents customer's device info and 3ds challenge result.
 	var verification_token: String?
+
+	public init(amount_money: Money, idempotency_key: String, additional_recipients: [AdditionalRecipient]? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, card_nonce: String? = nil, customer_card_id: String? = nil, customer_id: String? = nil, delay_capture: Bool? = nil, note: String? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, verification_token: String? = nil) {
+		self.amount_money = amount_money
+		self.idempotency_key = idempotency_key
+		self.additional_recipients = additional_recipients
+		self.billing_address = billing_address
+		self.buyer_email_address = buyer_email_address
+		self.card_nonce = card_nonce
+		self.customer_card_id = customer_card_id
+		self.customer_id = customer_id
+		self.delay_capture = delay_capture
+		self.note = note
+		self.order_id = order_id
+		self.reference_id = reference_id
+		self.shipping_address = shipping_address
+		self.verification_token = verification_token
+	}
 }
 
+/// Represents an additional recipient (other than the merchant) entitled to a portion of the tender. Support is currently limited to USD, CAD and GBP currencies
 public struct ChargeRequestAdditionalRecipient: Content {
 	/// The amount of money distributed to the recipient.
 	var amount_money: Money
@@ -1614,16 +2471,31 @@ public struct ChargeRequestAdditionalRecipient: Content {
 	var description: String
 	/// The location ID for a recipient (other than the merchant) receiving a portion of the tender.
 	var location_id: String
+
+	public init(amount_money: Money, description: String, location_id: String) {
+		self.amount_money = amount_money
+		self.description = description
+		self.location_id = location_id
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [Charge](#endpoint-charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct ChargeResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The created transaction.
 	var transaction: Transaction?
+
+	public init(errors: [Error]? = nil, transaction: Transaction? = nil) {
+		self.errors = errors
+		self.transaction = transaction
+	}
 }
 
 public struct CheckAppointmentsOnboardedRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct CheckAppointmentsOnboardedResponse: Content {
@@ -1631,8 +2503,14 @@ public struct CheckAppointmentsOnboardedResponse: Content {
 	var appointments_onboarded: Bool?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(appointments_onboarded: Bool? = nil, errors: [Error]? = nil) {
+		self.appointments_onboarded = appointments_onboarded
+		self.errors = errors
+	}
 }
 
+/// Square Checkout lets merchants accept online payments for supported payment types using a checkout workflow hosted on squareup.com.
 public struct Checkout: Content {
 	/// Additional recipients (other than the merchant) receiving a portion of this checkout. For example, fees assessed on the purchase by a third party integration.
 	var additional_recipients: [AdditionalRecipient]?
@@ -1654,23 +2532,52 @@ public struct Checkout: Content {
 	var pre_populate_shipping_address: Address?
 	/// The URL to redirect to after checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect_url is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout will display an order confirmation page on your behalf; however Square strongly recommends that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.
 	var redirect_url: String?
+
+	public init(additional_recipients: [AdditionalRecipient]? = nil, ask_for_shipping_address: Bool? = nil, checkout_page_url: String? = nil, created_at: Timestamp? = nil, id: String? = nil, merchant_support_email: String? = nil, order: Order? = nil, pre_populate_buyer_email: String? = nil, pre_populate_shipping_address: Address? = nil, redirect_url: String? = nil) {
+		self.additional_recipients = additional_recipients
+		self.ask_for_shipping_address = ask_for_shipping_address
+		self.checkout_page_url = checkout_page_url
+		self.created_at = created_at
+		self.id = id
+		self.merchant_support_email = merchant_support_email
+		self.order = order
+		self.pre_populate_buyer_email = pre_populate_buyer_email
+		self.pre_populate_shipping_address = pre_populate_shipping_address
+		self.redirect_url = redirect_url
+	}
 }
 
+/// Completes (captures) a payment.  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 public struct CompletePaymentRequest: Content {
+
+	public init() {
+	}
 }
 
+/// The return value from a [CompletePayment](#endpoint-payments-completepayment) call.
 public struct CompletePaymentResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The successfully completed payment.
 	var payment: Payment?
+
+	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+		self.errors = errors
+		self.payment = payment
+	}
 }
 
+/// Latitude and longitude coordinates.
 public struct Coordinates: Content {
 	/// The latitude of the coordinate expressed in degrees.
 	var latitude: Float?
 	/// The longitude of the coordinate expressed in degrees.
 	var longitude: Float?
+
+	public init(latitude: Float? = nil, longitude: Float? = nil) {
+		self.latitude = latitude
+		self.longitude = longitude
+	}
 }
 
 /// Indicates the country associated with another entity, such as a business. Values are in [ISO 3166-1-alpha-2 format](http://www.iso.org/iso/home/standards/country_codes.htm).
@@ -2182,6 +3089,11 @@ public struct CreateBookingRequest: Content {
 	var booking: Booking
 	/// A unique key to make this request an idempotent operation.
 	var idempotency_key: String?
+
+	public init(booking: Booking, idempotency_key: String? = nil) {
+		self.booking = booking
+		self.idempotency_key = idempotency_key
+	}
 }
 
 public struct CreateBookingResponse: Content {
@@ -2189,22 +3101,40 @@ public struct CreateBookingResponse: Content {
 	var booking: Booking?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+		self.booking = booking
+		self.errors = errors
+	}
 }
 
+/// A request to create a new `BreakType`
 public struct CreateBreakTypeRequest: Content {
 	/// The `BreakType` to be created.
 	var break_type: BreakType
 	/// Unique string value to insure idempotency of the operation
 	var idempotency_key: String?
+
+	public init(break_type: BreakType, idempotency_key: String? = nil) {
+		self.break_type = break_type
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// The response to the request to create a `BreakType`. Contains the created `BreakType` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct CreateBreakTypeResponse: Content {
 	/// The `BreakType` that was created by the request.
 	var break_type: BreakType?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(break_type: BreakType? = nil, errors: [Error]? = nil) {
+		self.break_type = break_type
+		self.errors = errors
+	}
 }
 
+/// Defines the parameters that can be included in the body of a request to the __CreateCheckout__ endpoint.
 public struct CreateCheckoutRequest: Content {
 	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be the valid location of the app owner merchant.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
 	var additional_recipients: [ChargeRequestAdditionalRecipient]?
@@ -2224,15 +3154,34 @@ public struct CreateCheckoutRequest: Content {
 	var pre_populate_shipping_address: Address?
 	/// The URL to redirect to after checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect_url is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout will display an order confirmation page on your behalf; however Square strongly recommends that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
 	var redirect_url: String?
+
+	public init(idempotency_key: String, order: CreateOrderRequest, additional_recipients: [ChargeRequestAdditionalRecipient]? = nil, ask_for_shipping_address: Bool? = nil, merchant_support_email: String? = nil, note: String? = nil, pre_populate_buyer_email: String? = nil, pre_populate_shipping_address: Address? = nil, redirect_url: String? = nil) {
+		self.idempotency_key = idempotency_key
+		self.order = order
+		self.additional_recipients = additional_recipients
+		self.ask_for_shipping_address = ask_for_shipping_address
+		self.merchant_support_email = merchant_support_email
+		self.note = note
+		self.pre_populate_buyer_email = pre_populate_buyer_email
+		self.pre_populate_shipping_address = pre_populate_shipping_address
+		self.redirect_url = redirect_url
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the __CreateCheckout__ endpoint.
 public struct CreateCheckoutResponse: Content {
 	/// The newly created checkout. If the same request was made with the same idempotency_key, this will be the checkout created with the idempotency_key.
 	var checkout: Checkout?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(checkout: Checkout? = nil, errors: [Error]? = nil) {
+		self.checkout = checkout
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that are included in the request body of a request to the CreateCustomerCard endpoint.
 public struct CreateCustomerCardRequest: Content {
 	/// Address information for the card on file. Only the `postal_code` field is required for payments in the US and Canada.
 	var billing_address: Address?
@@ -2242,29 +3191,55 @@ public struct CreateCustomerCardRequest: Content {
 	var cardholder_name: String?
 	/// An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.
 	var verification_token: String?
+
+	public init(card_nonce: String, billing_address: Address? = nil, cardholder_name: String? = nil, verification_token: String? = nil) {
+		self.card_nonce = card_nonce
+		self.billing_address = billing_address
+		self.cardholder_name = cardholder_name
+		self.verification_token = verification_token
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the CreateCustomerCard endpoint.  One of `errors` or `card` is present in a given response (never both).
 public struct CreateCustomerCardResponse: Content {
 	/// The created card on file.
 	var card: Card?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(card: Card? = nil, errors: [Error]? = nil) {
+		self.card = card
+		self.errors = errors
+	}
 }
 
+/// Defines the body parameters that can be provided in a request to the [CreateCustomerGroup](#endpoint-createcustomegroup) endpoint.
 public struct CreateCustomerGroupRequest: Content {
 	/// The customer group to create.
 	var group: CustomerGroup
 	/// The idempotency key for the request. See the [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) guide for more information.
 	var idempotency_key: String?
+
+	public init(group: CustomerGroup, idempotency_key: String? = nil) {
+		self.group = group
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](#endpoint-createcustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
 public struct CreateCustomerGroupResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully created customer group.
 	var group: CustomerGroup?
+
+	public init(errors: [Error]? = nil, group: CustomerGroup? = nil) {
+		self.errors = errors
+		self.group = group
+	}
 }
 
+/// Defines the body parameters that can be provided in a request to the CreateCustomer endpoint.
 public struct CreateCustomerRequest: Content {
 	/// The physical address associated with the customer profile.
 	var address: Address?
@@ -2288,13 +3263,33 @@ public struct CreateCustomerRequest: Content {
 	var phone_number: String?
 	/// An optional, second ID used to associate the customer profile with an entity in another system.
 	var reference_id: String?
+
+	public init(address: Address? = nil, birthday: Timestamp? = nil, company_name: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, idempotency_key: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, reference_id: String? = nil) {
+		self.address = address
+		self.birthday = birthday
+		self.company_name = company_name
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.idempotency_key = idempotency_key
+		self.nickname = nickname
+		self.note = note
+		self.phone_number = phone_number
+		self.reference_id = reference_id
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the CreateCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
 public struct CreateCustomerResponse: Content {
 	/// The created customer.
 	var customer: Customer?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(customer: Customer? = nil, errors: [Error]? = nil) {
+		self.customer = customer
+		self.errors = errors
+	}
 }
 
 public struct CreateDeviceCodeRequest: Content {
@@ -2302,6 +3297,11 @@ public struct CreateDeviceCodeRequest: Content {
 	var device_code: DeviceCode
 	/// A unique string that identifies this CreateCheckout request. Keys can be any valid string but must be unique for every CreateCheckout request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	var idempotency_key: String
+
+	public init(device_code: DeviceCode, idempotency_key: String) {
+		self.device_code = device_code
+		self.idempotency_key = idempotency_key
+	}
 }
 
 public struct CreateDeviceCodeResponse: Content {
@@ -2309,8 +3309,14 @@ public struct CreateDeviceCodeResponse: Content {
 	var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(device_code: DeviceCode? = nil, errors: [Error]? = nil) {
+		self.device_code = device_code
+		self.errors = errors
+	}
 }
 
+/// Defines the parameters for a `CreateDisputeEvidenceText` request.
 public struct CreateDisputeEvidenceTextRequest: Content {
 	/// The evidence string.
 	var evidence_text: String
@@ -2318,74 +3324,139 @@ public struct CreateDisputeEvidenceTextRequest: Content {
 	var evidence_type: DisputeEvidenceType?
 	/// The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/docs/working-with-apis/idempotency).
 	var idempotency_key: String
+
+	public init(evidence_text: String, idempotency_key: String, evidence_type: DisputeEvidenceType? = nil) {
+		self.evidence_text = evidence_text
+		self.idempotency_key = idempotency_key
+		self.evidence_type = evidence_type
+	}
 }
 
+/// Defines the fields in a `CreateDisputeEvidenceText` response.
 public struct CreateDisputeEvidenceTextResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The newly uploaded dispute evidence metadata.
 	var evidence: DisputeEvidence?
+
+	public init(errors: [Error]? = nil, evidence: DisputeEvidence? = nil) {
+		self.errors = errors
+		self.evidence = evidence
+	}
 }
 
+/// Describes a `CreateInvoice` request.
 public struct CreateInvoiceRequest: Content {
 	/// A unique string that identifies the `CreateInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/docs/working-with-apis/idempotency).
 	var idempotency_key: String?
 	/// The invoice to create.
 	var invoice: Invoice
+
+	public init(invoice: Invoice, idempotency_key: String? = nil) {
+		self.invoice = invoice
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// The response returned by the `CreateInvoice` request.
 public struct CreateInvoiceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created invoice.
 	var invoice: Invoice?
+
+	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+		self.errors = errors
+		self.invoice = invoice
+	}
 }
 
+/// Request object for the [CreateLocation](#endpoint-createlocation) endpoint.
 public struct CreateLocationRequest: Content {
 	/// The initial values of the location being created. The `name` field is required. All other fields are optional. Unspecified fields will be set to default values using existing location data.
 	var location: Location?
+
+	public init(location: Location? = nil) {
+		self.location = location
+	}
 }
 
+/// Response object returned by the [CreateLocation](#endpoint-createlocation) endpoint.
 public struct CreateLocationResponse: Content {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created `Location`.
 	var location: Location?
+
+	public init(errors: [Error]? = nil, location: Location? = nil) {
+		self.errors = errors
+		self.location = location
+	}
 }
 
+/// A request to create a new loyalty account.
 public struct CreateLoyaltyAccountRequest: Content {
 	/// A unique string that identifies this `CreateLoyaltyAccount` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
 	/// The loyalty account to create.
 	var loyalty_account: LoyaltyAccount
+
+	public init(idempotency_key: String, loyalty_account: LoyaltyAccount) {
+		self.idempotency_key = idempotency_key
+		self.loyalty_account = loyalty_account
+	}
 }
 
+/// A response that includes loyalty account created.
 public struct CreateLoyaltyAccountResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The newly created loyalty account.
 	var loyalty_account: LoyaltyAccount?
+
+	public init(errors: [Error]? = nil, loyalty_account: LoyaltyAccount? = nil) {
+		self.errors = errors
+		self.loyalty_account = loyalty_account
+	}
 }
 
+/// A request to create a loyalty reward.
 public struct CreateLoyaltyRewardRequest: Content {
 	/// A unique string that identifies this `CreateLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
 	/// The reward to create.
 	var reward: LoyaltyReward
+
+	public init(idempotency_key: String, reward: LoyaltyReward) {
+		self.idempotency_key = idempotency_key
+		self.reward = reward
+	}
 }
 
+/// A response that includes the loyalty reward created.
 public struct CreateLoyaltyRewardResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The loyalty reward created.
 	var reward: LoyaltyReward?
+
+	public init(errors: [Error]? = nil, reward: LoyaltyReward? = nil) {
+		self.errors = errors
+		self.reward = reward
+	}
 }
 
+/// Defines the body parameters that can be provided in a request to the __CreateMobileAuthorizationCode__ endpoint.
 public struct CreateMobileAuthorizationCodeRequest: Content {
 	/// The Square location ID the authorization code should be tied to.
 	var location_id: String?
+
+	public init(location_id: String? = nil) {
+		self.location_id = location_id
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the __CreateMobileAuthorizationCode__ endpoint.
 public struct CreateMobileAuthorizationCodeResponse: Content {
 	/// Generated authorization code that connects a mobile application instance to a Square account.
 	var authorization_code: String?
@@ -2393,6 +3464,12 @@ public struct CreateMobileAuthorizationCodeResponse: Content {
 	var error: Error?
 	/// The timestamp when `authorization_code` expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, e.g., "2016-09-04T23:59:33.123Z".
 	var expires_at: Timestamp?
+
+	public init(authorization_code: String? = nil, error: Error? = nil, expires_at: Timestamp? = nil) {
+		self.authorization_code = authorization_code
+		self.error = error
+		self.expires_at = expires_at
+	}
 }
 
 public struct CreateOrderRequest: Content {
@@ -2402,15 +3479,28 @@ public struct CreateOrderRequest: Content {
 	var location_id: String?
 	/// The order to create. If this field is set, then the only other top-level field that can be set is the idempotency_key.
 	var order: Order?
+
+	public init(idempotency_key: String? = nil, location_id: String? = nil, order: Order? = nil) {
+		self.idempotency_key = idempotency_key
+		self.location_id = location_id
+		self.order = order
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the CreateOrder endpoint.  One of `errors` or `order` is present in a given response (never both).
 public struct CreateOrderResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The newly created order.
 	var order: Order?
+
+	public init(errors: [Error]? = nil, order: Order? = nil) {
+		self.errors = errors
+		self.order = order
+	}
 }
 
+/// Creates a payment from a provided source (such as a nonce or a card on file).  The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.  For more information, see [Payments and Refunds APIs Overview](/payments-api/overview).  For information about application fees in a payment, see [Take Payments and Collect Fees](/payments-api/take-payments-and-collect-fees).
 public struct CreatePaymentRequest: Content {
 	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	var accept_partial_authorization: Bool?
@@ -2448,15 +3538,43 @@ public struct CreatePaymentRequest: Content {
 	var tip_money: Money?
 	/// An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
 	var verification_token: String?
+
+	public init(amount_money: Money, idempotency_key: String, source_id: String, accept_partial_authorization: Bool? = nil, app_fee_money: Money? = nil, autocomplete: Bool? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, customer_id: String? = nil, delay_duration: Timestamp? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, statement_description_identifier: String? = nil, tip_money: Money? = nil, verification_token: String? = nil) {
+		self.amount_money = amount_money
+		self.idempotency_key = idempotency_key
+		self.source_id = source_id
+		self.accept_partial_authorization = accept_partial_authorization
+		self.app_fee_money = app_fee_money
+		self.autocomplete = autocomplete
+		self.billing_address = billing_address
+		self.buyer_email_address = buyer_email_address
+		self.customer_id = customer_id
+		self.delay_duration = delay_duration
+		self.location_id = location_id
+		self.note = note
+		self.order_id = order_id
+		self.reference_id = reference_id
+		self.shipping_address = shipping_address
+		self.statement_description_identifier = statement_description_identifier
+		self.tip_money = tip_money
+		self.verification_token = verification_token
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [CreatePayment](#endpoint-payments-createpayment) endpoint.  Note: If there are errors processing the request, the payment field might not be present, or it might be present with a status of `FAILED`.
 public struct CreatePaymentResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created payment.
 	var payment: Payment?
+
+	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+		self.errors = errors
+		self.payment = payment
+	}
 }
 
+/// Defines the body parameters that can be included in a request to the [CreateRefund](#endpoint-createrefund) endpoint.  Deprecated - recommend using [RefundPayment](#endpoint-refunds-refundpayment)
 public struct CreateRefundRequest: Content {
 	/// The amount of money to refund.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  This amount cannot exceed the amount that was originally charged to the tender that corresponds to `tender_id`.
 	var amount_money: Money
@@ -2466,29 +3584,55 @@ public struct CreateRefundRequest: Content {
 	var reason: String?
 	/// The ID of the tender to refund.  A ``Transaction`` has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
 	var tender_id: String
+
+	public init(amount_money: Money, idempotency_key: String, tender_id: String, reason: String? = nil) {
+		self.amount_money = amount_money
+		self.idempotency_key = idempotency_key
+		self.tender_id = tender_id
+		self.reason = reason
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [CreateRefund](#endpoint-createrefund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
 public struct CreateRefundResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The created refund.
 	var refund: Refund?
+
+	public init(errors: [Error]? = nil, refund: Refund? = nil) {
+		self.errors = errors
+		self.refund = refund
+	}
 }
 
+/// Represents a request to create a `Shift`
 public struct CreateShiftRequest: Content {
 	/// Unique string value to insure the idempotency of the operation.
 	var idempotency_key: String?
 	/// The `Shift` to be created
 	var shift: Shift
+
+	public init(shift: Shift, idempotency_key: String? = nil) {
+		self.shift = shift
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// The response to the request to create a `Shift`. Contains the created `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct CreateShiftResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The `Shift` that was created on the request.
 	var shift: Shift?
+
+	public init(errors: [Error]? = nil, shift: Shift? = nil) {
+		self.errors = errors
+		self.shift = shift
+	}
 }
 
+/// Defines parameters in a  [CreateSubscription](#endpoint-subscriptions-createsubscription) endpoint request.
 public struct CreateSubscriptionRequest: Content {
 	/// The date when the subscription should be canceled, in  YYYY-MM-DD format (for example, 2025-02-29). This overrides the plan configuration  if it comes before the date the subscription would otherwise end.
 	var canceled_date: String?
@@ -2510,27 +3654,58 @@ public struct CreateSubscriptionRequest: Content {
 	var tax_percentage: String?
 	/// The timezone that is used in date calculations for the subscription. If unset, defaults to the location timezone. If a timezone is not configured for the location, defaults to "America/New_York". Format: the IANA Timezone Database identifier for the location timezone. For a list of time zones, see [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 	var timezone: String?
+
+	public init(customer_id: String, idempotency_key: String, location_id: String, plan_id: String, canceled_date: String? = nil, card_id: String? = nil, price_override_money: Money? = nil, start_date: String? = nil, tax_percentage: String? = nil, timezone: String? = nil) {
+		self.customer_id = customer_id
+		self.idempotency_key = idempotency_key
+		self.location_id = location_id
+		self.plan_id = plan_id
+		self.canceled_date = canceled_date
+		self.card_id = card_id
+		self.price_override_money = price_override_money
+		self.start_date = start_date
+		self.tax_percentage = tax_percentage
+		self.timezone = timezone
+	}
 }
 
+/// Defines the fields that are included in the response from the [CreateSubscription](#endpoint-subscriptions-createsubscription) endpoint.
 public struct CreateSubscriptionResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The newly created subscription.   For more information, see  [Subscription object](https://developer.squareup.com/docs/docs/subscriptions-api/overview#subscription-object).
 	var subscription: Subscription?
+
+	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+		self.errors = errors
+		self.subscription = subscription
+	}
 }
 
+/// Represents a create request for a `TeamMember` object.
 public struct CreateTeamMemberRequest: Content {
 	/// A unique string that identifies this CreateTeamMember request. Keys can be any valid string but must be unique for every request. See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information. <br> <b>Min Length 1    Max Length 45</b>
 	var idempotency_key: String?
 	/// <b>Required</b> The data which will be used to create the `TeamMember` object.
 	var team_member: TeamMember?
+
+	public init(idempotency_key: String? = nil, team_member: TeamMember? = nil) {
+		self.idempotency_key = idempotency_key
+		self.team_member = team_member
+	}
 }
 
+/// Represents a response from a create request, containing the created `TeamMember` object or error messages.
 public struct CreateTeamMemberResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully created `TeamMember` object.
 	var team_member: TeamMember?
+
+	public init(errors: [Error]? = nil, team_member: TeamMember? = nil) {
+		self.errors = errors
+		self.team_member = team_member
+	}
 }
 
 public struct CreateTerminalCheckoutRequest: Content {
@@ -2538,6 +3713,11 @@ public struct CreateTerminalCheckoutRequest: Content {
 	var checkout: TerminalCheckout
 	/// A unique string that identifies this `CreateCheckout` request. Keys can be any valid string but must be unique for every `CreateCheckout` request.  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	var idempotency_key: String
+
+	public init(checkout: TerminalCheckout, idempotency_key: String) {
+		self.checkout = checkout
+		self.idempotency_key = idempotency_key
+	}
 }
 
 public struct CreateTerminalCheckoutResponse: Content {
@@ -2545,6 +3725,11 @@ public struct CreateTerminalCheckoutResponse: Content {
 	var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(checkout: TerminalCheckout? = nil, errors: [Error]? = nil) {
+		self.checkout = checkout
+		self.errors = errors
+	}
 }
 
 public struct CreateTerminalRefundRequest: Content {
@@ -2552,6 +3737,11 @@ public struct CreateTerminalRefundRequest: Content {
 	var idempotency_key: String
 	/// The refund to create.
 	var refund: TerminalRefund?
+
+	public init(idempotency_key: String, refund: TerminalRefund? = nil) {
+		self.idempotency_key = idempotency_key
+		self.refund = refund
+	}
 }
 
 public struct CreateTerminalRefundResponse: Content {
@@ -2559,6 +3749,11 @@ public struct CreateTerminalRefundResponse: Content {
 	var errors: [Error]?
 	/// The created `TerminalRefund`
 	var refund: TerminalRefund?
+
+	public init(errors: [Error]? = nil, refund: TerminalRefund? = nil) {
+		self.errors = errors
+		self.refund = refund
+	}
 }
 
 /// Indicates the associated currency for an amount of money. Values correspond to [ISO 4217](https://wikipedia.org/wiki/ISO_4217).
@@ -2927,6 +4122,7 @@ public enum Currency: String, Content {
 	case BTC
 }
 
+/// Supported custom attribute query expressions for calling the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint to search for items or item variations.
 public struct CustomAttributeFilter: Content {
 	/// A query expression to filter items or item variations by matching their custom attributes' `boolean_value` property values against the specified Boolean expression.
 	var bool_filter: Bool?
@@ -2940,8 +4136,18 @@ public struct CustomAttributeFilter: Content {
 	var selection_uids_filter: [String]?
 	/// A query expression to filter items or item variations by matching their custom attributes' `string_value`  property value against the specified text.
 	var string_filter: String?
+
+	public init(bool_filter: Bool? = nil, custom_attribute_definition_id: String? = nil, key: String? = nil, number_filter: Range? = nil, selection_uids_filter: [String]? = nil, string_filter: String? = nil) {
+		self.bool_filter = bool_filter
+		self.custom_attribute_definition_id = custom_attribute_definition_id
+		self.key = key
+		self.number_filter = number_filter
+		self.selection_uids_filter = selection_uids_filter
+		self.string_filter = string_filter
+	}
 }
 
+/// Represents a Square customer profile, which can have one or more cards on file associated with it.
 public struct Customer: Content {
 	/// The physical address associated with the customer profile.
 	var address: Address?
@@ -2981,6 +4187,28 @@ public struct Customer: Content {
 	var segment_ids: [String]?
 	/// The timestamp when the customer profile was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(address: Address? = nil, birthday: Timestamp? = nil, cards: [Card]? = nil, company_name: String? = nil, created_at: Timestamp? = nil, creation_source: CustomerCreationSource? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, group_ids: [String]? = nil, groups: [CustomerGroupInfo]? = nil, id: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, preferences: CustomerPreferences? = nil, reference_id: String? = nil, segment_ids: [String]? = nil, updated_at: Timestamp? = nil) {
+		self.address = address
+		self.birthday = birthday
+		self.cards = cards
+		self.company_name = company_name
+		self.created_at = created_at
+		self.creation_source = creation_source
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.group_ids = group_ids
+		self.groups = groups
+		self.id = id
+		self.nickname = nickname
+		self.note = note
+		self.phone_number = phone_number
+		self.preferences = preferences
+		self.reference_id = reference_id
+		self.segment_ids = segment_ids
+		self.updated_at = updated_at
+	}
 }
 
 /// Indicates the method used to create the customer profile.
@@ -3025,13 +4253,20 @@ public enum CustomerCreationSource: String, Content {
 	case UNMERGE_RECOVERY
 }
 
+/// Creation source filter.  If one or more creation sources are set, customer profiles are included in, or excluded from, the result if they match at least one of the filter criteria.
 public struct CustomerCreationSourceFilter: Content {
 	/// Indicates whether a customer profile matching the filter criteria should be included in the result or excluded from the result.  Default: `INCLUDE`. See [CustomerInclusionExclusion](#type-customerinclusionexclusion) for possible values
 	var rule: CustomerInclusionExclusion?
 	/// The list of creation sources used as filtering criteria. See [CustomerCreationSource](#type-customercreationsource) for possible values
 	var values: CustomerCreationSource?
+
+	public init(rule: CustomerInclusionExclusion? = nil, values: CustomerCreationSource? = nil) {
+		self.rule = rule
+		self.values = values
+	}
 }
 
+/// Represents a set of `CustomerQuery` filters used to limit the set of `Customers` returned by `SearchCustomers`.
 public struct CustomerFilter: Content {
 	/// A filter to select customers based on when they were created.
 	var created_at: TimeRange?
@@ -3047,8 +4282,19 @@ public struct CustomerFilter: Content {
 	var reference_id: CustomerTextFilter?
 	/// A filter to select customers based on when they were updated.
 	var updated_at: TimeRange?
+
+	public init(created_at: TimeRange? = nil, creation_source: CustomerCreationSourceFilter? = nil, email_address: CustomerTextFilter? = nil, group_ids: FilterValue? = nil, phone_number: CustomerTextFilter? = nil, reference_id: CustomerTextFilter? = nil, updated_at: TimeRange? = nil) {
+		self.created_at = created_at
+		self.creation_source = creation_source
+		self.email_address = email_address
+		self.group_ids = group_ids
+		self.phone_number = phone_number
+		self.reference_id = reference_id
+		self.updated_at = updated_at
+	}
 }
 
+/// Represents a group of customer profiles.   Customer groups can be created, modified, and have their membership defined either via  the Customers API or within Customer Directory in the Square Dashboard or Point of Sale.
 public struct CustomerGroup: Content {
 	/// The timestamp when the customer group was created, in RFC 3339 format.
 	let created_at: Timestamp?
@@ -3058,13 +4304,26 @@ public struct CustomerGroup: Content {
 	var name: String
 	/// The timesamp when the customer group was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(name: String, created_at: Timestamp? = nil, id: String? = nil, updated_at: Timestamp? = nil) {
+		self.name = name
+		self.created_at = created_at
+		self.id = id
+		self.updated_at = updated_at
+	}
 }
 
+/// Contains some brief information about a Customer Group with its identifier included.
 public struct CustomerGroupInfo: Content {
 	/// The ID of the Customer Group.
 	var id: String
 	/// The name of the Customer Group.
 	var name: String
+
+	public init(id: String, name: String) {
+		self.id = id
+		self.name = name
+	}
 }
 
 /// Indicates whether customers should be included in, or excluded from, the result set when they match the filtering criteria.
@@ -3075,18 +4334,30 @@ public enum CustomerInclusionExclusion: String, Content {
 	case EXCLUDE
 }
 
+/// Represents communication preferences for the customer profile.
 public struct CustomerPreferences: Content {
 	/// The customer has unsubscribed from receiving marketing campaign emails.
 	var email_unsubscribed: Bool?
+
+	public init(email_unsubscribed: Bool? = nil) {
+		self.email_unsubscribed = email_unsubscribed
+	}
 }
 
+/// Represents a query (including filtering criteria, sorting criteria, or both) used to search for customer profiles.
 public struct CustomerQuery: Content {
 	/// A list of filtering criteria.
 	var filter: CustomerFilter?
 	/// Sorting criteria for query results. The default behavior is to sort  customers alphabetically by `given_name` and `family_name`.
 	var sort: CustomerSort?
+
+	public init(filter: CustomerFilter? = nil, sort: CustomerSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
 }
 
+/// Represents a group of customer profiles that match one or more predefined filter criteria.   Segments (also known as Smart Groups) are defined and created within Customer Directory in the Square Dashboard or Point of Sale.
 public struct CustomerSegment: Content {
 	/// The timestamp when the segment was created, in RFC 3339 format.
 	let created_at: Timestamp?
@@ -3096,13 +4367,21 @@ public struct CustomerSegment: Content {
 	let name: String
 	/// The timestamp when the segment was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	// no init-- this struct is read-only
 }
 
+/// Specifies how searched customers profiles are sorted, including the sort key and sort order.
 public struct CustomerSort: Content {
 	///  Use one or more customer attributes as the sort key to sort searched customer profiles.  For example, use creation date (`created_at`) of customers or default attributes as the sort key.   Default: `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
 	var field: CustomerSortField?
 	/// Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  Default: `ASC`. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(field: CustomerSortField? = nil, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
 }
 
 /// Specifies customer attributes as the sort key to customer profiles returned from a search.
@@ -3113,18 +4392,30 @@ public enum CustomerSortField: String, Content {
 	case CREATED_AT
 }
 
+/// A filter to select customers based on exact or fuzzy matching of customer attributes against a specified query. Depending on customer attributes,  the filter can be case sensitive. This filter can be either exact or fuzzy. It cannot be both.
 public struct CustomerTextFilter: Content {
 	/// Use the exact filter to select customers whose attributes match exactly the specified query.
 	var exact: String?
 	/// Use the fuzzy filter to select customers whose attributes match the specified query  in a fuzzy manner. When the fuzzy option is used, search queries are tokenized, and then  each query token must be matched somewhere in the searched attribute. For single token queries,  this is effectively the same behavior as a partial match operation.
 	var fuzzy: String?
+
+	public init(exact: String? = nil, fuzzy: String? = nil) {
+		self.exact = exact
+		self.fuzzy = fuzzy
+	}
 }
 
+/// A range defined by two dates. Used for filtering a query for Connect v2 objects that have date properties.
 public struct DateRange: Content {
 	/// String in `YYYY-MM-DD` format, e.g. `2017-10-31` per the ISO 8601 extended format for calendar dates. The end of a date range (inclusive)
 	var end_date: String?
 	/// String in `YYYY-MM-DD` format, e.g. `2017-10-31` per the ISO 8601 extended format for calendar dates. The beginning of a date range (inclusive)
 	var start_date: String?
+
+	public init(end_date: String? = nil, start_date: String? = nil) {
+		self.end_date = end_date
+		self.start_date = start_date
+	}
 }
 
 /// Indicates the specific day  of the week.
@@ -3145,15 +4436,27 @@ public enum DayOfWeek: String, Content {
 	case SAT
 }
 
+/// A request to delete a `BreakType`
 public struct DeleteBreakTypeRequest: Content {
+
+	public init() {
+	}
 }
 
+/// The response to a request to delete a `BreakType`. May contain a set  of `Error` objects if the request resulted in errors.
 public struct DeleteBreakTypeResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
 public struct DeleteCatalogObjectRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct DeleteCatalogObjectResponse: Content {
@@ -3163,56 +4466,117 @@ public struct DeleteCatalogObjectResponse: Content {
 	var deleted_object_ids: [String]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(deleted_at: Timestamp? = nil, deleted_object_ids: [String]? = nil, errors: [Error]? = nil) {
+		self.deleted_at = deleted_at
+		self.deleted_object_ids = deleted_object_ids
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that are included in requests to the DeleteCustomerCard endpoint.
 public struct DeleteCustomerCardRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the DeleteCustomerCard endpoint.
 public struct DeleteCustomerCardResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that can be provided in a request to the [DeleteCustomerGroup](#endpoint-deletecustomergroup) endpoint.
 public struct DeleteCustomerGroupRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](#endpoint-deletecustomergroup) endpoint.
 public struct DeleteCustomerGroupResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that are included in a request to the DeleteCustomer endpoint.
 public struct DeleteCustomerRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the DeleteCustomer endpoint.
 public struct DeleteCustomerResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Describes a `DeleteInvoice` request.
 public struct DeleteInvoiceRequest: Content {
 	/// The version of the `invoice` to delete. If you do not know the version, you can call `GetInvoice` or  `ListInvoices`.
 	var version: Int?
+
+	public init(version: Int? = nil) {
+		self.version = version
+	}
 }
 
+/// Describes a `DeleteInvoice` response.
 public struct DeleteInvoiceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// A request to delete a loyalty reward.
 public struct DeleteLoyaltyRewardRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response returned by the API call.
 public struct DeleteLoyaltyRewardResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// A request to delete a `Shift`
 public struct DeleteShiftRequest: Content {
+
+	public init() {
+	}
 }
 
+/// The response to a request to delete a `Shift`. May contain a set of  `Error` objects if the request resulted in errors.
 public struct DeleteShiftResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
 public struct Device: Content {
@@ -3220,6 +4584,11 @@ public struct Device: Content {
 	var id: String?
 	/// The device's merchant-specified name.
 	var name: String?
+
+	public init(id: String? = nil, name: String? = nil) {
+		self.id = id
+		self.name = name
+	}
 }
 
 public struct DeviceCheckoutOptions: Content {
@@ -3229,6 +4598,12 @@ public struct DeviceCheckoutOptions: Content {
 	var skip_receipt_screen: Bool?
 	/// Tip specific settings
 	var tip_settings: TipSettings?
+
+	public init(device_id: String, skip_receipt_screen: Bool? = nil, tip_settings: TipSettings? = nil) {
+		self.device_id = device_id
+		self.skip_receipt_screen = skip_receipt_screen
+		self.tip_settings = tip_settings
+	}
 }
 
 public struct DeviceCode: Content {
@@ -3254,6 +4629,20 @@ public struct DeviceCode: Content {
 	let status: DeviceCodeStatus?
 	/// When this DeviceCode's status was last changed. Timestamp in RFC 3339 format.
 	let status_changed_at: Timestamp?
+
+	public init(product_type: ProductType, code: String? = nil, created_at: Timestamp? = nil, device_id: String? = nil, id: String? = nil, location_id: String? = nil, name: String? = nil, pair_by: Timestamp? = nil, paired_at: Timestamp? = nil, status: DeviceCodeStatus? = nil, status_changed_at: Timestamp? = nil) {
+		self.product_type = product_type
+		self.code = code
+		self.created_at = created_at
+		self.device_id = device_id
+		self.id = id
+		self.location_id = location_id
+		self.name = name
+		self.pair_by = pair_by
+		self.paired_at = paired_at
+		self.status = status
+		self.status_changed_at = status_changed_at
+	}
 }
 
 /// DeviceCode.Status enum.
@@ -3268,6 +4657,7 @@ public enum DeviceCodeStatus: String, Content {
 	case EXPIRED
 }
 
+/// Details about the device that took the payment.
 public struct DeviceDetails: Content {
 	/// The Square-issued ID of the device.
 	var device_id: String?
@@ -3275,8 +4665,15 @@ public struct DeviceDetails: Content {
 	var device_installation_id: String?
 	/// The name of the device set by the seller.
 	var device_name: String?
+
+	public init(device_id: String? = nil, device_installation_id: String? = nil, device_name: String? = nil) {
+		self.device_id = device_id
+		self.device_installation_id = device_installation_id
+		self.device_name = device_name
+	}
 }
 
+/// Represents a dispute a cardholder initiated with their bank.
 public struct Dispute: Content {
 	/// The disputed amount. The amount can be less than the entire transaction amount. For example, a cardholder purchased multiple items, however initiated dispute only for some of the items.
 	var amount_money: Money?
@@ -3306,6 +4703,23 @@ public struct Dispute: Content {
 	let updated_at: Timestamp?
 	/// The current version of the `Dispute`.
 	var version: Int?
+
+	public init(amount_money: Money? = nil, brand_dispute_id: String? = nil, card_brand: CardBrand? = nil, created_at: Timestamp? = nil, dispute_id: String? = nil, disputed_payment: DisputedPayment? = nil, due_at: Timestamp? = nil, evidence_ids: [String]? = nil, location_id: String? = nil, reason: DisputeReason? = nil, reported_date: Timestamp? = nil, state: DisputeState? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.amount_money = amount_money
+		self.brand_dispute_id = brand_dispute_id
+		self.card_brand = card_brand
+		self.created_at = created_at
+		self.dispute_id = dispute_id
+		self.disputed_payment = disputed_payment
+		self.due_at = due_at
+		self.evidence_ids = evidence_ids
+		self.location_id = location_id
+		self.reason = reason
+		self.reported_date = reported_date
+		self.state = state
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
 public struct DisputeEvidence: Content {
@@ -3317,13 +4731,26 @@ public struct DisputeEvidence: Content {
 	var evidence_type: DisputeEvidenceType?
 	/// The time when the next action is due, in RFC 3339 format.
 	var uploaded_at: Timestamp?
+
+	public init(dispute_id: String? = nil, evidence_id: String? = nil, evidence_type: DisputeEvidenceType? = nil, uploaded_at: Timestamp? = nil) {
+		self.dispute_id = dispute_id
+		self.evidence_id = evidence_id
+		self.evidence_type = evidence_type
+		self.uploaded_at = uploaded_at
+	}
 }
 
+/// A file to be uploaded as dispute evidence.
 public struct DisputeEvidenceFile: Content {
 	/// The file name including the file extension. For example: "receipt.tiff".
 	var filename: String?
 	/// Dispute evidence files must be application/pdf, image/heic, image/heif, image/jpeg, image/png, or image/tiff formats.
 	var filetype: String?
+
+	public init(filename: String? = nil, filetype: String? = nil) {
+		self.filename = filename
+		self.filetype = filetype
+	}
 }
 
 /// The type of the dispute evidence.
@@ -3384,31 +4811,26 @@ public enum DisputeReason: String, Content {
 
 /// The list of possible dispute states.
 public enum DisputeState: String, Content {
-	/// 
 	case UNKNOWN_STATE
-	/// 
 	case INQUIRY_EVIDENCE_REQUIRED
-	/// 
 	case INQUIRY_PROCESSING
-	/// 
 	case INQUIRY_CLOSED
-	/// 
 	case EVIDENCE_REQUIRED
-	/// 
 	case PROCESSING
-	/// 
 	case WON
-	/// 
 	case LOST
-	/// 
 	case ACCEPTED
-	/// 
 	case WAITING_THIRD_PARTY
 }
 
+/// The payment the cardholder disputed.
 public struct DisputedPayment: Content {
 	/// Square-generated unique ID of the payment being disputed.
 	var payment_id: String?
+
+	public init(payment_id: String? = nil) {
+		self.payment_id = payment_id
+	}
 }
 
 /// Determines item visibility in Ecom (Online Store) and Online Checkout.
@@ -3423,6 +4845,7 @@ public enum EcomVisibility: String, Content {
 	case VISIBLE
 }
 
+/// An employee object that is used by the external API.
 public struct Employee: Content {
 	/// A read-only timestamp in RFC 3339 format.
 	let created_at: Timestamp?
@@ -3444,6 +4867,19 @@ public struct Employee: Content {
 	var status: EmployeeStatus?
 	/// A read-only timestamp in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(created_at: Timestamp? = nil, email: String? = nil, first_name: String? = nil, id: String? = nil, is_owner: Bool? = nil, last_name: String? = nil, location_ids: [String]? = nil, phone_number: String? = nil, status: EmployeeStatus? = nil, updated_at: Timestamp? = nil) {
+		self.created_at = created_at
+		self.email = email
+		self.first_name = first_name
+		self.id = id
+		self.is_owner = is_owner
+		self.last_name = last_name
+		self.location_ids = location_ids
+		self.phone_number = phone_number
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
 /// The status of the Employee being retrieved.
@@ -3454,6 +4890,7 @@ public enum EmployeeStatus: String, Content {
 	case INACTIVE
 }
 
+/// The hourly wage rate that an employee will earn on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at verison 2020-08-26. Use `TeamMemberWage` instead.
 public struct EmployeeWage: Content {
 	/// The `Employee` that this wage is assigned to.
 	var employee_id: String?
@@ -3463,8 +4900,16 @@ public struct EmployeeWage: Content {
 	var id: String?
 	/// The job title that this wage relates to.
 	var title: String?
+
+	public init(employee_id: String? = nil, hourly_rate: Money? = nil, id: String? = nil, title: String? = nil) {
+		self.employee_id = employee_id
+		self.hourly_rate = hourly_rate
+		self.id = id
+		self.title = title
+	}
 }
 
+/// Represents an error encountered during a request to the Connect API.  See [Handling errors](#handlingerrors) for more information.
 public struct Error: Content {
 	/// The high-level category for the error. See [ErrorCategory](#type-errorcategory) for possible values
 	var category: ErrorCategory
@@ -3474,6 +4919,13 @@ public struct Error: Content {
 	var detail: String?
 	/// The name of the field provided in the original request (if any) that the error pertains to.
 	var field: String?
+
+	public init(category: ErrorCategory, code: ErrorCode, detail: String? = nil, field: String? = nil) {
+		self.category = category
+		self.code = code
+		self.detail = detail
+		self.field = field
+	}
 }
 
 /// Indicates which high-level category of error has occurred during a request to the Connect API.
@@ -3760,6 +5212,7 @@ public enum ExcludeStrategy: String, Content {
 	case MOST_EXPENSIVE
 }
 
+/// A filter to select resources based on an exact field value. For any given value, the value can only be in one property. Depending on the field, either all properties can be set or only a subset will be available.  Refer to the documentation of the field.
 public struct FilterValue: Content {
 	/// A list of terms that must be present on the field of the resource.
 	var all: [String]?
@@ -3767,39 +5220,78 @@ public struct FilterValue: Content {
 	var any: [String]?
 	/// A list of terms that must not be present on the field the resource
 	var none: [String]?
+
+	public init(all: [String]? = nil, any: [String]? = nil, none: [String]? = nil) {
+		self.all = all
+		self.any = any
+		self.none = none
+	}
 }
 
+/// Request object for fetching a specific `BankAccount` by the object ID.
 public struct GetBankAccountByV1IdRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Response object returned by GetBankAccountByV1Id.
 public struct GetBankAccountByV1IdResponse: Content {
 	/// The requested `BankAccount` object.
 	var bank_account: BankAccount?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(bank_account: BankAccount? = nil, errors: [Error]? = nil) {
+		self.bank_account = bank_account
+		self.errors = errors
+	}
 }
 
+/// Request object to fetch a specific `BankAccount` by the object ID.
 public struct GetBankAccountRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Response object returned by `GetBankAccount`.
 public struct GetBankAccountResponse: Content {
 	/// The requested `BankAccount` object.
 	var bank_account: BankAccount?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(bank_account: BankAccount? = nil, errors: [Error]? = nil) {
+		self.bank_account = bank_account
+		self.errors = errors
+	}
 }
 
+/// A request to GET a `BreakType` by ID
 public struct GetBreakTypeRequest: Content {
+
+	public init() {
+	}
 }
 
+/// The response to a request to get a `BreakType`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct GetBreakTypeResponse: Content {
 	/// The response object.
 	var break_type: BreakType?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(break_type: BreakType? = nil, errors: [Error]? = nil) {
+		self.break_type = break_type
+		self.errors = errors
+	}
 }
 
 public struct GetDeviceCodeRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct GetDeviceCodeResponse: Content {
@@ -3807,69 +5299,137 @@ public struct GetDeviceCodeResponse: Content {
 	var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(device_code: DeviceCode? = nil, errors: [Error]? = nil) {
+		self.device_code = device_code
+		self.errors = errors
+	}
 }
 
+/// A request to get an `EmployeeWage`
 public struct GetEmployeeWageRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response to a request to get an `EmployeeWage`. Contains the requested `EmployeeWage` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct GetEmployeeWageResponse: Content {
 	/// The requested `EmployeeWage` object.
 	var employee_wage: EmployeeWage?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(employee_wage: EmployeeWage? = nil, errors: [Error]? = nil) {
+		self.employee_wage = employee_wage
+		self.errors = errors
+	}
 }
 
+/// Describes a `GetInvoice` request.
 public struct GetInvoiceRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Describes a `GetInvoice` response.
 public struct GetInvoiceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The invoice requested.
 	var invoice: Invoice?
+
+	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+		self.errors = errors
+		self.invoice = invoice
+	}
 }
 
+/// Retrieves a specific `Refund` using the `refund_id`.
 public struct GetPaymentRefundRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [GetRefund](#endpoint-refunds-getpaymentrefund) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct GetPaymentRefundResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `PaymentRefund`.
 	var refund: PaymentRefund?
+
+	public init(errors: [Error]? = nil, refund: PaymentRefund? = nil) {
+		self.errors = errors
+		self.refund = refund
+	}
 }
 
+/// Retrieve details for a specific payment.
 public struct GetPaymentRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [GetPayment](#endpoint-payments-getpayment) endpoint.
 public struct GetPaymentResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `Payment`.
 	var payment: Payment?
+
+	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+		self.errors = errors
+		self.payment = payment
+	}
 }
 
+/// A request to get a `Shift` by ID
 public struct GetShiftRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response to request to get a `Shift`. Contains the requested `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct GetShiftResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested `Shift`.
 	var shift: Shift?
+
+	public init(errors: [Error]? = nil, shift: Shift? = nil) {
+		self.errors = errors
+		self.shift = shift
+	}
 }
 
+/// A request to get an `TeamMemberWage`
 public struct GetTeamMemberWageRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response to a request to get a `TeamMemberWage`. Contains the requested `TeamMemberWage` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct GetTeamMemberWageResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested `TeamMemberWage` object.
 	var team_member_wage: TeamMemberWage?
+
+	public init(errors: [Error]? = nil, team_member_wage: TeamMemberWage? = nil) {
+		self.errors = errors
+		self.team_member_wage = team_member_wage
+	}
 }
 
 public struct GetTerminalCheckoutRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct GetTerminalCheckoutResponse: Content {
@@ -3877,9 +5437,17 @@ public struct GetTerminalCheckoutResponse: Content {
 	var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(checkout: TerminalCheckout? = nil, errors: [Error]? = nil) {
+		self.checkout = checkout
+		self.errors = errors
+	}
 }
 
 public struct GetTerminalRefundRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct GetTerminalRefundResponse: Content {
@@ -3887,18 +5455,21 @@ public struct GetTerminalRefundResponse: Content {
 	var errors: [Error]?
 	/// The requested `Refund`
 	var refund: TerminalRefund?
+
+	public init(errors: [Error]? = nil, refund: TerminalRefund? = nil) {
+		self.errors = errors
+		self.refund = refund
+	}
 }
 
 /// Object types to inline under their respective parent object in certain connect v2 responses
 public enum InlineTypes: String, Content {
-	/// 
 	case INLINE_NONE
-	/// 
 	case INLINE_VARIATIONS
-	/// 
 	case INLINE_ALL
 }
 
+/// Represents a change in state or quantity of product inventory at a particular time and location.
 public struct InventoryAdjustment: Content {
 	/// The Square generated ID of the `CatalogObject` being tracked.
 	var catalog_object_id: String?
@@ -3934,6 +5505,26 @@ public struct InventoryAdjustment: Content {
 	var total_price_money: Money?
 	/// The read-only Square ID of the [Transaction][#type-transaction] that caused the adjustment. Only relevant for payment-related state transitions.
 	var transaction_id: String?
+
+	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_state: InventoryState? = nil, goods_receipt_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, purchase_order_id: String? = nil, quantity: String? = nil, reference_id: String? = nil, refund_id: String? = nil, source: SourceApplication? = nil, to_state: InventoryState? = nil, total_price_money: Money? = nil, transaction_id: String? = nil) {
+		self.catalog_object_id = catalog_object_id
+		self.catalog_object_type = catalog_object_type
+		self.created_at = created_at
+		self.employee_id = employee_id
+		self.from_state = from_state
+		self.goods_receipt_id = goods_receipt_id
+		self.id = id
+		self.location_id = location_id
+		self.occurred_at = occurred_at
+		self.purchase_order_id = purchase_order_id
+		self.quantity = quantity
+		self.reference_id = reference_id
+		self.refund_id = refund_id
+		self.source = source
+		self.to_state = to_state
+		self.total_price_money = total_price_money
+		self.transaction_id = transaction_id
+	}
 }
 
 /// Indicates whether Square should alert the merchant when the inventory quantity of a CatalogItemVariation is low.
@@ -3944,6 +5535,7 @@ public enum InventoryAlertType: String, Content {
 	case LOW_QUANTITY
 }
 
+/// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular `CatalogObject`.
 public struct InventoryChange: Content {
 	/// Contains details about the inventory adjustment when `type` is `ADJUSTMENT` and unset for all other types.
 	var adjustment: InventoryAdjustment?
@@ -3953,6 +5545,13 @@ public struct InventoryChange: Content {
 	var transfer: InventoryTransfer?
 	/// Indicates how the inventory change was applied. See `InventoryChangeType` for all possible values. See [InventoryChangeType](#type-inventorychangetype) for possible values
 	var type: InventoryChangeType?
+
+	public init(adjustment: InventoryAdjustment? = nil, physical_count: InventoryPhysicalCount? = nil, transfer: InventoryTransfer? = nil, type: InventoryChangeType? = nil) {
+		self.adjustment = adjustment
+		self.physical_count = physical_count
+		self.transfer = transfer
+		self.type = type
+	}
 }
 
 /// Indicates how the inventory change was applied to a tracked quantity of items.
@@ -3965,6 +5564,7 @@ public enum InventoryChangeType: String, Content {
 	case TRANSFER
 }
 
+/// Represents Square's estimated quantity of items in a particular state at a particular location based on the known history of physical counts and inventory adjustments.
 public struct InventoryCount: Content {
 	/// A read-only timestamp in RFC 3339 format that indicates when Square received the most recent physical count or adjustment that had an affect on the estimated count.
 	var calculated_at: Timestamp?
@@ -3978,8 +5578,18 @@ public struct InventoryCount: Content {
 	var quantity: String?
 	/// The current `InventoryState` for the related quantity of items. See [InventoryState](#type-inventorystate) for possible values
 	var state: InventoryState?
+
+	public init(calculated_at: Timestamp? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, location_id: String? = nil, quantity: String? = nil, state: InventoryState? = nil) {
+		self.calculated_at = calculated_at
+		self.catalog_object_id = catalog_object_id
+		self.catalog_object_type = catalog_object_type
+		self.location_id = location_id
+		self.quantity = quantity
+		self.state = state
+	}
 }
 
+/// Represents the quantity of an item variation that is physically present at a specific location, verified by a seller or a seller's employee. For example, a physical count might come from an employee counting the item variations on hand or from syncing with an external system.
 public struct InventoryPhysicalCount: Content {
 	/// The Square generated ID of the `CatalogObject` being tracked.
 	var catalog_object_id: String?
@@ -4003,6 +5613,20 @@ public struct InventoryPhysicalCount: Content {
 	var source: SourceApplication?
 	/// The current `InventoryState` for the related quantity of items. See [InventoryState](#type-inventorystate) for possible values
 	var state: InventoryState?
+
+	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: InventoryState? = nil) {
+		self.catalog_object_id = catalog_object_id
+		self.catalog_object_type = catalog_object_type
+		self.created_at = created_at
+		self.employee_id = employee_id
+		self.id = id
+		self.location_id = location_id
+		self.occurred_at = occurred_at
+		self.quantity = quantity
+		self.reference_id = reference_id
+		self.source = source
+		self.state = state
+	}
 }
 
 /// Indicates the state of a tracked item quantity in the lifecycle of goods.
@@ -4033,6 +5657,7 @@ public enum InventoryState: String, Content {
 	case UNLINKED_RETURN
 }
 
+/// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
 public struct InventoryTransfer: Content {
 	/// The Square generated ID of the `CatalogObject` being tracked.
 	var catalog_object_id: String?
@@ -4058,8 +5683,24 @@ public struct InventoryTransfer: Content {
 	var state: InventoryState?
 	/// The Square ID of the `Location` where the related quantity of items were tracked after the transfer.
 	var to_location_id: String?
+
+	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_location_id: String? = nil, id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: InventoryState? = nil, to_location_id: String? = nil) {
+		self.catalog_object_id = catalog_object_id
+		self.catalog_object_type = catalog_object_type
+		self.created_at = created_at
+		self.employee_id = employee_id
+		self.from_location_id = from_location_id
+		self.id = id
+		self.occurred_at = occurred_at
+		self.quantity = quantity
+		self.reference_id = reference_id
+		self.source = source
+		self.state = state
+		self.to_location_id = to_location_id
+	}
 }
 
+/// Stores information about an invoice. You use the Invoices API to create and process invoices. For more information, see [Manage Invoices Using the Invoices API](/docs/invoices-api/overview).
 public struct Invoice: Content {
 	/// The timestamp when the invoice was created, in RFC 3339 format.
 	let created_at: Timestamp?
@@ -4095,8 +5736,29 @@ public struct Invoice: Content {
 	let updated_at: Timestamp?
 	/// The Square-assigned version number, which is incremented each time an update is committed to the invoice.
 	var version: Int?
+
+	public init(created_at: Timestamp? = nil, custom_fields: [InvoiceCustomField]? = nil, description: String? = nil, id: String? = nil, invoice_number: String? = nil, location_id: String? = nil, next_payment_amount_money: Money? = nil, order_id: String? = nil, payment_requests: [InvoicePaymentRequest]? = nil, primary_recipient: InvoiceRecipient? = nil, public_url: String? = nil, scheduled_at: Timestamp? = nil, status: InvoiceStatus? = nil, timezone: String? = nil, title: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.custom_fields = custom_fields
+		self.description = description
+		self.id = id
+		self.invoice_number = invoice_number
+		self.location_id = location_id
+		self.next_payment_amount_money = next_payment_amount_money
+		self.order_id = order_id
+		self.payment_requests = payment_requests
+		self.primary_recipient = primary_recipient
+		self.public_url = public_url
+		self.scheduled_at = scheduled_at
+		self.status = status
+		self.timezone = timezone
+		self.title = title
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
+/// An additional seller-defined and customer-facing field to include on the invoice. For more information,  see [Custom fields](/docs/invoices-api/overview#custom-fields).
 public struct InvoiceCustomField: Content {
 	/// The label or title of the custom field. This field is required for a custom field.
 	var label: String?
@@ -4104,6 +5766,12 @@ public struct InvoiceCustomField: Content {
 	var placement: InvoiceCustomFieldPlacement?
 	/// The text of the custom field. If omitted, only the label is rendered.
 	var value: String?
+
+	public init(label: String? = nil, placement: InvoiceCustomFieldPlacement? = nil, value: String? = nil) {
+		self.label = label
+		self.placement = placement
+		self.value = value
+	}
 }
 
 /// Indicates where to render a custom field on the Square-hosted invoice page and in emailed or PDF  copies of the invoice.
@@ -4114,13 +5782,20 @@ public enum InvoiceCustomFieldPlacement: String, Content {
 	case BELOW_LINE_ITEMS
 }
 
+/// Describes query filters to apply.
 public struct InvoiceFilter: Content {
 	/// Limits the search to the specified customers, within the specified locations.  Specifying a customer is optional. In the current implementation,  a maximum of one customer can be specified.
 	var customer_ids: [String]?
 	/// Limits the search to the specified locations. A location is required.  In the current implementation, only one location can be specified.
 	var location_ids: [String]
+
+	public init(location_ids: [String], customer_ids: [String]? = nil) {
+		self.location_ids = location_ids
+		self.customer_ids = customer_ids
+	}
 }
 
+/// Describes a payment request reminder (automatic notification) that Square sends to the customer. You configure a reminder relative to the payment request `due_date`.
 public struct InvoicePaymentReminder: Content {
 	/// The reminder message.
 	var message: String?
@@ -4132,6 +5807,14 @@ public struct InvoicePaymentReminder: Content {
 	let status: InvoicePaymentReminderStatus?
 	/// A Square-assigned ID that uniquely identifies the reminder within the `InvoicePaymentRequest`.
 	let uid: String?
+
+	public init(message: String? = nil, relative_scheduled_days: Int? = nil, sent_at: Timestamp? = nil, status: InvoicePaymentReminderStatus? = nil, uid: String? = nil) {
+		self.message = message
+		self.relative_scheduled_days = relative_scheduled_days
+		self.sent_at = sent_at
+		self.status = status
+		self.uid = uid
+	}
 }
 
 /// The status of a payment request reminder.
@@ -4144,6 +5827,7 @@ public enum InvoicePaymentReminderStatus: String, Content {
 	case SENT
 }
 
+/// Represents a payment request for an [invoice](#type-Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](/docs/invoices-api/overview#payment-requests).
 public struct InvoicePaymentRequest: Content {
 	/// The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call `RetrieveCustomer` in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
 	var card_id: String?
@@ -4169,15 +5853,37 @@ public struct InvoicePaymentRequest: Content {
 	let total_completed_amount_money: Money?
 	/// The Square-generated ID of the payment request in an `invoice`.
 	let uid: String?
+
+	public init(card_id: String? = nil, computed_amount_money: Money? = nil, due_date: String? = nil, fixed_amount_requested_money: Money? = nil, percentage_requested: String? = nil, reminders: [InvoicePaymentReminder]? = nil, request_method: InvoiceRequestMethod? = nil, request_type: InvoiceRequestType? = nil, rounding_adjustment_included_money: Money? = nil, tipping_enabled: Bool? = nil, total_completed_amount_money: Money? = nil, uid: String? = nil) {
+		self.card_id = card_id
+		self.computed_amount_money = computed_amount_money
+		self.due_date = due_date
+		self.fixed_amount_requested_money = fixed_amount_requested_money
+		self.percentage_requested = percentage_requested
+		self.reminders = reminders
+		self.request_method = request_method
+		self.request_type = request_type
+		self.rounding_adjustment_included_money = rounding_adjustment_included_money
+		self.tipping_enabled = tipping_enabled
+		self.total_completed_amount_money = total_completed_amount_money
+		self.uid = uid
+	}
 }
 
+/// Describes query criteria for searching invoices.
 public struct InvoiceQuery: Content {
 	/// Query filters to apply in  searching invoices.  For more information, see [Retrieve invoices](https://developer.squareup.com/docs/docs/invoices-api/overview#retrieve-invoices).
 	var filter: InvoiceFilter
 	/// Describes the sort order for the search result.
 	var sort: InvoiceSort?
+
+	public init(filter: InvoiceFilter, sort: InvoiceSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
 }
 
+/// Provides customer data that Square uses to deliver an invoice.
 public struct InvoiceRecipient: Content {
 	/// The recipient's physical address.
 	let address: Address?
@@ -4193,6 +5899,16 @@ public struct InvoiceRecipient: Content {
 	let given_name: String?
 	/// The recipient's phone number.
 	let phone_number: String?
+
+	public init(address: Address? = nil, company_name: String? = nil, customer_id: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, phone_number: String? = nil) {
+		self.address = address
+		self.company_name = company_name
+		self.customer_id = customer_id
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.phone_number = phone_number
+	}
 }
 
 /// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing.
@@ -4217,11 +5933,17 @@ public enum InvoiceRequestType: String, Content {
 	case INSTALLMENT
 }
 
+/// Identifies the  sort field and sort order.
 public struct InvoiceSort: Content {
 	/// The field to sort on. See [InvoiceSortField](#type-invoicesortfield) for possible values
 	var field: InvoiceSortField
 	/// The order to use for sorting the results. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(field: InvoiceSortField, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
 }
 
 /// Field to use for sorting.
@@ -4254,6 +5976,7 @@ public enum InvoiceStatus: String, Content {
 	case PAYMENT_PENDING
 }
 
+/// Price and inventory alerting overrides for a `CatalogItemVariation` at a specific `Location`.
 public struct ItemVariationLocationOverrides: Content {
 	/// If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard.  This value is always an integer.
 	var inventory_alert_threshold: Int?
@@ -4267,8 +5990,18 @@ public struct ItemVariationLocationOverrides: Content {
 	var pricing_type: CatalogPricingType?
 	/// If `true`, inventory tracking is active for the `CatalogItemVariation` at this `Location`.
 	var track_inventory: Bool?
+
+	public init(inventory_alert_threshold: Int? = nil, inventory_alert_type: InventoryAlertType? = nil, location_id: String? = nil, price_money: Money? = nil, pricing_type: CatalogPricingType? = nil, track_inventory: Bool? = nil) {
+		self.inventory_alert_threshold = inventory_alert_threshold
+		self.inventory_alert_type = inventory_alert_type
+		self.location_id = location_id
+		self.price_money = price_money
+		self.pricing_type = pricing_type
+		self.track_inventory = track_inventory
+	}
 }
 
+/// An object describing a job that a team member is assigned to.
 public struct JobAssignment: Content {
 	/// The total pay amount for a 12 month period on the job. Set if the job `PayType` is `SALARY`.
 	var annual_rate: Money?
@@ -4280,6 +6013,14 @@ public struct JobAssignment: Content {
 	var pay_type: JobAssignmentPayType
 	/// The planned hours per week for the job. Set if the job `PayType` is `SALARY`.
 	var weekly_hours: Int?
+
+	public init(job_title: String, pay_type: JobAssignmentPayType, annual_rate: Money? = nil, hourly_rate: Money? = nil, weekly_hours: Int? = nil) {
+		self.job_title = job_title
+		self.pay_type = pay_type
+		self.annual_rate = annual_rate
+		self.hourly_rate = hourly_rate
+		self.weekly_hours = weekly_hours
+	}
 }
 
 /// Enumerates the possible pay types that a job can be assigned.
@@ -4292,6 +6033,7 @@ public enum JobAssignmentPayType: String, Content {
 	case SALARY
 }
 
+/// Request object for fetching all `BankAccount` objects linked to a account.
 public struct ListBankAccountsRequest: Content {
 	/// The pagination cursor returned by a previous call to this endpoint. Use it in the next `ListBankAccounts` request to retrieve the next set  of results.  See the [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) guide for more information.
 	var cursor: String?
@@ -4299,8 +6041,15 @@ public struct ListBankAccountsRequest: Content {
 	var limit: Int?
 	/// Location ID. You can specify this optional filter  to retrieve only the linked bank accounts belonging to a specific location.
 	var location_id: String?
+
+	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.location_id = location_id
+	}
 }
 
+/// Response object returned by ListBankAccounts.
 public struct ListBankAccountsResponse: Content {
 	/// List of BankAccounts associated with this account.
 	var bank_accounts: [BankAccount]?
@@ -4308,8 +6057,15 @@ public struct ListBankAccountsResponse: Content {
 	var cursor: String?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(bank_accounts: [BankAccount]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.bank_accounts = bank_accounts
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
+/// A request for a filtered set of `BreakType` objects
 public struct ListBreakTypesRequest: Content {
 	/// Pointer to the next page of Break Type results to fetch.
 	var cursor: String?
@@ -4317,8 +6073,15 @@ public struct ListBreakTypesRequest: Content {
 	var limit: Int?
 	/// Filter Break Types returned to only those that are associated with the specified location.
 	var location_id: String?
+
+	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.location_id = location_id
+	}
 }
 
+/// The response to a request for a set of `BreakTypes`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct ListBreakTypesResponse: Content {
 	///  A page of `BreakType` results.
 	var break_types: [BreakType]?
@@ -4326,6 +6089,12 @@ public struct ListBreakTypesResponse: Content {
 	var cursor: String?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(break_types: [BreakType]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.break_types = break_types
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
 public struct ListCashDrawerShiftEventsRequest: Content {
@@ -4335,6 +6104,12 @@ public struct ListCashDrawerShiftEventsRequest: Content {
 	var limit: Int?
 	/// The ID of the location to list cash drawer shifts for.
 	var location_id: String
+
+	public init(location_id: String, cursor: String? = nil, limit: Int? = nil) {
+		self.location_id = location_id
+		self.cursor = cursor
+		self.limit = limit
+	}
 }
 
 public struct ListCashDrawerShiftEventsResponse: Content {
@@ -4344,6 +6119,12 @@ public struct ListCashDrawerShiftEventsResponse: Content {
 	var errors: [Error]?
 	/// All of the events (payments, refunds, etc.) for a cash drawer during the shift.
 	var events: [CashDrawerShiftEvent]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, events: [CashDrawerShiftEvent]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.events = events
+	}
 }
 
 public struct ListCashDrawerShiftsRequest: Content {
@@ -4359,6 +6140,15 @@ public struct ListCashDrawerShiftsRequest: Content {
 	var location_id: String
 	/// The order in which cash drawer shifts are listed in the response, based on their opened_at field. Default value: ASC See [SortOrder](#type-sortorder) for possible values
 	var sort_order: SortOrder?
+
+	public init(location_id: String, begin_time: String? = nil, cursor: String? = nil, end_time: String? = nil, limit: Int? = nil, sort_order: SortOrder? = nil) {
+		self.location_id = location_id
+		self.begin_time = begin_time
+		self.cursor = cursor
+		self.end_time = end_time
+		self.limit = limit
+		self.sort_order = sort_order
+	}
 }
 
 public struct ListCashDrawerShiftsResponse: Content {
@@ -4368,6 +6158,12 @@ public struct ListCashDrawerShiftsResponse: Content {
 	var errors: [Error]?
 	/// A collection of CashDrawerShiftSummary objects for shifts that match the query.
 	var items: [CashDrawerShiftSummary]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, items: [CashDrawerShiftSummary]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.items = items
+	}
 }
 
 public struct ListCatalogRequest: Content {
@@ -4377,6 +6173,12 @@ public struct ListCatalogRequest: Content {
 	var cursor: String?
 	/// An optional case-insensitive, comma-separated list of object types to retrieve, for example `ITEM,ITEM_VARIATION,CATEGORY,IMAGE`.  The legal values are taken from the CatalogObjectType enum: `ITEM`, `ITEM_VARIATION`, `CATEGORY`, `DISCOUNT`, `TAX`, `MODIFIER`, `MODIFIER_LIST`, or `IMAGE`.
 	var types: String?
+
+	public init(catalog_version: Int? = nil, cursor: String? = nil, types: String? = nil) {
+		self.catalog_version = catalog_version
+		self.cursor = cursor
+		self.types = types
+	}
 }
 
 public struct ListCatalogResponse: Content {
@@ -4386,13 +6188,25 @@ public struct ListCatalogResponse: Content {
 	var errors: [Error]?
 	/// The CatalogObjects returned.
 	var objects: [CatalogObject]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, objects: [CatalogObject]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.objects = objects
+	}
 }
 
+/// Defines the query parameters that can be provided in a request to the [ListCustomerGroups](#endpoint-listcustomergroups) endpoint.
 public struct ListCustomerGroupsRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
+
+	public init(cursor: String? = nil) {
+		self.cursor = cursor
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](#endpoint-listcustomergroups) endpoint.  One of `errors` or `groups` is present in a given response (never both).
 public struct ListCustomerGroupsResponse: Content {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
@@ -4400,13 +6214,25 @@ public struct ListCustomerGroupsResponse: Content {
 	var errors: [Error]?
 	/// A list of customer groups belonging to the current merchant.
 	var groups: [CustomerGroup]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, groups: [CustomerGroup]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.groups = groups
+	}
 }
 
+/// Defines the valid parameters for requests to __ListCustomerSegments__.
 public struct ListCustomerSegmentsRequest: Content {
 	/// A pagination cursor returned by previous calls to __ListCustomerSegments__. Used to retrieve the next set of query results.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
+
+	public init(cursor: String? = nil) {
+		self.cursor = cursor
+	}
 }
 
+/// Defines the fields included in the response body for requests to __ListCustomerSegments__.  One of `errors` or `segments` is present in a given response (never both).
 public struct ListCustomerSegmentsResponse: Content {
 	/// A pagination cursor to be used in subsequent calls to __ListCustomerSegments__ to retrieve the next set of query results. Only present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
@@ -4414,8 +6240,15 @@ public struct ListCustomerSegmentsResponse: Content {
 	var errors: [Error]?
 	/// The list of customer segments belonging to the associated Square account.
 	var segments: [CustomerSegment]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, segments: [CustomerSegment]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.segments = segments
+	}
 }
 
+/// Defines the query parameters that can be provided in a request to the ListCustomers endpoint.
 public struct ListCustomersRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
@@ -4423,8 +6256,15 @@ public struct ListCustomersRequest: Content {
 	var sort_field: CustomerSortField?
 	/// Indicates whether Customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  Default: `ASC`. See [SortOrder](#type-sortorder) for possible values
 	var sort_order: SortOrder?
+
+	public init(cursor: String? = nil, sort_field: CustomerSortField? = nil, sort_order: SortOrder? = nil) {
+		self.cursor = cursor
+		self.sort_field = sort_field
+		self.sort_order = sort_order
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the ListCustomers endpoint.  One of `errors` or `customers` is present in a given response (never both).
 public struct ListCustomersResponse: Content {
 	/// A pagination cursor to retrieve the next set of results for the original query. Only present if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
@@ -4432,6 +6272,12 @@ public struct ListCustomersResponse: Content {
 	var customers: [Customer]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [Error]? = nil) {
+		self.cursor = cursor
+		self.customers = customers
+		self.errors = errors
+	}
 }
 
 public struct ListDeviceCodesRequest: Content {
@@ -4443,6 +6289,13 @@ public struct ListDeviceCodesRequest: Content {
 	var product_type: ProductType?
 	/// If specified, returns DeviceCodes with the specified statuses. Returns DeviceCodes of status `PAIRED` and `UNPAIRED` if empty. See [DeviceCodeStatus](#type-devicecodestatus) for possible values
 	var status: DeviceCodeStatus?
+
+	public init(cursor: String? = nil, location_id: String? = nil, product_type: ProductType? = nil, status: DeviceCodeStatus? = nil) {
+		self.cursor = cursor
+		self.location_id = location_id
+		self.product_type = product_type
+		self.status = status
+	}
 }
 
 public struct ListDeviceCodesResponse: Content {
@@ -4452,18 +6305,35 @@ public struct ListDeviceCodesResponse: Content {
 	var device_codes: [DeviceCode]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(cursor: String? = nil, device_codes: [DeviceCode]? = nil, errors: [Error]? = nil) {
+		self.cursor = cursor
+		self.device_codes = device_codes
+		self.errors = errors
+	}
 }
 
+/// Defines the parameters for a `ListDisputeEvidence` request.
 public struct ListDisputeEvidenceRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields in a `ListDisputeEvidence` response.
 public struct ListDisputeEvidenceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The list of evidence previously uploaded to the specified dispute.
 	var evidence: [DisputeEvidence]?
+
+	public init(errors: [Error]? = nil, evidence: [DisputeEvidence]? = nil) {
+		self.errors = errors
+		self.evidence = evidence
+	}
 }
 
+/// Defines the request parameters for the `ListDisputes` endpoint.
 public struct ListDisputesRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
@@ -4471,8 +6341,15 @@ public struct ListDisputesRequest: Content {
 	var location_id: String?
 	/// The dispute states to filter the result. If not specified, the endpoint returns all open disputes (the dispute status is not `INQUIRY_CLOSED`, `WON`, or `LOST`). See [DisputeState](#type-disputestate) for possible values
 	var states: DisputeState?
+
+	public init(cursor: String? = nil, location_id: String? = nil, states: DisputeState? = nil) {
+		self.cursor = cursor
+		self.location_id = location_id
+		self.states = states
+	}
 }
 
+/// Defines fields in a `ListDisputes` response.
 public struct ListDisputesResponse: Content {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
@@ -4480,8 +6357,15 @@ public struct ListDisputesResponse: Content {
 	var disputes: [Dispute]?
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
+
+	public init(cursor: String? = nil, disputes: [Dispute]? = nil, errors: [Error]? = nil) {
+		self.cursor = cursor
+		self.disputes = disputes
+		self.errors = errors
+	}
 }
 
+/// A request for a set of `EmployeeWage` objects
 public struct ListEmployeeWagesRequest: Content {
 	/// Pointer to the next page of Employee Wage results to fetch.
 	var cursor: String?
@@ -4489,8 +6373,15 @@ public struct ListEmployeeWagesRequest: Content {
 	var employee_id: String?
 	/// Maximum number of Employee Wages to return per page. Can range between 1 and 200. The default is the maximum at 200.
 	var limit: Int?
+
+	public init(cursor: String? = nil, employee_id: String? = nil, limit: Int? = nil) {
+		self.cursor = cursor
+		self.employee_id = employee_id
+		self.limit = limit
+	}
 }
 
+/// The response to a request for a set of `EmployeeWage` objects. Contains  a set of `EmployeeWage`.
 public struct ListEmployeeWagesResponse: Content {
 	/// Value supplied in the subsequent request to fetch the next next page of Employee Wage results.
 	var cursor: String?
@@ -4498,6 +6389,12 @@ public struct ListEmployeeWagesResponse: Content {
 	var employee_wages: [EmployeeWage]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(cursor: String? = nil, employee_wages: [EmployeeWage]? = nil, errors: [Error]? = nil) {
+		self.cursor = cursor
+		self.employee_wages = employee_wages
+		self.errors = errors
+	}
 }
 
 public struct ListEmployeesRequest: Content {
@@ -4508,6 +6405,13 @@ public struct ListEmployeesRequest: Content {
 	var location_id: String?
 	/// Specifies the EmployeeStatus to filter the employee by. See [EmployeeStatus](#type-employeestatus) for possible values
 	var status: EmployeeStatus?
+
+	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil, status: EmployeeStatus? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.location_id = location_id
+		self.status = status
+	}
 }
 
 public struct ListEmployeesResponse: Content {
@@ -4516,8 +6420,15 @@ public struct ListEmployeesResponse: Content {
 	var employees: [Employee]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(cursor: String? = nil, employees: [Employee]? = nil, errors: [Error]? = nil) {
+		self.cursor = cursor
+		self.employees = employees
+		self.errors = errors
+	}
 }
 
+/// Describes a `ListInvoice` request.
 public struct ListInvoicesRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -4525,8 +6436,15 @@ public struct ListInvoicesRequest: Content {
 	var limit: Int?
 	/// The ID of the location for which to list invoices.
 	var location_id: String
+
+	public init(location_id: String, cursor: String? = nil, limit: Int? = nil) {
+		self.location_id = location_id
+		self.cursor = cursor
+		self.limit = limit
+	}
 }
 
+/// Describes a `ListInvoice` response.
 public struct ListInvoicesResponse: Content {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -4534,33 +6452,65 @@ public struct ListInvoicesResponse: Content {
 	var errors: [Error]?
 	/// The invoices retrieved.
 	var invoices: [Invoice]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, invoices: [Invoice]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.invoices = invoices
+	}
 }
 
+/// Defines the fields that are included in requests to the __ListLocations__ endpoint.
 public struct ListLocationsRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the __ListLocations__ endpoint.  One of `errors` or `locations` is present in a given response (never both).
 public struct ListLocationsResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The business locations.
 	var locations: [Location]?
+
+	public init(errors: [Error]? = nil, locations: [Location]? = nil) {
+		self.errors = errors
+		self.locations = locations
+	}
 }
 
+/// A request to list `LoyaltyProgram`.
 public struct ListLoyaltyProgramsRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response that contains all loyalty programs.
 public struct ListLoyaltyProgramsResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// A list of `LoyaltyProgram` for the merchant.
 	var programs: [LoyaltyProgram]?
+
+	public init(errors: [Error]? = nil, programs: [LoyaltyProgram]? = nil) {
+		self.errors = errors
+		self.programs = programs
+	}
 }
 
+/// Request object for the [ListMerchant](#endpoint-listmerchant) endpoint.
 public struct ListMerchantsRequest: Content {
 	/// The cursor generated by the previous response.
 	var cursor: Int?
+
+	public init(cursor: Int? = nil) {
+		self.cursor = cursor
+	}
 }
 
+/// The response object returned by the [ListMerchant](#endpoint-listmerchant) endpoint.
 public struct ListMerchantsResponse: Content {
 	/// If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	var cursor: Int?
@@ -4568,8 +6518,15 @@ public struct ListMerchantsResponse: Content {
 	var errors: [Error]?
 	/// The requested `Merchant` entities.
 	var merchant: [Merchant]?
+
+	public init(cursor: Int? = nil, errors: [Error]? = nil, merchant: [Merchant]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.merchant = merchant
+	}
 }
 
+/// Retrieves a list of refunds for the account making the request.  The maximum results per page is 100.
 public struct ListPaymentRefundsRequest: Content {
 	/// The timestamp for the beginning of the requested reporting period, in RFC 3339 format.  Default: The current time minus one year.
 	var begin_time: Timestamp?
@@ -4587,8 +6544,20 @@ public struct ListPaymentRefundsRequest: Content {
 	var source_type: String?
 	/// If provided, only refunds with the given status are returned. For a list of refund status values, see `PaymentRefund`.  Default: If omitted, refunds are returned regardless of their status.
 	var status: String?
+
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: String? = nil, source_type: String? = nil, status: String? = nil) {
+		self.begin_time = begin_time
+		self.cursor = cursor
+		self.end_time = end_time
+		self.limit = limit
+		self.location_id = location_id
+		self.sort_order = sort_order
+		self.source_type = source_type
+		self.status = status
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [ListPaymentRefunds](#endpoint-refunds-listpaymentrefunds) endpoint.  Either `errors` or `refunds` is present in a given response (never both).
 public struct ListPaymentRefundsResponse: Content {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
@@ -4596,8 +6565,15 @@ public struct ListPaymentRefundsResponse: Content {
 	var errors: [Error]?
 	/// The list of requested refunds.
 	var refunds: [PaymentRefund]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, refunds: [PaymentRefund]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.refunds = refunds
+	}
 }
 
+/// Retrieves a list of payments taken by the account making the request.  The maximum results per page is 100.
 public struct ListPaymentsRequest: Content {
 	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 	var begin_time: Timestamp?
@@ -4617,8 +6593,21 @@ public struct ListPaymentsRequest: Content {
 	var sort_order: String?
 	/// The exact amount in the `total_money` for a payment.
 	var total: Int?
+
+	public init(begin_time: Timestamp? = nil, card_brand: String? = nil, cursor: String? = nil, end_time: Timestamp? = nil, last_4: String? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: String? = nil, total: Int? = nil) {
+		self.begin_time = begin_time
+		self.card_brand = card_brand
+		self.cursor = cursor
+		self.end_time = end_time
+		self.last_4 = last_4
+		self.limit = limit
+		self.location_id = location_id
+		self.sort_order = sort_order
+		self.total = total
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [ListPayments](#endpoint-payments-listpayments) endpoint.
 public struct ListPaymentsResponse: Content {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	var cursor: String?
@@ -4626,8 +6615,15 @@ public struct ListPaymentsResponse: Content {
 	var errors: [Error]?
 	/// The requested list of payments.
 	var payments: [Payment]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, payments: [Payment]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.payments = payments
+	}
 }
 
+/// Defines the query parameters that can be included in a request to the [ListRefunds](#endpoint-listrefunds) endpoint.  Deprecated - recommend using [SearchOrders](#endpoint-orders-searchorders)
 public struct ListRefundsRequest: Content {
 	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	var begin_time: Timestamp?
@@ -4637,8 +6633,16 @@ public struct ListRefundsRequest: Content {
 	var end_time: Timestamp?
 	/// The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC` See [SortOrder](#type-sortorder) for possible values
 	var sort_order: SortOrder?
+
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, sort_order: SortOrder? = nil) {
+		self.begin_time = begin_time
+		self.cursor = cursor
+		self.end_time = end_time
+		self.sort_order = sort_order
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [ListRefunds](#endpoint-listrefunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
 public struct ListRefundsResponse: Content {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
@@ -4646,15 +6650,28 @@ public struct ListRefundsResponse: Content {
 	var errors: [Error]?
 	/// An array of refunds that match your query.
 	var refunds: [Refund]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, refunds: [Refund]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.refunds = refunds
+	}
 }
 
+/// Defines parameters in a  [ListSubscriptionEvents](#endpoint-subscriptions-listsubscriptionevents) endpoint request.
 public struct ListSubscriptionEventsRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
 	/// The upper limit on the number of subscription events to return  in the response.   Default: `200`
 	var limit: Int?
+
+	public init(cursor: String? = nil, limit: Int? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+	}
 }
 
+/// Defines the fields that are included in the response from the [ListSubscriptionEvents](#endpoint-subscriptions-listsubscriptionevents) endpoint.
 public struct ListSubscriptionEventsResponse: Content {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of events.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -4662,6 +6679,12 @@ public struct ListSubscriptionEventsResponse: Content {
 	var errors: [Error]?
 	/// The `SubscriptionEvents` retrieved.
 	var subscription_events: [SubscriptionEvent]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, subscription_events: [SubscriptionEvent]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.subscription_events = subscription_events
+	}
 }
 
 public struct ListTeamMemberBookingProfilesRequest: Content {
@@ -4673,6 +6696,13 @@ public struct ListTeamMemberBookingProfilesRequest: Content {
 	var limit: Int?
 	/// Indicates whether to include only team members enabled at the given location in the returned result.
 	var location_id: String?
+
+	public init(bookable_only: Bool? = nil, cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {
+		self.bookable_only = bookable_only
+		self.cursor = cursor
+		self.limit = limit
+		self.location_id = location_id
+	}
 }
 
 public struct ListTeamMemberBookingProfilesResponse: Content {
@@ -4682,8 +6712,15 @@ public struct ListTeamMemberBookingProfilesResponse: Content {
 	var errors: [Error]?
 	/// The list of team member booking profiles.
 	var team_member_booking_profiles: [TeamMemberBookingProfile]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, team_member_booking_profiles: [TeamMemberBookingProfile]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.team_member_booking_profiles = team_member_booking_profiles
+	}
 }
 
+/// A request for a set of `TeamMemberWage` objects
 public struct ListTeamMemberWagesRequest: Content {
 	/// Pointer to the next page of Employee Wage results to fetch.
 	var cursor: String?
@@ -4691,8 +6728,15 @@ public struct ListTeamMemberWagesRequest: Content {
 	var limit: Int?
 	/// Filter wages returned to only those that are associated with the specified team member.
 	var team_member_id: String?
+
+	public init(cursor: String? = nil, limit: Int? = nil, team_member_id: String? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.team_member_id = team_member_id
+	}
 }
 
+/// The response to a request for a set of `TeamMemberWage` objects. Contains a set of `TeamMemberWage`.
 public struct ListTeamMemberWagesResponse: Content {
 	/// Value supplied in the subsequent request to fetch the next next page of Team Member Wage results.
 	var cursor: String?
@@ -4700,8 +6744,15 @@ public struct ListTeamMemberWagesResponse: Content {
 	var errors: [Error]?
 	/// A page of Team Member Wage results.
 	var team_member_wages: [TeamMemberWage]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, team_member_wages: [TeamMemberWage]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.team_member_wages = team_member_wages
+	}
 }
 
+/// Defines the query parameters that can be included in a request to the [ListTransactions](#endpoint-listtransactions) endpoint.  Deprecated - recommend using [SearchOrders](#endpoint-orders-searchorders)
 public struct ListTransactionsRequest: Content {
 	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	var begin_time: Timestamp?
@@ -4711,8 +6762,16 @@ public struct ListTransactionsRequest: Content {
 	var end_time: Timestamp?
 	/// The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC` See [SortOrder](#type-sortorder) for possible values
 	var sort_order: SortOrder?
+
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, sort_order: SortOrder? = nil) {
+		self.begin_time = begin_time
+		self.cursor = cursor
+		self.end_time = end_time
+		self.sort_order = sort_order
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [ListTransactions](#endpoint-listtransactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
 public struct ListTransactionsResponse: Content {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	var cursor: String?
@@ -4720,15 +6779,28 @@ public struct ListTransactionsResponse: Content {
 	var errors: [Error]?
 	/// An array of transactions that match your query.
 	var transactions: [Transaction]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, transactions: [Transaction]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.transactions = transactions
+	}
 }
 
+/// A request for a set of `WorkweekConfig` objects
 public struct ListWorkweekConfigsRequest: Content {
 	/// Pointer to the next page of Workweek Config results to fetch.
 	var cursor: String?
 	/// Maximum number of Workweek Configs to return per page.
 	var limit: Int?
+
+	public init(cursor: String? = nil, limit: Int? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+	}
 }
 
+/// The response to a request for a set of `WorkweekConfig` objects. Contains the requested `WorkweekConfig` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct ListWorkweekConfigsResponse: Content {
 	/// Value supplied in the subsequent request to fetch the next page of Employee Wage results.
 	var cursor: String?
@@ -4736,6 +6808,12 @@ public struct ListWorkweekConfigsResponse: Content {
 	var errors: [Error]?
 	/// A page of Employee Wage results.
 	var workweek_configs: [WorkweekConfig]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, workweek_configs: [WorkweekConfig]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.workweek_configs = workweek_configs
+	}
 }
 
 public struct Location: Content {
@@ -4791,6 +6869,35 @@ public struct Location: Content {
 	var type: LocationType?
 	/// The website URL of the location.
 	var website_url: String?
+
+	public init(address: Address? = nil, business_email: String? = nil, business_hours: BusinessHours? = nil, business_name: String? = nil, capabilities: LocationCapability? = nil, coordinates: Coordinates? = nil, country: Country? = nil, created_at: Timestamp? = nil, currency: Currency? = nil, description: String? = nil, facebook_url: String? = nil, full_format_logo_url: String? = nil, id: String? = nil, instagram_username: String? = nil, language_code: String? = nil, logo_url: String? = nil, mcc: String? = nil, merchant_id: String? = nil, name: String? = nil, phone_number: String? = nil, pos_background_url: String? = nil, status: LocationStatus? = nil, timezone: String? = nil, twitter_username: String? = nil, type: LocationType? = nil, website_url: String? = nil) {
+		self.address = address
+		self.business_email = business_email
+		self.business_hours = business_hours
+		self.business_name = business_name
+		self.capabilities = capabilities
+		self.coordinates = coordinates
+		self.country = country
+		self.created_at = created_at
+		self.currency = currency
+		self.description = description
+		self.facebook_url = facebook_url
+		self.full_format_logo_url = full_format_logo_url
+		self.id = id
+		self.instagram_username = instagram_username
+		self.language_code = language_code
+		self.logo_url = logo_url
+		self.mcc = mcc
+		self.merchant_id = merchant_id
+		self.name = name
+		self.phone_number = phone_number
+		self.pos_background_url = pos_background_url
+		self.status = status
+		self.timezone = timezone
+		self.twitter_username = twitter_username
+		self.type = type
+		self.website_url = website_url
+	}
 }
 
 /// The capabilities a location may have.
@@ -4815,6 +6922,7 @@ public enum LocationType: String, Content {
 	case MOBILE
 }
 
+/// Describes a loyalty account. For more information, see  [Loyalty Overview](/docs/loyalty/overview).
 public struct LoyaltyAccount: Content {
 	/// The available point balance in the loyalty account.    Your application should be able to handle loyalty accounts that have a negative point balance (`balance` is less than 0). This might occur if a seller makes a manual adjustment or as a result of a refund or exchange.
 	let balance: Int?
@@ -4834,8 +6942,21 @@ public struct LoyaltyAccount: Content {
 	var program_id: String
 	/// The timestamp when the loyalty account was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(mappings: [LoyaltyAccountMapping], program_id: String, balance: Int? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, enrolled_at: Timestamp? = nil, id: String? = nil, lifetime_points: Int? = nil, updated_at: Timestamp? = nil) {
+		self.mappings = mappings
+		self.program_id = program_id
+		self.balance = balance
+		self.created_at = created_at
+		self.customer_id = customer_id
+		self.enrolled_at = enrolled_at
+		self.id = id
+		self.lifetime_points = lifetime_points
+		self.updated_at = updated_at
+	}
 }
 
+/// Associates a loyalty account with the buyer's phone number. For more information, see  [Loyalty Overview](/docs/loyalty/overview).
 public struct LoyaltyAccountMapping: Content {
 	/// The timestamp when the mapping was created, in RFC 3339 format.
 	let created_at: Timestamp?
@@ -4845,6 +6966,13 @@ public struct LoyaltyAccountMapping: Content {
 	var type: LoyaltyAccountMappingType
 	/// The phone number, in E.164 format. For example, "+14155551111".
 	var value: String
+
+	public init(type: LoyaltyAccountMappingType, value: String, created_at: Timestamp? = nil, id: String? = nil) {
+		self.type = type
+		self.value = value
+		self.created_at = created_at
+		self.id = id
+	}
 }
 
 /// The type of mapping.
@@ -4853,6 +6981,7 @@ public enum LoyaltyAccountMappingType: String, Content {
 	case PHONE
 }
 
+/// Provides information about a loyalty event.  For more information, see [Loyalty events](/docs/loyalty-api/overview/#loyalty-events).
 public struct LoyaltyEvent: Content {
 	/// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 	let accumulate_points: LoyaltyEventAccumulatePoints?
@@ -4880,8 +7009,11 @@ public struct LoyaltyEvent: Content {
 	let source: LoyaltyEventSource
 	/// The type of the loyalty event. See [LoyaltyEventType](#type-loyaltyeventtype) for possible values
 	let type: LoyaltyEventType
+
+	// no init-- this struct is read-only
 }
 
+/// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 public struct LoyaltyEventAccumulatePoints: Content {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String?
@@ -4889,8 +7021,15 @@ public struct LoyaltyEventAccumulatePoints: Content {
 	var order_id: String?
 	/// The number of points accumulated by the event.
 	var points: Int?
+
+	public init(loyalty_program_id: String? = nil, order_id: String? = nil, points: Int? = nil) {
+		self.loyalty_program_id = loyalty_program_id
+		self.order_id = order_id
+		self.points = points
+	}
 }
 
+/// Provides metadata when the event `type` is `ADJUST_POINTS`.
 public struct LoyaltyEventAdjustPoints: Content {
 	/// The Square-assigned ID of the `loyalty program`.
 	let loyalty_program_id: String?
@@ -4898,8 +7037,15 @@ public struct LoyaltyEventAdjustPoints: Content {
 	var points: Int
 	/// The reason for the adjustment of points.
 	var reason: String?
+
+	public init(points: Int, loyalty_program_id: String? = nil, reason: String? = nil) {
+		self.points = points
+		self.loyalty_program_id = loyalty_program_id
+		self.reason = reason
+	}
 }
 
+/// Provides metadata when the event `type` is `CREATE_REWARD`.
 public struct LoyaltyEventCreateReward: Content {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String
@@ -4907,13 +7053,21 @@ public struct LoyaltyEventCreateReward: Content {
 	let points: Int
 	/// The Square-assigned ID of the created `loyalty reward`. This field is returned only if the event source is `LOYALTY_API`.
 	let reward_id: String?
+
+	// no init-- this struct is read-only
 }
 
+/// Filter events by date time range.
 public struct LoyaltyEventDateTimeFilter: Content {
 	/// The `created_at` date time range used to filter the result.
 	var created_at: TimeRange
+
+	public init(created_at: TimeRange) {
+		self.created_at = created_at
+	}
 }
 
+/// Provides metadata when the event `type` is `DELETE_REWARD`.
 public struct LoyaltyEventDeleteReward: Content {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String
@@ -4921,15 +7075,21 @@ public struct LoyaltyEventDeleteReward: Content {
 	let points: Int
 	/// The ID of the deleted `loyalty reward`. This field is returned only if the event source is `LOYALTY_API`.
 	let reward_id: String?
+
+	// no init-- this struct is read-only
 }
 
+/// Provides metadata when the event `type` is `EXPIRE_POINTS`.
 public struct LoyaltyEventExpirePoints: Content {
 	/// The Square-assigned ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The number of points expired.
 	var points: Int
+
+	// no init-- this struct is read-only
 }
 
+/// The filtering criteria. If the request specifies multiple filters,  the endpoint uses a logical AND to evaluate them.
 public struct LoyaltyEventFilter: Content {
 	/// Filter events by date time range.  For each range, the start time is inclusive and the end time  is exclusive.
 	var date_time_filter: LoyaltyEventDateTimeFilter?
@@ -4941,35 +7101,67 @@ public struct LoyaltyEventFilter: Content {
 	var order_filter: LoyaltyEventOrderFilter?
 	/// Filter events by event type.
 	var type_filter: LoyaltyEventTypeFilter?
+
+	public init(date_time_filter: LoyaltyEventDateTimeFilter? = nil, location_filter: LoyaltyEventLocationFilter? = nil, loyalty_account_filter: LoyaltyEventLoyaltyAccountFilter? = nil, order_filter: LoyaltyEventOrderFilter? = nil, type_filter: LoyaltyEventTypeFilter? = nil) {
+		self.date_time_filter = date_time_filter
+		self.location_filter = location_filter
+		self.loyalty_account_filter = loyalty_account_filter
+		self.order_filter = order_filter
+		self.type_filter = type_filter
+	}
 }
 
+/// Filter events by location.
 public struct LoyaltyEventLocationFilter: Content {
 	/// The `location` IDs for loyalty events to query. If multiple values are specified, the endpoint uses  a logical OR to combine them.
 	var location_ids: [String]
+
+	public init(location_ids: [String]) {
+		self.location_ids = location_ids
+	}
 }
 
+/// Filter events by loyalty account.
 public struct LoyaltyEventLoyaltyAccountFilter: Content {
 	/// The ID of the `loyalty account` associated with loyalty events.
 	var loyalty_account_id: String
+
+	public init(loyalty_account_id: String) {
+		self.loyalty_account_id = loyalty_account_id
+	}
 }
 
+/// Filter events by the order associated with the event.
 public struct LoyaltyEventOrderFilter: Content {
 	/// The ID of the `order` associated with the event.
 	var order_id: String
+
+	public init(order_id: String) {
+		self.order_id = order_id
+	}
 }
 
+/// Provides metadata when the event `type` is `OTHER`.
 public struct LoyaltyEventOther: Content {
 	/// The Square-assigned ID of the `loyalty program`.
 	let loyalty_program_id: String
 	/// The number of points added or removed.
 	var points: Int
+
+	// no init-- this struct is read-only
 }
 
+/// Represents a query used to search for loyalty events.
 public struct LoyaltyEventQuery: Content {
 	/// The query filter criteria.
 	var filter: LoyaltyEventFilter?
+
+	public init(filter: LoyaltyEventFilter? = nil) {
+		self.filter = filter
+	}
 }
 
+/// Provides metadata when the event `type` is `REDEEM_REWARD`.
 public struct LoyaltyEventRedeemReward: Content {
 	/// The ID of the `loyalty program`.
 	let loyalty_program_id: String
@@ -4977,6 +7169,8 @@ public struct LoyaltyEventRedeemReward: Content {
 	let order_id: String?
 	/// The ID of the redeemed `loyalty reward`. This field is returned only if the event source is `LOYALTY_API`.
 	let reward_id: String?
+
+	// no init-- this struct is read-only
 }
 
 /// Defines whether the event was generated by the Square Point of Sale.
@@ -5005,9 +7199,14 @@ public enum LoyaltyEventType: String, Content {
 	case OTHER
 }
 
+/// Filter events by event type.
 public struct LoyaltyEventTypeFilter: Content {
 	/// The loyalty event types used to filter the result. If multiple values are specified, the endpoint uses a  logical OR to combine them. See [LoyaltyEventType](#type-loyaltyeventtype) for possible values
 	var types: LoyaltyEventType
+
+	public init(types: LoyaltyEventType) {
+		self.types = types
+	}
 }
 
 public struct LoyaltyProgram: Content {
@@ -5029,8 +7228,11 @@ public struct LoyaltyProgram: Content {
 	let terminology: LoyaltyProgramTerminology
 	/// The timestamp when the reward was last updated, in RFC 3339 format.
 	let updated_at: Timestamp
+
+	// no init-- this struct is read-only
 }
 
+/// Defines an accrual rule, which is how buyers can earn points.
 public struct LoyaltyProgramAccrualRule: Content {
 	/// The type of the accrual rule that defines how buyers can earn points. See [LoyaltyProgramAccrualRuleType](#type-loyaltyprogramaccrualruletype) for possible values
 	let accrual_type: LoyaltyProgramAccrualRuleType
@@ -5042,6 +7244,8 @@ public struct LoyaltyProgramAccrualRule: Content {
 	let spend_amount_money: Money?
 	/// When the accrual rule is visit-based (`accrual_type` is `VISIT`), this field indicates the minimum purchase required during the visit to  quality for the reward.
 	let visit_minimum_amount_money: Money?
+
+	// no init-- this struct is read-only
 }
 
 /// The type of the accrual rule that defines how buyers can earn points.
@@ -5056,11 +7260,15 @@ public enum LoyaltyProgramAccrualRuleType: String, Content {
 	case CATEGORY
 }
 
+/// Describes when the loyalty program expires.
 public struct LoyaltyProgramExpirationPolicy: Content {
 	/// The duration of time before points expire, in RFC 3339 format.
 	let expiration_duration: Timestamp
+
+	// no init-- this struct is read-only
 }
 
+/// Provides details about the reward tier discount. DEPRECATED at version 2020-12-16. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Get discount details for the reward](/docs/loyalty-api/overview#get-discount-details).
 public struct LoyaltyProgramRewardDefinition: Content {
 	/// The list of catalog objects to which this reward can be applied. They are either all item-variation ids or category ids, depending on the `type` field. DEPRECATED at version 2020-12-16. You can find this information in the `product_set_data.product_ids_any` field of the `PRODUCT_SET` catalog object referenced by the pricing rule.
 	let catalog_object_ids: [String]?
@@ -5074,6 +7282,8 @@ public struct LoyaltyProgramRewardDefinition: Content {
 	let percentage_discount: String?
 	/// Indicates the scope of the reward tier. DEPRECATED at version 2020-12-16. You can find this information in the `discount_target_scope` field of the `PRICING_RULE` catalog object and the `product_set_data` field of the `PRODUCT_SET` catalog object referenced by the pricing rule. For `ORDER` scopes, the target scope is `WHOLE_PURCHASE` and `all_products` is true. For `ITEM_VARIATION` and `CATEGORY` scopes, the target scope is `LINE_ITEM` and `product_ids_any` is a list of catalog object IDs of the given type. See [LoyaltyProgramRewardDefinitionScope](#type-loyaltyprogramrewarddefinitionscope) for possible values
 	let scope: LoyaltyProgramRewardDefinitionScope
+
+	// no init-- this struct is read-only
 }
 
 /// Indicates the scope of the reward tier. DEPRECATED at version 2020-12-16. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Get discount details for the reward](https://developer.squareup.com/docs/docs/loyalty-api/overview#get-discount-details).
@@ -5094,6 +7304,7 @@ public enum LoyaltyProgramRewardDefinitionType: String, Content {
 	case FIXED_PERCENTAGE
 }
 
+/// Describes a loyalty program reward tier.
 public struct LoyaltyProgramRewardTier: Content {
 	/// The timestamp when the reward tier was created, in RFC 3339 format.
 	let created_at: Timestamp
@@ -5107,6 +7318,8 @@ public struct LoyaltyProgramRewardTier: Content {
 	let points: Int
 	/// A reference to the specific version of a `PRICING_RULE` catalog object that contains information about the reward tier discount.  Use `object_id` and `catalog_version` with the `RetrieveCatalogObject` endpoint to get discount details. Make sure to set `include_related_objects` to true in the request to retrieve all catalog objects that define the discount. For more information, see [Get discount details for the reward](https://developer.squareup.com/docs/docs/loyalty-api/overview#get-discount-details).
 	let pricing_rule_reference: CatalogObjectReference?
+
+	// no init-- this struct is read-only
 }
 
 /// Indicates whether the program is currently active.
@@ -5122,6 +7335,8 @@ public struct LoyaltyProgramTerminology: Content {
 	let one: String
 	/// A plural unit for point (for example, 10 points is called 10 stars).
 	let other: String
+
+	// no init-- this struct is read-only
 }
 
 public struct LoyaltyReward: Content {
@@ -5143,6 +7358,18 @@ public struct LoyaltyReward: Content {
 	let status: LoyaltyRewardStatus?
 	/// The timestamp when the reward was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(loyalty_account_id: String, reward_tier_id: String, created_at: Timestamp? = nil, id: String? = nil, order_id: String? = nil, points: Int? = nil, redeemed_at: Timestamp? = nil, status: LoyaltyRewardStatus? = nil, updated_at: Timestamp? = nil) {
+		self.loyalty_account_id = loyalty_account_id
+		self.reward_tier_id = reward_tier_id
+		self.created_at = created_at
+		self.id = id
+		self.order_id = order_id
+		self.points = points
+		self.redeemed_at = redeemed_at
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
 /// The status of the loyalty reward.
@@ -5155,6 +7382,7 @@ public enum LoyaltyRewardStatus: String, Content {
 	case DELETED
 }
 
+/// Represents a unit of measurement to use with a quantity, such as ounces or inches. Exactly one of the following fields are required: `custom_unit`, `area_unit`, `length_unit`, `volume_unit`, and `weight_unit`.
 public struct MeasurementUnit: Content {
 	/// Represents a standard area unit. See [MeasurementUnitArea](#type-measurementunitarea) for possible values
 	var area_unit: MeasurementUnitArea?
@@ -5172,6 +7400,17 @@ public struct MeasurementUnit: Content {
 	var volume_unit: MeasurementUnitVolume?
 	/// Represents a standard unit of weight or mass. See [MeasurementUnitWeight](#type-measurementunitweight) for possible values
 	var weight_unit: MeasurementUnitWeight?
+
+	public init(area_unit: MeasurementUnitArea? = nil, custom_unit: MeasurementUnitCustom? = nil, generic_unit: MeasurementUnitGeneric? = nil, length_unit: MeasurementUnitLength? = nil, time_unit: MeasurementUnitTime? = nil, type: MeasurementUnitUnitType? = nil, volume_unit: MeasurementUnitVolume? = nil, weight_unit: MeasurementUnitWeight? = nil) {
+		self.area_unit = area_unit
+		self.custom_unit = custom_unit
+		self.generic_unit = generic_unit
+		self.length_unit = length_unit
+		self.time_unit = time_unit
+		self.type = type
+		self.volume_unit = volume_unit
+		self.weight_unit = weight_unit
+	}
 }
 
 /// Unit of area used to measure a quantity.
@@ -5194,11 +7433,17 @@ public enum MeasurementUnitArea: String, Content {
 	case METRIC_SQUARE_KILOMETER
 }
 
+/// The information needed to define a custom unit, provided by the seller.
 public struct MeasurementUnitCustom: Content {
 	/// The abbreviation of the custom unit, such as "bsh" (bushel). This appears in the cart for the Point of Sale app, and in reports.
 	var abbreviation: String
 	/// The name of the custom unit, for example "bushel".
 	var name: String
+
+	public init(abbreviation: String, name: String) {
+		self.abbreviation = abbreviation
+		self.name = name
+	}
 }
 
 /// 
@@ -5299,6 +7544,7 @@ public enum MeasurementUnitWeight: String, Content {
 	case METRIC_KILOGRAM
 }
 
+/// Represents a Square seller.
 public struct Merchant: Content {
 	/// The business name of the merchant.
 	var business_name: String?
@@ -5314,6 +7560,16 @@ public struct Merchant: Content {
 	var main_location_id: String?
 	/// The merchant status, active or inactive. See [MerchantStatus](#type-merchantstatus) for possible values
 	var status: MerchantStatus?
+
+	public init(country: Country, business_name: String? = nil, currency: Currency? = nil, id: String? = nil, language_code: String? = nil, main_location_id: String? = nil, status: MerchantStatus? = nil) {
+		self.country = country
+		self.business_name = business_name
+		self.currency = currency
+		self.id = id
+		self.language_code = language_code
+		self.main_location_id = main_location_id
+		self.status = status
+	}
 }
 
 /// 
@@ -5324,11 +7580,17 @@ public enum MerchantStatus: String, Content {
 	case INACTIVE
 }
 
+/// Represents an amount of money. `Money` fields can be signed or unsigned. Fields that do not explicitly define whether they are signed or unsigned are considered unsigned and can only hold positive amounts. For signed fields, the sign of the value indicates the purpose of the money transfer. See [Working with Monetary Amounts](/build-basics/working-with-monetary-amounts) for more information.
 public struct Money: Content {
 	/// The amount of money, in the smallest denomination of the currency indicated by `currency`. For example, when `currency` is `USD`, `amount` is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.
 	var amount: Int?
 	/// The type of currency, in __ISO 4217 format__. For example, the currency code for US dollars is `USD`.  See `Currency` for possible values. See [Currency](#type-currency) for possible values
 	var currency: Currency?
+
+	public init(amount: Int? = nil, currency: Currency? = nil) {
+		self.amount = amount
+		self.currency = currency
+	}
 }
 
 public struct ObtainTokenRequest: Content {
@@ -5350,6 +7612,18 @@ public struct ObtainTokenRequest: Content {
 	var scopes: [String]?
 	/// __OPTIONAL__  A boolean indicating a request for a short-lived access token. The short-lived access token returned in the response will expire in 24 hours.
 	var short_lived: Bool?
+
+	public init(client_id: String, client_secret: String, grant_type: String, code: String? = nil, migration_token: String? = nil, redirect_uri: String? = nil, refresh_token: String? = nil, scopes: [String]? = nil, short_lived: Bool? = nil) {
+		self.client_id = client_id
+		self.client_secret = client_secret
+		self.grant_type = grant_type
+		self.code = code
+		self.migration_token = migration_token
+		self.redirect_uri = redirect_uri
+		self.refresh_token = refresh_token
+		self.scopes = scopes
+		self.short_lived = short_lived
+	}
 }
 
 public struct ObtainTokenResponse: Content {
@@ -5371,16 +7645,36 @@ public struct ObtainTokenResponse: Content {
 	var subscription_id: String?
 	/// This value is always _bearer_.
 	var token_type: String?
+
+	public init(access_token: String? = nil, expires_at: String? = nil, id_token: String? = nil, merchant_id: String? = nil, plan_id: String? = nil, refresh_token: String? = nil, short_lived: Bool? = nil, subscription_id: String? = nil, token_type: String? = nil) {
+		self.access_token = access_token
+		self.expires_at = expires_at
+		self.id_token = id_token
+		self.merchant_id = merchant_id
+		self.plan_id = plan_id
+		self.refresh_token = refresh_token
+		self.short_lived = short_lived
+		self.subscription_id = subscription_id
+		self.token_type = token_type
+	}
 }
 
 public struct OnboardAppointmentsRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct OnboardAppointmentsResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. Order objects also include information on any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
 public struct Order: Content {
 	/// Timestamp for when the order reached a terminal [state](#property-state). In RFC 3339 format, e.g., "2016-09-04T23:59:33.123Z".
 	let closed_at: Timestamp?
@@ -5440,6 +7734,38 @@ public struct Order: Content {
 	let updated_at: Timestamp?
 	/// Version number which is incremented each time an update is committed to the order. Orders that were not created through the API will not include a version and thus cannot be updated.  [Read more about working with versions](https://developer.squareup.com/docs/orders-api/manage-orders#update-orders).
 	var version: Int?
+
+	public init(location_id: String, closed_at: Timestamp? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, discounts: [OrderLineItemDiscount]? = nil, fulfillments: [OrderFulfillment]? = nil, id: String? = nil, line_items: [OrderLineItem]? = nil, metadata: String? = nil, net_amounts: OrderMoneyAmounts? = nil, pricing_options: OrderPricingOptions? = nil, reference_id: String? = nil, refunds: [Refund]? = nil, return_amounts: OrderMoneyAmounts? = nil, returns: [OrderReturn]? = nil, rewards: [OrderReward]? = nil, rounding_adjustment: OrderRoundingAdjustment? = nil, service_charges: [OrderServiceCharge]? = nil, source: OrderSource? = nil, state: OrderState? = nil, taxes: [OrderLineItemTax]? = nil, tenders: [Tender]? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_service_charge_money: Money? = nil, total_tax_money: Money? = nil, total_tip_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.location_id = location_id
+		self.closed_at = closed_at
+		self.created_at = created_at
+		self.customer_id = customer_id
+		self.discounts = discounts
+		self.fulfillments = fulfillments
+		self.id = id
+		self.line_items = line_items
+		self.metadata = metadata
+		self.net_amounts = net_amounts
+		self.pricing_options = pricing_options
+		self.reference_id = reference_id
+		self.refunds = refunds
+		self.return_amounts = return_amounts
+		self.returns = returns
+		self.rewards = rewards
+		self.rounding_adjustment = rounding_adjustment
+		self.service_charges = service_charges
+		self.source = source
+		self.state = state
+		self.taxes = taxes
+		self.tenders = tenders
+		self.total_discount_money = total_discount_money
+		self.total_money = total_money
+		self.total_service_charge_money = total_service_charge_money
+		self.total_tax_money = total_tax_money
+		self.total_tip_money = total_tip_money
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
 public struct OrderCreated: Content {
@@ -5453,13 +7779,26 @@ public struct OrderCreated: Content {
 	var state: OrderState?
 	/// Version number which is incremented each time an update is committed to the order. Orders that were not created through the API will not include a version and thus cannot be updated.  [Read more about working with versions](https://developer.squareup.com/docs/docs/orders-api/manage-orders#update-orders)
 	var version: Int?
+
+	public init(created_at: Timestamp? = nil, location_id: String? = nil, order_id: String? = nil, state: OrderState? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.location_id = location_id
+		self.order_id = order_id
+		self.state = state
+		self.version = version
+	}
 }
 
 public struct OrderCreatedObject: Content {
 	/// Information about the created order.
 	var order_created: OrderCreated?
+
+	public init(order_created: OrderCreated? = nil) {
+		self.order_created = order_created
+	}
 }
 
+/// A lightweight description of an [Order](#type-order) that is returned when `returned_entries` is true on a [SearchOrderRequest](#type-searchorderrequest)
 public struct OrderEntry: Content {
 	/// The location id the Order belongs to.
 	var location_id: String?
@@ -5467,8 +7806,15 @@ public struct OrderEntry: Content {
 	var order_id: String?
 	/// Version number which is incremented each time an update is committed to the order. Orders that were not created through the API will not include a version and thus cannot be updated.  [Read more about working with versions](https://developer.squareup.com/docs/orders-api/manage-orders#update-orders).
 	let version: Int?
+
+	public init(location_id: String? = nil, order_id: String? = nil, version: Int? = nil) {
+		self.location_id = location_id
+		self.order_id = order_id
+		self.version = version
+	}
 }
 
+/// Contains details on how to fulfill this order.
 public struct OrderFulfillment: Content {
 	/// Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (personally identifiable information, card details, etc.).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries may also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a max length of 255 characters.  An application may have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  See [Metadata](https://developer.squareup.com/docs/build-basics/metadata) for more information.
 	var metadata: String?
@@ -5482,8 +7828,18 @@ public struct OrderFulfillment: Content {
 	var type: OrderFulfillmentType?
 	/// Unique ID that identifies the fulfillment only within this order.
 	var uid: String?
+
+	public init(metadata: String? = nil, pickup_details: OrderFulfillmentPickupDetails? = nil, shipment_details: OrderFulfillmentShipmentDetails? = nil, state: OrderFulfillmentState? = nil, type: OrderFulfillmentType? = nil, uid: String? = nil) {
+		self.metadata = metadata
+		self.pickup_details = pickup_details
+		self.shipment_details = shipment_details
+		self.state = state
+		self.type = type
+		self.uid = uid
+	}
 }
 
+/// Contains details necessary to fulfill a pickup order.
 public struct OrderFulfillmentPickupDetails: Content {
 	/// The [timestamp](#workingwithdates) indicating when the fulfillment was accepted. In RFC3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
 	let accepted_at: Timestamp?
@@ -5521,13 +7877,40 @@ public struct OrderFulfillmentPickupDetails: Content {
 	let rejected_at: Timestamp?
 	/// The schedule type of the pickup fulfillment. Defaults to `SCHEDULED`. See [OrderFulfillmentPickupDetailsScheduleType](#type-orderfulfillmentpickupdetailsscheduletype) for possible values
 	var schedule_type: OrderFulfillmentPickupDetailsScheduleType?
+
+	public init(accepted_at: Timestamp? = nil, auto_complete_duration: Timestamp? = nil, cancel_reason: String? = nil, canceled_at: Timestamp? = nil, curbside_pickup_details: OrderFulfillmentPickupDetailsCurbsidePickupDetails? = nil, expired_at: Timestamp? = nil, expires_at: Timestamp? = nil, is_curbside_pickup: Bool? = nil, note: String? = nil, picked_up_at: Timestamp? = nil, pickup_at: Timestamp? = nil, pickup_window_duration: Timestamp? = nil, placed_at: Timestamp? = nil, prep_time_duration: Timestamp? = nil, ready_at: Timestamp? = nil, recipient: OrderFulfillmentRecipient? = nil, rejected_at: Timestamp? = nil, schedule_type: OrderFulfillmentPickupDetailsScheduleType? = nil) {
+		self.accepted_at = accepted_at
+		self.auto_complete_duration = auto_complete_duration
+		self.cancel_reason = cancel_reason
+		self.canceled_at = canceled_at
+		self.curbside_pickup_details = curbside_pickup_details
+		self.expired_at = expired_at
+		self.expires_at = expires_at
+		self.is_curbside_pickup = is_curbside_pickup
+		self.note = note
+		self.picked_up_at = picked_up_at
+		self.pickup_at = pickup_at
+		self.pickup_window_duration = pickup_window_duration
+		self.placed_at = placed_at
+		self.prep_time_duration = prep_time_duration
+		self.ready_at = ready_at
+		self.recipient = recipient
+		self.rejected_at = rejected_at
+		self.schedule_type = schedule_type
+	}
 }
 
+/// Specific details for curbside pickup.
 public struct OrderFulfillmentPickupDetailsCurbsidePickupDetails: Content {
 	/// The [timestamp](#workingwithdates) in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z", indicating when the buyer arrived and is waiting for pickup.
 	var buyer_arrived_at: Timestamp?
 	/// Specific details for curbside pickup, such as parking number, vehicle model, etc.
 	var curbside_details: String?
+
+	public init(buyer_arrived_at: Timestamp? = nil, curbside_details: String? = nil) {
+		self.buyer_arrived_at = buyer_arrived_at
+		self.curbside_details = curbside_details
+	}
 }
 
 /// The schedule type of the pickup fulfillment.
@@ -5538,6 +7921,7 @@ public enum OrderFulfillmentPickupDetailsScheduleType: String, Content {
 	case ASAP
 }
 
+/// Contains information on the recipient of a fulfillment.
 public struct OrderFulfillmentRecipient: Content {
 	/// The address of the fulfillment recipient.  If provided, overrides the value pulled from the customer profile indicated by `customer_id`.
 	var address: Address?
@@ -5549,8 +7933,17 @@ public struct OrderFulfillmentRecipient: Content {
 	var email_address: String?
 	/// The phone number of the fulfillment recipient.  If provided, overrides the value pulled from the customer profile indicated by `customer_id`.
 	var phone_number: String?
+
+	public init(address: Address? = nil, customer_id: String? = nil, display_name: String? = nil, email_address: String? = nil, phone_number: String? = nil) {
+		self.address = address
+		self.customer_id = customer_id
+		self.display_name = display_name
+		self.email_address = email_address
+		self.phone_number = phone_number
+	}
 }
 
+/// Contains details necessary to fulfill a shipment order.
 public struct OrderFulfillmentShipmentDetails: Content {
 	/// A description of why the shipment was canceled.
 	var cancel_reason: String?
@@ -5582,6 +7975,24 @@ public struct OrderFulfillmentShipmentDetails: Content {
 	var tracking_number: String?
 	/// A link to the tracking webpage on the carrier's website.
 	var tracking_url: String?
+
+	public init(cancel_reason: String? = nil, canceled_at: Timestamp? = nil, carrier: String? = nil, expected_shipped_at: Timestamp? = nil, failed_at: Timestamp? = nil, failure_reason: String? = nil, in_progress_at: Timestamp? = nil, packaged_at: Timestamp? = nil, placed_at: Timestamp? = nil, recipient: OrderFulfillmentRecipient? = nil, shipped_at: Timestamp? = nil, shipping_note: String? = nil, shipping_type: String? = nil, tracking_number: String? = nil, tracking_url: String? = nil) {
+		self.cancel_reason = cancel_reason
+		self.canceled_at = canceled_at
+		self.carrier = carrier
+		self.expected_shipped_at = expected_shipped_at
+		self.failed_at = failed_at
+		self.failure_reason = failure_reason
+		self.in_progress_at = in_progress_at
+		self.packaged_at = packaged_at
+		self.placed_at = placed_at
+		self.recipient = recipient
+		self.shipped_at = shipped_at
+		self.shipping_note = shipping_note
+		self.shipping_type = shipping_type
+		self.tracking_number = tracking_number
+		self.tracking_url = tracking_url
+	}
 }
 
 /// The current state of this fulfillment.
@@ -5623,13 +8034,28 @@ public struct OrderFulfillmentUpdated: Content {
 	let updated_at: Timestamp?
 	/// Version number which is incremented each time an update is committed to the order. Orders that were not created through the API will not include a version and thus cannot be updated.  [Read more about working with versions](https://developer.squareup.com/docs/docs/orders-api/manage-orders#update-orders)
 	var version: Int?
+
+	public init(created_at: Timestamp? = nil, fulfillment_update: [OrderFulfillmentUpdatedUpdate]? = nil, location_id: String? = nil, order_id: String? = nil, state: OrderState? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.fulfillment_update = fulfillment_update
+		self.location_id = location_id
+		self.order_id = order_id
+		self.state = state
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
 public struct OrderFulfillmentUpdatedObject: Content {
 	/// Information about the updated order fulfillment.
 	var order_fulfillment_updated: OrderFulfillmentUpdated?
+
+	public init(order_fulfillment_updated: OrderFulfillmentUpdated? = nil) {
+		self.order_fulfillment_updated = order_fulfillment_updated
+	}
 }
 
+/// Information about fulfillment updates.
 public struct OrderFulfillmentUpdatedUpdate: Content {
 	/// Unique ID that identifies the fulfillment only within this order.
 	var fulfillment_uid: String?
@@ -5637,8 +8063,15 @@ public struct OrderFulfillmentUpdatedUpdate: Content {
 	var new_state: OrderFulfillmentState?
 	/// The state of the fulfillment before the change. Will not be populated if the fulfillment is created with this new Order version. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
 	var old_state: OrderFulfillmentState?
+
+	public init(fulfillment_uid: String? = nil, new_state: OrderFulfillmentState? = nil, old_state: OrderFulfillmentState? = nil) {
+		self.fulfillment_uid = fulfillment_uid
+		self.new_state = new_state
+		self.old_state = old_state
+	}
 }
 
+/// Represents a line item in an order. Each line item describes a different product to purchase, with its own quantity and price details.
 public struct OrderLineItem: Content {
 	/// The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` will be automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
 	var applied_discounts: [OrderLineItemAppliedDiscount]?
@@ -5676,8 +8109,30 @@ public struct OrderLineItem: Content {
 	var variation_name: String?
 	/// The total price of all item variations sold in this line item. Calculated as `base_price_money` multiplied by `quantity`. Does not include modifiers.
 	let variation_total_price_money: Money?
+
+	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, gross_sales_money: Money? = nil, metadata: String? = nil, modifiers: [OrderLineItemModifier]? = nil, name: String? = nil, note: String? = nil, pricing_blocklists: OrderLineItemPricingBlocklists? = nil, quantity_unit: OrderQuantityUnit? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
+		self.quantity = quantity
+		self.applied_discounts = applied_discounts
+		self.applied_taxes = applied_taxes
+		self.base_price_money = base_price_money
+		self.catalog_object_id = catalog_object_id
+		self.gross_sales_money = gross_sales_money
+		self.metadata = metadata
+		self.modifiers = modifiers
+		self.name = name
+		self.note = note
+		self.pricing_blocklists = pricing_blocklists
+		self.quantity_unit = quantity_unit
+		self.total_discount_money = total_discount_money
+		self.total_money = total_money
+		self.total_tax_money = total_tax_money
+		self.uid = uid
+		self.variation_name = variation_name
+		self.variation_total_price_money = variation_total_price_money
+	}
 }
 
+/// Represents an applied portion of a discount to a line item in an order.  Order scoped discounts will automatically have applied discounts present for each line item. Line item scoped discounts must have applied discounts added manually for any applicable line items. The corresponding applied money will automatically be computed based on participating line items.
 public struct OrderLineItemAppliedDiscount: Content {
 	/// The amount of money applied by the discount to the line item.
 	let applied_money: Money?
@@ -5685,8 +8140,15 @@ public struct OrderLineItemAppliedDiscount: Content {
 	var discount_uid: String
 	/// Unique ID that identifies the applied discount only within this order.
 	var uid: String?
+
+	public init(discount_uid: String, applied_money: Money? = nil, uid: String? = nil) {
+		self.discount_uid = discount_uid
+		self.applied_money = applied_money
+		self.uid = uid
+	}
 }
 
+/// Represents an applied portion of a tax to a line item in an order.  Order-scoped taxes automatically include the applied taxes in each line item. Line item taxes must be referenced from any applicable line items. The corresponding applied money is automatically computed, based on the set of participating line items.
 public struct OrderLineItemAppliedTax: Content {
 	/// The amount of money applied by the tax to the line item.
 	let applied_money: Money?
@@ -5694,8 +8156,15 @@ public struct OrderLineItemAppliedTax: Content {
 	var tax_uid: String
 	/// Unique ID that identifies the applied tax only within this order.
 	var uid: String?
+
+	public init(tax_uid: String, applied_money: Money? = nil, uid: String? = nil) {
+		self.tax_uid = tax_uid
+		self.applied_money = applied_money
+		self.uid = uid
+	}
 }
 
+/// Represents a discount that applies to one or more line items in an order.  Fixed-amount, order-scoped discounts are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount contributed by the item to the order subtotal.
 public struct OrderLineItemDiscount: Content {
 	/// The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	var amount_money: Money?
@@ -5719,6 +8188,20 @@ public struct OrderLineItemDiscount: Content {
 	var type: OrderLineItemDiscountType?
 	/// Unique ID that identifies the discount only within this order.
 	var uid: String?
+
+	public init(amount_money: Money? = nil, applied_money: Money? = nil, catalog_object_id: String? = nil, metadata: String? = nil, name: String? = nil, percentage: String? = nil, pricing_rule_id: String? = nil, reward_ids: [String]? = nil, scope: OrderLineItemDiscountScope? = nil, type: OrderLineItemDiscountType? = nil, uid: String? = nil) {
+		self.amount_money = amount_money
+		self.applied_money = applied_money
+		self.catalog_object_id = catalog_object_id
+		self.metadata = metadata
+		self.name = name
+		self.percentage = percentage
+		self.pricing_rule_id = pricing_rule_id
+		self.reward_ids = reward_ids
+		self.scope = scope
+		self.type = type
+		self.uid = uid
+	}
 }
 
 /// Indicates whether this is a line item or order level discount.
@@ -5745,6 +8228,7 @@ public enum OrderLineItemDiscountType: String, Content {
 	case VARIABLE_AMOUNT
 }
 
+/// A [CatalogModifier](#type-catalogmodifier).
 public struct OrderLineItemModifier: Content {
 	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined `CatalogModifier` price.
 	var base_price_money: Money?
@@ -5756,15 +8240,30 @@ public struct OrderLineItemModifier: Content {
 	let total_price_money: Money?
 	/// Unique ID that identifies the modifier only within this order.
 	var uid: String?
+
+	public init(base_price_money: Money? = nil, catalog_object_id: String? = nil, name: String? = nil, total_price_money: Money? = nil, uid: String? = nil) {
+		self.base_price_money = base_price_money
+		self.catalog_object_id = catalog_object_id
+		self.name = name
+		self.total_price_money = total_price_money
+		self.uid = uid
+	}
 }
 
+/// Describes pricing adjustments that are blocked from manual and  automatic application to a line item. For more information, see  [Apply Taxes and Discounts](/docs/orders-api/apply-taxes-and-discounts).
 public struct OrderLineItemPricingBlocklists: Content {
 	/// A list of discounts blocked from applying to the line item.  Discounts can be blocked by the `discount_uid` (for ad-hoc discounts) or  the `discount_catalog_object_id` (for catalog discounts).
 	var blocked_discounts: [OrderLineItemPricingBlocklistsBlockedDiscount]?
 	/// A list of taxes blocked from applying to the line item.  Taxes can be blocked by the `tax_uid` (for ad-hoc taxes) or  the `tax_catalog_object_id` (for catalog taxes).
 	var blocked_taxes: [OrderLineItemPricingBlocklistsBlockedTax]?
+
+	public init(blocked_discounts: [OrderLineItemPricingBlocklistsBlockedDiscount]? = nil, blocked_taxes: [OrderLineItemPricingBlocklistsBlockedTax]? = nil) {
+		self.blocked_discounts = blocked_discounts
+		self.blocked_taxes = blocked_taxes
+	}
 }
 
+/// A discount to block from applying to a line item. The discount must be  identified by either `discount_uid` or `discount_catalog_object_id`, but not both.
 public struct OrderLineItemPricingBlocklistsBlockedDiscount: Content {
 	/// The `catalog_object_id` of the discount that should be blocked.  Use this field to block catalog discounts. For ad-hoc discounts use the  `discount_uid` field.
 	var discount_catalog_object_id: String?
@@ -5772,8 +8271,15 @@ public struct OrderLineItemPricingBlocklistsBlockedDiscount: Content {
 	var discount_uid: String?
 	/// Unique ID of the `BlockedDiscount` within the order.
 	var uid: String?
+
+	public init(discount_catalog_object_id: String? = nil, discount_uid: String? = nil, uid: String? = nil) {
+		self.discount_catalog_object_id = discount_catalog_object_id
+		self.discount_uid = discount_uid
+		self.uid = uid
+	}
 }
 
+/// A tax to block from applying to a line item. The tax must be  identified by either `tax_uid` or `tax_catalog_object_id`, but not both.
 public struct OrderLineItemPricingBlocklistsBlockedTax: Content {
 	/// The `catalog_object_id` of the tax that should be blocked.  Use this field to block catalog taxes. For ad-hoc taxes use the  `tax_uid` field.
 	var tax_catalog_object_id: String?
@@ -5781,8 +8287,15 @@ public struct OrderLineItemPricingBlocklistsBlockedTax: Content {
 	var tax_uid: String?
 	/// Unique ID of the `BlockedTax` within the order.
 	var uid: String?
+
+	public init(tax_catalog_object_id: String? = nil, tax_uid: String? = nil, uid: String? = nil) {
+		self.tax_catalog_object_id = tax_catalog_object_id
+		self.tax_uid = tax_uid
+		self.uid = uid
+	}
 }
 
+/// Represents a tax that applies to one or more line item in the order.  Fixed-amount, order-scoped taxes are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount the item contributes to the order subtotal.
 public struct OrderLineItemTax: Content {
 	/// The amount of the money applied by the tax in the order.
 	var applied_money: Money?
@@ -5802,6 +8315,18 @@ public struct OrderLineItemTax: Content {
 	var type: OrderLineItemTaxType?
 	/// Unique ID that identifies the tax only within this order.
 	var uid: String?
+
+	public init(applied_money: Money? = nil, auto_applied: Bool? = nil, catalog_object_id: String? = nil, metadata: String? = nil, name: String? = nil, percentage: String? = nil, scope: OrderLineItemTaxScope? = nil, type: OrderLineItemTaxType? = nil, uid: String? = nil) {
+		self.applied_money = applied_money
+		self.auto_applied = auto_applied
+		self.catalog_object_id = catalog_object_id
+		self.metadata = metadata
+		self.name = name
+		self.percentage = percentage
+		self.scope = scope
+		self.type = type
+		self.uid = uid
+	}
 }
 
 /// Indicates whether this is a line item or order level tax.
@@ -5824,6 +8349,7 @@ public enum OrderLineItemTaxType: String, Content {
 	case INCLUSIVE
 }
 
+/// A collection of various money amounts.
 public struct OrderMoneyAmounts: Content {
 	/// Money associated with discounts.
 	var discount_money: Money?
@@ -5835,22 +8361,43 @@ public struct OrderMoneyAmounts: Content {
 	var tip_money: Money?
 	/// Total money.
 	var total_money: Money?
+
+	public init(discount_money: Money? = nil, service_charge_money: Money? = nil, tax_money: Money? = nil, tip_money: Money? = nil, total_money: Money? = nil) {
+		self.discount_money = discount_money
+		self.service_charge_money = service_charge_money
+		self.tax_money = tax_money
+		self.tip_money = tip_money
+		self.total_money = total_money
+	}
 }
 
+/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on pre-configured [pricing rules](/reference/square/objects/CatalogPricingRule).
 public struct OrderPricingOptions: Content {
 	/// The option to determine whether pricing rule-based discounts are automatically applied to an order.
 	var auto_apply_discounts: Bool?
 	/// The option to determine whether rule-based taxes are automatically applied to an order when the criteria of the corresponding rules are met.
 	var auto_apply_taxes: Bool?
+
+	public init(auto_apply_discounts: Bool? = nil, auto_apply_taxes: Bool? = nil) {
+		self.auto_apply_discounts = auto_apply_discounts
+		self.auto_apply_taxes = auto_apply_taxes
+	}
 }
 
+/// Contains the measurement unit for a quantity and a precision which specifies the number of digits after the decimal point for decimal quantities.
 public struct OrderQuantityUnit: Content {
 	/// A `MeasurementUnit` that represents the unit of measure for the quantity.
 	var measurement_unit: MeasurementUnit?
 	/// For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities like `"1.0"` and `"1.1"`, but not `"1.01"`.  Min: 0. Max: 5.
 	var precision: Int?
+
+	public init(measurement_unit: MeasurementUnit? = nil, precision: Int? = nil) {
+		self.measurement_unit = measurement_unit
+		self.precision = precision
+	}
 }
 
+/// The set of line items, service charges, taxes, discounts, tips, etc. being returned in an Order.
 public struct OrderReturn: Content {
 	/// Aggregate monetary value being returned by this Return entry.
 	var return_amounts: OrderMoneyAmounts?
@@ -5868,8 +8415,20 @@ public struct OrderReturn: Content {
 	var source_order_id: String?
 	/// Unique ID that identifies the return only within this order.
 	var uid: String?
+
+	public init(return_amounts: OrderMoneyAmounts? = nil, return_discounts: [OrderReturnDiscount]? = nil, return_line_items: [OrderReturnLineItem]? = nil, return_service_charges: [OrderReturnServiceCharge]? = nil, return_taxes: [OrderReturnTax]? = nil, rounding_adjustment: OrderRoundingAdjustment? = nil, source_order_id: String? = nil, uid: String? = nil) {
+		self.return_amounts = return_amounts
+		self.return_discounts = return_discounts
+		self.return_line_items = return_line_items
+		self.return_service_charges = return_service_charges
+		self.return_taxes = return_taxes
+		self.rounding_adjustment = rounding_adjustment
+		self.source_order_id = source_order_id
+		self.uid = uid
+	}
 }
 
+/// Represents a discount being returned that applies to one or more return line items in an order.  Fixed-amount, order-scoped discounts are distributed across all non-zero return line item totals. The amount distributed to each return line item is relative to that item’s contribution to the order subtotal.
 public struct OrderReturnDiscount: Content {
 	/// The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	var amount_money: Money?
@@ -5889,8 +8448,21 @@ public struct OrderReturnDiscount: Content {
 	var type: OrderLineItemDiscountType?
 	/// Unique ID that identifies the return discount only within this order.
 	var uid: String?
+
+	public init(amount_money: Money? = nil, applied_money: Money? = nil, catalog_object_id: String? = nil, name: String? = nil, percentage: String? = nil, scope: OrderLineItemDiscountScope? = nil, source_discount_uid: String? = nil, type: OrderLineItemDiscountType? = nil, uid: String? = nil) {
+		self.amount_money = amount_money
+		self.applied_money = applied_money
+		self.catalog_object_id = catalog_object_id
+		self.name = name
+		self.percentage = percentage
+		self.scope = scope
+		self.source_discount_uid = source_discount_uid
+		self.type = type
+		self.uid = uid
+	}
 }
 
+/// The line item being returned in an Order.
 public struct OrderReturnLineItem: Content {
 	/// The list of references to `OrderReturnDiscount` entities applied to the returned line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderReturnDiscount` applied to the returned line item. On reads, the amount applied is populated.
 	var applied_discounts: [OrderLineItemAppliedDiscount]?
@@ -5926,8 +8498,29 @@ public struct OrderReturnLineItem: Content {
 	var variation_name: String?
 	/// The total price of all item variations returned in this line item. Calculated as `base_price_money` multiplied by `quantity`. Does not include modifiers.
 	let variation_total_price_money: Money?
+
+	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, gross_return_money: Money? = nil, name: String? = nil, note: String? = nil, quantity_unit: OrderQuantityUnit? = nil, return_modifiers: [OrderReturnLineItemModifier]? = nil, source_line_item_uid: String? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
+		self.quantity = quantity
+		self.applied_discounts = applied_discounts
+		self.applied_taxes = applied_taxes
+		self.base_price_money = base_price_money
+		self.catalog_object_id = catalog_object_id
+		self.gross_return_money = gross_return_money
+		self.name = name
+		self.note = note
+		self.quantity_unit = quantity_unit
+		self.return_modifiers = return_modifiers
+		self.source_line_item_uid = source_line_item_uid
+		self.total_discount_money = total_discount_money
+		self.total_money = total_money
+		self.total_tax_money = total_tax_money
+		self.uid = uid
+		self.variation_name = variation_name
+		self.variation_total_price_money = variation_total_price_money
+	}
 }
 
+/// A line item modifier being returned.
 public struct OrderReturnLineItemModifier: Content {
 	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined `CatalogModifier` price.
 	var base_price_money: Money?
@@ -5941,8 +8534,18 @@ public struct OrderReturnLineItemModifier: Content {
 	let total_price_money: Money?
 	/// Unique ID that identifies the return modifier only within this order.
 	var uid: String?
+
+	public init(base_price_money: Money? = nil, catalog_object_id: String? = nil, name: String? = nil, source_modifier_uid: String? = nil, total_price_money: Money? = nil, uid: String? = nil) {
+		self.base_price_money = base_price_money
+		self.catalog_object_id = catalog_object_id
+		self.name = name
+		self.source_modifier_uid = source_modifier_uid
+		self.total_price_money = total_price_money
+		self.uid = uid
+	}
 }
 
+/// Represents the service charge applied to the original order.
 public struct OrderReturnServiceCharge: Content {
 	/// The amount of a non-percentage based service charge.  Exactly one of `percentage` or `amount_money` should be set.
 	var amount_money: Money?
@@ -5968,8 +8571,24 @@ public struct OrderReturnServiceCharge: Content {
 	let total_tax_money: Money?
 	/// Unique ID that identifies the return service charge only within this order.
 	var uid: String?
+
+	public init(amount_money: Money? = nil, applied_money: Money? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, calculation_phase: OrderServiceChargeCalculationPhase? = nil, catalog_object_id: String? = nil, name: String? = nil, percentage: String? = nil, source_service_charge_uid: String? = nil, taxable: Bool? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil) {
+		self.amount_money = amount_money
+		self.applied_money = applied_money
+		self.applied_taxes = applied_taxes
+		self.calculation_phase = calculation_phase
+		self.catalog_object_id = catalog_object_id
+		self.name = name
+		self.percentage = percentage
+		self.source_service_charge_uid = source_service_charge_uid
+		self.taxable = taxable
+		self.total_money = total_money
+		self.total_tax_money = total_tax_money
+		self.uid = uid
+	}
 }
 
+/// Represents a tax being returned that applies to one or more return line items in an order.  Fixed-amount, order-scoped taxes are distributed across all non-zero return line item totals. The amount distributed to each return line item is relative to that item’s contribution to the order subtotal.
 public struct OrderReturnTax: Content {
 	/// The amount of the money applied by the tax in an order.
 	var applied_money: Money?
@@ -5987,15 +8606,33 @@ public struct OrderReturnTax: Content {
 	var type: OrderLineItemTaxType?
 	/// Unique ID that identifies the return tax only within this order.
 	var uid: String?
+
+	public init(applied_money: Money? = nil, catalog_object_id: String? = nil, name: String? = nil, percentage: String? = nil, scope: OrderLineItemTaxScope? = nil, source_tax_uid: String? = nil, type: OrderLineItemTaxType? = nil, uid: String? = nil) {
+		self.applied_money = applied_money
+		self.catalog_object_id = catalog_object_id
+		self.name = name
+		self.percentage = percentage
+		self.scope = scope
+		self.source_tax_uid = source_tax_uid
+		self.type = type
+		self.uid = uid
+	}
 }
 
+/// Represents a reward that may be applied to an order if the necessary reward tier criteria are met. Rewards are created through the Loyalty API.
 public struct OrderReward: Content {
 	/// The identifier of the reward.
 	var id: String
 	/// The identifier of the reward tier corresponding to this reward.
 	var reward_tier_id: String
+
+	public init(id: String, reward_tier_id: String) {
+		self.id = id
+		self.reward_tier_id = reward_tier_id
+	}
 }
 
+/// A rounding adjustment of the money being returned. Commonly used to apply Cash Rounding when the minimum unit of account is smaller than the lowest physical denomination of currency.
 public struct OrderRoundingAdjustment: Content {
 	/// Actual rounding adjustment amount.
 	var amount_money: Money?
@@ -6003,8 +8640,15 @@ public struct OrderRoundingAdjustment: Content {
 	var name: String?
 	/// Unique ID that identifies the rounding adjustment only within this order.
 	var uid: String?
+
+	public init(amount_money: Money? = nil, name: String? = nil, uid: String? = nil) {
+		self.amount_money = amount_money
+		self.name = name
+		self.uid = uid
+	}
 }
 
+/// Represents a service charge applied to an order.
 public struct OrderServiceCharge: Content {
 	/// The amount of a non-percentage based service charge.  Exactly one of `percentage` or `amount_money` should be set.
 	var amount_money: Money?
@@ -6030,6 +8674,21 @@ public struct OrderServiceCharge: Content {
 	let total_tax_money: Money?
 	/// Unique ID that identifies the service charge only within this order.
 	var uid: String?
+
+	public init(amount_money: Money? = nil, applied_money: Money? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, calculation_phase: OrderServiceChargeCalculationPhase? = nil, catalog_object_id: String? = nil, metadata: String? = nil, name: String? = nil, percentage: String? = nil, taxable: Bool? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil) {
+		self.amount_money = amount_money
+		self.applied_money = applied_money
+		self.applied_taxes = applied_taxes
+		self.calculation_phase = calculation_phase
+		self.catalog_object_id = catalog_object_id
+		self.metadata = metadata
+		self.name = name
+		self.percentage = percentage
+		self.taxable = taxable
+		self.total_money = total_money
+		self.total_tax_money = total_tax_money
+		self.uid = uid
+	}
 }
 
 /// Represents a phase in the process of calculating order totals. Service charges are applied __after__ the indicated phase.  [Read more about how order totals are calculated.](https://developer.squareup.com/docs/docs/orders-api/how-it-works#how-totals-are-calculated)
@@ -6040,9 +8699,14 @@ public enum OrderServiceChargeCalculationPhase: String, Content {
 	case TOTAL_PHASE
 }
 
+/// Represents the origination details of an order.
 public struct OrderSource: Content {
 	/// The name used to identify the place (physical or digital) that an order originates. If unset, the name defaults to the name of the application that created the order.
 	var name: String?
+
+	public init(name: String? = nil) {
+		self.name = name
+	}
 }
 
 /// The state of the order.
@@ -6068,13 +8732,27 @@ public struct OrderUpdated: Content {
 	let updated_at: Timestamp?
 	/// Version number which is incremented each time an update is committed to the order. Orders that were not created through the API will not include a version and thus cannot be updated.  [Read more about working with versions](https://developer.squareup.com/docs/docs/orders-api/manage-orders#update-orders)
 	var version: Int?
+
+	public init(created_at: Timestamp? = nil, location_id: String? = nil, order_id: String? = nil, state: OrderState? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.location_id = location_id
+		self.order_id = order_id
+		self.state = state
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
 public struct OrderUpdatedObject: Content {
 	/// Information about the updated order.
 	var order_updated: OrderUpdated?
+
+	public init(order_updated: OrderUpdated? = nil) {
+		self.order_updated = order_updated
+	}
 }
 
+/// Defines the fields that are included in requests to the [PayOrder](#endpoint-payorder) endpoint.
 public struct PayOrderRequest: Content {
 	/// A value you specify that uniquely identifies this request among requests you've sent. If you're unsure whether a particular payment request was completed successfully, you can reattempt it with the same idempotency key without worrying about duplicate payments.  See [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
 	var idempotency_key: String
@@ -6082,15 +8760,28 @@ public struct PayOrderRequest: Content {
 	var order_version: Int?
 	/// The IDs of the `payments` to collect. The payment total must match the order total.
 	var payment_ids: [String]?
+
+	public init(idempotency_key: String, order_version: Int? = nil, payment_ids: [String]? = nil) {
+		self.idempotency_key = idempotency_key
+		self.order_version = order_version
+		self.payment_ids = payment_ids
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [PayOrder](#endpoint-payorder) endpoint.
 public struct PayOrderResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The paid, updated `order`.
 	var order: Order?
+
+	public init(errors: [Error]? = nil, order: Order? = nil) {
+		self.errors = errors
+		self.order = order
+	}
 }
 
+/// Represents a payment processed by the Square API.
 public struct Payment: Content {
 	/// The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	var amount_money: Money?
@@ -6150,13 +8841,50 @@ public struct Payment: Content {
 	let total_money: Money?
 	/// The timestamp of when the payment was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, card_details: CardPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, employee_id: String? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, statement_description_identifier: String? = nil, status: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil) {
+		self.amount_money = amount_money
+		self.app_fee_money = app_fee_money
+		self.billing_address = billing_address
+		self.buyer_email_address = buyer_email_address
+		self.card_details = card_details
+		self.created_at = created_at
+		self.customer_id = customer_id
+		self.delay_action = delay_action
+		self.delay_duration = delay_duration
+		self.delayed_until = delayed_until
+		self.employee_id = employee_id
+		self.id = id
+		self.location_id = location_id
+		self.note = note
+		self.order_id = order_id
+		self.processing_fee = processing_fee
+		self.receipt_number = receipt_number
+		self.receipt_url = receipt_url
+		self.reference_id = reference_id
+		self.refund_ids = refund_ids
+		self.refunded_money = refunded_money
+		self.risk_evaluation = risk_evaluation
+		self.shipping_address = shipping_address
+		self.source_type = source_type
+		self.statement_description_identifier = statement_description_identifier
+		self.status = status
+		self.tip_money = tip_money
+		self.total_money = total_money
+		self.updated_at = updated_at
+	}
 }
 
 public struct PaymentOptions: Content {
 	/// Indicates whether the Payment objects created from this `TerminalCheckout` will automatically be `COMPLETED` or left in an `APPROVED` state for later modification.
 	var autocomplete: Bool?
+
+	public init(autocomplete: Bool? = nil) {
+		self.autocomplete = autocomplete
+	}
 }
 
+/// Represents a refund of a payment made using Square. Contains information about the original payment and the amount of money refunded.
 public struct PaymentRefund: Content {
 	/// The amount of money refunded. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).
 	var amount_money: Money
@@ -6180,8 +8908,23 @@ public struct PaymentRefund: Content {
 	var status: String?
 	/// The timestamp of when the refund was last updated, in RFC 3339 format.
 	let updated_at: Timestamp?
+
+	public init(amount_money: Money, id: String, app_fee_money: Money? = nil, created_at: Timestamp? = nil, location_id: String? = nil, order_id: String? = nil, payment_id: String? = nil, processing_fee: [ProcessingFee]? = nil, reason: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
+		self.amount_money = amount_money
+		self.id = id
+		self.app_fee_money = app_fee_money
+		self.created_at = created_at
+		self.location_id = location_id
+		self.order_id = order_id
+		self.payment_id = payment_id
+		self.processing_fee = processing_fee
+		self.reason = reason
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
+/// Represents the Square processing fee.
 public struct ProcessingFee: Content {
 	/// The fee amount, which might be negative, that is assessed or adjusted by Square.  Positive values represent funds being assessed, while negative values represent funds being returned.
 	var amount_money: Money?
@@ -6189,6 +8932,12 @@ public struct ProcessingFee: Content {
 	var effective_at: Timestamp?
 	/// The type of fee assessed or adjusted. The fee type can be `INITIAL` or `ADJUSTMENT`.
 	var type: String?
+
+	public init(amount_money: Money? = nil, effective_at: Timestamp? = nil, type: String? = nil) {
+		self.amount_money = amount_money
+		self.effective_at = effective_at
+		self.type = type
+	}
 }
 
 /// Indicates the Square product used to generate an inventory change.
@@ -6217,45 +8966,75 @@ public enum Product: String, Content {
 
 /// 
 public enum ProductType: String, Content {
-	/// 
 	case TERMINAL_API
 }
 
+/// Describes a `PublishInvoice` request.
 public struct PublishInvoiceRequest: Content {
 	/// A unique string that identifies the `PublishInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/docs/working-with-apis/idempotency).
 	var idempotency_key: String?
 	/// The version of the `Invoice` to publish. This must match the current version of the invoice, otherwise the request is rejected.
 	var version: Int
+
+	public init(version: Int, idempotency_key: String? = nil) {
+		self.version = version
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// Describes a `PublishInvoice` response.
 public struct PublishInvoiceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The published invoice.
 	var invoice: Invoice?
+
+	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+		self.errors = errors
+		self.invoice = invoice
+	}
 }
 
+/// The range of a number value between the specified lower and upper bounds.
 public struct Range: Content {
 	/// The upper bound of the number range.
 	var max: String?
 	/// The lower bound of the number range.
 	var min: String?
+
+	public init(max: String? = nil, min: String? = nil) {
+		self.max = max
+		self.min = min
+	}
 }
 
+/// A request to redeem a loyalty reward.
 public struct RedeemLoyaltyRewardRequest: Content {
 	/// A unique string that identifies this `RedeemLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
 	var idempotency_key: String
 	/// The ID of the `location` where the reward is redeemed.
 	var location_id: String
+
+	public init(idempotency_key: String, location_id: String) {
+		self.idempotency_key = idempotency_key
+		self.location_id = location_id
+	}
 }
 
+/// A response that includes the `LoyaltyEvent` published for redeeming the reward.
 public struct RedeemLoyaltyRewardResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The `LoyaltyEvent` for redeeming the reward.
 	var event: LoyaltyEvent?
+
+	public init(errors: [Error]? = nil, event: LoyaltyEvent? = nil) {
+		self.errors = errors
+		self.event = event
+	}
 }
 
+/// Represents a refund processed for a Square transaction.
 public struct Refund: Content {
 	/// Additional recipients (other than the merchant) receiving a portion of this refund. For example, fees assessed on a refund of a purchase by a third party integration.
 	var additional_recipients: [AdditionalRecipient]?
@@ -6277,8 +9056,22 @@ public struct Refund: Content {
 	var tender_id: String
 	/// The ID of the transaction that the refunded tender is part of.
 	var transaction_id: String
+
+	public init(amount_money: Money, id: String, location_id: String, reason: String, status: RefundStatus, tender_id: String, transaction_id: String, additional_recipients: [AdditionalRecipient]? = nil, created_at: Timestamp? = nil, processing_fee_money: Money? = nil) {
+		self.amount_money = amount_money
+		self.id = id
+		self.location_id = location_id
+		self.reason = reason
+		self.status = status
+		self.tender_id = tender_id
+		self.transaction_id = transaction_id
+		self.additional_recipients = additional_recipients
+		self.created_at = created_at
+		self.processing_fee_money = processing_fee_money
+	}
 }
 
+/// Refunds a payment.
 public struct RefundPaymentRequest: Content {
 	/// The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	var amount_money: Money
@@ -6290,13 +9083,27 @@ public struct RefundPaymentRequest: Content {
 	var payment_id: String
 	/// A description of the reason for the refund.
 	var reason: String?
+
+	public init(amount_money: Money, idempotency_key: String, payment_id: String, app_fee_money: Money? = nil, reason: String? = nil) {
+		self.amount_money = amount_money
+		self.idempotency_key = idempotency_key
+		self.payment_id = payment_id
+		self.app_fee_money = app_fee_money
+		self.reason = reason
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [RefundPayment](#endpoint-refunds-refundpayment) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct RefundPaymentResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The successfully created `PaymentRefund`.
 	var refund: PaymentRefund?
+
+	public init(errors: [Error]? = nil, refund: PaymentRefund? = nil) {
+		self.errors = errors
+		self.refund = refund
+	}
 }
 
 /// Indicates a refund's current status.
@@ -6311,16 +9118,27 @@ public enum RefundStatus: String, Content {
 	case FAILED
 }
 
+/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.
 public struct RegisterDomainRequest: Content {
 	/// A domain name as described in RFC-1034 that will be registered with ApplePay
 	var domain_name: String
+
+	public init(domain_name: String) {
+		self.domain_name = domain_name
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` will be present in a given response (never both).
 public struct RegisterDomainResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// Status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
 	var status: RegisterDomainResponseStatus?
+
+	public init(errors: [Error]? = nil, status: RegisterDomainResponseStatus? = nil) {
+		self.errors = errors
+		self.status = status
+	}
 }
 
 /// The status of domain registration.
@@ -6331,25 +9149,47 @@ public enum RegisterDomainResponseStatus: String, Content {
 	case VERIFIED
 }
 
+/// Defines the parameters for a `RemoveDisputeEvidence` request.
 public struct RemoveDisputeEvidenceRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields in a `RemoveDisputeEvidence` response.
 public struct RemoveDisputeEvidenceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](#endpoint-removegroupfromcustomer) endpoint.
 public struct RemoveGroupFromCustomerRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](#endpoint-removegroupfromcustomer) endpoint.
 public struct RemoveGroupFromCustomerResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
 public struct RenewTokenRequest: Content {
 	/// The token you want to renew.
 	var access_token: String?
+
+	public init(access_token: String? = nil) {
+		self.access_token = access_token
+	}
 }
 
 public struct RenewTokenResponse: Content {
@@ -6365,9 +9205,21 @@ public struct RenewTokenResponse: Content {
 	var subscription_id: String?
 	/// This value is always _bearer_.
 	var token_type: String?
+
+	public init(access_token: String? = nil, expires_at: String? = nil, merchant_id: String? = nil, plan_id: String? = nil, subscription_id: String? = nil, token_type: String? = nil) {
+		self.access_token = access_token
+		self.expires_at = expires_at
+		self.merchant_id = merchant_id
+		self.plan_id = plan_id
+		self.subscription_id = subscription_id
+		self.token_type = token_type
+	}
 }
 
 public struct RetrieveBookingRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveBookingResponse: Content {
@@ -6375,9 +9227,17 @@ public struct RetrieveBookingResponse: Content {
 	var booking: Booking?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+		self.booking = booking
+		self.errors = errors
+	}
 }
 
 public struct RetrieveBusinessBookingProfileRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveBusinessBookingProfileResponse: Content {
@@ -6385,11 +9245,20 @@ public struct RetrieveBusinessBookingProfileResponse: Content {
 	var business_booking_profile: BusinessBookingProfile?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(business_booking_profile: BusinessBookingProfile? = nil, errors: [Error]? = nil) {
+		self.business_booking_profile = business_booking_profile
+		self.errors = errors
+	}
 }
 
 public struct RetrieveCashDrawerShiftRequest: Content {
 	/// The ID of the location to retrieve cash drawer shifts from.
 	var location_id: String
+
+	public init(location_id: String) {
+		self.location_id = location_id
+	}
 }
 
 public struct RetrieveCashDrawerShiftResponse: Content {
@@ -6397,6 +9266,11 @@ public struct RetrieveCashDrawerShiftResponse: Content {
 	var cash_drawer_shift: CashDrawerShift?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(cash_drawer_shift: CashDrawerShift? = nil, errors: [Error]? = nil) {
+		self.cash_drawer_shift = cash_drawer_shift
+		self.errors = errors
+	}
 }
 
 public struct RetrieveCatalogObjectRequest: Content {
@@ -6404,6 +9278,11 @@ public struct RetrieveCatalogObjectRequest: Content {
 	var catalog_version: Int?
 	/// If `true`, the response will include additional objects that are related to the requested object, as follows:  If the `object` field of the response contains a `CatalogItem`, its associated `CatalogCategory`, `CatalogTax`, `CatalogImage` and `CatalogModifierList` objects will be returned in the `related_objects` field of the response. If the `object` field of the response contains a `CatalogItemVariation`, its parent `CatalogItem` will be returned in the `related_objects` field of the response.  Default value: `false`
 	var include_related_objects: Bool?
+
+	public init(catalog_version: Int? = nil, include_related_objects: Bool? = nil) {
+		self.catalog_version = catalog_version
+		self.include_related_objects = include_related_objects
+	}
 }
 
 public struct RetrieveCatalogObjectResponse: Content {
@@ -6413,68 +9292,135 @@ public struct RetrieveCatalogObjectResponse: Content {
 	var object: CatalogObject?
 	/// A list of `CatalogObject`s referenced by the object in the `object` field.
 	var related_objects: [CatalogObject]?
+
+	public init(errors: [Error]? = nil, object: CatalogObject? = nil, related_objects: [CatalogObject]? = nil) {
+		self.errors = errors
+		self.object = object
+		self.related_objects = related_objects
+	}
 }
 
+/// Defines the fields that can be provided in a request to the [RetrieveCustomerGroup](#endpoint-retrievecustomergroup) endpoint.
 public struct RetrieveCustomerGroupRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](#endpoint-retrievecustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
 public struct RetrieveCustomerGroupResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The retrieved customer group.
 	var group: CustomerGroup?
+
+	public init(errors: [Error]? = nil, group: CustomerGroup? = nil) {
+		self.errors = errors
+		self.group = group
+	}
 }
 
+/// Defines the fields that are included in requests to the RetrieveCustomer endpoint.
 public struct RetrieveCustomerRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the RetrieveCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
 public struct RetrieveCustomerResponse: Content {
 	/// The requested customer.
 	var customer: Customer?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(customer: Customer? = nil, errors: [Error]? = nil) {
+		self.customer = customer
+		self.errors = errors
+	}
 }
 
+/// Defines the valid parameters for requests to __RetrieveCustomerSegmentRequest__.
 public struct RetrieveCustomerSegmentRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields included in the response body for requests to __RetrieveCustomerSegment__.  One of `errors` or `segment` is present in a given response (never both).
 public struct RetrieveCustomerSegmentResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The retrieved customer segment.
 	var segment: CustomerSegment?
+
+	public init(errors: [Error]? = nil, segment: CustomerSegment? = nil) {
+		self.errors = errors
+		self.segment = segment
+	}
 }
 
+/// Defines the parameters for a `RetrieveDisputeEvidence` request.
 public struct RetrieveDisputeEvidenceRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields in a `RetrieveDisputeEvidence` response.
 public struct RetrieveDisputeEvidenceResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// Metadata about the dispute evidence file.
 	var evidence: DisputeEvidence?
+
+	public init(errors: [Error]? = nil, evidence: DisputeEvidence? = nil) {
+		self.errors = errors
+		self.evidence = evidence
+	}
 }
 
+/// Defines the request parameters for the `RetrieveDispute` endpoint.
 public struct RetrieveDisputeRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines fields in a `RetrieveDispute` response.
 public struct RetrieveDisputeResponse: Content {
 	/// Details about the requested `Dispute`.
 	var dispute: Dispute?
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
+
+	public init(dispute: Dispute? = nil, errors: [Error]? = nil) {
+		self.dispute = dispute
+		self.errors = errors
+	}
 }
 
 public struct RetrieveEmployeeRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveEmployeeResponse: Content {
 	var employee: Employee?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(employee: Employee? = nil, errors: [Error]? = nil) {
+		self.employee = employee
+		self.errors = errors
+	}
 }
 
 public struct RetrieveInventoryAdjustmentRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveInventoryAdjustmentResponse: Content {
@@ -6482,6 +9428,11 @@ public struct RetrieveInventoryAdjustmentResponse: Content {
 	var adjustment: InventoryAdjustment?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(adjustment: InventoryAdjustment? = nil, errors: [Error]? = nil) {
+		self.adjustment = adjustment
+		self.errors = errors
+	}
 }
 
 public struct RetrieveInventoryChangesRequest: Content {
@@ -6489,6 +9440,11 @@ public struct RetrieveInventoryChangesRequest: Content {
 	var cursor: String?
 	/// The `Location` IDs to look up as a comma-separated list. An empty list queries all locations.
 	var location_ids: String?
+
+	public init(cursor: String? = nil, location_ids: String? = nil) {
+		self.cursor = cursor
+		self.location_ids = location_ids
+	}
 }
 
 public struct RetrieveInventoryChangesResponse: Content {
@@ -6498,6 +9454,12 @@ public struct RetrieveInventoryChangesResponse: Content {
 	var cursor: String?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(changes: [InventoryChange]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.changes = changes
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
 public struct RetrieveInventoryCountRequest: Content {
@@ -6505,6 +9467,11 @@ public struct RetrieveInventoryCountRequest: Content {
 	var cursor: String?
 	/// The `Location` IDs to look up as a comma-separated list. An empty list queries all locations.
 	var location_ids: String?
+
+	public init(cursor: String? = nil, location_ids: String? = nil) {
+		self.cursor = cursor
+		self.location_ids = location_ids
+	}
 }
 
 public struct RetrieveInventoryCountResponse: Content {
@@ -6514,9 +9481,18 @@ public struct RetrieveInventoryCountResponse: Content {
 	var cursor: String?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(counts: [InventoryCount]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.counts = counts
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
 public struct RetrieveInventoryPhysicalCountRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveInventoryPhysicalCountResponse: Content {
@@ -6524,49 +9500,97 @@ public struct RetrieveInventoryPhysicalCountResponse: Content {
 	var count: InventoryPhysicalCount?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(count: InventoryPhysicalCount? = nil, errors: [Error]? = nil) {
+		self.count = count
+		self.errors = errors
+	}
 }
 
+/// Defines the fields that are included in the request body for the __RetrieveLocation__ endpoint.
 public struct RetrieveLocationRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that the [RetrieveLocation](#endpoint-retrievelocation) endpoint returns in a response.
 public struct RetrieveLocationResponse: Content {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The requested location.
 	var location: Location?
+
+	public init(errors: [Error]? = nil, location: Location? = nil) {
+		self.errors = errors
+		self.location = location
+	}
 }
 
+/// A request to retrieve a loyalty account.
 public struct RetrieveLoyaltyAccountRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response that includes the loyalty account.
 public struct RetrieveLoyaltyAccountResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The loyalty account.
 	var loyalty_account: LoyaltyAccount?
+
+	public init(errors: [Error]? = nil, loyalty_account: LoyaltyAccount? = nil) {
+		self.errors = errors
+		self.loyalty_account = loyalty_account
+	}
 }
 
+/// A request to retrieve a loyalty reward.
 public struct RetrieveLoyaltyRewardRequest: Content {
+
+	public init() {
+	}
 }
 
+/// A response that includes the loyalty reward.
 public struct RetrieveLoyaltyRewardResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The loyalty reward retrieved.
 	var reward: LoyaltyReward?
+
+	public init(errors: [Error]? = nil, reward: LoyaltyReward? = nil) {
+		self.errors = errors
+		self.reward = reward
+	}
 }
 
+/// Request object for the [RetrieveMerchant](#endpoint-retrievemerchant) endpoint.
 public struct RetrieveMerchantRequest: Content {
+
+	public init() {
+	}
 }
 
+/// The response object returned by the [RetrieveMerchant](#endpoint-retrieveMerchant) endpoint.
 public struct RetrieveMerchantResponse: Content {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The requested `Merchant` object.
 	var merchant: Merchant?
+
+	public init(errors: [Error]? = nil, merchant: Merchant? = nil) {
+		self.errors = errors
+		self.merchant = merchant
+	}
 }
 
 public struct RetrieveObsMigrationProfileRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveObsMigrationProfileResponse: Content {
@@ -6580,9 +9604,20 @@ public struct RetrieveObsMigrationProfileResponse: Content {
 	var banner_text: String?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(banner_cta_text: String? = nil, banner_cta_url: String? = nil, banner_enabled: Bool? = nil, banner_text: String? = nil, errors: [Error]? = nil) {
+		self.banner_cta_text = banner_cta_text
+		self.banner_cta_url = banner_cta_url
+		self.banner_enabled = banner_enabled
+		self.banner_text = banner_text
+		self.errors = errors
+	}
 }
 
 public struct RetrieveOrderRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveOrderResponse: Content {
@@ -6590,19 +9625,37 @@ public struct RetrieveOrderResponse: Content {
 	var errors: [Error]?
 	/// The requested order.
 	var order: Order?
+
+	public init(errors: [Error]? = nil, order: Order? = nil) {
+		self.errors = errors
+		self.order = order
+	}
 }
 
+/// Defines parameters in a  [RetrieveSubscription](#endpoint-subscriptions-retrievesubscription) endpoint request.
 public struct RetrieveSubscriptionRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response from the [RetrieveSubscription](#endpoint-subscriptions-retrievesubscription) endpoint.
 public struct RetrieveSubscriptionResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The subscription retrieved.
 	var subscription: Subscription?
+
+	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+		self.errors = errors
+		self.subscription = subscription
+	}
 }
 
 public struct RetrieveTeamMemberBookingProfileRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct RetrieveTeamMemberBookingProfileResponse: Content {
@@ -6610,36 +9663,70 @@ public struct RetrieveTeamMemberBookingProfileResponse: Content {
 	var errors: [Error]?
 	/// The returned team member booking profile.
 	var team_member_booking_profile: TeamMemberBookingProfile?
+
+	public init(errors: [Error]? = nil, team_member_booking_profile: TeamMemberBookingProfile? = nil) {
+		self.errors = errors
+		self.team_member_booking_profile = team_member_booking_profile
+	}
 }
 
+/// Represents a retrieve request for a `TeamMember` object.
 public struct RetrieveTeamMemberRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Represents a response from a retrieve request, containing a `TeamMember` object or error messages.
 public struct RetrieveTeamMemberResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully retrieved `TeamMember` object.
 	var team_member: TeamMember?
+
+	public init(errors: [Error]? = nil, team_member: TeamMember? = nil) {
+		self.errors = errors
+		self.team_member = team_member
+	}
 }
 
 public struct RetrieveTransactionRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](#endpont-retrievetransaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct RetrieveTransactionResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The requested transaction.
 	var transaction: Transaction?
+
+	public init(errors: [Error]? = nil, transaction: Transaction? = nil) {
+		self.errors = errors
+		self.transaction = transaction
+	}
 }
 
+/// Represents a retrieve request for the wage setting of a team member
 public struct RetrieveWageSettingRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Represents a response from a retrieve request, containing the specified `WageSetting` object or error messages.
 public struct RetrieveWageSettingResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully retrieved `WageSetting` object.
 	var wage_setting: WageSetting?
+
+	public init(errors: [Error]? = nil, wage_setting: WageSetting? = nil) {
+		self.errors = errors
+		self.wage_setting = wage_setting
+	}
 }
 
 public struct RevokeTokenRequest: Content {
@@ -6651,18 +9738,35 @@ public struct RevokeTokenRequest: Content {
 	var merchant_id: String?
 	/// If `true`, terminate the given single access token, but do not terminate the entire authorization. Default: `false`
 	var revoke_only_access_token: Bool?
+
+	public init(access_token: String? = nil, client_id: String? = nil, merchant_id: String? = nil, revoke_only_access_token: Bool? = nil) {
+		self.access_token = access_token
+		self.client_id = client_id
+		self.merchant_id = merchant_id
+		self.revoke_only_access_token = revoke_only_access_token
+	}
 }
 
 public struct RevokeTokenResponse: Content {
 	/// If the request is successful, this is true.
 	var success: Bool?
+
+	public init(success: Bool? = nil) {
+		self.success = success
+	}
 }
 
+/// Represents fraud risk information for the associated payment.  When you take a payment through Square's Payments API (using the `CreatePayment` endpoint), Square evaluates it and assigns a risk level to the payment. Sellers can use this information to determine the course of action (for example, provide the goods/services or refund the payment).
 public struct RiskEvaluation: Content {
 	/// The timestamp when payment risk was evaluated, in RFC3339 format.
 	var created_at: Timestamp?
 	/// The risk level associated with the payment
 	var risk_level: RiskEvaluationRiskLevel?
+
+	public init(created_at: Timestamp? = nil, risk_level: RiskEvaluationRiskLevel? = nil) {
+		self.created_at = created_at
+		self.risk_level = risk_level
+	}
 }
 
 /// 
@@ -6677,6 +9781,7 @@ public enum RiskEvaluationRiskLevel: String, Content {
 	case HIGH
 }
 
+/// A query filter to search for availabilities by.
 public struct SearchAvailabilityFilter: Content {
 	/// The query expression to search for availabilities for an existing booking by matching the specified `booking_id` value. This is commonly used to reschedule an appointment. If this expression is specified, the `location_id` and `segment_filters` expressions are not allowed.
 	var booking_id: String?
@@ -6686,16 +9791,32 @@ public struct SearchAvailabilityFilter: Content {
 	var segment_filters: [SegmentFilter]?
 	/// The query expression to search for availabilities matching the specified range of starting times. The range must be at least 24 hours and at most 31 days in length.
 	var start_at_range: TimeRange
+
+	public init(start_at_range: TimeRange, booking_id: String? = nil, location_id: String? = nil, segment_filters: [SegmentFilter]? = nil) {
+		self.start_at_range = start_at_range
+		self.booking_id = booking_id
+		self.location_id = location_id
+		self.segment_filters = segment_filters
+	}
 }
 
+/// Query conditions to search for availabilities of bookings.
 public struct SearchAvailabilityQuery: Content {
 	/// The query filter to search for availabilities of existing bookings.
 	var filter: SearchAvailabilityFilter
+
+	public init(filter: SearchAvailabilityFilter) {
+		self.filter = filter
+	}
 }
 
 public struct SearchAvailabilityRequest: Content {
 	/// Query conditions used to filter results.
 	var query: SearchAvailabilityQuery
+
+	public init(query: SearchAvailabilityQuery) {
+		self.query = query
+	}
 }
 
 public struct SearchAvailabilityResponse: Content {
@@ -6703,8 +9824,14 @@ public struct SearchAvailabilityResponse: Content {
 	var availabilities: [Availability]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(availabilities: [Availability]? = nil, errors: [Error]? = nil) {
+		self.availabilities = availabilities
+		self.errors = errors
+	}
 }
 
+/// Defines the request body for the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint.
 public struct SearchCatalogItemsRequest: Content {
 	/// The category id query expression to return items containing the specified category IDs.
 	var category_ids: [String]?
@@ -6724,6 +9851,18 @@ public struct SearchCatalogItemsRequest: Content {
 	var stock_levels: SearchCatalogItemsRequestStockLevel?
 	/// The text filter expression to return items or item variations containing specified text in the `name`, `description`, or `abbreviation` attribute value of an item, or in the `name`, `sku`, or `upc` attribute value of an item variation.
 	var text_filter: String?
+
+	public init(category_ids: [String]? = nil, cursor: String? = nil, custom_attribute_filters: [CustomAttributeFilter]? = nil, enabled_location_ids: [String]? = nil, limit: Int? = nil, product_types: CatalogItemProductType? = nil, sort_order: SortOrder? = nil, stock_levels: SearchCatalogItemsRequestStockLevel? = nil, text_filter: String? = nil) {
+		self.category_ids = category_ids
+		self.cursor = cursor
+		self.custom_attribute_filters = custom_attribute_filters
+		self.enabled_location_ids = enabled_location_ids
+		self.limit = limit
+		self.product_types = product_types
+		self.sort_order = sort_order
+		self.stock_levels = stock_levels
+		self.text_filter = text_filter
+	}
 }
 
 /// Defines supported stock levels of the item inventory.
@@ -6734,6 +9873,7 @@ public enum SearchCatalogItemsRequestStockLevel: String, Content {
 	case LOW
 }
 
+/// Defines the response body returned from the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint.
 public struct SearchCatalogItemsResponse: Content {
 	/// Pagination token used in the next request to return more of the search result.
 	var cursor: String?
@@ -6743,6 +9883,13 @@ public struct SearchCatalogItemsResponse: Content {
 	var items: [CatalogObject]?
 	/// Ids of returned item variations matching the specified query expression.
 	var matched_variation_ids: [String]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, items: [CatalogObject]? = nil, matched_variation_ids: [String]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.items = items
+		self.matched_variation_ids = matched_variation_ids
+	}
 }
 
 public struct SearchCatalogObjectsRequest: Content {
@@ -6760,6 +9907,16 @@ public struct SearchCatalogObjectsRequest: Content {
 	var object_types: CatalogObjectType?
 	/// A query to be used to filter or sort the results. If no query is specified, the entire catalog will be returned.
 	var query: CatalogQuery?
+
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil, limit: Int? = nil, object_types: CatalogObjectType? = nil, query: CatalogQuery? = nil) {
+		self.begin_time = begin_time
+		self.cursor = cursor
+		self.include_deleted_objects = include_deleted_objects
+		self.include_related_objects = include_related_objects
+		self.limit = limit
+		self.object_types = object_types
+		self.query = query
+	}
 }
 
 public struct SearchCatalogObjectsResponse: Content {
@@ -6773,8 +9930,17 @@ public struct SearchCatalogObjectsResponse: Content {
 	var objects: [CatalogObject]?
 	/// A list of CatalogObjects referenced by the objects in the `objects` field.
 	var related_objects: [CatalogObject]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, latest_time: String? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.latest_time = latest_time
+		self.objects = objects
+		self.related_objects = related_objects
+	}
 }
 
+/// Defines the fields included in the request body for the SearchCustomers endpoint.
 public struct SearchCustomersRequest: Content {
 	/// Include the pagination cursor in subsequent calls to this endpoint to retrieve the next set of results associated with the original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
@@ -6782,8 +9948,15 @@ public struct SearchCustomersRequest: Content {
 	var limit: Int?
 	/// Query customers based on the given conditions and sort order. Calling SearchCustomers without an explicit query parameter will return all customers ordered alphabetically based on `given_name` and `family_name`.
 	var query: CustomerQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: CustomerQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the SearchCustomers endpoint.  One of `errors` or `customers` is present in a given response (never both).
 public struct SearchCustomersResponse: Content {
 	/// A pagination cursor that can be used during subsequent calls to SearchCustomers to retrieve the next set of results associated with the original query. Pagination cursors are only present when a request succeeds and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	var cursor: String?
@@ -6791,8 +9964,15 @@ public struct SearchCustomersResponse: Content {
 	var customers: [Customer]?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [Error]? = nil) {
+		self.cursor = cursor
+		self.customers = customers
+		self.errors = errors
+	}
 }
 
+/// Describes a `SearchInvoices` request.
 public struct SearchInvoicesRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -6800,8 +9980,15 @@ public struct SearchInvoicesRequest: Content {
 	var limit: Int?
 	/// Describes the query criteria for searching invoices.
 	var query: InvoiceQuery
+
+	public init(query: InvoiceQuery, cursor: String? = nil, limit: Int? = nil) {
+		self.query = query
+		self.cursor = cursor
+		self.limit = limit
+	}
 }
 
+/// Describes a `SearchInvoices` response.
 public struct SearchInvoicesResponse: Content {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -6809,8 +9996,15 @@ public struct SearchInvoicesResponse: Content {
 	var errors: [Error]?
 	/// The list of invoices returned by the search.
 	var invoices: [Invoice]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, invoices: [Invoice]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.invoices = invoices
+	}
 }
 
+/// A request to search for loyalty accounts.
 public struct SearchLoyaltyAccountsRequest: Content {
 	/// A pagination cursor returned by a previous call to  this endpoint. Provide this to retrieve the next set of  results for the original query.  For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
@@ -6818,15 +10012,28 @@ public struct SearchLoyaltyAccountsRequest: Content {
 	var limit: Int?
 	/// The search criteria for the request.
 	var query: SearchLoyaltyAccountsRequestLoyaltyAccountQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: SearchLoyaltyAccountsRequestLoyaltyAccountQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// The search criteria for the loyalty accounts.
 public struct SearchLoyaltyAccountsRequestLoyaltyAccountQuery: Content {
 	/// The set of customer IDs to use in the loyalty account search.    This cannot be combined with `mappings`.    Max: 30 customer IDs
 	var customer_ids: [String]?
 	/// The set of mappings to use in the loyalty account search.    This cannot be combined with `customer_ids`.    Max: 30 mappings
 	var mappings: [LoyaltyAccountMapping]?
+
+	public init(customer_ids: [String]? = nil, mappings: [LoyaltyAccountMapping]? = nil) {
+		self.customer_ids = customer_ids
+		self.mappings = mappings
+	}
 }
 
+/// A response that includes loyalty accounts that satisfy the search criteria.
 public struct SearchLoyaltyAccountsResponse: Content {
 	/// The pagination cursor to use in a subsequent  request. If empty, this is the final response. For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
@@ -6834,8 +10041,15 @@ public struct SearchLoyaltyAccountsResponse: Content {
 	var errors: [Error]?
 	/// The loyalty accounts that met the search criteria,   in order of creation date.
 	var loyalty_accounts: [LoyaltyAccount]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, loyalty_accounts: [LoyaltyAccount]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.loyalty_accounts = loyalty_accounts
+	}
 }
 
+/// A request to search for loyalty events.
 public struct SearchLoyaltyEventsRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. For more information, see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
@@ -6843,8 +10057,15 @@ public struct SearchLoyaltyEventsRequest: Content {
 	var limit: Int?
 	/// A set of one or more predefined query filters to apply when  searching for loyalty events. The endpoint performs a logical AND to  evaluate multiple filters and performs a logical OR on arrays   that specifies multiple field values.
 	var query: LoyaltyEventQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: LoyaltyEventQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// A response that contains loyalty events that satisfy the search  criteria, in order by the `created_at` date.
 public struct SearchLoyaltyEventsResponse: Content {
 	/// The pagination cursor to be used in a subsequent  request. If empty, this is the final response.  For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
@@ -6852,8 +10073,15 @@ public struct SearchLoyaltyEventsResponse: Content {
 	var errors: [Error]?
 	/// The loyalty events that satisfy the search criteria.
 	var events: [LoyaltyEvent]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, events: [LoyaltyEvent]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.events = events
+	}
 }
 
+/// A request to search for loyalty rewards.
 public struct SearchLoyaltyRewardsRequest: Content {
 	/// A pagination cursor returned by a previous call to  this endpoint. Provide this to retrieve the next set of  results for the original query. For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	var cursor: String?
@@ -6861,15 +10089,28 @@ public struct SearchLoyaltyRewardsRequest: Content {
 	var limit: Int?
 	/// The search criteria for the request.  If empty, the endpoint retrieves all loyalty rewards in the loyalty program.
 	var query: SearchLoyaltyRewardsRequestLoyaltyRewardQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: SearchLoyaltyRewardsRequestLoyaltyRewardQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// The set of search requirements.
 public struct SearchLoyaltyRewardsRequestLoyaltyRewardQuery: Content {
 	/// The ID of the `loyalty account` to which the loyalty reward belongs.
 	var loyalty_account_id: String
 	/// The status of the loyalty reward. See [LoyaltyRewardStatus](#type-loyaltyrewardstatus) for possible values
 	var status: LoyaltyRewardStatus?
+
+	public init(loyalty_account_id: String, status: LoyaltyRewardStatus? = nil) {
+		self.loyalty_account_id = loyalty_account_id
+		self.status = status
+	}
 }
 
+/// A response that includes the loyalty rewards satisfying the search criteria.
 public struct SearchLoyaltyRewardsResponse: Content {
 	/// The pagination cursor to be used in a subsequent  request. If empty, this is the final response.
 	var cursor: String?
@@ -6877,13 +10118,25 @@ public struct SearchLoyaltyRewardsResponse: Content {
 	var errors: [Error]?
 	/// The loyalty rewards that satisfy the search criteria. These are returned in descending order by `updated_at`.
 	var rewards: [LoyaltyReward]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, rewards: [LoyaltyReward]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.rewards = rewards
+	}
 }
 
+/// Filter based on Order `customer_id` and any Tender `customer_id` associated with the Order. Does not filter based on the [FulfillmentRecipient](#type-orderfulfillmentrecipient) `customer_id`.
 public struct SearchOrdersCustomerFilter: Content {
 	/// List of customer IDs to filter by.  Max: 10 customer IDs.
 	var customer_ids: [String]?
+
+	public init(customer_ids: [String]? = nil) {
+		self.customer_ids = customer_ids
+	}
 }
 
+/// Filter for `Order` objects based on whether their `CREATED_AT`, `CLOSED_AT` or `UPDATED_AT` timestamps fall within a specified time range. You can specify the time range and which timestamp to filter for. You can filter for only one time range at a time.  For each time range, the start time and end time are inclusive. If the end time is absent, it defaults to the time of the first request for the cursor.  __Important:__ If you use the DateTimeFilter in a SearchOrders query, you must also set the `sort_field` in [OrdersSort](#type-searchorderordersort) to the same field you filter for. For example, if you set the `CLOSED_AT` field in DateTimeFilter, you must also set the `sort_field` in SearchOrdersSort to `CLOSED_AT`. Otherwise, SearchOrders will throw an error. [Learn more about filtering orders by time range](/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range).
 public struct SearchOrdersDateTimeFilter: Content {
 	/// Time range for filtering on the `closed_at` timestamp. If you use this value, you must also set the `sort_field` in the OrdersSearchSort object to `CLOSED_AT`.
 	var closed_at: TimeRange?
@@ -6891,8 +10144,15 @@ public struct SearchOrdersDateTimeFilter: Content {
 	var created_at: TimeRange?
 	/// Time range for filtering on the `updated_at` timestamp. If you use this value, you must also set the `sort_field` in the OrdersSearchSort object to `UPDATED_AT`.
 	var updated_at: TimeRange?
+
+	public init(closed_at: TimeRange? = nil, created_at: TimeRange? = nil, updated_at: TimeRange? = nil) {
+		self.closed_at = closed_at
+		self.created_at = created_at
+		self.updated_at = updated_at
+	}
 }
 
+/// Filtering criteria to use for a SearchOrders request. Multiple filters will be ANDed together.
 public struct SearchOrdersFilter: Content {
 	/// Filter by customers associated with the order.
 	var customer_filter: SearchOrdersCustomerFilter?
@@ -6904,22 +10164,43 @@ public struct SearchOrdersFilter: Content {
 	var source_filter: SearchOrdersSourceFilter?
 	/// Filter by ``OrderState``.
 	var state_filter: SearchOrdersStateFilter?
+
+	public init(customer_filter: SearchOrdersCustomerFilter? = nil, date_time_filter: SearchOrdersDateTimeFilter? = nil, fulfillment_filter: SearchOrdersFulfillmentFilter? = nil, source_filter: SearchOrdersSourceFilter? = nil, state_filter: SearchOrdersStateFilter? = nil) {
+		self.customer_filter = customer_filter
+		self.date_time_filter = date_time_filter
+		self.fulfillment_filter = fulfillment_filter
+		self.source_filter = source_filter
+		self.state_filter = state_filter
+	}
 }
 
+/// Filter based on [Order Fulfillment](#type-orderfulfillment) information.
 public struct SearchOrdersFulfillmentFilter: Content {
 	/// List of `fulfillment states` to filter for. Will return orders if any of its fulfillments match any of the fulfillment states listed in this field. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
 	var fulfillment_states: OrderFulfillmentState?
 	/// List of `fulfillment types` to filter for. Will return orders if any of its fulfillments match any of the fulfillment types listed in this field. See [OrderFulfillmentType](#type-orderfulfillmenttype) for possible values
 	var fulfillment_types: OrderFulfillmentType?
+
+	public init(fulfillment_states: OrderFulfillmentState? = nil, fulfillment_types: OrderFulfillmentType? = nil) {
+		self.fulfillment_states = fulfillment_states
+		self.fulfillment_types = fulfillment_types
+	}
 }
 
+/// Contains query criteria for the search.
 public struct SearchOrdersQuery: Content {
 	/// Criteria to filter results by.
 	var filter: SearchOrdersFilter?
 	/// Criteria to sort results by.
 	var sort: SearchOrdersSort?
+
+	public init(filter: SearchOrdersFilter? = nil, sort: SearchOrdersSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
 }
 
+/// The request does not have any required fields. When given no query criteria, SearchOrders will return all results for all of the merchant’s locations. When fetching additional pages using a `cursor`, the `query` must be equal to the `query` used to fetch the first page of results.
 public struct SearchOrdersRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
@@ -6931,8 +10212,17 @@ public struct SearchOrdersRequest: Content {
 	var query: SearchOrdersQuery?
 	/// Boolean that controls the format of the search results. If `true`, SearchOrders will return ``OrderEntry`` objects. If `false`, SearchOrders will return complete Order objects.  Default: `false`.
 	var return_entries: Bool?
+
+	public init(cursor: String? = nil, limit: Int? = nil, location_ids: [String]? = nil, query: SearchOrdersQuery? = nil, return_entries: Bool? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.location_ids = location_ids
+		self.query = query
+		self.return_entries = return_entries
+	}
 }
 
+/// Only one of `order_entries` or `orders` fields will be set, depending on whether `return_entries` was set on the [SearchOrdersRequest](#type-searchorderrequest).
 public struct SearchOrdersResponse: Content {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	var cursor: String?
@@ -6942,13 +10232,26 @@ public struct SearchOrdersResponse: Content {
 	var order_entries: [OrderEntry]?
 	/// List of `Order` objects that match query conditions. Populated only if `return_entries` in the request is set to `false`.
 	var orders: [Order]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, order_entries: [OrderEntry]? = nil, orders: [Order]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.order_entries = order_entries
+		self.orders = orders
+	}
 }
 
+/// Sorting criteria for a SearchOrders request. Results can only be sorted by a timestamp field.
 public struct SearchOrdersSort: Content {
 	/// The field to sort by.  __Important:__ When using a `DateTimeFilter`, `sort_field` must match the timestamp field that the DateTimeFilter uses to filter. For example, If you set your `sort_field` to `CLOSED_AT` and you use a DateTimeFilter, your DateTimeFilter must filter for orders by their `CLOSED_AT` date. If this field does not match the timestamp field in `DateTimeFilter`, SearchOrders will return an error.  Default: `CREATED_AT`. See [SearchOrdersSortField](#type-searchorderssortfield) for possible values
 	var sort_field: SearchOrdersSortField
 	/// The chronological order in which results are returned. Defaults to `DESC`. See [SortOrder](#type-sortorder) for possible values
 	var sort_order: SortOrder?
+
+	public init(sort_field: SearchOrdersSortField, sort_order: SortOrder? = nil) {
+		self.sort_field = sort_field
+		self.sort_order = sort_order
+	}
 }
 
 /// Specifies which timestamp to use to sort SearchOrder results.
@@ -6961,16 +10264,27 @@ public enum SearchOrdersSortField: String, Content {
 	case CLOSED_AT
 }
 
+/// Filter based on order `source` information.
 public struct SearchOrdersSourceFilter: Content {
 	/// Filters by `Source` `name`. Will return any orders with with a `source.name` that matches any of the listed source names.  Max: 10 source names.
 	var source_names: [String]?
+
+	public init(source_names: [String]? = nil) {
+		self.source_names = source_names
+	}
 }
 
+/// Filter by current Order `state`.
 public struct SearchOrdersStateFilter: Content {
 	/// States to filter for. See [OrderState](#type-orderstate) for possible values
 	var states: OrderState
+
+	public init(states: OrderState) {
+		self.states = states
+	}
 }
 
+/// A request for a filtered and sorted set of `Shift` objects.
 public struct SearchShiftsRequest: Content {
 	/// opaque cursor for fetching the next page.
 	var cursor: String?
@@ -6978,8 +10292,15 @@ public struct SearchShiftsRequest: Content {
 	var limit: Int?
 	/// Query filters.
 	var query: ShiftQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: ShiftQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// The response to a request for `Shift` objects. Contains the requested `Shift` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct SearchShiftsResponse: Content {
 	/// Opaque cursor for fetching the next page.
 	var cursor: String?
@@ -6987,20 +10308,38 @@ public struct SearchShiftsResponse: Content {
 	var errors: [Error]?
 	/// Shifts
 	var shifts: [Shift]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, shifts: [Shift]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.shifts = shifts
+	}
 }
 
+/// Represents a set of SearchSubscriptionsQuery filters used to limit the set of Subscriptions returned by SearchSubscriptions.
 public struct SearchSubscriptionsFilter: Content {
 	/// A filter to select subscriptions based on the customer.
 	var customer_ids: [String]?
 	/// A filter to select subscriptions based the location.
 	var location_ids: [String]?
+
+	public init(customer_ids: [String]? = nil, location_ids: [String]? = nil) {
+		self.customer_ids = customer_ids
+		self.location_ids = location_ids
+	}
 }
 
+/// Represents a query (including filtering criteria) used to search for subscriptions.
 public struct SearchSubscriptionsQuery: Content {
 	/// A list of filtering criteria.
 	var filter: SearchSubscriptionsFilter?
+
+	public init(filter: SearchSubscriptionsFilter? = nil) {
+		self.filter = filter
+	}
 }
 
+/// Defines parameters in a [SearchSubscriptions](#endpoint-subscriptions-searchsubscriptions) endpoint  request.
 public struct SearchSubscriptionsRequest: Content {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -7008,8 +10347,15 @@ public struct SearchSubscriptionsRequest: Content {
 	var limit: Int?
 	/// Query subscriptions based on the given conditions and sort order. Calling SearchSubscriptions without an explicit query parameter will return all subscriptions.
 	var query: SearchSubscriptionsQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: SearchSubscriptionsQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// Defines the fields that are included in the response from the [SearchSubscriptions](#endpoint-subscriptions-searchsubscriptions) endpoint.
 public struct SearchSubscriptionsResponse: Content {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of subscriptions.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	var cursor: String?
@@ -7017,20 +10363,38 @@ public struct SearchSubscriptionsResponse: Content {
 	var errors: [Error]?
 	/// The search result.
 	var subscriptions: [Subscription]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, subscriptions: [Subscription]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.subscriptions = subscriptions
+	}
 }
 
+/// Represents a filter used in a search for `TeamMember` objects. `AND` logic is applied between the individual fields, and `OR` logic is applied within list-based fields. For example, setting this filter value, ``` filter = (locations_ids = ["A", "B"], status = ACTIVE) ``` returns only active team members assigned to either location "A" or "B".
 public struct SearchTeamMembersFilter: Content {
 	/// When present, filter by team members assigned to the specified locations. When empty, include team members assigned to any location.
 	var location_ids: [String]?
 	/// When present, filter by team members who match the given status. When empty, include team members of all statuses. See [TeamMemberStatus](#type-teammemberstatus) for possible values
 	var status: TeamMemberStatus?
+
+	public init(location_ids: [String]? = nil, status: TeamMemberStatus? = nil) {
+		self.location_ids = location_ids
+		self.status = status
+	}
 }
 
+/// Represents the parameters in a search for `TeamMember` objects.
 public struct SearchTeamMembersQuery: Content {
 	/// The options to filter by.
 	var filter: SearchTeamMembersFilter?
+
+	public init(filter: SearchTeamMembersFilter? = nil) {
+		self.filter = filter
+	}
 }
 
+/// Represents a search request for a filtered list of `TeamMember` objects.
 public struct SearchTeamMembersRequest: Content {
 	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) with Square APIs for more information.
 	var cursor: String?
@@ -7038,8 +10402,15 @@ public struct SearchTeamMembersRequest: Content {
 	var limit: Int?
 	/// The query parameters.
 	var query: SearchTeamMembersQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: SearchTeamMembersQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
+/// Represents a response from a search request, containing a filtered list of `TeamMember` objects.
 public struct SearchTeamMembersResponse: Content {
 	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) with Square APIs for more information.
 	var cursor: String?
@@ -7047,6 +10418,12 @@ public struct SearchTeamMembersResponse: Content {
 	var errors: [Error]?
 	/// The filtered list of `TeamMember` objects.
 	var team_members: [TeamMember]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, team_members: [TeamMember]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.team_members = team_members
+	}
 }
 
 public struct SearchTerminalCheckoutsRequest: Content {
@@ -7056,6 +10433,12 @@ public struct SearchTerminalCheckoutsRequest: Content {
 	var limit: Int?
 	/// Queries terminal checkouts based on given conditions and sort order. Leaving this unset will return all checkouts with the default sort order.
 	var query: TerminalCheckoutQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: TerminalCheckoutQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
 public struct SearchTerminalCheckoutsResponse: Content {
@@ -7065,6 +10448,12 @@ public struct SearchTerminalCheckoutsResponse: Content {
 	var cursor: String?
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
+
+	public init(checkouts: [TerminalCheckout]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+		self.checkouts = checkouts
+		self.cursor = cursor
+		self.errors = errors
+	}
 }
 
 public struct SearchTerminalRefundsRequest: Content {
@@ -7074,6 +10463,12 @@ public struct SearchTerminalRefundsRequest: Content {
 	var limit: Int?
 	/// Query the terminal refunds based on given conditions and sort order. Calling `SearchTerminalRefunds` without an explicitly query parameter will return all available refunds with the default sort order.
 	var query: TerminalRefundQuery?
+
+	public init(cursor: String? = nil, limit: Int? = nil, query: TerminalRefundQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
 }
 
 public struct SearchTerminalRefundsResponse: Content {
@@ -7083,15 +10478,28 @@ public struct SearchTerminalRefundsResponse: Content {
 	var errors: [Error]?
 	/// The requested search result of `TerminalRefund`s.
 	var refunds: [TerminalRefund]?
+
+	public init(cursor: String? = nil, errors: [Error]? = nil, refunds: [TerminalRefund]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.refunds = refunds
+	}
 }
 
+/// A query filter to search for appointment segments by.
 public struct SegmentFilter: Content {
 	/// The ID of the `CatalogItemVariation` representing the service booked in this segment.
 	var service_variation_id: String
 	/// A query expression specifying which team members satisfy the condition. Supported expressions are - `ANY`: include team members whose IDs match any member of the specified list. - `NONE`: exclude team members whose IDs match members of the specified list.  The `ALL` expression is not supported in the Bookings API. When no expression is specified, any service-providing team member is eligible to fulfill the Booking.
 	var team_member_id_filter: FilterValue?
+
+	public init(service_variation_id: String, team_member_id_filter: FilterValue? = nil) {
+		self.service_variation_id = service_variation_id
+		self.team_member_id_filter = team_member_id_filter
+	}
 }
 
+/// A record of the hourly rate, start, and end times for a single work shift for an employee. May include a record of the start and end times for breaks taken during the shift.
 public struct Shift: Content {
 	/// A list of any paid or unpaid breaks that were taken during this shift.
 	var breaks: [Break]?
@@ -7119,8 +10527,25 @@ public struct Shift: Content {
 	var version: Int?
 	/// Job and pay related information. If wage is not set on create, will default to a wage of zero money. If title is not set on create, will default to the name of the role the employee is assigned to, if any.
 	var wage: ShiftWage?
+
+	public init(start_at: Timestamp, breaks: [Break]? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, end_at: Timestamp? = nil, id: String? = nil, location_id: String? = nil, status: ShiftStatus? = nil, team_member_id: String? = nil, timezone: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil, wage: ShiftWage? = nil) {
+		self.start_at = start_at
+		self.breaks = breaks
+		self.created_at = created_at
+		self.employee_id = employee_id
+		self.end_at = end_at
+		self.id = id
+		self.location_id = location_id
+		self.status = status
+		self.team_member_id = team_member_id
+		self.timezone = timezone
+		self.updated_at = updated_at
+		self.version = version
+		self.wage = wage
+	}
 }
 
+/// Defines a filter used in a search for `Shift` records. `AND` logic is used by Square's servers to apply each filter property specified.
 public struct ShiftFilter: Content {
 	/// Fetch shifts for the specified employees. DEPRECATED at version 2020-08-26. Use `team_member_ids` instead
 	var employee_ids: [String]?
@@ -7136,6 +10561,16 @@ public struct ShiftFilter: Content {
 	var team_member_ids: [String]
 	/// Fetch the `Shift`s based on workday date range.
 	var workday: ShiftWorkday?
+
+	public init(location_ids: [String], team_member_ids: [String], employee_ids: [String]? = nil, end: TimeRange? = nil, start: TimeRange? = nil, status: ShiftFilterStatus? = nil, workday: ShiftWorkday? = nil) {
+		self.location_ids = location_ids
+		self.team_member_ids = team_member_ids
+		self.employee_ids = employee_ids
+		self.end = end
+		self.start = start
+		self.status = status
+		self.workday = workday
+	}
 }
 
 /// Specifies the `status` of `Shift` records to be returned.
@@ -7146,18 +10581,30 @@ public enum ShiftFilterStatus: String, Content {
 	case CLOSED
 }
 
+/// The parameters of a `Shift` search query. Includes filter and sort options.
 public struct ShiftQuery: Content {
 	/// Query filter options
 	var filter: ShiftFilter?
 	/// Sort order details
 	var sort: ShiftSort?
+
+	public init(filter: ShiftFilter? = nil, sort: ShiftSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
 }
 
+/// Sets the sort order of search results.
 public struct ShiftSort: Content {
 	/// The field to sort on. See [ShiftSortField](#type-shiftsortfield) for possible values
 	var field: ShiftSortField?
 	/// The order in which results are returned. Defaults to DESC. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(field: ShiftSortField? = nil, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
 }
 
 /// Enumerates the `Shift` fields to sort on.
@@ -7180,13 +10627,20 @@ public enum ShiftStatus: String, Content {
 	case CLOSED
 }
 
+/// The hourly wage rate used to compensate an employee for this shift.
 public struct ShiftWage: Content {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on annual wage and hours worked per week.
 	var hourly_rate: Money?
 	/// The name of the job performed during this shift. Square labor-reporting UIs may group shifts together by title.
 	var title: String?
+
+	public init(hourly_rate: Money? = nil, title: String? = nil) {
+		self.hourly_rate = hourly_rate
+		self.title = title
+	}
 }
 
+/// A `Shift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
 public struct ShiftWorkday: Content {
 	/// Dates for fetching the shifts
 	var date_range: DateRange?
@@ -7194,6 +10648,12 @@ public struct ShiftWorkday: Content {
 	var default_timezone: String?
 	/// The strategy on which the dates are applied. See [ShiftWorkdayMatcher](#type-shiftworkdaymatcher) for possible values
 	var match_shifts_by: ShiftWorkdayMatcher?
+
+	public init(date_range: DateRange? = nil, default_timezone: String? = nil, match_shifts_by: ShiftWorkdayMatcher? = nil) {
+		self.date_range = date_range
+		self.default_timezone = default_timezone
+		self.match_shifts_by = match_shifts_by
+	}
 }
 
 /// Defines the logic used to apply a workday filter.
@@ -7214,6 +10674,7 @@ public enum SortOrder: String, Content {
 	case ASC
 }
 
+/// Provides information about the application used to generate a change.
 public struct SourceApplication: Content {
 	/// Read-only Square ID assigned to the application. Only used for `Product` type `EXTERNAL_API`.
 	var application_id: String?
@@ -7221,8 +10682,15 @@ public struct SourceApplication: Content {
 	var name: String?
 	/// Read-only `Product` type for the application. See [Product](#type-product) for possible values
 	var product: Product?
+
+	public init(application_id: String? = nil, name: String? = nil, product: Product? = nil) {
+		self.application_id = application_id
+		self.name = name
+		self.product = product
+	}
 }
 
+/// Contains the name and abbreviation for standard measurement unit.
 public struct StandardUnitDescription: Content {
 	/// UI display abbreviation for the measurement unit. For example, 'lb'.
 	var abbreviation: String?
@@ -7230,25 +10698,48 @@ public struct StandardUnitDescription: Content {
 	var name: String?
 	/// Identifies the measurement unit being described.
 	var unit: MeasurementUnit?
+
+	public init(abbreviation: String? = nil, name: String? = nil, unit: MeasurementUnit? = nil) {
+		self.abbreviation = abbreviation
+		self.name = name
+		self.unit = unit
+	}
 }
 
+/// Group of standard measurement units.
 public struct StandardUnitDescriptionGroup: Content {
 	/// IETF language tag.
 	var language_code: String?
 	/// List of standard (non-custom) measurement units in this description group.
 	var standard_unit_descriptions: [StandardUnitDescription]?
+
+	public init(language_code: String? = nil, standard_unit_descriptions: [StandardUnitDescription]? = nil) {
+		self.language_code = language_code
+		self.standard_unit_descriptions = standard_unit_descriptions
+	}
 }
 
+/// Defines the parameters for a `SubmitEvidence` request.
 public struct SubmitEvidenceRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields in a `SubmitEvidence` response.
 public struct SubmitEvidenceResponse: Content {
 	/// The `Dispute` for which evidence was submitted.
 	var dispute: Dispute?
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
+
+	public init(dispute: Dispute? = nil, errors: [Error]? = nil) {
+		self.dispute = dispute
+		self.errors = errors
+	}
 }
 
+/// Represents a customer subscription to a subscription plan. For an overview of the `Subscription` type, see  [Subscription object](/docs/subscriptions-api/overview#subscription-object-overview).
 public struct Subscription: Content {
 	/// The subscription cancellation date, in YYYY-MM-DD format (for example, 2013-01-15). On this date, the subscription status changes  to `CANCELED` and the subscription billing stops.  If you don't set this field, the subscription plan dictates if and  when subscription ends.   You cannot update this field, you can only clear it.
 	var canceled_date: String?
@@ -7280,6 +10771,24 @@ public struct Subscription: Content {
 	let timezone: String?
 	/// The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
 	var version: Int?
+
+	public init(canceled_date: String? = nil, card_id: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, paid_until_date: String? = nil, plan_id: String? = nil, price_override_money: Money? = nil, start_date: String? = nil, status: SubscriptionStatus? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
+		self.canceled_date = canceled_date
+		self.card_id = card_id
+		self.created_at = created_at
+		self.customer_id = customer_id
+		self.id = id
+		self.invoice_ids = invoice_ids
+		self.location_id = location_id
+		self.paid_until_date = paid_until_date
+		self.plan_id = plan_id
+		self.price_override_money = price_override_money
+		self.start_date = start_date
+		self.status = status
+		self.tax_percentage = tax_percentage
+		self.timezone = timezone
+		self.version = version
+	}
 }
 
 /// Determines the billing cadence of a `Subscription`
@@ -7312,6 +10821,7 @@ public enum SubscriptionCadence: String, Content {
 	case EVERY_TWO_YEARS
 }
 
+/// Describes changes to subscription and billing states.
 public struct SubscriptionEvent: Content {
 	/// The date, in YYYY-MM-DD format (for example, 2013-01-15), when the subscription event went into effect.
 	var effective_date: String
@@ -7321,6 +10831,13 @@ public struct SubscriptionEvent: Content {
 	var plan_id: String
 	/// Type of the subscription event. See [SubscriptionEventSubscriptionEventType](#type-subscriptioneventsubscriptioneventtype) for possible values
 	var subscription_event_type: SubscriptionEventSubscriptionEventType
+
+	public init(effective_date: String, id: String, plan_id: String, subscription_event_type: SubscriptionEventSubscriptionEventType) {
+		self.effective_date = effective_date
+		self.id = id
+		self.plan_id = plan_id
+		self.subscription_event_type = subscription_event_type
+	}
 }
 
 /// The possible subscription event types.
@@ -7333,6 +10850,7 @@ public enum SubscriptionEventSubscriptionEventType: String, Content {
 	case STOP_SUBSCRIPTION
 }
 
+/// Describes a phase in a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](/docs/subscriptions-api/setup-plan).
 public struct SubscriptionPhase: Content {
 	/// The billing cadence of the phase. For example, weekly or monthly. This field cannot be changed after a `SubscriptionPhase` is created. See [SubscriptionCadence](#type-subscriptioncadence) for possible values
 	var cadence: SubscriptionCadence
@@ -7344,11 +10862,18 @@ public struct SubscriptionPhase: Content {
 	var recurring_price_money: Money
 	/// The Square-assigned ID of the subscription phase. This field cannot be changed after a `SubscriptionPhase` is created.
 	var uid: String?
+
+	public init(cadence: SubscriptionCadence, recurring_price_money: Money, ordinal: Int? = nil, periods: Int? = nil, uid: String? = nil) {
+		self.cadence = cadence
+		self.recurring_price_money = recurring_price_money
+		self.ordinal = ordinal
+		self.periods = periods
+		self.uid = uid
+	}
 }
 
 /// Possible subscription status values.
 public enum SubscriptionStatus: String, Content {
-	/// 
 	case DEFAULT_SUBSCRIPTION_STATUS_DO_NOT_USE
 	/// The subscription starts in the future.
 	case PENDING
@@ -7374,6 +10899,7 @@ public enum TaxInclusionType: String, Content {
 	case INCLUSIVE
 }
 
+/// A record representing an individual team member for a business.
 public struct TeamMember: Content {
 	/// Describes the team member's assigned locations.
 	var assigned_locations: TeamMemberAssignedLocations?
@@ -7397,13 +10923,33 @@ public struct TeamMember: Content {
 	var status: TeamMemberStatus?
 	/// The timestamp in RFC 3339 format describing when the team member was last updated. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
 	let updated_at: Timestamp?
+
+	public init(assigned_locations: TeamMemberAssignedLocations? = nil, created_at: Timestamp? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, id: String? = nil, is_owner: Bool? = nil, phone_number: String? = nil, reference_id: String? = nil, status: TeamMemberStatus? = nil, updated_at: Timestamp? = nil) {
+		self.assigned_locations = assigned_locations
+		self.created_at = created_at
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.id = id
+		self.is_owner = is_owner
+		self.phone_number = phone_number
+		self.reference_id = reference_id
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
+/// An object that represents a team member's assignment to locations.
 public struct TeamMemberAssignedLocations: Content {
 	/// The current assignment type of the team member. See [TeamMemberAssignedLocationsAssignmentType](#type-teammemberassignedlocationsassignmenttype) for possible values
 	var assignment_type: TeamMemberAssignedLocationsAssignmentType?
 	/// The locations that the team member is assigned to.
 	var location_ids: [String]?
+
+	public init(assignment_type: TeamMemberAssignedLocationsAssignmentType? = nil, location_ids: [String]? = nil) {
+		self.assignment_type = assignment_type
+		self.location_ids = location_ids
+	}
 }
 
 /// Enumerates the possible assignment types the team member can have
@@ -7414,6 +10960,7 @@ public enum TeamMemberAssignedLocationsAssignmentType: String, Content {
 	case EXPLICIT_LOCATIONS
 }
 
+/// The booking profile of a seller's team member, including the team member's ID, display name, description and whether the team member can be booked as a service provider.
 public struct TeamMemberBookingProfile: Content {
 	/// The description of the team member.
 	var description: String?
@@ -7425,6 +10972,14 @@ public struct TeamMemberBookingProfile: Content {
 	var profile_image_url: String?
 	/// The ID of the `TeamMember` object for the team member associated with the booking profile.
 	var team_member_id: String?
+
+	public init(description: String? = nil, display_name: String? = nil, is_bookable: Bool? = nil, profile_image_url: String? = nil, team_member_id: String? = nil) {
+		self.description = description
+		self.display_name = display_name
+		self.is_bookable = is_bookable
+		self.profile_image_url = profile_image_url
+		self.team_member_id = team_member_id
+	}
 }
 
 /// Enumerates the possible statuses the team member can have within a business.
@@ -7435,6 +10990,7 @@ public enum TeamMemberStatus: String, Content {
 	case INACTIVE
 }
 
+/// The hourly wage rate that a team member will earn on a `Shift` for doing the job specified by the `title` property of this object.
 public struct TeamMemberWage: Content {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on annual wage and hours worked per week.
 	var hourly_rate: Money?
@@ -7444,8 +11000,16 @@ public struct TeamMemberWage: Content {
 	var team_member_id: String?
 	/// The job title that this wage relates to.
 	var title: String?
+
+	public init(hourly_rate: Money? = nil, id: String? = nil, team_member_id: String? = nil, title: String? = nil) {
+		self.hourly_rate = hourly_rate
+		self.id = id
+		self.team_member_id = team_member_id
+		self.title = title
+	}
 }
 
+/// Represents a tender (i.e., a method of payment) used in a Square transaction.
 public struct Tender: Content {
 	/// Additional recipients (other than the merchant) receiving a portion of this tender. For example, fees assessed on the purchase by a third party integration.
 	var additional_recipients: [AdditionalRecipient]?
@@ -7475,8 +11039,26 @@ public struct Tender: Content {
 	var transaction_id: String?
 	/// The type of tender, such as `CARD` or `CASH`. See [TenderType](#type-tendertype) for possible values
 	var type: TenderType
+
+	public init(type: TenderType, additional_recipients: [AdditionalRecipient]? = nil, amount_money: Money? = nil, card_details: TenderCardDetails? = nil, cash_details: TenderCashDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, payment_id: String? = nil, processing_fee_money: Money? = nil, tip_money: Money? = nil, transaction_id: String? = nil) {
+		self.type = type
+		self.additional_recipients = additional_recipients
+		self.amount_money = amount_money
+		self.card_details = card_details
+		self.cash_details = cash_details
+		self.created_at = created_at
+		self.customer_id = customer_id
+		self.id = id
+		self.location_id = location_id
+		self.note = note
+		self.payment_id = payment_id
+		self.processing_fee_money = processing_fee_money
+		self.tip_money = tip_money
+		self.transaction_id = transaction_id
+	}
 }
 
+/// Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
 public struct TenderCardDetails: Content {
 	/// The credit card's non-confidential details.
 	var card: Card?
@@ -7484,6 +11066,12 @@ public struct TenderCardDetails: Content {
 	var entry_method: TenderCardDetailsEntryMethod?
 	/// The credit card payment's current state (such as `AUTHORIZED` or `CAPTURED`). See `TenderCardDetailsStatus` for possible values. See [TenderCardDetailsStatus](#type-tendercarddetailsstatus) for possible values
 	var status: TenderCardDetailsStatus?
+
+	public init(card: Card? = nil, entry_method: TenderCardDetailsEntryMethod? = nil, status: TenderCardDetailsStatus? = nil) {
+		self.card = card
+		self.entry_method = entry_method
+		self.status = status
+	}
 }
 
 /// Indicates the method used to enter the card's details.
@@ -7512,11 +11100,17 @@ public enum TenderCardDetailsStatus: String, Content {
 	case FAILED
 }
 
+/// Represents the details of a tender with `type` `CASH`.
 public struct TenderCashDetails: Content {
 	/// The total amount of cash provided by the buyer, before change is given.
 	var buyer_tendered_money: Money?
 	/// The amount of change returned to the buyer.
 	var change_back_money: Money?
+
+	public init(buyer_tendered_money: Money? = nil, change_back_money: Money? = nil) {
+		self.buyer_tendered_money = buyer_tendered_money
+		self.change_back_money = change_back_money
+	}
 }
 
 /// Indicates a tender's type.
@@ -7560,6 +11154,20 @@ public struct TerminalCheckout: Content {
 	let status: String?
 	/// The time when the `TerminalCheckout` was last updated as an RFC 3339 timestamp.
 	let updated_at: Timestamp?
+
+	public init(amount_money: Money, device_options: DeviceCheckoutOptions, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, id: String? = nil, note: String? = nil, payment_ids: [String]? = nil, reference_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
+		self.amount_money = amount_money
+		self.device_options = device_options
+		self.cancel_reason = cancel_reason
+		self.created_at = created_at
+		self.deadline_duration = deadline_duration
+		self.id = id
+		self.note = note
+		self.payment_ids = payment_ids
+		self.reference_id = reference_id
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
 public struct TerminalCheckoutQuery: Content {
@@ -7567,6 +11175,11 @@ public struct TerminalCheckoutQuery: Content {
 	var filter: TerminalCheckoutQueryFilter?
 	/// Option for sorting returned `TerminalCheckout`s
 	var sort: TerminalCheckoutQuerySort?
+
+	public init(filter: TerminalCheckoutQueryFilter? = nil, sort: TerminalCheckoutQuerySort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
 }
 
 public struct TerminalCheckoutQueryFilter: Content {
@@ -7576,11 +11189,21 @@ public struct TerminalCheckoutQueryFilter: Content {
 	var device_id: String?
 	/// Filtered results with the desired status of the `TerminalCheckout` Options: PENDING, IN_PROGRESS, CANCELED, COMPLETED
 	var status: String?
+
+	public init(created_at: TimeRange? = nil, device_id: String? = nil, status: String? = nil) {
+		self.created_at = created_at
+		self.device_id = device_id
+		self.status = status
+	}
 }
 
 public struct TerminalCheckoutQuerySort: Content {
 	/// The order in which results are listed. - `ASC` - oldest to newest - `DESC` - newest to oldest (default).
 	var sort_order: String?
+
+	public init(sort_order: String? = nil) {
+		self.sort_order = sort_order
+	}
 }
 
 public struct TerminalRefund: Content {
@@ -7608,11 +11231,31 @@ public struct TerminalRefund: Content {
 	let status: String?
 	/// The time when the `TerminalRefund` was last updated as an RFC 3339 timestamp.
 	let updated_at: Timestamp?
+
+	public init(amount_money: Money, payment_id: String, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, device_id: String? = nil, id: String? = nil, order_id: String? = nil, reason: String? = nil, refund_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
+		self.amount_money = amount_money
+		self.payment_id = payment_id
+		self.cancel_reason = cancel_reason
+		self.created_at = created_at
+		self.deadline_duration = deadline_duration
+		self.device_id = device_id
+		self.id = id
+		self.order_id = order_id
+		self.reason = reason
+		self.refund_id = refund_id
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
 public struct TerminalRefundQuery: Content {
 	var filter: TerminalRefundQueryFilter?
 	var sort: TerminalRefundQuerySort?
+
+	public init(filter: TerminalRefundQueryFilter? = nil, sort: TerminalRefundQuerySort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
 }
 
 public struct TerminalRefundQueryFilter: Content {
@@ -7622,18 +11265,34 @@ public struct TerminalRefundQueryFilter: Content {
 	var device_id: String?
 	/// Filtered results with the desired status of the `TerminalRefund` Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	var status: String?
+
+	public init(created_at: TimeRange? = nil, device_id: String? = nil, status: String? = nil) {
+		self.created_at = created_at
+		self.device_id = device_id
+		self.status = status
+	}
 }
 
 public struct TerminalRefundQuerySort: Content {
 	/// The order in which results are listed. - `ASC` - oldest to newest - `DESC` - newest to oldest (default).
 	var sort_order: String?
+
+	public init(sort_order: String? = nil) {
+		self.sort_order = sort_order
+	}
 }
 
+/// Represents a generic time range. The start and end values are represented in RFC 3339 format. Time ranges are customized to be inclusive or exclusive based on the needs of a particular endpoint. Refer to the relevant endpoint-specific documentation to determine how time ranges are handled.
 public struct TimeRange: Content {
 	/// A datetime value in RFC 3339 format indicating when the time range ends.
 	var end_at: Timestamp?
 	/// A datetime value in RFC 3339 format indicating when the time range starts.
 	var start_at: Timestamp?
+
+	public init(end_at: Timestamp? = nil, start_at: Timestamp? = nil) {
+		self.end_at = end_at
+		self.start_at = start_at
+	}
 }
 
 public struct TipSettings: Content {
@@ -7647,8 +11306,17 @@ public struct TipSettings: Content {
 	var smart_tipping: Bool?
 	/// A list of tip percentages that should be presented during the checkout flow. Specified as up to 3 non-negative integers from 0 to 100 (inclusive). Defaults to [15, 20, 25]
 	var tip_percentages: [Int]?
+
+	public init(allow_tipping: Bool? = nil, custom_tip_field: Bool? = nil, separate_tip_screen: Bool? = nil, smart_tipping: Bool? = nil, tip_percentages: [Int]? = nil) {
+		self.allow_tipping = allow_tipping
+		self.custom_tip_field = custom_tip_field
+		self.separate_tip_screen = separate_tip_screen
+		self.smart_tipping = smart_tipping
+		self.tip_percentages = tip_percentages
+	}
 }
 
+/// Represents a transaction processed with Square, either with the Connect API or with Square Point of Sale.  The `tenders` field of this object lists all methods of payment used to pay in the transaction.
 public struct Transaction: Content {
 	/// If the transaction was created in the Square Point of Sale app, this value is the ID generated for the transaction by Square Point of Sale.  This ID has no relationship to the transaction's canonical `id`, which is generated by Square's backend servers. This value is generated for bookkeeping purposes, in case the transaction cannot immediately be completed (for example, if the transaction is processed in offline mode).  It is not currently possible with the Connect API to perform a transaction lookup by this value.
 	var client_id: String?
@@ -7670,6 +11338,19 @@ public struct Transaction: Content {
 	var shipping_address: Address?
 	/// The tenders used to pay in the transaction.
 	var tenders: [Tender]?
+
+	public init(client_id: String? = nil, created_at: Timestamp? = nil, id: String? = nil, location_id: String? = nil, order_id: String? = nil, product: TransactionProduct? = nil, reference_id: String? = nil, refunds: [Refund]? = nil, shipping_address: Address? = nil, tenders: [Tender]? = nil) {
+		self.client_id = client_id
+		self.created_at = created_at
+		self.id = id
+		self.location_id = location_id
+		self.order_id = order_id
+		self.product = product
+		self.reference_id = reference_id
+		self.refunds = refunds
+		self.shipping_address = shipping_address
+		self.tenders = tenders
+	}
 }
 
 /// Indicates the Square product used to process a transaction.
@@ -7694,9 +11375,7 @@ public enum TransactionProduct: String, Content {
 
 /// The transaction type used in the disputed payment.
 public enum TransactionType: String, Content {
-	/// 
 	case DEBIT
-	/// 
 	case CREDIT
 }
 
@@ -7705,6 +11384,11 @@ public struct UpdateBookingRequest: Content {
 	var booking: Booking
 	/// A unique key to make this request an idempotent operation.
 	var idempotency_key: String?
+
+	public init(booking: Booking, idempotency_key: String? = nil) {
+		self.booking = booking
+		self.idempotency_key = idempotency_key
+	}
 }
 
 public struct UpdateBookingResponse: Content {
@@ -7712,32 +11396,60 @@ public struct UpdateBookingResponse: Content {
 	var booking: Booking?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+		self.booking = booking
+		self.errors = errors
+	}
 }
 
+/// A request to update a `BreakType`
 public struct UpdateBreakTypeRequest: Content {
 	/// The updated `BreakType`.
 	var break_type: BreakType
+
+	public init(break_type: BreakType) {
+		self.break_type = break_type
+	}
 }
 
+/// A response to a request to update a `BreakType`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct UpdateBreakTypeResponse: Content {
 	/// The response object.
 	var break_type: BreakType?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(break_type: BreakType? = nil, errors: [Error]? = nil) {
+		self.break_type = break_type
+		self.errors = errors
+	}
 }
 
+/// Defines the body parameters that can be provided in a request to the [UpdateCustomerGroup](#endpoint-updatecustomergroup) endpoint.
 public struct UpdateCustomerGroupRequest: Content {
 	/// The `CustomerGroup` object including all the updates you want to make.
 	var group: CustomerGroup
+
+	public init(group: CustomerGroup) {
+		self.group = group
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](#endpoint-updatecustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
 public struct UpdateCustomerGroupResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated customer group.
 	var group: CustomerGroup?
+
+	public init(errors: [Error]? = nil, group: CustomerGroup? = nil) {
+		self.errors = errors
+		self.group = group
+	}
 }
 
+/// Defines the body parameters that can be provided in a request to the UpdateCustomer endpoint.
 public struct UpdateCustomerRequest: Content {
 	/// The physical address associated with the customer profile.
 	var address: Address?
@@ -7759,15 +11471,35 @@ public struct UpdateCustomerRequest: Content {
 	var phone_number: String?
 	/// An optional, second ID used to associate the customer profile with an entity in another system.
 	var reference_id: String?
+
+	public init(address: Address? = nil, birthday: Timestamp? = nil, company_name: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, reference_id: String? = nil) {
+		self.address = address
+		self.birthday = birthday
+		self.company_name = company_name
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.nickname = nickname
+		self.note = note
+		self.phone_number = phone_number
+		self.reference_id = reference_id
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the UpdateCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
 public struct UpdateCustomerResponse: Content {
 	/// The updated customer.
 	var customer: Customer?
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(customer: Customer? = nil, errors: [Error]? = nil) {
+		self.customer = customer
+		self.errors = errors
+	}
 }
 
+/// Describes a `UpdateInvoice` request.
 public struct UpdateInvoiceRequest: Content {
 	/// The list of fields to clear. For examples, see [Update an invoice](https://developer.squareup.com/docs/docs/invoices-api/overview#update-an-invoice).
 	var fields_to_clear: [String]?
@@ -7775,13 +11507,25 @@ public struct UpdateInvoiceRequest: Content {
 	var idempotency_key: String?
 	/// The invoice fields to update.  The current invoice version must be specified in the `version` field. For more information, see [Update an invoice](https://developer.squareup.com/docs/docs/invoices-api/overview#update-an-invoice).
 	var invoice: Invoice
+
+	public init(invoice: Invoice, fields_to_clear: [String]? = nil, idempotency_key: String? = nil) {
+		self.invoice = invoice
+		self.fields_to_clear = fields_to_clear
+		self.idempotency_key = idempotency_key
+	}
 }
 
+/// Describes a `UpdateInvoice` response.
 public struct UpdateInvoiceResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The updated invoice.
 	var invoice: Invoice?
+
+	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+		self.errors = errors
+		self.invoice = invoice
+	}
 }
 
 public struct UpdateItemModifierListsRequest: Content {
@@ -7791,6 +11535,12 @@ public struct UpdateItemModifierListsRequest: Content {
 	var modifier_lists_to_disable: [String]?
 	/// The IDs of the CatalogModifierList objects to enable for the CatalogItem.
 	var modifier_lists_to_enable: [String]?
+
+	public init(item_ids: [String], modifier_lists_to_disable: [String]? = nil, modifier_lists_to_enable: [String]? = nil) {
+		self.item_ids = item_ids
+		self.modifier_lists_to_disable = modifier_lists_to_disable
+		self.modifier_lists_to_enable = modifier_lists_to_enable
+	}
 }
 
 public struct UpdateItemModifierListsResponse: Content {
@@ -7798,6 +11548,11 @@ public struct UpdateItemModifierListsResponse: Content {
 	var errors: [Error]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-date) of this update in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
 	var updated_at: Timestamp?
+
+	public init(errors: [Error]? = nil, updated_at: Timestamp? = nil) {
+		self.errors = errors
+		self.updated_at = updated_at
+	}
 }
 
 public struct UpdateItemTaxesRequest: Content {
@@ -7807,6 +11562,12 @@ public struct UpdateItemTaxesRequest: Content {
 	var taxes_to_disable: [String]?
 	/// IDs of the CatalogTax objects to enable.
 	var taxes_to_enable: [String]?
+
+	public init(item_ids: [String], taxes_to_disable: [String]? = nil, taxes_to_enable: [String]? = nil) {
+		self.item_ids = item_ids
+		self.taxes_to_disable = taxes_to_disable
+		self.taxes_to_enable = taxes_to_enable
+	}
 }
 
 public struct UpdateItemTaxesResponse: Content {
@@ -7814,20 +11575,37 @@ public struct UpdateItemTaxesResponse: Content {
 	var errors: [Error]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this update in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
 	var updated_at: Timestamp?
+
+	public init(errors: [Error]? = nil, updated_at: Timestamp? = nil) {
+		self.errors = errors
+		self.updated_at = updated_at
+	}
 }
 
+/// Request object for the [UpdateLocation](#endpoint-updatelocation) endpoint.
 public struct UpdateLocationRequest: Content {
 	/// The `Location` object with only the fields to update.
 	var location: Location?
+
+	public init(location: Location? = nil) {
+		self.location = location
+	}
 }
 
+/// Response object returned by the [UpdateLocation](#endpoint-updatelocation) endpoint.
 public struct UpdateLocationResponse: Content {
 	/// Information on errors encountered during the request.
 	var errors: [Error]?
 	/// The updated `Location`.
 	var location: Location?
+
+	public init(errors: [Error]? = nil, location: Location? = nil) {
+		self.errors = errors
+		self.location = location
+	}
 }
 
+/// Defines the fields that are included in requests to the [UpdateOrder](#endpoint-orders-updateorder) endpoint.
 public struct UpdateOrderRequest: Content {
 	/// The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders#on-dot-notation) fields to clear. For example, `line_items[uid].note` [Read more about Deleting fields](https://developer.squareup.com/docs/orders-api/manage-orders#delete-fields).
 	var fields_to_clear: [String]?
@@ -7835,73 +11613,140 @@ public struct UpdateOrderRequest: Content {
 	var idempotency_key: String?
 	/// The [sparse order](https://developer.squareup.com/docs/orders-api/manage-orders#sparse-order-objects) containing only the fields to update and the version the update is being applied to.
 	var order: Order?
+
+	public init(fields_to_clear: [String]? = nil, idempotency_key: String? = nil, order: Order? = nil) {
+		self.fields_to_clear = fields_to_clear
+		self.idempotency_key = idempotency_key
+		self.order = order
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [UpdateOrder](#endpoint-orders-updateorder) endpoint.
 public struct UpdateOrderResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The updated Order.
 	var order: Order?
+
+	public init(errors: [Error]? = nil, order: Order? = nil) {
+		self.errors = errors
+		self.order = order
+	}
 }
 
+/// A request to update a `Shift` object.
 public struct UpdateShiftRequest: Content {
 	/// The updated `Shift` object.
 	var shift: Shift
+
+	public init(shift: Shift) {
+		self.shift = shift
+	}
 }
 
+/// The response to a request to update a `Shift`. Contains the updated `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct UpdateShiftResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The updated `Shift`.
 	var shift: Shift?
+
+	public init(errors: [Error]? = nil, shift: Shift? = nil) {
+		self.errors = errors
+		self.shift = shift
+	}
 }
 
+/// Defines parameters in a [UpdateSubscription](#endpoint-subscriptions-updatesubscription) endpoint  request.
 public struct UpdateSubscriptionRequest: Content {
 	/// The subscription object containing the current version, and fields to update. Unset fields will be left at their current server values, and JSON `null` values will be treated as a request to clear the relevant data.
 	var subscription: Subscription?
+
+	public init(subscription: Subscription? = nil) {
+		self.subscription = subscription
+	}
 }
 
+/// Defines the fields that are included in the response from the [UpdateSubscription](#endpoint-subscriptions-updatesubscription) endpoint.
 public struct UpdateSubscriptionResponse: Content {
 	/// Information about errors encountered during the request.
 	var errors: [Error]?
 	/// The modified `Subscription` object.
 	var subscription: Subscription?
+
+	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+		self.errors = errors
+		self.subscription = subscription
+	}
 }
 
+/// Represents an update request for a `TeamMember` object.
 public struct UpdateTeamMemberRequest: Content {
 	/// The data which will be used to update the `TeamMember` object.
 	var team_member: TeamMember?
+
+	public init(team_member: TeamMember? = nil) {
+		self.team_member = team_member
+	}
 }
 
+/// Represents a response from an update request, containing the updated `TeamMember` object or error messages.
 public struct UpdateTeamMemberResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated `TeamMember` object.
 	var team_member: TeamMember?
+
+	public init(errors: [Error]? = nil, team_member: TeamMember? = nil) {
+		self.errors = errors
+		self.team_member = team_member
+	}
 }
 
+/// Represents an update request for the `WageSetting` object describing a `TeamMember`.
 public struct UpdateWageSettingRequest: Content {
 	/// The new `WageSetting` object that will completely replace the existing one.
 	var wage_setting: WageSetting
+
+	public init(wage_setting: WageSetting) {
+		self.wage_setting = wage_setting
+	}
 }
 
+/// Represents a response from an update request, containing the updated `WageSetting` object or error messages.
 public struct UpdateWageSettingResponse: Content {
 	/// The errors that occurred during the request.
 	var errors: [Error]?
 	/// The successfully updated `WageSetting` object.
 	var wage_setting: WageSetting?
+
+	public init(errors: [Error]? = nil, wage_setting: WageSetting? = nil) {
+		self.errors = errors
+		self.wage_setting = wage_setting
+	}
 }
 
+/// A request to update a `WorkweekConfig` object
 public struct UpdateWorkweekConfigRequest: Content {
 	/// The updated `WorkweekConfig` object.
 	var workweek_config: WorkweekConfig
+
+	public init(workweek_config: WorkweekConfig) {
+		self.workweek_config = workweek_config
+	}
 }
 
+/// The response to a request to update a `WorkweekConfig` object. Contains the updated `WorkweekConfig` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct UpdateWorkweekConfigResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
 	/// The response object.
 	var workweek_config: WorkweekConfig?
+
+	public init(errors: [Error]? = nil, workweek_config: WorkweekConfig? = nil) {
+		self.errors = errors
+		self.workweek_config = workweek_config
+	}
 }
 
 public struct UpsertCatalogObjectRequest: Content {
@@ -7909,6 +11754,11 @@ public struct UpsertCatalogObjectRequest: Content {
 	var idempotency_key: String
 	/// A CatalogObject to be created or updated.  - For updates, the object must be active (the `is_deleted` field is not `true`). - For creates, the object ID must start with `#`. The provided ID is replaced with a server-generated ID.
 	var object: CatalogObject
+
+	public init(idempotency_key: String, object: CatalogObject) {
+		self.idempotency_key = idempotency_key
+		self.object = object
+	}
 }
 
 public struct UpsertCatalogObjectResponse: Content {
@@ -7918,8 +11768,15 @@ public struct UpsertCatalogObjectResponse: Content {
 	var errors: [Error]?
 	/// The mapping between client and server IDs for this upsert.
 	var id_mappings: [CatalogIdMapping]?
+
+	public init(catalog_object: CatalogObject? = nil, errors: [Error]? = nil, id_mappings: [CatalogIdMapping]? = nil) {
+		self.catalog_object = catalog_object
+		self.errors = errors
+		self.id_mappings = id_mappings
+	}
 }
 
+/// V1AdjustInventoryRequest
 public struct V1AdjustInventoryRequest: Content {
 	/// The reason for the inventory adjustment. See [V1AdjustInventoryRequestAdjustmentType](#type-v1adjustinventoryrequestadjustmenttype) for possible values
 	var adjustment_type: V1AdjustInventoryRequestAdjustmentType?
@@ -7927,24 +11784,34 @@ public struct V1AdjustInventoryRequest: Content {
 	var memo: String?
 	/// The number to adjust the variation's quantity by.
 	var quantity_delta: Float?
+
+	public init(adjustment_type: V1AdjustInventoryRequestAdjustmentType? = nil, memo: String? = nil, quantity_delta: Float? = nil) {
+		self.adjustment_type = adjustment_type
+		self.memo = memo
+		self.quantity_delta = quantity_delta
+	}
 }
 
 /// 
 public enum V1AdjustInventoryRequestAdjustmentType: String, Content {
-	/// 
 	case SALE
-	/// 
 	case RECEIVE_STOCK
-	/// 
 	case MANUAL_ADJUST
 }
 
 public struct V1ApplyFeeRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ApplyModifierListRequest: Content {
+
+	public init() {
+	}
 }
 
+/// V1BankAccount
 public struct V1BankAccount: Content {
 	/// The last few digits of the bank account number.
 	var account_number_suffix: String?
@@ -7962,24 +11829,30 @@ public struct V1BankAccount: Content {
 	var routing_number: String?
 	/// The bank account's type (for example, savings or checking). See [V1BankAccountType](#type-v1bankaccounttype) for possible values
 	var type: V1BankAccountType?
+
+	public init(account_number_suffix: String? = nil, bank_name: String? = nil, currency_code: String? = nil, id: String? = nil, merchant_id: String? = nil, name: String? = nil, routing_number: String? = nil, type: V1BankAccountType? = nil) {
+		self.account_number_suffix = account_number_suffix
+		self.bank_name = bank_name
+		self.currency_code = currency_code
+		self.id = id
+		self.merchant_id = merchant_id
+		self.name = name
+		self.routing_number = routing_number
+		self.type = type
+	}
 }
 
 /// 
 public enum V1BankAccountType: String, Content {
-	/// 
 	case BUSINESS_CHECKING
-	/// 
 	case CHECKING
-	/// 
 	case INVESTMENT
-	/// 
 	case LOAN
-	/// 
 	case SAVINGS
-	/// 
 	case OTHER
 }
 
+/// V1CashDrawerEvent
 public struct V1CashDrawerEvent: Content {
 	/// The time when the event occurred, in ISO 8601 format.
 	var created_at: String?
@@ -7993,30 +11866,31 @@ public struct V1CashDrawerEvent: Content {
 	var event_type: V1CashDrawerEventEventType?
 	/// The event's unique ID.
 	var id: String?
+
+	public init(created_at: String? = nil, description: String? = nil, employee_id: String? = nil, event_money: V1Money? = nil, event_type: V1CashDrawerEventEventType? = nil, id: String? = nil) {
+		self.created_at = created_at
+		self.description = description
+		self.employee_id = employee_id
+		self.event_money = event_money
+		self.event_type = event_type
+		self.id = id
+	}
 }
 
 /// 
 public enum V1CashDrawerEventEventType: String, Content {
-	/// 
 	case NO_SALE
-	/// 
 	case CASH_TENDER_PAYMENT
-	/// 
 	case OTHER_TENDER_PAYMENT
-	/// 
 	case CASH_TENDER_CANCELED_PAYMENT
-	/// 
 	case OTHER_TENDER_CANCELED_PAYMENT
-	/// 
 	case CASH_TENDER_REFUND
-	/// 
 	case OTHER_TENDER_REFUND
-	/// 
 	case PAID_IN
-	/// 
 	case PAID_OUT
 }
 
+/// Contains details for a single cash drawer shift.
 public struct V1CashDrawerShift: Content {
 	/// The amount of money added to the cash drawer for reasons other than cash payments.
 	var cash_paid_in_money: V1Money?
@@ -8056,18 +11930,38 @@ public struct V1CashDrawerShift: Content {
 	var opening_employee_id: String?
 	/// The amount of money in the cash drawer at the start of the shift.
 	var starting_cash_money: V1Money?
+
+	public init(cash_paid_in_money: V1Money? = nil, cash_paid_out_money: V1Money? = nil, cash_payment_money: V1Money? = nil, cash_refunds_money: V1Money? = nil, closed_at: String? = nil, closed_cash_money: V1Money? = nil, closing_employee_id: String? = nil, description: String? = nil, device: Device? = nil, employee_ids: [String]? = nil, ended_at: String? = nil, ending_employee_id: String? = nil, event_type: V1CashDrawerShiftEventType? = nil, events: [V1CashDrawerEvent]? = nil, expected_cash_money: V1Money? = nil, id: String? = nil, opened_at: String? = nil, opening_employee_id: String? = nil, starting_cash_money: V1Money? = nil) {
+		self.cash_paid_in_money = cash_paid_in_money
+		self.cash_paid_out_money = cash_paid_out_money
+		self.cash_payment_money = cash_payment_money
+		self.cash_refunds_money = cash_refunds_money
+		self.closed_at = closed_at
+		self.closed_cash_money = closed_cash_money
+		self.closing_employee_id = closing_employee_id
+		self.description = description
+		self.device = device
+		self.employee_ids = employee_ids
+		self.ended_at = ended_at
+		self.ending_employee_id = ending_employee_id
+		self.event_type = event_type
+		self.events = events
+		self.expected_cash_money = expected_cash_money
+		self.id = id
+		self.opened_at = opened_at
+		self.opening_employee_id = opening_employee_id
+		self.starting_cash_money = starting_cash_money
+	}
 }
 
 /// 
 public enum V1CashDrawerShiftEventType: String, Content {
-	/// 
 	case OPEN
-	/// 
 	case ENDED
-	/// 
 	case CLOSED
 }
 
+/// V1Category
 public struct V1Category: Content {
 	/// The category's unique ID.
 	var id: String?
@@ -8075,48 +11969,87 @@ public struct V1Category: Content {
 	var name: String?
 	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
 	var v2_id: String?
+
+	public init(id: String? = nil, name: String? = nil, v2_id: String? = nil) {
+		self.id = id
+		self.name = name
+		self.v2_id = v2_id
+	}
 }
 
 public struct V1CreateCategoryRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Category?
+
+	public init(body: V1Category? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1CreateDiscountRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Discount?
+
+	public init(body: V1Discount? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1CreateEmployeeRoleRequest: Content {
 	/// An EmployeeRole object with a name and permissions, and an optional owner flag.
 	var employee_role: V1EmployeeRole?
+
+	public init(employee_role: V1EmployeeRole? = nil) {
+		self.employee_role = employee_role
+	}
 }
 
 public struct V1CreateFeeRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Fee?
+
+	public init(body: V1Fee? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1CreateItemRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Item?
+
+	public init(body: V1Item? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1CreateModifierListRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1ModifierList?
+
+	public init(body: V1ModifierList? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1CreateModifierOptionRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1ModifierOption?
+
+	public init(body: V1ModifierOption? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1CreatePageRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Page?
+
+	public init(body: V1Page? = nil) {
+		self.body = body
+	}
 }
 
+/// V1CreateRefundRequest
 public struct V1CreateRefundRequest: Content {
 	/// The ID of the payment to refund. If you are creating a `PARTIAL` refund for a split tender payment, instead provide the id of the particular tender you want to refund.
 	var payment_id: String
@@ -8128,37 +12061,65 @@ public struct V1CreateRefundRequest: Content {
 	var request_idempotence_key: String?
 	/// TThe type of refund (FULL or PARTIAL). See [V1CreateRefundRequestType](#type-v1createrefundrequesttype) for possible values
 	var type: V1CreateRefundRequestType
+
+	public init(payment_id: String, reason: String, type: V1CreateRefundRequestType, refunded_money: V1Money? = nil, request_idempotence_key: String? = nil) {
+		self.payment_id = payment_id
+		self.reason = reason
+		self.type = type
+		self.refunded_money = refunded_money
+		self.request_idempotence_key = request_idempotence_key
+	}
 }
 
 /// 
 public enum V1CreateRefundRequestType: String, Content {
-	/// 
 	case FULL
-	/// 
 	case PARTIAL
 }
 
 public struct V1CreateVariationRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Variation?
+
+	public init(body: V1Variation? = nil) {
+		self.body = body
+	}
 }
 
 public struct V1DeleteCategoryRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteDiscountRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteFeeRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteItemRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteModifierListRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteModifierOptionRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeletePageCellRequest: Content {
@@ -8166,20 +12127,38 @@ public struct V1DeletePageCellRequest: Content {
 	var column: String?
 	/// The row of the cell to clear. Always an integer between 0 and 4, inclusive. Row 0 is the top row.
 	var row: String?
+
+	public init(column: String? = nil, row: String? = nil) {
+		self.column = column
+		self.row = row
+	}
 }
 
 public struct V1DeletePageRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteTimecardRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteTimecardResponse: Content {
+
+	public init() {
+	}
 }
 
 public struct V1DeleteVariationRequest: Content {
+
+	public init() {
+	}
 }
 
+/// V1Discount
 public struct V1Discount: Content {
 	/// The amount of the discount. This amount is 0 if discount_type is VARIABLE_AMOUNT. This field is not included for rate-based discounts.
 	var amount_money: V1Money?
@@ -8197,6 +12176,17 @@ public struct V1Discount: Content {
 	var rate: String?
 	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
 	var v2_id: String?
+
+	public init(amount_money: V1Money? = nil, color: V1DiscountColor? = nil, discount_type: V1DiscountDiscountType? = nil, id: String? = nil, name: String? = nil, pin_required: Bool? = nil, rate: String? = nil, v2_id: String? = nil) {
+		self.amount_money = amount_money
+		self.color = color
+		self.discount_type = discount_type
+		self.id = id
+		self.name = name
+		self.pin_required = pin_required
+		self.rate = rate
+		self.v2_id = v2_id
+	}
 }
 
 /// 
@@ -8214,14 +12204,12 @@ public enum V1DiscountColor: String, Content {
 
 /// 
 public enum V1DiscountDiscountType: String, Content {
-	/// 
 	case FIXED
-	/// 
 	case VARIABLE_PERCENTAGE
-	/// 
 	case VARIABLE_AMOUNT
 }
 
+/// Represents one of a business's employees.
 public struct V1Employee: Content {
 	/// The IDs of the locations the employee is allowed to clock in at.
 	var authorized_location_ids: [String]?
@@ -8243,8 +12231,22 @@ public struct V1Employee: Content {
 	var status: V1EmployeeStatus?
 	/// The time when the employee entity was most recently updated, in ISO 8601 format.
 	var updated_at: String?
+
+	public init(first_name: String, last_name: String, authorized_location_ids: [String]? = nil, created_at: String? = nil, email: String? = nil, external_id: String? = nil, id: String? = nil, role_ids: [String]? = nil, status: V1EmployeeStatus? = nil, updated_at: String? = nil) {
+		self.first_name = first_name
+		self.last_name = last_name
+		self.authorized_location_ids = authorized_location_ids
+		self.created_at = created_at
+		self.email = email
+		self.external_id = external_id
+		self.id = id
+		self.role_ids = role_ids
+		self.status = status
+		self.updated_at = updated_at
+	}
 }
 
+/// V1EmployeeRole
 public struct V1EmployeeRole: Content {
 	/// The time when the employee entity was created, in ISO 8601 format. Is set by Square when the Role is created.
 	var created_at: String?
@@ -8258,34 +12260,35 @@ public struct V1EmployeeRole: Content {
 	var permissions: V1EmployeeRolePermissions
 	/// The time when the employee entity was most recently updated, in ISO 8601 format. Is set by Square when the Role updated.
 	var updated_at: String?
+
+	public init(name: String, permissions: V1EmployeeRolePermissions, created_at: String? = nil, id: String? = nil, is_owner: Bool? = nil, updated_at: String? = nil) {
+		self.name = name
+		self.permissions = permissions
+		self.created_at = created_at
+		self.id = id
+		self.is_owner = is_owner
+		self.updated_at = updated_at
+	}
 }
 
 /// 
 public enum V1EmployeeRolePermissions: String, Content {
-	/// 
 	case REGISTER_ACCESS_SALES_HISTORY
-	/// 
 	case REGISTER_APPLY_RESTRICTED_DISCOUNTS
-	/// 
 	case REGISTER_CHANGE_SETTINGS
-	/// 
 	case REGISTER_EDIT_ITEM
-	/// 
 	case REGISTER_ISSUE_REFUNDS
-	/// 
 	case REGISTER_OPEN_CASH_DRAWER_OUTSIDE_SALE
-	/// 
 	case REGISTER_VIEW_SUMMARY_REPORTS
 }
 
 /// 
 public enum V1EmployeeStatus: String, Content {
-	/// 
 	case ACTIVE
-	/// 
 	case INACTIVE
 }
 
+/// V1Fee
 public struct V1Fee: Content {
 	/// The type of adjustment the fee applies to a payment. Currently, this value is TAX for all fees. See [V1FeeAdjustmentType](#type-v1feeadjustmenttype) for possible values
 	var adjustment_type: V1FeeAdjustmentType?
@@ -8307,59 +12310,65 @@ public struct V1Fee: Content {
 	var type: V1FeeType?
 	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
 	var v2_id: String?
+
+	public init(adjustment_type: V1FeeAdjustmentType? = nil, applies_to_custom_amounts: Bool? = nil, calculation_phase: V1FeeCalculationPhase? = nil, enabled: Bool? = nil, id: String? = nil, inclusion_type: V1FeeInclusionType? = nil, name: String? = nil, rate: String? = nil, type: V1FeeType? = nil, v2_id: String? = nil) {
+		self.adjustment_type = adjustment_type
+		self.applies_to_custom_amounts = applies_to_custom_amounts
+		self.calculation_phase = calculation_phase
+		self.enabled = enabled
+		self.id = id
+		self.inclusion_type = inclusion_type
+		self.name = name
+		self.rate = rate
+		self.type = type
+		self.v2_id = v2_id
+	}
 }
 
 /// 
 public enum V1FeeAdjustmentType: String, Content {
-	/// 
 	case TAX
 }
 
 /// 
 public enum V1FeeCalculationPhase: String, Content {
-	/// 
 	case FEE_SUBTOTAL_PHASE
-	/// 
 	case OTHER
-	/// 
 	case FEE_TOTAL_PHASE
 }
 
 /// 
 public enum V1FeeInclusionType: String, Content {
-	/// 
 	case ADDITIVE
-	/// 
 	case INCLUSIVE
 }
 
 /// 
 public enum V1FeeType: String, Content {
-	/// 
 	case CA_GST
-	/// 
 	case CA_HST
-	/// 
 	case CA_PST
-	/// 
 	case CA_QST
-	/// 
 	case JP_CONSUMPTION_TAX
-	/// 
 	case CA_PEI_PST
-	/// 
 	case US_SALES_TAX
-	/// 
 	case OTHER
 }
 
+/// V1InventoryEntry
 public struct V1InventoryEntry: Content {
 	/// The current available quantity of the item variation.
 	var quantity_on_hand: Float?
 	/// The variation that the entry corresponds to.
 	var variation_id: String?
+
+	public init(quantity_on_hand: Float? = nil, variation_id: String? = nil) {
+		self.quantity_on_hand = quantity_on_hand
+		self.variation_id = variation_id
+	}
 }
 
+/// V1Item
 public struct V1Item: Content {
 	/// The text of the item's display label in Square Point of Sale. Only up to the first five characters of the string are used.
 	var abbreviation: String?
@@ -8395,6 +12404,26 @@ public struct V1Item: Content {
 	var variations: [V1Variation]?
 	/// Indicates whether the item is viewable from the merchant's online store (PUBLIC) or PRIVATE. See [V1ItemVisibility](#type-v1itemvisibility) for possible values
 	var visibility: V1ItemVisibility?
+
+	public init(abbreviation: String? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, category: V1Category? = nil, category_id: String? = nil, color: V1ItemColor? = nil, description: String? = nil, fees: [V1Fee]? = nil, id: String? = nil, master_image: V1ItemImage? = nil, modifier_lists: [V1ModifierList]? = nil, name: String? = nil, taxable: Bool? = nil, type: V1ItemType? = nil, v2_id: String? = nil, variations: [V1Variation]? = nil, visibility: V1ItemVisibility? = nil) {
+		self.abbreviation = abbreviation
+		self.available_for_pickup = available_for_pickup
+		self.available_online = available_online
+		self.category = category
+		self.category_id = category_id
+		self.color = color
+		self.description = description
+		self.fees = fees
+		self.id = id
+		self.master_image = master_image
+		self.modifier_lists = modifier_lists
+		self.name = name
+		self.taxable = taxable
+		self.type = type
+		self.v2_id = v2_id
+		self.variations = variations
+		self.visibility = visibility
+	}
 }
 
 /// 
@@ -8410,36 +12439,44 @@ public enum V1ItemColor: String, Content {
 	case x_e5BF00 = "e5BF00"
 }
 
+/// V1ItemImage
 public struct V1ItemImage: Content {
 	/// The image's unique ID.
 	var id: String?
 	/// The image's publicly accessible URL.
 	var url: String?
+
+	public init(id: String? = nil, url: String? = nil) {
+		self.id = id
+		self.url = url
+	}
 }
 
 /// 
 public enum V1ItemType: String, Content {
-	/// 
 	case NORMAL
-	/// 
 	case GIFT_CARD
-	/// 
 	case OTHER
 }
 
 /// 
 public enum V1ItemVisibility: String, Content {
-	/// 
 	case PUBLIC
-	/// 
 	case PRIVATE
 }
 
 public struct V1ListBankAccountsRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListBankAccountsResponse: Content {
 	var items: [V1BankAccount]?
+
+	public init(items: [V1BankAccount]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListCashDrawerShiftsRequest: Content {
@@ -8449,24 +12486,48 @@ public struct V1ListCashDrawerShiftsRequest: Content {
 	var end_time: String?
 	/// The order in which cash drawer shifts are listed in the response, based on their created_at field. Default value: ASC See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(begin_time: String? = nil, end_time: String? = nil, order: SortOrder? = nil) {
+		self.begin_time = begin_time
+		self.end_time = end_time
+		self.order = order
+	}
 }
 
 public struct V1ListCashDrawerShiftsResponse: Content {
 	var items: [V1CashDrawerShift]?
+
+	public init(items: [V1CashDrawerShift]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListCategoriesRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListCategoriesResponse: Content {
 	var items: [V1Category]?
+
+	public init(items: [V1Category]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListDiscountsRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListDiscountsResponse: Content {
 	var items: [V1Discount]?
+
+	public init(items: [V1Discount]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListEmployeeRolesRequest: Content {
@@ -8476,10 +12537,20 @@ public struct V1ListEmployeeRolesRequest: Content {
 	var limit: Int?
 	/// The order in which employees are listed in the response, based on their created_at field.Default value: ASC See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(batch_token: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
+		self.batch_token = batch_token
+		self.limit = limit
+		self.order = order
+	}
 }
 
 public struct V1ListEmployeeRolesResponse: Content {
 	var items: [V1EmployeeRole]?
+
+	public init(items: [V1EmployeeRole]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListEmployeesRequest: Content {
@@ -8501,25 +12572,46 @@ public struct V1ListEmployeesRequest: Content {
 	var order: SortOrder?
 	/// If provided, the endpoint returns only employee entities with the specified status (ACTIVE or INACTIVE). See [V1ListEmployeesRequestStatus](#type-v1listemployeesrequeststatus) for possible values
 	var status: V1ListEmployeesRequestStatus?
+
+	public init(batch_token: String? = nil, begin_created_at: String? = nil, begin_updated_at: String? = nil, end_created_at: String? = nil, end_updated_at: String? = nil, external_id: String? = nil, limit: Int? = nil, order: SortOrder? = nil, status: V1ListEmployeesRequestStatus? = nil) {
+		self.batch_token = batch_token
+		self.begin_created_at = begin_created_at
+		self.begin_updated_at = begin_updated_at
+		self.end_created_at = end_created_at
+		self.end_updated_at = end_updated_at
+		self.external_id = external_id
+		self.limit = limit
+		self.order = order
+		self.status = status
+	}
 }
 
 /// 
 public enum V1ListEmployeesRequestStatus: String, Content {
-	/// 
 	case ACTIVE
-	/// 
 	case INACTIVE
 }
 
 public struct V1ListEmployeesResponse: Content {
 	var items: [V1Employee]?
+
+	public init(items: [V1Employee]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListFeesRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListFeesResponse: Content {
 	var items: [V1Fee]?
+
+	public init(items: [V1Fee]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListInventoryRequest: Content {
@@ -8527,26 +12619,50 @@ public struct V1ListInventoryRequest: Content {
 	var batch_token: String?
 	/// The maximum number of inventory entries to return in a single response. This value cannot exceed 1000.
 	var limit: Int?
+
+	public init(batch_token: String? = nil, limit: Int? = nil) {
+		self.batch_token = batch_token
+		self.limit = limit
+	}
 }
 
 public struct V1ListInventoryResponse: Content {
 	var items: [V1InventoryEntry]?
+
+	public init(items: [V1InventoryEntry]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListItemsRequest: Content {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	var batch_token: String?
+
+	public init(batch_token: String? = nil) {
+		self.batch_token = batch_token
+	}
 }
 
 public struct V1ListItemsResponse: Content {
 	var items: [V1Item]?
+
+	public init(items: [V1Item]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListModifierListsRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListModifierListsResponse: Content {
 	var items: [V1ModifierList]?
+
+	public init(items: [V1ModifierList]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListOrdersRequest: Content {
@@ -8556,17 +12672,34 @@ public struct V1ListOrdersRequest: Content {
 	var limit: Int?
 	/// TThe order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(batch_token: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
+		self.batch_token = batch_token
+		self.limit = limit
+		self.order = order
+	}
 }
 
 public struct V1ListOrdersResponse: Content {
 	var items: [V1Order]?
+
+	public init(items: [V1Order]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListPagesRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListPagesResponse: Content {
 	var items: [V1Page]?
+
+	public init(items: [V1Page]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListPaymentsRequest: Content {
@@ -8582,10 +12715,23 @@ public struct V1ListPaymentsRequest: Content {
 	var limit: Int?
 	/// The order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, include_partial: Bool? = nil, limit: Int? = nil, order: SortOrder? = nil) {
+		self.batch_token = batch_token
+		self.begin_time = begin_time
+		self.end_time = end_time
+		self.include_partial = include_partial
+		self.limit = limit
+		self.order = order
+	}
 }
 
 public struct V1ListPaymentsResponse: Content {
 	var items: [V1Payment]?
+
+	public init(items: [V1Payment]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListRefundsRequest: Content {
@@ -8599,10 +12745,22 @@ public struct V1ListRefundsRequest: Content {
 	var limit: Int?
 	/// TThe order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
+		self.batch_token = batch_token
+		self.begin_time = begin_time
+		self.end_time = end_time
+		self.limit = limit
+		self.order = order
+	}
 }
 
 public struct V1ListRefundsResponse: Content {
 	var items: [V1Refund]?
+
+	public init(items: [V1Refund]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListSettlementsRequest: Content {
@@ -8618,25 +12776,43 @@ public struct V1ListSettlementsRequest: Content {
 	var order: SortOrder?
 	/// Provide this parameter to retrieve only settlements with a particular status (SENT or FAILED). See [V1ListSettlementsRequestStatus](#type-v1listsettlementsrequeststatus) for possible values
 	var status: V1ListSettlementsRequestStatus?
+
+	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, order: SortOrder? = nil, status: V1ListSettlementsRequestStatus? = nil) {
+		self.batch_token = batch_token
+		self.begin_time = begin_time
+		self.end_time = end_time
+		self.limit = limit
+		self.order = order
+		self.status = status
+	}
 }
 
 /// 
 public enum V1ListSettlementsRequestStatus: String, Content {
-	/// 
 	case SENT
-	/// 
 	case FAILED
 }
 
 public struct V1ListSettlementsResponse: Content {
 	var items: [V1Settlement]?
+
+	public init(items: [V1Settlement]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListTimecardEventsRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1ListTimecardEventsResponse: Content {
 	var items: [V1TimecardEvent]?
+
+	public init(items: [V1TimecardEvent]? = nil) {
+		self.items = items
+	}
 }
 
 public struct V1ListTimecardsRequest: Content {
@@ -8662,12 +12838,31 @@ public struct V1ListTimecardsRequest: Content {
 	var limit: Int?
 	/// The order in which timecards are listed in the response, based on their created_at field. See [SortOrder](#type-sortorder) for possible values
 	var order: SortOrder?
+
+	public init(batch_token: String? = nil, begin_clockin_time: String? = nil, begin_clockout_time: String? = nil, begin_updated_at: String? = nil, deleted: Bool? = nil, employee_id: String? = nil, end_clockin_time: String? = nil, end_clockout_time: String? = nil, end_updated_at: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
+		self.batch_token = batch_token
+		self.begin_clockin_time = begin_clockin_time
+		self.begin_clockout_time = begin_clockout_time
+		self.begin_updated_at = begin_updated_at
+		self.deleted = deleted
+		self.employee_id = employee_id
+		self.end_clockin_time = end_clockin_time
+		self.end_clockout_time = end_clockout_time
+		self.end_updated_at = end_updated_at
+		self.limit = limit
+		self.order = order
+	}
 }
 
 public struct V1ListTimecardsResponse: Content {
 	var items: [V1Timecard]?
+
+	public init(items: [V1Timecard]? = nil) {
+		self.items = items
+	}
 }
 
+/// V1ModifierList
 public struct V1ModifierList: Content {
 	/// The modifier list's unique ID.
 	var id: String?
@@ -8679,16 +12874,23 @@ public struct V1ModifierList: Content {
 	var selection_type: V1ModifierListSelectionType?
 	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
 	var v2_id: String?
+
+	public init(id: String? = nil, modifier_options: [V1ModifierOption]? = nil, name: String? = nil, selection_type: V1ModifierListSelectionType? = nil, v2_id: String? = nil) {
+		self.id = id
+		self.modifier_options = modifier_options
+		self.name = name
+		self.selection_type = selection_type
+		self.v2_id = v2_id
+	}
 }
 
 /// 
 public enum V1ModifierListSelectionType: String, Content {
-	/// 
 	case SINGLE
-	/// 
 	case MULTIPLE
 }
 
+/// V1ModifierOption
 public struct V1ModifierOption: Content {
 	/// The modifier option's unique ID.
 	var id: String?
@@ -8704,6 +12906,16 @@ public struct V1ModifierOption: Content {
 	var price_money: V1Money?
 	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
 	var v2_id: String?
+
+	public init(id: String? = nil, modifier_list_id: String? = nil, name: String? = nil, on_by_default: Bool? = nil, ordinal: Int? = nil, price_money: V1Money? = nil, v2_id: String? = nil) {
+		self.id = id
+		self.modifier_list_id = modifier_list_id
+		self.name = name
+		self.on_by_default = on_by_default
+		self.ordinal = ordinal
+		self.price_money = price_money
+		self.v2_id = v2_id
+	}
 }
 
 public struct V1Money: Content {
@@ -8711,8 +12923,14 @@ public struct V1Money: Content {
 	var amount: Int?
 	///  See [Currency](#type-currency) for possible values
 	var currency_code: Currency?
+
+	public init(amount: Int? = nil, currency_code: Currency? = nil) {
+		self.amount = amount
+		self.currency_code = currency_code
+	}
 }
 
+/// V1Order
 public struct V1Order: Content {
 	/// For Bitcoin transactions, the price of the buyer's order in satoshi (100 million satoshi equals 1 BTC).
 	var btc_price_satoshi: Float?
@@ -8764,49 +12982,71 @@ public struct V1Order: Content {
 	var total_tax_money: V1Money?
 	/// The time when the order was last modified, in ISO 8601 format.
 	var updated_at: String?
+
+	public init(btc_price_satoshi: Float? = nil, btc_receive_address: String? = nil, buyer_email: String? = nil, buyer_note: String? = nil, canceled_note: String? = nil, completed_note: String? = nil, created_at: String? = nil, errors: [Error]? = nil, expires_at: String? = nil, id: String? = nil, order_history: [V1OrderHistoryEntry]? = nil, payment_id: String? = nil, promo_code: String? = nil, recipient_name: String? = nil, recipient_phone_number: String? = nil, refunded_note: String? = nil, shipping_address: Address? = nil, state: V1OrderState? = nil, subtotal_money: V1Money? = nil, tender: V1Tender? = nil, total_discount_money: V1Money? = nil, total_price_money: V1Money? = nil, total_shipping_money: V1Money? = nil, total_tax_money: V1Money? = nil, updated_at: String? = nil) {
+		self.btc_price_satoshi = btc_price_satoshi
+		self.btc_receive_address = btc_receive_address
+		self.buyer_email = buyer_email
+		self.buyer_note = buyer_note
+		self.canceled_note = canceled_note
+		self.completed_note = completed_note
+		self.created_at = created_at
+		self.errors = errors
+		self.expires_at = expires_at
+		self.id = id
+		self.order_history = order_history
+		self.payment_id = payment_id
+		self.promo_code = promo_code
+		self.recipient_name = recipient_name
+		self.recipient_phone_number = recipient_phone_number
+		self.refunded_note = refunded_note
+		self.shipping_address = shipping_address
+		self.state = state
+		self.subtotal_money = subtotal_money
+		self.tender = tender
+		self.total_discount_money = total_discount_money
+		self.total_price_money = total_price_money
+		self.total_shipping_money = total_shipping_money
+		self.total_tax_money = total_tax_money
+		self.updated_at = updated_at
+	}
 }
 
+/// V1OrderHistoryEntry
 public struct V1OrderHistoryEntry: Content {
 	/// The type of action performed on the order. See [V1OrderHistoryEntryAction](#type-v1orderhistoryentryaction) for possible values
 	var action: V1OrderHistoryEntryAction?
 	/// The time when the action was performed, in ISO 8601 format.
 	var created_at: String?
+
+	public init(action: V1OrderHistoryEntryAction? = nil, created_at: String? = nil) {
+		self.action = action
+		self.created_at = created_at
+	}
 }
 
 /// 
 public enum V1OrderHistoryEntryAction: String, Content {
-	/// 
 	case ORDER_PLACED
-	/// 
 	case DECLINED
-	/// 
 	case PAYMENT_RECEIVED
-	/// 
 	case CANCELED
-	/// 
 	case COMPLETED
-	/// 
 	case REFUNDED
-	/// 
 	case EXPIRED
 }
 
 /// 
 public enum V1OrderState: String, Content {
-	/// 
 	case PENDING
-	/// 
 	case OPEN
-	/// 
 	case COMPLETED
-	/// 
 	case CANCELED
-	/// 
 	case REFUNDED
-	/// 
 	case REJECTED
 }
 
+/// V1Page
 public struct V1Page: Content {
 	/// The cells included on the page.
 	var cells: [V1PageCell]?
@@ -8816,8 +13056,16 @@ public struct V1Page: Content {
 	var name: String?
 	/// The page's position in the merchant's list of pages. Always an integer between 0 and 6, inclusive.
 	var page_index: Int?
+
+	public init(cells: [V1PageCell]? = nil, id: String? = nil, name: String? = nil, page_index: Int? = nil) {
+		self.cells = cells
+		self.id = id
+		self.name = name
+		self.page_index = page_index
+	}
 }
 
+/// V1PageCell
 public struct V1PageCell: Content {
 	/// The column of the cell. Always an integer between 0 and 4, inclusive.
 	var column: Int?
@@ -8831,30 +13079,33 @@ public struct V1PageCell: Content {
 	var placeholder_type: V1PageCellPlaceholderType?
 	/// The row of the cell. Always an integer between 0 and 4, inclusive.
 	var row: Int?
+
+	public init(column: Int? = nil, object_id: String? = nil, object_type: V1PageCellObjectType? = nil, page_id: String? = nil, placeholder_type: V1PageCellPlaceholderType? = nil, row: Int? = nil) {
+		self.column = column
+		self.object_id = object_id
+		self.object_type = object_type
+		self.page_id = page_id
+		self.placeholder_type = placeholder_type
+		self.row = row
+	}
 }
 
 /// 
 public enum V1PageCellObjectType: String, Content {
-	/// 
 	case ITEM
-	/// 
 	case DISCOUNT
-	/// 
 	case CATEGORY
-	/// 
 	case PLACEHOLDER
 }
 
 /// 
 public enum V1PageCellPlaceholderType: String, Content {
-	/// 
 	case ALL_ITEMS
-	/// 
 	case DISCOUNTS_CATEGORY
-	/// 
 	case REWARDS_FINDER
 }
 
+/// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
 public struct V1Payment: Content {
 	/// All of the additive taxes associated with the payment.
 	var additive_tax: [V1PaymentTax]?
@@ -8910,8 +13161,39 @@ public struct V1Payment: Content {
 	var tip_money: V1Money?
 	/// The total of all discounts applied to the payment.
 	var total_collected_money: V1Money?
+
+	public init(additive_tax: [V1PaymentTax]? = nil, additive_tax_money: V1Money? = nil, created_at: String? = nil, creator_id: String? = nil, device: Device? = nil, discount_money: V1Money? = nil, gross_sales_money: V1Money? = nil, id: String? = nil, inclusive_tax: [V1PaymentTax]? = nil, inclusive_tax_money: V1Money? = nil, is_partial: Bool? = nil, itemizations: [V1PaymentItemization]? = nil, merchant_id: String? = nil, net_sales_money: V1Money? = nil, net_total_money: V1Money? = nil, payment_url: String? = nil, processing_fee_money: V1Money? = nil, receipt_url: String? = nil, refunded_money: V1Money? = nil, refunds: [V1Refund]? = nil, surcharge_money: V1Money? = nil, surcharges: [V1PaymentSurcharge]? = nil, swedish_rounding_money: V1Money? = nil, tax_money: V1Money? = nil, tender: [V1Tender]? = nil, tip_money: V1Money? = nil, total_collected_money: V1Money? = nil) {
+		self.additive_tax = additive_tax
+		self.additive_tax_money = additive_tax_money
+		self.created_at = created_at
+		self.creator_id = creator_id
+		self.device = device
+		self.discount_money = discount_money
+		self.gross_sales_money = gross_sales_money
+		self.id = id
+		self.inclusive_tax = inclusive_tax
+		self.inclusive_tax_money = inclusive_tax_money
+		self.is_partial = is_partial
+		self.itemizations = itemizations
+		self.merchant_id = merchant_id
+		self.net_sales_money = net_sales_money
+		self.net_total_money = net_total_money
+		self.payment_url = payment_url
+		self.processing_fee_money = processing_fee_money
+		self.receipt_url = receipt_url
+		self.refunded_money = refunded_money
+		self.refunds = refunds
+		self.surcharge_money = surcharge_money
+		self.surcharges = surcharges
+		self.swedish_rounding_money = swedish_rounding_money
+		self.tax_money = tax_money
+		self.tender = tender
+		self.tip_money = tip_money
+		self.total_collected_money = total_collected_money
+	}
 }
 
+/// V1PaymentDiscount
 public struct V1PaymentDiscount: Content {
 	/// The amount of money that this discount adds to the payment (note that this value is always negative or zero).
 	var applied_money: V1Money?
@@ -8919,8 +13201,15 @@ public struct V1PaymentDiscount: Content {
 	var discount_id: String?
 	/// The discount's name.
 	var name: String?
+
+	public init(applied_money: V1Money? = nil, discount_id: String? = nil, name: String? = nil) {
+		self.applied_money = applied_money
+		self.discount_id = discount_id
+		self.name = name
+	}
 }
 
+/// V1PaymentItemDetail
 public struct V1PaymentItemDetail: Content {
 	/// The name of the item's merchant-defined category, if any.
 	var category_name: String?
@@ -8930,8 +13219,16 @@ public struct V1PaymentItemDetail: Content {
 	var item_variation_id: String?
 	///  The item's merchant-defined SKU, if any.
 	var sku: String?
+
+	public init(category_name: String? = nil, item_id: String? = nil, item_variation_id: String? = nil, sku: String? = nil) {
+		self.category_name = category_name
+		self.item_id = item_id
+		self.item_variation_id = item_variation_id
+		self.sku = sku
+	}
 }
 
+/// Payment include an` itemizations` field that lists the items purchased, along with associated fees, modifiers, and discounts. Each itemization has an `itemization_type` field that indicates which of the following the itemization represents:  <ul> <li>An item variation from the merchant's item library</li> <li>A custom monetary amount</li> <li> An action performed on a Square gift card, such as activating or reloading it. </li> </ul>  *Note**: itemization information included in a `Payment` object reflects details collected **at the time of the payment**. Details such as the name or price of items might have changed since the payment was processed.
 public struct V1PaymentItemization: Content {
 	/// The total of all discounts applied to the itemization. This value is always negative or zero.
 	var discount_money: V1Money?
@@ -8961,24 +13258,36 @@ public struct V1PaymentItemization: Content {
 	var taxes: [V1PaymentTax]?
 	/// The total cost of the item, including all taxes and discounts.
 	var total_money: V1Money?
+
+	public init(discount_money: V1Money? = nil, discounts: [V1PaymentDiscount]? = nil, gross_sales_money: V1Money? = nil, item_detail: V1PaymentItemDetail? = nil, item_variation_name: String? = nil, itemization_type: V1PaymentItemizationItemizationType? = nil, modifiers: [V1PaymentModifier]? = nil, name: String? = nil, net_sales_money: V1Money? = nil, notes: String? = nil, quantity: Float? = nil, single_quantity_money: V1Money? = nil, taxes: [V1PaymentTax]? = nil, total_money: V1Money? = nil) {
+		self.discount_money = discount_money
+		self.discounts = discounts
+		self.gross_sales_money = gross_sales_money
+		self.item_detail = item_detail
+		self.item_variation_name = item_variation_name
+		self.itemization_type = itemization_type
+		self.modifiers = modifiers
+		self.name = name
+		self.net_sales_money = net_sales_money
+		self.notes = notes
+		self.quantity = quantity
+		self.single_quantity_money = single_quantity_money
+		self.taxes = taxes
+		self.total_money = total_money
+	}
 }
 
 /// 
 public enum V1PaymentItemizationItemizationType: String, Content {
-	/// 
 	case ITEM
-	/// 
 	case CUSTOM_AMOUNT
-	/// 
 	case GIFT_CARD_ACTIVATION
-	/// 
 	case GIFT_CARD_RELOAD
-	/// 
 	case GIFT_CARD_UNKNOWN
-	/// 
 	case OTHER
 }
 
+/// V1PaymentModifier
 public struct V1PaymentModifier: Content {
 	/// The amount of money that this modifier option adds to the payment.
 	var applied_money: V1Money?
@@ -8986,8 +13295,15 @@ public struct V1PaymentModifier: Content {
 	var modifier_option_id: String?
 	/// The modifier option's name.
 	var name: String?
+
+	public init(applied_money: V1Money? = nil, modifier_option_id: String? = nil, name: String? = nil) {
+		self.applied_money = applied_money
+		self.modifier_option_id = modifier_option_id
+		self.name = name
+	}
 }
 
+/// V1PaymentSurcharge
 public struct V1PaymentSurcharge: Content {
 	/// The amount of the surcharge as a Money object. Exactly one of rate or amount_money should be set.
 	var amount_money: V1Money?
@@ -9005,18 +13321,27 @@ public struct V1PaymentSurcharge: Content {
 	var taxes: [V1PaymentTax]?
 	/// Indicates the source of the surcharge. For example, if it was applied as an automatic gratuity for a large group. See [V1PaymentSurchargeType](#type-v1paymentsurchargetype) for possible values
 	var type: V1PaymentSurchargeType?
+
+	public init(amount_money: V1Money? = nil, applied_money: V1Money? = nil, name: String? = nil, rate: String? = nil, surcharge_id: String? = nil, taxable: Bool? = nil, taxes: [V1PaymentTax]? = nil, type: V1PaymentSurchargeType? = nil) {
+		self.amount_money = amount_money
+		self.applied_money = applied_money
+		self.name = name
+		self.rate = rate
+		self.surcharge_id = surcharge_id
+		self.taxable = taxable
+		self.taxes = taxes
+		self.type = type
+	}
 }
 
 /// 
 public enum V1PaymentSurchargeType: String, Content {
-	/// 
 	case UNKNOWN
-	/// 
 	case AUTO_GRATUITY
-	/// 
 	case CUSTOM
 }
 
+/// V1PaymentTax
 public struct V1PaymentTax: Content {
 	/// The amount of money that this tax adds to the payment.
 	var applied_money: V1Money?
@@ -9030,23 +13355,37 @@ public struct V1PaymentTax: Content {
 	var name: String?
 	/// The rate of the tax, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%.
 	var rate: String?
+
+	public init(applied_money: V1Money? = nil, errors: [Error]? = nil, fee_id: String? = nil, inclusion_type: V1PaymentTaxInclusionType? = nil, name: String? = nil, rate: String? = nil) {
+		self.applied_money = applied_money
+		self.errors = errors
+		self.fee_id = fee_id
+		self.inclusion_type = inclusion_type
+		self.name = name
+		self.rate = rate
+	}
 }
 
 /// 
 public enum V1PaymentTaxInclusionType: String, Content {
-	/// 
 	case ADDITIVE
-	/// 
 	case INCLUSIVE
 }
 
+/// Represents a phone number.
 public struct V1PhoneNumber: Content {
 	/// The phone number's international calling code. For US phone numbers, this value is +1.
 	var calling_code: String
 	/// The phone number.
 	var number: String
+
+	public init(calling_code: String, number: String) {
+		self.calling_code = calling_code
+		self.number = number
+	}
 }
 
+/// V1Refund
 public struct V1Refund: Content {
 	/// The time when the merchant initiated the refund for Square to process, in ISO 8601 format.
 	var created_at: String?
@@ -9083,52 +13422,108 @@ public struct V1Refund: Content {
 	var refunded_tip_money: V1Money?
 	/// The type of refund See [V1RefundType](#type-v1refundtype) for possible values
 	var type: V1RefundType?
+
+	public init(created_at: String? = nil, is_exchange: Bool? = nil, merchant_id: String? = nil, payment_id: String? = nil, processed_at: String? = nil, reason: String? = nil, refunded_additive_tax: [V1PaymentTax]? = nil, refunded_additive_tax_money: V1Money? = nil, refunded_discount_money: V1Money? = nil, refunded_inclusive_tax: [V1PaymentTax]? = nil, refunded_inclusive_tax_money: V1Money? = nil, refunded_money: V1Money? = nil, refunded_processing_fee_money: V1Money? = nil, refunded_surcharge_money: V1Money? = nil, refunded_surcharges: [V1PaymentSurcharge]? = nil, refunded_tax_money: V1Money? = nil, refunded_tip_money: V1Money? = nil, type: V1RefundType? = nil) {
+		self.created_at = created_at
+		self.is_exchange = is_exchange
+		self.merchant_id = merchant_id
+		self.payment_id = payment_id
+		self.processed_at = processed_at
+		self.reason = reason
+		self.refunded_additive_tax = refunded_additive_tax
+		self.refunded_additive_tax_money = refunded_additive_tax_money
+		self.refunded_discount_money = refunded_discount_money
+		self.refunded_inclusive_tax = refunded_inclusive_tax
+		self.refunded_inclusive_tax_money = refunded_inclusive_tax_money
+		self.refunded_money = refunded_money
+		self.refunded_processing_fee_money = refunded_processing_fee_money
+		self.refunded_surcharge_money = refunded_surcharge_money
+		self.refunded_surcharges = refunded_surcharges
+		self.refunded_tax_money = refunded_tax_money
+		self.refunded_tip_money = refunded_tip_money
+		self.type = type
+	}
 }
 
 /// 
 public enum V1RefundType: String, Content {
-	/// 
 	case FULL
-	/// 
 	case PARTIAL
 }
 
 public struct V1RemoveFeeRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RemoveModifierListRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveBankAccountRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveCashDrawerShiftRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveEmployeeRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveEmployeeRoleRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveItemRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveModifierListRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveOrderRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrievePaymentRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveSettlementRequest: Content {
+
+	public init() {
+	}
 }
 
 public struct V1RetrieveTimecardRequest: Content {
+
+	public init() {
+	}
 }
 
+/// V1Settlement
 public struct V1Settlement: Content {
 	/// The Square-issued unique identifier for the bank account associated with the settlement.
 	var bank_account_id: String?
@@ -9142,8 +13537,18 @@ public struct V1Settlement: Content {
 	var status: V1SettlementStatus?
 	/// The amount of money involved in the settlement. A positive amount indicates a deposit, and a negative amount indicates a withdrawal. This amount is never zero.
 	var total_money: V1Money?
+
+	public init(bank_account_id: String? = nil, entries: [V1SettlementEntry]? = nil, id: String? = nil, initiated_at: String? = nil, status: V1SettlementStatus? = nil, total_money: V1Money? = nil) {
+		self.bank_account_id = bank_account_id
+		self.entries = entries
+		self.id = id
+		self.initiated_at = initiated_at
+		self.status = status
+		self.total_money = total_money
+	}
 }
 
+/// V1SettlementEntry
 public struct V1SettlementEntry: Content {
 	/// The total amount of money this entry contributes to the total settlement amount.
 	var amount_money: V1Money?
@@ -9153,6 +13558,13 @@ public struct V1SettlementEntry: Content {
 	var payment_id: String?
 	/// The settlement's current status. See [V1SettlementEntryType](#type-v1settlemententrytype) for possible values
 	var type: V1SettlementEntryType?
+
+	public init(amount_money: V1Money? = nil, fee_money: V1Money? = nil, payment_id: String? = nil, type: V1SettlementEntryType? = nil) {
+		self.amount_money = amount_money
+		self.fee_money = fee_money
+		self.payment_id = payment_id
+		self.type = type
+	}
 }
 
 /// 
@@ -9187,7 +13599,6 @@ public enum V1SettlementEntryType: String, Content {
 	case SUBSCRIPTION_FEE
 	/// Refund of a previously charged Square product subscription fee.
 	case SUBSCRIPTION_FEE_REFUND
-	/// 
 	case OTHER
 	/// A payment in which Square covers part of the funds for a purchase
 	case INCENTED_PAYMENT
@@ -9203,12 +13614,11 @@ public enum V1SettlementEntryType: String, Content {
 
 /// 
 public enum V1SettlementStatus: String, Content {
-	/// 
 	case FAILED
-	/// 
 	case SENT
 }
 
+/// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
 public struct V1Tender: Content {
 	/// The brand of credit card provided. See [V1TenderCardBrand](#type-v1tendercardbrand) for possible values
 	var card_brand: V1TenderCardBrand?
@@ -9242,68 +13652,64 @@ public struct V1Tender: Content {
 	var total_money: V1Money?
 	/// The type of tender. See [V1TenderType](#type-v1tendertype) for possible values
 	var type: V1TenderType?
+
+	public init(card_brand: V1TenderCardBrand? = nil, change_back_money: V1Money? = nil, employee_id: String? = nil, entry_method: V1TenderEntryMethod? = nil, id: String? = nil, is_exchange: Bool? = nil, name: String? = nil, pan_suffix: String? = nil, payment_note: String? = nil, receipt_url: String? = nil, refunded_money: V1Money? = nil, settled_at: String? = nil, tendered_at: String? = nil, tendered_money: V1Money? = nil, total_money: V1Money? = nil, type: V1TenderType? = nil) {
+		self.card_brand = card_brand
+		self.change_back_money = change_back_money
+		self.employee_id = employee_id
+		self.entry_method = entry_method
+		self.id = id
+		self.is_exchange = is_exchange
+		self.name = name
+		self.pan_suffix = pan_suffix
+		self.payment_note = payment_note
+		self.receipt_url = receipt_url
+		self.refunded_money = refunded_money
+		self.settled_at = settled_at
+		self.tendered_at = tendered_at
+		self.tendered_money = tendered_money
+		self.total_money = total_money
+		self.type = type
+	}
 }
 
 /// The brand of a credit card.
 public enum V1TenderCardBrand: String, Content {
-	/// 
 	case OTHER_BRAND
-	/// 
 	case VISA
-	/// 
 	case MASTER_CARD
-	/// 
 	case AMERICAN_EXPRESS
-	/// 
 	case DISCOVER
-	/// 
 	case DISCOVER_DINERS
-	/// 
 	case JCB
-	/// 
 	case CHINA_UNIONPAY
-	/// 
 	case SQUARE_GIFT_CARD
 }
 
 /// 
 public enum V1TenderEntryMethod: String, Content {
-	/// 
 	case MANUAL
-	/// 
 	case SCANNED
-	/// 
 	case SQUARE_CASH
-	/// 
 	case SQUARE_WALLET
-	/// 
 	case SWIPED
-	/// 
 	case WEB_FORM
-	/// 
 	case OTHER
 }
 
 /// 
 public enum V1TenderType: String, Content {
-	/// 
 	case CREDIT_CARD
-	/// 
 	case CASH
-	/// 
 	case THIRD_PARTY_CARD
-	/// 
 	case NO_SALE
-	/// 
 	case SQUARE_WALLET
-	/// 
 	case SQUARE_GIFT_CARD
-	/// 
 	case UNKNOWN
-	/// 
 	case OTHER
 }
 
+/// Represents a timecard for an employee.
 public struct V1Timecard: Content {
 	/// The ID of the location the employee clocked in from. We strongly reccomend providing a clockin_location_id. Square uses the clockin_location_id to determine a timecard’s timezone and overtime rules.
 	var clockin_location_id: String?
@@ -9329,8 +13735,24 @@ public struct V1Timecard: Content {
 	var regular_seconds_worked: Float?
 	/// The time when the timecard was most recently updated, in ISO 8601 format.
 	var updated_at: String?
+
+	public init(employee_id: String, clockin_location_id: String? = nil, clockin_time: String? = nil, clockout_location_id: String? = nil, clockout_time: String? = nil, created_at: String? = nil, deleted: Bool? = nil, doubletime_seconds_worked: Float? = nil, id: String? = nil, overtime_seconds_worked: Float? = nil, regular_seconds_worked: Float? = nil, updated_at: String? = nil) {
+		self.employee_id = employee_id
+		self.clockin_location_id = clockin_location_id
+		self.clockin_time = clockin_time
+		self.clockout_location_id = clockout_location_id
+		self.clockout_time = clockout_time
+		self.created_at = created_at
+		self.deleted = deleted
+		self.doubletime_seconds_worked = doubletime_seconds_worked
+		self.id = id
+		self.overtime_seconds_worked = overtime_seconds_worked
+		self.regular_seconds_worked = regular_seconds_worked
+		self.updated_at = updated_at
+	}
 }
 
+/// V1TimecardEvent
 public struct V1TimecardEvent: Content {
 	/// The time the employee clocked in, in ISO 8601 format.
 	var clockin_time: String?
@@ -9342,6 +13764,14 @@ public struct V1TimecardEvent: Content {
 	var event_type: V1TimecardEventEventType?
 	/// The event's unique ID.
 	var id: String?
+
+	public init(clockin_time: String? = nil, clockout_time: String? = nil, created_at: String? = nil, event_type: V1TimecardEventEventType? = nil, id: String? = nil) {
+		self.clockin_time = clockin_time
+		self.clockout_time = clockout_time
+		self.created_at = created_at
+		self.event_type = event_type
+		self.id = id
+	}
 }
 
 /// Actions that resulted in a change to a timecard. All timecard events created with the Connect API have an event type that begins with `API`.
@@ -9367,53 +13797,86 @@ public enum V1TimecardEventEventType: String, Content {
 public struct V1UpdateCategoryRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Category
+
+	public init(body: V1Category) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateDiscountRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Discount
+
+	public init(body: V1Discount) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateEmployeeRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Employee
+
+	public init(body: V1Employee) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateEmployeeRoleRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1EmployeeRole
+
+	public init(body: V1EmployeeRole) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateFeeRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Fee
+
+	public init(body: V1Fee) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateItemRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Item
+
+	public init(body: V1Item) {
+		self.body = body
+	}
 }
 
+/// V1UpdateModifierListRequest
 public struct V1UpdateModifierListRequest: Content {
 	/// The modifier list's name.
 	var name: String?
 	/// Indicates whether multiple options from the modifier list can be applied to a single item. See [V1UpdateModifierListRequestSelectionType](#type-v1updatemodifierlistrequestselectiontype) for possible values
 	var selection_type: V1UpdateModifierListRequestSelectionType?
+
+	public init(name: String? = nil, selection_type: V1UpdateModifierListRequestSelectionType? = nil) {
+		self.name = name
+		self.selection_type = selection_type
+	}
 }
 
 /// 
 public enum V1UpdateModifierListRequestSelectionType: String, Content {
-	/// 
 	case SINGLE
-	/// 
 	case MULTIPLE
 }
 
 public struct V1UpdateModifierOptionRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1ModifierOption
+
+	public init(body: V1ModifierOption) {
+		self.body = body
+	}
 }
 
+/// V1UpdateOrderRequest
 public struct V1UpdateOrderRequest: Content {
 	/// The action to perform on the order (COMPLETE, CANCEL, or REFUND). See [V1UpdateOrderRequestAction](#type-v1updateorderrequestaction) for possible values
 	var action: V1UpdateOrderRequestAction
@@ -9425,38 +13888,60 @@ public struct V1UpdateOrderRequest: Content {
 	var refunded_note: String?
 	/// The tracking number of the shipment associated with the order. Only valid if action is COMPLETE.
 	var shipped_tracking_number: String?
+
+	public init(action: V1UpdateOrderRequestAction, canceled_note: String? = nil, completed_note: String? = nil, refunded_note: String? = nil, shipped_tracking_number: String? = nil) {
+		self.action = action
+		self.canceled_note = canceled_note
+		self.completed_note = completed_note
+		self.refunded_note = refunded_note
+		self.shipped_tracking_number = shipped_tracking_number
+	}
 }
 
 /// 
 public enum V1UpdateOrderRequestAction: String, Content {
-	/// 
 	case COMPLETE
-	/// 
 	case CANCEL
-	/// 
 	case REFUND
 }
 
 public struct V1UpdatePageCellRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1PageCell
+
+	public init(body: V1PageCell) {
+		self.body = body
+	}
 }
 
 public struct V1UpdatePageRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Page
+
+	public init(body: V1Page) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateTimecardRequest: Content {
 	/// An object containing the fields to POST for the request. See the corresponding object definition for field details.
 	var body: V1Timecard
+
+	public init(body: V1Timecard) {
+		self.body = body
+	}
 }
 
 public struct V1UpdateVariationRequest: Content {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	var body: V1Variation
+
+	public init(body: V1Variation) {
+		self.body = body
+	}
 }
 
+/// V1Variation
 public struct V1Variation: Content {
 	/// The item variation's unique ID.
 	var id: String?
@@ -9482,40 +13967,56 @@ public struct V1Variation: Content {
 	var user_data: String?
 	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
 	var v2_id: String?
+
+	public init(id: String? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: V1VariationInventoryAlertType? = nil, item_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: V1Money? = nil, pricing_type: V1VariationPricingType? = nil, sku: String? = nil, track_inventory: Bool? = nil, user_data: String? = nil, v2_id: String? = nil) {
+		self.id = id
+		self.inventory_alert_threshold = inventory_alert_threshold
+		self.inventory_alert_type = inventory_alert_type
+		self.item_id = item_id
+		self.name = name
+		self.ordinal = ordinal
+		self.price_money = price_money
+		self.pricing_type = pricing_type
+		self.sku = sku
+		self.track_inventory = track_inventory
+		self.user_data = user_data
+		self.v2_id = v2_id
+	}
 }
 
 /// 
 public enum V1VariationInventoryAlertType: String, Content {
-	/// 
 	case LOW_QUANTITY
-	/// 
 	case NONE
-	/// 
 	case INVESTMENT
-	/// 
 	case LOAN
-	/// 
 	case SAVINGS
-	/// 
 	case OTHER
 }
 
 /// 
 public enum V1VariationPricingType: String, Content {
-	/// 
 	case FIXED_PRICING
-	/// 
 	case VARIABLE_PRICING
 }
 
 public struct VoidTransactionRequest: Content {
+
+	public init() {
+	}
 }
 
+/// Defines the fields that are included in the response body of a request to the [VoidTransaction](#endpoint-voidtransaction) endpoint.
 public struct VoidTransactionResponse: Content {
 	/// Any errors that occurred during the request.
 	var errors: [Error]?
+
+	public init(errors: [Error]? = nil) {
+		self.errors = errors
+	}
 }
 
+/// An object representing a team member's wage information.
 public struct WageSetting: Content {
 	/// The timestamp in RFC 3339 format describing when the wage setting object was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
 	let created_at: Timestamp?
@@ -9529,6 +14030,15 @@ public struct WageSetting: Content {
 	let updated_at: Timestamp?
 	/// Used for resolving concurrency issues; request will fail if version provided does not match server version at time of request. If not provided, Square executes a blind write, potentially overwriting data from another write. Read about [optimistic concurrency](https://developer.squareup.com/docs/docs/working-with-apis/optimistic-concurrency) in Square APIs for more information.
 	var version: Int?
+
+	public init(created_at: Timestamp? = nil, is_overtime_exempt: Bool? = nil, job_assignments: [JobAssignment]? = nil, team_member_id: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.is_overtime_exempt = is_overtime_exempt
+		self.job_assignments = job_assignments
+		self.team_member_id = team_member_id
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
 /// The days of the week.
@@ -9549,6 +14059,7 @@ public enum Weekday: String, Content {
 	case SUN
 }
 
+/// Sets the Day of the week and hour of the day that a business starts a work week. Used for the calculation of overtime pay.
 public struct WorkweekConfig: Content {
 	/// A read-only timestamp in RFC 3339 format; presented in UTC
 	let created_at: Timestamp?
@@ -9562,5 +14073,14 @@ public struct WorkweekConfig: Content {
 	let updated_at: Timestamp?
 	/// Used for resolving concurrency issues; request will fail if version provided does not match server version at time of request. If not provided, Square executes a blind write; potentially overwriting data from another write.
 	var version: Int?
+
+	public init(start_of_day_local_time: String, start_of_week: Weekday, created_at: Timestamp? = nil, id: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.start_of_day_local_time = start_of_day_local_time
+		self.start_of_week = start_of_week
+		self.created_at = created_at
+		self.id = id
+		self.updated_at = updated_at
+		self.version = version
+	}
 }
 
