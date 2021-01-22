@@ -1,6 +1,6 @@
 
 /// Basic info about the API
-public struct SquareAPI {
+public struct SquareAPIInfo {
 	public static var version: String { return "2020-12-16" }
 
 	public static var host: String { return "connect.squareup.com" }

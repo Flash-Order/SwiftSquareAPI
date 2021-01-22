@@ -30,7 +30,6 @@ public extension Duration {
 
 
 
-
 /// protocol for Square Endpoint definitions
 public protocol SquareAPIEndpoint {
 	associatedtype inputType: Codable
