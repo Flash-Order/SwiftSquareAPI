@@ -28,9 +28,12 @@ extension Duration {
 //	var date3339: Date? { return iso3339.date(from: self) }
 //}
 
+
 let kSquareHost = "connect.squareup.com"
 
 public protocol SQCodable: Codable {}
+
+extension Array: SQCodable where Element: SQCodable {}
 
 /// protocol for Square Endpoint definitions
 public protocol SquareAPIEndpoint {
