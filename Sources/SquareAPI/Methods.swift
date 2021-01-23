@@ -59,6 +59,16 @@ public struct V1ListEmployees: SquareAPIEndpoint {
 	}
 }
 
+///  Use the CreateEmployee endpoint to add an employee to a Square account. Employees created with the Connect API have an initial status of `INACTIVE`. Inactive employees cannot sign in to Square Point of Sale until they are activated from the Square Dashboard. Employee status cannot be changed with the Connect API.  Employee entities cannot be deleted. To disable employee profiles, set the employee's status to <code>INACTIVE</code>
+public struct V1CreateEmployee: SquareAPIEndpoint {
+	public typealias inputType = V1Employee
+	public typealias outputType = V1Employee
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v1/me/employees"
+	}
+}
+
 /// Provides the details for a single employee.
 public struct V1RetrieveEmployee: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -84,6 +94,16 @@ public struct V1ListEmployeeRoles: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = [V1EmployeeRole]
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v1/me/roles"
+	}
+}
+
+/// Creates an employee role you can then assign to employees.  Square accounts can include any number of roles that can be assigned to employees. These roles define the actions and permissions granted to an employee with that role. For example, an employee with a "Shift Manager" role might be able to issue refunds in Square Point of Sale, whereas an employee with a "Clerk" role might not.  Roles are assigned with the [V1UpdateEmployee](#endpoint-v1updateemployee) endpoint. An employee can have only one role at a time.  If an employee has no role, they have none of the permissions associated with roles. All employees can accept payments with Square Point of Sale.
+public struct V1CreateEmployeeRole: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = V1EmployeeRole
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v1/me/roles"
@@ -116,6 +136,17 @@ public struct V1ListTimecards: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = [V1Timecard]
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v1/me/timecards"
+	}
+}
+
+/// Creates a timecard for an employee and clocks them in with an `API_CREATE` event and a `clockin_time` set to the current time unless the request provides a different value.  To import timecards from another system (rather than clocking someone in). Specify the `clockin_time` and* `clockout_time` in the request.  Timecards correspond to exactly one shift for a given employee, bounded by the `clockin_time` and `clockout_time` fields. An employee is considered clocked in if they have a timecard that doesn't have a `clockout_time` set. An employee that is currently clocked in cannot be clocked in a second time.
+@available(*,deprecated)
+public struct V1CreateTimecard: SquareAPIEndpoint {
+	public typealias inputType = V1Timecard
+	public typealias outputType = V1Timecard
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v1/me/timecards"
@@ -275,6 +306,26 @@ public struct V1ListCategories: SquareAPIEndpoint {
 	}
 }
 
+/// Creates an item category.
+@available(*,deprecated)
+public struct V1CreateCategory: SquareAPIEndpoint {
+	public typealias inputType = V1Category
+	public typealias outputType = V1Category
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Creates an item category.
+		/// - Parameters:
+		///   - location_id: The ID of the location to create an item for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/categories"
+	}
+}
+
 /// Lists all the discounts for a given location.
 @available(*,deprecated)
 public struct V1ListDiscounts: SquareAPIEndpoint {
@@ -296,6 +347,26 @@ public struct V1ListDiscounts: SquareAPIEndpoint {
 	}
 }
 
+/// Creates a discount.
+@available(*,deprecated)
+public struct V1CreateDiscount: SquareAPIEndpoint {
+	public typealias inputType = V1Discount
+	public typealias outputType = V1Discount
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Creates a discount.
+		/// - Parameters:
+		///   - location_id: The ID of the location to create an item for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/discounts"
+	}
+}
+
 /// Lists all the fees (taxes) for a given location.
 @available(*,deprecated)
 public struct V1ListFees: SquareAPIEndpoint {
@@ -308,6 +379,26 @@ public struct V1ListFees: SquareAPIEndpoint {
 		/// Lists all the fees (taxes) for a given location.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list fees for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/fees"
+	}
+}
+
+/// Creates a fee (tax).
+@available(*,deprecated)
+public struct V1CreateFee: SquareAPIEndpoint {
+	public typealias inputType = V1Fee
+	public typealias outputType = V1Fee
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Creates a fee (tax).
+		/// - Parameters:
+		///   - location_id: The ID of the location to create a fee for.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
@@ -382,6 +473,26 @@ public struct V1ListItems: SquareAPIEndpoint {
 	}
 }
 
+/// Creates an item and at least one variation for it.    Item-related entities include fields you can use to associate them with entities in a non-Square system.  When you create an item-related entity, you can optionally specify `id`. This value must be unique among all IDs ever specified for the account, including those specified by other applications. You can never reuse an entity ID. If you do not specify an ID, Square generates one for the entity.  Item variations have a `user_data` string that lets you associate arbitrary metadata with the variation. The string cannot exceed 255 characters.
+@available(*,deprecated)
+public struct V1CreateItem: SquareAPIEndpoint {
+	public typealias inputType = V1Item
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Creates an item and at least one variation for it.    Item-related entities include fields you can use to associate them with entities in a non-Square system.  When you create an item-related entity, you can optionally specify `id`. This value must be unique among all IDs ever specified for the account, including those specified by other applications. You can never reuse an entity ID. If you do not specify an ID, Square generates one for the entity.  Item variations have a `user_data` string that lets you associate arbitrary metadata with the variation. The string cannot exceed 255 characters.
+		/// - Parameters:
+		///   - location_id: The ID of the location to create an item for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items"
+	}
+}
+
 /// Provides the details for a single item, including associated modifier lists and fees.
 @available(*,deprecated)
 public struct V1RetrieveItem: SquareAPIEndpoint {
@@ -441,6 +552,26 @@ public struct V1ListModifierLists: SquareAPIEndpoint {
 		/// Lists all the modifier lists for a given location.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list modifier lists for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/modifier-lists"
+	}
+}
+
+/// Creates an item modifier list and at least 1 modifier option for it.
+@available(*,deprecated)
+public struct V1CreateModifierList: SquareAPIEndpoint {
+	public typealias inputType = V1ModifierList
+	public typealias outputType = V1ModifierList
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Creates an item modifier list and at least 1 modifier option for it.
+		/// - Parameters:
+		///   - location_id: The ID of the location to create a modifier list for.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
@@ -561,6 +692,26 @@ public struct V1ListPages: SquareAPIEndpoint {
 	}
 }
 
+/// Creates a Favorites page in Square Point of Sale.
+@available(*,deprecated)
+public struct V1CreatePage: SquareAPIEndpoint {
+	public typealias inputType = V1Page
+	public typealias outputType = V1Page
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Creates a Favorites page in Square Point of Sale.
+		/// - Parameters:
+		///   - location_id: The ID of the location to create an item for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/pages"
+	}
+}
+
 /// Provides summary information for all payments taken for a given Square account during a date range. Date ranges cannot exceed 1 year in length. See Date ranges for details of inclusive and exclusive dates.  *Note**: Details for payments processed with Square Point of Sale while in offline mode may not be transmitted to Square for up to 72 hours. Offline payments have a `created_at` value that reflects the time the payment was originally processed, not the time it was subsequently transmitted to Square. Consequently, the ListPayments endpoint might list an offline payment chronologically between online payments that were seen in a previous request.
 public struct V1ListPayments: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -615,6 +766,25 @@ public struct V1ListRefunds: SquareAPIEndpoint {
 		/// Provides the details for all refunds initiated by a merchant or any of the merchant's mobile staff during a date range. Date ranges cannot exceed one year in length.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list refunds for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/refunds"
+	}
+}
+
+/// Issues a refund for a previously processed payment. You must issue a refund within 60 days of the associated payment.  You cannot issue a partial refund for a split tender payment. You must instead issue a full or partial refund for a particular tender, by providing the applicable tender id to the V1CreateRefund endpoint. Issuing a full refund for a split tender payment refunds all tenders associated with the payment.  Issuing a refund for a card payment is not reversible. For development purposes, you can create fake cash payments in Square Point of Sale and refund them.
+public struct V1CreateRefund: SquareAPIEndpoint {
+	public typealias inputType = V1CreateRefundRequest
+	public typealias outputType = V1Refund
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Issues a refund for a previously processed payment. You must issue a refund within 60 days of the associated payment.  You cannot issue a partial refund for a split tender payment. You must instead issue a full or partial refund for a particular tender, by providing the applicable tender id to the V1CreateRefund endpoint. Issuing a full refund for a split tender payment refunds all tenders associated with the payment.  Issuing a refund for a card payment is not reversible. For development purposes, you can create fake cash payments in Square Point of Sale and refund them.
+		/// - Parameters:
+		///   - location_id: The ID of the original payment's associated location.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
@@ -1013,11 +1183,31 @@ public struct ListCustomers: SquareAPIEndpoint {
 	}
 }
 
+/// Creates a new customer for a business, which can have associated cards on file.  You must provide __at least one__ of the following values in your request to this endpoint:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
+public struct CreateCustomer: SquareAPIEndpoint {
+	public typealias inputType = CreateCustomerRequest
+	public typealias outputType = CreateCustomerResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/customers"
+	}
+}
+
 /// Retrieves the list of customer groups of a business.
 public struct ListCustomerGroups: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListCustomerGroupsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/customers/groups"
+	}
+}
+
+/// Creates a new customer group for a business.   The request must include the `name` value of the group.
+public struct CreateCustomerGroup: SquareAPIEndpoint {
+	public typealias inputType = CreateCustomerGroupRequest
+	public typealias outputType = CreateCustomerGroupResponse
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v2/customers/groups"
@@ -1129,6 +1319,16 @@ public struct ListDeviceCodes: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListDeviceCodesResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/devices/codes"
+	}
+}
+
+/// Creates a DeviceCode that can be used to login to a Square Terminal device to enter the connected terminal mode.
+public struct CreateDeviceCode: SquareAPIEndpoint {
+	public typealias inputType = CreateDeviceCodeRequest
+	public typealias outputType = CreateDeviceCodeResponse
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v2/devices/codes"
@@ -1435,6 +1635,16 @@ public struct ListInvoices: SquareAPIEndpoint {
 	}
 }
 
+/// Creates a draft [invoice](#type-invoice)  for an order created using the Orders API.  A draft invoice remains in your account and no action is taken.  You must publish the invoice before Square can process it (send it to the customer's email address or charge the customer’s card on file).
+public struct CreateInvoice: SquareAPIEndpoint {
+	public typealias inputType = CreateInvoiceRequest
+	public typealias outputType = CreateInvoiceResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/invoices"
+	}
+}
+
 /// Searches for invoices from a location specified in  the filter. You can optionally specify customers in the filter for whom to  retrieve invoices. In the current implementation, you can only specify one location and  optionally one customer.  The response is paginated. If truncated, the response includes a `cursor`  that you use in a subsequent request to fetch the next set of invoices.
 public struct SearchInvoices: SquareAPIEndpoint {
 	public typealias inputType = SearchInvoicesRequest
@@ -1508,6 +1718,16 @@ public struct ListBreakTypes: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListBreakTypesResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/break-types"
+	}
+}
+
+/// Creates a new `BreakType`.  A `BreakType` is a template for creating `Break` objects. You must provide the following values in your request to this endpoint:  - `location_id` - `break_name` - `expected_duration` - `is_paid`  You can only have 3 `BreakType` instances per location. If you attempt to add a 4th `BreakType` for a location, an `INVALID_REQUEST_ERROR` "Exceeded limit of 3 breaks per location." is returned.
+public struct CreateBreakType: SquareAPIEndpoint {
+	public typealias inputType = CreateBreakTypeRequest
+	public typealias outputType = CreateBreakTypeResponse
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v2/labor/break-types"
@@ -1660,6 +1880,16 @@ public struct ListLocations: SquareAPIEndpoint {
 	}
 }
 
+/// Creates a location.
+public struct CreateLocation: SquareAPIEndpoint {
+	public typealias inputType = CreateLocationRequest
+	public typealias outputType = CreateLocationResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/locations"
+	}
+}
+
 /// Retrieves details of a location. You can specify "main"  as the location ID to retrieve details of the  main location.
 public struct RetrieveLocation: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -1732,6 +1962,26 @@ public struct ListTransactions: SquareAPIEndpoint {
 		/// Lists transactions for a particular location.  Transactions include payment information from sales and exchanges and refund information from returns and exchanges.  Max results per [page](#paginatingresults): 50
 		/// - Parameters:
 		///   - location_id: The ID of the location to list transactions for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions"
+	}
+}
+
+/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card nonce generated with the `SqPaymentForm`) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](#endpoint-retrievetransaction). See the `processing_fee_money` field of each [Tender included](#type-tender) in the transaction.
+@available(*,deprecated)
+public struct Charge: SquareAPIEndpoint {
+	public typealias inputType = ChargeRequest
+	public typealias outputType = ChargeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card nonce generated with the `SqPaymentForm`) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](#endpoint-retrievetransaction). See the `processing_fee_money` field of each [Tender included](#type-tender) in the transaction.
+		/// - Parameters:
+		///   - location_id: The ID of the location to associate the created transaction with.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
@@ -2132,6 +2382,16 @@ public struct ListPayments: SquareAPIEndpoint {
 	}
 }
 
+/// Charges a payment source (for example, a card  represented by customer's card on file or a card nonce). In addition  to the payment source, the request must include the  amount to accept for the payment.  There are several optional parameters that you can include in the request  (for example, tip money, whether to autocomplete the payment, or a reference ID  to correlate this payment with another system).   The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.
+public struct CreatePayment: SquareAPIEndpoint {
+	public typealias inputType = CreatePaymentRequest
+	public typealias outputType = CreatePaymentResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/payments"
+	}
+}
+
 /// Cancels (voids) a payment identified by the idempotency key that is specified in the request.  Use this method when the status of a `CreatePayment` request is unknown (for example, after you send a `CreatePayment` request, a network error occurs and you do not get a response). In this case, you can direct Square to cancel the payment using this endpoint. In the request, you provide the same idempotency key that you provided in your `CreatePayment` request that you want to cancel. After canceling the payment, you can submit your `CreatePayment` request again.  Note that if no payment with the specified idempotency key is found, no action is taken and the endpoint  returns successfully.
 public struct CancelPaymentByIdempotencyKey: SquareAPIEndpoint {
 	public typealias inputType = CancelPaymentByIdempotencyKeyRequest
@@ -2205,6 +2465,16 @@ public struct ListPaymentRefunds: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListPaymentRefundsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/refunds"
+	}
+}
+
+/// Refunds a payment. You can refund the entire payment amount or a  portion of it.
+public struct RefundPayment: SquareAPIEndpoint {
+	public typealias inputType = RefundPaymentRequest
+	public typealias outputType = RefundPaymentResponse
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v2/refunds"
