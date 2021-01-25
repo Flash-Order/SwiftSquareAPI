@@ -4,7 +4,7 @@ import Vapor
 import Foundation
 ///public typealias Content = Codable
 public enum HTTPMethod: String {
-	case GET,POST,PUT
+	case GET,POST,PUT,DELETE
 }
 #endif
 

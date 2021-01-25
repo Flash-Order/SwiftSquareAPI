@@ -89,6 +89,22 @@ public struct V1RetrieveEmployee: SquareAPIEndpoint {
 	}
 }
 
+public struct V1UpdateEmployee: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Employee
+	public typealias outputType = V1Employee
+	public typealias paramType = Params
+	public struct Params {
+		let employee_id: String
+		public init(employee_id: String) {
+			self.employee_id = employee_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/me/employees/\(inputs.employee_id)"
+	}
+}
+
 /// Provides summary information for all of a business's employee roles.
 public struct V1ListEmployeeRoles: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -121,6 +137,26 @@ public struct V1RetrieveEmployeeRole: SquareAPIEndpoint {
 		/// Provides the details for a single employee role.
 		/// - Parameters:
 		///   - role_id: The role's ID.
+		public init(role_id: String) {
+			self.role_id = role_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/me/roles/\(inputs.role_id)"
+	}
+}
+
+/// Modifies the details of an employee role.
+public struct V1UpdateEmployeeRole: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1EmployeeRole
+	public typealias outputType = V1EmployeeRole
+	public typealias paramType = Params
+	public struct Params {
+		let role_id: String
+		/// Modifies the details of an employee role.
+		/// - Parameters:
+		///   - role_id: The ID of the role to modify.
 		public init(role_id: String) {
 			self.role_id = role_id
 		}
@@ -165,6 +201,27 @@ public struct V1RetrieveTimecard: SquareAPIEndpoint {
 		/// Provides the details for a single timecard.   Only approved accounts can manage their employees with Square. Unapproved accounts cannot use employee management features with the API.
 		/// - Parameters:
 		///   - timecard_id: The timecard's ID.
+		public init(timecard_id: String) {
+			self.timecard_id = timecard_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/me/timecards/\(inputs.timecard_id)"
+	}
+}
+
+/// Modifies the details of a timecard with an `API_EDIT` event for the timecard. Updating an active timecard with a `clockout_time` clocks the employee out.
+@available(*,deprecated)
+public struct V1UpdateTimecard: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Timecard
+	public typealias outputType = V1Timecard
+	public typealias paramType = Params
+	public struct Params {
+		let timecard_id: String
+		/// Modifies the details of a timecard with an `API_EDIT` event for the timecard. Updating an active timecard with a `clockout_time` clocks the employee out.
+		/// - Parameters:
+		///   - timecard_id: TThe ID of the timecard to modify.
 		public init(timecard_id: String) {
 			self.timecard_id = timecard_id
 		}
@@ -326,6 +383,54 @@ public struct V1CreateCategory: SquareAPIEndpoint {
 	}
 }
 
+/// Modifies the details of an existing item category.
+@available(*,deprecated)
+public struct V1UpdateCategory: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Category
+	public typealias outputType = V1Category
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let category_id: String
+		/// Modifies the details of an existing item category.
+		/// - Parameters:
+		///   - location_id: The ID of the category's associated location.
+		///   - category_id: The ID of the category to edit.
+		public init(location_id: String, category_id: String) {
+			self.location_id = location_id
+			self.category_id = category_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/categories/\(inputs.category_id)"
+	}
+}
+
+/// Deletes an existing item category.   __DeleteCategory__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteCategoryRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeleteCategory: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Category
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let category_id: String
+		/// Deletes an existing item category.   __DeleteCategory__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteCategoryRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - category_id: The ID of the category to delete.
+		public init(location_id: String, category_id: String) {
+			self.location_id = location_id
+			self.category_id = category_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/categories/\(inputs.category_id)"
+	}
+}
+
 /// Lists all the discounts for a given location.
 @available(*,deprecated)
 public struct V1ListDiscounts: SquareAPIEndpoint {
@@ -367,6 +472,54 @@ public struct V1CreateDiscount: SquareAPIEndpoint {
 	}
 }
 
+/// Modifies the details of an existing discount.
+@available(*,deprecated)
+public struct V1UpdateDiscount: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Discount
+	public typealias outputType = V1Discount
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let discount_id: String
+		/// Modifies the details of an existing discount.
+		/// - Parameters:
+		///   - location_id: The ID of the category's associated location.
+		///   - discount_id: The ID of the discount to edit.
+		public init(location_id: String, discount_id: String) {
+			self.location_id = location_id
+			self.discount_id = discount_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/discounts/\(inputs.discount_id)"
+	}
+}
+
+/// Deletes an existing discount.   __DeleteDiscount__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteDiscountRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeleteDiscount: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Discount
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let discount_id: String
+		/// Deletes an existing discount.   __DeleteDiscount__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteDiscountRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - discount_id: The ID of the discount to delete.
+		public init(location_id: String, discount_id: String) {
+			self.location_id = location_id
+			self.discount_id = discount_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/discounts/\(inputs.discount_id)"
+	}
+}
+
 /// Lists all the fees (taxes) for a given location.
 @available(*,deprecated)
 public struct V1ListFees: SquareAPIEndpoint {
@@ -405,6 +558,54 @@ public struct V1CreateFee: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/\(inputs.location_id)/fees"
+	}
+}
+
+/// Modifies the details of an existing fee (tax).
+@available(*,deprecated)
+public struct V1UpdateFee: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Fee
+	public typealias outputType = V1Fee
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let fee_id: String
+		/// Modifies the details of an existing fee (tax).
+		/// - Parameters:
+		///   - location_id: The ID of the fee's associated location.
+		///   - fee_id: The ID of the fee to edit.
+		public init(location_id: String, fee_id: String) {
+			self.location_id = location_id
+			self.fee_id = fee_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/fees/\(inputs.fee_id)"
+	}
+}
+
+/// Deletes an existing fee (tax).   __DeleteFee__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteFeeRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeleteFee: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Fee
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let fee_id: String
+		/// Deletes an existing fee (tax).   __DeleteFee__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteFeeRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the fee's associated location.
+		///   - fee_id: The ID of the fee to delete.
+		public init(location_id: String, fee_id: String) {
+			self.location_id = location_id
+			self.fee_id = fee_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/fees/\(inputs.fee_id)"
 	}
 }
 
@@ -517,6 +718,162 @@ public struct V1RetrieveItem: SquareAPIEndpoint {
 	}
 }
 
+/// Modifies the core details of an existing item.
+@available(*,deprecated)
+public struct V1UpdateItem: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Item
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		/// Modifies the core details of an existing item.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - item_id: The ID of the item to modify.
+		public init(location_id: String, item_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+	}
+}
+
+/// Deletes an existing item and all item variations associated with it.   __DeleteItem__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteItemRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeleteItem: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		/// Deletes an existing item and all item variations associated with it.   __DeleteItem__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteItemRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - item_id: The ID of the item to modify.
+		public init(location_id: String, item_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+	}
+}
+
+/// Associates a fee with an item so the fee is automatically applied to the item in Square Point of Sale.
+@available(*,deprecated)
+public struct V1ApplyFee: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = Empty
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		let fee_id: String
+		/// Associates a fee with an item so the fee is automatically applied to the item in Square Point of Sale.
+		/// - Parameters:
+		///   - location_id: The ID of the fee's associated location.
+		///   - item_id: The ID of the item to add the fee to.
+		///   - fee_id: The ID of the fee to apply.
+		public init(location_id: String, item_id: String, fee_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+			self.fee_id = fee_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/fees/\(inputs.fee_id)"
+	}
+}
+
+/// Removes a fee assocation from an item so the fee is no longer automatically applied to the item in Square Point of Sale.
+@available(*,deprecated)
+public struct V1RemoveFee: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		let fee_id: String
+		/// Removes a fee assocation from an item so the fee is no longer automatically applied to the item in Square Point of Sale.
+		/// - Parameters:
+		///   - location_id: The ID of the fee's associated location.
+		///   - item_id: The ID of the item to add the fee to.
+		///   - fee_id: The ID of the fee to apply.
+		public init(location_id: String, item_id: String, fee_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+			self.fee_id = fee_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/fees/\(inputs.fee_id)"
+	}
+}
+
+/// Associates a modifier list with an item so the associated modifier options can be applied to the item.
+@available(*,deprecated)
+public struct V1ApplyModifierList: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = Empty
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		let modifier_list_id: String
+		/// Associates a modifier list with an item so the associated modifier options can be applied to the item.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - item_id: The ID of the item to add the modifier list to.
+		///   - modifier_list_id: The ID of the modifier list to apply.
+		public init(location_id: String, item_id: String, modifier_list_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+			self.modifier_list_id = modifier_list_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/modifier-lists/\(inputs.modifier_list_id)"
+	}
+}
+
+/// Removes a modifier list association from an item so the modifier options from the list can no longer be applied to the item.
+@available(*,deprecated)
+public struct V1RemoveModifierList: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Item
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		let modifier_list_id: String
+		/// Removes a modifier list association from an item so the modifier options from the list can no longer be applied to the item.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - item_id: The ID of the item to remove the modifier list from.
+		///   - modifier_list_id: The ID of the modifier list to remove.
+		public init(location_id: String, item_id: String, modifier_list_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+			self.modifier_list_id = modifier_list_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/modifier-lists/\(inputs.modifier_list_id)"
+	}
+}
+
 /// Creates an item variation for an existing item.
 @available(*,deprecated)
 public struct V1CreateVariation: SquareAPIEndpoint {
@@ -537,6 +894,60 @@ public struct V1CreateVariation: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations"
+	}
+}
+
+/// Modifies the details of an existing item variation.
+@available(*,deprecated)
+public struct V1UpdateVariation: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Variation
+	public typealias outputType = V1Variation
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		let variation_id: String
+		/// Modifies the details of an existing item variation.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - item_id: The ID of the item to modify.
+		///   - variation_id: The ID of the variation to modify.
+		public init(location_id: String, item_id: String, variation_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+			self.variation_id = variation_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations/\(inputs.variation_id)"
+	}
+}
+
+/// Deletes an existing item variation from an item.   __DeleteVariation__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteVariationRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeleteVariation: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Variation
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let item_id: String
+		let variation_id: String
+		/// Deletes an existing item variation from an item.   __DeleteVariation__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteVariationRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - item_id: The ID of the item to delete.
+		///   - variation_id: The ID of the variation to delete.
+		public init(location_id: String, item_id: String, variation_id: String) {
+			self.location_id = location_id
+			self.item_id = item_id
+			self.variation_id = variation_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations/\(inputs.variation_id)"
 	}
 }
 
@@ -605,6 +1016,54 @@ public struct V1RetrieveModifierList: SquareAPIEndpoint {
 	}
 }
 
+/// Modifies the details of an existing item modifier list.
+@available(*,deprecated)
+public struct V1UpdateModifierList: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1UpdateModifierListRequest
+	public typealias outputType = V1ModifierList
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let modifier_list_id: String
+		/// Modifies the details of an existing item modifier list.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - modifier_list_id: The ID of the modifier list to edit.
+		public init(location_id: String, modifier_list_id: String) {
+			self.location_id = location_id
+			self.modifier_list_id = modifier_list_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+	}
+}
+
+/// Deletes an existing item modifier list and all modifier options associated with it.   __DeleteModifierList__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteModifierListRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeleteModifierList: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1ModifierList
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let modifier_list_id: String
+		/// Deletes an existing item modifier list and all modifier options associated with it.   __DeleteModifierList__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteModifierListRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - modifier_list_id: The ID of the modifier list to delete.
+		public init(location_id: String, modifier_list_id: String) {
+			self.location_id = location_id
+			self.modifier_list_id = modifier_list_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+	}
+}
+
 /// Creates an item modifier option and adds it to a modifier list.
 @available(*,deprecated)
 public struct V1CreateModifierOption: SquareAPIEndpoint {
@@ -625,6 +1084,60 @@ public struct V1CreateModifierOption: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options"
+	}
+}
+
+/// Modifies the details of an existing item modifier option.
+@available(*,deprecated)
+public struct V1UpdateModifierOption: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1ModifierOption
+	public typealias outputType = V1ModifierOption
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let modifier_list_id: String
+		let modifier_option_id: String
+		/// Modifies the details of an existing item modifier option.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - modifier_list_id: The ID of the modifier list to edit.
+		///   - modifier_option_id: The ID of the modifier list to edit.
+		public init(location_id: String, modifier_list_id: String, modifier_option_id: String) {
+			self.location_id = location_id
+			self.modifier_list_id = modifier_list_id
+			self.modifier_option_id = modifier_option_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options/\(inputs.modifier_option_id)"
+	}
+}
+
+/// Deletes an existing item modifier option from a modifier list.   __DeleteModifierOption__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteModifierOptionRequest` object.
+@available(*,deprecated)
+public struct V1DeleteModifierOption: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1ModifierOption
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let modifier_list_id: String
+		let modifier_option_id: String
+		/// Deletes an existing item modifier option from a modifier list.   __DeleteModifierOption__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeleteModifierOptionRequest` object.
+		/// - Parameters:
+		///   - location_id: The ID of the item's associated location.
+		///   - modifier_list_id: The ID of the modifier list to delete.
+		///   - modifier_option_id: The ID of the modifier list to edit.
+		public init(location_id: String, modifier_list_id: String, modifier_option_id: String) {
+			self.location_id = location_id
+			self.modifier_list_id = modifier_list_id
+			self.modifier_option_id = modifier_option_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options/\(inputs.modifier_option_id)"
 	}
 }
 
@@ -658,6 +1171,29 @@ public struct V1RetrieveOrder: SquareAPIEndpoint {
 		let location_id: String
 		let order_id: String
 		/// Provides comprehensive information for a single online store order, including the order's history.
+		/// - Parameters:
+		///   - location_id: The ID of the order's associated location.
+		///   - order_id: The order's Square-issued ID. You obtain this value from Order objects returned by the List Orders endpoint
+		public init(location_id: String, order_id: String) {
+			self.location_id = location_id
+			self.order_id = order_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/orders/\(inputs.order_id)"
+	}
+}
+
+/// Updates the details of an online store order. Every update you perform on an order corresponds to one of three actions:
+public struct V1UpdateOrder: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1UpdateOrderRequest
+	public typealias outputType = V1Order
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let order_id: String
+		/// Updates the details of an online store order. Every update you perform on an order corresponds to one of three actions:
 		/// - Parameters:
 		///   - location_id: The ID of the order's associated location.
 		///   - order_id: The order's Square-issued ID. You obtain this value from Order objects returned by the List Orders endpoint
@@ -709,6 +1245,102 @@ public struct V1CreatePage: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/\(inputs.location_id)/pages"
+	}
+}
+
+/// Modifies the details of a Favorites page in Square Point of Sale.
+@available(*,deprecated)
+public struct V1UpdatePage: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1Page
+	public typealias outputType = V1Page
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let page_id: String
+		/// Modifies the details of a Favorites page in Square Point of Sale.
+		/// - Parameters:
+		///   - location_id: The ID of the Favorites page's associated location
+		///   - page_id: The ID of the page to modify.
+		public init(location_id: String, page_id: String) {
+			self.location_id = location_id
+			self.page_id = page_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)"
+	}
+}
+
+/// Deletes an existing Favorites page and all of its cells.   __DeletePage__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeletePageRequest` object.
+@available(*,deprecated)
+public struct V1DeletePage: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Page
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let page_id: String
+		/// Deletes an existing Favorites page and all of its cells.   __DeletePage__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeletePageRequest` object.
+		/// - Parameters:
+		///   - location_id: The ID of the Favorites page's associated location.
+		///   - page_id: The ID of the page to delete.
+		public init(location_id: String, page_id: String) {
+			self.location_id = location_id
+			self.page_id = page_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)"
+	}
+}
+
+/// Modifies a cell of a Favorites page in Square Point of Sale.
+@available(*,deprecated)
+public struct V1UpdatePageCell: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = V1PageCell
+	public typealias outputType = V1Page
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let page_id: String
+		/// Modifies a cell of a Favorites page in Square Point of Sale.
+		/// - Parameters:
+		///   - location_id: The ID of the Favorites page's associated location.
+		///   - page_id: The ID of the page the cell belongs to.
+		public init(location_id: String, page_id: String) {
+			self.location_id = location_id
+			self.page_id = page_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)/cells"
+	}
+}
+
+/// Deletes a cell from a Favorites page in Square Point of Sale.   __DeletePageCell__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeletePageCellRequest` object as documented below.
+@available(*,deprecated)
+public struct V1DeletePageCell: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = V1Page
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let page_id: String
+		/// Deletes a cell from a Favorites page in Square Point of Sale.   __DeletePageCell__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeletePageCellRequest` object as documented below.
+		/// - Parameters:
+		///   - location_id: The ID of the Favorites page's associated location.
+		///   - page_id: The ID of the page to delete.
+		public init(location_id: String, page_id: String) {
+			self.location_id = location_id
+			self.page_id = page_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)/cells"
 	}
 }
 
@@ -980,6 +1612,26 @@ public struct RetrieveBooking: SquareAPIEndpoint {
 	}
 }
 
+/// Updates a booking.
+public struct UpdateBooking: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateBookingRequest
+	public typealias outputType = UpdateBookingResponse
+	public typealias paramType = Params
+	public struct Params {
+		let booking_id: String
+		/// Updates a booking.
+		/// - Parameters:
+		///   - booking_id: The ID of the `Booking` object representing the to-be-updated booking.
+		public init(booking_id: String) {
+			self.booking_id = booking_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/bookings/\(inputs.booking_id)"
+	}
+}
+
 /// Cancels an existing booking.
 public struct CancelBooking: SquareAPIEndpoint {
 	public typealias inputType = CancelBookingRequest
@@ -1132,6 +1784,26 @@ public struct RetrieveCatalogObject: SquareAPIEndpoint {
 	}
 }
 
+/// Deletes a single [CatalogObject](#type-catalogobject) based on the provided ID and returns the set of successfully deleted IDs in the response. Deletion is a cascading event such that all children of the targeted object are also deleted. For example, deleting a [CatalogItem](#type-catalogitem) will also delete all of its [CatalogItemVariation](#type-catalogitemvariation) children.
+public struct DeleteCatalogObject: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteCatalogObjectResponse
+	public typealias paramType = Params
+	public struct Params {
+		let object_id: String
+		/// Deletes a single [CatalogObject](#type-catalogobject) based on the provided ID and returns the set of successfully deleted IDs in the response. Deletion is a cascading event such that all children of the targeted object are also deleted. For example, deleting a [CatalogItem](#type-catalogitem) will also delete all of its [CatalogItemVariation](#type-catalogitemvariation) children.
+		/// - Parameters:
+		///   - object_id: The ID of the catalog object to be deleted. When an object is deleted, other objects in the graph that depend on that object will be deleted as well (for example, deleting a catalog item will delete its catalog item variations).
+		public init(object_id: String) {
+			self.object_id = object_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/catalog/object/\(inputs.object_id)"
+	}
+}
+
 /// Searches for [CatalogObject](#type-CatalogObject) of any type by matching supported search attribute values, excluding custom attribute values on items or item variations, against one or more of the specified query expressions.  This (`SearchCatalogObjects`) endpoint differs from the [SearchCatalogItems](#endpoint-Catalog-SearchCatalogItems) endpoint in the following aspects:  - `SearchCatalogItems` can only search for items or item variations, whereas `SearchCatalogObjects` can search for any type of catalog objects. - `SearchCatalogItems` supports the custom attribute query filters to return items or item variations that contain custom attribute values, where `SearchCatalogObjects` does not. - `SearchCatalogItems` does not support the `include_deleted_objects` filter to search for deleted items or item variations, whereas `SearchCatalogObjects` does. - The both endpoints have different call conventions, including the query filter formats.
 public struct SearchCatalogObjects: SquareAPIEndpoint {
 	public typealias inputType = SearchCatalogObjectsRequest
@@ -1234,6 +1906,46 @@ public struct RetrieveCustomerGroup: SquareAPIEndpoint {
 	}
 }
 
+/// Updates a customer group as identified by the `group_id` value.
+public struct UpdateCustomerGroup: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateCustomerGroupRequest
+	public typealias outputType = UpdateCustomerGroupResponse
+	public typealias paramType = Params
+	public struct Params {
+		let group_id: String
+		/// Updates a customer group as identified by the `group_id` value.
+		/// - Parameters:
+		///   - group_id: The ID of the customer group to update.
+		public init(group_id: String) {
+			self.group_id = group_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/groups/\(inputs.group_id)"
+	}
+}
+
+/// Deletes a customer group as identified by the `group_id` value.
+public struct DeleteCustomerGroup: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteCustomerGroupResponse
+	public typealias paramType = Params
+	public struct Params {
+		let group_id: String
+		/// Deletes a customer group as identified by the `group_id` value.
+		/// - Parameters:
+		///   - group_id: The ID of the customer group to delete.
+		public init(group_id: String) {
+			self.group_id = group_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/groups/\(inputs.group_id)"
+	}
+}
+
 /// Searches the customer profiles associated with a Square account using a supported query filter.  Calling `SearchCustomers` without any explicit query filter returns all customer profiles ordered alphabetically based on `given_name` and `family_name`.  Under normal operating conditions, newly created or updated customer profiles become available for the search operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 public struct SearchCustomers: SquareAPIEndpoint {
 	public typealias inputType = SearchCustomersRequest
@@ -1295,6 +2007,46 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
+/// Updates the details of an existing customer. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to update merged profiles.  You cannot edit a customer's cards on file with this endpoint. To make changes to a card on file, you must delete the existing card on file with the [DeleteCustomerCard](#endpoint-Customers-deletecustomercard) endpoint, then create a new one with the [CreateCustomerCard](#endpoint-Customers-createcustomercard) endpoint.
+public struct UpdateCustomer: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateCustomerRequest
+	public typealias outputType = UpdateCustomerResponse
+	public typealias paramType = Params
+	public struct Params {
+		let customer_id: String
+		/// Updates the details of an existing customer. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to update merged profiles.  You cannot edit a customer's cards on file with this endpoint. To make changes to a card on file, you must delete the existing card on file with the [DeleteCustomerCard](#endpoint-Customers-deletecustomercard) endpoint, then create a new one with the [CreateCustomerCard](#endpoint-Customers-createcustomercard) endpoint.
+		/// - Parameters:
+		///   - customer_id: The ID of the customer to update.
+		public init(customer_id: String) {
+			self.customer_id = customer_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/\(inputs.customer_id)"
+	}
+}
+
+/// Deletes a customer from a business, along with any linked cards on file. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to delete merged profiles.
+public struct DeleteCustomer: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteCustomerResponse
+	public typealias paramType = Params
+	public struct Params {
+		let customer_id: String
+		/// Deletes a customer from a business, along with any linked cards on file. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to delete merged profiles.
+		/// - Parameters:
+		///   - customer_id: The ID of the customer to delete.
+		public init(customer_id: String) {
+			self.customer_id = customer_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/\(inputs.customer_id)"
+	}
+}
+
 /// Adds a card on file to an existing customer.  As with charges, calls to `CreateCustomerCard` are idempotent. Multiple calls with the same card nonce return the same card record that was created with the provided nonce during the _first_ call.
 public struct CreateCustomerCard: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerCardRequest
@@ -1311,6 +2063,75 @@ public struct CreateCustomerCard: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v2/customers/\(inputs.customer_id)/cards"
+	}
+}
+
+/// Removes a card on file from a customer.
+public struct DeleteCustomerCard: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteCustomerCardResponse
+	public typealias paramType = Params
+	public struct Params {
+		let customer_id: String
+		let card_id: String
+		/// Removes a card on file from a customer.
+		/// - Parameters:
+		///   - customer_id: The ID of the customer that the card on file belongs to.
+		///   - card_id: The ID of the card on file to delete.
+		public init(customer_id: String, card_id: String) {
+			self.customer_id = customer_id
+			self.card_id = card_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/\(inputs.customer_id)/cards/\(inputs.card_id)"
+	}
+}
+
+/// Adds a group membership to a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+public struct AddGroupToCustomer: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = Empty
+	public typealias outputType = AddGroupToCustomerResponse
+	public typealias paramType = Params
+	public struct Params {
+		let customer_id: String
+		let group_id: String
+		/// Adds a group membership to a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+		/// - Parameters:
+		///   - customer_id: The ID of the customer to add to a group.
+		///   - group_id: The ID of the customer group to add the customer to.
+		public init(customer_id: String, group_id: String) {
+			self.customer_id = customer_id
+			self.group_id = group_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/\(inputs.customer_id)/groups/\(inputs.group_id)"
+	}
+}
+
+/// Removes a group membership from a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+public struct RemoveGroupFromCustomer: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = RemoveGroupFromCustomerResponse
+	public typealias paramType = Params
+	public struct Params {
+		let customer_id: String
+		let group_id: String
+		/// Removes a group membership from a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+		/// - Parameters:
+		///   - customer_id: The ID of the customer to remove from the group.
+		///   - group_id: The ID of the customer group to remove the customer from.
+		public init(customer_id: String, group_id: String) {
+			self.customer_id = customer_id
+			self.group_id = group_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/customers/\(inputs.customer_id)/groups/\(inputs.group_id)"
 	}
 }
 
@@ -1438,6 +2259,29 @@ public struct RetrieveDisputeEvidence: SquareAPIEndpoint {
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute that you want to retrieve evidence from.
 		///   - evidence_id: The ID of the evidence to retrieve.
+		public init(dispute_id: String, evidence_id: String) {
+			self.dispute_id = dispute_id
+			self.evidence_id = evidence_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/disputes/\(inputs.dispute_id)/evidence/\(inputs.evidence_id)"
+	}
+}
+
+/// Removes specified evidence from a dispute.  Square does not send the bank any evidence that is removed. Also, you cannot remove evidence after submitting it to the bank using [SubmitEvidence](/reference/square/disputes-api/submit-evidence).
+public struct RemoveDisputeEvidence: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = RemoveDisputeEvidenceResponse
+	public typealias paramType = Params
+	public struct Params {
+		let dispute_id: String
+		let evidence_id: String
+		/// Removes specified evidence from a dispute.  Square does not send the bank any evidence that is removed. Also, you cannot remove evidence after submitting it to the bank using [SubmitEvidence](/reference/square/disputes-api/submit-evidence).
+		/// - Parameters:
+		///   - dispute_id: The ID of the dispute you want to remove evidence from.
+		///   - evidence_id: The ID of the evidence you want to remove.
 		public init(dispute_id: String, evidence_id: String) {
 			self.dispute_id = dispute_id
 			self.evidence_id = evidence_id
@@ -1675,6 +2519,46 @@ public struct GetInvoice: SquareAPIEndpoint {
 	}
 }
 
+/// Updates an invoice by modifying fields, clearing fields, or both. For most updates, you can use a sparse  `Invoice` object to add fields or change values, and use the `fields_to_clear` field to specify fields to clear.  However, some restrictions apply. For example, you cannot change the `order_id` or `location_id` field, and you  must provide the complete `custom_fields` list to update a custom field. Published invoices have additional restrictions.
+public struct UpdateInvoice: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateInvoiceRequest
+	public typealias outputType = UpdateInvoiceResponse
+	public typealias paramType = Params
+	public struct Params {
+		let invoice_id: String
+		/// Updates an invoice by modifying fields, clearing fields, or both. For most updates, you can use a sparse  `Invoice` object to add fields or change values, and use the `fields_to_clear` field to specify fields to clear.  However, some restrictions apply. For example, you cannot change the `order_id` or `location_id` field, and you  must provide the complete `custom_fields` list to update a custom field. Published invoices have additional restrictions.
+		/// - Parameters:
+		///   - invoice_id: The ID of the invoice to update.
+		public init(invoice_id: String) {
+			self.invoice_id = invoice_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/invoices/\(inputs.invoice_id)"
+	}
+}
+
+/// Deletes the specified invoice. When an invoice is deleted, the  associated Order status changes to CANCELED. You can only delete a draft  invoice (you cannot delete a published invoice, including one that is scheduled for processing).
+public struct DeleteInvoice: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteInvoiceResponse
+	public typealias paramType = Params
+	public struct Params {
+		let invoice_id: String
+		/// Deletes the specified invoice. When an invoice is deleted, the  associated Order status changes to CANCELED. You can only delete a draft  invoice (you cannot delete a published invoice, including one that is scheduled for processing).
+		/// - Parameters:
+		///   - invoice_id: The ID of the invoice to delete.
+		public init(invoice_id: String) {
+			self.invoice_id = invoice_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/invoices/\(inputs.invoice_id)"
+	}
+}
+
 /// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
 public struct CancelInvoice: SquareAPIEndpoint {
 	public typealias inputType = CancelInvoiceRequest
@@ -1745,6 +2629,46 @@ public struct GetBreakType: SquareAPIEndpoint {
 		/// Returns a single `BreakType` specified by id.
 		/// - Parameters:
 		///   - id: UUID for the `BreakType` being retrieved.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/break-types/\(inputs.id)"
+	}
+}
+
+/// Updates an existing `BreakType`.
+public struct UpdateBreakType: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateBreakTypeRequest
+	public typealias outputType = UpdateBreakTypeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates an existing `BreakType`.
+		/// - Parameters:
+		///   - id: UUID for the `BreakType` being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/break-types/\(inputs.id)"
+	}
+}
+
+/// Deletes an existing `BreakType`.  A `BreakType` can be deleted even if it is referenced from a `Shift`.
+public struct DeleteBreakType: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteBreakTypeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Deletes an existing `BreakType`.  A `BreakType` can be deleted even if it is referenced from a `Shift`.
+		/// - Parameters:
+		///   - id: UUID for the `BreakType` being deleted.
 		public init(id: String) {
 			self.id = id
 		}
@@ -1827,6 +2751,46 @@ public struct GetShift: SquareAPIEndpoint {
 	}
 }
 
+/// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Breaks` in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the shift must be complete with `end_at` set on each `Break`.
+public struct UpdateShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateShiftRequest
+	public typealias outputType = UpdateShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Breaks` in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the shift must be complete with `end_at` set on each `Break`.
+		/// - Parameters:
+		///   - id: ID of the object being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/shifts/\(inputs.id)"
+	}
+}
+
+/// Deletes a `Shift`.
+public struct DeleteShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Deletes a `Shift`.
+		/// - Parameters:
+		///   - id: UUID for the `Shift` being deleted.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/shifts/\(inputs.id)"
+	}
+}
+
 /// Returns a paginated list of `TeamMemberWage` instances for a business.
 public struct ListTeamMemberWages: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -1869,6 +2833,26 @@ public struct ListWorkweekConfigs: SquareAPIEndpoint {
 	}
 }
 
+/// Updates a `WorkweekConfig`.
+public struct UpdateWorkweekConfig: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateWorkweekConfigRequest
+	public typealias outputType = UpdateWorkweekConfigResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates a `WorkweekConfig`.
+		/// - Parameters:
+		///   - id: UUID for the `WorkweekConfig` object being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/workweek-configs/\(inputs.id)"
+	}
+}
+
 /// Provides information of all locations of a business.  Many Square API endpoints require a `location_id` parameter. The `id` field of the [`Location`](#type-location) objects returned by this endpoint correspond to that `location_id` parameter.
 public struct ListLocations: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -1901,6 +2885,26 @@ public struct RetrieveLocation: SquareAPIEndpoint {
 		/// Retrieves details of a location. You can specify "main"  as the location ID to retrieve details of the  main location.
 		/// - Parameters:
 		///   - location_id: The ID of the location to retrieve. If you specify the string "main", then the endpoint returns the main location.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)"
+	}
+}
+
+/// Updates a location.
+public struct UpdateLocation: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateLocationRequest
+	public typealias outputType = UpdateLocationResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Updates a location.
+		/// - Parameters:
+		///   - location_id: The ID of the location to update.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
@@ -2242,6 +3246,26 @@ public struct RetrieveLoyaltyReward: SquareAPIEndpoint {
 	}
 }
 
+/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](#endpoint-Loyalty-CreateLoyaltyReward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
+public struct DeleteLoyaltyReward: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteLoyaltyRewardResponse
+	public typealias paramType = Params
+	public struct Params {
+		let reward_id: String
+		/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](#endpoint-Loyalty-CreateLoyaltyReward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
+		/// - Parameters:
+		///   - reward_id: The ID of the `loyalty reward` to delete.
+		public init(reward_id: String) {
+			self.reward_id = reward_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/loyalty/rewards/\(inputs.reward_id)"
+	}
+}
+
 /// Redeems a loyalty reward.  The endpoint sets the reward to the `REDEEMED` terminal state.   If you are using your own order processing system (not using the  Orders API), you call this endpoint after the buyer paid for the  purchase.  After the reward reaches the terminal state, it cannot be deleted.  In other words, points used for the reward cannot be returned  to the account.
 public struct RedeemLoyaltyReward: SquareAPIEndpoint {
 	public typealias inputType = RedeemLoyaltyRewardRequest
@@ -2343,6 +3367,26 @@ public struct RetrieveOrder: SquareAPIEndpoint {
 		/// Retrieves an [Order](#type-order) by ID.
 		/// - Parameters:
 		///   - order_id: The ID of the order to retrieve.
+		public init(order_id: String) {
+			self.order_id = order_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/orders/\(inputs.order_id)"
+	}
+}
+
+/// Updates an open [Order](#type-order) by adding, replacing, or deleting fields. Orders with a `COMPLETED` or `CANCELED` state cannot be updated.  An UpdateOrder request requires the following:  - The `order_id` in the endpoint path, identifying the order to update. - The latest `version` of the order to update. - The [sparse order](/orders-api/manage-orders#sparse-order-objects) containing only the fields to update and the version the update is being applied to. - If deleting fields, the [dot notation paths](/orders-api/manage-orders#on-dot-notation) identifying fields to clear.  To pay for an order, please refer to the [Pay for Orders](/orders-api/pay-for-orders) guide.
+public struct UpdateOrder: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateOrderRequest
+	public typealias outputType = UpdateOrderResponse
+	public typealias paramType = Params
+	public struct Params {
+		let order_id: String
+		/// Updates an open [Order](#type-order) by adding, replacing, or deleting fields. Orders with a `COMPLETED` or `CANCELED` state cannot be updated.  An UpdateOrder request requires the following:  - The `order_id` in the endpoint path, identifying the order to update. - The latest `version` of the order to update. - The [sparse order](/orders-api/manage-orders#sparse-order-objects) containing only the fields to update and the version the update is being applied to. - If deleting fields, the [dot notation paths](/orders-api/manage-orders#on-dot-notation) identifying fields to clear.  To pay for an order, please refer to the [Pay for Orders](/orders-api/pay-for-orders) guide.
+		/// - Parameters:
+		///   - order_id: The ID of the order to update.
 		public init(order_id: String) {
 			self.order_id = order_id
 		}
@@ -2541,6 +3585,26 @@ public struct RetrieveSubscription: SquareAPIEndpoint {
 	}
 }
 
+/// Updates a subscription. You can set, modify, and clear the  `subscription` field values.
+public struct UpdateSubscription: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateSubscriptionRequest
+	public typealias outputType = UpdateSubscriptionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let subscription_id: String
+		/// Updates a subscription. You can set, modify, and clear the  `subscription` field values.
+		/// - Parameters:
+		///   - subscription_id: The ID for the subscription to update.
+		public init(subscription_id: String) {
+			self.subscription_id = subscription_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/subscriptions/\(inputs.subscription_id)"
+	}
+}
+
 /// Sets the `canceled_date` field to the end of the active billing period. After this date, the status changes from ACTIVE to CANCELED.
 public struct CancelSubscription: SquareAPIEndpoint {
 	public typealias inputType = Empty
@@ -2640,6 +3704,26 @@ public struct RetrieveTeamMember: SquareAPIEndpoint {
 	}
 }
 
+/// Updates a single `TeamMember` object. The `TeamMember` will be returned on successful updates. Learn about [Troubleshooting the Teams API](/docs/team/troubleshooting#updateteammember).
+public struct UpdateTeamMember: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateTeamMemberRequest
+	public typealias outputType = UpdateTeamMemberResponse
+	public typealias paramType = Params
+	public struct Params {
+		let team_member_id: String
+		/// Updates a single `TeamMember` object. The `TeamMember` will be returned on successful updates. Learn about [Troubleshooting the Teams API](/docs/team/troubleshooting#updateteammember).
+		/// - Parameters:
+		///   - team_member_id: The ID of the team member to update.
+		public init(team_member_id: String) {
+			self.team_member_id = team_member_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/team-members/\(inputs.team_member_id)"
+	}
+}
+
 /// Retrieve a `WageSetting` object for a team member specified by `TeamMember.id`. Learn about [Troubleshooting the Teams API](/docs/team/troubleshooting#retrievewagesetting).
 public struct RetrieveWageSetting: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -2651,6 +3735,26 @@ public struct RetrieveWageSetting: SquareAPIEndpoint {
 		/// Retrieve a `WageSetting` object for a team member specified by `TeamMember.id`. Learn about [Troubleshooting the Teams API](/docs/team/troubleshooting#retrievewagesetting).
 		/// - Parameters:
 		///   - team_member_id: The ID of the team member to retrieve wage setting for
+		public init(team_member_id: String) {
+			self.team_member_id = team_member_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/team-members/\(inputs.team_member_id)/wage-setting"
+	}
+}
+
+/// Creates or updates a `WageSetting` object. The object is created if a `WageSetting` with the specified `team_member_id` does not exist. Otherwise, it fully replaces the `WageSetting` object for the team member. The `WageSetting` will be returned upon successful update. Learn about [Troubleshooting the Teams API](/docs/team/troubleshooting#updatewagesetting).
+public struct UpdateWageSetting: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateWageSettingRequest
+	public typealias outputType = UpdateWageSettingResponse
+	public typealias paramType = Params
+	public struct Params {
+		let team_member_id: String
+		/// Creates or updates a `WageSetting` object. The object is created if a `WageSetting` with the specified `team_member_id` does not exist. Otherwise, it fully replaces the `WageSetting` object for the team member. The `WageSetting` will be returned upon successful update. Learn about [Troubleshooting the Teams API](/docs/team/troubleshooting#updatewagesetting).
+		/// - Parameters:
+		///   - team_member_id: The ID of the team member to update the `WageSetting` object for.
 		public init(team_member_id: String) {
 			self.team_member_id = team_member_id
 		}
