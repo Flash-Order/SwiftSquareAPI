@@ -24,13 +24,13 @@ public struct AcceptDisputeResponse: Codable {
 	/// Details about the accepted dispute.
 	public var dispute: Dispute?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields in an `AcceptDispute` response.
 	/// - Parameters:
 	///   - dispute: Details about the accepted dispute.
 	///   - errors: Information about errors encountered during the request.
-	public init(dispute: Dispute? = nil, errors: [Error]? = nil) {
+	public init(dispute: Dispute? = nil, errors: [SquareError]? = nil) {
 		self.dispute = dispute
 		self.errors = errors
 	}
@@ -60,7 +60,7 @@ public struct AccumulateLoyaltyPointsRequest: Codable {
 /// A response containing the resulting loyalty event.
 public struct AccumulateLoyaltyPointsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The resulting loyalty event.
 	public var event: LoyaltyEvent?
 
@@ -68,7 +68,7 @@ public struct AccumulateLoyaltyPointsResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - event: The resulting loyalty event.
-	public init(errors: [Error]? = nil, event: LoyaltyEvent? = nil) {
+	public init(errors: [SquareError]? = nil, event: LoyaltyEvent? = nil) {
 		self.errors = errors
 		self.event = event
 	}
@@ -95,12 +95,12 @@ public struct AddGroupToCustomerRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](#endpoint-addgrouptocustomer) endpoint.
 public struct AddGroupToCustomerResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](#endpoint-addgrouptocustomer) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -219,7 +219,7 @@ public struct AdjustLoyaltyPointsRequest: Codable {
 /// A response that includes the loyalty event that  resulted from the successful API call.
 public struct AdjustLoyaltyPointsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The resulting event data for adjusting points.
 	public var event: LoyaltyEvent?
 
@@ -227,7 +227,7 @@ public struct AdjustLoyaltyPointsResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - event: The resulting event data for adjusting points.
-	public init(errors: [Error]? = nil, event: LoyaltyEvent? = nil) {
+	public init(errors: [SquareError]? = nil, event: LoyaltyEvent? = nil) {
 		self.errors = errors
 		self.event = event
 	}
@@ -416,9 +416,9 @@ public struct BatchChangeInventoryResponse: Codable {
 	/// The current counts for all objects referenced in the request.
 	public var counts: [InventoryCount]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(counts: [InventoryCount]? = nil, errors: [Error]? = nil) {
+	public init(counts: [InventoryCount]? = nil, errors: [SquareError]? = nil) {
 		self.counts = counts
 		self.errors = errors
 	}
@@ -439,9 +439,9 @@ public struct BatchDeleteCatalogObjectsResponse: Codable {
 	/// The IDs of all CatalogObjects deleted by this request.
 	public var deleted_object_ids: [String]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(deleted_at: Timestamp? = nil, deleted_object_ids: [String]? = nil, errors: [Error]? = nil) {
+	public init(deleted_at: Timestamp? = nil, deleted_object_ids: [String]? = nil, errors: [SquareError]? = nil) {
 		self.deleted_at = deleted_at
 		self.deleted_object_ids = deleted_object_ids
 		self.errors = errors
@@ -465,13 +465,13 @@ public struct BatchRetrieveCatalogObjectsRequest: Codable {
 
 public struct BatchRetrieveCatalogObjectsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// A list of `CatalogObject`s returned.
 	public var objects: [CatalogObject]?
 	/// A list of `CatalogObject`s referenced by the object in the `objects` field.
 	public var related_objects: [CatalogObject]?
 
-	public init(errors: [Error]? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
+	public init(errors: [SquareError]? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
 		self.errors = errors
 		self.objects = objects
 		self.related_objects = related_objects
@@ -511,9 +511,9 @@ public struct BatchRetrieveInventoryChangesResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(changes: [InventoryChange]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(changes: [InventoryChange]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.changes = changes
 		self.cursor = cursor
 		self.errors = errors
@@ -547,9 +547,9 @@ public struct BatchRetrieveInventoryCountsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(counts: [InventoryCount]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(counts: [InventoryCount]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.counts = counts
 		self.cursor = cursor
 		self.errors = errors
@@ -576,7 +576,7 @@ public struct BatchRetrieveOrdersRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the BatchRetrieveOrders endpoint.
 public struct BatchRetrieveOrdersResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested orders. This will omit any requested orders that do not exist.
 	public var orders: [Order]?
 
@@ -584,7 +584,7 @@ public struct BatchRetrieveOrdersResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - orders: The requested orders. This will omit any requested orders that do not exist.
-	public init(errors: [Error]? = nil, orders: [Order]? = nil) {
+	public init(errors: [SquareError]? = nil, orders: [Order]? = nil) {
 		self.errors = errors
 		self.orders = orders
 	}
@@ -604,7 +604,7 @@ public struct BatchUpsertCatalogObjectsRequest: Codable {
 
 public struct BatchUpsertCatalogObjectsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The mapping between client and server IDs for this upsert.
 	public var id_mappings: [CatalogIdMapping]?
 	/// The created successfully created CatalogObjects.
@@ -612,7 +612,7 @@ public struct BatchUpsertCatalogObjectsResponse: Codable {
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this update in RFC 3339 format, e.g., "2016-09-04T23:59:33.123Z".
 	public var updated_at: Timestamp?
 
-	public init(errors: [Error]? = nil, id_mappings: [CatalogIdMapping]? = nil, objects: [CatalogObject]? = nil, updated_at: Timestamp? = nil) {
+	public init(errors: [SquareError]? = nil, id_mappings: [CatalogIdMapping]? = nil, objects: [CatalogObject]? = nil, updated_at: Timestamp? = nil) {
 		self.errors = errors
 		self.id_mappings = id_mappings
 		self.objects = objects
@@ -783,7 +783,7 @@ public struct BulkCreateTeamMembersRequest: Codable {
 /// Represents a response from a bulk create request, containing the created `TeamMember` objects or error messages.
 public struct BulkCreateTeamMembersResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully created `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	public var team_members: CreateTeamMemberResponse?
 
@@ -791,7 +791,7 @@ public struct BulkCreateTeamMembersResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_members: The successfully created `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
-	public init(errors: [Error]? = nil, team_members: CreateTeamMemberResponse? = nil) {
+	public init(errors: [SquareError]? = nil, team_members: CreateTeamMemberResponse? = nil) {
 		self.errors = errors
 		self.team_members = team_members
 	}
@@ -813,7 +813,7 @@ public struct BulkUpdateTeamMembersRequest: Codable {
 /// Represents a response from a bulk update request, containing the updated `TeamMember` objects or error messages.
 public struct BulkUpdateTeamMembersResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully updated `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	public var team_members: UpdateTeamMemberResponse?
 
@@ -821,7 +821,7 @@ public struct BulkUpdateTeamMembersResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_members: The successfully updated `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
-	public init(errors: [Error]? = nil, team_members: UpdateTeamMemberResponse? = nil) {
+	public init(errors: [SquareError]? = nil, team_members: UpdateTeamMemberResponse? = nil) {
 		self.errors = errors
 		self.team_members = team_members
 	}
@@ -1023,7 +1023,7 @@ public struct CalculateLoyaltyPointsRequest: Codable {
 /// A response that includes the points that the buyer can earn from  a specified purchase.
 public struct CalculateLoyaltyPointsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The points that the buyer can earn from a specified purchase.
 	public var points: Int?
 
@@ -1031,7 +1031,7 @@ public struct CalculateLoyaltyPointsResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - points: The points that the buyer can earn from a specified purchase.
-	public init(errors: [Error]? = nil, points: Int? = nil) {
+	public init(errors: [SquareError]? = nil, points: Int? = nil) {
 		self.errors = errors
 		self.points = points
 	}
@@ -1051,11 +1051,11 @@ public struct CalculateOrderRequest: Codable {
 
 public struct CalculateOrderResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The calculated version of the order provided in the request.
 	public var order: Order?
 
-	public init(errors: [Error]? = nil, order: Order? = nil) {
+	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
 	}
@@ -1077,9 +1077,9 @@ public struct CancelBookingResponse: Codable {
 	/// The booking that was cancelled.
 	public var booking: Booking?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+	public init(booking: Booking? = nil, errors: [SquareError]? = nil) {
 		self.booking = booking
 		self.errors = errors
 	}
@@ -1101,7 +1101,7 @@ public struct CancelInvoiceRequest: Codable {
 /// The response returned by the `CancelInvoice` request.
 public struct CancelInvoiceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The canceled invoice.
 	public var invoice: Invoice?
 
@@ -1109,7 +1109,7 @@ public struct CancelInvoiceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - invoice: The canceled invoice.
-	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
 	}
@@ -1131,12 +1131,12 @@ public struct CancelPaymentByIdempotencyKeyRequest: Codable {
 /// The return value from the [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey) endpoint. On success, `errors` is empty.
 public struct CancelPaymentByIdempotencyKeyResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The return value from the [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey) endpoint. On success, `errors` is empty.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -1152,7 +1152,7 @@ public struct CancelPaymentRequest: Codable {
 /// The return value from the [CancelPayment](#endpoint-payments-cancelpayment) endpoint.
 public struct CancelPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully canceled `Payment` object.
 	public var payment: Payment?
 
@@ -1160,7 +1160,7 @@ public struct CancelPaymentResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully canceled `Payment` object.
-	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+	public init(errors: [SquareError]? = nil, payment: Payment? = nil) {
 		self.errors = errors
 		self.payment = payment
 	}
@@ -1177,7 +1177,7 @@ public struct CancelSubscriptionRequest: Codable {
 /// Defines fields that are included in a  [CancelSubscription](#endpoint-subscriptions-cancelsubscription) response.
 public struct CancelSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The canceled subscription.
 	public var subscription: Subscription?
 
@@ -1185,7 +1185,7 @@ public struct CancelSubscriptionResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The canceled subscription.
-	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+	public init(errors: [SquareError]? = nil, subscription: Subscription? = nil) {
 		self.errors = errors
 		self.subscription = subscription
 	}
@@ -1201,9 +1201,9 @@ public struct CancelTerminalCheckoutResponse: Codable {
 	/// The canceled `TerminalCheckout`
 	public var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(checkout: TerminalCheckout? = nil, errors: [Error]? = nil) {
+	public init(checkout: TerminalCheckout? = nil, errors: [SquareError]? = nil) {
 		self.checkout = checkout
 		self.errors = errors
 	}
@@ -1217,11 +1217,11 @@ public struct CancelTerminalRefundRequest: Codable {
 
 public struct CancelTerminalRefundResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The updated `TerminalRefund`
 	public var refund: TerminalRefund?
 
-	public init(errors: [Error]? = nil, refund: TerminalRefund? = nil) {
+	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
 	}
@@ -1236,12 +1236,12 @@ public struct CaptureTransactionRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [CaptureTransaction](#endpoint-capturetransaction) endpoint.
 public struct CaptureTransactionResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](#endpoint-capturetransaction) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -1337,7 +1337,7 @@ public struct CardPaymentDetails: Codable {
 	/// The method used to enter the card's details for the payment. The method can be `KEYED`, `SWIPED`, `EMV`, `ON_FILE`, or `CONTACTLESS`.
 	public var entry_method: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// Whether the card must be physically present for the payment to be refunded.  If set to `true`, the card must be present.
 	public var refund_requires_card_presence: Bool?
 	/// The statement description sent to the card networks.  Note: The actual statement description varies and is likely to be truncated and appended with additional information on a per issuer basis.
@@ -1366,7 +1366,7 @@ public struct CardPaymentDetails: Codable {
 	///   - status: The card payment's current state. The state can be AUTHORIZED, CAPTURED, VOIDED, or FAILED.
 	///   - verification_method: For EMV payments, the method used to verify the cardholder's identity. The method can be `PIN`, `SIGNATURE`, `PIN_AND_SIGNATURE`, `ON_DEVICE`, or `NONE`.
 	///   - verification_results: For EMV payments, the results of the cardholder verification. The result can be `SUCCESS`, `FAILURE`, or `UNKNOWN`.
-	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [Error]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil) {
+	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [SquareError]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil) {
 		self.application_cryptogram = application_cryptogram
 		self.application_identifier = application_identifier
 		self.application_name = application_name
@@ -1907,13 +1907,13 @@ public struct CatalogInfoRequest: Codable {
 
 public struct CatalogInfoResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// Limits that apply to this API.
 	public var limits: CatalogInfoResponseLimits?
 	/// Names and abbreviations for standard units.
 	public var standard_unit_description_group: StandardUnitDescriptionGroup?
 
-	public init(errors: [Error]? = nil, limits: CatalogInfoResponseLimits? = nil, standard_unit_description_group: StandardUnitDescriptionGroup? = nil) {
+	public init(errors: [SquareError]? = nil, limits: CatalogInfoResponseLimits? = nil, standard_unit_description_group: StandardUnitDescriptionGroup? = nil) {
 		self.errors = errors
 		self.limits = limits
 		self.standard_unit_description_group = standard_unit_description_group
@@ -3047,7 +3047,7 @@ public struct ChargeRequestAdditionalRecipient: Codable {
 /// Defines the fields that are included in the response body of a request to the [Charge](#endpoint-charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct ChargeResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The created transaction.
 	public var transaction: Transaction?
 
@@ -3055,7 +3055,7 @@ public struct ChargeResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - transaction: The created transaction.
-	public init(errors: [Error]? = nil, transaction: Transaction? = nil) {
+	public init(errors: [SquareError]? = nil, transaction: Transaction? = nil) {
 		self.errors = errors
 		self.transaction = transaction
 	}
@@ -3071,9 +3071,9 @@ public struct CheckAppointmentsOnboardedResponse: Codable {
 	/// Indicates whether the seller has enabled the Square Appointments service (`true`) or not (`false`).
 	public var appointments_onboarded: Bool?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(appointments_onboarded: Bool? = nil, errors: [Error]? = nil) {
+	public init(appointments_onboarded: Bool? = nil, errors: [SquareError]? = nil) {
 		self.appointments_onboarded = appointments_onboarded
 		self.errors = errors
 	}
@@ -3139,7 +3139,7 @@ public struct CompletePaymentRequest: Codable {
 /// The return value from a [CompletePayment](#endpoint-payments-completepayment) call.
 public struct CompletePaymentResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully completed payment.
 	public var payment: Payment?
 
@@ -3147,7 +3147,7 @@ public struct CompletePaymentResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully completed payment.
-	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+	public init(errors: [SquareError]? = nil, payment: Payment? = nil) {
 		self.errors = errors
 		self.payment = payment
 	}
@@ -3690,9 +3690,9 @@ public struct CreateBookingResponse: Codable {
 	/// The booking that was created.
 	public var booking: Booking?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+	public init(booking: Booking? = nil, errors: [SquareError]? = nil) {
 		self.booking = booking
 		self.errors = errors
 	}
@@ -3720,13 +3720,13 @@ public struct CreateBreakTypeResponse: Codable {
 	/// The `BreakType` that was created by the request.
 	public var break_type: BreakType?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The response to the request to create a `BreakType`. Contains the created `BreakType` object. May contain a set of `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - break_type: The `BreakType` that was created by the request.
 	///   - errors: Any errors that occurred during the request.
-	public init(break_type: BreakType? = nil, errors: [Error]? = nil) {
+	public init(break_type: BreakType? = nil, errors: [SquareError]? = nil) {
 		self.break_type = break_type
 		self.errors = errors
 	}
@@ -3782,13 +3782,13 @@ public struct CreateCheckoutResponse: Codable {
 	/// The newly created checkout. If the same request was made with the same idempotency_key, this will be the checkout created with the idempotency_key.
 	public var checkout: Checkout?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the __CreateCheckout__ endpoint.
 	/// - Parameters:
 	///   - checkout: The newly created checkout. If the same request was made with the same idempotency_key, this will be the checkout created with the idempotency_key.
 	///   - errors: Any errors that occurred during the request.
-	public init(checkout: Checkout? = nil, errors: [Error]? = nil) {
+	public init(checkout: Checkout? = nil, errors: [SquareError]? = nil) {
 		self.checkout = checkout
 		self.errors = errors
 	}
@@ -3824,13 +3824,13 @@ public struct CreateCustomerCardResponse: Codable {
 	/// The created card on file.
 	public var card: Card?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the CreateCustomerCard endpoint.  One of `errors` or `card` is present in a given response (never both).
 	/// - Parameters:
 	///   - card: The created card on file.
 	///   - errors: Any errors that occurred during the request.
-	public init(card: Card? = nil, errors: [Error]? = nil) {
+	public init(card: Card? = nil, errors: [SquareError]? = nil) {
 		self.card = card
 		self.errors = errors
 	}
@@ -3856,7 +3856,7 @@ public struct CreateCustomerGroupRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](#endpoint-createcustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
 public struct CreateCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully created customer group.
 	public var group: CustomerGroup?
 
@@ -3864,7 +3864,7 @@ public struct CreateCustomerGroupResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The successfully created customer group.
-	public init(errors: [Error]? = nil, group: CustomerGroup? = nil) {
+	public init(errors: [SquareError]? = nil, group: CustomerGroup? = nil) {
 		self.errors = errors
 		self.group = group
 	}
@@ -3928,13 +3928,13 @@ public struct CreateCustomerResponse: Codable {
 	/// The created customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the CreateCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The created customer.
 	///   - errors: Any errors that occurred during the request.
-	public init(customer: Customer? = nil, errors: [Error]? = nil) {
+	public init(customer: Customer? = nil, errors: [SquareError]? = nil) {
 		self.customer = customer
 		self.errors = errors
 	}
@@ -3956,9 +3956,9 @@ public struct CreateDeviceCodeResponse: Codable {
 	/// The created DeviceCode object containing the device code string.
 	public var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(device_code: DeviceCode? = nil, errors: [Error]? = nil) {
+	public init(device_code: DeviceCode? = nil, errors: [SquareError]? = nil) {
 		self.device_code = device_code
 		self.errors = errors
 	}
@@ -3988,7 +3988,7 @@ public struct CreateDisputeEvidenceTextRequest: Codable {
 /// Defines the fields in a `CreateDisputeEvidenceText` response.
 public struct CreateDisputeEvidenceTextResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly uploaded dispute evidence metadata.
 	public var evidence: DisputeEvidence?
 
@@ -3996,7 +3996,7 @@ public struct CreateDisputeEvidenceTextResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - evidence: The newly uploaded dispute evidence metadata.
-	public init(errors: [Error]? = nil, evidence: DisputeEvidence? = nil) {
+	public init(errors: [SquareError]? = nil, evidence: DisputeEvidence? = nil) {
 		self.errors = errors
 		self.evidence = evidence
 	}
@@ -4022,7 +4022,7 @@ public struct CreateInvoiceRequest: Codable {
 /// The response returned by the `CreateInvoice` request.
 public struct CreateInvoiceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly created invoice.
 	public var invoice: Invoice?
 
@@ -4030,7 +4030,7 @@ public struct CreateInvoiceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - invoice: The newly created invoice.
-	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
 	}
@@ -4052,7 +4052,7 @@ public struct CreateLocationRequest: Codable {
 /// Response object returned by the [CreateLocation](#endpoint-createlocation) endpoint.
 public struct CreateLocationResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly created `Location`.
 	public var location: Location?
 
@@ -4060,7 +4060,7 @@ public struct CreateLocationResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - location: The newly created `Location`.
-	public init(errors: [Error]? = nil, location: Location? = nil) {
+	public init(errors: [SquareError]? = nil, location: Location? = nil) {
 		self.errors = errors
 		self.location = location
 	}
@@ -4086,7 +4086,7 @@ public struct CreateLoyaltyAccountRequest: Codable {
 /// A response that includes loyalty account created.
 public struct CreateLoyaltyAccountResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly created loyalty account.
 	public var loyalty_account: LoyaltyAccount?
 
@@ -4094,7 +4094,7 @@ public struct CreateLoyaltyAccountResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - loyalty_account: The newly created loyalty account.
-	public init(errors: [Error]? = nil, loyalty_account: LoyaltyAccount? = nil) {
+	public init(errors: [SquareError]? = nil, loyalty_account: LoyaltyAccount? = nil) {
 		self.errors = errors
 		self.loyalty_account = loyalty_account
 	}
@@ -4120,7 +4120,7 @@ public struct CreateLoyaltyRewardRequest: Codable {
 /// A response that includes the loyalty reward created.
 public struct CreateLoyaltyRewardResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The loyalty reward created.
 	public var reward: LoyaltyReward?
 
@@ -4128,7 +4128,7 @@ public struct CreateLoyaltyRewardResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - reward: The loyalty reward created.
-	public init(errors: [Error]? = nil, reward: LoyaltyReward? = nil) {
+	public init(errors: [SquareError]? = nil, reward: LoyaltyReward? = nil) {
 		self.errors = errors
 		self.reward = reward
 	}
@@ -4152,7 +4152,7 @@ public struct CreateMobileAuthorizationCodeResponse: Codable {
 	/// Generated authorization code that connects a mobile application instance to a Square account.
 	public var authorization_code: String?
 	/// An error object that provides details about how creation of authorization code failed.
-	public var error: Error?
+	public var error: SquareError?
 	/// The timestamp when `authorization_code` expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, e.g., "2016-09-04T23:59:33.123Z".
 	public var expires_at: Timestamp?
 
@@ -4161,7 +4161,7 @@ public struct CreateMobileAuthorizationCodeResponse: Codable {
 	///   - authorization_code: Generated authorization code that connects a mobile application instance to a Square account.
 	///   - error: An error object that provides details about how creation of authorization code failed.
 	///   - expires_at: The timestamp when `authorization_code` expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, e.g., "2016-09-04T23:59:33.123Z".
-	public init(authorization_code: String? = nil, error: Error? = nil, expires_at: Timestamp? = nil) {
+	public init(authorization_code: String? = nil, error: SquareError? = nil, expires_at: Timestamp? = nil) {
 		self.authorization_code = authorization_code
 		self.error = error
 		self.expires_at = expires_at
@@ -4186,7 +4186,7 @@ public struct CreateOrderRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the CreateOrder endpoint.  One of `errors` or `order` is present in a given response (never both).
 public struct CreateOrderResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly created order.
 	public var order: Order?
 
@@ -4194,7 +4194,7 @@ public struct CreateOrderResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The newly created order.
-	public init(errors: [Error]? = nil, order: Order? = nil) {
+	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
 	}
@@ -4284,7 +4284,7 @@ public struct CreatePaymentRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [CreatePayment](#endpoint-payments-createpayment) endpoint.  Note: If there are errors processing the request, the payment field might not be present, or it might be present with a status of `FAILED`.
 public struct CreatePaymentResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly created payment.
 	public var payment: Payment?
 
@@ -4292,7 +4292,7 @@ public struct CreatePaymentResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The newly created payment.
-	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+	public init(errors: [SquareError]? = nil, payment: Payment? = nil) {
 		self.errors = errors
 		self.payment = payment
 	}
@@ -4326,7 +4326,7 @@ public struct CreateRefundRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [CreateRefund](#endpoint-createrefund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
 public struct CreateRefundResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The created refund.
 	public var refund: Refund?
 
@@ -4334,7 +4334,7 @@ public struct CreateRefundResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - refund: The created refund.
-	public init(errors: [Error]? = nil, refund: Refund? = nil) {
+	public init(errors: [SquareError]? = nil, refund: Refund? = nil) {
 		self.errors = errors
 		self.refund = refund
 	}
@@ -4360,7 +4360,7 @@ public struct CreateShiftRequest: Codable {
 /// The response to the request to create a `Shift`. Contains the created `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct CreateShiftResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The `Shift` that was created on the request.
 	public var shift: Shift?
 
@@ -4368,7 +4368,7 @@ public struct CreateShiftResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - shift: The `Shift` that was created on the request.
-	public init(errors: [Error]? = nil, shift: Shift? = nil) {
+	public init(errors: [SquareError]? = nil, shift: Shift? = nil) {
 		self.errors = errors
 		self.shift = shift
 	}
@@ -4426,7 +4426,7 @@ public struct CreateSubscriptionRequest: Codable {
 /// Defines the fields that are included in the response from the [CreateSubscription](#endpoint-subscriptions-createsubscription) endpoint.
 public struct CreateSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The newly created subscription.   For more information, see  [Subscription object](https://developer.squareup.com/docs/docs/subscriptions-api/overview#subscription-object).
 	public var subscription: Subscription?
 
@@ -4434,7 +4434,7 @@ public struct CreateSubscriptionResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The newly created subscription.   For more information, see  [Subscription object](https://developer.squareup.com/docs/docs/subscriptions-api/overview#subscription-object).
-	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+	public init(errors: [SquareError]? = nil, subscription: Subscription? = nil) {
 		self.errors = errors
 		self.subscription = subscription
 	}
@@ -4460,7 +4460,7 @@ public struct CreateTeamMemberRequest: Codable {
 /// Represents a response from a create request, containing the created `TeamMember` object or error messages.
 public struct CreateTeamMemberResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully created `TeamMember` object.
 	public var team_member: TeamMember?
 
@@ -4468,7 +4468,7 @@ public struct CreateTeamMemberResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_member: The successfully created `TeamMember` object.
-	public init(errors: [Error]? = nil, team_member: TeamMember? = nil) {
+	public init(errors: [SquareError]? = nil, team_member: TeamMember? = nil) {
 		self.errors = errors
 		self.team_member = team_member
 	}
@@ -4490,9 +4490,9 @@ public struct CreateTerminalCheckoutResponse: Codable {
 	/// The created `TerminalCheckout`
 	public var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(checkout: TerminalCheckout? = nil, errors: [Error]? = nil) {
+	public init(checkout: TerminalCheckout? = nil, errors: [SquareError]? = nil) {
 		self.checkout = checkout
 		self.errors = errors
 	}
@@ -4512,11 +4512,11 @@ public struct CreateTerminalRefundRequest: Codable {
 
 public struct CreateTerminalRefundResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The created `TerminalRefund`
 	public var refund: TerminalRefund?
 
-	public init(errors: [Error]? = nil, refund: TerminalRefund? = nil) {
+	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
 	}
@@ -5284,12 +5284,12 @@ public struct DeleteBreakTypeRequest: Codable {
 /// The response to a request to delete a `BreakType`. May contain a set  of `Error` objects if the request resulted in errors.
 public struct DeleteBreakTypeResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The response to a request to delete a `BreakType`. May contain a set  of `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5306,9 +5306,9 @@ public struct DeleteCatalogObjectResponse: Codable {
 	/// The IDs of all catalog objects deleted by this request. Multiple IDs may be returned when associated objects are also deleted, for example a catalog item variation will be deleted (and its ID included in this field) when its parent catalog item is deleted.
 	public var deleted_object_ids: [String]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(deleted_at: Timestamp? = nil, deleted_object_ids: [String]? = nil, errors: [Error]? = nil) {
+	public init(deleted_at: Timestamp? = nil, deleted_object_ids: [String]? = nil, errors: [SquareError]? = nil) {
 		self.deleted_at = deleted_at
 		self.deleted_object_ids = deleted_object_ids
 		self.errors = errors
@@ -5326,12 +5326,12 @@ public struct DeleteCustomerCardRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the DeleteCustomerCard endpoint.
 public struct DeleteCustomerCardResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the DeleteCustomerCard endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5347,12 +5347,12 @@ public struct DeleteCustomerGroupRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](#endpoint-deletecustomergroup) endpoint.
 public struct DeleteCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](#endpoint-deletecustomergroup) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5368,12 +5368,12 @@ public struct DeleteCustomerRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the DeleteCustomer endpoint.
 public struct DeleteCustomerResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the DeleteCustomer endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5394,12 +5394,12 @@ public struct DeleteInvoiceRequest: Codable {
 /// Describes a `DeleteInvoice` response.
 public struct DeleteInvoiceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Describes a `DeleteInvoice` response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5415,12 +5415,12 @@ public struct DeleteLoyaltyRewardRequest: Codable {
 /// A response returned by the API call.
 public struct DeleteLoyaltyRewardResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// A response returned by the API call.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5436,12 +5436,12 @@ public struct DeleteShiftRequest: Codable {
 /// The response to a request to delete a `Shift`. May contain a set of  `Error` objects if the request resulted in errors.
 public struct DeleteShiftResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The response to a request to delete a `Shift`. May contain a set of  `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -5823,7 +5823,7 @@ public struct EmployeeWage: Codable {
 }
 
 /// Represents an error encountered during a request to the Connect API.  See [Handling errors](#handlingerrors) for more information.
-public struct Error: Codable {
+public struct SquareError: Codable {
 	/// The high-level category for the error. See [ErrorCategory](#type-errorcategory) for possible values
 	public var category: ErrorCategory
 	/// The specific code of the error. See [ErrorCode](#type-errorcode) for possible values
@@ -6165,13 +6165,13 @@ public struct GetBankAccountByV1IdResponse: Codable {
 	/// The requested `BankAccount` object.
 	public var bank_account: BankAccount?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Response object returned by GetBankAccountByV1Id.
 	/// - Parameters:
 	///   - bank_account: The requested `BankAccount` object.
 	///   - errors: Information on errors encountered during the request.
-	public init(bank_account: BankAccount? = nil, errors: [Error]? = nil) {
+	public init(bank_account: BankAccount? = nil, errors: [SquareError]? = nil) {
 		self.bank_account = bank_account
 		self.errors = errors
 	}
@@ -6190,13 +6190,13 @@ public struct GetBankAccountResponse: Codable {
 	/// The requested `BankAccount` object.
 	public var bank_account: BankAccount?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Response object returned by `GetBankAccount`.
 	/// - Parameters:
 	///   - bank_account: The requested `BankAccount` object.
 	///   - errors: Information on errors encountered during the request.
-	public init(bank_account: BankAccount? = nil, errors: [Error]? = nil) {
+	public init(bank_account: BankAccount? = nil, errors: [SquareError]? = nil) {
 		self.bank_account = bank_account
 		self.errors = errors
 	}
@@ -6215,13 +6215,13 @@ public struct GetBreakTypeResponse: Codable {
 	/// The response object.
 	public var break_type: BreakType?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The response to a request to get a `BreakType`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - break_type: The response object.
 	///   - errors: Any errors that occurred during the request.
-	public init(break_type: BreakType? = nil, errors: [Error]? = nil) {
+	public init(break_type: BreakType? = nil, errors: [SquareError]? = nil) {
 		self.break_type = break_type
 		self.errors = errors
 	}
@@ -6237,9 +6237,9 @@ public struct GetDeviceCodeResponse: Codable {
 	/// The queried DeviceCode.
 	public var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(device_code: DeviceCode? = nil, errors: [Error]? = nil) {
+	public init(device_code: DeviceCode? = nil, errors: [SquareError]? = nil) {
 		self.device_code = device_code
 		self.errors = errors
 	}
@@ -6258,13 +6258,13 @@ public struct GetEmployeeWageResponse: Codable {
 	/// The requested `EmployeeWage` object.
 	public var employee_wage: EmployeeWage?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// A response to a request to get an `EmployeeWage`. Contains the requested `EmployeeWage` objects. May contain a set of `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - employee_wage: The requested `EmployeeWage` object.
 	///   - errors: Any errors that occurred during the request.
-	public init(employee_wage: EmployeeWage? = nil, errors: [Error]? = nil) {
+	public init(employee_wage: EmployeeWage? = nil, errors: [SquareError]? = nil) {
 		self.employee_wage = employee_wage
 		self.errors = errors
 	}
@@ -6281,7 +6281,7 @@ public struct GetInvoiceRequest: Codable {
 /// Describes a `GetInvoice` response.
 public struct GetInvoiceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The invoice requested.
 	public var invoice: Invoice?
 
@@ -6289,7 +6289,7 @@ public struct GetInvoiceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - invoice: The invoice requested.
-	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
 	}
@@ -6306,7 +6306,7 @@ public struct GetPaymentRefundRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [GetRefund](#endpoint-refunds-getpaymentrefund) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct GetPaymentRefundResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `PaymentRefund`.
 	public var refund: PaymentRefund?
 
@@ -6314,7 +6314,7 @@ public struct GetPaymentRefundResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The requested `PaymentRefund`.
-	public init(errors: [Error]? = nil, refund: PaymentRefund? = nil) {
+	public init(errors: [SquareError]? = nil, refund: PaymentRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
 	}
@@ -6331,7 +6331,7 @@ public struct GetPaymentRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [GetPayment](#endpoint-payments-getpayment) endpoint.
 public struct GetPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `Payment`.
 	public var payment: Payment?
 
@@ -6339,7 +6339,7 @@ public struct GetPaymentResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The requested `Payment`.
-	public init(errors: [Error]? = nil, payment: Payment? = nil) {
+	public init(errors: [SquareError]? = nil, payment: Payment? = nil) {
 		self.errors = errors
 		self.payment = payment
 	}
@@ -6356,7 +6356,7 @@ public struct GetShiftRequest: Codable {
 /// A response to request to get a `Shift`. Contains the requested `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct GetShiftResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `Shift`.
 	public var shift: Shift?
 
@@ -6364,7 +6364,7 @@ public struct GetShiftResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - shift: The requested `Shift`.
-	public init(errors: [Error]? = nil, shift: Shift? = nil) {
+	public init(errors: [SquareError]? = nil, shift: Shift? = nil) {
 		self.errors = errors
 		self.shift = shift
 	}
@@ -6381,7 +6381,7 @@ public struct GetTeamMemberWageRequest: Codable {
 /// A response to a request to get a `TeamMemberWage`. Contains the requested `TeamMemberWage` objects. May contain a set of `Error` objects if the request resulted in errors.
 public struct GetTeamMemberWageResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `TeamMemberWage` object.
 	public var team_member_wage: TeamMemberWage?
 
@@ -6389,7 +6389,7 @@ public struct GetTeamMemberWageResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - team_member_wage: The requested `TeamMemberWage` object.
-	public init(errors: [Error]? = nil, team_member_wage: TeamMemberWage? = nil) {
+	public init(errors: [SquareError]? = nil, team_member_wage: TeamMemberWage? = nil) {
 		self.errors = errors
 		self.team_member_wage = team_member_wage
 	}
@@ -6405,9 +6405,9 @@ public struct GetTerminalCheckoutResponse: Codable {
 	/// The requested `TerminalCheckout`
 	public var checkout: TerminalCheckout?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(checkout: TerminalCheckout? = nil, errors: [Error]? = nil) {
+	public init(checkout: TerminalCheckout? = nil, errors: [SquareError]? = nil) {
 		self.checkout = checkout
 		self.errors = errors
 	}
@@ -6421,11 +6421,11 @@ public struct GetTerminalRefundRequest: Codable {
 
 public struct GetTerminalRefundResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `Refund`
 	public var refund: TerminalRefund?
 
-	public init(errors: [Error]? = nil, refund: TerminalRefund? = nil) {
+	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
 	}
@@ -7197,14 +7197,14 @@ public struct ListBankAccountsResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch next set of bank accounts. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Response object returned by ListBankAccounts.
 	/// - Parameters:
 	///   - bank_accounts: List of BankAccounts associated with this account.
 	///   - cursor: When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch next set of bank accounts. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	///   - errors: Information on errors encountered during the request.
-	public init(bank_accounts: [BankAccount]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(bank_accounts: [BankAccount]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.bank_accounts = bank_accounts
 		self.cursor = cursor
 		self.errors = errors
@@ -7239,14 +7239,14 @@ public struct ListBreakTypesResponse: Codable {
 	/// Value supplied in the subsequent request to fetch the next next page of Break Type results.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The response to a request for a set of `BreakTypes`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - break_types:  A page of `BreakType` results.
 	///   - cursor: Value supplied in the subsequent request to fetch the next next page of Break Type results.
 	///   - errors: Any errors that occurred during the request.
-	public init(break_types: [BreakType]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(break_types: [BreakType]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.break_types = break_types
 		self.cursor = cursor
 		self.errors = errors
@@ -7272,11 +7272,11 @@ public struct ListCashDrawerShiftEventsResponse: Codable {
 	/// Opaque cursor for fetching the next page. Cursor is not present in the last page of results.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// All of the events (payments, refunds, etc.) for a cash drawer during the shift.
 	public var events: [CashDrawerShiftEvent]?
 
-	public init(cursor: String? = nil, errors: [Error]? = nil, events: [CashDrawerShiftEvent]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, events: [CashDrawerShiftEvent]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.events = events
@@ -7311,11 +7311,11 @@ public struct ListCashDrawerShiftsResponse: Codable {
 	/// Opaque cursor for fetching the next page of results. Cursor is not present in the last page of results.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// A collection of CashDrawerShiftSummary objects for shifts that match the query.
 	public var items: [CashDrawerShiftSummary]?
 
-	public init(cursor: String? = nil, errors: [Error]? = nil, items: [CashDrawerShiftSummary]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, items: [CashDrawerShiftSummary]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.items = items
@@ -7341,11 +7341,11 @@ public struct ListCatalogResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The CatalogObjects returned.
 	public var objects: [CatalogObject]?
 
-	public init(cursor: String? = nil, errors: [Error]? = nil, objects: [CatalogObject]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, objects: [CatalogObject]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.objects = objects
@@ -7370,7 +7370,7 @@ public struct ListCustomerGroupsResponse: Codable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// A list of customer groups belonging to the current merchant.
 	public var groups: [CustomerGroup]?
 
@@ -7379,7 +7379,7 @@ public struct ListCustomerGroupsResponse: Codable {
 	///   - cursor: A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	///   - errors: Any errors that occurred during the request.
 	///   - groups: A list of customer groups belonging to the current merchant.
-	public init(cursor: String? = nil, errors: [Error]? = nil, groups: [CustomerGroup]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, groups: [CustomerGroup]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.groups = groups
@@ -7404,7 +7404,7 @@ public struct ListCustomerSegmentsResponse: Codable {
 	/// A pagination cursor to be used in subsequent calls to __ListCustomerSegments__ to retrieve the next set of query results. Only present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The list of customer segments belonging to the associated Square account.
 	public var segments: [CustomerSegment]?
 
@@ -7413,7 +7413,7 @@ public struct ListCustomerSegmentsResponse: Codable {
 	///   - cursor: A pagination cursor to be used in subsequent calls to __ListCustomerSegments__ to retrieve the next set of query results. Only present only if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
 	///   - errors: Any errors that occurred during the request.
 	///   - segments: The list of customer segments belonging to the associated Square account.
-	public init(cursor: String? = nil, errors: [Error]? = nil, segments: [CustomerSegment]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, segments: [CustomerSegment]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.segments = segments
@@ -7448,14 +7448,14 @@ public struct ListCustomersResponse: Codable {
 	/// An array of `Customer` objects that match the provided query.
 	public var customers: [Customer]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the ListCustomers endpoint.  One of `errors` or `customers` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor to retrieve the next set of results for the original query. Only present if the request succeeded and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	///   - customers: An array of `Customer` objects that match the provided query.
 	///   - errors: Any errors that occurred during the request.
-	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [Error]? = nil) {
+	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
 		self.customers = customers
 		self.errors = errors
@@ -7486,9 +7486,9 @@ public struct ListDeviceCodesResponse: Codable {
 	/// The queried DeviceCode.
 	public var device_codes: [DeviceCode]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(cursor: String? = nil, device_codes: [DeviceCode]? = nil, errors: [Error]? = nil) {
+	public init(cursor: String? = nil, device_codes: [DeviceCode]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
 		self.device_codes = device_codes
 		self.errors = errors
@@ -7506,7 +7506,7 @@ public struct ListDisputeEvidenceRequest: Codable {
 /// Defines the fields in a `ListDisputeEvidence` response.
 public struct ListDisputeEvidenceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The list of evidence previously uploaded to the specified dispute.
 	public var evidence: [DisputeEvidence]?
 
@@ -7514,7 +7514,7 @@ public struct ListDisputeEvidenceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - evidence: The list of evidence previously uploaded to the specified dispute.
-	public init(errors: [Error]? = nil, evidence: [DisputeEvidence]? = nil) {
+	public init(errors: [SquareError]? = nil, evidence: [DisputeEvidence]? = nil) {
 		self.errors = errors
 		self.evidence = evidence
 	}
@@ -7548,14 +7548,14 @@ public struct ListDisputesResponse: Codable {
 	/// The list of disputes.
 	public var disputes: [Dispute]?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines fields in a `ListDisputes` response.
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - disputes: The list of disputes.
 	///   - errors: Information about errors encountered during the request.
-	public init(cursor: String? = nil, disputes: [Dispute]? = nil, errors: [Error]? = nil) {
+	public init(cursor: String? = nil, disputes: [Dispute]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
 		self.disputes = disputes
 		self.errors = errors
@@ -7590,14 +7590,14 @@ public struct ListEmployeeWagesResponse: Codable {
 	/// A page of Employee Wage results.
 	public var employee_wages: [EmployeeWage]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// The response to a request for a set of `EmployeeWage` objects. Contains  a set of `EmployeeWage`.
 	/// - Parameters:
 	///   - cursor: Value supplied in the subsequent request to fetch the next next page of Employee Wage results.
 	///   - employee_wages: A page of Employee Wage results.
 	///   - errors: Any errors that occurred during the request.
-	public init(cursor: String? = nil, employee_wages: [EmployeeWage]? = nil, errors: [Error]? = nil) {
+	public init(cursor: String? = nil, employee_wages: [EmployeeWage]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
 		self.employee_wages = employee_wages
 		self.errors = errors
@@ -7626,9 +7626,9 @@ public struct ListEmployeesResponse: Codable {
 	public var cursor: String?
 	public var employees: [Employee]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(cursor: String? = nil, employees: [Employee]? = nil, errors: [Error]? = nil) {
+	public init(cursor: String? = nil, employees: [Employee]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
 		self.employees = employees
 		self.errors = errors
@@ -7661,7 +7661,7 @@ public struct ListInvoicesResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The invoices retrieved.
 	public var invoices: [Invoice]?
 
@@ -7670,7 +7670,7 @@ public struct ListInvoicesResponse: Codable {
 	///   - cursor: When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - invoices: The invoices retrieved.
-	public init(cursor: String? = nil, errors: [Error]? = nil, invoices: [Invoice]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, invoices: [Invoice]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.invoices = invoices
@@ -7688,7 +7688,7 @@ public struct ListLocationsRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the __ListLocations__ endpoint.  One of `errors` or `locations` is present in a given response (never both).
 public struct ListLocationsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The business locations.
 	public var locations: [Location]?
 
@@ -7696,7 +7696,7 @@ public struct ListLocationsResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - locations: The business locations.
-	public init(errors: [Error]? = nil, locations: [Location]? = nil) {
+	public init(errors: [SquareError]? = nil, locations: [Location]? = nil) {
 		self.errors = errors
 		self.locations = locations
 	}
@@ -7713,7 +7713,7 @@ public struct ListLoyaltyProgramsRequest: Codable {
 /// A response that contains all loyalty programs.
 public struct ListLoyaltyProgramsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// A list of `LoyaltyProgram` for the merchant.
 	public var programs: [LoyaltyProgram]?
 
@@ -7721,7 +7721,7 @@ public struct ListLoyaltyProgramsResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - programs: A list of `LoyaltyProgram` for the merchant.
-	public init(errors: [Error]? = nil, programs: [LoyaltyProgram]? = nil) {
+	public init(errors: [SquareError]? = nil, programs: [LoyaltyProgram]? = nil) {
 		self.errors = errors
 		self.programs = programs
 	}
@@ -7745,7 +7745,7 @@ public struct ListMerchantsResponse: Codable {
 	/// If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	public var cursor: Int?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `Merchant` entities.
 	public var merchant: [Merchant]?
 
@@ -7754,7 +7754,7 @@ public struct ListMerchantsResponse: Codable {
 	///   - cursor: If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	///   - errors: Information on errors encountered during the request.
 	///   - merchant: The requested `Merchant` entities.
-	public init(cursor: Int? = nil, errors: [Error]? = nil, merchant: [Merchant]? = nil) {
+	public init(cursor: Int? = nil, errors: [SquareError]? = nil, merchant: [Merchant]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.merchant = merchant
@@ -7807,7 +7807,7 @@ public struct ListPaymentRefundsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The list of requested refunds.
 	public var refunds: [PaymentRefund]?
 
@@ -7816,7 +7816,7 @@ public struct ListPaymentRefundsResponse: Codable {
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - refunds: The list of requested refunds.
-	public init(cursor: String? = nil, errors: [Error]? = nil, refunds: [PaymentRefund]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, refunds: [PaymentRefund]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.refunds = refunds
@@ -7873,7 +7873,7 @@ public struct ListPaymentsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested list of payments.
 	public var payments: [Payment]?
 
@@ -7882,7 +7882,7 @@ public struct ListPaymentsResponse: Codable {
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - payments: The requested list of payments.
-	public init(cursor: String? = nil, errors: [Error]? = nil, payments: [Payment]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, payments: [Payment]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.payments = payments
@@ -7919,7 +7919,7 @@ public struct ListRefundsResponse: Codable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// An array of refunds that match your query.
 	public var refunds: [Refund]?
 
@@ -7928,7 +7928,7 @@ public struct ListRefundsResponse: Codable {
 	///   - cursor: A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	///   - errors: Any errors that occurred during the request.
 	///   - refunds: An array of refunds that match your query.
-	public init(cursor: String? = nil, errors: [Error]? = nil, refunds: [Refund]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, refunds: [Refund]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.refunds = refunds
@@ -7957,7 +7957,7 @@ public struct ListSubscriptionEventsResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of events.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The `SubscriptionEvents` retrieved.
 	public var subscription_events: [SubscriptionEvent]?
 
@@ -7966,7 +7966,7 @@ public struct ListSubscriptionEventsResponse: Codable {
 	///   - cursor: When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of events.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription_events: The `SubscriptionEvents` retrieved.
-	public init(cursor: String? = nil, errors: [Error]? = nil, subscription_events: [SubscriptionEvent]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, subscription_events: [SubscriptionEvent]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.subscription_events = subscription_events
@@ -7995,11 +7995,11 @@ public struct ListTeamMemberBookingProfilesResponse: Codable {
 	/// The cursor for paginating through the results.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The list of team member booking profiles.
 	public var team_member_booking_profiles: [TeamMemberBookingProfile]?
 
-	public init(cursor: String? = nil, errors: [Error]? = nil, team_member_booking_profiles: [TeamMemberBookingProfile]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, team_member_booking_profiles: [TeamMemberBookingProfile]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.team_member_booking_profiles = team_member_booking_profiles
@@ -8032,7 +8032,7 @@ public struct ListTeamMemberWagesResponse: Codable {
 	/// Value supplied in the subsequent request to fetch the next next page of Team Member Wage results.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// A page of Team Member Wage results.
 	public var team_member_wages: [TeamMemberWage]?
 
@@ -8041,7 +8041,7 @@ public struct ListTeamMemberWagesResponse: Codable {
 	///   - cursor: Value supplied in the subsequent request to fetch the next next page of Team Member Wage results.
 	///   - errors: Any errors that occurred during the request.
 	///   - team_member_wages: A page of Team Member Wage results.
-	public init(cursor: String? = nil, errors: [Error]? = nil, team_member_wages: [TeamMemberWage]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, team_member_wages: [TeamMemberWage]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.team_member_wages = team_member_wages
@@ -8078,7 +8078,7 @@ public struct ListTransactionsResponse: Codable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// An array of transactions that match your query.
 	public var transactions: [Transaction]?
 
@@ -8087,7 +8087,7 @@ public struct ListTransactionsResponse: Codable {
 	///   - cursor: A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](#paginatingresults) for more information.
 	///   - errors: Any errors that occurred during the request.
 	///   - transactions: An array of transactions that match your query.
-	public init(cursor: String? = nil, errors: [Error]? = nil, transactions: [Transaction]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, transactions: [Transaction]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.transactions = transactions
@@ -8116,7 +8116,7 @@ public struct ListWorkweekConfigsResponse: Codable {
 	/// Value supplied in the subsequent request to fetch the next page of Employee Wage results.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// A page of Employee Wage results.
 	public var workweek_configs: [WorkweekConfig]?
 
@@ -8125,7 +8125,7 @@ public struct ListWorkweekConfigsResponse: Codable {
 	///   - cursor: Value supplied in the subsequent request to fetch the next page of Employee Wage results.
 	///   - errors: Any errors that occurred during the request.
 	///   - workweek_configs: A page of Employee Wage results.
-	public init(cursor: String? = nil, errors: [Error]? = nil, workweek_configs: [WorkweekConfig]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, workweek_configs: [WorkweekConfig]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.workweek_configs = workweek_configs
@@ -9062,9 +9062,9 @@ public struct OnboardAppointmentsRequest: Codable {
 
 public struct OnboardAppointmentsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -10456,7 +10456,7 @@ public struct PayOrderRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [PayOrder](#endpoint-payorder) endpoint.
 public struct PayOrderResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The paid, updated `order`.
 	public var order: Order?
 
@@ -10464,7 +10464,7 @@ public struct PayOrderResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The paid, updated `order`.
-	public init(errors: [Error]? = nil, order: Order? = nil) {
+	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
 	}
@@ -10727,7 +10727,7 @@ public struct PublishInvoiceRequest: Codable {
 /// Describes a `PublishInvoice` response.
 public struct PublishInvoiceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The published invoice.
 	public var invoice: Invoice?
 
@@ -10735,7 +10735,7 @@ public struct PublishInvoiceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - invoice: The published invoice.
-	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
 	}
@@ -10778,7 +10778,7 @@ public struct RedeemLoyaltyRewardRequest: Codable {
 /// A response that includes the `LoyaltyEvent` published for redeeming the reward.
 public struct RedeemLoyaltyRewardResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The `LoyaltyEvent` for redeeming the reward.
 	public var event: LoyaltyEvent?
 
@@ -10786,7 +10786,7 @@ public struct RedeemLoyaltyRewardResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - event: The `LoyaltyEvent` for redeeming the reward.
-	public init(errors: [Error]? = nil, event: LoyaltyEvent? = nil) {
+	public init(errors: [SquareError]? = nil, event: LoyaltyEvent? = nil) {
 		self.errors = errors
 		self.event = event
 	}
@@ -10873,7 +10873,7 @@ public struct RefundPaymentRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [RefundPayment](#endpoint-refunds-refundpayment) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct RefundPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully created `PaymentRefund`.
 	public var refund: PaymentRefund?
 
@@ -10881,7 +10881,7 @@ public struct RefundPaymentResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The successfully created `PaymentRefund`.
-	public init(errors: [Error]? = nil, refund: PaymentRefund? = nil) {
+	public init(errors: [SquareError]? = nil, refund: PaymentRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
 	}
@@ -10915,7 +10915,7 @@ public struct RegisterDomainRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` will be present in a given response (never both).
 public struct RegisterDomainResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// Status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
 	public var status: RegisterDomainResponseStatus?
 
@@ -10923,7 +10923,7 @@ public struct RegisterDomainResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - status: Status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
-	public init(errors: [Error]? = nil, status: RegisterDomainResponseStatus? = nil) {
+	public init(errors: [SquareError]? = nil, status: RegisterDomainResponseStatus? = nil) {
 		self.errors = errors
 		self.status = status
 	}
@@ -10948,12 +10948,12 @@ public struct RemoveDisputeEvidenceRequest: Codable {
 /// Defines the fields in a `RemoveDisputeEvidence` response.
 public struct RemoveDisputeEvidenceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields in a `RemoveDisputeEvidence` response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -10969,12 +10969,12 @@ public struct RemoveGroupFromCustomerRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](#endpoint-removegroupfromcustomer) endpoint.
 public struct RemoveGroupFromCustomerResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](#endpoint-removegroupfromcustomer) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
@@ -11022,9 +11022,9 @@ public struct RetrieveBookingResponse: Codable {
 	/// The booking that was requested.
 	public var booking: Booking?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+	public init(booking: Booking? = nil, errors: [SquareError]? = nil) {
 		self.booking = booking
 		self.errors = errors
 	}
@@ -11040,9 +11040,9 @@ public struct RetrieveBusinessBookingProfileResponse: Codable {
 	/// The seller's booking profile.
 	public var business_booking_profile: BusinessBookingProfile?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(business_booking_profile: BusinessBookingProfile? = nil, errors: [Error]? = nil) {
+	public init(business_booking_profile: BusinessBookingProfile? = nil, errors: [SquareError]? = nil) {
 		self.business_booking_profile = business_booking_profile
 		self.errors = errors
 	}
@@ -11061,9 +11061,9 @@ public struct RetrieveCashDrawerShiftResponse: Codable {
 	/// The cash drawer shift queried for.
 	public var cash_drawer_shift: CashDrawerShift?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(cash_drawer_shift: CashDrawerShift? = nil, errors: [Error]? = nil) {
+	public init(cash_drawer_shift: CashDrawerShift? = nil, errors: [SquareError]? = nil) {
 		self.cash_drawer_shift = cash_drawer_shift
 		self.errors = errors
 	}
@@ -11083,13 +11083,13 @@ public struct RetrieveCatalogObjectRequest: Codable {
 
 public struct RetrieveCatalogObjectResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The `CatalogObject`s returned.
 	public var object: CatalogObject?
 	/// A list of `CatalogObject`s referenced by the object in the `object` field.
 	public var related_objects: [CatalogObject]?
 
-	public init(errors: [Error]? = nil, object: CatalogObject? = nil, related_objects: [CatalogObject]? = nil) {
+	public init(errors: [SquareError]? = nil, object: CatalogObject? = nil, related_objects: [CatalogObject]? = nil) {
 		self.errors = errors
 		self.object = object
 		self.related_objects = related_objects
@@ -11107,7 +11107,7 @@ public struct RetrieveCustomerGroupRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](#endpoint-retrievecustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
 public struct RetrieveCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The retrieved customer group.
 	public var group: CustomerGroup?
 
@@ -11115,7 +11115,7 @@ public struct RetrieveCustomerGroupResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The retrieved customer group.
-	public init(errors: [Error]? = nil, group: CustomerGroup? = nil) {
+	public init(errors: [SquareError]? = nil, group: CustomerGroup? = nil) {
 		self.errors = errors
 		self.group = group
 	}
@@ -11134,13 +11134,13 @@ public struct RetrieveCustomerResponse: Codable {
 	/// The requested customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the RetrieveCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The requested customer.
 	///   - errors: Any errors that occurred during the request.
-	public init(customer: Customer? = nil, errors: [Error]? = nil) {
+	public init(customer: Customer? = nil, errors: [SquareError]? = nil) {
 		self.customer = customer
 		self.errors = errors
 	}
@@ -11157,7 +11157,7 @@ public struct RetrieveCustomerSegmentRequest: Codable {
 /// Defines the fields included in the response body for requests to __RetrieveCustomerSegment__.  One of `errors` or `segment` is present in a given response (never both).
 public struct RetrieveCustomerSegmentResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The retrieved customer segment.
 	public var segment: CustomerSegment?
 
@@ -11165,7 +11165,7 @@ public struct RetrieveCustomerSegmentResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - segment: The retrieved customer segment.
-	public init(errors: [Error]? = nil, segment: CustomerSegment? = nil) {
+	public init(errors: [SquareError]? = nil, segment: CustomerSegment? = nil) {
 		self.errors = errors
 		self.segment = segment
 	}
@@ -11182,7 +11182,7 @@ public struct RetrieveDisputeEvidenceRequest: Codable {
 /// Defines the fields in a `RetrieveDisputeEvidence` response.
 public struct RetrieveDisputeEvidenceResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// Metadata about the dispute evidence file.
 	public var evidence: DisputeEvidence?
 
@@ -11190,7 +11190,7 @@ public struct RetrieveDisputeEvidenceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - evidence: Metadata about the dispute evidence file.
-	public init(errors: [Error]? = nil, evidence: DisputeEvidence? = nil) {
+	public init(errors: [SquareError]? = nil, evidence: DisputeEvidence? = nil) {
 		self.errors = errors
 		self.evidence = evidence
 	}
@@ -11209,13 +11209,13 @@ public struct RetrieveDisputeResponse: Codable {
 	/// Details about the requested `Dispute`.
 	public var dispute: Dispute?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines fields in a `RetrieveDispute` response.
 	/// - Parameters:
 	///   - dispute: Details about the requested `Dispute`.
 	///   - errors: Information about errors encountered during the request.
-	public init(dispute: Dispute? = nil, errors: [Error]? = nil) {
+	public init(dispute: Dispute? = nil, errors: [SquareError]? = nil) {
 		self.dispute = dispute
 		self.errors = errors
 	}
@@ -11230,9 +11230,9 @@ public struct RetrieveEmployeeRequest: Codable {
 public struct RetrieveEmployeeResponse: Codable {
 	public var employee: Employee?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(employee: Employee? = nil, errors: [Error]? = nil) {
+	public init(employee: Employee? = nil, errors: [SquareError]? = nil) {
 		self.employee = employee
 		self.errors = errors
 	}
@@ -11248,9 +11248,9 @@ public struct RetrieveInventoryAdjustmentResponse: Codable {
 	/// The requested `InventoryAdjustment`.
 	public var adjustment: InventoryAdjustment?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(adjustment: InventoryAdjustment? = nil, errors: [Error]? = nil) {
+	public init(adjustment: InventoryAdjustment? = nil, errors: [SquareError]? = nil) {
 		self.adjustment = adjustment
 		self.errors = errors
 	}
@@ -11274,9 +11274,9 @@ public struct RetrieveInventoryChangesResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(changes: [InventoryChange]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(changes: [InventoryChange]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.changes = changes
 		self.cursor = cursor
 		self.errors = errors
@@ -11301,9 +11301,9 @@ public struct RetrieveInventoryCountResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(counts: [InventoryCount]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(counts: [InventoryCount]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.counts = counts
 		self.cursor = cursor
 		self.errors = errors
@@ -11320,9 +11320,9 @@ public struct RetrieveInventoryPhysicalCountResponse: Codable {
 	/// The requested `InventoryPhysicalCount`.
 	public var count: InventoryPhysicalCount?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(count: InventoryPhysicalCount? = nil, errors: [Error]? = nil) {
+	public init(count: InventoryPhysicalCount? = nil, errors: [SquareError]? = nil) {
 		self.count = count
 		self.errors = errors
 	}
@@ -11339,7 +11339,7 @@ public struct RetrieveLocationRequest: Codable {
 /// Defines the fields that the [RetrieveLocation](#endpoint-retrievelocation) endpoint returns in a response.
 public struct RetrieveLocationResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested location.
 	public var location: Location?
 
@@ -11347,7 +11347,7 @@ public struct RetrieveLocationResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - location: The requested location.
-	public init(errors: [Error]? = nil, location: Location? = nil) {
+	public init(errors: [SquareError]? = nil, location: Location? = nil) {
 		self.errors = errors
 		self.location = location
 	}
@@ -11364,7 +11364,7 @@ public struct RetrieveLoyaltyAccountRequest: Codable {
 /// A response that includes the loyalty account.
 public struct RetrieveLoyaltyAccountResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The loyalty account.
 	public var loyalty_account: LoyaltyAccount?
 
@@ -11372,7 +11372,7 @@ public struct RetrieveLoyaltyAccountResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - loyalty_account: The loyalty account.
-	public init(errors: [Error]? = nil, loyalty_account: LoyaltyAccount? = nil) {
+	public init(errors: [SquareError]? = nil, loyalty_account: LoyaltyAccount? = nil) {
 		self.errors = errors
 		self.loyalty_account = loyalty_account
 	}
@@ -11389,7 +11389,7 @@ public struct RetrieveLoyaltyRewardRequest: Codable {
 /// A response that includes the loyalty reward.
 public struct RetrieveLoyaltyRewardResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The loyalty reward retrieved.
 	public var reward: LoyaltyReward?
 
@@ -11397,7 +11397,7 @@ public struct RetrieveLoyaltyRewardResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - reward: The loyalty reward retrieved.
-	public init(errors: [Error]? = nil, reward: LoyaltyReward? = nil) {
+	public init(errors: [SquareError]? = nil, reward: LoyaltyReward? = nil) {
 		self.errors = errors
 		self.reward = reward
 	}
@@ -11414,7 +11414,7 @@ public struct RetrieveMerchantRequest: Codable {
 /// The response object returned by the [RetrieveMerchant](#endpoint-retrieveMerchant) endpoint.
 public struct RetrieveMerchantResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested `Merchant` object.
 	public var merchant: Merchant?
 
@@ -11422,7 +11422,7 @@ public struct RetrieveMerchantResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - merchant: The requested `Merchant` object.
-	public init(errors: [Error]? = nil, merchant: Merchant? = nil) {
+	public init(errors: [SquareError]? = nil, merchant: Merchant? = nil) {
 		self.errors = errors
 		self.merchant = merchant
 	}
@@ -11444,9 +11444,9 @@ public struct RetrieveObsMigrationProfileResponse: Codable {
 	/// The text appearing on the COVID banner.
 	public var banner_text: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(banner_cta_text: String? = nil, banner_cta_url: String? = nil, banner_enabled: Bool? = nil, banner_text: String? = nil, errors: [Error]? = nil) {
+	public init(banner_cta_text: String? = nil, banner_cta_url: String? = nil, banner_enabled: Bool? = nil, banner_text: String? = nil, errors: [SquareError]? = nil) {
 		self.banner_cta_text = banner_cta_text
 		self.banner_cta_url = banner_cta_url
 		self.banner_enabled = banner_enabled
@@ -11463,11 +11463,11 @@ public struct RetrieveOrderRequest: Codable {
 
 public struct RetrieveOrderResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested order.
 	public var order: Order?
 
-	public init(errors: [Error]? = nil, order: Order? = nil) {
+	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
 	}
@@ -11484,7 +11484,7 @@ public struct RetrieveSubscriptionRequest: Codable {
 /// Defines the fields that are included in the response from the [RetrieveSubscription](#endpoint-subscriptions-retrievesubscription) endpoint.
 public struct RetrieveSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The subscription retrieved.
 	public var subscription: Subscription?
 
@@ -11492,7 +11492,7 @@ public struct RetrieveSubscriptionResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The subscription retrieved.
-	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+	public init(errors: [SquareError]? = nil, subscription: Subscription? = nil) {
 		self.errors = errors
 		self.subscription = subscription
 	}
@@ -11506,11 +11506,11 @@ public struct RetrieveTeamMemberBookingProfileRequest: Codable {
 
 public struct RetrieveTeamMemberBookingProfileResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The returned team member booking profile.
 	public var team_member_booking_profile: TeamMemberBookingProfile?
 
-	public init(errors: [Error]? = nil, team_member_booking_profile: TeamMemberBookingProfile? = nil) {
+	public init(errors: [SquareError]? = nil, team_member_booking_profile: TeamMemberBookingProfile? = nil) {
 		self.errors = errors
 		self.team_member_booking_profile = team_member_booking_profile
 	}
@@ -11527,7 +11527,7 @@ public struct RetrieveTeamMemberRequest: Codable {
 /// Represents a response from a retrieve request, containing a `TeamMember` object or error messages.
 public struct RetrieveTeamMemberResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully retrieved `TeamMember` object.
 	public var team_member: TeamMember?
 
@@ -11535,7 +11535,7 @@ public struct RetrieveTeamMemberResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_member: The successfully retrieved `TeamMember` object.
-	public init(errors: [Error]? = nil, team_member: TeamMember? = nil) {
+	public init(errors: [SquareError]? = nil, team_member: TeamMember? = nil) {
 		self.errors = errors
 		self.team_member = team_member
 	}
@@ -11550,7 +11550,7 @@ public struct RetrieveTransactionRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](#endpont-retrievetransaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct RetrieveTransactionResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested transaction.
 	public var transaction: Transaction?
 
@@ -11558,7 +11558,7 @@ public struct RetrieveTransactionResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - transaction: The requested transaction.
-	public init(errors: [Error]? = nil, transaction: Transaction? = nil) {
+	public init(errors: [SquareError]? = nil, transaction: Transaction? = nil) {
 		self.errors = errors
 		self.transaction = transaction
 	}
@@ -11575,7 +11575,7 @@ public struct RetrieveWageSettingRequest: Codable {
 /// Represents a response from a retrieve request, containing the specified `WageSetting` object or error messages.
 public struct RetrieveWageSettingResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully retrieved `WageSetting` object.
 	public var wage_setting: WageSetting?
 
@@ -11583,7 +11583,7 @@ public struct RetrieveWageSettingResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - wage_setting: The successfully retrieved `WageSetting` object.
-	public init(errors: [Error]? = nil, wage_setting: WageSetting? = nil) {
+	public init(errors: [SquareError]? = nil, wage_setting: WageSetting? = nil) {
 		self.errors = errors
 		self.wage_setting = wage_setting
 	}
@@ -11696,9 +11696,9 @@ public struct SearchAvailabilityResponse: Codable {
 	/// List of slots available for booking.
 	public var availabilities: [Availability]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(availabilities: [Availability]? = nil, errors: [Error]? = nil) {
+	public init(availabilities: [Availability]? = nil, errors: [SquareError]? = nil) {
 		self.availabilities = availabilities
 		self.errors = errors
 	}
@@ -11762,7 +11762,7 @@ public struct SearchCatalogItemsResponse: Codable {
 	/// Pagination token used in the next request to return more of the search result.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// Returned items matching the specified query expressions.
 	public var items: [CatalogObject]?
 	/// Ids of returned item variations matching the specified query expression.
@@ -11774,7 +11774,7 @@ public struct SearchCatalogItemsResponse: Codable {
 	///   - errors: Any errors that occurred during the request.
 	///   - items: Returned items matching the specified query expressions.
 	///   - matched_variation_ids: Ids of returned item variations matching the specified query expression.
-	public init(cursor: String? = nil, errors: [Error]? = nil, items: [CatalogObject]? = nil, matched_variation_ids: [String]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, items: [CatalogObject]? = nil, matched_variation_ids: [String]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.items = items
@@ -11813,7 +11813,7 @@ public struct SearchCatalogObjectsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// When the associated product catalog was last updated. Will match the value for `end_time` or `cursor` if either field is included in the `SearchCatalog` request.
 	public var latest_time: String?
 	/// The CatalogObjects returned.
@@ -11821,7 +11821,7 @@ public struct SearchCatalogObjectsResponse: Codable {
 	/// A list of CatalogObjects referenced by the objects in the `objects` field.
 	public var related_objects: [CatalogObject]?
 
-	public init(cursor: String? = nil, errors: [Error]? = nil, latest_time: String? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, latest_time: String? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.latest_time = latest_time
@@ -11858,14 +11858,14 @@ public struct SearchCustomersResponse: Codable {
 	/// An array of `Customer` objects that match a query.
 	public var customers: [Customer]?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the SearchCustomers endpoint.  One of `errors` or `customers` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor that can be used during subsequent calls to SearchCustomers to retrieve the next set of results associated with the original query. Pagination cursors are only present when a request succeeds and additional results are available.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	///   - customers: An array of `Customer` objects that match a query.
 	///   - errors: Any errors that occurred during the request.
-	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [Error]? = nil) {
+	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
 		self.customers = customers
 		self.errors = errors
@@ -11898,7 +11898,7 @@ public struct SearchInvoicesResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The list of invoices returned by the search.
 	public var invoices: [Invoice]?
 
@@ -11907,7 +11907,7 @@ public struct SearchInvoicesResponse: Codable {
 	///   - cursor: When a response is truncated, it includes a cursor that you can use in a  subsequent request to fetch the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - invoices: The list of invoices returned by the search.
-	public init(cursor: String? = nil, errors: [Error]? = nil, invoices: [Invoice]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, invoices: [Invoice]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.invoices = invoices
@@ -11957,7 +11957,7 @@ public struct SearchLoyaltyAccountsResponse: Codable {
 	/// The pagination cursor to use in a subsequent  request. If empty, this is the final response. For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The loyalty accounts that met the search criteria,   in order of creation date.
 	public var loyalty_accounts: [LoyaltyAccount]?
 
@@ -11966,7 +11966,7 @@ public struct SearchLoyaltyAccountsResponse: Codable {
 	///   - cursor: The pagination cursor to use in a subsequent  request. If empty, this is the final response. For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	///   - errors: Any errors that occurred during the request.
 	///   - loyalty_accounts: The loyalty accounts that met the search criteria,   in order of creation date.
-	public init(cursor: String? = nil, errors: [Error]? = nil, loyalty_accounts: [LoyaltyAccount]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, loyalty_accounts: [LoyaltyAccount]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.loyalty_accounts = loyalty_accounts
@@ -11999,7 +11999,7 @@ public struct SearchLoyaltyEventsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent  request. If empty, this is the final response.  For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The loyalty events that satisfy the search criteria.
 	public var events: [LoyaltyEvent]?
 
@@ -12008,7 +12008,7 @@ public struct SearchLoyaltyEventsResponse: Codable {
 	///   - cursor: The pagination cursor to be used in a subsequent  request. If empty, this is the final response.  For more information,  see [Pagination](https://developer.squareup.com/docs/docs/basics/api101/pagination).
 	///   - errors: Any errors that occurred during the request.
 	///   - events: The loyalty events that satisfy the search criteria.
-	public init(cursor: String? = nil, errors: [Error]? = nil, events: [LoyaltyEvent]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, events: [LoyaltyEvent]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.events = events
@@ -12058,7 +12058,7 @@ public struct SearchLoyaltyRewardsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent  request. If empty, this is the final response.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The loyalty rewards that satisfy the search criteria. These are returned in descending order by `updated_at`.
 	public var rewards: [LoyaltyReward]?
 
@@ -12067,7 +12067,7 @@ public struct SearchLoyaltyRewardsResponse: Codable {
 	///   - cursor: The pagination cursor to be used in a subsequent  request. If empty, this is the final response.
 	///   - errors: Any errors that occurred during the request.
 	///   - rewards: The loyalty rewards that satisfy the search criteria. These are returned in descending order by `updated_at`.
-	public init(cursor: String? = nil, errors: [Error]? = nil, rewards: [LoyaltyReward]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, rewards: [LoyaltyReward]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.rewards = rewards
@@ -12205,7 +12205,7 @@ public struct SearchOrdersResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
 	/// `Errors` encountered during the search.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// List of `OrderEntries` that fit the query conditions. Populated only if `return_entries` was set to `true` in the request.
 	public var order_entries: [OrderEntry]?
 	/// List of `Order` objects that match query conditions. Populated only if `return_entries` in the request is set to `false`.
@@ -12217,7 +12217,7 @@ public struct SearchOrdersResponse: Codable {
 	///   - errors: `Errors` encountered during the search.
 	///   - order_entries: List of `OrderEntries` that fit the query conditions. Populated only if `return_entries` was set to `true` in the request.
 	///   - orders: List of `Order` objects that match query conditions. Populated only if `return_entries` in the request is set to `false`.
-	public init(cursor: String? = nil, errors: [Error]? = nil, order_entries: [OrderEntry]? = nil, orders: [Order]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, order_entries: [OrderEntry]? = nil, orders: [Order]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.order_entries = order_entries
@@ -12304,7 +12304,7 @@ public struct SearchShiftsResponse: Codable {
 	/// Opaque cursor for fetching the next page.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// Shifts
 	public var shifts: [Shift]?
 
@@ -12313,7 +12313,7 @@ public struct SearchShiftsResponse: Codable {
 	///   - cursor: Opaque cursor for fetching the next page.
 	///   - errors: Any errors that occurred during the request.
 	///   - shifts: Shifts
-	public init(cursor: String? = nil, errors: [Error]? = nil, shifts: [Shift]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, shifts: [Shift]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.shifts = shifts
@@ -12376,7 +12376,7 @@ public struct SearchSubscriptionsResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of subscriptions.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The search result.
 	public var subscriptions: [Subscription]?
 
@@ -12385,7 +12385,7 @@ public struct SearchSubscriptionsResponse: Codable {
 	///   - cursor: When a response is truncated, it includes a cursor that you can  use in a subsequent request to fetch the next set of subscriptions.  If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - subscriptions: The search result.
-	public init(cursor: String? = nil, errors: [Error]? = nil, subscriptions: [Subscription]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, subscriptions: [Subscription]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.subscriptions = subscriptions
@@ -12448,7 +12448,7 @@ public struct SearchTeamMembersResponse: Codable {
 	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) with Square APIs for more information.
 	public var cursor: String?
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The filtered list of `TeamMember` objects.
 	public var team_members: [TeamMember]?
 
@@ -12457,7 +12457,7 @@ public struct SearchTeamMembersResponse: Codable {
 	///   - cursor: The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) with Square APIs for more information.
 	///   - errors: The errors that occurred during the request.
 	///   - team_members: The filtered list of `TeamMember` objects.
-	public init(cursor: String? = nil, errors: [Error]? = nil, team_members: [TeamMember]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, team_members: [TeamMember]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.team_members = team_members
@@ -12485,9 +12485,9 @@ public struct SearchTerminalCheckoutsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(checkouts: [TerminalCheckout]? = nil, cursor: String? = nil, errors: [Error]? = nil) {
+	public init(checkouts: [TerminalCheckout]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
 		self.checkouts = checkouts
 		self.cursor = cursor
 		self.errors = errors
@@ -12513,11 +12513,11 @@ public struct SearchTerminalRefundsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The requested search result of `TerminalRefund`s.
 	public var refunds: [TerminalRefund]?
 
-	public init(cursor: String? = nil, errors: [Error]? = nil, refunds: [TerminalRefund]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, refunds: [TerminalRefund]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
 		self.refunds = refunds
@@ -12829,13 +12829,13 @@ public struct SubmitEvidenceResponse: Codable {
 	/// The `Dispute` for which evidence was submitted.
 	public var dispute: Dispute?
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields in a `SubmitEvidence` response.
 	/// - Parameters:
 	///   - dispute: The `Dispute` for which evidence was submitted.
 	///   - errors: Information about errors encountered during the request.
-	public init(dispute: Dispute? = nil, errors: [Error]? = nil) {
+	public init(dispute: Dispute? = nil, errors: [SquareError]? = nil) {
 		self.dispute = dispute
 		self.errors = errors
 	}
@@ -13600,9 +13600,9 @@ public struct UpdateBookingResponse: Codable {
 	/// The booking that was updated.
 	public var booking: Booking?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
-	public init(booking: Booking? = nil, errors: [Error]? = nil) {
+	public init(booking: Booking? = nil, errors: [SquareError]? = nil) {
 		self.booking = booking
 		self.errors = errors
 	}
@@ -13626,13 +13626,13 @@ public struct UpdateBreakTypeResponse: Codable {
 	/// The response object.
 	public var break_type: BreakType?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// A response to a request to update a `BreakType`. Contains the requested `BreakType` objects. May contain a set of `Error` objects if the request resulted in errors.
 	/// - Parameters:
 	///   - break_type: The response object.
 	///   - errors: Any errors that occurred during the request.
-	public init(break_type: BreakType? = nil, errors: [Error]? = nil) {
+	public init(break_type: BreakType? = nil, errors: [SquareError]? = nil) {
 		self.break_type = break_type
 		self.errors = errors
 	}
@@ -13654,7 +13654,7 @@ public struct UpdateCustomerGroupRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](#endpoint-updatecustomergroup) endpoint.  One of `errors` or `group` is present in a given response (never both).
 public struct UpdateCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully updated customer group.
 	public var group: CustomerGroup?
 
@@ -13662,7 +13662,7 @@ public struct UpdateCustomerGroupResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The successfully updated customer group.
-	public init(errors: [Error]? = nil, group: CustomerGroup? = nil) {
+	public init(errors: [SquareError]? = nil, group: CustomerGroup? = nil) {
 		self.errors = errors
 		self.group = group
 	}
@@ -13722,13 +13722,13 @@ public struct UpdateCustomerResponse: Codable {
 	/// The updated customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the UpdateCustomer endpoint.  One of `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The updated customer.
 	///   - errors: Any errors that occurred during the request.
-	public init(customer: Customer? = nil, errors: [Error]? = nil) {
+	public init(customer: Customer? = nil, errors: [SquareError]? = nil) {
 		self.customer = customer
 		self.errors = errors
 	}
@@ -13758,7 +13758,7 @@ public struct UpdateInvoiceRequest: Codable {
 /// Describes a `UpdateInvoice` response.
 public struct UpdateInvoiceResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The updated invoice.
 	public var invoice: Invoice?
 
@@ -13766,7 +13766,7 @@ public struct UpdateInvoiceResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - invoice: The updated invoice.
-	public init(errors: [Error]? = nil, invoice: Invoice? = nil) {
+	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
 	}
@@ -13789,11 +13789,11 @@ public struct UpdateItemModifierListsRequest: Codable {
 
 public struct UpdateItemModifierListsResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-date) of this update in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
 	public var updated_at: Timestamp?
 
-	public init(errors: [Error]? = nil, updated_at: Timestamp? = nil) {
+	public init(errors: [SquareError]? = nil, updated_at: Timestamp? = nil) {
 		self.errors = errors
 		self.updated_at = updated_at
 	}
@@ -13816,11 +13816,11 @@ public struct UpdateItemTaxesRequest: Codable {
 
 public struct UpdateItemTaxesResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The database [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) of this update in RFC 3339 format, e.g., `2016-09-04T23:59:33.123Z`.
 	public var updated_at: Timestamp?
 
-	public init(errors: [Error]? = nil, updated_at: Timestamp? = nil) {
+	public init(errors: [SquareError]? = nil, updated_at: Timestamp? = nil) {
 		self.errors = errors
 		self.updated_at = updated_at
 	}
@@ -13842,7 +13842,7 @@ public struct UpdateLocationRequest: Codable {
 /// Response object returned by the [UpdateLocation](#endpoint-updatelocation) endpoint.
 public struct UpdateLocationResponse: Codable {
 	/// Information on errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The updated `Location`.
 	public var location: Location?
 
@@ -13850,7 +13850,7 @@ public struct UpdateLocationResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - location: The updated `Location`.
-	public init(errors: [Error]? = nil, location: Location? = nil) {
+	public init(errors: [SquareError]? = nil, location: Location? = nil) {
 		self.errors = errors
 		self.location = location
 	}
@@ -13880,7 +13880,7 @@ public struct UpdateOrderRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [UpdateOrder](#endpoint-orders-updateorder) endpoint.
 public struct UpdateOrderResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The updated Order.
 	public var order: Order?
 
@@ -13888,7 +13888,7 @@ public struct UpdateOrderResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The updated Order.
-	public init(errors: [Error]? = nil, order: Order? = nil) {
+	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
 	}
@@ -13910,7 +13910,7 @@ public struct UpdateShiftRequest: Codable {
 /// The response to a request to update a `Shift`. Contains the updated `Shift` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct UpdateShiftResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The updated `Shift`.
 	public var shift: Shift?
 
@@ -13918,7 +13918,7 @@ public struct UpdateShiftResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - shift: The updated `Shift`.
-	public init(errors: [Error]? = nil, shift: Shift? = nil) {
+	public init(errors: [SquareError]? = nil, shift: Shift? = nil) {
 		self.errors = errors
 		self.shift = shift
 	}
@@ -13940,7 +13940,7 @@ public struct UpdateSubscriptionRequest: Codable {
 /// Defines the fields that are included in the response from the [UpdateSubscription](#endpoint-subscriptions-updatesubscription) endpoint.
 public struct UpdateSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The modified `Subscription` object.
 	public var subscription: Subscription?
 
@@ -13948,7 +13948,7 @@ public struct UpdateSubscriptionResponse: Codable {
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The modified `Subscription` object.
-	public init(errors: [Error]? = nil, subscription: Subscription? = nil) {
+	public init(errors: [SquareError]? = nil, subscription: Subscription? = nil) {
 		self.errors = errors
 		self.subscription = subscription
 	}
@@ -13970,7 +13970,7 @@ public struct UpdateTeamMemberRequest: Codable {
 /// Represents a response from an update request, containing the updated `TeamMember` object or error messages.
 public struct UpdateTeamMemberResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully updated `TeamMember` object.
 	public var team_member: TeamMember?
 
@@ -13978,7 +13978,7 @@ public struct UpdateTeamMemberResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_member: The successfully updated `TeamMember` object.
-	public init(errors: [Error]? = nil, team_member: TeamMember? = nil) {
+	public init(errors: [SquareError]? = nil, team_member: TeamMember? = nil) {
 		self.errors = errors
 		self.team_member = team_member
 	}
@@ -14000,7 +14000,7 @@ public struct UpdateWageSettingRequest: Codable {
 /// Represents a response from an update request, containing the updated `WageSetting` object or error messages.
 public struct UpdateWageSettingResponse: Codable {
 	/// The errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The successfully updated `WageSetting` object.
 	public var wage_setting: WageSetting?
 
@@ -14008,7 +14008,7 @@ public struct UpdateWageSettingResponse: Codable {
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - wage_setting: The successfully updated `WageSetting` object.
-	public init(errors: [Error]? = nil, wage_setting: WageSetting? = nil) {
+	public init(errors: [SquareError]? = nil, wage_setting: WageSetting? = nil) {
 		self.errors = errors
 		self.wage_setting = wage_setting
 	}
@@ -14030,7 +14030,7 @@ public struct UpdateWorkweekConfigRequest: Codable {
 /// The response to a request to update a `WorkweekConfig` object. Contains the updated `WorkweekConfig` object. May contain a set of `Error` objects if the request resulted in errors.
 public struct UpdateWorkweekConfigResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The response object.
 	public var workweek_config: WorkweekConfig?
 
@@ -14038,7 +14038,7 @@ public struct UpdateWorkweekConfigResponse: Codable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - workweek_config: The response object.
-	public init(errors: [Error]? = nil, workweek_config: WorkweekConfig? = nil) {
+	public init(errors: [SquareError]? = nil, workweek_config: WorkweekConfig? = nil) {
 		self.errors = errors
 		self.workweek_config = workweek_config
 	}
@@ -14060,11 +14060,11 @@ public struct UpsertCatalogObjectResponse: Codable {
 	/// The successfully created or updated CatalogObject.
 	public var catalog_object: CatalogObject?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The mapping between client and server IDs for this upsert.
 	public var id_mappings: [CatalogIdMapping]?
 
-	public init(catalog_object: CatalogObject? = nil, errors: [Error]? = nil, id_mappings: [CatalogIdMapping]? = nil) {
+	public init(catalog_object: CatalogObject? = nil, errors: [SquareError]? = nil, id_mappings: [CatalogIdMapping]? = nil) {
 		self.catalog_object = catalog_object
 		self.errors = errors
 		self.id_mappings = id_mappings
@@ -15383,7 +15383,7 @@ public struct V1Order: Codable {
 	/// The time when the order was created, in ISO 8601 format.
 	public var created_at: String?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The time when the order expires if no action is taken, in ISO 8601 format.
 	public var expires_at: String?
 	/// The order's unique identifier.
@@ -15446,7 +15446,7 @@ public struct V1Order: Codable {
 	///   - total_shipping_money: The shipping cost for the order.
 	///   - total_tax_money: The total of all taxes applied to the order.
 	///   - updated_at: The time when the order was last modified, in ISO 8601 format.
-	public init(btc_price_satoshi: StringNumber? = nil, btc_receive_address: String? = nil, buyer_email: String? = nil, buyer_note: String? = nil, canceled_note: String? = nil, completed_note: String? = nil, created_at: String? = nil, errors: [Error]? = nil, expires_at: String? = nil, id: String? = nil, order_history: [V1OrderHistoryEntry]? = nil, payment_id: String? = nil, promo_code: String? = nil, recipient_name: String? = nil, recipient_phone_number: String? = nil, refunded_note: String? = nil, shipping_address: Address? = nil, state: V1OrderState? = nil, subtotal_money: V1Money? = nil, tender: V1Tender? = nil, total_discount_money: V1Money? = nil, total_price_money: V1Money? = nil, total_shipping_money: V1Money? = nil, total_tax_money: V1Money? = nil, updated_at: String? = nil) {
+	public init(btc_price_satoshi: StringNumber? = nil, btc_receive_address: String? = nil, buyer_email: String? = nil, buyer_note: String? = nil, canceled_note: String? = nil, completed_note: String? = nil, created_at: String? = nil, errors: [SquareError]? = nil, expires_at: String? = nil, id: String? = nil, order_history: [V1OrderHistoryEntry]? = nil, payment_id: String? = nil, promo_code: String? = nil, recipient_name: String? = nil, recipient_phone_number: String? = nil, refunded_note: String? = nil, shipping_address: Address? = nil, state: V1OrderState? = nil, subtotal_money: V1Money? = nil, tender: V1Tender? = nil, total_discount_money: V1Money? = nil, total_price_money: V1Money? = nil, total_shipping_money: V1Money? = nil, total_tax_money: V1Money? = nil, updated_at: String? = nil) {
 		self.btc_price_satoshi = btc_price_satoshi
 		self.btc_receive_address = btc_receive_address
 		self.buyer_email = buyer_email
@@ -15898,7 +15898,7 @@ public struct V1PaymentTax: Codable {
 	/// The amount of money that this tax adds to the payment.
 	public var applied_money: V1Money?
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 	/// The ID of the tax, if available. Taxes applied in older versions of Square Register might not have an ID.
 	public var fee_id: String?
 	/// Whether the tax is an ADDITIVE tax or an INCLUSIVE tax. See [V1PaymentTaxInclusionType](#type-v1paymenttaxinclusiontype) for possible values
@@ -15916,7 +15916,7 @@ public struct V1PaymentTax: Codable {
 	///   - inclusion_type: Whether the tax is an ADDITIVE tax or an INCLUSIVE tax. See [V1PaymentTaxInclusionType](#type-v1paymenttaxinclusiontype) for possible values
 	///   - name: The merchant-defined name of the tax.
 	///   - rate: The rate of the tax, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%.
-	public init(applied_money: V1Money? = nil, errors: [Error]? = nil, fee_id: String? = nil, inclusion_type: V1PaymentTaxInclusionType? = nil, name: String? = nil, rate: String? = nil) {
+	public init(applied_money: V1Money? = nil, errors: [SquareError]? = nil, fee_id: String? = nil, inclusion_type: V1PaymentTaxInclusionType? = nil, name: String? = nil, rate: String? = nil) {
 		self.applied_money = applied_money
 		self.errors = errors
 		self.fee_id = fee_id
@@ -16671,12 +16671,12 @@ public struct VoidTransactionRequest: Codable {
 /// Defines the fields that are included in the response body of a request to the [VoidTransaction](#endpoint-voidtransaction) endpoint.
 public struct VoidTransactionResponse: Codable {
 	/// Any errors that occurred during the request.
-	public var errors: [Error]?
+	public var errors: [SquareError]?
 
 	/// Defines the fields that are included in the response body of a request to the [VoidTransaction](#endpoint-voidtransaction) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	public init(errors: [Error]? = nil) {
+	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
 }
