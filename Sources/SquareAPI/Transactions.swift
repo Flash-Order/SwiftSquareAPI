@@ -1,0 +1,155 @@
+/// Lists refunds for one of a business's locations.  In addition to full or partial tender refunds processed through Square APIs, refunds may result from itemized returns or exchanges through Square's Point of Sale applications.  Refunds with a `status` of `PENDING` are not currently included in this endpoint's response.  Max results per [page](#paginatingresults): 50
+@available(*,deprecated)
+public struct ListRefunds: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListRefundsResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Lists refunds for one of a business's locations.  In addition to full or partial tender refunds processed through Square APIs, refunds may result from itemized returns or exchanges through Square's Point of Sale applications.  Refunds with a `status` of `PENDING` are not currently included in this endpoint's response.  Max results per [page](#paginatingresults): 50
+		/// - Parameters:
+		///   - location_id: The ID of the location to list refunds for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/refunds"
+	}
+}
+
+/// Lists transactions for a particular location.  Transactions include payment information from sales and exchanges and refund information from returns and exchanges.  Max results per [page](#paginatingresults): 50
+@available(*,deprecated)
+public struct ListTransactions: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListTransactionsResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Lists transactions for a particular location.  Transactions include payment information from sales and exchanges and refund information from returns and exchanges.  Max results per [page](#paginatingresults): 50
+		/// - Parameters:
+		///   - location_id: The ID of the location to list transactions for.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions"
+	}
+}
+
+/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card nonce generated with the `SqPaymentForm`) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](#endpoint-retrievetransaction). See the `processing_fee_money` field of each [Tender included](#type-tender) in the transaction.
+@available(*,deprecated)
+public struct Charge: SquareAPIEndpoint {
+	public typealias inputType = ChargeRequest
+	public typealias outputType = ChargeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card nonce generated with the `SqPaymentForm`) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](#endpoint-retrievetransaction). See the `processing_fee_money` field of each [Tender included](#type-tender) in the transaction.
+		/// - Parameters:
+		///   - location_id: The ID of the location to associate the created transaction with.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions"
+	}
+}
+
+/// Retrieves details for a single transaction.
+@available(*,deprecated)
+public struct RetrieveTransaction: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = RetrieveTransactionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let transaction_id: String
+		/// Retrieves details for a single transaction.
+		/// - Parameters:
+		///   - location_id: The ID of the transaction's associated location.
+		///   - transaction_id: The ID of the transaction to retrieve.
+		public init(location_id: String, transaction_id: String) {
+			self.location_id = location_id
+			self.transaction_id = transaction_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)"
+	}
+}
+
+/// Captures a transaction that was created with the [Charge](#endpoint-charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](/payments/transactions/overview#delayed-capture) for more information.
+@available(*,deprecated)
+public struct CaptureTransaction: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = CaptureTransactionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let transaction_id: String
+		/// Captures a transaction that was created with the [Charge](#endpoint-charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](/payments/transactions/overview#delayed-capture) for more information.
+		/// - Parameters:
+		///   - location_id: 
+		///   - transaction_id: 
+		public init(location_id: String, transaction_id: String) {
+			self.location_id = location_id
+			self.transaction_id = transaction_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/capture"
+	}
+}
+
+/// Initiates a refund for a previously charged tender.  You must issue a refund within 120 days of the associated payment. See [this article](https://squareup.com/help/us/en/article/5060) for more information on refund behavior.  NOTE: Card-present transactions with Interac credit cards **cannot be refunded using the Connect API**. Interac transactions must refunded in-person (e.g., dipping the card using POS app).
+@available(*,deprecated)
+public struct CreateRefund: SquareAPIEndpoint {
+	public typealias inputType = CreateRefundRequest
+	public typealias outputType = CreateRefundResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let transaction_id: String
+		/// Initiates a refund for a previously charged tender.  You must issue a refund within 120 days of the associated payment. See [this article](https://squareup.com/help/us/en/article/5060) for more information on refund behavior.  NOTE: Card-present transactions with Interac credit cards **cannot be refunded using the Connect API**. Interac transactions must refunded in-person (e.g., dipping the card using POS app).
+		/// - Parameters:
+		///   - location_id: The ID of the original transaction's associated location.
+		///   - transaction_id: The ID of the original transaction that includes the tender to refund.
+		public init(location_id: String, transaction_id: String) {
+			self.location_id = location_id
+			self.transaction_id = transaction_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/refund"
+	}
+}
+
+/// Cancels a transaction that was created with the [Charge](#endpoint-charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](/payments/transactions/overview#delayed-capture) for more information.
+@available(*,deprecated)
+public struct VoidTransaction: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = VoidTransactionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let transaction_id: String
+		/// Cancels a transaction that was created with the [Charge](#endpoint-charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](/payments/transactions/overview#delayed-capture) for more information.
+		/// - Parameters:
+		///   - location_id: 
+		///   - transaction_id: 
+		public init(location_id: String, transaction_id: String) {
+			self.location_id = location_id
+			self.transaction_id = transaction_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/void"
+	}
+}
+

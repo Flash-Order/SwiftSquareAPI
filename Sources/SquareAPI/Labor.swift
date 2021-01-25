@@ -1,0 +1,256 @@
+/// Returns a paginated list of `BreakType` instances for a business.
+public struct ListBreakTypes: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListBreakTypesResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/break-types"
+	}
+}
+
+/// Creates a new `BreakType`.  A `BreakType` is a template for creating `Break` objects. You must provide the following values in your request to this endpoint:  - `location_id` - `break_name` - `expected_duration` - `is_paid`  You can only have 3 `BreakType` instances per location. If you attempt to add a 4th `BreakType` for a location, an `INVALID_REQUEST_ERROR` "Exceeded limit of 3 breaks per location." is returned.
+public struct CreateBreakType: SquareAPIEndpoint {
+	public typealias inputType = CreateBreakTypeRequest
+	public typealias outputType = CreateBreakTypeResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/break-types"
+	}
+}
+
+/// Returns a single `BreakType` specified by id.
+public struct GetBreakType: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = GetBreakTypeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Returns a single `BreakType` specified by id.
+		/// - Parameters:
+		///   - id: UUID for the `BreakType` being retrieved.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/break-types/\(inputs.id)"
+	}
+}
+
+/// Updates an existing `BreakType`.
+public struct UpdateBreakType: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateBreakTypeRequest
+	public typealias outputType = UpdateBreakTypeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates an existing `BreakType`.
+		/// - Parameters:
+		///   - id: UUID for the `BreakType` being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/break-types/\(inputs.id)"
+	}
+}
+
+/// Deletes an existing `BreakType`.  A `BreakType` can be deleted even if it is referenced from a `Shift`.
+public struct DeleteBreakType: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteBreakTypeResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Deletes an existing `BreakType`.  A `BreakType` can be deleted even if it is referenced from a `Shift`.
+		/// - Parameters:
+		///   - id: UUID for the `BreakType` being deleted.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/break-types/\(inputs.id)"
+	}
+}
+
+/// Returns a paginated list of `EmployeeWage` instances for a business.
+@available(*,deprecated)
+public struct ListEmployeeWages: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListEmployeeWagesResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/employee-wages"
+	}
+}
+
+/// Returns a single `EmployeeWage` specified by id.
+@available(*,deprecated)
+public struct GetEmployeeWage: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = GetEmployeeWageResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Returns a single `EmployeeWage` specified by id.
+		/// - Parameters:
+		///   - id: UUID for the `EmployeeWage` being retrieved.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/employee-wages/\(inputs.id)"
+	}
+}
+
+/// Creates a new `Shift`.  A `Shift` represents a complete work day for a single employee. You must provide the following values in your request to this endpoint:  - `location_id` - `employee_id` - `start_at`  An attempt to create a new `Shift` can result in a `BAD_REQUEST` error when: - The `status` of the new `Shift` is `OPEN` and the employee has another shift with an `OPEN` status. - The `start_at` date is in the future - the `start_at` or `end_at` overlaps another shift for the same employee - If `Break`s are set in the request, a break `start_at` must not be before the `Shift.start_at`. A break `end_at` must not be after the `Shift.end_at`
+public struct CreateShift: SquareAPIEndpoint {
+	public typealias inputType = CreateShiftRequest
+	public typealias outputType = CreateShiftResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/shifts"
+	}
+}
+
+/// Returns a paginated list of `Shift` records for a business. The list to be returned can be filtered by: - Location IDs **and** - employee IDs **and** - shift status (`OPEN`, `CLOSED`) **and** - shift start **and** - shift end **and** - work day details  The list can be sorted by: - `start_at` - `end_at` - `created_at` - `updated_at`
+public struct SearchShifts: SquareAPIEndpoint {
+	public typealias inputType = SearchShiftsRequest
+	public typealias outputType = SearchShiftsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/shifts/search"
+	}
+}
+
+/// Returns a single `Shift` specified by id.
+public struct GetShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = GetShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Returns a single `Shift` specified by id.
+		/// - Parameters:
+		///   - id: UUID for the `Shift` being retrieved.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/shifts/\(inputs.id)"
+	}
+}
+
+/// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Breaks` in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the shift must be complete with `end_at` set on each `Break`.
+public struct UpdateShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateShiftRequest
+	public typealias outputType = UpdateShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Breaks` in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the shift must be complete with `end_at` set on each `Break`.
+		/// - Parameters:
+		///   - id: ID of the object being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/shifts/\(inputs.id)"
+	}
+}
+
+/// Deletes a `Shift`.
+public struct DeleteShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Deletes a `Shift`.
+		/// - Parameters:
+		///   - id: UUID for the `Shift` being deleted.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/shifts/\(inputs.id)"
+	}
+}
+
+/// Returns a paginated list of `TeamMemberWage` instances for a business.
+public struct ListTeamMemberWages: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListTeamMemberWagesResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/team-member-wages"
+	}
+}
+
+/// Returns a single `TeamMemberWage` specified by id.
+public struct GetTeamMemberWage: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = GetTeamMemberWageResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Returns a single `TeamMemberWage` specified by id.
+		/// - Parameters:
+		///   - id: UUID for the `TeamMemberWage` being retrieved.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/team-member-wages/\(inputs.id)"
+	}
+}
+
+/// Returns a list of `WorkweekConfig` instances for a business.
+public struct ListWorkweekConfigs: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListWorkweekConfigsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/workweek-configs"
+	}
+}
+
+/// Updates a `WorkweekConfig`.
+public struct UpdateWorkweekConfig: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateWorkweekConfigRequest
+	public typealias outputType = UpdateWorkweekConfigResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates a `WorkweekConfig`.
+		/// - Parameters:
+		///   - id: UUID for the `WorkweekConfig` object being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v2/labor/workweek-configs/\(inputs.id)"
+	}
+}
+
