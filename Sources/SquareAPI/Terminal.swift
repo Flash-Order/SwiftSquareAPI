@@ -34,7 +34,8 @@ public struct GetTerminalCheckout: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/terminals/checkouts/\(inputs.checkout_id)"
+		let url = "/v2/terminals/checkouts/\(inputs.checkout_id)"
+		return url
 	}
 }
 
@@ -53,7 +54,8 @@ public struct CancelTerminalCheckout: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/terminals/checkouts/\(inputs.checkout_id)/cancel"
+		let url = "/v2/terminals/checkouts/\(inputs.checkout_id)/cancel"
+		return url
 	}
 }
 
@@ -93,7 +95,8 @@ public struct GetTerminalRefund: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/terminals/refunds/\(inputs.terminal_refund_id)"
+		let url = "/v2/terminals/refunds/\(inputs.terminal_refund_id)"
+		return url
 	}
 }
 
@@ -112,7 +115,8 @@ public struct CancelTerminalRefund: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/terminals/refunds/\(inputs.terminal_refund_id)/cancel"
+		let url = "/v2/terminals/refunds/\(inputs.terminal_refund_id)/cancel"
+		return url
 	}
 }
 

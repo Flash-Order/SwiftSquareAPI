@@ -14,7 +14,8 @@ public struct RetrieveInventoryAdjustment: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/inventory/adjustment/\(inputs.adjustment_id)"
+		let url = "/v2/inventory/adjustment/\(inputs.adjustment_id)"
+		return url
 	}
 }
 
@@ -64,7 +65,8 @@ public struct RetrieveInventoryPhysicalCount: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/inventory/physical-count/\(inputs.physical_count_id)"
+		let url = "/v2/inventory/physical-count/\(inputs.physical_count_id)"
+		return url
 	}
 }
 
@@ -76,15 +78,30 @@ public struct RetrieveInventoryCount: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let catalog_object_id: String
+		let location_ids: String?
+		let cursor: String?
 		/// Retrieves the current calculated stock count for a given [CatalogObject](#type-catalogobject) at a given set of [Location](#type-location)s. Responses are paginated and unsorted. For more sophisticated queries, use a batch endpoint.
 		/// - Parameters:
 		///   - catalog_object_id: ID of the `CatalogObject` to retrieve.
-		public init(catalog_object_id: String) {
+		///   - location_ids: The `Location` IDs to look up as a comma-separated list. An empty list queries all locations.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination) guide for more information.
+		public init(catalog_object_id: String, location_ids: String? = nil, cursor: String? = nil) {
 			self.catalog_object_id = catalog_object_id
+			self.location_ids = location_ids
+			self.cursor = cursor
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/inventory/\(inputs.catalog_object_id)"
+		let url = "/v2/inventory/\(inputs.catalog_object_id)"
+		var queries = [String]()
+		if let v = inputs.location_ids { queries.append("location_ids=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -96,15 +113,30 @@ public struct RetrieveInventoryChanges: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let catalog_object_id: String
+		let location_ids: String?
+		let cursor: String?
 		/// Returns a set of physical counts and inventory adjustments for the provided [CatalogObject](#type-catalogobject) at the requested [Location](#type-location)s.  Results are paginated and sorted in descending order according to their `occurred_at` timestamp (newest first).  There are no limits on how far back the caller can page. This endpoint can be  used to display recent changes for a specific item. For more sophisticated queries, use a batch endpoint.
 		/// - Parameters:
 		///   - catalog_object_id: ID of the `CatalogObject` to retrieve.
-		public init(catalog_object_id: String) {
+		///   - location_ids: The `Location` IDs to look up as a comma-separated list. An empty list queries all locations.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
+		public init(catalog_object_id: String, location_ids: String? = nil, cursor: String? = nil) {
 			self.catalog_object_id = catalog_object_id
+			self.location_ids = location_ids
+			self.cursor = cursor
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/inventory/\(inputs.catalog_object_id)/changes"
+		let url = "/v2/inventory/\(inputs.catalog_object_id)/changes"
+		var queries = [String]()
+		if let v = inputs.location_ids { queries.append("location_ids=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 

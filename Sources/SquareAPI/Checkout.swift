@@ -13,7 +13,8 @@ public struct CreateCheckout: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/checkouts"
+		let url = "/v2/locations/\(inputs.location_id)/checkouts"
+		return url
 	}
 }
 

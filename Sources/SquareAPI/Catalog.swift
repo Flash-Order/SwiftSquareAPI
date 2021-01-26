@@ -44,9 +44,34 @@ public struct ListCatalog: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListCatalogResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/catalog/list"
+	public typealias paramType = Params
+	public struct Params {
+		let cursor: String?
+		let types: String?
+		let catalog_version: Int?
+		/// Returns a list of [CatalogObject](#type-catalogobject)s that includes all objects of a set of desired types (for example, all [CatalogItem](#type-catalogitem) and [CatalogTax](#type-catalogtax) objects) in the catalog. The `types` parameter is specified as a comma-separated list of valid [CatalogObject](#type-catalogobject) types: `ITEM`, `ITEM_VARIATION`, `MODIFIER`, `MODIFIER_LIST`, `CATEGORY`, `DISCOUNT`, `TAX`, `IMAGE`.  __Important:__ ListCatalog does not return deleted catalog items. To retrieve deleted catalog items, use [SearchCatalogObjects](#endpoint-Catalog-SearchCatalogObjects)  and set the `include_deleted_objects` attribute value to `true`.
+		/// - Parameters:
+		///   - cursor: The pagination cursor returned in the previous response. Leave unset for an initial request. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+		///   - types: An optional case-insensitive, comma-separated list of object types to retrieve, for example `ITEM,ITEM_VARIATION,CATEGORY,IMAGE`.  The legal values are taken from the CatalogObjectType enum: `ITEM`, `ITEM_VARIATION`, `CATEGORY`, `DISCOUNT`, `TAX`, `MODIFIER`, `MODIFIER_LIST`, or `IMAGE`.
+		///   - catalog_version: (Beta) The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the `CatalogObject`s' `version` attribute.
+		public init(cursor: String? = nil, types: String? = nil, catalog_version: Int? = nil) {
+			self.cursor = cursor
+			self.types = types
+			self.catalog_version = catalog_version
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/catalog/list"
+		var queries = [String]()
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if let v = inputs.types { queries.append("types=\(v)") }
+		if let v = inputs.catalog_version { queries.append("catalog_version=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -68,15 +93,30 @@ public struct RetrieveCatalogObject: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let object_id: String
+		let include_related_objects: Bool?
+		let catalog_version: Int?
 		/// Returns a single [CatalogItem](#type-catalogitem) as a [CatalogObject](#type-catalogobject) based on the provided ID. The returned object includes all of the relevant [CatalogItem](#type-catalogitem) information including: [CatalogItemVariation](#type-catalogitemvariation) children, references to its [CatalogModifierList](#type-catalogmodifierlist) objects, and the ids of any [CatalogTax](#type-catalogtax) objects that apply to it.
 		/// - Parameters:
 		///   - object_id: The object ID of any type of catalog objects to be retrieved.
-		public init(object_id: String) {
+		///   - include_related_objects: If `true`, the response will include additional objects that are related to the requested object, as follows:  If the `object` field of the response contains a `CatalogItem`, its associated `CatalogCategory`, `CatalogTax`, `CatalogImage` and `CatalogModifierList` objects will be returned in the `related_objects` field of the response. If the `object` field of the response contains a `CatalogItemVariation`, its parent `CatalogItem` will be returned in the `related_objects` field of the response.  Default value: `false`
+		///   - catalog_version: (Beta) Requests objects as of a specific version of the catalog. This allows you to retrieve historical versions of objects. The value to retrieve a specific version of an object can be found in the version field of `CatalogObject`s.
+		public init(object_id: String, include_related_objects: Bool? = nil, catalog_version: Int? = nil) {
 			self.object_id = object_id
+			self.include_related_objects = include_related_objects
+			self.catalog_version = catalog_version
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/catalog/object/\(inputs.object_id)"
+		let url = "/v2/catalog/object/\(inputs.object_id)"
+		var queries = [String]()
+		if let v = inputs.include_related_objects { queries.append("include_related_objects=\(v)") }
+		if let v = inputs.catalog_version { queries.append("catalog_version=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -96,7 +136,8 @@ public struct DeleteCatalogObject: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/catalog/object/\(inputs.object_id)"
+		let url = "/v2/catalog/object/\(inputs.object_id)"
+		return url
 	}
 }
 

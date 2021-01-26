@@ -7,15 +7,38 @@ public struct ListRefunds: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let begin_time: String?
+		let end_time: String?
+		let sort_order: String?
+		let cursor: String?
 		/// Lists refunds for one of a business's locations.  In addition to full or partial tender refunds processed through Square APIs, refunds may result from itemized returns or exchanges through Square's Point of Sale applications.  Refunds with a `status` of `PENDING` are not currently included in this endpoint's response.  Max results per [page](#paginatingresults): 50
 		/// - Parameters:
 		///   - location_id: The ID of the location to list refunds for.
-		public init(location_id: String) {
+		///   - begin_time: The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
+		///   - end_time: The end of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time.
+		///   - sort_order: The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC`
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](#paginatingresults) for more information.
+		public init(location_id: String, begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil) {
 			self.location_id = location_id
+			self.begin_time = begin_time
+			self.end_time = end_time
+			self.sort_order = sort_order
+			self.cursor = cursor
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/refunds"
+		let url = "/v2/locations/\(inputs.location_id)/refunds"
+		var queries = [String]()
+		if let v = inputs.begin_time { queries.append("begin_time=\(v)") }
+		if let v = inputs.end_time { queries.append("end_time=\(v)") }
+		if let v = inputs.sort_order { queries.append("sort_order=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -28,15 +51,38 @@ public struct ListTransactions: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let begin_time: String?
+		let end_time: String?
+		let sort_order: String?
+		let cursor: String?
 		/// Lists transactions for a particular location.  Transactions include payment information from sales and exchanges and refund information from returns and exchanges.  Max results per [page](#paginatingresults): 50
 		/// - Parameters:
 		///   - location_id: The ID of the location to list transactions for.
-		public init(location_id: String) {
+		///   - begin_time: The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
+		///   - end_time: The end of the requested reporting period, in RFC 3339 format.  See [Date ranges](#dateranges) for details on date inclusivity/exclusivity.  Default value: The current time.
+		///   - sort_order: The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC`
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](#paginatingresults) for more information.
+		public init(location_id: String, begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil) {
 			self.location_id = location_id
+			self.begin_time = begin_time
+			self.end_time = end_time
+			self.sort_order = sort_order
+			self.cursor = cursor
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/transactions"
+		let url = "/v2/locations/\(inputs.location_id)/transactions"
+		var queries = [String]()
+		if let v = inputs.begin_time { queries.append("begin_time=\(v)") }
+		if let v = inputs.end_time { queries.append("end_time=\(v)") }
+		if let v = inputs.sort_order { queries.append("sort_order=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -56,7 +102,8 @@ public struct Charge: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/transactions"
+		let url = "/v2/locations/\(inputs.location_id)/transactions"
+		return url
 	}
 }
 
@@ -80,7 +127,8 @@ public struct RetrieveTransaction: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)"
+		let url = "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)"
+		return url
 	}
 }
 
@@ -103,7 +151,8 @@ public struct CaptureTransaction: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/capture"
+		let url = "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/capture"
+		return url
 	}
 }
 
@@ -126,7 +175,8 @@ public struct CreateRefund: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/refund"
+		let url = "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/refund"
+		return url
 	}
 }
 
@@ -149,7 +199,8 @@ public struct VoidTransaction: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/void"
+		let url = "/v2/locations/\(inputs.location_id)/transactions/\(inputs.transaction_id)/void"
+		return url
 	}
 }
 

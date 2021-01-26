@@ -54,7 +54,8 @@ public struct RetrieveTeamMember: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/team-members/\(inputs.team_member_id)"
+		let url = "/v2/team-members/\(inputs.team_member_id)"
+		return url
 	}
 }
 
@@ -74,7 +75,8 @@ public struct UpdateTeamMember: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/team-members/\(inputs.team_member_id)"
+		let url = "/v2/team-members/\(inputs.team_member_id)"
+		return url
 	}
 }
 
@@ -94,7 +96,8 @@ public struct RetrieveWageSetting: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/team-members/\(inputs.team_member_id)/wage-setting"
+		let url = "/v2/team-members/\(inputs.team_member_id)/wage-setting"
+		return url
 	}
 }
 
@@ -114,7 +117,8 @@ public struct UpdateWageSetting: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/team-members/\(inputs.team_member_id)/wage-setting"
+		let url = "/v2/team-members/\(inputs.team_member_id)/wage-setting"
+		return url
 	}
 }
 

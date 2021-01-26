@@ -3,9 +3,34 @@ public struct ListCustomers: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListCustomersResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/customers"
+	public typealias paramType = Params
+	public struct Params {
+		let cursor: String?
+		let sort_field: String?
+		let sort_order: String?
+		/// Lists customer profiles associated with a Square account.  Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
+		/// - Parameters:
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
+		///   - sort_field: Indicates how Customers should be sorted.  Default: `DEFAULT`.
+		///   - sort_order: Indicates whether Customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  Default: `ASC`.
+		public init(cursor: String? = nil, sort_field: String? = nil, sort_order: String? = nil) {
+			self.cursor = cursor
+			self.sort_field = sort_field
+			self.sort_order = sort_order
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/customers"
+		var queries = [String]()
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if let v = inputs.sort_field { queries.append("sort_field=\(v)") }
+		if let v = inputs.sort_order { queries.append("sort_order=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -45,7 +70,8 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)"
+		let url = "/v2/customers/\(inputs.customer_id)"
+		return url
 	}
 }
 
@@ -65,7 +91,8 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)"
+		let url = "/v2/customers/\(inputs.customer_id)"
+		return url
 	}
 }
 
@@ -85,7 +112,8 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)"
+		let url = "/v2/customers/\(inputs.customer_id)"
+		return url
 	}
 }
 
@@ -104,7 +132,8 @@ public struct CreateCustomerCard: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)/cards"
+		let url = "/v2/customers/\(inputs.customer_id)/cards"
+		return url
 	}
 }
 
@@ -127,7 +156,8 @@ public struct DeleteCustomerCard: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)/cards/\(inputs.card_id)"
+		let url = "/v2/customers/\(inputs.customer_id)/cards/\(inputs.card_id)"
+		return url
 	}
 }
 
@@ -150,7 +180,8 @@ public struct AddGroupToCustomer: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)/groups/\(inputs.group_id)"
+		let url = "/v2/customers/\(inputs.customer_id)/groups/\(inputs.group_id)"
+		return url
 	}
 }
 
@@ -173,7 +204,8 @@ public struct RemoveGroupFromCustomer: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/\(inputs.customer_id)/groups/\(inputs.group_id)"
+		let url = "/v2/customers/\(inputs.customer_id)/groups/\(inputs.group_id)"
+		return url
 	}
 }
 

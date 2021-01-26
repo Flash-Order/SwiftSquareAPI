@@ -15,7 +15,8 @@ public struct V1ListBankAccounts: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/bank-accounts"
+		let url = "/v1/\(inputs.location_id)/bank-accounts"
+		return url
 	}
 }
 
@@ -39,7 +40,8 @@ public struct V1RetrieveBankAccount: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/bank-accounts/\(inputs.bank_account_id)"
+		let url = "/v1/\(inputs.location_id)/bank-accounts/\(inputs.bank_account_id)"
+		return url
 	}
 }
 
@@ -51,15 +53,34 @@ public struct V1ListOrders: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let order: String?
+		let limit: Int?
+		let batch_token: String?
 		/// Provides summary information for a merchant's online store orders.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list online store orders for.
-		public init(location_id: String) {
+		///   - order: TThe order in which payments are listed in the response.
+		///   - limit: The maximum number of payments to return in a single response. This value cannot exceed 200.
+		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
+		public init(location_id: String, order: String? = nil, limit: Int? = nil, batch_token: String? = nil) {
 			self.location_id = location_id
+			self.order = order
+			self.limit = limit
+			self.batch_token = batch_token
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/orders"
+		let url = "/v1/\(inputs.location_id)/orders"
+		var queries = [String]()
+		if let v = inputs.order { queries.append("order=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.batch_token { queries.append("batch_token=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -82,7 +103,8 @@ public struct V1RetrieveOrder: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/orders/\(inputs.order_id)"
+		let url = "/v1/\(inputs.location_id)/orders/\(inputs.order_id)"
+		return url
 	}
 }
 
@@ -105,7 +127,8 @@ public struct V1UpdateOrder: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/orders/\(inputs.order_id)"
+		let url = "/v1/\(inputs.location_id)/orders/\(inputs.order_id)"
+		return url
 	}
 }
 
@@ -117,15 +140,46 @@ public struct V1ListPayments: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let order: String?
+		let begin_time: String?
+		let end_time: String?
+		let limit: Int?
+		let batch_token: String?
+		let include_partial: Bool?
 		/// Provides summary information for all payments taken for a given Square account during a date range. Date ranges cannot exceed 1 year in length. See Date ranges for details of inclusive and exclusive dates.  *Note**: Details for payments processed with Square Point of Sale while in offline mode may not be transmitted to Square for up to 72 hours. Offline payments have a `created_at` value that reflects the time the payment was originally processed, not the time it was subsequently transmitted to Square. Consequently, the ListPayments endpoint might list an offline payment chronologically between online payments that were seen in a previous request.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list payments for. If you specify me, this endpoint returns payments aggregated from all of the business's locations.
-		public init(location_id: String) {
+		///   - order: The order in which payments are listed in the response.
+		///   - begin_time: The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
+		///   - end_time: The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
+		///   - limit: The maximum number of payments to return in a single response. This value cannot exceed 200.
+		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
+		///   - include_partial: Indicates whether or not to include partial payments in the response. Partial payments will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
+		public init(location_id: String, order: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, batch_token: String? = nil, include_partial: Bool? = nil) {
 			self.location_id = location_id
+			self.order = order
+			self.begin_time = begin_time
+			self.end_time = end_time
+			self.limit = limit
+			self.batch_token = batch_token
+			self.include_partial = include_partial
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/payments"
+		let url = "/v1/\(inputs.location_id)/payments"
+		var queries = [String]()
+		if let v = inputs.order { queries.append("order=\(v)") }
+		if let v = inputs.begin_time { queries.append("begin_time=\(v)") }
+		if let v = inputs.end_time { queries.append("end_time=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.batch_token { queries.append("batch_token=\(v)") }
+		if let v = inputs.include_partial { queries.append("include_partial=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -148,7 +202,8 @@ public struct V1RetrievePayment: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/payments/\(inputs.payment_id)"
+		let url = "/v1/\(inputs.location_id)/payments/\(inputs.payment_id)"
+		return url
 	}
 }
 
@@ -160,15 +215,42 @@ public struct V1ListRefunds: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let order: String?
+		let begin_time: String?
+		let end_time: String?
+		let limit: Int?
+		let batch_token: String?
 		/// Provides the details for all refunds initiated by a merchant or any of the merchant's mobile staff during a date range. Date ranges cannot exceed one year in length.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list refunds for.
-		public init(location_id: String) {
+		///   - order: TThe order in which payments are listed in the response.
+		///   - begin_time: The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
+		///   - end_time: The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
+		///   - limit: The approximate number of refunds to return in a single response. Default: 100. Max: 200. Response may contain more results than the prescribed limit when refunds are made simultaneously to multiple tenders in a payment or when refunds are generated in an exchange to account for the value of returned goods.
+		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
+		public init(location_id: String, order: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, batch_token: String? = nil) {
 			self.location_id = location_id
+			self.order = order
+			self.begin_time = begin_time
+			self.end_time = end_time
+			self.limit = limit
+			self.batch_token = batch_token
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/refunds"
+		let url = "/v1/\(inputs.location_id)/refunds"
+		var queries = [String]()
+		if let v = inputs.order { queries.append("order=\(v)") }
+		if let v = inputs.begin_time { queries.append("begin_time=\(v)") }
+		if let v = inputs.end_time { queries.append("end_time=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.batch_token { queries.append("batch_token=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -187,7 +269,8 @@ public struct V1CreateRefund: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/refunds"
+		let url = "/v1/\(inputs.location_id)/refunds"
+		return url
 	}
 }
 
@@ -199,15 +282,46 @@ public struct V1ListSettlements: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let order: String?
+		let begin_time: String?
+		let end_time: String?
+		let limit: Int?
+		let status: String?
+		let batch_token: String?
 		/// Provides summary information for all deposits and withdrawals initiated by Square to a linked bank account during a date range. Date ranges cannot exceed one year in length.  *Note**: the ListSettlements endpoint does not provide entry information.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list settlements for. If you specify me, this endpoint returns settlements aggregated from all of the business's locations.
-		public init(location_id: String) {
+		///   - order: The order in which settlements are listed in the response.
+		///   - begin_time: The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
+		///   - end_time: The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
+		///   - limit: The maximum number of settlements to return in a single response. This value cannot exceed 200.
+		///   - status: Provide this parameter to retrieve only settlements with a particular status (SENT or FAILED).
+		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
+		public init(location_id: String, order: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, status: String? = nil, batch_token: String? = nil) {
 			self.location_id = location_id
+			self.order = order
+			self.begin_time = begin_time
+			self.end_time = end_time
+			self.limit = limit
+			self.status = status
+			self.batch_token = batch_token
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/settlements"
+		let url = "/v1/\(inputs.location_id)/settlements"
+		var queries = [String]()
+		if let v = inputs.order { queries.append("order=\(v)") }
+		if let v = inputs.begin_time { queries.append("begin_time=\(v)") }
+		if let v = inputs.end_time { queries.append("end_time=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.status { queries.append("status=\(v)") }
+		if let v = inputs.batch_token { queries.append("batch_token=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -230,7 +344,8 @@ public struct V1RetrieveSettlement: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/settlements/\(inputs.settlement_id)"
+		let url = "/v1/\(inputs.location_id)/settlements/\(inputs.settlement_id)"
+		return url
 	}
 }
 

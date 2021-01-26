@@ -35,7 +35,8 @@ public struct RetrieveLocation: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)"
+		let url = "/v2/locations/\(inputs.location_id)"
+		return url
 	}
 }
 
@@ -49,13 +50,14 @@ public struct UpdateLocation: SquareAPIEndpoint {
 		let location_id: String
 		/// Updates a location.
 		/// - Parameters:
-		///   - location_id: The ID of the location to update.
+		///   - location_id: (Beta) The ID of the location to update.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/locations/\(inputs.location_id)"
+		let url = "/v2/locations/\(inputs.location_id)"
+		return url
 	}
 }
 

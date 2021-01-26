@@ -28,13 +28,14 @@ public struct RetrieveSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Retrieves a subscription.
 		/// - Parameters:
-		///   - subscription_id: The ID of the subscription to retrieve.
+		///   - subscription_id: (Beta) The ID of the subscription to retrieve.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/subscriptions/\(inputs.subscription_id)"
+		let url = "/v2/subscriptions/\(inputs.subscription_id)"
+		return url
 	}
 }
 
@@ -48,13 +49,14 @@ public struct UpdateSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Updates a subscription. You can set, modify, and clear the  `subscription` field values.
 		/// - Parameters:
-		///   - subscription_id: The ID for the subscription to update.
+		///   - subscription_id: (Beta) The ID for the subscription to update.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/subscriptions/\(inputs.subscription_id)"
+		let url = "/v2/subscriptions/\(inputs.subscription_id)"
+		return url
 	}
 }
 
@@ -67,13 +69,14 @@ public struct CancelSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Sets the `canceled_date` field to the end of the active billing period. After this date, the status changes from ACTIVE to CANCELED.
 		/// - Parameters:
-		///   - subscription_id: The ID of the subscription to cancel.
+		///   - subscription_id: (Beta) The ID of the subscription to cancel.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/subscriptions/\(inputs.subscription_id)/cancel"
+		let url = "/v2/subscriptions/\(inputs.subscription_id)/cancel"
+		return url
 	}
 }
 
@@ -85,15 +88,30 @@ public struct ListSubscriptionEvents: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_id: String
+		let cursor: String?
+		let limit: Int?
 		/// Lists all events for a specific subscription. In the current implementation, only `START_SUBSCRIPTION` and `STOP_SUBSCRIPTION` (when the subscription was canceled) events are returned.
 		/// - Parameters:
-		///   - subscription_id: The ID of the subscription to retrieve the events for.
-		public init(subscription_id: String) {
+		///   - subscription_id: (Beta) The ID of the subscription to retrieve the events for.
+		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
+		///   - limit: (Beta) The upper limit on the number of subscription events to return  in the response.   Default: `200`
+		public init(subscription_id: String, cursor: String? = nil, limit: Int? = nil) {
 			self.subscription_id = subscription_id
+			self.cursor = cursor
+			self.limit = limit
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/subscriptions/\(inputs.subscription_id)/events"
+		let url = "/v2/subscriptions/\(inputs.subscription_id)/events"
+		var queries = [String]()
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 

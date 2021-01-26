@@ -54,7 +54,8 @@ public struct RetrieveOrder: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/orders/\(inputs.order_id)"
+		let url = "/v2/orders/\(inputs.order_id)"
+		return url
 	}
 }
 
@@ -68,13 +69,14 @@ public struct UpdateOrder: SquareAPIEndpoint {
 		let order_id: String
 		/// Updates an open [Order](#type-order) by adding, replacing, or deleting fields. Orders with a `COMPLETED` or `CANCELED` state cannot be updated.  An UpdateOrder request requires the following:  - The `order_id` in the endpoint path, identifying the order to update. - The latest `version` of the order to update. - The [sparse order](/orders-api/manage-orders#sparse-order-objects) containing only the fields to update and the version the update is being applied to. - If deleting fields, the [dot notation paths](/orders-api/manage-orders#on-dot-notation) identifying fields to clear.  To pay for an order, please refer to the [Pay for Orders](/orders-api/pay-for-orders) guide.
 		/// - Parameters:
-		///   - order_id: The ID of the order to update.
+		///   - order_id: (Beta) The ID of the order to update.
 		public init(order_id: String) {
 			self.order_id = order_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/orders/\(inputs.order_id)"
+		let url = "/v2/orders/\(inputs.order_id)"
+		return url
 	}
 }
 
@@ -87,13 +89,14 @@ public struct PayOrder: SquareAPIEndpoint {
 		let order_id: String
 		/// Pay for an [order](#type-order) using one or more approved [payments](#type-payment), or settle an order with a total of `0`.  The total of the `payment_ids` listed in the request must be equal to the order total. Orders with a total amount of `0` can be marked as paid by specifying an empty array of `payment_ids` in the request.  To be used with PayOrder, a payment must:  - Reference the order by specifying the `order_id` when [creating the payment](#endpoint-payments-createpayment). Any approved payments that reference the same `order_id` not specified in the `payment_ids` will be canceled. - Be approved with [delayed capture](/payments-api/take-payments#delayed-capture). Using a delayed capture payment with PayOrder will complete the approved payment.
 		/// - Parameters:
-		///   - order_id: The ID of the order being paid.
+		///   - order_id: (Beta) The ID of the order being paid.
 		public init(order_id: String) {
 			self.order_id = order_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/orders/\(inputs.order_id)/pay"
+		let url = "/v2/orders/\(inputs.order_id)/pay"
+		return url
 	}
 }
 

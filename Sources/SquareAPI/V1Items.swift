@@ -15,7 +15,8 @@ public struct V1ListCategories: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/categories"
+		let url = "/v1/\(inputs.location_id)/categories"
+		return url
 	}
 }
 
@@ -35,7 +36,8 @@ public struct V1CreateCategory: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/categories"
+		let url = "/v1/\(inputs.location_id)/categories"
+		return url
 	}
 }
 
@@ -59,7 +61,8 @@ public struct V1UpdateCategory: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/categories/\(inputs.category_id)"
+		let url = "/v1/\(inputs.location_id)/categories/\(inputs.category_id)"
+		return url
 	}
 }
 
@@ -83,7 +86,8 @@ public struct V1DeleteCategory: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/categories/\(inputs.category_id)"
+		let url = "/v1/\(inputs.location_id)/categories/\(inputs.category_id)"
+		return url
 	}
 }
 
@@ -104,7 +108,8 @@ public struct V1ListDiscounts: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/discounts"
+		let url = "/v1/\(inputs.location_id)/discounts"
+		return url
 	}
 }
 
@@ -124,7 +129,8 @@ public struct V1CreateDiscount: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/discounts"
+		let url = "/v1/\(inputs.location_id)/discounts"
+		return url
 	}
 }
 
@@ -148,7 +154,8 @@ public struct V1UpdateDiscount: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/discounts/\(inputs.discount_id)"
+		let url = "/v1/\(inputs.location_id)/discounts/\(inputs.discount_id)"
+		return url
 	}
 }
 
@@ -172,7 +179,8 @@ public struct V1DeleteDiscount: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/discounts/\(inputs.discount_id)"
+		let url = "/v1/\(inputs.location_id)/discounts/\(inputs.discount_id)"
+		return url
 	}
 }
 
@@ -193,7 +201,8 @@ public struct V1ListFees: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/fees"
+		let url = "/v1/\(inputs.location_id)/fees"
+		return url
 	}
 }
 
@@ -213,7 +222,8 @@ public struct V1CreateFee: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/fees"
+		let url = "/v1/\(inputs.location_id)/fees"
+		return url
 	}
 }
 
@@ -237,7 +247,8 @@ public struct V1UpdateFee: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/fees/\(inputs.fee_id)"
+		let url = "/v1/\(inputs.location_id)/fees/\(inputs.fee_id)"
+		return url
 	}
 }
 
@@ -261,7 +272,8 @@ public struct V1DeleteFee: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/fees/\(inputs.fee_id)"
+		let url = "/v1/\(inputs.location_id)/fees/\(inputs.fee_id)"
+		return url
 	}
 }
 
@@ -274,15 +286,30 @@ public struct V1ListInventory: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let limit: Int?
+		let batch_token: String?
 		/// Provides inventory information for all inventory-enabled item variations.
 		/// - Parameters:
 		///   - location_id: The ID of the item's associated location.
-		public init(location_id: String) {
+		///   - limit: The maximum number of inventory entries to return in a single response. This value cannot exceed 1000.
+		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
+		public init(location_id: String, limit: Int? = nil, batch_token: String? = nil) {
 			self.location_id = location_id
+			self.limit = limit
+			self.batch_token = batch_token
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/inventory"
+		let url = "/v1/\(inputs.location_id)/inventory"
+		var queries = [String]()
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.batch_token { queries.append("batch_token=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -305,7 +332,8 @@ public struct V1AdjustInventory: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/inventory/\(inputs.variation_id)"
+		let url = "/v1/\(inputs.location_id)/inventory/\(inputs.variation_id)"
+		return url
 	}
 }
 
@@ -318,15 +346,26 @@ public struct V1ListItems: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
+		let batch_token: String?
 		/// Provides summary information of all items for a given location.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list items for.
-		public init(location_id: String) {
+		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
+		public init(location_id: String, batch_token: String? = nil) {
 			self.location_id = location_id
+			self.batch_token = batch_token
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items"
+		let url = "/v1/\(inputs.location_id)/items"
+		var queries = [String]()
+		if let v = inputs.batch_token { queries.append("batch_token=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -346,7 +385,8 @@ public struct V1CreateItem: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items"
+		let url = "/v1/\(inputs.location_id)/items"
+		return url
 	}
 }
 
@@ -370,7 +410,8 @@ public struct V1RetrieveItem: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+		return url
 	}
 }
 
@@ -394,7 +435,8 @@ public struct V1UpdateItem: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+		return url
 	}
 }
 
@@ -418,7 +460,8 @@ public struct V1DeleteItem: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)"
+		return url
 	}
 }
 
@@ -445,7 +488,8 @@ public struct V1ApplyFee: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/fees/\(inputs.fee_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/fees/\(inputs.fee_id)"
+		return url
 	}
 }
 
@@ -472,7 +516,8 @@ public struct V1RemoveFee: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/fees/\(inputs.fee_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/fees/\(inputs.fee_id)"
+		return url
 	}
 }
 
@@ -499,7 +544,8 @@ public struct V1ApplyModifierList: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/modifier-lists/\(inputs.modifier_list_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/modifier-lists/\(inputs.modifier_list_id)"
+		return url
 	}
 }
 
@@ -526,7 +572,8 @@ public struct V1RemoveModifierList: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/modifier-lists/\(inputs.modifier_list_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/modifier-lists/\(inputs.modifier_list_id)"
+		return url
 	}
 }
 
@@ -549,7 +596,8 @@ public struct V1CreateVariation: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations"
+		return url
 	}
 }
 
@@ -576,7 +624,8 @@ public struct V1UpdateVariation: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations/\(inputs.variation_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations/\(inputs.variation_id)"
+		return url
 	}
 }
 
@@ -603,7 +652,8 @@ public struct V1DeleteVariation: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations/\(inputs.variation_id)"
+		let url = "/v1/\(inputs.location_id)/items/\(inputs.item_id)/variations/\(inputs.variation_id)"
+		return url
 	}
 }
 
@@ -624,7 +674,8 @@ public struct V1ListModifierLists: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists"
+		let url = "/v1/\(inputs.location_id)/modifier-lists"
+		return url
 	}
 }
 
@@ -644,7 +695,8 @@ public struct V1CreateModifierList: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists"
+		let url = "/v1/\(inputs.location_id)/modifier-lists"
+		return url
 	}
 }
 
@@ -668,7 +720,8 @@ public struct V1RetrieveModifierList: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+		let url = "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+		return url
 	}
 }
 
@@ -692,7 +745,8 @@ public struct V1UpdateModifierList: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+		let url = "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+		return url
 	}
 }
 
@@ -716,7 +770,8 @@ public struct V1DeleteModifierList: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+		let url = "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)"
+		return url
 	}
 }
 
@@ -739,7 +794,8 @@ public struct V1CreateModifierOption: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options"
+		let url = "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options"
+		return url
 	}
 }
 
@@ -766,7 +822,8 @@ public struct V1UpdateModifierOption: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options/\(inputs.modifier_option_id)"
+		let url = "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options/\(inputs.modifier_option_id)"
+		return url
 	}
 }
 
@@ -793,7 +850,8 @@ public struct V1DeleteModifierOption: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options/\(inputs.modifier_option_id)"
+		let url = "/v1/\(inputs.location_id)/modifier-lists/\(inputs.modifier_list_id)/modifier-options/\(inputs.modifier_option_id)"
+		return url
 	}
 }
 
@@ -814,7 +872,8 @@ public struct V1ListPages: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/pages"
+		let url = "/v1/\(inputs.location_id)/pages"
+		return url
 	}
 }
 
@@ -834,7 +893,8 @@ public struct V1CreatePage: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/pages"
+		let url = "/v1/\(inputs.location_id)/pages"
+		return url
 	}
 }
 
@@ -858,7 +918,8 @@ public struct V1UpdatePage: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)"
+		let url = "/v1/\(inputs.location_id)/pages/\(inputs.page_id)"
+		return url
 	}
 }
 
@@ -882,7 +943,8 @@ public struct V1DeletePage: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)"
+		let url = "/v1/\(inputs.location_id)/pages/\(inputs.page_id)"
+		return url
 	}
 }
 
@@ -906,7 +968,8 @@ public struct V1UpdatePageCell: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)/cells"
+		let url = "/v1/\(inputs.location_id)/pages/\(inputs.page_id)/cells"
+		return url
 	}
 }
 
@@ -920,17 +983,32 @@ public struct V1DeletePageCell: SquareAPIEndpoint {
 	public struct Params {
 		let location_id: String
 		let page_id: String
+		let row: String?
+		let column: String?
 		/// Deletes a cell from a Favorites page in Square Point of Sale.   __DeletePageCell__ returns nothing on success but Connect SDKs map the empty response to an empty `V1DeletePageCellRequest` object as documented below.
 		/// - Parameters:
 		///   - location_id: The ID of the Favorites page's associated location.
 		///   - page_id: The ID of the page to delete.
-		public init(location_id: String, page_id: String) {
+		///   - row: The row of the cell to clear. Always an integer between 0 and 4, inclusive. Row 0 is the top row.
+		///   - column: The column of the cell to clear. Always an integer between 0 and 4, inclusive. Column 0 is the leftmost column.
+		public init(location_id: String, page_id: String, row: String? = nil, column: String? = nil) {
 			self.location_id = location_id
 			self.page_id = page_id
+			self.row = row
+			self.column = column
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/\(inputs.location_id)/pages/\(inputs.page_id)/cells"
+		let url = "/v1/\(inputs.location_id)/pages/\(inputs.page_id)/cells"
+		var queries = [String]()
+		if let v = inputs.row { queries.append("row=\(v)") }
+		if let v = inputs.column { queries.append("column=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 

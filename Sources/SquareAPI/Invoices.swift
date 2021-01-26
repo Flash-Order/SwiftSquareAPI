@@ -3,9 +3,34 @@ public struct ListInvoices: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListInvoicesResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/invoices"
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		let cursor: String?
+		let limit: Int?
+		/// Returns a list of invoices for a given location. The response  is paginated. If truncated, the response includes a `cursor` that you     use in a subsequent request to fetch the next set of invoices.
+		/// - Parameters:
+		///   - location_id: (Beta) The ID of the location for which to list invoices.
+		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
+		///   - limit: (Beta) The maximum number of invoices to return (200 is the maximum `limit`).  If not provided, the server  uses a default limit of 100 invoices.
+		public init(location_id: String, cursor: String? = nil, limit: Int? = nil) {
+			self.location_id = location_id
+			self.cursor = cursor
+			self.limit = limit
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/invoices"
+		var queries = [String]()
+		queries.append("location_id=\(inputs.location_id)")
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -39,13 +64,14 @@ public struct GetInvoice: SquareAPIEndpoint {
 		let invoice_id: String
 		/// Retrieves an invoice by invoice ID.
 		/// - Parameters:
-		///   - invoice_id: The id of the invoice to retrieve.
+		///   - invoice_id: (Beta) The id of the invoice to retrieve.
 		public init(invoice_id: String) {
 			self.invoice_id = invoice_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/invoices/\(inputs.invoice_id)"
+		let url = "/v2/invoices/\(inputs.invoice_id)"
+		return url
 	}
 }
 
@@ -59,13 +85,14 @@ public struct UpdateInvoice: SquareAPIEndpoint {
 		let invoice_id: String
 		/// Updates an invoice by modifying fields, clearing fields, or both. For most updates, you can use a sparse  `Invoice` object to add fields or change values, and use the `fields_to_clear` field to specify fields to clear.  However, some restrictions apply. For example, you cannot change the `order_id` or `location_id` field, and you  must provide the complete `custom_fields` list to update a custom field. Published invoices have additional restrictions.
 		/// - Parameters:
-		///   - invoice_id: The ID of the invoice to update.
+		///   - invoice_id: (Beta) The ID of the invoice to update.
 		public init(invoice_id: String) {
 			self.invoice_id = invoice_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/invoices/\(inputs.invoice_id)"
+		let url = "/v2/invoices/\(inputs.invoice_id)"
+		return url
 	}
 }
 
@@ -77,15 +104,26 @@ public struct DeleteInvoice: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice_id: String
+		let version: Int?
 		/// Deletes the specified invoice. When an invoice is deleted, the  associated Order status changes to CANCELED. You can only delete a draft  invoice (you cannot delete a published invoice, including one that is scheduled for processing).
 		/// - Parameters:
-		///   - invoice_id: The ID of the invoice to delete.
-		public init(invoice_id: String) {
+		///   - invoice_id: (Beta) The ID of the invoice to delete.
+		///   - version: (Beta) The version of the `invoice` to delete. If you do not know the version, you can call `GetInvoice` or  `ListInvoices`.
+		public init(invoice_id: String, version: Int? = nil) {
 			self.invoice_id = invoice_id
+			self.version = version
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/invoices/\(inputs.invoice_id)"
+		let url = "/v2/invoices/\(inputs.invoice_id)"
+		var queries = [String]()
+		if let v = inputs.version { queries.append("version=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -98,13 +136,14 @@ public struct CancelInvoice: SquareAPIEndpoint {
 		let invoice_id: String
 		/// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
 		/// - Parameters:
-		///   - invoice_id: The ID of the `invoice` to cancel.
+		///   - invoice_id: (Beta) The ID of the `invoice` to cancel.
 		public init(invoice_id: String) {
 			self.invoice_id = invoice_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/invoices/\(inputs.invoice_id)/cancel"
+		let url = "/v2/invoices/\(inputs.invoice_id)/cancel"
+		return url
 	}
 }
 
@@ -117,13 +156,14 @@ public struct PublishInvoice: SquareAPIEndpoint {
 		let invoice_id: String
 		/// Publishes the specified draft invoice.   After an invoice is published, Square  follows up based on the invoice configuration. For example, Square  sends the invoice to the customer's email address, charges the customer's card on file, or does  nothing. Square also makes the invoice available on a Square-hosted invoice page.   The invoice `status` also changes from `DRAFT` to a status  based on the invoice configuration. For example, the status changes to `UNPAID` if  Square emails the invoice or `PARTIALLY_PAID` if Square charge a card on file for a portion of the  invoice amount).
 		/// - Parameters:
-		///   - invoice_id: The id of the invoice to publish.
+		///   - invoice_id: (Beta) The id of the invoice to publish.
 		public init(invoice_id: String) {
 			self.invoice_id = invoice_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/invoices/\(inputs.invoice_id)/publish"
+		let url = "/v2/invoices/\(inputs.invoice_id)/publish"
+		return url
 	}
 }
 

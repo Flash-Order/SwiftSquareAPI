@@ -3,9 +3,26 @@ public struct ListCustomerGroups: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListCustomerGroupsResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/customers/groups"
+	public typealias paramType = Params
+	public struct Params {
+		let cursor: String?
+		/// Retrieves the list of customer groups of a business.
+		/// - Parameters:
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
+		public init(cursor: String? = nil) {
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/customers/groups"
+		var queries = [String]()
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -35,7 +52,8 @@ public struct RetrieveCustomerGroup: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/groups/\(inputs.group_id)"
+		let url = "/v2/customers/groups/\(inputs.group_id)"
+		return url
 	}
 }
 
@@ -55,7 +73,8 @@ public struct UpdateCustomerGroup: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/groups/\(inputs.group_id)"
+		let url = "/v2/customers/groups/\(inputs.group_id)"
+		return url
 	}
 }
 
@@ -75,7 +94,8 @@ public struct DeleteCustomerGroup: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/groups/\(inputs.group_id)"
+		let url = "/v2/customers/groups/\(inputs.group_id)"
+		return url
 	}
 }
 

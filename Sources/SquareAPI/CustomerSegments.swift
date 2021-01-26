@@ -3,9 +3,26 @@ public struct ListCustomerSegments: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListCustomerSegmentsResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/customers/segments"
+	public typealias paramType = Params
+	public struct Params {
+		let cursor: String?
+		/// Retrieves the list of customer segments of a business.
+		/// - Parameters:
+		///   - cursor: A pagination cursor returned by previous calls to __ListCustomerSegments__. Used to retrieve the next set of query results.  See the [Pagination guide](https://developer.squareup.com/docs/docs/working-with-apis/pagination) for more information.
+		public init(cursor: String? = nil) {
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/customers/segments"
+		var queries = [String]()
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -25,7 +42,8 @@ public struct RetrieveCustomerSegment: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/customers/segments/\(inputs.segment_id)"
+		let url = "/v2/customers/segments/\(inputs.segment_id)"
+		return url
 	}
 }
 

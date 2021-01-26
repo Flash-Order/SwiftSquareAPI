@@ -14,7 +14,8 @@ public struct RenewToken: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/oauth2/clients/\(inputs.client_id)/access-token/renew"
+		let url = "/oauth2/clients/\(inputs.client_id)/access-token/renew"
+		return url
 	}
 }
 

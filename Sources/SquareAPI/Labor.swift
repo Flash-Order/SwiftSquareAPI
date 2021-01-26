@@ -3,9 +3,34 @@ public struct ListBreakTypes: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListBreakTypesResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/labor/break-types"
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String?
+		let limit: Int?
+		let cursor: String?
+		/// Returns a paginated list of `BreakType` instances for a business.
+		/// - Parameters:
+		///   - location_id: Filter Break Types returned to only those that are associated with the specified location.
+		///   - limit: Maximum number of Break Types to return per page. Can range between 1 and 200. The default is the maximum at 200.
+		///   - cursor: Pointer to the next page of Break Type results to fetch.
+		public init(location_id: String? = nil, limit: Int? = nil, cursor: String? = nil) {
+			self.location_id = location_id
+			self.limit = limit
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/break-types"
+		var queries = [String]()
+		if let v = inputs.location_id { queries.append("location_id=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -35,7 +60,8 @@ public struct GetBreakType: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/break-types/\(inputs.id)"
+		let url = "/v2/labor/break-types/\(inputs.id)"
+		return url
 	}
 }
 
@@ -55,7 +81,8 @@ public struct UpdateBreakType: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/break-types/\(inputs.id)"
+		let url = "/v2/labor/break-types/\(inputs.id)"
+		return url
 	}
 }
 
@@ -75,7 +102,8 @@ public struct DeleteBreakType: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/break-types/\(inputs.id)"
+		let url = "/v2/labor/break-types/\(inputs.id)"
+		return url
 	}
 }
 
@@ -85,9 +113,34 @@ public struct ListEmployeeWages: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListEmployeeWagesResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/labor/employee-wages"
+	public typealias paramType = Params
+	public struct Params {
+		let employee_id: String?
+		let limit: Int?
+		let cursor: String?
+		/// Returns a paginated list of `EmployeeWage` instances for a business.
+		/// - Parameters:
+		///   - employee_id: Filter wages returned to only those that are associated with the specified employee.
+		///   - limit: Maximum number of Employee Wages to return per page. Can range between 1 and 200. The default is the maximum at 200.
+		///   - cursor: Pointer to the next page of Employee Wage results to fetch.
+		public init(employee_id: String? = nil, limit: Int? = nil, cursor: String? = nil) {
+			self.employee_id = employee_id
+			self.limit = limit
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/employee-wages"
+		var queries = [String]()
+		if let v = inputs.employee_id { queries.append("employee_id=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -108,7 +161,8 @@ public struct GetEmployeeWage: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/employee-wages/\(inputs.id)"
+		let url = "/v2/labor/employee-wages/\(inputs.id)"
+		return url
 	}
 }
 
@@ -148,7 +202,8 @@ public struct GetShift: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/shifts/\(inputs.id)"
+		let url = "/v2/labor/shifts/\(inputs.id)"
+		return url
 	}
 }
 
@@ -168,7 +223,8 @@ public struct UpdateShift: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/shifts/\(inputs.id)"
+		let url = "/v2/labor/shifts/\(inputs.id)"
+		return url
 	}
 }
 
@@ -188,7 +244,8 @@ public struct DeleteShift: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/shifts/\(inputs.id)"
+		let url = "/v2/labor/shifts/\(inputs.id)"
+		return url
 	}
 }
 
@@ -197,9 +254,34 @@ public struct ListTeamMemberWages: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListTeamMemberWagesResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/labor/team-member-wages"
+	public typealias paramType = Params
+	public struct Params {
+		let team_member_id: String?
+		let limit: Int?
+		let cursor: String?
+		/// Returns a paginated list of `TeamMemberWage` instances for a business.
+		/// - Parameters:
+		///   - team_member_id: Filter wages returned to only those that are associated with the specified team member.
+		///   - limit: Maximum number of Team Member Wages to return per page. Can range between 1 and 200. The default is the maximum at 200.
+		///   - cursor: Pointer to the next page of Employee Wage results to fetch.
+		public init(team_member_id: String? = nil, limit: Int? = nil, cursor: String? = nil) {
+			self.team_member_id = team_member_id
+			self.limit = limit
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/team-member-wages"
+		var queries = [String]()
+		if let v = inputs.team_member_id { queries.append("team_member_id=\(v)") }
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -219,7 +301,8 @@ public struct GetTeamMemberWage: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/team-member-wages/\(inputs.id)"
+		let url = "/v2/labor/team-member-wages/\(inputs.id)"
+		return url
 	}
 }
 
@@ -228,9 +311,30 @@ public struct ListWorkweekConfigs: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
 	public typealias outputType = ListWorkweekConfigsResponse
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
-		return "/v2/labor/workweek-configs"
+	public typealias paramType = Params
+	public struct Params {
+		let limit: Int?
+		let cursor: String?
+		/// Returns a list of `WorkweekConfig` instances for a business.
+		/// - Parameters:
+		///   - limit: Maximum number of Workweek Configs to return per page.
+		///   - cursor: Pointer to the next page of Workweek Config results to fetch.
+		public init(limit: Int? = nil, cursor: String? = nil) {
+			self.limit = limit
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/workweek-configs"
+		var queries = [String]()
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
 	}
 }
 
@@ -250,7 +354,8 @@ public struct UpdateWorkweekConfig: SquareAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v2/labor/workweek-configs/\(inputs.id)"
+		let url = "/v2/labor/workweek-configs/\(inputs.id)"
+		return url
 	}
 }
 
