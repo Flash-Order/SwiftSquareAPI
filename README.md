@@ -1,3 +1,3 @@
 # SquareAPI
 
-A description of this package.
+Generated from https://github.com/square/connect-api-specification
