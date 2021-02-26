@@ -144,3 +144,13 @@ public struct CreatePaymentRequestAlpha: Codable {
 		self.cash_details = cash_details
 	}
 }
+
+/// Charges a payment source (for example, a card  represented by customer's card on file or a card nonce). In addition  to the payment source, the request must include the  amount to accept for the payment.  There are several optional parameters that you can include in the request  (for example, tip money, whether to autocomplete the payment, or a reference ID  to correlate this payment with another system).   The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.
+public struct CreatePaymentAlpha: SquareAPIEndpoint {
+	public typealias inputType = CreatePaymentRequestAlpha
+	public typealias outputType = CreatePaymentResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/payments"
+	}
+}
