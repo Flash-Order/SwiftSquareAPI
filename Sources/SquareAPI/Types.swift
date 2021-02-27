@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2021-01-21" }
+	public static var version: String { return "2021-02-26" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -1330,6 +1330,8 @@ public struct CardPaymentDetails: Codable {
 	public var avs_status: String?
 	/// The credit card's non-confidential details.
 	public var card: Card?
+	/// The timeline for card payments.
+	public var card_payment_timeline: CardPaymentTimeline?
 	/// The status code returned from the Card Verification Value (CVV) check. The code can be `CVV_ACCEPTED`, `CVV_REJECTED`, or `CVV_NOT_CHECKED`.
 	public var cvv_status: String?
 	/// Details about the device that took the payment.
@@ -1357,6 +1359,7 @@ public struct CardPaymentDetails: Codable {
 	///   - auth_result_code: The status code returned by the card issuer that describes the payment's authorization status.
 	///   - avs_status: The status code returned from the Address Verification System (AVS) check. The code can be `AVS_ACCEPTED`, `AVS_REJECTED`, or `AVS_NOT_CHECKED`.
 	///   - card: The credit card's non-confidential details.
+	///   - card_payment_timeline: The timeline for card payments.
 	///   - cvv_status: The status code returned from the Card Verification Value (CVV) check. The code can be `CVV_ACCEPTED`, `CVV_REJECTED`, or `CVV_NOT_CHECKED`.
 	///   - device_details: Details about the device that took the payment.
 	///   - entry_method: The method used to enter the card's details for the payment. The method can be `KEYED`, `SWIPED`, `EMV`, `ON_FILE`, or `CONTACTLESS`.
@@ -1366,13 +1369,14 @@ public struct CardPaymentDetails: Codable {
 	///   - status: The card payment's current state. The state can be AUTHORIZED, CAPTURED, VOIDED, or FAILED.
 	///   - verification_method: For EMV payments, the method used to verify the cardholder's identity. The method can be `PIN`, `SIGNATURE`, `PIN_AND_SIGNATURE`, `ON_DEVICE`, or `NONE`.
 	///   - verification_results: For EMV payments, the results of the cardholder verification. The result can be `SUCCESS`, `FAILURE`, or `UNKNOWN`.
-	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [SquareError]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil) {
+	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, card_payment_timeline: CardPaymentTimeline? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [SquareError]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil) {
 		self.application_cryptogram = application_cryptogram
 		self.application_identifier = application_identifier
 		self.application_name = application_name
 		self.auth_result_code = auth_result_code
 		self.avs_status = avs_status
 		self.card = card
+		self.card_payment_timeline = card_payment_timeline
 		self.cvv_status = cvv_status
 		self.device_details = device_details
 		self.entry_method = entry_method
@@ -1382,6 +1386,27 @@ public struct CardPaymentDetails: Codable {
 		self.status = status
 		self.verification_method = verification_method
 		self.verification_results = verification_results
+	}
+}
+
+/// The timeline for card payments.
+public struct CardPaymentTimeline: Codable {
+	/// The timestamp when the payment was authorized, in RFC 3339 format.
+	public var authorized_at: Timestamp?
+	/// The timestamp when the payment was captured, in RFC 3339 format.
+	public var captured_at: Timestamp?
+	/// The timestamp when the payment was voided, in RFC 3339 format.
+	public var voided_at: Timestamp?
+
+	/// The timeline for card payments.
+	/// - Parameters:
+	///   - authorized_at: The timestamp when the payment was authorized, in RFC 3339 format.
+	///   - captured_at: The timestamp when the payment was captured, in RFC 3339 format.
+	///   - voided_at: The timestamp when the payment was voided, in RFC 3339 format.
+	public init(authorized_at: Timestamp? = nil, captured_at: Timestamp? = nil, voided_at: Timestamp? = nil) {
+		self.authorized_at = authorized_at
+		self.captured_at = captured_at
+		self.voided_at = voided_at
 	}
 }
 
@@ -1535,7 +1560,7 @@ public struct CashDrawerShiftEvent: Codable {
 	public var description: String?
 	/// The ID of the employee that created the event.
 	public var employee_id: String?
-	/// The amount of money that was added to or removed from the cash drawer in the event. The amount can be positive (for added money), negative (for removed money), or zero (for other tender type payments).
+	/// The amount of money that was added to or removed from the cash drawer in the event. The amount can be positive (for added money) or zero (for other tender type payments). The addition or removal of money can be determined by by the event type.
 	public var event_money: Money?
 	/// The type of cash drawer shift event. See [CashDrawerEventType](#type-cashdrawereventtype) for possible values
 	public var event_type: CashDrawerEventType?
@@ -4038,12 +4063,12 @@ public struct CreateInvoiceResponse: Codable {
 
 /// Request object for the [CreateLocation](#endpoint-createlocation) endpoint.
 public struct CreateLocationRequest: Codable {
-	/// The initial values of the location being created. The `name` field is required. All other fields are optional. Unspecified fields will be set to default values using existing location data.
+	/// The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional. Unspecified fields will be set to default values using existing location data.
 	public var location: Location?
 
 	/// Request object for the [CreateLocation](#endpoint-createlocation) endpoint.
 	/// - Parameters:
-	///   - location: The initial values of the location being created. The `name` field is required. All other fields are optional. Unspecified fields will be set to default values using existing location data.
+	///   - location: The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional. Unspecified fields will be set to default values using existing location data.
 	public init(location: Location? = nil) {
 		self.location = location
 	}
@@ -4171,14 +4196,11 @@ public struct CreateMobileAuthorizationCodeResponse: Codable {
 public struct CreateOrderRequest: Codable {
 	/// A value you specify that uniquely identifies this order among orders you've created.  If you're unsure whether a particular order was created successfully, you can reattempt it with the same idempotency key without worrying about creating duplicate orders.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
 	public var idempotency_key: String?
-	/// The ID of the business location to associate the order with.
-	public var location_id: String?
 	/// The order to create. If this field is set, then the only other top-level field that can be set is the idempotency_key.
 	public var order: Order?
 
-	public init(idempotency_key: String? = nil, location_id: String? = nil, order: Order? = nil) {
+	public init(idempotency_key: String? = nil, order: Order? = nil) {
 		self.idempotency_key = idempotency_key
-		self.location_id = location_id
 		self.order = order
 	}
 }
@@ -5979,7 +6001,7 @@ public enum ErrorCode: String, Codable {
 	case INVALID_ENCRYPTED_CARD
 	/// The credit card cannot be validated based on the provided details.
 	case INVALID_CARD
-	/// An unexpected error occurred.
+	/// Square received a decline from the cardholder's bank without any  additional information. If the card information seems correct, the card  holder can contact their card issuer to ask for more information.
 	case GENERIC_DECLINE
 	/// The card issuer declined the request because the CVV value is invalid.
 	case CVV_FAILURE
@@ -8169,7 +8191,7 @@ public struct Location: Codable {
 	public var mcc: String?
 	/// The ID of the merchant that owns the location.
 	public let merchant_id: String?
-	/// The name of the location. This information appears in the dashboard as the nickname.
+	/// The name of the location. This information appears in the dashboard as the nickname. A location name must be unique within a seller account.
 	public var name: String?
 	/// The phone number of the location in human readable format.
 	public var phone_number: String?
@@ -13006,7 +13028,6 @@ public struct SubscriptionPhase: Codable {
 
 /// Possible subscription status values.
 public enum SubscriptionStatus: String, Codable {
-	case DEFAULT_SUBSCRIPTION_STATUS_DO_NOT_USE
 	/// The subscription starts in the future.
 	case PENDING
 	/// The subscription is active.
@@ -13495,7 +13516,7 @@ public struct TipSettings: Codable {
 	public var custom_tip_field: Bool?
 	/// Indicates whether tip options should be presented on their own screen before presenting the signature screen during card payment. Defaults to false.
 	public var separate_tip_screen: Bool?
-	/// Enables the "Smart Tip Amounts" behavior described in https://squareup.com/help/us/en/article/5069-accept-tips-with-the-square-app. Exact tipping options depend on the region the Square seller is active in.  In the United States and Canada, tipping options will be presented in whole dollar amounts for payments under 10 USD/CAD respectively.  If set to true, the tip_percentages settings is ignored. Defaults to false.
+	/// Enables the "Smart Tip Amounts" behavior. Exact tipping options depend on the region the Square seller is active in.  In the United States and Canada, tipping options will be presented in whole dollar amounts for payments under 10 USD/CAD respectively.  If set to true, the tip_percentages settings is ignored. Defaults to false.  To learn more about smart tipping, see [Accept Tips with the Square App](https://squareup.com/help/us/en/article/5069-accept-tips-with-the-square-app)
 	public var smart_tipping: Bool?
 	/// A list of tip percentages that should be presented during the checkout flow. Specified as up to 3 non-negative integers from 0 to 100 (inclusive). Defaults to [15, 20, 25]
 	public var tip_percentages: [Int]?
@@ -14071,325 +14092,12 @@ public struct UpsertCatalogObjectResponse: Codable {
 	}
 }
 
-/// V1AdjustInventoryRequest
-public struct V1AdjustInventoryRequest: Codable {
-	/// The reason for the inventory adjustment. See [V1AdjustInventoryRequestAdjustmentType](#type-v1adjustinventoryrequestadjustmenttype) for possible values
-	public var adjustment_type: V1AdjustInventoryRequestAdjustmentType?
-	/// A note about the inventory adjustment.
-	public var memo: String?
-	/// The number to adjust the variation's quantity by.
-	public var quantity_delta: StringNumber?
-
-	/// V1AdjustInventoryRequest
-	/// - Parameters:
-	///   - adjustment_type: The reason for the inventory adjustment. See [V1AdjustInventoryRequestAdjustmentType](#type-v1adjustinventoryrequestadjustmenttype) for possible values
-	///   - memo: A note about the inventory adjustment.
-	///   - quantity_delta: The number to adjust the variation's quantity by.
-	public init(adjustment_type: V1AdjustInventoryRequestAdjustmentType? = nil, memo: String? = nil, quantity_delta: StringNumber? = nil) {
-		self.adjustment_type = adjustment_type
-		self.memo = memo
-		self.quantity_delta = quantity_delta
-	}
-}
-
-/// 
-public enum V1AdjustInventoryRequestAdjustmentType: String, Codable {
-	case SALE
-	case RECEIVE_STOCK
-	case MANUAL_ADJUST
-}
-
-public struct V1ApplyFeeRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ApplyModifierListRequest: Codable {
-
-	public init() {
-	}
-}
-
-/// V1BankAccount
-public struct V1BankAccount: Codable {
-	/// The last few digits of the bank account number.
-	public var account_number_suffix: String?
-	/// The name of the bank that manages the account.
-	public var bank_name: String?
-	/// The currency code of the currency associated with the bank account, in ISO 4217 format. For example, the currency code for US dollars is USD.
-	public var currency_code: String?
-	/// The bank account's Square-issued ID.
-	public var id: String?
-	/// The Square-issued ID of the merchant associated with the bank account.
-	public var merchant_id: String?
-	/// The name associated with the bank account.
-	public var name: String?
-	/// The bank account's routing number.
-	public var routing_number: String?
-	/// The bank account's type (for example, savings or checking). See [V1BankAccountType](#type-v1bankaccounttype) for possible values
-	public var type: V1BankAccountType?
-
-	/// V1BankAccount
-	/// - Parameters:
-	///   - account_number_suffix: The last few digits of the bank account number.
-	///   - bank_name: The name of the bank that manages the account.
-	///   - currency_code: The currency code of the currency associated with the bank account, in ISO 4217 format. For example, the currency code for US dollars is USD.
-	///   - id: The bank account's Square-issued ID.
-	///   - merchant_id: The Square-issued ID of the merchant associated with the bank account.
-	///   - name: The name associated with the bank account.
-	///   - routing_number: The bank account's routing number.
-	///   - type: The bank account's type (for example, savings or checking). See [V1BankAccountType](#type-v1bankaccounttype) for possible values
-	public init(account_number_suffix: String? = nil, bank_name: String? = nil, currency_code: String? = nil, id: String? = nil, merchant_id: String? = nil, name: String? = nil, routing_number: String? = nil, type: V1BankAccountType? = nil) {
-		self.account_number_suffix = account_number_suffix
-		self.bank_name = bank_name
-		self.currency_code = currency_code
-		self.id = id
-		self.merchant_id = merchant_id
-		self.name = name
-		self.routing_number = routing_number
-		self.type = type
-	}
-}
-
-/// 
-public enum V1BankAccountType: String, Codable {
-	case BUSINESS_CHECKING
-	case CHECKING
-	case INVESTMENT
-	case LOAN
-	case SAVINGS
-	case OTHER
-}
-
-/// V1CashDrawerEvent
-public struct V1CashDrawerEvent: Codable {
-	/// The time when the event occurred, in ISO 8601 format.
-	public var created_at: String?
-	/// An optional description of the event, entered by the employee that created it.
-	public var description: String?
-	/// The ID of the employee that created the event.
-	public var employee_id: String?
-	/// The amount of money that was added to or removed from the cash drawer because of the event. This value can be positive (for added money) or negative (for removed money).
-	public var event_money: V1Money?
-	/// The type of event that occurred. See [V1CashDrawerEventEventType](#type-v1cashdrawereventeventtype) for possible values
-	public var event_type: V1CashDrawerEventEventType?
-	/// The event's unique ID.
-	public var id: String?
-
-	/// V1CashDrawerEvent
-	/// - Parameters:
-	///   - created_at: The time when the event occurred, in ISO 8601 format.
-	///   - description: An optional description of the event, entered by the employee that created it.
-	///   - employee_id: The ID of the employee that created the event.
-	///   - event_money: The amount of money that was added to or removed from the cash drawer because of the event. This value can be positive (for added money) or negative (for removed money).
-	///   - event_type: The type of event that occurred. See [V1CashDrawerEventEventType](#type-v1cashdrawereventeventtype) for possible values
-	///   - id: The event's unique ID.
-	public init(created_at: String? = nil, description: String? = nil, employee_id: String? = nil, event_money: V1Money? = nil, event_type: V1CashDrawerEventEventType? = nil, id: String? = nil) {
-		self.created_at = created_at
-		self.description = description
-		self.employee_id = employee_id
-		self.event_money = event_money
-		self.event_type = event_type
-		self.id = id
-	}
-}
-
-/// 
-public enum V1CashDrawerEventEventType: String, Codable {
-	case NO_SALE
-	case CASH_TENDER_PAYMENT
-	case OTHER_TENDER_PAYMENT
-	case CASH_TENDER_CANCELED_PAYMENT
-	case OTHER_TENDER_CANCELED_PAYMENT
-	case CASH_TENDER_REFUND
-	case OTHER_TENDER_REFUND
-	case PAID_IN
-	case PAID_OUT
-}
-
-/// Contains details for a single cash drawer shift.
-public struct V1CashDrawerShift: Codable {
-	/// The amount of money added to the cash drawer for reasons other than cash payments.
-	public var cash_paid_in_money: V1Money?
-	/// The amount of money removed from the cash drawer for reasons other than cash refunds.
-	public var cash_paid_out_money: V1Money?
-	/// The amount of money added to the cash drawer from cash payments.
-	public var cash_payment_money: V1Money?
-	/// The amount of money removed from the cash drawer from cash refunds. This value is always negative or zero.
-	public var cash_refunds_money: V1Money?
-	/// The time when the shift was closed, in ISO 8601 format.
-	public var closed_at: String?
-	/// The amount of money found in the cash drawer at the end of the shift by an auditing employee.
-	public var closed_cash_money: V1Money?
-	/// The ID of the employee that closed the cash drawer shift by auditing the cash drawer's contents.
-	public var closing_employee_id: String?
-	/// A description of the cash drawer shift.
-	public var description: String?
-	/// The device running Square Register that was connected to the cash drawer.
-	public var device: Device?
-	/// The IDs of all employees that were logged into Square Register at some point during the cash drawer shift.
-	public var employee_ids: [String]?
-	/// The time when the shift ended, in ISO 8601 format.
-	public var ended_at: String?
-	/// The ID of the employee that ended the cash drawer shift.
-	public var ending_employee_id: String?
-	/// The shift's current state. See [V1CashDrawerShiftEventType](#type-v1cashdrawershifteventtype) for possible values
-	public var event_type: V1CashDrawerShiftEventType?
-	/// All of the events (payments, refunds, and so on) that involved the cash drawer during the shift.
-	public var events: [V1CashDrawerEvent]?
-	/// The amount of money that should be in the cash drawer at the end of the shift, based on the shift's other money amounts.
-	public var expected_cash_money: V1Money?
-	/// The shift's unique ID.
-	public var id: String?
-	/// The time when the shift began, in ISO 8601 format.
-	public var opened_at: String?
-	/// The ID of the employee that started the cash drawer shift.
-	public var opening_employee_id: String?
-	/// The amount of money in the cash drawer at the start of the shift.
-	public var starting_cash_money: V1Money?
-
-	/// Contains details for a single cash drawer shift.
-	/// - Parameters:
-	///   - cash_paid_in_money: The amount of money added to the cash drawer for reasons other than cash payments.
-	///   - cash_paid_out_money: The amount of money removed from the cash drawer for reasons other than cash refunds.
-	///   - cash_payment_money: The amount of money added to the cash drawer from cash payments.
-	///   - cash_refunds_money: The amount of money removed from the cash drawer from cash refunds. This value is always negative or zero.
-	///   - closed_at: The time when the shift was closed, in ISO 8601 format.
-	///   - closed_cash_money: The amount of money found in the cash drawer at the end of the shift by an auditing employee.
-	///   - closing_employee_id: The ID of the employee that closed the cash drawer shift by auditing the cash drawer's contents.
-	///   - description: A description of the cash drawer shift.
-	///   - device: The device running Square Register that was connected to the cash drawer.
-	///   - employee_ids: The IDs of all employees that were logged into Square Register at some point during the cash drawer shift.
-	///   - ended_at: The time when the shift ended, in ISO 8601 format.
-	///   - ending_employee_id: The ID of the employee that ended the cash drawer shift.
-	///   - event_type: The shift's current state. See [V1CashDrawerShiftEventType](#type-v1cashdrawershifteventtype) for possible values
-	///   - events: All of the events (payments, refunds, and so on) that involved the cash drawer during the shift.
-	///   - expected_cash_money: The amount of money that should be in the cash drawer at the end of the shift, based on the shift's other money amounts.
-	///   - id: The shift's unique ID.
-	///   - opened_at: The time when the shift began, in ISO 8601 format.
-	///   - opening_employee_id: The ID of the employee that started the cash drawer shift.
-	///   - starting_cash_money: The amount of money in the cash drawer at the start of the shift.
-	public init(cash_paid_in_money: V1Money? = nil, cash_paid_out_money: V1Money? = nil, cash_payment_money: V1Money? = nil, cash_refunds_money: V1Money? = nil, closed_at: String? = nil, closed_cash_money: V1Money? = nil, closing_employee_id: String? = nil, description: String? = nil, device: Device? = nil, employee_ids: [String]? = nil, ended_at: String? = nil, ending_employee_id: String? = nil, event_type: V1CashDrawerShiftEventType? = nil, events: [V1CashDrawerEvent]? = nil, expected_cash_money: V1Money? = nil, id: String? = nil, opened_at: String? = nil, opening_employee_id: String? = nil, starting_cash_money: V1Money? = nil) {
-		self.cash_paid_in_money = cash_paid_in_money
-		self.cash_paid_out_money = cash_paid_out_money
-		self.cash_payment_money = cash_payment_money
-		self.cash_refunds_money = cash_refunds_money
-		self.closed_at = closed_at
-		self.closed_cash_money = closed_cash_money
-		self.closing_employee_id = closing_employee_id
-		self.description = description
-		self.device = device
-		self.employee_ids = employee_ids
-		self.ended_at = ended_at
-		self.ending_employee_id = ending_employee_id
-		self.event_type = event_type
-		self.events = events
-		self.expected_cash_money = expected_cash_money
-		self.id = id
-		self.opened_at = opened_at
-		self.opening_employee_id = opening_employee_id
-		self.starting_cash_money = starting_cash_money
-	}
-}
-
-/// 
-public enum V1CashDrawerShiftEventType: String, Codable {
-	case OPEN
-	case ENDED
-	case CLOSED
-}
-
-/// V1Category
-public struct V1Category: Codable {
-	/// The category's unique ID.
-	public var id: String?
-	/// The category's name.
-	public var name: String?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-
-	/// V1Category
-	/// - Parameters:
-	///   - id: The category's unique ID.
-	///   - name: The category's name.
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public init(id: String? = nil, name: String? = nil, v2_id: String? = nil) {
-		self.id = id
-		self.name = name
-		self.v2_id = v2_id
-	}
-}
-
-public struct V1CreateCategoryRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Category?
-
-	public init(body: V1Category? = nil) {
-		self.body = body
-	}
-}
-
-public struct V1CreateDiscountRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Discount?
-
-	public init(body: V1Discount? = nil) {
-		self.body = body
-	}
-}
-
 public struct V1CreateEmployeeRoleRequest: Codable {
 	/// An EmployeeRole object with a name and permissions, and an optional owner flag.
 	public var employee_role: V1EmployeeRole?
 
 	public init(employee_role: V1EmployeeRole? = nil) {
 		self.employee_role = employee_role
-	}
-}
-
-public struct V1CreateFeeRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Fee?
-
-	public init(body: V1Fee? = nil) {
-		self.body = body
-	}
-}
-
-public struct V1CreateItemRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Item?
-
-	public init(body: V1Item? = nil) {
-		self.body = body
-	}
-}
-
-public struct V1CreateModifierListRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1ModifierList?
-
-	public init(body: V1ModifierList? = nil) {
-		self.body = body
-	}
-}
-
-public struct V1CreateModifierOptionRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1ModifierOption?
-
-	public init(body: V1ModifierOption? = nil) {
-		self.body = body
-	}
-}
-
-public struct V1CreatePageRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Page?
-
-	public init(body: V1Page? = nil) {
-		self.body = body
 	}
 }
 
@@ -14403,7 +14111,7 @@ public struct V1CreateRefundRequest: Codable {
 	public var refunded_money: V1Money?
 	/// An optional key to ensure idempotence if you issue the same PARTIAL refund request more than once.
 	public var request_idempotence_key: String?
-	/// TThe type of refund (FULL or PARTIAL). See [V1CreateRefundRequestType](#type-v1createrefundrequesttype) for possible values
+	/// The type of refund (FULL or PARTIAL). See [V1CreateRefundRequestType](#type-v1createrefundrequesttype) for possible values
 	public var type: V1CreateRefundRequestType
 
 	/// V1CreateRefundRequest
@@ -14412,7 +14120,7 @@ public struct V1CreateRefundRequest: Codable {
 	///   - reason: The reason for the refund.
 	///   - refunded_money: The amount of money to refund. Required only for PARTIAL refunds.
 	///   - request_idempotence_key: An optional key to ensure idempotence if you issue the same PARTIAL refund request more than once.
-	///   - type: TThe type of refund (FULL or PARTIAL). See [V1CreateRefundRequestType](#type-v1createrefundrequesttype) for possible values
+	///   - type: The type of refund (FULL or PARTIAL). See [V1CreateRefundRequestType](#type-v1createrefundrequesttype) for possible values
 	public init(payment_id: String, reason: String, type: V1CreateRefundRequestType, refunded_money: V1Money? = nil, request_idempotence_key: String? = nil) {
 		self.payment_id = payment_id
 		self.reason = reason
@@ -14426,148 +14134,6 @@ public struct V1CreateRefundRequest: Codable {
 public enum V1CreateRefundRequestType: String, Codable {
 	case FULL
 	case PARTIAL
-}
-
-public struct V1CreateVariationRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Variation?
-
-	public init(body: V1Variation? = nil) {
-		self.body = body
-	}
-}
-
-public struct V1DeleteCategoryRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteDiscountRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteFeeRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteItemRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteModifierListRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteModifierOptionRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeletePageCellRequest: Codable {
-	/// The column of the cell to clear. Always an integer between 0 and 4, inclusive. Column 0 is the leftmost column.
-	public var column: String?
-	/// The row of the cell to clear. Always an integer between 0 and 4, inclusive. Row 0 is the top row.
-	public var row: String?
-
-	public init(column: String? = nil, row: String? = nil) {
-		self.column = column
-		self.row = row
-	}
-}
-
-public struct V1DeletePageRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteTimecardRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteTimecardResponse: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1DeleteVariationRequest: Codable {
-
-	public init() {
-	}
-}
-
-/// V1Discount
-public struct V1Discount: Codable {
-	/// The amount of the discount. This amount is 0 if discount_type is VARIABLE_AMOUNT. This field is not included for rate-based discounts.
-	public var amount_money: V1Money?
-	/// The color of the discount's display label in Square Point of Sale, if not the default color. The default color is 9da2a6. See [V1DiscountColor](#type-v1discountcolor) for possible values
-	public var color: V1DiscountColor?
-	/// Indicates whether the discount is a FIXED value or entered at the time of sale. See [V1DiscountDiscountType](#type-v1discountdiscounttype) for possible values
-	public var discount_type: V1DiscountDiscountType?
-	/// The discount's unique ID.
-	public var id: String?
-	/// The discount's name.
-	public var name: String?
-	/// Indicates whether a mobile staff member needs to enter their PIN to apply the discount to a payment.
-	public var pin_required: Bool?
-	/// The rate of the discount, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%. This rate is 0 if discount_type is VARIABLE_PERCENTAGE.
-	public var rate: String?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-
-	/// V1Discount
-	/// - Parameters:
-	///   - amount_money: The amount of the discount. This amount is 0 if discount_type is VARIABLE_AMOUNT. This field is not included for rate-based discounts.
-	///   - color: The color of the discount's display label in Square Point of Sale, if not the default color. The default color is 9da2a6. See [V1DiscountColor](#type-v1discountcolor) for possible values
-	///   - discount_type: Indicates whether the discount is a FIXED value or entered at the time of sale. See [V1DiscountDiscountType](#type-v1discountdiscounttype) for possible values
-	///   - id: The discount's unique ID.
-	///   - name: The discount's name.
-	///   - pin_required: Indicates whether a mobile staff member needs to enter their PIN to apply the discount to a payment.
-	///   - rate: The rate of the discount, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%. This rate is 0 if discount_type is VARIABLE_PERCENTAGE.
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public init(amount_money: V1Money? = nil, color: V1DiscountColor? = nil, discount_type: V1DiscountDiscountType? = nil, id: String? = nil, name: String? = nil, pin_required: Bool? = nil, rate: String? = nil, v2_id: String? = nil) {
-		self.amount_money = amount_money
-		self.color = color
-		self.discount_type = discount_type
-		self.id = id
-		self.name = name
-		self.pin_required = pin_required
-		self.rate = rate
-		self.v2_id = v2_id
-	}
-}
-
-/// 
-public enum V1DiscountColor: String, Codable {
-	case x_9da2a6 = "9da2a6"
-	case x_4ab200 = "4ab200"
-	case x_0b8000 = "0b8000"
-	case x_2952cc = "2952cc"
-	case x_a82ee5 = "a82ee5"
-	case x_e5457a = "e5457a"
-	case x_b21212 = "b21212"
-	case x_593c00 = "593c00"
-	case x_e5BF00 = "e5BF00"
-}
-
-/// 
-public enum V1DiscountDiscountType: String, Codable {
-	case FIXED
-	case VARIABLE_PERCENTAGE
-	case VARIABLE_AMOUNT
 }
 
 /// Represents one of a business's employees.
@@ -14588,7 +14154,7 @@ public struct V1Employee: Codable {
 	public var last_name: String
 	/// The ids of the employee's associated roles. Currently, you can specify only one or zero roles per employee.
 	public var role_ids: [String]?
-	/// CWhether the employee is ACTIVE or INACTIVE. Inactive employees cannot sign in to Square Register.Merchants update this field from the Square Dashboard. See [V1EmployeeStatus](#type-v1employeestatus) for possible values
+	/// Whether the employee is ACTIVE or INACTIVE. Inactive employees cannot sign in to Square Register.Merchants update this field from the Square Dashboard. See [V1EmployeeStatus](#type-v1employeestatus) for possible values
 	public var status: V1EmployeeStatus?
 	/// The time when the employee entity was most recently updated, in ISO 8601 format.
 	public var updated_at: String?
@@ -14603,7 +14169,7 @@ public struct V1Employee: Codable {
 	///   - id: The employee's unique ID.
 	///   - last_name: The employee's last name.
 	///   - role_ids: The ids of the employee's associated roles. Currently, you can specify only one or zero roles per employee.
-	///   - status: CWhether the employee is ACTIVE or INACTIVE. Inactive employees cannot sign in to Square Register.Merchants update this field from the Square Dashboard. See [V1EmployeeStatus](#type-v1employeestatus) for possible values
+	///   - status: Whether the employee is ACTIVE or INACTIVE. Inactive employees cannot sign in to Square Register.Merchants update this field from the Square Dashboard. See [V1EmployeeStatus](#type-v1employeestatus) for possible values
 	///   - updated_at: The time when the employee entity was most recently updated, in ISO 8601 format.
 	public init(first_name: String, last_name: String, authorized_location_ids: [String]? = nil, created_at: String? = nil, email: String? = nil, external_id: String? = nil, id: String? = nil, role_ids: [String]? = nil, status: V1EmployeeStatus? = nil, updated_at: String? = nil) {
 		self.first_name = first_name
@@ -14667,287 +14233,6 @@ public enum V1EmployeeRolePermissions: String, Codable {
 public enum V1EmployeeStatus: String, Codable {
 	case ACTIVE
 	case INACTIVE
-}
-
-/// V1Fee
-public struct V1Fee: Codable {
-	/// The type of adjustment the fee applies to a payment. Currently, this value is TAX for all fees. See [V1FeeAdjustmentType](#type-v1feeadjustmenttype) for possible values
-	public var adjustment_type: V1FeeAdjustmentType?
-	/// If true, the fee applies to custom amounts entered into Square Point of Sale that are not associated with a particular item.
-	public var applies_to_custom_amounts: Bool?
-	/// Forthcoming See [V1FeeCalculationPhase](#type-v1feecalculationphase) for possible values
-	public var calculation_phase: V1FeeCalculationPhase?
-	/// If true, the fee is applied to all appropriate items. If false, the fee is not applied at all.
-	public var enabled: Bool?
-	/// The fee's unique ID.
-	public var id: String?
-	/// Whether the fee is ADDITIVE or INCLUSIVE. See [V1FeeInclusionType](#type-v1feeinclusiontype) for possible values
-	public var inclusion_type: V1FeeInclusionType?
-	/// The fee's name.
-	public var name: String?
-	/// The rate of the fee, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%.
-	public var rate: String?
-	/// In countries with multiple classifications for sales taxes, indicates which classification the fee falls under. Currently relevant only to Canadian merchants. See [V1FeeType](#type-v1feetype) for possible values
-	public var type: V1FeeType?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-
-	/// V1Fee
-	/// - Parameters:
-	///   - adjustment_type: The type of adjustment the fee applies to a payment. Currently, this value is TAX for all fees. See [V1FeeAdjustmentType](#type-v1feeadjustmenttype) for possible values
-	///   - applies_to_custom_amounts: If true, the fee applies to custom amounts entered into Square Point of Sale that are not associated with a particular item.
-	///   - calculation_phase: Forthcoming See [V1FeeCalculationPhase](#type-v1feecalculationphase) for possible values
-	///   - enabled: If true, the fee is applied to all appropriate items. If false, the fee is not applied at all.
-	///   - id: The fee's unique ID.
-	///   - inclusion_type: Whether the fee is ADDITIVE or INCLUSIVE. See [V1FeeInclusionType](#type-v1feeinclusiontype) for possible values
-	///   - name: The fee's name.
-	///   - rate: The rate of the fee, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%.
-	///   - type: In countries with multiple classifications for sales taxes, indicates which classification the fee falls under. Currently relevant only to Canadian merchants. See [V1FeeType](#type-v1feetype) for possible values
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public init(adjustment_type: V1FeeAdjustmentType? = nil, applies_to_custom_amounts: Bool? = nil, calculation_phase: V1FeeCalculationPhase? = nil, enabled: Bool? = nil, id: String? = nil, inclusion_type: V1FeeInclusionType? = nil, name: String? = nil, rate: String? = nil, type: V1FeeType? = nil, v2_id: String? = nil) {
-		self.adjustment_type = adjustment_type
-		self.applies_to_custom_amounts = applies_to_custom_amounts
-		self.calculation_phase = calculation_phase
-		self.enabled = enabled
-		self.id = id
-		self.inclusion_type = inclusion_type
-		self.name = name
-		self.rate = rate
-		self.type = type
-		self.v2_id = v2_id
-	}
-}
-
-/// 
-public enum V1FeeAdjustmentType: String, Codable {
-	case TAX
-}
-
-/// 
-public enum V1FeeCalculationPhase: String, Codable {
-	case FEE_SUBTOTAL_PHASE
-	case OTHER
-	case FEE_TOTAL_PHASE
-}
-
-/// 
-public enum V1FeeInclusionType: String, Codable {
-	case ADDITIVE
-	case INCLUSIVE
-}
-
-/// 
-public enum V1FeeType: String, Codable {
-	case CA_GST
-	case CA_HST
-	case CA_PST
-	case CA_QST
-	case JP_CONSUMPTION_TAX
-	case CA_PEI_PST
-	case US_SALES_TAX
-	case OTHER
-}
-
-/// V1InventoryEntry
-public struct V1InventoryEntry: Codable {
-	/// The current available quantity of the item variation.
-	public var quantity_on_hand: StringNumber?
-	/// The variation that the entry corresponds to.
-	public var variation_id: String?
-
-	/// V1InventoryEntry
-	/// - Parameters:
-	///   - quantity_on_hand: The current available quantity of the item variation.
-	///   - variation_id: The variation that the entry corresponds to.
-	public init(quantity_on_hand: StringNumber? = nil, variation_id: String? = nil) {
-		self.quantity_on_hand = quantity_on_hand
-		self.variation_id = variation_id
-	}
-}
-
-/// V1Item
-public struct V1Item: Codable {
-	/// The text of the item's display label in Square Point of Sale. Only up to the first five characters of the string are used.
-	public var abbreviation: String?
-	/// If true, the item can be added to pickup orders from the merchant's online store. Default value: false
-	public var available_for_pickup: Bool?
-	/// If true, the item can be added to shipping orders from the merchant's online store.
-	public var available_online: Bool?
-	/// The category the item belongs to, if any.
-	public var category: V1Category?
-	/// The ID of the item's category, if any.
-	public var category_id: String?
-	/// The color of the discount's display label in Square Point of Sale, if not the default color. The default color is 9da2a6. See [V1ItemColor](#type-v1itemcolor) for possible values
-	public var color: V1ItemColor?
-	/// The item's description.
-	public var description: String?
-	/// The fees that apply to the item, if any.
-	public var fees: [V1Fee]?
-	/// The item's ID. Must be unique among all entity IDs ever provided on behalf of the merchant. You can never reuse an ID. This value can include alphanumeric characters, dashes (-), and underscores (_).
-	public var id: String?
-	/// The item's master image, if any.
-	public var master_image: V1ItemImage?
-	/// The modifier lists that apply to the item, if any.
-	public var modifier_lists: [V1ModifierList]?
-	/// The item's name.
-	public var name: String?
-	/// Deprecated. This field is not used.
-	public var taxable: Bool?
-	/// The item's type. This value is NORMAL for almost all items. See [V1ItemType](#type-v1itemtype) for possible values
-	public var type: V1ItemType?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-	/// The item's variations. You must specify at least one variation.
-	public var variations: [V1Variation]?
-	/// Indicates whether the item is viewable from the merchant's online store (PUBLIC) or PRIVATE. See [V1ItemVisibility](#type-v1itemvisibility) for possible values
-	public var visibility: V1ItemVisibility?
-
-	/// V1Item
-	/// - Parameters:
-	///   - abbreviation: The text of the item's display label in Square Point of Sale. Only up to the first five characters of the string are used.
-	///   - available_for_pickup: If true, the item can be added to pickup orders from the merchant's online store. Default value: false
-	///   - available_online: If true, the item can be added to shipping orders from the merchant's online store.
-	///   - category: The category the item belongs to, if any.
-	///   - category_id: The ID of the item's category, if any.
-	///   - color: The color of the discount's display label in Square Point of Sale, if not the default color. The default color is 9da2a6. See [V1ItemColor](#type-v1itemcolor) for possible values
-	///   - description: The item's description.
-	///   - fees: The fees that apply to the item, if any.
-	///   - id: The item's ID. Must be unique among all entity IDs ever provided on behalf of the merchant. You can never reuse an ID. This value can include alphanumeric characters, dashes (-), and underscores (_).
-	///   - master_image: The item's master image, if any.
-	///   - modifier_lists: The modifier lists that apply to the item, if any.
-	///   - name: The item's name.
-	///   - taxable: Deprecated. This field is not used.
-	///   - type: The item's type. This value is NORMAL for almost all items. See [V1ItemType](#type-v1itemtype) for possible values
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	///   - variations: The item's variations. You must specify at least one variation.
-	///   - visibility: Indicates whether the item is viewable from the merchant's online store (PUBLIC) or PRIVATE. See [V1ItemVisibility](#type-v1itemvisibility) for possible values
-	public init(abbreviation: String? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, category: V1Category? = nil, category_id: String? = nil, color: V1ItemColor? = nil, description: String? = nil, fees: [V1Fee]? = nil, id: String? = nil, master_image: V1ItemImage? = nil, modifier_lists: [V1ModifierList]? = nil, name: String? = nil, taxable: Bool? = nil, type: V1ItemType? = nil, v2_id: String? = nil, variations: [V1Variation]? = nil, visibility: V1ItemVisibility? = nil) {
-		self.abbreviation = abbreviation
-		self.available_for_pickup = available_for_pickup
-		self.available_online = available_online
-		self.category = category
-		self.category_id = category_id
-		self.color = color
-		self.description = description
-		self.fees = fees
-		self.id = id
-		self.master_image = master_image
-		self.modifier_lists = modifier_lists
-		self.name = name
-		self.taxable = taxable
-		self.type = type
-		self.v2_id = v2_id
-		self.variations = variations
-		self.visibility = visibility
-	}
-}
-
-/// 
-public enum V1ItemColor: String, Codable {
-	case x_9da2a6 = "9da2a6"
-	case x_4ab200 = "4ab200"
-	case x_0b8000 = "0b8000"
-	case x_2952cc = "2952cc"
-	case x_a82ee5 = "a82ee5"
-	case x_e5457a = "e5457a"
-	case x_b21212 = "b21212"
-	case x_593c00 = "593c00"
-	case x_e5BF00 = "e5BF00"
-}
-
-/// V1ItemImage
-public struct V1ItemImage: Codable {
-	/// The image's unique ID.
-	public var id: String?
-	/// The image's publicly accessible URL.
-	public var url: String?
-
-	/// V1ItemImage
-	/// - Parameters:
-	///   - id: The image's unique ID.
-	///   - url: The image's publicly accessible URL.
-	public init(id: String? = nil, url: String? = nil) {
-		self.id = id
-		self.url = url
-	}
-}
-
-/// 
-public enum V1ItemType: String, Codable {
-	case NORMAL
-	case GIFT_CARD
-	case OTHER
-}
-
-/// 
-public enum V1ItemVisibility: String, Codable {
-	case PUBLIC
-	case PRIVATE
-}
-
-public struct V1ListBankAccountsRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListBankAccountsResponse: Codable {
-	public var items: [V1BankAccount]?
-
-	public init(items: [V1BankAccount]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListCashDrawerShiftsRequest: Codable {
-	/// The beginning of the requested reporting period, in ISO 8601 format. Default value: The current time minus 90 days.
-	public var begin_time: String?
-	/// The beginning of the requested reporting period, in ISO 8601 format. Default value: The current time.
-	public var end_time: String?
-	/// The order in which cash drawer shifts are listed in the response, based on their created_at field. Default value: ASC See [SortOrder](#type-sortorder) for possible values
-	public var order: SortOrder?
-
-	public init(begin_time: String? = nil, end_time: String? = nil, order: SortOrder? = nil) {
-		self.begin_time = begin_time
-		self.end_time = end_time
-		self.order = order
-	}
-}
-
-public struct V1ListCashDrawerShiftsResponse: Codable {
-	public var items: [V1CashDrawerShift]?
-
-	public init(items: [V1CashDrawerShift]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListCategoriesRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListCategoriesResponse: Codable {
-	public var items: [V1Category]?
-
-	public init(items: [V1Category]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListDiscountsRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListDiscountsResponse: Codable {
-	public var items: [V1Discount]?
-
-	public init(items: [V1Discount]? = nil) {
-		self.items = items
-	}
 }
 
 public struct V1ListEmployeeRolesRequest: Codable {
@@ -15020,77 +14305,12 @@ public struct V1ListEmployeesResponse: Codable {
 	}
 }
 
-public struct V1ListFeesRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListFeesResponse: Codable {
-	public var items: [V1Fee]?
-
-	public init(items: [V1Fee]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListInventoryRequest: Codable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-	/// The maximum number of inventory entries to return in a single response. This value cannot exceed 1000.
-	public var limit: Int?
-
-	public init(batch_token: String? = nil, limit: Int? = nil) {
-		self.batch_token = batch_token
-		self.limit = limit
-	}
-}
-
-public struct V1ListInventoryResponse: Codable {
-	public var items: [V1InventoryEntry]?
-
-	public init(items: [V1InventoryEntry]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListItemsRequest: Codable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-
-	public init(batch_token: String? = nil) {
-		self.batch_token = batch_token
-	}
-}
-
-public struct V1ListItemsResponse: Codable {
-	public var items: [V1Item]?
-
-	public init(items: [V1Item]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListModifierListsRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListModifierListsResponse: Codable {
-	public var items: [V1ModifierList]?
-
-	public init(items: [V1ModifierList]? = nil) {
-		self.items = items
-	}
-}
-
 public struct V1ListOrdersRequest: Codable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 	public var batch_token: String?
 	/// The maximum number of payments to return in a single response. This value cannot exceed 200.
 	public var limit: Int?
-	/// TThe order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
+	/// The order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
 	public var order: SortOrder?
 
 	public init(batch_token: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
@@ -15104,20 +14324,6 @@ public struct V1ListOrdersResponse: Codable {
 	public var items: [V1Order]?
 
 	public init(items: [V1Order]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListPagesRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListPagesResponse: Codable {
-	public var items: [V1Page]?
-
-	public init(items: [V1Page]? = nil) {
 		self.items = items
 	}
 }
@@ -15163,7 +14369,7 @@ public struct V1ListRefundsRequest: Codable {
 	public var end_time: String?
 	/// The approximate number of refunds to return in a single response. Default: 100. Max: 200. Response may contain more results than the prescribed limit when refunds are made simultaneously to multiple tenders in a payment or when refunds are generated in an exchange to account for the value of returned goods.
 	public var limit: Int?
-	/// TThe order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
+	/// The order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
 	public var order: SortOrder?
 
 	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
@@ -15218,139 +14424,6 @@ public struct V1ListSettlementsResponse: Codable {
 
 	public init(items: [V1Settlement]? = nil) {
 		self.items = items
-	}
-}
-
-public struct V1ListTimecardEventsRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1ListTimecardEventsResponse: Codable {
-	public var items: [V1TimecardEvent]?
-
-	public init(items: [V1TimecardEvent]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListTimecardsRequest: Codable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-	/// If filtering results by their clockin_time field, the beginning of the requested reporting period, in ISO 8601 format.
-	public var begin_clockin_time: String?
-	/// If filtering results by their clockout_time field, the beginning of the requested reporting period, in ISO 8601 format.
-	public var begin_clockout_time: String?
-	/// If filtering results by their updated_at field, the beginning of the requested reporting period, in ISO 8601 format.
-	public var begin_updated_at: String?
-	/// If true, only deleted timecards are returned. If false, only valid timecards are returned.If you don't provide this parameter, both valid and deleted timecards are returned.
-	public var deleted: Bool?
-	/// If provided, the endpoint returns only timecards for the employee with the specified ID.
-	public var employee_id: String?
-	/// If filtering results by their clockin_time field, the end of the requested reporting period, in ISO 8601 format.
-	public var end_clockin_time: String?
-	/// If filtering results by their clockout_time field, the end of the requested reporting period, in ISO 8601 format.
-	public var end_clockout_time: String?
-	/// If filtering results by their updated_at field, the end of the requested reporting period, in ISO 8601 format.
-	public var end_updated_at: String?
-	/// The maximum integer number of employee entities to return in a single response. Default 100, maximum 200.
-	public var limit: Int?
-	/// The order in which timecards are listed in the response, based on their created_at field. See [SortOrder](#type-sortorder) for possible values
-	public var order: SortOrder?
-
-	public init(batch_token: String? = nil, begin_clockin_time: String? = nil, begin_clockout_time: String? = nil, begin_updated_at: String? = nil, deleted: Bool? = nil, employee_id: String? = nil, end_clockin_time: String? = nil, end_clockout_time: String? = nil, end_updated_at: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
-		self.batch_token = batch_token
-		self.begin_clockin_time = begin_clockin_time
-		self.begin_clockout_time = begin_clockout_time
-		self.begin_updated_at = begin_updated_at
-		self.deleted = deleted
-		self.employee_id = employee_id
-		self.end_clockin_time = end_clockin_time
-		self.end_clockout_time = end_clockout_time
-		self.end_updated_at = end_updated_at
-		self.limit = limit
-		self.order = order
-	}
-}
-
-public struct V1ListTimecardsResponse: Codable {
-	public var items: [V1Timecard]?
-
-	public init(items: [V1Timecard]? = nil) {
-		self.items = items
-	}
-}
-
-/// V1ModifierList
-public struct V1ModifierList: Codable {
-	/// The modifier list's unique ID.
-	public var id: String?
-	/// The options included in the modifier list.
-	public var modifier_options: [V1ModifierOption]?
-	/// The modifier list's name.
-	public var name: String?
-	/// Indicates whether MULTIPLE options or a SINGLE option from the modifier list can be applied to a single item. See [V1ModifierListSelectionType](#type-v1modifierlistselectiontype) for possible values
-	public var selection_type: V1ModifierListSelectionType?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-
-	/// V1ModifierList
-	/// - Parameters:
-	///   - id: The modifier list's unique ID.
-	///   - modifier_options: The options included in the modifier list.
-	///   - name: The modifier list's name.
-	///   - selection_type: Indicates whether MULTIPLE options or a SINGLE option from the modifier list can be applied to a single item. See [V1ModifierListSelectionType](#type-v1modifierlistselectiontype) for possible values
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public init(id: String? = nil, modifier_options: [V1ModifierOption]? = nil, name: String? = nil, selection_type: V1ModifierListSelectionType? = nil, v2_id: String? = nil) {
-		self.id = id
-		self.modifier_options = modifier_options
-		self.name = name
-		self.selection_type = selection_type
-		self.v2_id = v2_id
-	}
-}
-
-/// 
-public enum V1ModifierListSelectionType: String, Codable {
-	case SINGLE
-	case MULTIPLE
-}
-
-/// V1ModifierOption
-public struct V1ModifierOption: Codable {
-	/// The modifier option's unique ID.
-	public var id: String?
-	/// The ID of the modifier list the option belongs to.
-	public var modifier_list_id: String?
-	/// The modifier option's name.
-	public var name: String?
-	/// If true, the modifier option is the default option in a modifier list for which selection_type is SINGLE.
-	public var on_by_default: Bool?
-	/// Indicates the modifier option's list position when displayed in Square Point of Sale and the merchant dashboard. If more than one modifier option in the same modifier list has the same ordinal value, those options are displayed in alphabetical order.
-	public var ordinal: Int?
-	/// The modifier option's price.
-	public var price_money: V1Money?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-
-	/// V1ModifierOption
-	/// - Parameters:
-	///   - id: The modifier option's unique ID.
-	///   - modifier_list_id: The ID of the modifier list the option belongs to.
-	///   - name: The modifier option's name.
-	///   - on_by_default: If true, the modifier option is the default option in a modifier list for which selection_type is SINGLE.
-	///   - ordinal: Indicates the modifier option's list position when displayed in Square Point of Sale and the merchant dashboard. If more than one modifier option in the same modifier list has the same ordinal value, those options are displayed in alphabetical order.
-	///   - price_money: The modifier option's price.
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public init(id: String? = nil, modifier_list_id: String? = nil, name: String? = nil, on_by_default: Bool? = nil, ordinal: Int? = nil, price_money: V1Money? = nil, v2_id: String? = nil) {
-		self.id = id
-		self.modifier_list_id = modifier_list_id
-		self.name = name
-		self.on_by_default = on_by_default
-		self.ordinal = ordinal
-		self.price_money = price_money
-		self.v2_id = v2_id
 	}
 }
 
@@ -15511,79 +14584,6 @@ public enum V1OrderState: String, Codable {
 	case CANCELED
 	case REFUNDED
 	case REJECTED
-}
-
-/// V1Page
-public struct V1Page: Codable {
-	/// The cells included on the page.
-	public var cells: [V1PageCell]?
-	/// The page's unique identifier.
-	public var id: String?
-	/// The page's name, if any.
-	public var name: String?
-	/// The page's position in the merchant's list of pages. Always an integer between 0 and 6, inclusive.
-	public var page_index: Int?
-
-	/// V1Page
-	/// - Parameters:
-	///   - cells: The cells included on the page.
-	///   - id: The page's unique identifier.
-	///   - name: The page's name, if any.
-	///   - page_index: The page's position in the merchant's list of pages. Always an integer between 0 and 6, inclusive.
-	public init(cells: [V1PageCell]? = nil, id: String? = nil, name: String? = nil, page_index: Int? = nil) {
-		self.cells = cells
-		self.id = id
-		self.name = name
-		self.page_index = page_index
-	}
-}
-
-/// V1PageCell
-public struct V1PageCell: Codable {
-	/// The column of the cell. Always an integer between 0 and 4, inclusive.
-	public var column: Int?
-	/// The unique identifier of the entity represented in the cell. Not present for cells with an object_type of PLACEHOLDER.
-	public var object_id: String?
-	/// The type of entity represented in the cell (ITEM, DISCOUNT, CATEGORY, or PLACEHOLDER). See [V1PageCellObjectType](#type-v1pagecellobjecttype) for possible values
-	public var object_type: V1PageCellObjectType?
-	/// The unique identifier of the page the cell is included on.
-	public var page_id: String?
-	/// For a cell with an object_type of PLACEHOLDER, this value indicates the cell's special behavior. See [V1PageCellPlaceholderType](#type-v1pagecellplaceholdertype) for possible values
-	public var placeholder_type: V1PageCellPlaceholderType?
-	/// The row of the cell. Always an integer between 0 and 4, inclusive.
-	public var row: Int?
-
-	/// V1PageCell
-	/// - Parameters:
-	///   - column: The column of the cell. Always an integer between 0 and 4, inclusive.
-	///   - object_id: The unique identifier of the entity represented in the cell. Not present for cells with an object_type of PLACEHOLDER.
-	///   - object_type: The type of entity represented in the cell (ITEM, DISCOUNT, CATEGORY, or PLACEHOLDER). See [V1PageCellObjectType](#type-v1pagecellobjecttype) for possible values
-	///   - page_id: The unique identifier of the page the cell is included on.
-	///   - placeholder_type: For a cell with an object_type of PLACEHOLDER, this value indicates the cell's special behavior. See [V1PageCellPlaceholderType](#type-v1pagecellplaceholdertype) for possible values
-	///   - row: The row of the cell. Always an integer between 0 and 4, inclusive.
-	public init(column: Int? = nil, object_id: String? = nil, object_type: V1PageCellObjectType? = nil, page_id: String? = nil, placeholder_type: V1PageCellPlaceholderType? = nil, row: Int? = nil) {
-		self.column = column
-		self.object_id = object_id
-		self.object_type = object_type
-		self.page_id = page_id
-		self.placeholder_type = placeholder_type
-		self.row = row
-	}
-}
-
-/// 
-public enum V1PageCellObjectType: String, Codable {
-	case ITEM
-	case DISCOUNT
-	case CATEGORY
-	case PLACEHOLDER
-}
-
-/// 
-public enum V1PageCellPlaceholderType: String, Codable {
-	case ALL_ITEMS
-	case DISCOUNTS_CATEGORY
-	case REWARDS_FINDER
 }
 
 /// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
@@ -15828,7 +14828,7 @@ public enum V1PaymentItemizationItemizationType: String, Codable {
 public struct V1PaymentModifier: Codable {
 	/// The amount of money that this modifier option adds to the payment.
 	public var applied_money: V1Money?
-	/// TThe ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
+	/// The ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
 	public var modifier_option_id: String?
 	/// The modifier option's name.
 	public var name: String?
@@ -15836,7 +14836,7 @@ public struct V1PaymentModifier: Codable {
 	/// V1PaymentModifier
 	/// - Parameters:
 	///   - applied_money: The amount of money that this modifier option adds to the payment.
-	///   - modifier_option_id: TThe ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
+	///   - modifier_option_id: The ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
 	///   - name: The modifier option's name.
 	public init(applied_money: V1Money? = nil, modifier_option_id: String? = nil, name: String? = nil) {
 		self.applied_money = applied_money
@@ -16035,30 +15035,6 @@ public enum V1RefundType: String, Codable {
 	case PARTIAL
 }
 
-public struct V1RemoveFeeRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1RemoveModifierListRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1RetrieveBankAccountRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1RetrieveCashDrawerShiftRequest: Codable {
-
-	public init() {
-	}
-}
-
 public struct V1RetrieveEmployeeRequest: Codable {
 
 	public init() {
@@ -16066,18 +15042,6 @@ public struct V1RetrieveEmployeeRequest: Codable {
 }
 
 public struct V1RetrieveEmployeeRoleRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1RetrieveItemRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1RetrieveModifierListRequest: Codable {
 
 	public init() {
 	}
@@ -16096,12 +15060,6 @@ public struct V1RetrievePaymentRequest: Codable {
 }
 
 public struct V1RetrieveSettlementRequest: Codable {
-
-	public init() {
-	}
-}
-
-public struct V1RetrieveTimecardRequest: Codable {
 
 	public init() {
 	}
@@ -16325,130 +15283,6 @@ public enum V1TenderType: String, Codable {
 	case OTHER
 }
 
-/// Represents a timecard for an employee.
-public struct V1Timecard: Codable {
-	/// The ID of the location the employee clocked in from. We strongly reccomend providing a clockin_location_id. Square uses the clockin_location_id to determine a timecard’s timezone and overtime rules.
-	public var clockin_location_id: String?
-	/// The clock-in time for the timecard, in ISO 8601 format.
-	public var clockin_time: String?
-	/// The ID of the location the employee clocked out from. Provide this value only if importing timecard information from another system.
-	public var clockout_location_id: String?
-	/// The clock-out time for the timecard, in ISO 8601 format. Provide this value only if importing timecard information from another system.
-	public var clockout_time: String?
-	/// The time when the timecard was created, in ISO 8601 format.
-	public var created_at: String?
-	/// If true, the timecard was deleted by the merchant, and it is no longer valid.
-	public var deleted: Bool?
-	/// The total number of doubletime seconds worked in the timecard.
-	public var doubletime_seconds_worked: StringNumber?
-	/// The ID of the employee the timecard is associated with.
-	public var employee_id: String
-	/// The timecard's unique ID.
-	public var id: String?
-	/// The total number of overtime seconds worked in the timecard.
-	public var overtime_seconds_worked: StringNumber?
-	/// The total number of regular (non-overtime) seconds worked in the timecard.
-	public var regular_seconds_worked: StringNumber?
-	/// The time when the timecard was most recently updated, in ISO 8601 format.
-	public var updated_at: String?
-
-	/// Represents a timecard for an employee.
-	/// - Parameters:
-	///   - clockin_location_id: The ID of the location the employee clocked in from. We strongly reccomend providing a clockin_location_id. Square uses the clockin_location_id to determine a timecard’s timezone and overtime rules.
-	///   - clockin_time: The clock-in time for the timecard, in ISO 8601 format.
-	///   - clockout_location_id: The ID of the location the employee clocked out from. Provide this value only if importing timecard information from another system.
-	///   - clockout_time: The clock-out time for the timecard, in ISO 8601 format. Provide this value only if importing timecard information from another system.
-	///   - created_at: The time when the timecard was created, in ISO 8601 format.
-	///   - deleted: If true, the timecard was deleted by the merchant, and it is no longer valid.
-	///   - doubletime_seconds_worked: The total number of doubletime seconds worked in the timecard.
-	///   - employee_id: The ID of the employee the timecard is associated with.
-	///   - id: The timecard's unique ID.
-	///   - overtime_seconds_worked: The total number of overtime seconds worked in the timecard.
-	///   - regular_seconds_worked: The total number of regular (non-overtime) seconds worked in the timecard.
-	///   - updated_at: The time when the timecard was most recently updated, in ISO 8601 format.
-	public init(employee_id: String, clockin_location_id: String? = nil, clockin_time: String? = nil, clockout_location_id: String? = nil, clockout_time: String? = nil, created_at: String? = nil, deleted: Bool? = nil, doubletime_seconds_worked: StringNumber? = nil, id: String? = nil, overtime_seconds_worked: StringNumber? = nil, regular_seconds_worked: StringNumber? = nil, updated_at: String? = nil) {
-		self.employee_id = employee_id
-		self.clockin_location_id = clockin_location_id
-		self.clockin_time = clockin_time
-		self.clockout_location_id = clockout_location_id
-		self.clockout_time = clockout_time
-		self.created_at = created_at
-		self.deleted = deleted
-		self.doubletime_seconds_worked = doubletime_seconds_worked
-		self.id = id
-		self.overtime_seconds_worked = overtime_seconds_worked
-		self.regular_seconds_worked = regular_seconds_worked
-		self.updated_at = updated_at
-	}
-}
-
-/// V1TimecardEvent
-public struct V1TimecardEvent: Codable {
-	/// The time the employee clocked in, in ISO 8601 format.
-	public var clockin_time: String?
-	/// The time the employee clocked out, in ISO 8601 format.
-	public var clockout_time: String?
-	/// The time when the event was created, in ISO 8601 format.
-	public var created_at: String?
-	/// The ID of the timecard to list events for. See [V1TimecardEventEventType](#type-v1timecardeventeventtype) for possible values
-	public var event_type: V1TimecardEventEventType?
-	/// The event's unique ID.
-	public var id: String?
-
-	/// V1TimecardEvent
-	/// - Parameters:
-	///   - clockin_time: The time the employee clocked in, in ISO 8601 format.
-	///   - clockout_time: The time the employee clocked out, in ISO 8601 format.
-	///   - created_at: The time when the event was created, in ISO 8601 format.
-	///   - event_type: The ID of the timecard to list events for. See [V1TimecardEventEventType](#type-v1timecardeventeventtype) for possible values
-	///   - id: The event's unique ID.
-	public init(clockin_time: String? = nil, clockout_time: String? = nil, created_at: String? = nil, event_type: V1TimecardEventEventType? = nil, id: String? = nil) {
-		self.clockin_time = clockin_time
-		self.clockout_time = clockout_time
-		self.created_at = created_at
-		self.event_type = event_type
-		self.id = id
-	}
-}
-
-/// Actions that resulted in a change to a timecard. All timecard events created with the Connect API have an event type that begins with `API`.
-public enum V1TimecardEventEventType: String, Codable {
-	/// The timecard was created by a request to the `CreateTimecard` endpoint.
-	case API_CREATE
-	/// The timecard was edited by a request to the `UpdateTimecard` endpoint.
-	case API_EDIT
-	/// The timecard was deleted by a request to the `DeleteTimecard` endpoint.
-	case API_DELETE
-	/// The employee clocked in via Square Point of Sale.
-	case REGISTER_CLOCKIN
-	/// The employee clocked out via Square Point of Sale.
-	case REGISTER_CLOCKOUT
-	/// A supervisor clocked out the employee from the merchant dashboard.
-	case DASHBOARD_SUPERVISOR_CLOSE
-	/// A supervisor manually edited the timecard from the merchant dashboard
-	case DASHBOARD_EDIT
-	/// A supervisor deleted the timecard from the merchant dashboard.
-	case DASHBOARD_DELETE
-}
-
-public struct V1UpdateCategoryRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Category
-
-	public init(body: V1Category) {
-		self.body = body
-	}
-}
-
-public struct V1UpdateDiscountRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Discount
-
-	public init(body: V1Discount) {
-		self.body = body
-	}
-}
-
 public struct V1UpdateEmployeeRequest: Codable {
 	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 	public var body: V1Employee
@@ -16463,56 +15297,6 @@ public struct V1UpdateEmployeeRoleRequest: Codable {
 	public var body: V1EmployeeRole
 
 	public init(body: V1EmployeeRole) {
-		self.body = body
-	}
-}
-
-public struct V1UpdateFeeRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Fee
-
-	public init(body: V1Fee) {
-		self.body = body
-	}
-}
-
-public struct V1UpdateItemRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Item
-
-	public init(body: V1Item) {
-		self.body = body
-	}
-}
-
-/// V1UpdateModifierListRequest
-public struct V1UpdateModifierListRequest: Codable {
-	/// The modifier list's name.
-	public var name: String?
-	/// Indicates whether multiple options from the modifier list can be applied to a single item. See [V1UpdateModifierListRequestSelectionType](#type-v1updatemodifierlistrequestselectiontype) for possible values
-	public var selection_type: V1UpdateModifierListRequestSelectionType?
-
-	/// V1UpdateModifierListRequest
-	/// - Parameters:
-	///   - name: The modifier list's name.
-	///   - selection_type: Indicates whether multiple options from the modifier list can be applied to a single item. See [V1UpdateModifierListRequestSelectionType](#type-v1updatemodifierlistrequestselectiontype) for possible values
-	public init(name: String? = nil, selection_type: V1UpdateModifierListRequestSelectionType? = nil) {
-		self.name = name
-		self.selection_type = selection_type
-	}
-}
-
-/// 
-public enum V1UpdateModifierListRequestSelectionType: String, Codable {
-	case SINGLE
-	case MULTIPLE
-}
-
-public struct V1UpdateModifierOptionRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1ModifierOption
-
-	public init(body: V1ModifierOption) {
 		self.body = body
 	}
 }
@@ -16551,115 +15335,6 @@ public enum V1UpdateOrderRequestAction: String, Codable {
 	case COMPLETE
 	case CANCEL
 	case REFUND
-}
-
-public struct V1UpdatePageCellRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1PageCell
-
-	public init(body: V1PageCell) {
-		self.body = body
-	}
-}
-
-public struct V1UpdatePageRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Page
-
-	public init(body: V1Page) {
-		self.body = body
-	}
-}
-
-public struct V1UpdateTimecardRequest: Codable {
-	/// An object containing the fields to POST for the request. See the corresponding object definition for field details.
-	public var body: V1Timecard
-
-	public init(body: V1Timecard) {
-		self.body = body
-	}
-}
-
-public struct V1UpdateVariationRequest: Codable {
-	/// An object containing the fields to POST for the request.  See the corresponding object definition for field details.
-	public var body: V1Variation
-
-	public init(body: V1Variation) {
-		self.body = body
-	}
-}
-
-/// V1Variation
-public struct V1Variation: Codable {
-	/// The item variation's unique ID.
-	public var id: String?
-	/// If the inventory quantity for the variation is less than or equal to this value and inventory_alert_type is LOW_QUANTITY, the variation displays an alert in the merchant dashboard.
-	public var inventory_alert_threshold: Int?
-	/// Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its inventory_alert_threshold. See [V1VariationInventoryAlertType](#type-v1variationinventoryalerttype) for possible values
-	public var inventory_alert_type: V1VariationInventoryAlertType?
-	/// The ID of the variation's associated item.
-	public var item_id: String?
-	/// The item variation's name.
-	public var name: String?
-	/// Indicates the variation's list position when displayed in Square Point of Sale and the merchant dashboard. If more than one variation for the same item has the same ordinal value, those variations are displayed in alphabetical order
-	public var ordinal: Int?
-	/// The item variation's price, if any.
-	public var price_money: V1Money?
-	/// Indicates whether the item variation's price is fixed or determined at the time of sale. See [V1VariationPricingType](#type-v1variationpricingtype) for possible values
-	public var pricing_type: V1VariationPricingType?
-	/// The item variation's SKU, if any.
-	public var sku: String?
-	/// If true, inventory tracking is active for the variation.
-	public var track_inventory: Bool?
-	/// Arbitrary metadata associated with the variation. Cannot exceed 255 characters.
-	public var user_data: String?
-	/// The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public var v2_id: String?
-
-	/// V1Variation
-	/// - Parameters:
-	///   - id: The item variation's unique ID.
-	///   - inventory_alert_threshold: If the inventory quantity for the variation is less than or equal to this value and inventory_alert_type is LOW_QUANTITY, the variation displays an alert in the merchant dashboard.
-	///   - inventory_alert_type: Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its inventory_alert_threshold. See [V1VariationInventoryAlertType](#type-v1variationinventoryalerttype) for possible values
-	///   - item_id: The ID of the variation's associated item.
-	///   - name: The item variation's name.
-	///   - ordinal: Indicates the variation's list position when displayed in Square Point of Sale and the merchant dashboard. If more than one variation for the same item has the same ordinal value, those variations are displayed in alphabetical order
-	///   - price_money: The item variation's price, if any.
-	///   - pricing_type: Indicates whether the item variation's price is fixed or determined at the time of sale. See [V1VariationPricingType](#type-v1variationpricingtype) for possible values
-	///   - sku: The item variation's SKU, if any.
-	///   - track_inventory: If true, inventory tracking is active for the variation.
-	///   - user_data: Arbitrary metadata associated with the variation. Cannot exceed 255 characters.
-	///   - v2_id: The ID of the CatalogObject in the Connect v2 API. Objects that are shared across multiple locations share the same v2 ID.
-	public init(id: String? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: V1VariationInventoryAlertType? = nil, item_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: V1Money? = nil, pricing_type: V1VariationPricingType? = nil, sku: String? = nil, track_inventory: Bool? = nil, user_data: String? = nil, v2_id: String? = nil) {
-		self.id = id
-		self.inventory_alert_threshold = inventory_alert_threshold
-		self.inventory_alert_type = inventory_alert_type
-		self.item_id = item_id
-		self.name = name
-		self.ordinal = ordinal
-		self.price_money = price_money
-		self.pricing_type = pricing_type
-		self.sku = sku
-		self.track_inventory = track_inventory
-		self.user_data = user_data
-		self.v2_id = v2_id
-	}
-}
-
-/// 
-public enum V1VariationInventoryAlertType: String, Codable {
-	case LOW_QUANTITY
-	case NONE
-	case INVESTMENT
-	case LOAN
-	case SAVINGS
-	case OTHER
-}
-
-/// 
-public enum V1VariationPricingType: String, Codable {
-	case FIXED_PRICING
-	case VARIABLE_PRICING
 }
 
 public struct VoidTransactionRequest: Codable {

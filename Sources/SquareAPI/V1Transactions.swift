@@ -1,50 +1,3 @@
-/// Provides non-confidential details for all of a location's associated bank accounts. This endpoint does not provide full bank account numbers, and there is no way to obtain a full bank account number with the Connect API.
-@available(*,deprecated)
-public struct V1ListBankAccounts: SquareAPIEndpoint {
-	public static var method: HTTPMethod { return .GET }
-	public typealias inputType = Empty
-	public typealias outputType = [V1BankAccount]
-	public typealias paramType = Params
-	public struct Params {
-		let location_id: String
-		/// Provides non-confidential details for all of a location's associated bank accounts. This endpoint does not provide full bank account numbers, and there is no way to obtain a full bank account number with the Connect API.
-		/// - Parameters:
-		///   - location_id: The ID of the location to list bank accounts for.
-		public init(location_id: String) {
-			self.location_id = location_id
-		}
-	}
-	public static func endpoint(for inputs: Params) throws -> String {
-		let url = "/v1/\(inputs.location_id)/bank-accounts"
-		return url
-	}
-}
-
-/// Provides non-confidential details for a merchant's associated bank account. This endpoint does not provide full bank account numbers, and there is no way to obtain a full bank account number with the Connect API.
-@available(*,deprecated)
-public struct V1RetrieveBankAccount: SquareAPIEndpoint {
-	public static var method: HTTPMethod { return .GET }
-	public typealias inputType = Empty
-	public typealias outputType = V1BankAccount
-	public typealias paramType = Params
-	public struct Params {
-		let location_id: String
-		let bank_account_id: String
-		/// Provides non-confidential details for a merchant's associated bank account. This endpoint does not provide full bank account numbers, and there is no way to obtain a full bank account number with the Connect API.
-		/// - Parameters:
-		///   - location_id: The ID of the bank account's associated location.
-		///   - bank_account_id: The bank account's Square-issued ID. You obtain this value from Settlement objects returned.
-		public init(location_id: String, bank_account_id: String) {
-			self.location_id = location_id
-			self.bank_account_id = bank_account_id
-		}
-	}
-	public static func endpoint(for inputs: Params) throws -> String {
-		let url = "/v1/\(inputs.location_id)/bank-accounts/\(inputs.bank_account_id)"
-		return url
-	}
-}
-
 /// Provides summary information for a merchant's online store orders.
 public struct V1ListOrders: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -59,7 +12,7 @@ public struct V1ListOrders: SquareAPIEndpoint {
 		/// Provides summary information for a merchant's online store orders.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list online store orders for.
-		///   - order: TThe order in which payments are listed in the response.
+		///   - order: The order in which payments are listed in the response.
 		///   - limit: The maximum number of payments to return in a single response. This value cannot exceed 200.
 		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 		public init(location_id: String, order: String? = nil, limit: Int? = nil, batch_token: String? = nil) {
@@ -223,7 +176,7 @@ public struct V1ListRefunds: SquareAPIEndpoint {
 		/// Provides the details for all refunds initiated by a merchant or any of the merchant's mobile staff during a date range. Date ranges cannot exceed one year in length.
 		/// - Parameters:
 		///   - location_id: The ID of the location to list refunds for.
-		///   - order: TThe order in which payments are listed in the response.
+		///   - order: The order in which payments are listed in the response.
 		///   - begin_time: The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
 		///   - end_time: The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
 		///   - limit: The approximate number of refunds to return in a single response. Default: 100. Max: 200. Response may contain more results than the prescribed limit when refunds are made simultaneously to multiple tenders in a payment or when refunds are generated in an exchange to account for the value of returned goods.
