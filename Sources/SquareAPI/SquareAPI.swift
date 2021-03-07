@@ -24,7 +24,9 @@ public extension Duration {
 	}
 }
 
-extension String: Error {}
+enum DecodeError: Error {
+	case message(String)
+}
 
 //extension Timestamp {
 //	var date3339: Date? { return iso3339.date(from: self) }
@@ -64,7 +66,7 @@ public struct StringNumber: Codable {
 			rawValue = "\(intValue)"
 		}
 		else {
-			throw "Cannot get value even trying String, Float, and Int"
+			throw DecodeError.message( "Cannot get value even trying String, Float, and Int" )
 		}
 	}
 	
