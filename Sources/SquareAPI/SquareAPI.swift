@@ -24,6 +24,8 @@ public extension Duration {
 	}
 }
 
+extension String: Error {}
+
 //extension Timestamp {
 //	var date3339: Date? { return iso3339.date(from: self) }
 //}
@@ -52,7 +54,18 @@ public struct StringNumber: Codable {
 
 	public init(from decoder: Decoder) throws {
 		let container = try decoder.singleValueContainer()
-		rawValue = try container.decode(String.self)
+		if let strValue = try? container.decode(String.self) {
+			rawValue = strValue
+		}
+		else if let fltValue = try? container.decode(Float.self) {
+			rawValue = "\(fltValue)"
+		}
+		else if let intValue = try? container.decode(Int.self) {
+			rawValue = "\(intValue)"
+		}
+		else {
+			throw "Cannot get value even trying String, Float, and Int"
+		}
 	}
 	
 	public func encode(to encoder: Encoder) throws {
