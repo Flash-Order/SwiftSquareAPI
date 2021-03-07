@@ -486,15 +486,15 @@ public struct BatchRetrieveInventoryChangesRequest: Codable {
 	/// The filter to return results by `Location` ID.  The filter is only applicable when set. The default value is null.
 	public var location_ids: [String]?
 	/// The filter to return `ADJUSTMENT` query results by `InventoryState`. This filter is only applied when set. The default value is null. See [InventoryState](#type-inventorystate) for possible values
-	public var states: InventoryState?
+	public var states: [InventoryState]?
 	/// The filter to return results by `InventoryChangeType` values other than `TRANSFER`. The default value is `[PHYSICAL_COUNT, ADJUSTMENT]`. See [InventoryChangeType](#type-inventorychangetype) for possible values
-	public var types: InventoryChangeType?
+	public var types: [InventoryChangeType]?
 	/// The filter to return results with their `calculated_at` value   after the given time as specified in an RFC 3339 timestamp.  The default value is the UNIX epoch of (`1970-01-01T00:00:00Z`).
 	public var updated_after: Timestamp?
 	/// The filter to return results with their `created_at` or `calculated_at` value   strictly before the given time as specified in an RFC 3339 timestamp.  The default value is the UNIX epoch of (`1970-01-01T00:00:00Z`).
 	public var updated_before: Timestamp?
 
-	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, location_ids: [String]? = nil, states: InventoryState? = nil, types: InventoryChangeType? = nil, updated_after: Timestamp? = nil, updated_before: Timestamp? = nil) {
+	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, location_ids: [String]? = nil, states: [InventoryState]? = nil, types: [InventoryChangeType]? = nil, updated_after: Timestamp? = nil, updated_before: Timestamp? = nil) {
 		self.catalog_object_ids = catalog_object_ids
 		self.cursor = cursor
 		self.location_ids = location_ids
@@ -528,11 +528,11 @@ public struct BatchRetrieveInventoryCountsRequest: Codable {
 	/// The filter to return results by `Location` ID.  This filter is applicable only when set. The default is null.
 	public var location_ids: [String]?
 	/// The filter to return results by `InventoryState`. The filter is only applicable when set. Ignored are untracked states of `NONE`, `SOLD`, and `UNLINKED_RETURN`. The default is null. See [InventoryState](#type-inventorystate) for possible values
-	public var states: InventoryState?
+	public var states: [InventoryState]?
 	/// The filter to return results with their `calculated_at` value  after the given time as specified in an RFC 3339 timestamp.  The default value is the UNIX epoch of (`1970-01-01T00:00:00Z`).
 	public var updated_after: Timestamp?
 
-	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, location_ids: [String]? = nil, states: InventoryState? = nil, updated_after: Timestamp? = nil) {
+	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, location_ids: [String]? = nil, states: [InventoryState]? = nil, updated_after: Timestamp? = nil) {
 		self.catalog_object_ids = catalog_object_ids
 		self.cursor = cursor
 		self.location_ids = location_ids
@@ -842,7 +842,7 @@ public struct BusinessAppointmentSettings: Codable {
 	/// The cut-off time in seconds for allowing clients to cancel or reschedule an appointment.
 	public var cancellation_window_seconds: Int?
 	/// Types of the location allowed for bookings. See [BusinessAppointmentSettingsBookingLocationType](#type-businessappointmentsettingsbookinglocationtype) for possible values
-	public var location_types: BusinessAppointmentSettingsBookingLocationType?
+	public var location_types: [BusinessAppointmentSettingsBookingLocationType]?
 	/// The maximum number of daily appointments per team member or per location.
 	public var max_appointments_per_day_limit: Int?
 	/// Indicates whether the daily appointment limit applies to team members or to business locations. See [BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType](#type-businessappointmentsettingsmaxappointmentsperdaylimittype) for possible values
@@ -871,7 +871,7 @@ public struct BusinessAppointmentSettings: Codable {
 	///   - min_booking_lead_time_seconds: The minimum lead time in seconds before a service can be booked. Bookings must be created at least this far ahead of the booking's starting time.
 	///   - multiple_service_booking_enabled: Indicates whether a customer can book multiple services in a single online booking.
 	///   - skip_booking_flow_staff_selection: Indicates whether customers has an assigned staff member (`true`) or can select s staff member of their choice (`false`).
-	public init(alignment_time: BusinessAppointmentSettingsAlignmentTime? = nil, any_team_member_booking_enabled: Bool? = nil, cancellation_fee_money: Money? = nil, cancellation_policy: BusinessAppointmentSettingsCancellationPolicy? = nil, cancellation_policy_text: String? = nil, cancellation_window_seconds: Int? = nil, location_types: BusinessAppointmentSettingsBookingLocationType? = nil, max_appointments_per_day_limit: Int? = nil, max_appointments_per_day_limit_type: BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType? = nil, max_booking_lead_time_seconds: Int? = nil, min_booking_lead_time_seconds: Int? = nil, multiple_service_booking_enabled: Bool? = nil, skip_booking_flow_staff_selection: Bool? = nil) {
+	public init(alignment_time: BusinessAppointmentSettingsAlignmentTime? = nil, any_team_member_booking_enabled: Bool? = nil, cancellation_fee_money: Money? = nil, cancellation_policy: BusinessAppointmentSettingsCancellationPolicy? = nil, cancellation_policy_text: String? = nil, cancellation_window_seconds: Int? = nil, location_types: [BusinessAppointmentSettingsBookingLocationType]? = nil, max_appointments_per_day_limit: Int? = nil, max_appointments_per_day_limit_type: BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType? = nil, max_booking_lead_time_seconds: Int? = nil, min_booking_lead_time_seconds: Int? = nil, multiple_service_booking_enabled: Bool? = nil, skip_booking_flow_staff_selection: Bool? = nil) {
 		self.alignment_time = alignment_time
 		self.any_team_member_booking_enabled = any_team_member_booking_enabled
 		self.cancellation_fee_money = cancellation_fee_money
@@ -1648,7 +1648,7 @@ public struct CatalogCategory: Codable {
 /// Contains information defining a custom attribute. Custom attributes are intended to store additional information about a catalog object or to associate a catalog object with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.). [Read more about custom attributes](/catalog-api/add-custom-attributes)
 public struct CatalogCustomAttributeDefinition: Codable {
 	/// The set of Catalog Object Types that this Custom Attribute may be applied to. Currently, only `ITEM` and `ITEM_VARIATION` are allowed. At least one type must be included. See [CatalogObjectType](#type-catalogobjecttype) for possible values
-	public var allowed_object_types: CatalogObjectType
+	public var allowed_object_types: [CatalogObjectType]
 	/// The visibility of a custom attribute to applications other than the application that created the attribute. See [CatalogCustomAttributeDefinitionAppVisibility](#type-catalogcustomattributedefinitionappvisibility) for possible values
 	public var app_visibility: CatalogCustomAttributeDefinitionAppVisibility?
 	/// __Read-only.__ The number of custom attributes that reference this custom attribute definition. Set by the server in response to a ListCatalog request with `include_counts` set to `true`.  If the actual count is greater than 100, `custom_attribute_usage_count` will be set to `100`.
@@ -1686,7 +1686,7 @@ public struct CatalogCustomAttributeDefinition: Codable {
 	///   - source_application: __Read only.__ Contains information about the application that created this custom attribute definition.
 	///   - string_config: Optionally, populated when `type` = `STRING`, unset otherwise.
 	///   - type: The type of this custom attribute. Cannot be modified after creation. Required. See [CatalogCustomAttributeDefinitionType](#type-catalogcustomattributedefinitiontype) for possible values
-	public init(allowed_object_types: CatalogObjectType, name: String, type: CatalogCustomAttributeDefinitionType, app_visibility: CatalogCustomAttributeDefinitionAppVisibility? = nil, custom_attribute_usage_count: Int? = nil, description: String? = nil, key: String? = nil, number_config: CatalogCustomAttributeDefinitionNumberConfig? = nil, selection_config: CatalogCustomAttributeDefinitionSelectionConfig? = nil, seller_visibility: CatalogCustomAttributeDefinitionSellerVisibility? = nil, source_application: SourceApplication? = nil, string_config: CatalogCustomAttributeDefinitionStringConfig? = nil) {
+	public init(allowed_object_types: [CatalogObjectType], name: String, type: CatalogCustomAttributeDefinitionType, app_visibility: CatalogCustomAttributeDefinitionAppVisibility? = nil, custom_attribute_usage_count: Int? = nil, description: String? = nil, key: String? = nil, number_config: CatalogCustomAttributeDefinitionNumberConfig? = nil, selection_config: CatalogCustomAttributeDefinitionSelectionConfig? = nil, seller_visibility: CatalogCustomAttributeDefinitionSellerVisibility? = nil, source_application: SourceApplication? = nil, string_config: CatalogCustomAttributeDefinitionStringConfig? = nil) {
 		self.allowed_object_types = allowed_object_types
 		self.name = name
 		self.type = type
@@ -5075,13 +5075,13 @@ public struct CustomerCreationSourceFilter: Codable {
 	/// Indicates whether a customer profile matching the filter criteria should be included in the result or excluded from the result.  Default: `INCLUDE`. See [CustomerInclusionExclusion](#type-customerinclusionexclusion) for possible values
 	public var rule: CustomerInclusionExclusion?
 	/// The list of creation sources used as filtering criteria. See [CustomerCreationSource](#type-customercreationsource) for possible values
-	public var values: CustomerCreationSource?
+	public var values: [CustomerCreationSource]?
 
 	/// Creation source filter.  If one or more creation sources are set, customer profiles are included in, or excluded from, the result if they match at least one of the filter criteria.
 	/// - Parameters:
 	///   - rule: Indicates whether a customer profile matching the filter criteria should be included in the result or excluded from the result.  Default: `INCLUDE`. See [CustomerInclusionExclusion](#type-customerinclusionexclusion) for possible values
 	///   - values: The list of creation sources used as filtering criteria. See [CustomerCreationSource](#type-customercreationsource) for possible values
-	public init(rule: CustomerInclusionExclusion? = nil, values: CustomerCreationSource? = nil) {
+	public init(rule: CustomerInclusionExclusion? = nil, values: [CustomerCreationSource]? = nil) {
 		self.rule = rule
 		self.values = values
 	}
@@ -7492,9 +7492,9 @@ public struct ListDeviceCodesRequest: Codable {
 	/// If specified, only returns DeviceCodes targeting the specified product type. Returns DeviceCodes of all product types if empty. See [ProductType](#type-producttype) for possible values
 	public var product_type: ProductType?
 	/// If specified, returns DeviceCodes with the specified statuses. Returns DeviceCodes of status `PAIRED` and `UNPAIRED` if empty. See [DeviceCodeStatus](#type-devicecodestatus) for possible values
-	public var status: DeviceCodeStatus?
+	public var status: [DeviceCodeStatus]?
 
-	public init(cursor: String? = nil, location_id: String? = nil, product_type: ProductType? = nil, status: DeviceCodeStatus? = nil) {
+	public init(cursor: String? = nil, location_id: String? = nil, product_type: ProductType? = nil, status: [DeviceCodeStatus]? = nil) {
 		self.cursor = cursor
 		self.location_id = location_id
 		self.product_type = product_type
@@ -7549,14 +7549,14 @@ public struct ListDisputesRequest: Codable {
 	/// The ID of the location for which to return a list of disputes. If not specified, the endpoint returns all open disputes (the dispute status is not `INQUIRY_CLOSED`, `WON`, or `LOST`) associated with all locations.
 	public var location_id: String?
 	/// The dispute states to filter the result. If not specified, the endpoint returns all open disputes (the dispute status is not `INQUIRY_CLOSED`, `WON`, or `LOST`). See [DisputeState](#type-disputestate) for possible values
-	public var states: DisputeState?
+	public var states: [DisputeState]?
 
 	/// Defines the request parameters for the `ListDisputes` endpoint.
 	/// - Parameters:
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - location_id: The ID of the location for which to return a list of disputes. If not specified, the endpoint returns all open disputes (the dispute status is not `INQUIRY_CLOSED`, `WON`, or `LOST`) associated with all locations.
 	///   - states: The dispute states to filter the result. If not specified, the endpoint returns all open disputes (the dispute status is not `INQUIRY_CLOSED`, `WON`, or `LOST`). See [DisputeState](#type-disputestate) for possible values
-	public init(cursor: String? = nil, location_id: String? = nil, states: DisputeState? = nil) {
+	public init(cursor: String? = nil, location_id: String? = nil, states: [DisputeState]? = nil) {
 		self.cursor = cursor
 		self.location_id = location_id
 		self.states = states
@@ -8164,7 +8164,7 @@ public struct Location: Codable {
 	/// The business name of the location This is the name visible to the customers of the location. For example, this name appears on customer receipts.
 	public var business_name: String?
 	/// The Square features that are enabled for the location. See `LocationCapability` for possible values. See [LocationCapability](#type-locationcapability) for possible values
-	public let capabilities: LocationCapability?
+	public let capabilities: [LocationCapability]?
 	/// The physical coordinates (latitude and longitude) of the location.
 	public var coordinates: Coordinates?
 	/// The country of the location, in ISO 3166-1-alpha-2 format.  See `Country` for possible values. See [Country](#type-country) for possible values
@@ -8208,7 +8208,7 @@ public struct Location: Codable {
 	/// The website URL of the location.
 	public var website_url: String?
 
-	public init(address: Address? = nil, business_email: String? = nil, business_hours: BusinessHours? = nil, business_name: String? = nil, capabilities: LocationCapability? = nil, coordinates: Coordinates? = nil, country: Country? = nil, created_at: Timestamp? = nil, currency: Currency? = nil, description: String? = nil, facebook_url: String? = nil, full_format_logo_url: String? = nil, id: String? = nil, instagram_username: String? = nil, language_code: String? = nil, logo_url: String? = nil, mcc: String? = nil, merchant_id: String? = nil, name: String? = nil, phone_number: String? = nil, pos_background_url: String? = nil, status: LocationStatus? = nil, timezone: String? = nil, twitter_username: String? = nil, type: LocationType? = nil, website_url: String? = nil) {
+	public init(address: Address? = nil, business_email: String? = nil, business_hours: BusinessHours? = nil, business_name: String? = nil, capabilities: [LocationCapability]? = nil, coordinates: Coordinates? = nil, country: Country? = nil, created_at: Timestamp? = nil, currency: Currency? = nil, description: String? = nil, facebook_url: String? = nil, full_format_logo_url: String? = nil, id: String? = nil, instagram_username: String? = nil, language_code: String? = nil, logo_url: String? = nil, mcc: String? = nil, merchant_id: String? = nil, name: String? = nil, phone_number: String? = nil, pos_background_url: String? = nil, status: LocationStatus? = nil, timezone: String? = nil, twitter_username: String? = nil, type: LocationType? = nil, website_url: String? = nil) {
 		self.address = address
 		self.business_email = business_email
 		self.business_hours = business_hours
@@ -8589,12 +8589,12 @@ public enum LoyaltyEventType: String, Codable {
 /// Filter events by event type.
 public struct LoyaltyEventTypeFilter: Codable {
 	/// The loyalty event types used to filter the result. If multiple values are specified, the endpoint uses a  logical OR to combine them. See [LoyaltyEventType](#type-loyaltyeventtype) for possible values
-	public var types: LoyaltyEventType
+	public var types: [LoyaltyEventType]
 
 	/// Filter events by event type.
 	/// - Parameters:
 	///   - types: The loyalty event types used to filter the result. If multiple values are specified, the endpoint uses a  logical OR to combine them. See [LoyaltyEventType](#type-loyaltyeventtype) for possible values
-	public init(types: LoyaltyEventType) {
+	public init(types: [LoyaltyEventType]) {
 		self.types = types
 	}
 }
@@ -11739,11 +11739,11 @@ public struct SearchCatalogItemsRequest: Codable {
 	/// The maximum number of results to return per page. The default value is 100.
 	public var limit: Int?
 	/// The product types query expression to return items or item variations having the specified product types. See [CatalogItemProductType](#type-catalogitemproducttype) for possible values
-	public var product_types: CatalogItemProductType?
+	public var product_types: [CatalogItemProductType]?
 	/// The order to sort the results by item names. The default sort order is ascending (`ASC`). See [SortOrder](#type-sortorder) for possible values
 	public var sort_order: SortOrder?
 	/// The stock-level query expression to return item variations with the specified stock levels. See [SearchCatalogItemsRequestStockLevel](#type-searchcatalogitemsrequeststocklevel) for possible values
-	public var stock_levels: SearchCatalogItemsRequestStockLevel?
+	public var stock_levels: [SearchCatalogItemsRequestStockLevel]?
 	/// The text filter expression to return items or item variations containing specified text in the `name`, `description`, or `abbreviation` attribute value of an item, or in the `name`, `sku`, or `upc` attribute value of an item variation.
 	public var text_filter: String?
 
@@ -11758,7 +11758,7 @@ public struct SearchCatalogItemsRequest: Codable {
 	///   - sort_order: The order to sort the results by item names. The default sort order is ascending (`ASC`). See [SortOrder](#type-sortorder) for possible values
 	///   - stock_levels: The stock-level query expression to return item variations with the specified stock levels. See [SearchCatalogItemsRequestStockLevel](#type-searchcatalogitemsrequeststocklevel) for possible values
 	///   - text_filter: The text filter expression to return items or item variations containing specified text in the `name`, `description`, or `abbreviation` attribute value of an item, or in the `name`, `sku`, or `upc` attribute value of an item variation.
-	public init(category_ids: [String]? = nil, cursor: String? = nil, custom_attribute_filters: [CustomAttributeFilter]? = nil, enabled_location_ids: [String]? = nil, limit: Int? = nil, product_types: CatalogItemProductType? = nil, sort_order: SortOrder? = nil, stock_levels: SearchCatalogItemsRequestStockLevel? = nil, text_filter: String? = nil) {
+	public init(category_ids: [String]? = nil, cursor: String? = nil, custom_attribute_filters: [CustomAttributeFilter]? = nil, enabled_location_ids: [String]? = nil, limit: Int? = nil, product_types: [CatalogItemProductType]? = nil, sort_order: SortOrder? = nil, stock_levels: [SearchCatalogItemsRequestStockLevel]? = nil, text_filter: String? = nil) {
 		self.category_ids = category_ids
 		self.cursor = cursor
 		self.custom_attribute_filters = custom_attribute_filters
@@ -11816,11 +11816,11 @@ public struct SearchCatalogObjectsRequest: Codable {
 	/// A limit on the number of results to be returned in a single page. The limit is advisory - the implementation may return more or fewer results. If the supplied limit is negative, zero, or is higher than the maximum limit of 1,000, it will be ignored.
 	public var limit: Int?
 	/// The desired set of object types to appear in the search results. See [CatalogObjectType](#type-catalogobjecttype) for possible values
-	public var object_types: CatalogObjectType?
+	public var object_types: [CatalogObjectType]?
 	/// A query to be used to filter or sort the results. If no query is specified, the entire catalog will be returned.
 	public var query: CatalogQuery?
 
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil, limit: Int? = nil, object_types: CatalogObjectType? = nil, query: CatalogQuery? = nil) {
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil, limit: Int? = nil, object_types: [CatalogObjectType]? = nil, query: CatalogQuery? = nil) {
 		self.begin_time = begin_time
 		self.cursor = cursor
 		self.include_deleted_objects = include_deleted_objects
@@ -12162,15 +12162,15 @@ public struct SearchOrdersFilter: Codable {
 /// Filter based on [Order Fulfillment](#type-orderfulfillment) information.
 public struct SearchOrdersFulfillmentFilter: Codable {
 	/// List of `fulfillment states` to filter for. Will return orders if any of its fulfillments match any of the fulfillment states listed in this field. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
-	public var fulfillment_states: OrderFulfillmentState?
+	public var fulfillment_states: [OrderFulfillmentState]?
 	/// List of `fulfillment types` to filter for. Will return orders if any of its fulfillments match any of the fulfillment types listed in this field. See [OrderFulfillmentType](#type-orderfulfillmenttype) for possible values
-	public var fulfillment_types: OrderFulfillmentType?
+	public var fulfillment_types: [OrderFulfillmentType]?
 
 	/// Filter based on [Order Fulfillment](#type-orderfulfillment) information.
 	/// - Parameters:
 	///   - fulfillment_states: List of `fulfillment states` to filter for. Will return orders if any of its fulfillments match any of the fulfillment states listed in this field. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
 	///   - fulfillment_types: List of `fulfillment types` to filter for. Will return orders if any of its fulfillments match any of the fulfillment types listed in this field. See [OrderFulfillmentType](#type-orderfulfillmenttype) for possible values
-	public init(fulfillment_states: OrderFulfillmentState? = nil, fulfillment_types: OrderFulfillmentType? = nil) {
+	public init(fulfillment_states: [OrderFulfillmentState]? = nil, fulfillment_types: [OrderFulfillmentType]? = nil) {
 		self.fulfillment_states = fulfillment_states
 		self.fulfillment_types = fulfillment_types
 	}
@@ -12290,12 +12290,12 @@ public struct SearchOrdersSourceFilter: Codable {
 /// Filter by current Order `state`.
 public struct SearchOrdersStateFilter: Codable {
 	/// States to filter for. See [OrderState](#type-orderstate) for possible values
-	public var states: OrderState
+	public var states: [OrderState]
 
 	/// Filter by current Order `state`.
 	/// - Parameters:
 	///   - states: States to filter for. See [OrderState](#type-orderstate) for possible values
-	public init(states: OrderState) {
+	public init(states: [OrderState]) {
 		self.states = states
 	}
 }
@@ -14196,7 +14196,7 @@ public struct V1EmployeeRole: Codable {
 	/// The role's merchant-defined name.
 	public var name: String
 	/// The role's permissions. See [V1EmployeeRolePermissions](#type-v1employeerolepermissions) for possible values
-	public var permissions: V1EmployeeRolePermissions
+	public var permissions: [V1EmployeeRolePermissions]
 	/// The time when the employee entity was most recently updated, in ISO 8601 format. Is set by Square when the Role updated.
 	public var updated_at: String?
 
@@ -14208,7 +14208,7 @@ public struct V1EmployeeRole: Codable {
 	///   - name: The role's merchant-defined name.
 	///   - permissions: The role's permissions. See [V1EmployeeRolePermissions](#type-v1employeerolepermissions) for possible values
 	///   - updated_at: The time when the employee entity was most recently updated, in ISO 8601 format. Is set by Square when the Role updated.
-	public init(name: String, permissions: V1EmployeeRolePermissions, created_at: String? = nil, id: String? = nil, is_owner: Bool? = nil, updated_at: String? = nil) {
+	public init(name: String, permissions: [V1EmployeeRolePermissions], created_at: String? = nil, id: String? = nil, is_owner: Bool? = nil, updated_at: String? = nil) {
 		self.name = name
 		self.permissions = permissions
 		self.created_at = created_at
