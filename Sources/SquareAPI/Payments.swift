@@ -58,7 +58,7 @@ public struct ListPayments: SquareAPIEndpoint {
 	}
 }
 
-/// Charges a payment source (for example, a card  represented by customer's card on file or a card nonce). In addition  to the payment source, the request must include the  amount to accept for the payment.  There are several optional parameters that you can include in the request  (for example, tip money, whether to autocomplete the payment, or a reference ID  to correlate this payment with another system).   The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.
+/// Creates a payment using the provided source. You can use this endpoint  to charge a card (credit/debit card or     Square gift card) or record a payment that the seller received outside of Square  (cash payment from a buyer or a payment that an external entity  procesed on behalf of the seller).  The endpoint creates a  `Payment` object and returns it in the response.
 public struct CreatePayment: SquareAPIEndpoint {
 	public typealias inputType = CreatePaymentRequest
 	public typealias outputType = CreatePaymentResponse
@@ -68,7 +68,7 @@ public struct CreatePayment: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels (voids) a payment identified by the idempotency key that is specified in the request.  Use this method when the status of a `CreatePayment` request is unknown (for example, after you send a `CreatePayment` request, a network error occurs and you do not get a response). In this case, you can direct Square to cancel the payment using this endpoint. In the request, you provide the same idempotency key that you provided in your `CreatePayment` request that you want to cancel. After canceling the payment, you can submit your `CreatePayment` request again.  Note that if no payment with the specified idempotency key is found, no action is taken and the endpoint  returns successfully.
+/// Cancels (voids) a payment identified by the idempotency key that is specified in the request.  Use this method when the status of a `CreatePayment` request is unknown (for example, after you send a `CreatePayment` request, a network error occurs and you do not get a response). In this case, you can direct Square to cancel the payment using this endpoint. In the request, you provide the same idempotency key that you provided in your `CreatePayment` request that you want to cancel. After canceling the payment, you can submit your `CreatePayment` request again.  Note that if no payment with the specified idempotency key is found, no action is taken and the endpoint returns successfully.
 public struct CancelPaymentByIdempotencyKey: SquareAPIEndpoint {
 	public typealias inputType = CancelPaymentByIdempotencyKeyRequest
 	public typealias outputType = CancelPaymentByIdempotencyKeyResponse
@@ -99,16 +99,37 @@ public struct GetPayment: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels (voids) a payment. If you set `autocomplete` to `false` when creating a payment,  you can cancel the payment using this endpoint.
+/// Updates a payment with the APPROVED status. You can update the `amount_money` and `tip_money` using this endpoint.
+public struct UpdatePayment: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdatePaymentRequest
+	public typealias outputType = UpdatePaymentResponse
+	public typealias paramType = Params
+	public struct Params {
+		let payment_id: String
+		/// Updates a payment with the APPROVED status. You can update the `amount_money` and `tip_money` using this endpoint.
+		/// - Parameters:
+		///   - payment_id: (Beta) The ID of the payment to update.
+		public init(payment_id: String) {
+			self.payment_id = payment_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/payments/\(inputs.payment_id)"
+		return url
+	}
+}
+
+/// Cancels (voids) a payment. You can use this endpoint to cancel a payment with  the APPROVED `status`.
 public struct CancelPayment: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CancelPaymentResponse
 	public typealias paramType = Params
 	public struct Params {
 		let payment_id: String
-		/// Cancels (voids) a payment. If you set `autocomplete` to `false` when creating a payment,  you can cancel the payment using this endpoint.
+		/// Cancels (voids) a payment. You can use this endpoint to cancel a payment with  the APPROVED `status`.
 		/// - Parameters:
-		///   - payment_id: The `payment_id` identifying the payment to be canceled.
+		///   - payment_id: The ID of the payment to cancel.
 		public init(payment_id: String) {
 			self.payment_id = payment_id
 		}
@@ -119,14 +140,14 @@ public struct CancelPayment: SquareAPIEndpoint {
 	}
 }
 
-/// Completes (captures) a payment.  By default, payments are set to complete immediately after they are created.  If you set `autocomplete` to `false` when creating a payment, you can complete (capture)  the payment using this endpoint.
+/// Completes (captures) a payment. By default, payments are set to complete immediately after they are created.  You can use this endpoint to complete a payment with the APPROVED `status`.
 public struct CompletePayment: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CompletePaymentResponse
 	public typealias paramType = Params
 	public struct Params {
 		let payment_id: String
-		/// Completes (captures) a payment.  By default, payments are set to complete immediately after they are created.  If you set `autocomplete` to `false` when creating a payment, you can complete (capture)  the payment using this endpoint.
+		/// Completes (captures) a payment. By default, payments are set to complete immediately after they are created.  You can use this endpoint to complete a payment with the APPROVED `status`.
 		/// - Parameters:
 		///   - payment_id: The unique ID identifying the payment to be completed.
 		public init(payment_id: String) {

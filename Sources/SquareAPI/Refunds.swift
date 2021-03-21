@@ -54,7 +54,7 @@ public struct ListPaymentRefunds: SquareAPIEndpoint {
 	}
 }
 
-/// Refunds a payment. You can refund the entire payment amount or a  portion of it.
+/// Refunds a payment. You can refund the entire payment amount or a portion of it. You can use this endpoint to refund a card payment or record a  refund of a cash or external payment. For more information, see [Refund Payment](https://developer.squareup.com/docs/payments-api/refund-payments).
 public struct RefundPayment: SquareAPIEndpoint {
 	public typealias inputType = RefundPaymentRequest
 	public typealias outputType = RefundPaymentResponse

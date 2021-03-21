@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2021-02-26" }
+	public static var version: String { return "2021-03-17" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -279,14 +279,14 @@ public struct Availability: Codable {
 	}
 }
 
-/// Reflects the current status of a balance payment.
+/// Reflects the current status of a balance payment. Contains only non-confidential information.
 public struct BalancePaymentDetails: Codable {
 	/// The ID of the account used to fund the payment.
 	public var account_id: String?
 	/// The balance payment’s current state. The state can be COMPLETED or FAILED.
 	public var status: String?
 
-	/// Reflects the current status of a balance payment.
+	/// Reflects the current status of a balance payment. Contains only non-confidential information.
 	/// - Parameters:
 	///   - account_id: The ID of the account used to fund the payment.
 	///   - status: The balance payment’s current state. The state can be COMPLETED or FAILED.
@@ -1115,12 +1115,12 @@ public struct CancelInvoiceResponse: Codable {
 	}
 }
 
-/// Specifies the idempotency key of a payment to cancel.
+/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey).
 public struct CancelPaymentByIdempotencyKeyRequest: Codable {
 	/// The `idempotency_key` identifying the payment to be canceled.
 	public var idempotency_key: String
 
-	/// Specifies the idempotency key of a payment to cancel.
+	/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey).
 	/// - Parameters:
 	///   - idempotency_key: The `idempotency_key` identifying the payment to be canceled.
 	public init(idempotency_key: String) {
@@ -1128,12 +1128,12 @@ public struct CancelPaymentByIdempotencyKeyRequest: Codable {
 	}
 }
 
-/// The return value from the [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey) endpoint. On success, `errors` is empty.
+/// Defines the response returned by  [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey). On success, `errors` is empty.
 public struct CancelPaymentByIdempotencyKeyResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// The return value from the [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey) endpoint. On success, `errors` is empty.
+	/// Defines the response returned by  [CancelPaymentByIdempotencyKey](#endpoint-payments-cancelpaymentbyidempotencykey). On success, `errors` is empty.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -1141,22 +1141,22 @@ public struct CancelPaymentByIdempotencyKeyResponse: Codable {
 	}
 }
 
-/// Cancels (voids) a payment before it has been completed. Note: Only payments created with `autocomplete` set to `false` can be canceled.
+/// Describes the request to cancel (void) a payment using  [CancelPayment](#endpoint-payments-cancelpayment).  You can only cancel a payment that is approved (not completed). For more information, see  [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
 public struct CancelPaymentRequest: Codable {
 
-	/// Cancels (voids) a payment before it has been completed. Note: Only payments created with `autocomplete` set to `false` can be canceled.
+	/// Describes the request to cancel (void) a payment using  [CancelPayment](#endpoint-payments-cancelpayment).  You can only cancel a payment that is approved (not completed). For more information, see  [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
 	public init() {
 	}
 }
 
-/// The return value from the [CancelPayment](#endpoint-payments-cancelpayment) endpoint.
+/// Defines the response returned by [CancelPayment](#endpoint-payments-cancelpayment).
 public struct CancelPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully canceled `Payment` object.
 	public var payment: Payment?
 
-	/// The return value from the [CancelPayment](#endpoint-payments-cancelpayment) endpoint.
+	/// Defines the response returned by [CancelPayment](#endpoint-payments-cancelpayment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully canceled `Payment` object.
@@ -1198,9 +1198,9 @@ public struct CancelTerminalCheckoutRequest: Codable {
 }
 
 public struct CancelTerminalCheckoutResponse: Codable {
-	/// The canceled `TerminalCheckout`
+	/// The canceled `TerminalCheckout`.
 	public var checkout: TerminalCheckout?
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 
 	public init(checkout: TerminalCheckout? = nil, errors: [SquareError]? = nil) {
@@ -1216,9 +1216,9 @@ public struct CancelTerminalRefundRequest: Codable {
 }
 
 public struct CancelTerminalRefundResponse: Codable {
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
-	/// The updated `TerminalRefund`
+	/// The updated `TerminalRefund`.
 	public var refund: TerminalRefund?
 
 	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
@@ -1316,7 +1316,7 @@ public enum CardBrand: String, Codable {
 	case FELICA
 }
 
-/// Reflects the current status of a card payment.
+/// Reflects the current status of a card payment. Contains only non-confidential information.
 public struct CardPaymentDetails: Codable {
 	/// For EMV payments, the cryptogram generated for the payment.
 	public var application_cryptogram: String?
@@ -1351,7 +1351,7 @@ public struct CardPaymentDetails: Codable {
 	/// For EMV payments, the results of the cardholder verification. The result can be `SUCCESS`, `FAILURE`, or `UNKNOWN`.
 	public var verification_results: String?
 
-	/// Reflects the current status of a card payment.
+	/// Reflects the current status of a card payment. Contains only non-confidential information.
 	/// - Parameters:
 	///   - application_cryptogram: For EMV payments, the cryptogram generated for the payment.
 	///   - application_identifier: For EMV payments, the application ID identifies the EMV application used for the payment.
@@ -1629,6 +1629,23 @@ public struct CashDrawerShiftSummary: Codable {
 		self.opened_at = opened_at
 		self.opened_cash_money = opened_cash_money
 		self.state = state
+	}
+}
+
+/// Stores details about a cash payment. Contains only non-confidential information. For more information, see  [Take Cash Payments](https://developer.squareup.com/docs/payments-api/take-payments/cash-payments).
+public struct CashPaymentDetails: Codable {
+	/// The amount and currency of the money supplied by the buyer.
+	public var buyer_supplied_money: Money
+	/// The amount of change due back to the buyer.  This read-only field is calculated from the `amount_money` and `buyer_supplied_money` fields.
+	public var change_back_money: Money?
+
+	/// Stores details about a cash payment. Contains only non-confidential information. For more information, see  [Take Cash Payments](https://developer.squareup.com/docs/payments-api/take-payments/cash-payments).
+	/// - Parameters:
+	///   - buyer_supplied_money: The amount and currency of the money supplied by the buyer.
+	///   - change_back_money: The amount of change due back to the buyer.  This read-only field is calculated from the `amount_money` and `buyer_supplied_money` fields.
+	public init(buyer_supplied_money: Money, change_back_money: Money? = nil) {
+		self.buyer_supplied_money = buyer_supplied_money
+		self.change_back_money = change_back_money
 	}
 }
 
@@ -2208,7 +2225,7 @@ public struct CatalogItemVariation: Codable {
 	public var team_member_ids: [String]?
 	/// If `true`, inventory tracking is active for the variation.
 	public var track_inventory: Bool?
-	/// The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard,  Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned  to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps  unless it is updated to fit the expected format.
+	/// The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard, Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps unless it is updated to fit the expected format.
 	public var upc: String?
 	/// Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
 	public var user_data: String?
@@ -2230,7 +2247,7 @@ public struct CatalogItemVariation: Codable {
 	///   - sku: The item variation's SKU, if any. This is a searchable attribute for use in applicable query filters.
 	///   - team_member_ids: Tokens of employees that can perform the service represented by this variation. Only valid for variations of type `APPOINTMENTS_SERVICE`.
 	///   - track_inventory: If `true`, inventory tracking is active for the variation.
-	///   - upc: The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard,  Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned  to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps  unless it is updated to fit the expected format.
+	///   - upc: The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard, Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps unless it is updated to fit the expected format.
 	///   - user_data: Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
 	public init(available_for_booking: Bool? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: InventoryAlertType? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: CatalogPricingType? = nil, service_duration: Int? = nil, sku: String? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
 		self.available_for_booking = available_for_booking
@@ -3153,22 +3170,22 @@ public struct Checkout: Codable {
 	}
 }
 
-/// Completes (captures) a payment.  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+/// Describes a request to complete (capture) a payment using  [CompletePayment](#endpoint-payments-completepayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 public struct CompletePaymentRequest: Codable {
 
-	/// Completes (captures) a payment.  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+	/// Describes a request to complete (capture) a payment using  [CompletePayment](#endpoint-payments-completepayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 	public init() {
 	}
 }
 
-/// The return value from a [CompletePayment](#endpoint-payments-completepayment) call.
+/// Defines the response returned by[CompletePayment](#endpoint-payments-completepayment).
 public struct CompletePaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully completed payment.
 	public var payment: Payment?
 
-	/// The return value from a [CompletePayment](#endpoint-payments-completepayment) call.
+	/// Defines the response returned by[CompletePayment](#endpoint-payments-completepayment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully completed payment.
@@ -3757,38 +3774,38 @@ public struct CreateBreakTypeResponse: Codable {
 	}
 }
 
-/// Defines the parameters that can be included in the body of a request to the __CreateCheckout__ endpoint.
+/// Defines the parameters that can be included in the body of a request to the `CreateCheckout` endpoint.
 public struct CreateCheckoutRequest: Codable {
-	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be the valid location of the app owner merchant.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
+	/// The basic primitive of a multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your `additional_recipients` field cannot be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be a valid seller location where the checkout is occurring.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in the Square Sandbox.
 	public var additional_recipients: [ChargeRequestAdditionalRecipient]?
-	/// If `true`, Square Checkout will collect shipping information on your behalf and store that information with the transaction information in your Square Dashboard.  Default: `false`.
+	/// If `true`, Square Checkout collects shipping information on your behalf and stores  that information with the transaction information in the Square Seller Dashboard.  Default: `false`.
 	public var ask_for_shipping_address: Bool?
-	/// A unique string that identifies this checkout among others you've created. It can be any valid string but must be unique for every order sent to Square Checkout for a given location ID.  The idempotency key is used to avoid processing the same order more than once. If you're unsure whether a particular checkout was created successfully, you can reattempt it with the same idempotency key and all the same other parameters without worrying about creating duplicates.  We recommend using a random number/string generator native to the language you are working in to generate strings for your idempotency keys.  See the [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency) guide for more information.
+	/// A unique string that identifies this checkout among others you have created. It can be any valid string but must be unique for every order sent to Square Checkout for a given location ID.  The idempotency key is used to avoid processing the same order more than once. If you are  unsure whether a particular checkout was created successfully, you can attempt it again with the same idempotency key and all the same other parameters without worrying about creating duplicates.  You should use a random number/string generator native to the language you are working in to generate strings for your idempotency keys.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String
-	/// The email address to display on the Square Checkout confirmation page and confirmation email that the buyer can use to contact the merchant.  If this value is not set, the confirmation page and email will display the primary email address associated with the merchant's Square account.  Default: none; only exists if explicitly set.
+	/// The email address to display on the Square Checkout confirmation page and confirmation email that the buyer can use to contact the seller.  If this value is not set, the confirmation page and email display the primary email address associated with the seller's Square account.  Default: none; only exists if explicitly set.
 	public var merchant_support_email: String?
-	/// An optional note to associate with the checkout object.  This value cannot exceed 60 characters.
+	/// An optional note to associate with the `checkout` object.  This value cannot exceed 60 characters.
 	public var note: String?
 	/// The order including line items to be checked out.
 	public var order: CreateOrderRequest
-	/// If provided, the buyer's email is pre-populated on the checkout page as an editable text field.  Default: none; only exists if explicitly set.
+	/// If provided, the buyer's email is prepopulated on the checkout page as an editable text field.  Default: none; only exists if explicitly set.
 	public var pre_populate_buyer_email: String?
-	/// If provided, the buyer's shipping info is pre-populated on the checkout page as editable text fields.  Default: none; only exists if explicitly set.
+	/// If provided, the buyer's shipping information is prepopulated on the checkout page as editable text fields.  Default: none; only exists if explicitly set.
 	public var pre_populate_shipping_address: Address?
-	/// The URL to redirect to after checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect_url is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout will display an order confirmation page on your behalf; however Square strongly recommends that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
+	/// The URL to redirect to after the checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect URL is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout displays an order confirmation page on your behalf; however, it is strongly recommended that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
 	public var redirect_url: String?
 
-	/// Defines the parameters that can be included in the body of a request to the __CreateCheckout__ endpoint.
+	/// Defines the parameters that can be included in the body of a request to the `CreateCheckout` endpoint.
 	/// - Parameters:
-	///   - additional_recipients: The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be the valid location of the app owner merchant.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
-	///   - ask_for_shipping_address: If `true`, Square Checkout will collect shipping information on your behalf and store that information with the transaction information in your Square Dashboard.  Default: `false`.
-	///   - idempotency_key: A unique string that identifies this checkout among others you've created. It can be any valid string but must be unique for every order sent to Square Checkout for a given location ID.  The idempotency key is used to avoid processing the same order more than once. If you're unsure whether a particular checkout was created successfully, you can reattempt it with the same idempotency key and all the same other parameters without worrying about creating duplicates.  We recommend using a random number/string generator native to the language you are working in to generate strings for your idempotency keys.  See the [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency) guide for more information.
-	///   - merchant_support_email: The email address to display on the Square Checkout confirmation page and confirmation email that the buyer can use to contact the merchant.  If this value is not set, the confirmation page and email will display the primary email address associated with the merchant's Square account.  Default: none; only exists if explicitly set.
-	///   - note: An optional note to associate with the checkout object.  This value cannot exceed 60 characters.
+	///   - additional_recipients: The basic primitive of a multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your `additional_recipients` field cannot be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be a valid seller location where the checkout is occurring.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in the Square Sandbox.
+	///   - ask_for_shipping_address: If `true`, Square Checkout collects shipping information on your behalf and stores  that information with the transaction information in the Square Seller Dashboard.  Default: `false`.
+	///   - idempotency_key: A unique string that identifies this checkout among others you have created. It can be any valid string but must be unique for every order sent to Square Checkout for a given location ID.  The idempotency key is used to avoid processing the same order more than once. If you are  unsure whether a particular checkout was created successfully, you can attempt it again with the same idempotency key and all the same other parameters without worrying about creating duplicates.  You should use a random number/string generator native to the language you are working in to generate strings for your idempotency keys.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	///   - merchant_support_email: The email address to display on the Square Checkout confirmation page and confirmation email that the buyer can use to contact the seller.  If this value is not set, the confirmation page and email display the primary email address associated with the seller's Square account.  Default: none; only exists if explicitly set.
+	///   - note: An optional note to associate with the `checkout` object.  This value cannot exceed 60 characters.
 	///   - order: The order including line items to be checked out.
-	///   - pre_populate_buyer_email: If provided, the buyer's email is pre-populated on the checkout page as an editable text field.  Default: none; only exists if explicitly set.
-	///   - pre_populate_shipping_address: If provided, the buyer's shipping info is pre-populated on the checkout page as editable text fields.  Default: none; only exists if explicitly set.
-	///   - redirect_url: The URL to redirect to after checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect_url is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout will display an order confirmation page on your behalf; however Square strongly recommends that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
+	///   - pre_populate_buyer_email: If provided, the buyer's email is prepopulated on the checkout page as an editable text field.  Default: none; only exists if explicitly set.
+	///   - pre_populate_shipping_address: If provided, the buyer's shipping information is prepopulated on the checkout page as editable text fields.  Default: none; only exists if explicitly set.
+	///   - redirect_url: The URL to redirect to after the checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect URL is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout displays an order confirmation page on your behalf; however, it is strongly recommended that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
 	public init(idempotency_key: String, order: CreateOrderRequest, additional_recipients: [ChargeRequestAdditionalRecipient]? = nil, ask_for_shipping_address: Bool? = nil, merchant_support_email: String? = nil, note: String? = nil, pre_populate_buyer_email: String? = nil, pre_populate_shipping_address: Address? = nil, redirect_url: String? = nil) {
 		self.idempotency_key = idempotency_key
 		self.order = order
@@ -3802,16 +3819,16 @@ public struct CreateCheckoutRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the __CreateCheckout__ endpoint.
+/// Defines the fields that are included in the response body of a request to the `CreateCheckout` endpoint.
 public struct CreateCheckoutResponse: Codable {
-	/// The newly created checkout. If the same request was made with the same idempotency_key, this will be the checkout created with the idempotency_key.
+	/// The newly created `checkout` object associated with the provided idempotency key.
 	public var checkout: Checkout?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the __CreateCheckout__ endpoint.
+	/// Defines the fields that are included in the response body of a request to the `CreateCheckout` endpoint.
 	/// - Parameters:
-	///   - checkout: The newly created checkout. If the same request was made with the same idempotency_key, this will be the checkout created with the idempotency_key.
+	///   - checkout: The newly created `checkout` object associated with the provided idempotency key.
 	///   - errors: Any errors that occurred during the request.
 	public init(checkout: Checkout? = nil, errors: [SquareError]? = nil) {
 		self.checkout = checkout
@@ -4222,7 +4239,7 @@ public struct CreateOrderResponse: Codable {
 	}
 }
 
-/// Creates a payment from a provided source (such as a nonce or a card on file).  The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.  For more information, see [Payments and Refunds APIs Overview](/payments-api/overview).  For information about application fees in a payment, see [Take Payments and Collect Fees](/payments-api/take-payments-and-collect-fees).
+/// Describes a request to create a payment using  [CreatePayment](#endpoint-payments-createpayment).
 public struct CreatePaymentRequest: Codable {
 	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	public var accept_partial_authorization: Bool?
@@ -4236,10 +4253,14 @@ public struct CreatePaymentRequest: Codable {
 	public var billing_address: Address?
 	/// The buyer's email address.
 	public var buyer_email_address: String?
+	/// Additional details required when recording a cash payment (`source_id` is CASH).
+	public var cash_details: CashPaymentDetails?
 	/// The `Customer` ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
 	public var customer_id: String?
 	/// The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	public var delay_duration: Timestamp?
+	/// Additional details required when recording an external payment (`source_id` is EXTERNAL).
+	public var external_details: ExternalPaymentDetails?
 	/// A unique string that identifies this `CreatePayment` request. Keys can be any valid string but must be unique for every `CreatePayment` request.  Max: 45 characters  Note: The number of allowed characters might be less than the stated maximum, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String
 	/// The location ID to associate with the payment. If not specified, the default location is used.
@@ -4252,7 +4273,7 @@ public struct CreatePaymentRequest: Codable {
 	public var reference_id: String?
 	/// The buyer's shipping address.
 	public var shipping_address: Address?
-	/// The ID for the source of funds for this payment. This can be a nonce generated by the Square payment form or a card on file made with the Customers API.
+	/// The ID for the source of funds for this payment. This can be a payment token  (card nonce) generated by the Square payment form or a card on file made with the  Customers API. If recording a payment that the seller  received outside of Square, specify either "CASH" or "EXTERNAL".  For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
 	public var source_id: String
 	/// Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and name of the seller taking the payment.
 	public var statement_description_identifier: String?
@@ -4261,7 +4282,7 @@ public struct CreatePaymentRequest: Codable {
 	/// An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
 	public var verification_token: String?
 
-	/// Creates a payment from a provided source (such as a nonce or a card on file).  The `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required to enable application fees.  For more information, see [Payments and Refunds APIs Overview](/payments-api/overview).  For information about application fees in a payment, see [Take Payments and Collect Fees](/payments-api/take-payments-and-collect-fees).
+	/// Describes a request to create a payment using  [CreatePayment](#endpoint-payments-createpayment).
 	/// - Parameters:
 	///   - accept_partial_authorization: If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	///   - amount_money: The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
@@ -4269,19 +4290,21 @@ public struct CreatePaymentRequest: Codable {
 	///   - autocomplete: If set to `true`, this payment will be completed when possible. If set to `false`, this payment is held in an approved state until either explicitly completed (captured) or canceled (voided). For more information, see [Delayed capture](https://developer.squareup.com/docs/payments-api/take-payments#delayed-payments).  Default: true
 	///   - billing_address: The buyer's billing address.
 	///   - buyer_email_address: The buyer's email address.
+	///   - cash_details: Additional details required when recording a cash payment (`source_id` is CASH).
 	///   - customer_id: The `Customer` ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
 	///   - delay_duration: The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
+	///   - external_details: Additional details required when recording an external payment (`source_id` is EXTERNAL).
 	///   - idempotency_key: A unique string that identifies this `CreatePayment` request. Keys can be any valid string but must be unique for every `CreatePayment` request.  Max: 45 characters  Note: The number of allowed characters might be less than the stated maximum, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	///   - location_id: The location ID to associate with the payment. If not specified, the default location is used.
 	///   - note: An optional note to be entered by the developer when creating a payment.  Limit 500 characters.
 	///   - order_id: Associates a previously created order with this payment.
 	///   - reference_id: A user-defined ID to associate with the payment.  You can use this field to associate the payment to an entity in an external system  (for example, you might specify an order ID that is generated by a third-party shopping cart).  Limit 40 characters.
 	///   - shipping_address: The buyer's shipping address.
-	///   - source_id: The ID for the source of funds for this payment. This can be a nonce generated by the Square payment form or a card on file made with the Customers API.
+	///   - source_id: The ID for the source of funds for this payment. This can be a payment token  (card nonce) generated by the Square payment form or a card on file made with the  Customers API. If recording a payment that the seller  received outside of Square, specify either "CASH" or "EXTERNAL".  For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
 	///   - statement_description_identifier: Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and name of the seller taking the payment.
 	///   - tip_money: The amount designated as a tip, in addition to `amount_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
 	///   - verification_token: An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
-	public init(amount_money: Money, idempotency_key: String, source_id: String, accept_partial_authorization: Bool? = nil, app_fee_money: Money? = nil, autocomplete: Bool? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, customer_id: String? = nil, delay_duration: Timestamp? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, statement_description_identifier: String? = nil, tip_money: Money? = nil, verification_token: String? = nil) {
+	public init(amount_money: Money, idempotency_key: String, source_id: String, accept_partial_authorization: Bool? = nil, app_fee_money: Money? = nil, autocomplete: Bool? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, cash_details: CashPaymentDetails? = nil, customer_id: String? = nil, delay_duration: Timestamp? = nil, external_details: ExternalPaymentDetails? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, statement_description_identifier: String? = nil, tip_money: Money? = nil, verification_token: String? = nil) {
 		self.amount_money = amount_money
 		self.idempotency_key = idempotency_key
 		self.source_id = source_id
@@ -4290,8 +4313,10 @@ public struct CreatePaymentRequest: Codable {
 		self.autocomplete = autocomplete
 		self.billing_address = billing_address
 		self.buyer_email_address = buyer_email_address
+		self.cash_details = cash_details
 		self.customer_id = customer_id
 		self.delay_duration = delay_duration
+		self.external_details = external_details
 		self.location_id = location_id
 		self.note = note
 		self.order_id = order_id
@@ -4303,14 +4328,14 @@ public struct CreatePaymentRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreatePayment](#endpoint-payments-createpayment) endpoint.  Note: If there are errors processing the request, the payment field might not be present, or it might be present with a status of `FAILED`.
+/// Defines the response returned by [CreatePayment](#endpoint-payments-createpayment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
 public struct CreatePaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created payment.
 	public var payment: Payment?
 
-	/// Defines the fields that are included in the response body of a request to the [CreatePayment](#endpoint-payments-createpayment) endpoint.  Note: If there are errors processing the request, the payment field might not be present, or it might be present with a status of `FAILED`.
+	/// Defines the response returned by [CreatePayment](#endpoint-payments-createpayment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The newly created payment.
@@ -4509,9 +4534,9 @@ public struct CreateTerminalCheckoutRequest: Codable {
 }
 
 public struct CreateTerminalCheckoutResponse: Codable {
-	/// The created `TerminalCheckout`
+	/// The created `TerminalCheckout`.
 	public var checkout: TerminalCheckout?
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 
 	public init(checkout: TerminalCheckout? = nil, errors: [SquareError]? = nil) {
@@ -4533,9 +4558,9 @@ public struct CreateTerminalRefundRequest: Codable {
 }
 
 public struct CreateTerminalRefundResponse: Codable {
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
-	/// The created `TerminalRefund`
+	/// The created `TerminalRefund`.
 	public var refund: TerminalRefund?
 
 	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
@@ -5483,9 +5508,9 @@ public struct Device: Codable {
 public struct DeviceCheckoutOptions: Codable {
 	/// The unique ID of the device intended for this `TerminalCheckout`. A list of `DeviceCode` objects can be retrieved from the /v2/devices/codes endpoint. Match a `DeviceCode.device_id` value with `device_id` to get the associated device code.
 	public var device_id: String
-	/// Instruct the device to skip the receipt screen. Defaults to false.
+	/// Instructs the device to skip the receipt screen. Defaults to false.
 	public var skip_receipt_screen: Bool?
-	/// Tip specific settings
+	/// Tip-specific settings.
 	public var tip_settings: TipSettings?
 
 	public init(device_id: String, skip_receipt_screen: Bool? = nil, tip_settings: TipSettings? = nil) {
@@ -6153,6 +6178,31 @@ public enum ExcludeStrategy: String, Codable {
 	case MOST_EXPENSIVE
 }
 
+/// Stores details about an external payment. Contains only non-confidential information. For more information, see  [Take External Payments](https://developer.squareup.com/docs/payments-api/take-payments/external-payments).
+public struct ExternalPaymentDetails: Codable {
+	/// A description of the external payment source. For example,  "Food Delivery Service".
+	public var source: String
+	/// The fees paid to the source. The `amount_money` minus this field is  the net amount seller receives.
+	public var source_fee_money: Money?
+	/// An ID to associate the payment to its originating source.
+	public var source_id: String?
+	/// The type of external payment the seller received. It can be one of the following: - CHECK - Paid using a physical check. - BANK_TRANSFER - Paid using ACH or another bank transfer. - OTHER\_GIFT\_CARD - Paid using a non-Square gift card. - CRYPTO - Paid using a crypto currency. - SQUARE_CASH - Paid using Square Cash App. - SOCIAL - Paid using peer-to-peer payment applications. - EXTERNAL - A third-party application gathered this payment outside of Square. - EMONEY - Paid using an E-money provider. - CARD - A credit or debit card that Square does not support. - STORED_BALANCE - Use for house accounts, store credit, and so forth. - OTHER - A type not listed here.
+	public var type: String
+
+	/// Stores details about an external payment. Contains only non-confidential information. For more information, see  [Take External Payments](https://developer.squareup.com/docs/payments-api/take-payments/external-payments).
+	/// - Parameters:
+	///   - source: A description of the external payment source. For example,  "Food Delivery Service".
+	///   - source_fee_money: The fees paid to the source. The `amount_money` minus this field is  the net amount seller receives.
+	///   - source_id: An ID to associate the payment to its originating source.
+	///   - type: The type of external payment the seller received. It can be one of the following: - CHECK - Paid using a physical check. - BANK_TRANSFER - Paid using ACH or another bank transfer. - OTHER\_GIFT\_CARD - Paid using a non-Square gift card. - CRYPTO - Paid using a crypto currency. - SQUARE_CASH - Paid using Square Cash App. - SOCIAL - Paid using peer-to-peer payment applications. - EXTERNAL - A third-party application gathered this payment outside of Square. - EMONEY - Paid using an E-money provider. - CARD - A credit or debit card that Square does not support. - STORED_BALANCE - Use for house accounts, store credit, and so forth. - OTHER - A type not listed here.
+	public init(source: String, type: String, source_fee_money: Money? = nil, source_id: String? = nil) {
+		self.source = source
+		self.type = type
+		self.source_fee_money = source_fee_money
+		self.source_id = source_id
+	}
+}
+
 /// A filter to select resources based on an exact field value. For any given value, the value can only be in one property. Depending on the field, either all properties can be set or only a subset will be available.  Refer to the documentation of the field.
 public struct FilterValue: Codable {
 	/// A list of terms that must be present on the field of the resource.
@@ -6317,22 +6367,22 @@ public struct GetInvoiceResponse: Codable {
 	}
 }
 
-/// Retrieves a specific `Refund` using the `refund_id`.
+/// Describes a request to retrieve a refund using  [GetPaymentRefund](#endpoint-payments-getpaymentrefund).
 public struct GetPaymentRefundRequest: Codable {
 
-	/// Retrieves a specific `Refund` using the `refund_id`.
+	/// Describes a request to retrieve a refund using  [GetPaymentRefund](#endpoint-payments-getpaymentrefund).
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [GetRefund](#endpoint-refunds-getpaymentrefund) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+/// Defines the response returned by [GetRefund](#endpoint-refunds-getpaymentrefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct GetPaymentRefundResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `PaymentRefund`.
 	public var refund: PaymentRefund?
 
-	/// Defines the fields that are included in the response body of a request to the [GetRefund](#endpoint-refunds-getpaymentrefund) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+	/// Defines the response returned by [GetRefund](#endpoint-refunds-getpaymentrefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The requested `PaymentRefund`.
@@ -6342,22 +6392,22 @@ public struct GetPaymentRefundResponse: Codable {
 	}
 }
 
-/// Retrieve details for a specific payment.
+/// Describes a request to retrieve a payment using  [GetPayment](#endpoint-payments-getpayment).
 public struct GetPaymentRequest: Codable {
 
-	/// Retrieve details for a specific payment.
+	/// Describes a request to retrieve a payment using  [GetPayment](#endpoint-payments-getpayment).
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [GetPayment](#endpoint-payments-getpayment) endpoint.
+/// Defines the response returned by [GetPayment](#endpoint-payments-getpayment).
 public struct GetPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `Payment`.
 	public var payment: Payment?
 
-	/// Defines the fields that are included in the response body of a request to the [GetPayment](#endpoint-payments-getpayment) endpoint.
+	/// Defines the response returned by [GetPayment](#endpoint-payments-getpayment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The requested `Payment`.
@@ -6424,9 +6474,9 @@ public struct GetTerminalCheckoutRequest: Codable {
 }
 
 public struct GetTerminalCheckoutResponse: Codable {
-	/// The requested `TerminalCheckout`
+	/// The requested `TerminalCheckout`.
 	public var checkout: TerminalCheckout?
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 
 	public init(checkout: TerminalCheckout? = nil, errors: [SquareError]? = nil) {
@@ -6442,9 +6492,9 @@ public struct GetTerminalRefundRequest: Codable {
 }
 
 public struct GetTerminalRefundResponse: Codable {
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
-	/// The requested `Refund`
+	/// The requested `Refund`.
 	public var refund: TerminalRefund?
 
 	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
@@ -6781,7 +6831,7 @@ public struct Invoice: Codable {
 	public var scheduled_at: Timestamp?
 	/// The status of the invoice. See [InvoiceStatus](#type-invoicestatus) for possible values
 	public let status: InvoiceStatus?
-	/// The time zone of the date values (for example, `due_date`) specified in the invoice.
+	/// The time zone used to interpret calendar dates on the invoice, such as `due_date`. When an invoice is created, this field is set to the `timezone` specified for the seller location. The value cannot be changed.  For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	public let timezone: String?
 	/// The title of the invoice.
 	public var title: String?
@@ -6806,7 +6856,7 @@ public struct Invoice: Codable {
 	///   - public_url: The URL of the Square-hosted invoice page. After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice page and returns the page URL in the response.
 	///   - scheduled_at: The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, according to the delivery method and payment request settings.  If the field is not set, Square processes the invoice immediately after it is published.
 	///   - status: The status of the invoice. See [InvoiceStatus](#type-invoicestatus) for possible values
-	///   - timezone: The time zone of the date values (for example, `due_date`) specified in the invoice.
+	///   - timezone: The time zone used to interpret calendar dates on the invoice, such as `due_date`. When an invoice is created, this field is set to the `timezone` specified for the seller location. The value cannot be changed.  For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	///   - title: The title of the invoice.
 	///   - updated_at: The timestamp when the invoice was last updated, in RFC 3339 format.
 	///   - version: The Square-assigned version number, which is incremented each time an update is committed to the invoice.
@@ -6873,10 +6923,12 @@ public enum InvoiceCustomFieldPlacement: String, Codable {
 
 /// Indicates how Square delivers the `invoice` to the customer.
 public enum InvoiceDeliveryMethod: String, Codable {
-	/// Directs Square to send the invoice, reminders, and receipts to the customer using email.
+	/// Directs Square to send invoices, reminders, and receipts to the customer using email.
 	case EMAIL
 	/// Directs Square to take no action on the invoice. In this case, the seller or application developer follows up with the customer for payment. For example, a seller might collect a payment in the Seller Dashboard or Point of Sale (POS) application. The seller might also share the URL of the Square-hosted invoice page (`public_url`) with the customer to request payment.
 	case SHARE_MANUALLY
+	/// Directs Square to send invoices and receipts to the customer using SMS (text message).  You cannot set `SMS` as a delivery method using the Invoices API, but you can change an `SMS` delivery method to `EMAIL` or `SHARE_MANUALLY`.
+	case SMS
 }
 
 /// Describes query filters to apply.
@@ -6943,7 +6995,7 @@ public struct InvoicePaymentRequest: Codable {
 	public var card_id: String?
 	/// The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`,  `fixed_amount_requested_money`, and `percentage_requested`).
 	public let computed_amount_money: Money?
-	/// The due date (in the invoice location's time zone) for the payment request, in `YYYY-MM-DD` format.  After this date, the invoice becomes overdue. This field is required to create a payment request.
+	/// The due date (in the invoice's time zone) for the payment request, in `YYYY-MM-DD` format. This field is required to create a payment request.  After this date, the invoice becomes overdue. For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	public var due_date: String?
 	/// If the payment request specifies `DEPOSIT` or `INSTALLMENT` as the  `request_type`,  this indicates the request amount. You cannot specify this when `request_type` is `BALANCE` or when the  payment request includes the `percentage_requested` field.
 	public var fixed_amount_requested_money: Money?
@@ -6969,7 +7021,7 @@ public struct InvoicePaymentRequest: Codable {
 	///   - automatic_payment_source: The payment method for an automatic payment.  The default value is `NONE`. See [InvoiceAutomaticPaymentSource](#type-invoiceautomaticpaymentsource) for possible values
 	///   - card_id: The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call `RetrieveCustomer` in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
 	///   - computed_amount_money: The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`,  `fixed_amount_requested_money`, and `percentage_requested`).
-	///   - due_date: The due date (in the invoice location's time zone) for the payment request, in `YYYY-MM-DD` format.  After this date, the invoice becomes overdue. This field is required to create a payment request.
+	///   - due_date: The due date (in the invoice's time zone) for the payment request, in `YYYY-MM-DD` format. This field is required to create a payment request.  After this date, the invoice becomes overdue. For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	///   - fixed_amount_requested_money: If the payment request specifies `DEPOSIT` or `INSTALLMENT` as the  `request_type`,  this indicates the request amount. You cannot specify this when `request_type` is `BALANCE` or when the  payment request includes the `percentage_requested` field.
 	///   - percentage_requested: Specifies the amount for the payment request in percentage:  - When the payment `request_type` is `DEPOSIT`, it is the percentage of the order total amount. - When the payment `request_type` is `INSTALLMENT`, it is the percentage of the order total less  the deposit, if requested. The sum of the `percentage_requested` in all installment  payment requests must be equal to 100.  You cannot specify this when the payment `request_type` is `BALANCE` or when the  payment request specifies the `fixed_amount_requested_money` field.
 	///   - reminders: A list of one or more reminders to send for the payment request.
@@ -7052,14 +7104,20 @@ public struct InvoiceRecipient: Codable {
 
 /// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing. DEPRECATED at version 2021-01-21. The corresponding `request_method` field is replaced by the `Invoice.delivery_method` and `InvoicePaymentRequest.automatic_payment_source` fields.
 public enum InvoiceRequestMethod: String, Codable {
-	/// Directs Square to email the invoice to the customer after the invoice is published  (either immediately or at the `scheduled_at` time, if specified in the `invoice`.
+	/// Directs Square to send invoices, reminders, and receipts to the customer using email. Square sends the invoice after it is published  (either immediately or at the `scheduled_at` time, if specified in the `invoice`.
 	case EMAIL
-	/// Directs Square to charge the card on file on the `due_date` specified in the payment request,  after the invoice is published.
+	/// Directs Square to charge the card on file on the `due_date` specified in the payment request and to use email to send invoices, reminders, and receipts.
 	case CHARGE_CARD_ON_FILE
 	/// Directs Square to take no specific action on the invoice. In this case, the seller  (or the application developer) follows up with the customer for payment. For example,  a seller might collect a payment in the Seller Dashboard or use the Point of Sale (POS) application.  The seller might also share the URL of the Square-hosted invoice page (`public_url`) with the customer requesting payment.
 	case SHARE_MANUALLY
-	/// Directs Square to charge the bank account on file on the `due_date` specified in the payment request, after the invoice is published.  This payment method applies only to recurring invoices that sellers create in the Seller Dashboard or other Square first-party application. The bank account is provided by the customer during the payment flow. You  cannot set `CHARGE_BANK_ON_FILE` as a payment source using the Invoices API.
+	/// Directs Square to charge the bank account on file on the `due_date` specified in the payment request and to use email to send invoices, reminders, and receipts.  The bank on file payment method applies only to recurring invoices that sellers create in the Seller Dashboard or other Square first-party applications. The bank account is provided by the customer during the payment flow. You  cannot set `CHARGE_BANK_ON_FILE` as a request method using the Invoices API.
 	case CHARGE_BANK_ON_FILE
+	/// Directs Square to send invoices and receipts to the customer using SMS (text message). Square sends the invoice after it is published (either immediately or at the `scheduled_at` time, if specified in the `invoice`.   You cannot set `SMS` as a request method using the Invoices API.
+	case SMS
+	/// Directs Square to charge the card on file on the `due_date` specified in the payment request and to use SMS (text message) to send invoices and receipts.   You cannot set `SMS_CHARGE_CARD_ON_FILE` as a request method using the Invoices API.
+	case SMS_CHARGE_CARD_ON_FILE
+	/// Directs Square to charge the bank account on file on the `due_date` specified in the payment request and to use SMS (text message) to send invoices and receipts.   The bank on file payment method applies only to recurring invoices that sellers create in the Seller Dashboard or other Square first-party applications. The bank account is provided by the customer during the payment flow. You cannot set `SMS_CHARGE_BANK_ON_FILE` as a request method using the Invoices API.
+	case SMS_CHARGE_BANK_ON_FILE
 }
 
 /// Indicates the type of the payment request. An invoice supports the following payment request combinations: - 1 balance - 1 deposit with 1 balance - 2 - 12 installments - 1 deposit with 2 - 12 installments  For more information,  see [Payment requests](https://developer.squareup.com/docs/docs/invoices-api/overview#payment-requests).
@@ -7783,7 +7841,7 @@ public struct ListMerchantsResponse: Codable {
 	}
 }
 
-/// Retrieves a list of refunds for the account making the request.  The maximum results per page is 100.
+/// Describes a request to list refunds using  [ListPaymentRefunds](#endpoint-payments-listpaymentrefunds).  The maximum results per page is 100.
 public struct ListPaymentRefundsRequest: Codable {
 	/// The timestamp for the beginning of the requested reporting period, in RFC 3339 format.  Default: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -7802,7 +7860,7 @@ public struct ListPaymentRefundsRequest: Codable {
 	/// If provided, only refunds with the given status are returned. For a list of refund status values, see `PaymentRefund`.  Default: If omitted, refunds are returned regardless of their status.
 	public var status: String?
 
-	/// Retrieves a list of refunds for the account making the request.  The maximum results per page is 100.
+	/// Describes a request to list refunds using  [ListPaymentRefunds](#endpoint-payments-listpaymentrefunds).  The maximum results per page is 100.
 	/// - Parameters:
 	///   - begin_time: The timestamp for the beginning of the requested reporting period, in RFC 3339 format.  Default: The current time minus one year.
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
@@ -7824,7 +7882,7 @@ public struct ListPaymentRefundsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListPaymentRefunds](#endpoint-refunds-listpaymentrefunds) endpoint.  Either `errors` or `refunds` is present in a given response (never both).
+/// Defines the response returned by [ListPaymentRefunds](#endpoint-refunds-listpaymentrefunds).  Either `errors` or `refunds` is present in a given response (never both).
 public struct ListPaymentRefundsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
@@ -7833,7 +7891,7 @@ public struct ListPaymentRefundsResponse: Codable {
 	/// The list of requested refunds.
 	public var refunds: [PaymentRefund]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListPaymentRefunds](#endpoint-refunds-listpaymentrefunds) endpoint.  Either `errors` or `refunds` is present in a given response (never both).
+	/// Defines the response returned by [ListPaymentRefunds](#endpoint-refunds-listpaymentrefunds).  Either `errors` or `refunds` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -7845,7 +7903,7 @@ public struct ListPaymentRefundsResponse: Codable {
 	}
 }
 
-/// Retrieves a list of payments taken by the account making the request.  The maximum results per page is 100.
+/// Describes a request to list payments using  [ListPayments](#endpoint-payments-listpayments).  The maximum results per page is 100.
 public struct ListPaymentsRequest: Codable {
 	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -7866,7 +7924,7 @@ public struct ListPaymentsRequest: Codable {
 	/// The exact amount in the `total_money` for a payment.
 	public var total: Int?
 
-	/// Retrieves a list of payments taken by the account making the request.  The maximum results per page is 100.
+	/// Describes a request to list payments using  [ListPayments](#endpoint-payments-listpayments).  The maximum results per page is 100.
 	/// - Parameters:
 	///   - begin_time: The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 	///   - card_brand: The brand of the payment card (for example, VISA).
@@ -7890,7 +7948,7 @@ public struct ListPaymentsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListPayments](#endpoint-payments-listpayments) endpoint.
+/// Defines the response returned by [ListPayments](#endpoint-payments-listpayments).
 public struct ListPaymentsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
@@ -7899,7 +7957,7 @@ public struct ListPaymentsResponse: Codable {
 	/// The requested list of payments.
 	public var payments: [Payment]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListPayments](#endpoint-payments-listpayments) endpoint.
+	/// Defines the response returned by [ListPayments](#endpoint-payments-listpayments).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -10498,12 +10556,18 @@ public struct Payment: Codable {
 	public var amount_money: Money?
 	/// The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.
 	public var app_fee_money: Money?
+	/// The initial amount of money approved for this payment.
+	public var approved_money: Money?
 	/// The buyer's billing address.
 	public let billing_address: Address?
 	/// The buyer's email address.
 	public let buyer_email_address: String?
-	/// Non-confidential details about the source. The details are only populated if the `source_type` is `CARD`.
+	/// Actions that can be performed on this payment: - `EDIT_AMOUNT_UP` - The payment amount can be edited up. - `EDIT_AMOUNT_DOWN` - The payment amount can be edited down. - `EDIT_TIP_AMOUNT_UP` - The tip amount can be edited up. - `EDIT_TIP_AMOUNT_DOWN` - The tip amount can be edited down.
+	public let capabilities: [String]?
+	/// Details about a card payment. These details are only populated if the source_type is `CARD`.
 	public let card_details: CardPaymentDetails?
+	/// Details about a cash payment. These details are only populated if the source_type is `CASH`.
+	public var cash_details: CashPaymentDetails?
 	/// The timestamp of when the payment was created, in RFC 3339 format.
 	public let created_at: Timestamp?
 	/// The `Customer` ID of the customer associated with the payment.
@@ -10516,6 +10580,8 @@ public struct Payment: Codable {
 	public let delayed_until: Timestamp?
 	/// An optional ID of the employee associated with taking the payment.
 	public let employee_id: String?
+	/// Details about an external payment. The details are only populated  if the `source_type` is `EXTERNAL`.
+	public let external_details: ExternalPaymentDetails?
 	/// A unique ID for the payment.
 	public let id: String?
 	/// The ID of the location associated with the payment.
@@ -10540,7 +10606,7 @@ public struct Payment: Codable {
 	public let risk_evaluation: RiskEvaluation?
 	/// The buyer's shipping address.
 	public let shipping_address: Address?
-	/// The source type for this payment.  Current values include `CARD`.
+	/// The source type for this payment.  Current values include `CARD`, `CASH`, or `EXTERNAL`.
 	public let source_type: String?
 	/// Additional payment information that gets added to the customer's card statement as part of the statement description.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and the name of the seller taking the payment.
 	public let statement_description_identifier: String?
@@ -10552,20 +10618,26 @@ public struct Payment: Codable {
 	public let total_money: Money?
 	/// The timestamp of when the payment was last updated, in RFC 3339 format.
 	public let updated_at: Timestamp?
+	/// Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
+	public var version_token: String?
 
 	/// Represents a payment processed by the Square API.
 	/// - Parameters:
 	///   - amount_money: The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - app_fee_money: The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.
+	///   - approved_money: The initial amount of money approved for this payment.
 	///   - billing_address: The buyer's billing address.
 	///   - buyer_email_address: The buyer's email address.
-	///   - card_details: Non-confidential details about the source. The details are only populated if the `source_type` is `CARD`.
+	///   - capabilities: Actions that can be performed on this payment: - `EDIT_AMOUNT_UP` - The payment amount can be edited up. - `EDIT_AMOUNT_DOWN` - The payment amount can be edited down. - `EDIT_TIP_AMOUNT_UP` - The tip amount can be edited up. - `EDIT_TIP_AMOUNT_DOWN` - The tip amount can be edited down.
+	///   - card_details: Details about a card payment. These details are only populated if the source_type is `CARD`.
+	///   - cash_details: Details about a cash payment. These details are only populated if the source_type is `CASH`.
 	///   - created_at: The timestamp of when the payment was created, in RFC 3339 format.
 	///   - customer_id: The `Customer` ID of the customer associated with the payment.
 	///   - delay_action: The action to be applied to the payment when the `delay_duration` has elapsed. This field is read-only.  Current values include `CANCEL`.
 	///   - delay_duration: The duration of time after the payment's creation when Square automatically applies the `delay_action` to the payment. This automatic `delay_action` applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This field is specified as a time duration, in RFC 3339 format.  Notes: This feature is only supported for card payments.  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	///   - delayed_until: The read-only timestamp of when the `delay_action` is automatically applied, in RFC 3339 format.  Note that this field is calculated by summing the payment's `delay_duration` and `created_at` fields. The `created_at` field is generated by Square and might not exactly match the time on your local machine.
 	///   - employee_id: An optional ID of the employee associated with taking the payment.
+	///   - external_details: Details about an external payment. The details are only populated  if the `source_type` is `EXTERNAL`.
 	///   - id: A unique ID for the payment.
 	///   - location_id: The ID of the location associated with the payment.
 	///   - note: An optional note to include when creating a payment.
@@ -10578,24 +10650,29 @@ public struct Payment: Codable {
 	///   - refunded_money: The total amount of the payment refunded to date.   This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).
 	///   - risk_evaluation: Provides information about the risk associated with the payment, as determined by Square. This field is present for payments to sellers that have opted in to receive risk evaluations.
 	///   - shipping_address: The buyer's shipping address.
-	///   - source_type: The source type for this payment.  Current values include `CARD`.
+	///   - source_type: The source type for this payment.  Current values include `CARD`, `CASH`, or `EXTERNAL`.
 	///   - statement_description_identifier: Additional payment information that gets added to the customer's card statement as part of the statement description.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and the name of the seller taking the payment.
 	///   - status: Indicates whether the payment is APPROVED, COMPLETED, CANCELED, or FAILED.
 	///   - tip_money: The amount designated as a tip.   This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - total_money: The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - updated_at: The timestamp of when the payment was last updated, in RFC 3339 format.
-	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, card_details: CardPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, employee_id: String? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, statement_description_identifier: String? = nil, status: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil) {
+	///   - version_token: Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
+	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, approved_money: Money? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, statement_description_identifier: String? = nil, status: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version_token: String? = nil) {
 		self.amount_money = amount_money
 		self.app_fee_money = app_fee_money
+		self.approved_money = approved_money
 		self.billing_address = billing_address
 		self.buyer_email_address = buyer_email_address
+		self.capabilities = capabilities
 		self.card_details = card_details
+		self.cash_details = cash_details
 		self.created_at = created_at
 		self.customer_id = customer_id
 		self.delay_action = delay_action
 		self.delay_duration = delay_duration
 		self.delayed_until = delayed_until
 		self.employee_id = employee_id
+		self.external_details = external_details
 		self.id = id
 		self.location_id = location_id
 		self.note = note
@@ -10614,11 +10691,12 @@ public struct Payment: Codable {
 		self.tip_money = tip_money
 		self.total_money = total_money
 		self.updated_at = updated_at
+		self.version_token = version_token
 	}
 }
 
 public struct PaymentOptions: Codable {
-	/// Indicates whether the Payment objects created from this `TerminalCheckout` will automatically be `COMPLETED` or left in an `APPROVED` state for later modification.
+	/// Indicates whether the `Payment` objects created from this `TerminalCheckout` are automatically `COMPLETED` or left in an `APPROVED` state for later modification.
 	public var autocomplete: Bool?
 
 	public init(autocomplete: Bool? = nil) {
@@ -10863,7 +10941,7 @@ public struct Refund: Codable {
 	}
 }
 
-/// Refunds a payment.
+/// Describes a request to refund a payment using [RefundPayment](#endpoint-payments-refundpayment).
 public struct RefundPaymentRequest: Codable {
 	/// The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	public var amount_money: Money
@@ -10876,7 +10954,7 @@ public struct RefundPaymentRequest: Codable {
 	/// A description of the reason for the refund.
 	public var reason: String?
 
-	/// Refunds a payment.
+	/// Describes a request to refund a payment using [RefundPayment](#endpoint-payments-refundpayment).
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	///   - app_fee_money: The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example,  US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included  when taking the payment. This is part of the application fee scenario the API supports. For more  information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).
@@ -10892,14 +10970,14 @@ public struct RefundPaymentRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RefundPayment](#endpoint-refunds-refundpayment) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+/// Defines the response returned by  [RefundPayment](#endpoint-payments-refundpayment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
 public struct RefundPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully created `PaymentRefund`.
 	public var refund: PaymentRefund?
 
-	/// Defines the fields that are included in the response body of a request to the [RefundPayment](#endpoint-refunds-refundpayment) endpoint.  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+	/// Defines the response returned by  [RefundPayment](#endpoint-payments-refundpayment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The successfully created `PaymentRefund`.
@@ -10934,24 +11012,24 @@ public struct RegisterDomainRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` will be present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` are present in a given response (never both).
 public struct RegisterDomainResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
-	/// Status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
+	/// The status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
 	public var status: RegisterDomainResponseStatus?
 
-	/// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` will be present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [RegisterDomain](#endpoint-registerdomain) endpoint.  Either `errors` or `status` are present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	///   - status: Status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
+	///   - status: The status of the domain registration.  See `RegisterDomainResponseStatus` for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
 	public init(errors: [SquareError]? = nil, status: RegisterDomainResponseStatus? = nil) {
 		self.errors = errors
 		self.status = status
 	}
 }
 
-/// The status of domain registration.
+/// The status of the domain registration.
 public enum RegisterDomainResponseStatus: String, Codable {
 	/// The domain is added, but not verified.
 	case PENDING
@@ -12487,11 +12565,11 @@ public struct SearchTeamMembersResponse: Codable {
 }
 
 public struct SearchTerminalCheckoutsRequest: Codable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
-	/// Limit the number of results returned for a single request.
+	/// Limits the number of results returned for a single request.
 	public var limit: Int?
-	/// Queries terminal checkouts based on given conditions and sort order. Leaving this unset will return all checkouts with the default sort order.
+	/// Queries Terminal checkouts based on given conditions and the sort order. Leaving these unset returns all checkouts with the default sort order.
 	public var query: TerminalCheckoutQuery?
 
 	public init(cursor: String? = nil, limit: Int? = nil, query: TerminalCheckoutQuery? = nil) {
@@ -12502,11 +12580,11 @@ public struct SearchTerminalCheckoutsRequest: Codable {
 }
 
 public struct SearchTerminalCheckoutsResponse: Codable {
-	/// The requested search result of `TerminalCheckout`s.
+	/// The requested search result of `TerminalCheckout` objects.
 	public var checkouts: [TerminalCheckout]?
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 
 	public init(checkouts: [TerminalCheckout]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
@@ -12517,11 +12595,11 @@ public struct SearchTerminalCheckoutsResponse: Codable {
 }
 
 public struct SearchTerminalRefundsRequest: Codable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.
 	public var cursor: String?
-	/// Limit the number of results returned for a single request.
+	/// Limits the number of results returned for a single request.
 	public var limit: Int?
-	/// Query the terminal refunds based on given conditions and sort order. Calling `SearchTerminalRefunds` without an explicitly query parameter will return all available refunds with the default sort order.
+	/// Queries the Terminal refunds based on given conditions and the sort order. Calling `SearchTerminalRefunds` without an explicit query parameter returns all available refunds with the default sort order.
 	public var query: TerminalRefundQuery?
 
 	public init(cursor: String? = nil, limit: Int? = nil, query: TerminalRefundQuery? = nil) {
@@ -12534,9 +12612,9 @@ public struct SearchTerminalRefundsRequest: Codable {
 public struct SearchTerminalRefundsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
-	/// Information on errors encountered during the request.
+	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
-	/// The requested search result of `TerminalRefund`s.
+	/// The requested search result of `TerminalRefund` objects.
 	public var refunds: [TerminalRefund]?
 
 	public init(cursor: String? = nil, errors: [SquareError]? = nil, refunds: [TerminalRefund]? = nil) {
@@ -13340,48 +13418,73 @@ public enum TenderType: String, Codable {
 }
 
 public struct TerminalCheckout: Codable {
-	/// The amount of money (including tax amount) that the Square Terminal device should try to collect.
+	/// The amount of money (including the tax amount) that the Square Terminal device should try to collect.
 	public var amount_money: Money
+	/// The ID of the application that created the checkout.
+	public let app_id: String?
 	/// Present if the status is `CANCELED`. See [ActionCancelReason](#type-actioncancelreason) for possible values
 	public let cancel_reason: ActionCancelReason?
-	/// The time when the `TerminalCheckout` was created as an RFC 3339 timestamp.
+	/// The time when the `TerminalCheckout` was created, as an RFC 3339 timestamp.
 	public let created_at: Timestamp?
-	/// The duration as an RFC 3339 duration, after which the checkout will be automatically canceled. TerminalCheckouts that are `PENDING` will be automatically `CANCELED` and have a cancellation reason of `TIMED_OUT`.  Default: 5 minutes from creation  Maximum: 5 minutes
+	/// An RFC 3339 duration, after which the checkout is automatically canceled. A `TerminalCheckout` that is `PENDING` is automatically `CANCELED` and has a cancellation reason of `TIMED_OUT`.  Default: 5 minutes from creation  Maximum: 5 minutes
 	public var deadline_duration: Timestamp?
 	/// Options to control the display and behavior of the Square Terminal device.
 	public var device_options: DeviceCheckoutOptions
-	/// A unique ID for this `TerminalCheckout`
+	/// A unique ID for this `TerminalCheckout`.
 	public let id: String?
-	/// An optional note to associate with the checkout, as well any payments used to complete the checkout.
+	/// The location of the device where the `TerminalCheckout` was directed.
+	public let location_id: String?
+	/// An optional note to associate with the checkout, as well as with any payments used to complete the checkout.
 	public var note: String?
-	/// A list of ids for payments created by this `TerminalCheckout`.
+	/// A list of IDs for payments created by this `TerminalCheckout`.
 	public let payment_ids: [String]?
-	/// An optional user-defined reference ID which can be used to associate this `TerminalCheckout` to another entity in an external system. For example, an order ID generated by a third-party shopping cart. Will also be associated with any payments used to complete the checkout.
+	/// The type of payment the terminal should attempt to capture from. Defaults to `CARD_PRESENT`. See [TerminalCheckoutPaymentType](#type-terminalcheckoutpaymenttype) for possible values
+	public var payment_type: TerminalCheckoutPaymentType?
+	/// An optional user-defined reference ID that can be used to associate this `TerminalCheckout` to another entity in an external system. For example, an order ID generated by a third-party shopping cart. The ID is also associated with any payments used to complete the checkout.
 	public var reference_id: String?
 	/// The status of the `TerminalCheckout`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	public let status: String?
-	/// The time when the `TerminalCheckout` was last updated as an RFC 3339 timestamp.
+	/// The time when the `TerminalCheckout` was last updated, as an RFC 3339 timestamp.
 	public let updated_at: Timestamp?
 
-	public init(amount_money: Money, device_options: DeviceCheckoutOptions, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, id: String? = nil, note: String? = nil, payment_ids: [String]? = nil, reference_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
+	public init(amount_money: Money, device_options: DeviceCheckoutOptions, app_id: String? = nil, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, payment_ids: [String]? = nil, payment_type: TerminalCheckoutPaymentType? = nil, reference_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
 		self.amount_money = amount_money
 		self.device_options = device_options
+		self.app_id = app_id
 		self.cancel_reason = cancel_reason
 		self.created_at = created_at
 		self.deadline_duration = deadline_duration
 		self.id = id
+		self.location_id = location_id
 		self.note = note
 		self.payment_ids = payment_ids
+		self.payment_type = payment_type
 		self.reference_id = reference_id
 		self.status = status
 		self.updated_at = updated_at
 	}
 }
 
+/// 
+public enum TerminalCheckoutPaymentType: String, Codable {
+	/// Accept credit card or debit card payments via tap, dip or swipe.
+	case CARD_PRESENT
+	/// Launches the manual credit or debit card entry screen for the buyer to complete.
+	case MANUAL_CARD_ENTRY
+	/// Launches the iD checkout screen for the buyer to complete.
+	case FELICA_ID
+	/// Launches the QUICPay checkout screen for the buyer to complete.
+	case FELICA_QUICPAY
+	/// Launches the Transportation Group checkout screen for the buyer to complete.
+	case FELICA_TRANSPORTATION_GROUP
+	/// Launches a checkout screen for the buyer on the Square Terminal that allows them to select a specific FeliCa brand or select the check balance screen.
+	case FELICA_ALL
+}
+
 public struct TerminalCheckoutQuery: Codable {
-	/// Options for filtering returned `TerminalCheckout`s
+	/// Options for filtering returned `TerminalCheckout` objects.
 	public var filter: TerminalCheckoutQueryFilter?
-	/// Option for sorting returned `TerminalCheckout`s
+	/// Option for sorting returned `TerminalCheckout` objects.
 	public var sort: TerminalCheckoutQuerySort?
 
 	public init(filter: TerminalCheckoutQueryFilter? = nil, sort: TerminalCheckoutQuerySort? = nil) {
@@ -13391,11 +13494,11 @@ public struct TerminalCheckoutQuery: Codable {
 }
 
 public struct TerminalCheckoutQueryFilter: Codable {
-	/// Time range for the beginning of the reporting period. Inclusive. Default: The current time minus one day.
+	/// The time range for the beginning of the reporting period, which is inclusive. Default: The current time minus one day.
 	public var created_at: TimeRange?
-	/// `TerminalCheckout`s associated with a specific device. If no device is specified then all `TerminalCheckout`s for the merchant will be displayed.
+	/// The `TerminalCheckout` objects associated with a specific device. If no device is specified, then all `TerminalCheckout` objects for the merchant are displayed.
 	public var device_id: String?
-	/// Filtered results with the desired status of the `TerminalCheckout` Options: PENDING, IN_PROGRESS, CANCELED, COMPLETED
+	/// Filtered results with the desired status of the `TerminalCheckout`. Options: PENDING, IN_PROGRESS, CANCELED, COMPLETED
 	public var status: String?
 
 	public init(created_at: TimeRange? = nil, device_id: String? = nil, status: String? = nil) {
@@ -13406,7 +13509,7 @@ public struct TerminalCheckoutQueryFilter: Codable {
 }
 
 public struct TerminalCheckoutQuerySort: Codable {
-	/// The order in which results are listed. - `ASC` - oldest to newest - `DESC` - newest to oldest (default).
+	/// The order in which results are listed. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	public var sort_order: String?
 
 	public init(sort_order: String? = nil) {
@@ -13417,37 +13520,43 @@ public struct TerminalCheckoutQuerySort: Codable {
 public struct TerminalRefund: Codable {
 	/// The amount of money, inclusive of `tax_money`, that the `TerminalRefund` should return. This value is limited to the amount taken in the original payment minus any completed or pending refunds.
 	public var amount_money: Money
+	/// The ID of the application that created the refund.
+	public let app_id: String?
 	/// Present if the status is `CANCELED`. See [ActionCancelReason](#type-actioncancelreason) for possible values
 	public let cancel_reason: ActionCancelReason?
-	/// The time when the `TerminalRefund` was created as an RFC 3339 timestamp.
+	/// The time when the `TerminalRefund` was created, as an RFC 3339 timestamp.
 	public let created_at: Timestamp?
-	/// The duration as an RFC 3339 duration, after which the refund will be automatically canceled. TerminalRefunds that are `PENDING` will be automatically `CANCELED` and have a cancellation reason of `TIMED_OUT`  Default: 5 minutes from creation  Maximum: 5 minutes
+	/// The RFC 3339 duration, after which the refund is automatically canceled. A `TerminalRefund` that is `PENDING` is automatically `CANCELED` and has a cancellation reason of `TIMED_OUT`.  Default: 5 minutes from creation.  Maximum: 5 minutes
 	public var deadline_duration: Timestamp?
-	/// The unique Id of the device intended for this `TerminalRefund`. The Id can be retrieved from /v2/devices api.
+	/// The unique ID of the device intended for this `TerminalRefund`. The Id can be retrieved from /v2/devices api.
 	public var device_id: String?
-	/// A unique ID for this `TerminalRefund`
+	/// A unique ID for this `TerminalRefund`.
 	public let id: String?
-	/// The reference to the Square order id for the payment identified by the `payment_id`.
+	/// The location of the device where the `TerminalRefund` was directed.
+	public let location_id: String?
+	/// The reference to the Square order ID for the payment identified by the `payment_id`.
 	public let order_id: String?
-	/// Unique ID of the payment being refunded.
+	/// The unique ID of the payment being refunded.
 	public var payment_id: String
 	/// A description of the reason for the refund. Note: maximum 192 characters
 	public var reason: String?
 	/// The reference to the payment refund created by completing this `TerminalRefund`.
 	public let refund_id: String?
-	/// The status of the `TerminalRefund`. Options: `PENDING`, `IN_PROGRESS`, `CANCELED`, `COMPLETED`
+	/// The status of the `TerminalRefund`. Options: `PENDING`, `IN_PROGRESS`, `CANCELED`, or `COMPLETED`.
 	public let status: String?
-	/// The time when the `TerminalRefund` was last updated as an RFC 3339 timestamp.
+	/// The time when the `TerminalRefund` was last updated, as an RFC 3339 timestamp.
 	public let updated_at: Timestamp?
 
-	public init(amount_money: Money, payment_id: String, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, device_id: String? = nil, id: String? = nil, order_id: String? = nil, reason: String? = nil, refund_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
+	public init(amount_money: Money, payment_id: String, app_id: String? = nil, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, device_id: String? = nil, id: String? = nil, location_id: String? = nil, order_id: String? = nil, reason: String? = nil, refund_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
 		self.amount_money = amount_money
 		self.payment_id = payment_id
+		self.app_id = app_id
 		self.cancel_reason = cancel_reason
 		self.created_at = created_at
 		self.deadline_duration = deadline_duration
 		self.device_id = device_id
 		self.id = id
+		self.location_id = location_id
 		self.order_id = order_id
 		self.reason = reason
 		self.refund_id = refund_id
@@ -13457,9 +13566,9 @@ public struct TerminalRefund: Codable {
 }
 
 public struct TerminalRefundQuery: Codable {
-	/// Filter for terminal refund query.
+	/// The filter for the Terminal refund query.
 	public var filter: TerminalRefundQueryFilter?
-	/// Sort order for terminal refund query.
+	/// The sort order for the Terminal refund query.
 	public var sort: TerminalRefundQuerySort?
 
 	public init(filter: TerminalRefundQueryFilter? = nil, sort: TerminalRefundQuerySort? = nil) {
@@ -13469,11 +13578,11 @@ public struct TerminalRefundQuery: Codable {
 }
 
 public struct TerminalRefundQueryFilter: Codable {
-	/// Timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one day.
+	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one day.
 	public var created_at: TimeRange?
-	/// `TerminalRefund`s associated with a specific device. If no device is specified then all `TerminalRefund`s for the signed in account will be displayed.
+	/// `TerminalRefund` objects associated with a specific device. If no device is specified, then all `TerminalRefund` objects for the signed-in account are displayed.
 	public var device_id: String?
-	/// Filtered results with the desired status of the `TerminalRefund` Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
+	/// Filtered results with the desired status of the `TerminalRefund`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, or `COMPLETED`.
 	public var status: String?
 
 	public init(created_at: TimeRange? = nil, device_id: String? = nil, status: String? = nil) {
@@ -13484,7 +13593,7 @@ public struct TerminalRefundQueryFilter: Codable {
 }
 
 public struct TerminalRefundQuerySort: Codable {
-	/// The order in which results are listed. - `ASC` - oldest to newest - `DESC` - newest to oldest (default).
+	/// The order in which results are listed. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	public var sort_order: String?
 
 	public init(sort_order: String? = nil) {
@@ -13514,11 +13623,11 @@ public struct TipSettings: Codable {
 	public var allow_tipping: Bool?
 	/// Indicates whether custom tip amounts are allowed during the checkout flow. Defaults to false.
 	public var custom_tip_field: Bool?
-	/// Indicates whether tip options should be presented on their own screen before presenting the signature screen during card payment. Defaults to false.
+	/// Indicates whether tip options should be presented on the screen before presenting the signature screen during card payment. Defaults to false.
 	public var separate_tip_screen: Bool?
-	/// Enables the "Smart Tip Amounts" behavior. Exact tipping options depend on the region the Square seller is active in.  In the United States and Canada, tipping options will be presented in whole dollar amounts for payments under 10 USD/CAD respectively.  If set to true, the tip_percentages settings is ignored. Defaults to false.  To learn more about smart tipping, see [Accept Tips with the Square App](https://squareup.com/help/us/en/article/5069-accept-tips-with-the-square-app)
+	/// Enables the "Smart Tip Amounts" behavior. Exact tipping options depend on the region in which the Square seller is active.  In the United States and Canada, tipping options are presented in whole dollar amounts for payments under $10 USD/CAD respectively.  If set to true, the `tip_percentages` settings is ignored. Defaults to false.  To learn more about smart tipping, see [Accept Tips with the Square App](https://squareup.com/help/us/en/article/5069-accept-tips-with-the-square-app).
 	public var smart_tipping: Bool?
-	/// A list of tip percentages that should be presented during the checkout flow. Specified as up to 3 non-negative integers from 0 to 100 (inclusive). Defaults to [15, 20, 25]
+	/// A list of tip percentages that should be presented during the checkout flow, specified as up to 3 non-negative integers from 0 to 100 (inclusive). Defaults to 15, 20, and 25.
 	public var tip_percentages: [Int]?
 
 	public init(allow_tipping: Bool? = nil, custom_tip_field: Bool? = nil, separate_tip_screen: Bool? = nil, smart_tipping: Bool? = nil, tip_percentages: [Int]? = nil) {
@@ -13912,6 +14021,40 @@ public struct UpdateOrderResponse: Codable {
 	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
+	}
+}
+
+/// Describes a request to update a payment using  [UpdatePayment](#endpoint-payments-updatepayment).
+public struct UpdatePaymentRequest: Codable {
+	/// A unique string that identifies this `UpdatePayment` request. Keys can be any valid string but must be unique for every `UpdatePayment` request.  The maximum is 45 characters.  For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
+	public var idempotency_key: String
+	/// The updated `Payment` object.
+	public var payment: Payment?
+
+	/// Describes a request to update a payment using  [UpdatePayment](#endpoint-payments-updatepayment).
+	/// - Parameters:
+	///   - idempotency_key: A unique string that identifies this `UpdatePayment` request. Keys can be any valid string but must be unique for every `UpdatePayment` request.  The maximum is 45 characters.  For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
+	///   - payment: The updated `Payment` object.
+	public init(idempotency_key: String, payment: Payment? = nil) {
+		self.idempotency_key = idempotency_key
+		self.payment = payment
+	}
+}
+
+/// Defines the response returned by  [UpdatePayment](#endpoint-payments-update).
+public struct UpdatePaymentResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The updated payment.
+	public var payment: Payment?
+
+	/// Defines the response returned by  [UpdatePayment](#endpoint-payments-update).
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - payment: The updated payment.
+	public init(errors: [SquareError]? = nil, payment: Payment? = nil) {
+		self.errors = errors
+		self.payment = payment
 	}
 }
 

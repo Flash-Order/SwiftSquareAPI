@@ -1,4 +1,4 @@
-/// Creates a new Terminal checkout request and sends it to the specified device to take a payment for the requested amount.
+/// Creates a Terminal checkout request and sends it to the specified device to take a payment for the requested amount.
 public struct CreateTerminalCheckout: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalCheckoutRequest
 	public typealias outputType = CreateTerminalCheckoutResponse
@@ -18,7 +18,7 @@ public struct SearchTerminalCheckouts: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a Terminal checkout request by checkout_id.
+/// Retrieves a Terminal checkout request by `checkout_id`.
 public struct GetTerminalCheckout: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -26,9 +26,9 @@ public struct GetTerminalCheckout: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let checkout_id: String
-		/// Retrieves a Terminal checkout request by checkout_id.
+		/// Retrieves a Terminal checkout request by `checkout_id`.
 		/// - Parameters:
-		///   - checkout_id: Unique ID for the desired `TerminalCheckout`
+		///   - checkout_id: The unique ID for the desired `TerminalCheckout`.
 		public init(checkout_id: String) {
 			self.checkout_id = checkout_id
 		}
@@ -48,7 +48,7 @@ public struct CancelTerminalCheckout: SquareAPIEndpoint {
 		let checkout_id: String
 		/// Cancels a Terminal checkout request if the status of the request permits it.
 		/// - Parameters:
-		///   - checkout_id: Unique ID for the desired `TerminalCheckout`
+		///   - checkout_id: The unique ID for the desired `TerminalCheckout`.
 		public init(checkout_id: String) {
 			self.checkout_id = checkout_id
 		}
@@ -69,7 +69,7 @@ public struct CreateTerminalRefund: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a filtered list of Terminal Interac refund requests created by the seller making the request.
+/// Retrieves a filtered list of Interac Terminal refund requests created by the seller making the request.
 public struct SearchTerminalRefunds: SquareAPIEndpoint {
 	public typealias inputType = SearchTerminalRefundsRequest
 	public typealias outputType = SearchTerminalRefundsResponse
@@ -79,7 +79,7 @@ public struct SearchTerminalRefunds: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves an Interac terminal refund object by ID.
+/// Retrieves an Interac Terminal refund object by ID.
 public struct GetTerminalRefund: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -87,9 +87,9 @@ public struct GetTerminalRefund: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let terminal_refund_id: String
-		/// Retrieves an Interac terminal refund object by ID.
+		/// Retrieves an Interac Terminal refund object by ID.
 		/// - Parameters:
-		///   - terminal_refund_id: Unique ID for the desired `TerminalRefund`
+		///   - terminal_refund_id: The unique ID for the desired `TerminalRefund`.
 		public init(terminal_refund_id: String) {
 			self.terminal_refund_id = terminal_refund_id
 		}
@@ -100,16 +100,16 @@ public struct GetTerminalRefund: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels an Interac terminal refund request by refund request ID if the status of the request permits it.
+/// Cancels an Interac Terminal refund request by refund request ID if the status of the request permits it.
 public struct CancelTerminalRefund: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CancelTerminalRefundResponse
 	public typealias paramType = Params
 	public struct Params {
 		let terminal_refund_id: String
-		/// Cancels an Interac terminal refund request by refund request ID if the status of the request permits it.
+		/// Cancels an Interac Terminal refund request by refund request ID if the status of the request permits it.
 		/// - Parameters:
-		///   - terminal_refund_id: Unique ID for the desired `TerminalRefund`
+		///   - terminal_refund_id: The unique ID for the desired `TerminalRefund`.
 		public init(terminal_refund_id: String) {
 			self.terminal_refund_id = terminal_refund_id
 		}
