@@ -10805,6 +10805,8 @@ public enum Product: String, Codable {
 /// 
 public enum ProductType: String, Codable {
 	case TERMINAL_API
+	case KDS			// hand-entered
+	case RESTAURANT		// hand-entered
 }
 
 /// Describes a `PublishInvoice` request.
