@@ -2557,6 +2557,18 @@ public struct ExternalPaymentDetails: Codable {
 	}
 }
 
+public struct GetDeviceCodeResponse: Codable {
+	/// The queried DeviceCode.
+	public var device_code: DeviceCode?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	public init(device_code: DeviceCode? = nil, errors: [SquareError]? = nil) {
+		self.device_code = device_code
+		self.errors = errors
+	}
+}
+
 /// Price and inventory alerting overrides for a `CatalogItemVariation` at a specific `Location`.
 public struct ItemVariationLocationOverrides: Codable {
 	/// If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard.  This value is always an integer.
