@@ -8,3 +8,5 @@
 import Foundation
 
 
+public typealias Info = SubscriptionEventInfo
+public typealias InfoCode = String
