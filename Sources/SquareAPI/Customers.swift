@@ -10,9 +10,9 @@ public struct ListCustomers: SquareAPIEndpoint {
 		let sort_order: String?
 		/// Lists customer profiles associated with a Square account.  Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-		///   - sort_field: Indicates how Customers should be sorted.  Default: `DEFAULT`.
-		///   - sort_order: Indicates whether Customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  Default: `ASC`.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - sort_field: Indicates how customers should be sorted.  Default: `DEFAULT`.
+		///   - sort_order: Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  Default: `ASC`.
 		public init(cursor: String? = nil, sort_field: String? = nil, sort_order: String? = nil) {
 			self.cursor = cursor
 			self.sort_field = sort_field
@@ -34,7 +34,7 @@ public struct ListCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new customer for a business, which can have associated cards on file.  You must provide __at least one__ of the following values in your request to this endpoint:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
+/// Creates a new customer for a business, which can have associated cards on file.  You must provide at least one of the following values in your request to this endpoint:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
 public struct CreateCustomer: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerRequest
 	public typealias outputType = CreateCustomerResponse
@@ -75,7 +75,7 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Updates the details of an existing customer. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to update merged profiles.  You cannot edit a customer's cards on file with this endpoint. To make changes to a card on file, you must delete the existing card on file with the [DeleteCustomerCard](#endpoint-Customers-deletecustomercard) endpoint, then create a new one with the [CreateCustomerCard](#endpoint-Customers-createcustomercard) endpoint.
+/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To change a card on file, call [DeleteCustomerCard](https://developer.squareup.com/reference/square_2021-04-21/customers-api/delete-customer-card) to delete the existing card and then call [CreateCustomerCard](https://developer.squareup.com/reference/square_2021-04-21/customers-api/create-customer-card) to create a new card.
 public struct UpdateCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateCustomerRequest
@@ -83,7 +83,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Updates the details of an existing customer. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to update merged profiles.  You cannot edit a customer's cards on file with this endpoint. To make changes to a card on file, you must delete the existing card on file with the [DeleteCustomerCard](#endpoint-Customers-deletecustomercard) endpoint, then create a new one with the [CreateCustomerCard](#endpoint-Customers-createcustomercard) endpoint.
+		/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To change a card on file, call [DeleteCustomerCard](https://developer.squareup.com/reference/square_2021-04-21/customers-api/delete-customer-card) to delete the existing card and then call [CreateCustomerCard](https://developer.squareup.com/reference/square_2021-04-21/customers-api/create-customer-card) to create a new card.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to update.
 		public init(customer_id: String) {
@@ -96,7 +96,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a customer from a business, along with any linked cards on file. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to delete merged profiles.
+/// Deletes a customer profile from a business, including any linked cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 public struct DeleteCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -104,15 +104,25 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Deletes a customer from a business, along with any linked cards on file. When two profiles are merged into a single profile, that profile is assigned a new `customer_id`. You must use the new `customer_id` to delete merged profiles.
+		let version: Int?
+		/// Deletes a customer profile from a business, including any linked cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to delete.
-		public init(customer_id: String) {
+		///   - version: (Beta) The current version of the customer profile.   As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
+		public init(customer_id: String, version: Int? = nil) {
 			self.customer_id = customer_id
+			self.version = version
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/customers/\(inputs.customer_id)"
+		var queries = [String]()
+		if let v = inputs.version { queries.append("version=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
 		return url
 	}
 }
@@ -161,7 +171,7 @@ public struct DeleteCustomerCard: SquareAPIEndpoint {
 	}
 }
 
-/// Adds a group membership to a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+/// Adds a group membership to a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 public struct AddGroupToCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = Empty
@@ -170,7 +180,7 @@ public struct AddGroupToCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let group_id: String
-		/// Adds a group membership to a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+		/// Adds a group membership to a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to add to a group.
 		///   - group_id: The ID of the customer group to add the customer to.
@@ -185,7 +195,7 @@ public struct AddGroupToCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Removes a group membership from a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+/// Removes a group membership from a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 public struct RemoveGroupFromCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -194,7 +204,7 @@ public struct RemoveGroupFromCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let group_id: String
-		/// Removes a group membership from a customer.   The customer is identified by the `customer_id` value  and the customer group is identified by the `group_id` value.
+		/// Removes a group membership from a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to remove from the group.
 		///   - group_id: The ID of the customer group to remove the customer from.

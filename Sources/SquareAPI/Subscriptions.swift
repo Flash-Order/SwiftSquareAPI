@@ -1,4 +1,4 @@
-/// Creates a subscription for a customer to a subscription plan.  If you provide a card on file in the request, Square charges the card for  the subscription. Otherwise, Square bills an invoice to the customer's email  address. The subscription starts immediately, unless the request includes  the optional `start_date`. Each individual subscription is associated with a particular location.
+/// Creates a subscription for a customer to a subscription plan.  If you provide a card on file in the request, Square charges the card for the subscription. Otherwise, Square bills an invoice to the customer's email address. The subscription starts immediately, unless the request includes the optional `start_date`. Each individual subscription is associated with a particular location.
 public struct CreateSubscription: SquareAPIEndpoint {
 	public typealias inputType = CreateSubscriptionRequest
 	public typealias outputType = CreateSubscriptionResponse
@@ -8,7 +8,7 @@ public struct CreateSubscription: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for subscriptions.  Results are ordered chronologically by subscription creation date. If the request specifies more than one location ID,  the endpoint orders the result  by location ID, and then by creation date within each location. If no locations are given in the query, all locations are searched.  You can also optionally specify `customer_ids` to search by customer.  If left unset, all customers  associated with the specified locations are returned.  If the request specifies customer IDs, the endpoint orders results  first by location, within location by customer ID, and within  customer by subscription creation date.  For more information, see  [Retrieve subscriptions](/docs/subscriptions-api/overview#retrieve-subscriptions).
+/// Searches for subscriptions. Results are ordered chronologically by subscription creation date. If the request specifies more than one location ID, the endpoint orders the result by location ID, and then by creation date within each location. If no locations are given in the query, all locations are searched.  You can also optionally specify `customer_ids` to search by customer. If left unset, all customers associated with the specified locations are returned. If the request specifies customer IDs, the endpoint orders results first by location, within location by customer ID, and within customer by subscription creation date.  For more information, see [Retrieve subscriptions](https://developer.squareup.com/docs/subscriptions-api/overview#retrieve-subscriptions).
 public struct SearchSubscriptions: SquareAPIEndpoint {
 	public typealias inputType = SearchSubscriptionsRequest
 	public typealias outputType = SearchSubscriptionsResponse
@@ -39,7 +39,7 @@ public struct RetrieveSubscription: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a subscription. You can set, modify, and clear the  `subscription` field values.
+/// Updates a subscription. You can set, modify, and clear the `subscription` field values.
 public struct UpdateSubscription: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateSubscriptionRequest
@@ -47,7 +47,7 @@ public struct UpdateSubscription: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_id: String
-		/// Updates a subscription. You can set, modify, and clear the  `subscription` field values.
+		/// Updates a subscription. You can set, modify, and clear the `subscription` field values.
 		/// - Parameters:
 		///   - subscription_id: (Beta) The ID for the subscription to update.
 		public init(subscription_id: String) {
@@ -93,8 +93,8 @@ public struct ListSubscriptionEvents: SquareAPIEndpoint {
 		/// Lists all events for a specific subscription. In the current implementation, only `START_SUBSCRIPTION` and `STOP_SUBSCRIPTION` (when the subscription was canceled) events are returned.
 		/// - Parameters:
 		///   - subscription_id: (Beta) The ID of the subscription to retrieve the events for.
-		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
-		///   - limit: (Beta) The upper limit on the number of subscription events to return  in the response.   Default: `200`
+		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - limit: (Beta) The upper limit on the number of subscription events to return in the response.  Default: `200`
 		public init(subscription_id: String, cursor: String? = nil, limit: Int? = nil) {
 			self.subscription_id = subscription_id
 			self.cursor = cursor
@@ -111,6 +111,26 @@ public struct ListSubscriptionEvents: SquareAPIEndpoint {
 			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 			return url + "?" + (encoded ?? query)
 		}
+		return url
+	}
+}
+
+/// Resumes a deactivated subscription.
+public struct ResumeSubscription: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = ResumeSubscriptionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let subscription_id: String
+		/// Resumes a deactivated subscription.
+		/// - Parameters:
+		///   - subscription_id: (Beta) The ID of the subscription to resume.
+		public init(subscription_id: String) {
+			self.subscription_id = subscription_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/subscriptions/\(inputs.subscription_id)/resume"
 		return url
 	}
 }

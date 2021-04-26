@@ -142,7 +142,7 @@ public struct V1ListEmployeeRoles: SquareAPIEndpoint {
 	}
 }
 
-/// Creates an employee role you can then assign to employees.  Square accounts can include any number of roles that can be assigned to employees. These roles define the actions and permissions granted to an employee with that role. For example, an employee with a "Shift Manager" role might be able to issue refunds in Square Point of Sale, whereas an employee with a "Clerk" role might not.  Roles are assigned with the [V1UpdateEmployee](#endpoint-v1updateemployee) endpoint. An employee can have only one role at a time.  If an employee has no role, they have none of the permissions associated with roles. All employees can accept payments with Square Point of Sale.
+/// Creates an employee role you can then assign to employees.  Square accounts can include any number of roles that can be assigned to employees. These roles define the actions and permissions granted to an employee with that role. For example, an employee with a "Shift Manager" role might be able to issue refunds in Square Point of Sale, whereas an employee with a "Clerk" role might not.  Roles are assigned with the [V1UpdateEmployee](https://developer.squareup.com/reference/square_2021-04-21/v1-employees-api/update-employee-role) endpoint. An employee can have only one role at a time.  If an employee has no role, they have none of the permissions associated with roles. All employees can accept payments with Square Point of Sale.
 public struct V1CreateEmployeeRole: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = V1EmployeeRole

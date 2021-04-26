@@ -1,4 +1,4 @@
-/// Retrieves a list of payments taken by the account making the request.  The maximum results per page is 100.
+/// Retrieves a list of payments taken by the account making the request.  Results are eventually consistent, and new payments or changes to payments might take several seconds to appear.  The maximum results per page is 100.
 public struct ListPayments: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -14,7 +14,7 @@ public struct ListPayments: SquareAPIEndpoint {
 		let last_4: String?
 		let card_brand: String?
 		let limit: Int?
-		/// Retrieves a list of payments taken by the account making the request.  The maximum results per page is 100.
+		/// Retrieves a list of payments taken by the account making the request.  Results are eventually consistent, and new payments or changes to payments might take several seconds to appear.  The maximum results per page is 100.
 		/// - Parameters:
 		///   - begin_time: The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 		///   - end_time: The timestamp for the end of the reporting period, in RFC 3339 format.  Default: The current time.
@@ -58,7 +58,7 @@ public struct ListPayments: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a payment using the provided source. You can use this endpoint  to charge a card (credit/debit card or     Square gift card) or record a payment that the seller received outside of Square  (cash payment from a buyer or a payment that an external entity  procesed on behalf of the seller).  The endpoint creates a  `Payment` object and returns it in the response.
+/// Creates a payment using the provided source. You can use this endpoint  to charge a card (credit/debit card or     Square gift card) or record a payment that the seller received outside of Square  (cash payment from a buyer or a payment that an external entity  processed on behalf of the seller).  The endpoint creates a  `Payment` object and returns it in the response.
 public struct CreatePayment: SquareAPIEndpoint {
 	public typealias inputType = CreatePaymentRequest
 	public typealias outputType = CreatePaymentResponse

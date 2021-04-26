@@ -8,7 +8,7 @@ public struct ListCustomerGroups: SquareAPIEndpoint {
 		let cursor: String?
 		/// Retrieves the list of customer groups of a business.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See the [Pagination guide](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 		public init(cursor: String? = nil) {
 			self.cursor = cursor
 		}
@@ -26,7 +26,7 @@ public struct ListCustomerGroups: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new customer group for a business.   The request must include the `name` value of the group.
+/// Creates a new customer group for a business.  The request must include the `name` value of the group.
 public struct CreateCustomerGroup: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerGroupRequest
 	public typealias outputType = CreateCustomerGroupResponse
