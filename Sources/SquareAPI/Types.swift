@@ -4311,3 +4311,206 @@ public struct TipSettings: Codable {
 		self.tip_percentages = tip_percentages
 	}
 }
+
+
+public struct V1Money: Codable {
+	/// Amount in the lowest denominated value of this Currency. E.g. in USD these are cents, in JPY they are Yen (which do not have a 'cent' concept).
+	public var amount: Int?
+	public var currency_code: String?
+	
+	public init(amount: Int? = nil, currency_code: String? = nil) {
+		self.amount = amount
+		self.currency_code = currency_code
+	}
+}
+
+
+/// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
+public struct V1Payment: Codable {
+	/// All of the additive taxes associated with the payment.
+//	public var additive_tax: [V1PaymentTax]?
+//	/// The sum of all additive taxes associated with the payment.
+//	public var additive_tax_money: V1Money?
+//	/// The time when the payment was created, in ISO 8601 format. Reflects the time of the first payment if the object represents an incomplete partial payment, and the time of the last or complete payment otherwise.
+//	public var created_at: String?
+//	/// The unique identifier of the Square account that took the payment.
+//	public var creator_id: String?
+//	/// The device that took the payment.
+//	public var device: Device?
+//	/// The total of all discounts applied to the payment.
+//	public var discount_money: V1Money?
+//	/// The total of all sales, including any applicable taxes.
+//	public var gross_sales_money: V1Money?
+//	/// The payment's unique identifier.
+//	public var id: String?
+//	/// All of the inclusive taxes associated with the payment.
+//	public var inclusive_tax: [V1PaymentTax]?
+//	/// The sum of all inclusive taxes associated with the payment.
+//	public var inclusive_tax_money: V1Money?
+//	/// Indicates whether or not the payment is only partially paid for. If true, this payment will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
+//	public var is_partial: Bool?
+//	/// The items purchased in the payment.
+//	public var itemizations: [V1PaymentItemization]?
+//	/// The unique identifier of the merchant that took the payment.
+//	public var merchant_id: String?
+//	/// The total of all sales, minus any applicable taxes.
+//	public var net_sales_money: V1Money?
+//	/// The amount to be deposited into the merchant's bank account for the payment.
+//	public var net_total_money: V1Money?
+//	/// The URL of the payment's detail page in the merchant dashboard. The merchant must be signed in to the merchant dashboard to view this page.
+//	public var payment_url: String?
+//	/// The total of all processing fees collected by Square for the payment.
+//	public var processing_fee_money: V1Money?
+//	/// The URL of the receipt for the payment. Note that for split tender payments, this URL corresponds to the receipt for the first tender listed in the payment's tender field. Each Tender object has its own receipt_url field you can use to get the other receipts associated with a split tender payment.
+//	public var receipt_url: String?
+//	/// The total of all refunds applied to the payment.
+//	public var refunded_money: V1Money?
+//	/// All of the refunds applied to the payment. Note that the value of all refunds on a payment can exceed the value of all tenders if a merchant chooses to refund money to a tender after previously accepting returned goods as part of an exchange.
+//	public var refunds: [V1Refund]?
+//	/// The total of all surcharges applied to the payment.
+//	public var surcharge_money: V1Money?
+//	/// A list of all surcharges associated with the payment.
+//	public var surcharges: [V1PaymentSurcharge]?
+//	/// The total of all sales, including any applicable taxes, rounded to the smallest legal unit of currency (e.g., the nearest penny in USD, the nearest nickel in CAD)
+//	public var swedish_rounding_money: V1Money?
+//	/// The total of all taxes applied to the payment. This is always the sum of inclusive_tax_money and additive_tax_money.
+//	public var tax_money: V1Money?
+	/// All of the tenders associated with the payment.
+	public var tender: [V1Tender]?
+	/// The total of all tips applied to the payment.
+	public var tip_money: V1Money?
+	/// The total of all discounts applied to the payment.
+//	public var total_collected_money: V1Money?
+	
+	/// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
+	/// - Parameters:
+	///   - additive_tax: All of the additive taxes associated with the payment.
+	///   - additive_tax_money: The sum of all additive taxes associated with the payment.
+	///   - created_at: The time when the payment was created, in ISO 8601 format. Reflects the time of the first payment if the object represents an incomplete partial payment, and the time of the last or complete payment otherwise.
+	///   - creator_id: The unique identifier of the Square account that took the payment.
+	///   - device: The device that took the payment.
+	///   - discount_money: The total of all discounts applied to the payment.
+	///   - gross_sales_money: The total of all sales, including any applicable taxes.
+	///   - id: The payment's unique identifier.
+	///   - inclusive_tax: All of the inclusive taxes associated with the payment.
+	///   - inclusive_tax_money: The sum of all inclusive taxes associated with the payment.
+	///   - is_partial: Indicates whether or not the payment is only partially paid for. If true, this payment will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
+	///   - itemizations: The items purchased in the payment.
+	///   - merchant_id: The unique identifier of the merchant that took the payment.
+	///   - net_sales_money: The total of all sales, minus any applicable taxes.
+	///   - net_total_money: The amount to be deposited into the merchant's bank account for the payment.
+	///   - payment_url: The URL of the payment's detail page in the merchant dashboard. The merchant must be signed in to the merchant dashboard to view this page.
+	///   - processing_fee_money: The total of all processing fees collected by Square for the payment.
+	///   - receipt_url: The URL of the receipt for the payment. Note that for split tender payments, this URL corresponds to the receipt for the first tender listed in the payment's tender field. Each Tender object has its own receipt_url field you can use to get the other receipts associated with a split tender payment.
+	///   - refunded_money: The total of all refunds applied to the payment.
+	///   - refunds: All of the refunds applied to the payment. Note that the value of all refunds on a payment can exceed the value of all tenders if a merchant chooses to refund money to a tender after previously accepting returned goods as part of an exchange.
+	///   - surcharge_money: The total of all surcharges applied to the payment.
+	///   - surcharges: A list of all surcharges associated with the payment.
+	///   - swedish_rounding_money: The total of all sales, including any applicable taxes, rounded to the smallest legal unit of currency (e.g., the nearest penny in USD, the nearest nickel in CAD)
+	///   - tax_money: The total of all taxes applied to the payment. This is always the sum of inclusive_tax_money and additive_tax_money.
+	///   - tender: All of the tenders associated with the payment.
+	///   - tip_money: The total of all tips applied to the payment.
+	///   - total_collected_money: The total of all discounts applied to the payment.
+//	public init(additive_tax: [V1PaymentTax]? = nil, additive_tax_money: V1Money? = nil, created_at: String? = nil, creator_id: String? = nil, device: Device? = nil, discount_money: V1Money? = nil, gross_sales_money: V1Money? = nil, id: String? = nil, inclusive_tax: [V1PaymentTax]? = nil, inclusive_tax_money: V1Money? = nil, is_partial: Bool? = nil, itemizations: [V1PaymentItemization]? = nil, merchant_id: String? = nil, net_sales_money: V1Money? = nil, net_total_money: V1Money? = nil, payment_url: String? = nil, processing_fee_money: V1Money? = nil, receipt_url: String? = nil, refunded_money: V1Money? = nil, refunds: [V1Refund]? = nil, surcharge_money: V1Money? = nil, surcharges: [V1PaymentSurcharge]? = nil, swedish_rounding_money: V1Money? = nil, tax_money: V1Money? = nil, tender: [V1Tender]? = nil, tip_money: V1Money? = nil, total_collected_money: V1Money? = nil) {
+//		self.additive_tax = additive_tax
+//		self.additive_tax_money = additive_tax_money
+//		self.created_at = created_at
+//		self.creator_id = creator_id
+//		self.device = device
+//		self.discount_money = discount_money
+//		self.gross_sales_money = gross_sales_money
+//		self.id = id
+//		self.inclusive_tax = inclusive_tax
+//		self.inclusive_tax_money = inclusive_tax_money
+//		self.is_partial = is_partial
+//		self.itemizations = itemizations
+//		self.merchant_id = merchant_id
+//		self.net_sales_money = net_sales_money
+//		self.net_total_money = net_total_money
+//		self.payment_url = payment_url
+//		self.processing_fee_money = processing_fee_money
+//		self.receipt_url = receipt_url
+//		self.refunded_money = refunded_money
+//		self.refunds = refunds
+//		self.surcharge_money = surcharge_money
+//		self.surcharges = surcharges
+//		self.swedish_rounding_money = swedish_rounding_money
+//		self.tax_money = tax_money
+//		self.tender = tender
+//		self.tip_money = tip_money
+//		self.total_collected_money = total_collected_money
+//	}
+}
+
+/// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
+public struct V1Tender: Codable {
+	/// The brand of credit card provided.
+	public var card_brand: String?
+	/// The amount of total_money returned to the buyer as change.
+	public var change_back_money: V1Money?
+	/// The ID of the employee that processed the tender.
+	public var employee_id: String?
+	/// The tender's unique ID.
+	public var entry_method: String?
+	/// The tender's unique ID.
+	public var id: String?
+	/// Indicates whether or not the tender is associated with an exchange. If is_exchange is true, the tender represents the value of goods returned in an exchange not the actual money paid. The exchange value reduces the tender amounts needed to pay for items purchased in the exchange.
+	public var is_exchange: Bool?
+	/// A human-readable description of the tender.
+	public var name: String?
+	/// The last four digits of the provided credit card's account number.
+	public var pan_suffix: String?
+	/// Notes entered by the merchant about the tender at the time of payment, if any. Typically only present for tender with the type: OTHER.
+	public var payment_note: String?
+	/// The URL of the receipt for the tender.
+	public var receipt_url: String?
+	/// The total of all refunds applied to this tender. This amount is always negative or zero.
+	public var refunded_money: V1Money?
+	/// The time when the tender was settled, in ISO 8601 format.
+	public var settled_at: String?
+	/// The time when the tender was created, in ISO 8601 format.
+	public var tendered_at: String?
+	/// The amount of total_money applied to the payment.
+	public var tendered_money: V1Money?
+	/// The total amount of money provided in this form of tender.
+	public var total_money: V1Money?
+	/// The type of tender.
+	public var type: String?
+	
+	/// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
+	/// - Parameters:
+	///   - card_brand: The brand of credit card provided.
+	///   - change_back_money: The amount of total_money returned to the buyer as change.
+	///   - employee_id: The ID of the employee that processed the tender.
+	///   - entry_method: The tender's unique ID.
+	///   - id: The tender's unique ID.
+	///   - is_exchange: Indicates whether or not the tender is associated with an exchange. If is_exchange is true, the tender represents the value of goods returned in an exchange not the actual money paid. The exchange value reduces the tender amounts needed to pay for items purchased in the exchange.
+	///   - name: A human-readable description of the tender.
+	///   - pan_suffix: The last four digits of the provided credit card's account number.
+	///   - payment_note: Notes entered by the merchant about the tender at the time of payment, if any. Typically only present for tender with the type: OTHER.
+	///   - receipt_url: The URL of the receipt for the tender.
+	///   - refunded_money: The total of all refunds applied to this tender. This amount is always negative or zero.
+	///   - settled_at: The time when the tender was settled, in ISO 8601 format.
+	///   - tendered_at: The time when the tender was created, in ISO 8601 format.
+	///   - tendered_money: The amount of total_money applied to the payment.
+	///   - total_money: The total amount of money provided in this form of tender.
+	///   - type: The type of tender.
+//	public init(card_brand: String? = nil, change_back_money: V1Money? = nil, employee_id: String? = nil, entry_method: String? = nil, id: String? = nil, is_exchange: Bool? = nil, name: String? = nil, pan_suffix: String? = nil, payment_note: String? = nil, receipt_url: String? = nil, refunded_money: V1Money? = nil, settled_at: String? = nil, tendered_at: String? = nil, tendered_money: V1Money? = nil, total_money: V1Money? = nil, type: String? = nil) {
+//		self.card_brand = card_brand
+//		self.change_back_money = change_back_money
+//		self.employee_id = employee_id
+//		self.entry_method = entry_method
+//		self.id = id
+//		self.is_exchange = is_exchange
+//		self.name = name
+//		self.pan_suffix = pan_suffix
+//		self.payment_note = payment_note
+//		self.receipt_url = receipt_url
+//		self.refunded_money = refunded_money
+//		self.settled_at = settled_at
+//		self.tendered_at = tendered_at
+//		self.tendered_money = tendered_money
+//		self.total_money = total_money
+//		self.type = type
+//	}
+}
