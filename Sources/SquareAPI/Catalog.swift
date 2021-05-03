@@ -1,3 +1,12 @@
+/// Returns a set of objects based on the provided ID. Each [CatalogItem](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogItem) returned in the set includes all of its child information including: all of its [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogItemVariation) objects, references to its [CatalogModifierList](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogModifierList) objects, and the ids of any [CatalogTax](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogTax) objects that apply to it.
+public struct BatchRetrieveCatalogObjects: SquareAPIEndpoint {
+	public typealias inputType = BatchRetrieveCatalogObjectsRequest
+	public typealias outputType = BatchRetrieveCatalogObjectsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/catalog/batch-retrieve"
+	}
+}
 
 
 /// Returns a list of [CatalogObject](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogObject)s that includes all objects of a set of desired types (for example, all [CatalogItem](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogItem) and [CatalogTax](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogTax) objects) in the catalog. The `types` parameter is specified as a comma-separated list of valid [CatalogObject](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogObject) types: `ITEM`, `ITEM_VARIATION`, `MODIFIER`, `MODIFIER_LIST`, `CATEGORY`, `DISCOUNT`, `TAX`, `IMAGE`.  __Important:__ ListCatalog does not return deleted catalog items. To retrieve deleted catalog items, use [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-04-21/catalog-api/search-catalog-objects) and set the `include_deleted_objects` attribute value to `true`.
