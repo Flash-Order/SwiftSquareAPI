@@ -9,6 +9,17 @@ public struct BatchRetrieveCatalogObjects: SquareAPIEndpoint {
 }
 
 
+/// Creates or updates up to 10,000 target objects based on the provided list of objects. The target objects are grouped into batches and each batch is inserted/updated in an all-or-nothing manner. If an object within a batch is malformed in some way, or violates a database constraint, the entire batch containing that item will be disregarded. However, other batches in the same request may still succeed. Each batch may contain up to 1,000 objects, and batches will be processed in order as long as the total object count for the request (items, variations, modifier lists, discounts, and taxes) is no more than 10,000.
+public struct BatchUpsertCatalogObjects: SquareAPIEndpoint {
+	public typealias inputType = BatchUpsertCatalogObjectsRequest
+	public typealias outputType = BatchUpsertCatalogObjectsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/catalog/batch-upsert"
+	}
+}
+
+
 /// Returns a list of [CatalogObject](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogObject)s that includes all objects of a set of desired types (for example, all [CatalogItem](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogItem) and [CatalogTax](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogTax) objects) in the catalog. The `types` parameter is specified as a comma-separated list of valid [CatalogObject](https://developer.squareup.com/reference/square_2021-04-21/objects/CatalogObject) types: `ITEM`, `ITEM_VARIATION`, `MODIFIER`, `MODIFIER_LIST`, `CATEGORY`, `DISCOUNT`, `TAX`, `IMAGE`.  __Important:__ ListCatalog does not return deleted catalog items. To retrieve deleted catalog items, use [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-04-21/catalog-api/search-catalog-objects) and set the `include_deleted_objects` attribute value to `true`.
 public struct ListCatalog: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
