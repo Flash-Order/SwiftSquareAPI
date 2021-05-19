@@ -4040,6 +4040,8 @@ public struct OrderSource: Codable {
 	}
 }
 
+public typealias BankAccountPaymentDetails = Empty
+
 /// Represents a payment processed by the Square API.
 public struct Payment: Codable {
 	/// The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
