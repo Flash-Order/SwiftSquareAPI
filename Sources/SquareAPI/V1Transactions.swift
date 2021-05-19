@@ -1,4 +1,5 @@
 /// Provides summary information for a merchant's online store orders.
+@available(*,deprecated)
 public struct V1ListOrders: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -38,6 +39,7 @@ public struct V1ListOrders: SquareAPIEndpoint {
 }
 
 /// Provides comprehensive information for a single online store order, including the order's history.
+@available(*,deprecated)
 public struct V1RetrieveOrder: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -62,6 +64,7 @@ public struct V1RetrieveOrder: SquareAPIEndpoint {
 }
 
 /// Updates the details of an online store order. Every update you perform on an order corresponds to one of three actions:
+@available(*,deprecated)
 public struct V1UpdateOrder: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = V1UpdateOrderRequest
@@ -86,6 +89,7 @@ public struct V1UpdateOrder: SquareAPIEndpoint {
 }
 
 /// Provides summary information for all payments taken for a given Square account during a date range. Date ranges cannot exceed 1 year in length. See Date ranges for details of inclusive and exclusive dates.  *Note**: Details for payments processed with Square Point of Sale while in offline mode may not be transmitted to Square for up to 72 hours. Offline payments have a `created_at` value that reflects the time the payment was originally processed, not the time it was subsequently transmitted to Square. Consequently, the ListPayments endpoint might list an offline payment chronologically between online payments that were seen in a previous request.
+@available(*,deprecated)
 public struct V1ListPayments: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -137,6 +141,7 @@ public struct V1ListPayments: SquareAPIEndpoint {
 }
 
 /// Provides comprehensive information for a single payment.
+@available(*,deprecated)
 public struct V1RetrievePayment: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -161,6 +166,7 @@ public struct V1RetrievePayment: SquareAPIEndpoint {
 }
 
 /// Provides the details for all refunds initiated by a merchant or any of the merchant's mobile staff during a date range. Date ranges cannot exceed one year in length.
+@available(*,deprecated)
 public struct V1ListRefunds: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -208,6 +214,7 @@ public struct V1ListRefunds: SquareAPIEndpoint {
 }
 
 /// Issues a refund for a previously processed payment. You must issue a refund within 60 days of the associated payment.  You cannot issue a partial refund for a split tender payment. You must instead issue a full or partial refund for a particular tender, by providing the applicable tender id to the V1CreateRefund endpoint. Issuing a full refund for a split tender payment refunds all tenders associated with the payment.  Issuing a refund for a card payment is not reversible. For development purposes, you can create fake cash payments in Square Point of Sale and refund them.
+@available(*,deprecated)
 public struct V1CreateRefund: SquareAPIEndpoint {
 	public typealias inputType = V1CreateRefundRequest
 	public typealias outputType = V1Refund
@@ -228,6 +235,7 @@ public struct V1CreateRefund: SquareAPIEndpoint {
 }
 
 /// Provides summary information for all deposits and withdrawals initiated by Square to a linked bank account during a date range. Date ranges cannot exceed one year in length.  *Note**: the ListSettlements endpoint does not provide entry information.
+@available(*,deprecated)
 public struct V1ListSettlements: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -279,6 +287,7 @@ public struct V1ListSettlements: SquareAPIEndpoint {
 }
 
 /// Provides comprehensive information for a single settlement.  The returned `Settlement` objects include an `entries` field that lists the transactions that contribute to the settlement total. Most settlement entries correspond to a payment payout, but settlement entries are also generated for less common events, like refunds, manual adjustments, or chargeback holds.  Square initiates its regular deposits as indicated in the [Deposit Options with Square](https://squareup.com/help/us/en/article/3807) help article. Details for a regular deposit are usually not available from Connect API endpoints before 10 p.m. PST the same day.  Square does not know when an initiated settlement **completes**, only whether it has failed. A completed settlement is typically reflected in a bank account within 3 business days, but in exceptional cases it may take longer.
+@available(*,deprecated)
 public struct V1RetrieveSettlement: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty

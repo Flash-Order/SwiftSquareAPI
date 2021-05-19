@@ -120,7 +120,7 @@ public struct RetrieveDisputeEvidence: SquareAPIEndpoint {
 	}
 }
 
-/// Removes specified evidence from a dispute.  Square does not send the bank any evidence that is removed. Also, you cannot remove evidence after submitting it to the bank using [SubmitEvidence](https://developer.squareup.com/reference/square_2021-04-21/disputes-api/submit-evidence).
+/// Removes specified evidence from a dispute.  Square does not send the bank any evidence that is removed. Also, you cannot remove evidence after submitting it to the bank using [SubmitEvidence](https://developer.squareup.com/reference/square_2021-05-13/disputes-api/submit-evidence).
 public struct RemoveDisputeEvidence: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -129,7 +129,7 @@ public struct RemoveDisputeEvidence: SquareAPIEndpoint {
 	public struct Params {
 		let dispute_id: String
 		let evidence_id: String
-		/// Removes specified evidence from a dispute.  Square does not send the bank any evidence that is removed. Also, you cannot remove evidence after submitting it to the bank using [SubmitEvidence](https://developer.squareup.com/reference/square_2021-04-21/disputes-api/submit-evidence).
+		/// Removes specified evidence from a dispute.  Square does not send the bank any evidence that is removed. Also, you cannot remove evidence after submitting it to the bank using [SubmitEvidence](https://developer.squareup.com/reference/square_2021-05-13/disputes-api/submit-evidence).
 		/// - Parameters:
 		///   - dispute_id: (Beta) The ID of the dispute you want to remove evidence from.
 		///   - evidence_id: (Beta) The ID of the evidence you want to remove.
@@ -164,14 +164,14 @@ public struct CreateDisputeEvidenceText: SquareAPIEndpoint {
 	}
 }
 
-/// Submits evidence to the cardholder's bank.  Before submitting evidence, Square compiles all available evidence. This includes evidence uploaded using the [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2021-04-21/disputes-api/create-dispute-evidence-file) and [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2021-04-21/disputes-api/create-dispute-evidence-text) endpoints and evidence automatically provided by Square, when available.
+/// Submits evidence to the cardholder's bank.  Before submitting evidence, Square compiles all available evidence. This includes evidence uploaded using the [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2021-05-13/disputes-api/create-dispute-evidence-file) and [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2021-05-13/disputes-api/create-dispute-evidence-text) endpoints and evidence automatically provided by Square, when available.
 public struct SubmitEvidence: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SubmitEvidenceResponse
 	public typealias paramType = Params
 	public struct Params {
 		let dispute_id: String
-		/// Submits evidence to the cardholder's bank.  Before submitting evidence, Square compiles all available evidence. This includes evidence uploaded using the [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2021-04-21/disputes-api/create-dispute-evidence-file) and [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2021-04-21/disputes-api/create-dispute-evidence-text) endpoints and evidence automatically provided by Square, when available.
+		/// Submits evidence to the cardholder's bank.  Before submitting evidence, Square compiles all available evidence. This includes evidence uploaded using the [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2021-05-13/disputes-api/create-dispute-evidence-file) and [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2021-05-13/disputes-api/create-dispute-evidence-text) endpoints and evidence automatically provided by Square, when available.
 		/// - Parameters:
 		///   - dispute_id: (Beta) The ID of the dispute that you want to submit evidence for.
 		public init(dispute_id: String) {
