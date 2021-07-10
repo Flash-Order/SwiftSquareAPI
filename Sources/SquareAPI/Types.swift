@@ -6957,9 +6957,9 @@ public struct GiftCard: Codable {
 	/// The Square-assigned ID of the gift card.
 	public let id: String?
 	/// The current gift card state.
-	public let state: Status?
+	public let state: GiftCardStatus?
 	/// Indicates the gift card type.
-	public var type: Type
+	public var type: GiftCardType
 
 	/// Represents a Square gift card.
 	/// - Parameters:
@@ -6971,7 +6971,7 @@ public struct GiftCard: Codable {
 	///   - id: The Square-assigned ID of the gift card.
 	///   - state: The current gift card state.
 	///   - type: Indicates the gift card type.
-	public init(type: Type, balance_money: Money? = nil, created_at: Timestamp? = nil, customer_ids: [String]? = nil, gan: String? = nil, gan_source: GANSource? = nil, id: String? = nil, state: Status? = nil) {
+	public init(type: GiftCardType, balance_money: Money? = nil, created_at: Timestamp? = nil, customer_ids: [String]? = nil, gan: String? = nil, gan_source: GANSource? = nil, id: String? = nil, state: GiftCardStatus? = nil) {
 		self.type = type
 		self.balance_money = balance_money
 		self.created_at = created_at
@@ -7020,7 +7020,7 @@ public struct GiftCardActivity: Codable {
 	/// Gift card activity data for refunding an activity. This data is present only when the type is REFUND.
 	public var refund_activity_details: GiftCardActivityRefund?
 	/// The type of the gift card activity.
-	public var type: Type
+	public var type: GiftCardActivityType
 	/// Gift card activity data for unblocking a gift card. This data is present only when the type is UNBLOCK.
 	public let unblock_activity_details: GiftCardActivityUnblock?
 	/// Gift card activity data for refunding an unlinked activity. Present only when type is `UNLINKED_ACTIVITY_REFUND`.
@@ -7048,7 +7048,7 @@ public struct GiftCardActivity: Codable {
 	///   - type: The type of the gift card activity.
 	///   - unblock_activity_details: Gift card activity data for unblocking a gift card. This data is present only when the type is UNBLOCK.
 	///   - unlinked_activity_refund_activity_details: Gift card activity data for refunding an unlinked activity. Present only when type is `UNLINKED_ACTIVITY_REFUND`.
-	public init(location_id: String, type: Type, activate_activity_details: GiftCardActivityActivate? = nil, adjust_decrement_activity_details: GiftCardActivityAdjustDecrement? = nil, adjust_increment_activity_details: GiftCardActivityAdjustIncrement? = nil, block_activity_details: GiftCardActivityBlock? = nil, clear_balance_activity_details: GiftCardActivityClearBalance? = nil, created_at: Timestamp? = nil, deactivate_activity_details: GiftCardActivityDeactivate? = nil, gift_card_balance_money: Money? = nil, gift_card_gan: String? = nil, gift_card_id: String? = nil, id: String? = nil, import_activity_details: GiftCardActivityImport? = nil, import_reversal_activity_details: GiftCardActivityImportReversal? = nil, load_activity_details: GiftCardActivityLoad? = nil, redeem_activity_details: GiftCardActivityRedeem? = nil, refund_activity_details: GiftCardActivityRefund? = nil, unblock_activity_details: GiftCardActivityUnblock? = nil, unlinked_activity_refund_activity_details: GiftCardActivityUnlinkedActivityRefund? = nil) {
+	public init(location_id: String, type: GiftCardActivityType, activate_activity_details: GiftCardActivityActivate? = nil, adjust_decrement_activity_details: GiftCardActivityAdjustDecrement? = nil, adjust_increment_activity_details: GiftCardActivityAdjustIncrement? = nil, block_activity_details: GiftCardActivityBlock? = nil, clear_balance_activity_details: GiftCardActivityClearBalance? = nil, created_at: Timestamp? = nil, deactivate_activity_details: GiftCardActivityDeactivate? = nil, gift_card_balance_money: Money? = nil, gift_card_gan: String? = nil, gift_card_id: String? = nil, id: String? = nil, import_activity_details: GiftCardActivityImport? = nil, import_reversal_activity_details: GiftCardActivityImportReversal? = nil, load_activity_details: GiftCardActivityLoad? = nil, redeem_activity_details: GiftCardActivityRedeem? = nil, refund_activity_details: GiftCardActivityRefund? = nil, unblock_activity_details: GiftCardActivityUnblock? = nil, unlinked_activity_refund_activity_details: GiftCardActivityUnlinkedActivityRefund? = nil) {
 		self.location_id = location_id
 		self.type = type
 		self.activate_activity_details = activate_activity_details
