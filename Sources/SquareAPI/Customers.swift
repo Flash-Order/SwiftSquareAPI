@@ -34,7 +34,7 @@ public struct ListCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new customer for a business, which can have associated cards on file.  You must provide at least one of the following values in your request to this endpoint:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
+/// Creates a new customer for a business.  You must provide at least one of the following values in your request to this endpoint:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
 public struct CreateCustomer: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerRequest
 	public typealias outputType = CreateCustomerResponse
@@ -75,7 +75,7 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To change a card on file, call [DeleteCustomerCard](https://developer.squareup.com/reference/square_2021-05-13/customers-api/delete-customer-card) to delete the existing card and then call [CreateCustomerCard](https://developer.squareup.com/reference/square_2021-05-13/customers-api/create-customer-card) to create a new card.
+/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_2021-06-16/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_2021-06-16/gift-cards-api).
 public struct UpdateCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateCustomerRequest
@@ -83,7 +83,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To change a card on file, call [DeleteCustomerCard](https://developer.squareup.com/reference/square_2021-05-13/customers-api/delete-customer-card) to delete the existing card and then call [CreateCustomerCard](https://developer.squareup.com/reference/square_2021-05-13/customers-api/create-customer-card) to create a new card.
+		/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_2021-06-16/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_2021-06-16/gift-cards-api).
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to update.
 		public init(customer_id: String) {
@@ -96,7 +96,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a customer profile from a business, including any linked cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 public struct DeleteCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -105,7 +105,7 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let version: Int?
-		/// Deletes a customer profile from a business, including any linked cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to delete.
 		///   - version: (Beta) The current version of the customer profile.   As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
@@ -128,6 +128,7 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 }
 
 /// Adds a card on file to an existing customer.  As with charges, calls to `CreateCustomerCard` are idempotent. Multiple calls with the same card nonce return the same card record that was created with the provided nonce during the _first_ call.
+@available(*,deprecated)
 public struct CreateCustomerCard: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerCardRequest
 	public typealias outputType = CreateCustomerCardResponse
@@ -148,6 +149,7 @@ public struct CreateCustomerCard: SquareAPIEndpoint {
 }
 
 /// Removes a card on file from a customer.
+@available(*,deprecated)
 public struct DeleteCustomerCard: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty

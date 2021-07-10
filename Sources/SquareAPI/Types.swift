@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2021-05-13" }
+	public static var version: String { return "2021-06-16" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -63,14 +63,14 @@ public struct AccumulateLoyaltyPointsRequest: Codable {
 	public var accumulate_points: LoyaltyEventAccumulatePoints
 	/// A unique string that identifies the `AccumulateLoyaltyPoints` request.  Keys can be any valid string but must be unique for every request.
 	public var idempotency_key: String
-	/// The [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the purchase was made.
+	/// The [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the purchase was made.
 	public var location_id: String
 
 	/// A request to accumulate points for a purchase.
 	/// - Parameters:
 	///   - accumulate_points: The points to add to the account.  If you are using the Orders API to manage orders, you   specify the order ID. Otherwise, specify the  points to add.
 	///   - idempotency_key: A unique string that identifies the `AccumulateLoyaltyPoints` request.  Keys can be any valid string but must be unique for every request.
-	///   - location_id: The [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the purchase was made.
+	///   - location_id: The [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the purchase was made.
 	public init(accumulate_points: LoyaltyEventAccumulatePoints, idempotency_key: String, location_id: String) {
 		self.accumulate_points = accumulate_points
 		self.idempotency_key = idempotency_key
@@ -105,20 +105,20 @@ public enum ActionCancelReason: String, Codable {
 	case TIMED_OUT
 }
 
-/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/add-group-to-customer) endpoint.
+/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/add-group-to-customer) endpoint.
 public struct AddGroupToCustomerRequest: Codable {
 
-	/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/add-group-to-customer) endpoint.
+	/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/add-group-to-customer) endpoint.
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/add-group-to-customer) endpoint.
+/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/add-group-to-customer) endpoint.
 public struct AddGroupToCustomerResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/add-group-to-customer) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/add-group-to-customer) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -134,7 +134,7 @@ public struct AdditionalRecipient: Codable {
 	public var description: String?
 	/// The location ID for a recipient (other than the merchant) receiving a portion of this tender.
 	public var location_id: String
-	/// The unique ID for this [AdditionalRecipientReceivable](https://developer.squareup.com/reference/square_2021-05-13/objects/AdditionalRecipientReceivable), assigned by the server.
+	/// The unique ID for this [AdditionalRecipientReceivable](https://developer.squareup.com/reference/square_2021-06-16/objects/AdditionalRecipientReceivable), assigned by the server.
 	public var receivable_id: String?
 
 	/// Represents an additional recipient (other than the merchant) receiving a portion of this tender.
@@ -142,7 +142,7 @@ public struct AdditionalRecipient: Codable {
 	///   - amount_money: The amount of money distributed to the recipient.
 	///   - description: The description of the additional recipient.
 	///   - location_id: The location ID for a recipient (other than the merchant) receiving a portion of this tender.
-	///   - receivable_id: The unique ID for this [AdditionalRecipientReceivable](https://developer.squareup.com/reference/square_2021-05-13/objects/AdditionalRecipientReceivable), assigned by the server.
+	///   - receivable_id: The unique ID for this [AdditionalRecipientReceivable](https://developer.squareup.com/reference/square_2021-06-16/objects/AdditionalRecipientReceivable), assigned by the server.
 	public init(amount_money: Money, location_id: String, description: String? = nil, receivable_id: String? = nil) {
 		self.amount_money = amount_money
 		self.location_id = location_id
@@ -258,19 +258,19 @@ public struct AdjustLoyaltyPointsResponse: Codable {
 public struct AppointmentSegment: Codable {
 	/// The time span in minutes of an appointment segment.
 	public var duration_minutes: Int
-	/// The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) object representing the service booked in this segment.
+	/// The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) object representing the service booked in this segment.
 	public var service_variation_id: String
 	/// The current version of the item variation representing the service booked in this segment.
 	public var service_variation_version: Int
-	/// The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-05-13/objects/TeamMember) object representing the team member booked in this segment.
+	/// The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-06-16/objects/TeamMember) object representing the team member booked in this segment.
 	public var team_member_id: String
 
 	/// Defines an appointment segment of a booking.
 	/// - Parameters:
 	///   - duration_minutes: The time span in minutes of an appointment segment.
-	///   - service_variation_id: The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) object representing the service booked in this segment.
+	///   - service_variation_id: The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) object representing the service booked in this segment.
 	///   - service_variation_version: The current version of the item variation representing the service booked in this segment.
-	///   - team_member_id: The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-05-13/objects/TeamMember) object representing the team member booked in this segment.
+	///   - team_member_id: The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-06-16/objects/TeamMember) object representing the team member booked in this segment.
 	public init(duration_minutes: Int, service_variation_id: String, service_variation_version: Int, team_member_id: String) {
 		self.duration_minutes = duration_minutes
 		self.service_variation_id = service_variation_id
@@ -475,12 +475,15 @@ public struct BatchChangeInventoryRequest: Codable {
 }
 
 public struct BatchChangeInventoryResponse: Codable {
+	/// Changes created for the request.
+	public var changes: [InventoryChange]?
 	/// The current counts for all objects referenced in the request.
 	public var counts: [InventoryCount]?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	public init(counts: [InventoryCount]? = nil, errors: [SquareError]? = nil) {
+	public init(changes: [InventoryChange]? = nil, counts: [InventoryCount]? = nil, errors: [SquareError]? = nil) {
+		self.changes = changes
 		self.counts = counts
 		self.errors = errors
 	}
@@ -511,7 +514,7 @@ public struct BatchDeleteCatalogObjectsResponse: Codable {
 }
 
 public struct BatchRetrieveCatalogObjectsRequest: Codable {
-	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject)s' `version` attribute.
+	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject)s' `version` attribute.
 	public var catalog_version: Int?
 	/// If `true`, the response will include additional objects that are related to the requested objects, as follows:  If the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.
 	public var include_related_objects: Bool?
@@ -528,9 +531,9 @@ public struct BatchRetrieveCatalogObjectsRequest: Codable {
 public struct BatchRetrieveCatalogObjectsResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
-	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject)s returned.
+	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject)s returned.
 	public var objects: [CatalogObject]?
-	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject)s referenced by the object in the `objects` field.
+	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject)s referenced by the object in the `objects` field.
 	public var related_objects: [CatalogObject]?
 
 	public init(errors: [SquareError]? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
@@ -688,15 +691,15 @@ public struct Booking: Codable {
 	public var appointment_segments: [AppointmentSegment]?
 	/// The timestamp specifying the creation time of this booking, in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// The ID of the [Customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) object representing the customer attending this booking
+	/// The ID of the [Customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) object representing the customer attending this booking
 	public var customer_id: String?
-	/// The free-text field for the customer to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a relevant [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance.
+	/// The free-text field for the customer to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a relevant [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance.
 	public var customer_note: String?
 	/// A unique ID of this object representing a booking.
 	public let id: String?
-	/// The ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) object representing the location where the booked service is provided.
+	/// The ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) object representing the location where the booked service is provided.
 	public var location_id: String?
-	/// The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance. This field should not be visible to customers.
+	/// The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance. This field should not be visible to customers.
 	public var seller_note: String?
 	/// The timestamp specifying the starting time of this booking, in RFC 3339 format.
 	public var start_at: Timestamp?
@@ -711,11 +714,11 @@ public struct Booking: Codable {
 	/// - Parameters:
 	///   - appointment_segments: A list of appointment segments for this booking.
 	///   - created_at: The timestamp specifying the creation time of this booking, in RFC 3339 format.
-	///   - customer_id: The ID of the [Customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) object representing the customer attending this booking
-	///   - customer_note: The free-text field for the customer to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a relevant [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance.
+	///   - customer_id: The ID of the [Customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) object representing the customer attending this booking
+	///   - customer_note: The free-text field for the customer to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a relevant [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance.
 	///   - id: A unique ID of this object representing a booking.
-	///   - location_id: The ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) object representing the location where the booked service is provided.
-	///   - seller_note: The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance. This field should not be visible to customers.
+	///   - location_id: The ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) object representing the location where the booked service is provided.
+	///   - seller_note: The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance. This field should not be visible to customers.
 	///   - start_at: The timestamp specifying the starting time of this booking, in RFC 3339 format.
 	///   - status: The status of the booking, describing where the booking stands with respect to the booking state machine.
 	///   - updated_at: The timestamp specifying the most recent update time of this booking, in RFC 3339 format.
@@ -831,25 +834,25 @@ public struct BreakType: Codable {
 
 /// Represents a bulk create request for `TeamMember` objects.
 public struct BulkCreateTeamMembersRequest: Codable {
-	/// The data which will be used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
+	/// The data used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	public var team_members: CreateTeamMemberRequest
 
 	/// Represents a bulk create request for `TeamMember` objects.
 	/// - Parameters:
-	///   - team_members: The data which will be used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
+	///   - team_members: The data used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	public init(team_members: CreateTeamMemberRequest) {
 		self.team_members = team_members
 	}
 }
 
-/// Represents a response from a bulk create request, containing the created `TeamMember` objects or error messages.
+/// Represents a response from a bulk create request containing the created `TeamMember` objects or error messages.
 public struct BulkCreateTeamMembersResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully created `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
 	public var team_members: CreateTeamMemberResponse?
 
-	/// Represents a response from a bulk create request, containing the created `TeamMember` objects or error messages.
+	/// Represents a response from a bulk create request containing the created `TeamMember` objects or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_members: The successfully created `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`.
@@ -861,25 +864,25 @@ public struct BulkCreateTeamMembersResponse: Codable {
 
 /// Represents a bulk update request for `TeamMember` objects.
 public struct BulkUpdateTeamMembersRequest: Codable {
-	/// The data which will be used to update the `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
+	/// The data used to update the `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	public var team_members: UpdateTeamMemberRequest
 
 	/// Represents a bulk update request for `TeamMember` objects.
 	/// - Parameters:
-	///   - team_members: The data which will be used to update the `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
+	///   - team_members: The data used to update the `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	public init(team_members: UpdateTeamMemberRequest) {
 		self.team_members = team_members
 	}
 }
 
-/// Represents a response from a bulk update request, containing the updated `TeamMember` objects or error messages.
+/// Represents a response from a bulk update request containing the updated `TeamMember` objects or error messages.
 public struct BulkUpdateTeamMembersResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully updated `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
 	public var team_members: UpdateTeamMemberResponse?
 
-	/// Represents a response from a bulk update request, containing the updated `TeamMember` objects or error messages.
+	/// Represents a response from a bulk update request containing the updated `TeamMember` objects or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_members: The successfully updated `TeamMember` objects. Each key is the `team_member_id` that maps to the `UpdateTeamMemberRequest`.
@@ -1067,14 +1070,14 @@ public struct BusinessHoursPeriod: Codable {
 
 /// A request to calculate the points that a buyer can earn from  a specified purchase.
 public struct CalculateLoyaltyPointsRequest: Codable {
-	/// The [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount`.
+	/// The [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount`.
 	public var order_id: String?
 	/// The purchase amount for which to calculate the points.  Specify this field if your application does not use the Orders API to process orders. Otherwise, specify the `order_id`.
 	public var transaction_amount_money: Money?
 
 	/// A request to calculate the points that a buyer can earn from  a specified purchase.
 	/// - Parameters:
-	///   - order_id: The [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount`.
+	///   - order_id: The [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount`.
 	///   - transaction_amount_money: The purchase amount for which to calculate the points.  Specify this field if your application does not use the Orders API to process orders. Otherwise, specify the `order_id`.
 	public init(order_id: String? = nil, transaction_amount_money: Money? = nil) {
 		self.order_id = order_id
@@ -1149,12 +1152,12 @@ public struct CancelBookingResponse: Codable {
 
 /// Describes a `CancelInvoice` request.
 public struct CancelInvoiceRequest: Codable {
-	/// The version of the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to cancel. If you do not know the version, you can call  [GetInvoice](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/get-invoice) or [ListInvoices](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/list-invoices).
+	/// The version of the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to cancel. If you do not know the version, you can call  [GetInvoice](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/get-invoice) or [ListInvoices](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/list-invoices).
 	public var version: Int
 
 	/// Describes a `CancelInvoice` request.
 	/// - Parameters:
-	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to cancel. If you do not know the version, you can call  [GetInvoice](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/get-invoice) or [ListInvoices](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/list-invoices).
+	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to cancel. If you do not know the version, you can call  [GetInvoice](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/get-invoice) or [ListInvoices](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/list-invoices).
 	public init(version: Int) {
 		self.version = version
 	}
@@ -1177,12 +1180,12 @@ public struct CancelInvoiceResponse: Codable {
 	}
 }
 
-/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment-by-idempotency-key).
+/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment-by-idempotency-key).
 public struct CancelPaymentByIdempotencyKeyRequest: Codable {
 	/// The `idempotency_key` identifying the payment to be canceled.
 	public var idempotency_key: String
 
-	/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment-by-idempotency-key).
+	/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment-by-idempotency-key).
 	/// - Parameters:
 	///   - idempotency_key: The `idempotency_key` identifying the payment to be canceled.
 	public init(idempotency_key: String) {
@@ -1190,12 +1193,12 @@ public struct CancelPaymentByIdempotencyKeyRequest: Codable {
 	}
 }
 
-/// Defines the response returned by  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment-by-idempotency-key). On success, `errors` is empty.
+/// Defines the response returned by  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment-by-idempotency-key). On success, `errors` is empty.
 public struct CancelPaymentByIdempotencyKeyResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the response returned by  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment-by-idempotency-key). On success, `errors` is empty.
+	/// Defines the response returned by  [CancelPaymentByIdempotencyKey](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment-by-idempotency-key). On success, `errors` is empty.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -1203,22 +1206,22 @@ public struct CancelPaymentByIdempotencyKeyResponse: Codable {
 	}
 }
 
-/// Describes the request to cancel (void) a payment using  [CancelPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment).  You can only cancel a payment that is approved (not completed). For more information, see  [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
+/// Describes the request to cancel (void) a payment using  [CancelPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment).  You can only cancel a payment that is approved (not completed). For more information, see  [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
 public struct CancelPaymentRequest: Codable {
 
-	/// Describes the request to cancel (void) a payment using  [CancelPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment).  You can only cancel a payment that is approved (not completed). For more information, see  [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
+	/// Describes the request to cancel (void) a payment using  [CancelPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment).  You can only cancel a payment that is approved (not completed). For more information, see  [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
 	public init() {
 	}
 }
 
-/// Defines the response returned by [CancelPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment).
+/// Defines the response returned by [CancelPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment).
 public struct CancelPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully canceled `Payment` object.
 	public var payment: Payment?
 
-	/// Defines the response returned by [CancelPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/cancel-payment).
+	/// Defines the response returned by [CancelPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/cancel-payment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully canceled `Payment` object.
@@ -1228,22 +1231,22 @@ public struct CancelPaymentResponse: Codable {
 	}
 }
 
-/// Defines parameters in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/cancel-subscription) endpoint request.
+/// Defines parameters in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/cancel-subscription) endpoint request.
 public struct CancelSubscriptionRequest: Codable {
 
-	/// Defines parameters in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/cancel-subscription) endpoint request.
+	/// Defines parameters in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/cancel-subscription) endpoint request.
 	public init() {
 	}
 }
 
-/// Defines fields that are included in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/cancel-subscription) response.
+/// Defines fields that are included in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/cancel-subscription) response.
 public struct CancelSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The canceled subscription.
 	public var subscription: Subscription?
 
-	/// Defines fields that are included in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/cancel-subscription) response.
+	/// Defines fields that are included in a [CancelSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/cancel-subscription) response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The canceled subscription.
@@ -1295,12 +1298,12 @@ public struct CaptureTransactionRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/capture-transaction) endpoint.
+/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/capture-transaction) endpoint.
 public struct CaptureTransactionResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/capture-transaction) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/capture-transaction) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -1308,7 +1311,7 @@ public struct CaptureTransactionResponse: Codable {
 	}
 }
 
-/// Represents the payment details of a card to be used for payments. These details are determined by the `card_nonce` generated by `SqPaymentForm`.
+/// Represents the payment details of a card to be used for payments. These details are determined by the payment token generated by Web Payments SDK.
 public struct Card: Codable {
 	/// The billing address for this card.
 	public var billing_address: Address?
@@ -1320,6 +1323,10 @@ public struct Card: Codable {
 	public let card_type: String?
 	/// The name of the cardholder.
 	public var cardholder_name: String?
+	/// The ID of a customer created using the Customers API to be associated with the card.
+	public var customer_id: String?
+	/// Indicates whether or not a card can be used for payments.
+	public let enabled: Bool?
 	/// The expiration month of the associated card as an integer between 1 and 12.
 	public var exp_month: Int?
 	/// The four-digit year of the card's expiration date.
@@ -1332,32 +1339,44 @@ public struct Card: Codable {
 	public let last_4: String?
 	/// Indicates whether the Card is prepaid or not. The Card object includes this field only in response to Payments API calls.
 	public let prepaid_type: String?
+	/// An optional user-defined reference ID that associates this card with another entity in an external system. For example, a customer ID from an external customer management system.
+	public var reference_id: String?
+	/// Current version number of the card. Increments with each card update. Requests to update an existing Card object will be rejected unless the version in the request matches the current version for the Card.
+	public var version: Int?
 
-	/// Represents the payment details of a card to be used for payments. These details are determined by the `card_nonce` generated by `SqPaymentForm`.
+	/// Represents the payment details of a card to be used for payments. These details are determined by the payment token generated by Web Payments SDK.
 	/// - Parameters:
 	///   - billing_address: The billing address for this card.
 	///   - bin: The first six digits of the card number, known as the Bank Identification Number (BIN). Only the Payments API returns this field.
 	///   - card_brand: The card's brand.
 	///   - card_type: The type of the card. The Card object includes this field only in response to Payments API calls.
 	///   - cardholder_name: The name of the cardholder.
+	///   - customer_id: The ID of a customer created using the Customers API to be associated with the card.
+	///   - enabled: Indicates whether or not a card can be used for payments.
 	///   - exp_month: The expiration month of the associated card as an integer between 1 and 12.
 	///   - exp_year: The four-digit year of the card's expiration date.
 	///   - fingerprint: __Not currently set.__ Intended as a Square-assigned identifier, based on the card number, to identify the card across multiple locations within a single application.
 	///   - id: Unique ID for this card. Generated by Square.
 	///   - last_4: The last 4 digits of the card number.
 	///   - prepaid_type: Indicates whether the Card is prepaid or not. The Card object includes this field only in response to Payments API calls.
-	public init(billing_address: Address? = nil, bin: String? = nil, card_brand: String? = nil, card_type: String? = nil, cardholder_name: String? = nil, exp_month: Int? = nil, exp_year: Int? = nil, fingerprint: String? = nil, id: String? = nil, last_4: String? = nil, prepaid_type: String? = nil) {
+	///   - reference_id: An optional user-defined reference ID that associates this card with another entity in an external system. For example, a customer ID from an external customer management system.
+	///   - version: Current version number of the card. Increments with each card update. Requests to update an existing Card object will be rejected unless the version in the request matches the current version for the Card.
+	public init(billing_address: Address? = nil, bin: String? = nil, card_brand: String? = nil, card_type: String? = nil, cardholder_name: String? = nil, customer_id: String? = nil, enabled: Bool? = nil, exp_month: Int? = nil, exp_year: Int? = nil, fingerprint: String? = nil, id: String? = nil, last_4: String? = nil, prepaid_type: String? = nil, reference_id: String? = nil, version: Int? = nil) {
 		self.billing_address = billing_address
 		self.bin = bin
 		self.card_brand = card_brand
 		self.card_type = card_type
 		self.cardholder_name = cardholder_name
+		self.customer_id = customer_id
+		self.enabled = enabled
 		self.exp_month = exp_month
 		self.exp_year = exp_year
 		self.fingerprint = fingerprint
 		self.id = id
 		self.last_4 = last_4
 		self.prepaid_type = prepaid_type
+		self.reference_id = reference_id
+		self.version = version
 	}
 }
 
@@ -1376,6 +1395,7 @@ public enum CardBrand: String, Codable {
 	case INTERAC
 	case EFTPOS
 	case FELICA
+	case EBT
 }
 
 /// Reflects the current status of a card payment. Contains only non-confidential information.
@@ -1871,7 +1891,7 @@ public enum CatalogCustomAttributeDefinitionType: String, Codable {
 public struct CatalogCustomAttributeValue: Codable {
 	/// A `true` or `false` value. Populated if `type` = `BOOLEAN`.
 	public var boolean_value: Bool?
-	/// __Read-only.__ The id of the [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogCustomAttributeDefinition) this value belongs to.
+	/// __Read-only.__ The id of the [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogCustomAttributeDefinition) this value belongs to.
 	public let custom_attribute_definition_id: String?
 	/// __Read-only.__ A copy of key from the associated `CatalogCustomAttributeDefinition`.
 	public let key: String?
@@ -1889,7 +1909,7 @@ public struct CatalogCustomAttributeValue: Codable {
 	/// An instance of a custom attribute. Custom attributes can be defined and added to `ITEM` and `ITEM_VARIATION` type catalog objects. [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes).
 	/// - Parameters:
 	///   - boolean_value: A `true` or `false` value. Populated if `type` = `BOOLEAN`.
-	///   - custom_attribute_definition_id: __Read-only.__ The id of the [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogCustomAttributeDefinition) this value belongs to.
+	///   - custom_attribute_definition_id: __Read-only.__ The id of the [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogCustomAttributeDefinition) this value belongs to.
 	///   - key: __Read-only.__ A copy of key from the associated `CatalogCustomAttributeDefinition`.
 	///   - name: The name of the custom attribute.
 	///   - number_value: Populated if `type` = `NUMBER`. Contains a string representation of a decimal number, using a `.` as the decimal separator.
@@ -1965,14 +1985,14 @@ public enum CatalogDiscountType: String, Codable {
 	case VARIABLE_AMOUNT
 }
 
-/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/upsert-catalog-object) or [BatchUpsertCatalogObjects](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/batch-upsert-catalog-objects) to create a [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
+/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/upsert-catalog-object) or [BatchUpsertCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/batch-upsert-catalog-objects) to create a [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
 public struct CatalogIdMapping: Codable {
 	/// The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
 	public var client_object_id: String?
 	/// The permanent ID for the CatalogObject created by the server.
 	public var object_id: String?
 
-	/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/upsert-catalog-object) or [BatchUpsertCatalogObjects](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/batch-upsert-catalog-objects) to create a [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
+	/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/upsert-catalog-object) or [BatchUpsertCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/batch-upsert-catalog-objects) to create a [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
 	/// - Parameters:
 	///   - client_object_id: The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
 	///   - object_id: The permanent ID for the CatalogObject created by the server.
@@ -1984,18 +2004,18 @@ public struct CatalogIdMapping: Codable {
 
 /// An image file to use in Square catalogs. It can be associated with catalog items, item variations, and categories.
 public struct CatalogImage: Codable {
-	/// A caption that describes what is shown in the image. Displayed in the Square Online Store. This is a searchable attribute for use in applicable query filters.
+	/// A caption that describes what is shown in the image. Displayed in the Square Online Store. This is a searchable attribute for use in applicable query filters using the [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-objects).
 	public var caption: String?
-	/// The internal name to identify this image in calls to the Square API.
+	/// The internal name to identify this image in calls to the Square API. This is a searchable attribute for use in applicable query filters using the [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-objects). It is not unique and should not be shown in a buyer facing context.
 	public var name: String?
-	/// The URL of this image, generated by Square after an image is uploaded using the [CreateCatalogImage](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/create-catalog-image) endpoint.
+	/// The URL of this image, generated by Square after an image is uploaded using the [CreateCatalogImage](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/create-catalog-image) endpoint.
 	public var url: String?
 
 	/// An image file to use in Square catalogs. It can be associated with catalog items, item variations, and categories.
 	/// - Parameters:
-	///   - caption: A caption that describes what is shown in the image. Displayed in the Square Online Store. This is a searchable attribute for use in applicable query filters.
-	///   - name: The internal name to identify this image in calls to the Square API.
-	///   - url: The URL of this image, generated by Square after an image is uploaded using the [CreateCatalogImage](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/create-catalog-image) endpoint.
+	///   - caption: A caption that describes what is shown in the image. Displayed in the Square Online Store. This is a searchable attribute for use in applicable query filters using the [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-objects).
+	///   - name: The internal name to identify this image in calls to the Square API. This is a searchable attribute for use in applicable query filters using the [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-objects). It is not unique and should not be shown in a buyer facing context.
+	///   - url: The URL of this image, generated by Square after an image is uploaded using the [CreateCatalogImage](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/create-catalog-image) endpoint.
 	public init(caption: String? = nil, name: String? = nil, url: String? = nil) {
 		self.caption = caption
 		self.name = name
@@ -2063,7 +2083,7 @@ public struct CatalogInfoResponseLimits: Codable {
 	}
 }
 
-/// A [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
+/// A [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
 public struct CatalogItem: Codable {
 	/// The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
 	public var abbreviation: String?
@@ -2093,10 +2113,10 @@ public struct CatalogItem: Codable {
 	public var sort_name: String?
 	/// A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
 	public var tax_ids: [String]?
-	/// A list of CatalogObjects containing the `CatalogItemVariation`s for this item.
+	/// A list of [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) objects for this item. An item must have at least one variation.
 	public var variations: [CatalogObject]?
 
-	/// A [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
+	/// A [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
 	/// - Parameters:
 	///   - abbreviation: The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
 	///   - available_electronically: If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
@@ -2112,7 +2132,7 @@ public struct CatalogItem: Codable {
 	///   - skip_modifier_screen: If `false`, the Square Point of Sale app will present the `CatalogItem`'s details screen immediately, allowing the merchant to choose `CatalogModifier`s before adding the item to the cart.  This is the default behavior.  If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-selected modifiers, and merchants can edit modifiers by drilling down onto the item's details.  Third-party clients are encouraged to implement similar behaviors.
 	///   - sort_name: A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting.  It is currently supported for sellers of the Japanese locale only.
 	///   - tax_ids: A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
-	///   - variations: A list of CatalogObjects containing the `CatalogItemVariation`s for this item.
+	///   - variations: A list of [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) objects for this item. An item must have at least one variation.
 	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, category_id: String? = nil, description: String? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: String? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
 		self.abbreviation = abbreviation
 		self.available_electronically = available_electronically
@@ -2287,6 +2307,10 @@ public struct CatalogItemVariation: Codable {
 	public var service_duration: Int?
 	/// The item variation's SKU, if any. This is a searchable attribute for use in applicable query filters.
 	public var sku: String?
+	/// Whether stock is counted directly on this variation (TRUE) or only on its components (FALSE). For backward compatibility missing values will be interpreted as TRUE.
+	public var stockable: Bool?
+	/// The rule of conversion of the [CatalogStockConversion](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogStockConversion) type that describes how this non-stockable sellable/receivable item variation is converted to/from the stockable item variation sharing the same parent item.
+	public var stockable_conversion: CatalogStockConversion?
 	/// Tokens of employees that can perform the service represented by this variation. Only valid for variations of type `APPOINTMENTS_SERVICE`.
 	public var team_member_ids: [String]?
 	/// If `true`, inventory tracking is active for the variation.
@@ -2311,11 +2335,13 @@ public struct CatalogItemVariation: Codable {
 	///   - pricing_type: Indicates whether the item variation's price is fixed or determined at the time of sale.
 	///   - service_duration: If the `CatalogItem` that owns this item variation is of type `APPOINTMENTS_SERVICE`, then this is the duration of the service in milliseconds. For example, a 30 minute appointment would have the value `1800000`, which is equal to 30 (minutes) * 60 (seconds per minute) * 1000 (milliseconds per second).
 	///   - sku: The item variation's SKU, if any. This is a searchable attribute for use in applicable query filters.
+	///   - stockable: Whether stock is counted directly on this variation (TRUE) or only on its components (FALSE). For backward compatibility missing values will be interpreted as TRUE.
+	///   - stockable_conversion: The rule of conversion of the [CatalogStockConversion](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogStockConversion) type that describes how this non-stockable sellable/receivable item variation is converted to/from the stockable item variation sharing the same parent item.
 	///   - team_member_ids: Tokens of employees that can perform the service represented by this variation. Only valid for variations of type `APPOINTMENTS_SERVICE`.
 	///   - track_inventory: If `true`, inventory tracking is active for the variation.
 	///   - upc: The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard, Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps unless it is updated to fit the expected format.
 	///   - user_data: Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
-	public init(available_for_booking: Bool? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: String? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: String? = nil, service_duration: Int? = nil, sku: String? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
+	public init(available_for_booking: Bool? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: String? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: String? = nil, service_duration: Int? = nil, sku: String? = nil, stockable: Bool? = nil, stockable_conversion: CatalogStockConversion? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
 		self.available_for_booking = available_for_booking
 		self.inventory_alert_threshold = inventory_alert_threshold
 		self.inventory_alert_type = inventory_alert_type
@@ -2329,6 +2355,8 @@ public struct CatalogItemVariation: Codable {
 		self.pricing_type = pricing_type
 		self.service_duration = service_duration
 		self.sku = sku
+		self.stockable = stockable
+		self.stockable_conversion = stockable_conversion
 		self.team_member_ids = team_member_ids
 		self.track_inventory = track_inventory
 		self.upc = upc
@@ -2438,7 +2466,7 @@ public struct CatalogObject: Codable {
 	public var category_data: CatalogCategory?
 	/// Structured data for a `CatalogCustomAttributeDefinition`, set for CatalogObjects of type `CUSTOM_ATTRIBUTE_DEFINITION`.
 	public var custom_attribute_definition_data: CatalogCustomAttributeDefinition?
-	/// A map (key-value pairs) of application-defined custom attribute values. The value of a key-value pair is a [CatalogCustomAttributeValue](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogCustomAttributeValue) object. The key is the `key` attribute value defined in the associated [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogCustomAttributeDefinition) object defined by the application making the request.  If the `CatalogCustomAttributeDefinition` object is defined by another application, the `CatalogCustomAttributeDefinition`'s key attribute value is prefixed by the defining application ID. For example, if the `CatalogCustomAttributeDefinition` has a `key` attribute of `"cocoa_brand"` and the defining application ID is `"abcd1234"`, the key in the map is `"abcd1234:cocoa_brand"` if the application making the request is different from the application defining the custom attribute definition. Otherwise, the key used in the map is simply `"cocoa_brand"`.  Application-defined custom attributes that are set at a global (location-independent) level. Custom attribute values are intended to store additional information about a catalog object or associations with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.).
+	/// A map (key-value pairs) of application-defined custom attribute values. The value of a key-value pair is a [CatalogCustomAttributeValue](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogCustomAttributeValue) object. The key is the `key` attribute value defined in the associated [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogCustomAttributeDefinition) object defined by the application making the request.  If the `CatalogCustomAttributeDefinition` object is defined by another application, the `CatalogCustomAttributeDefinition`'s key attribute value is prefixed by the defining application ID. For example, if the `CatalogCustomAttributeDefinition` has a `key` attribute of `"cocoa_brand"` and the defining application ID is `"abcd1234"`, the key in the map is `"abcd1234:cocoa_brand"` if the application making the request is different from the application defining the custom attribute definition. Otherwise, the key used in the map is simply `"cocoa_brand"`.  Application-defined custom attributes that are set at a global (location-independent) level. Custom attribute values are intended to store additional information about a catalog object or associations with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.).
 	public var custom_attribute_values: CatalogCustomAttributeValue?
 	/// Structured data for a `CatalogDiscount`, set for CatalogObjects of type `DISCOUNT`.
 	public var discount_data: CatalogDiscount?
@@ -2493,7 +2521,7 @@ public struct CatalogObject: Codable {
 	///   - catalog_v1_ids: The Connect v1 IDs for this object at each location where it is present, where they differ from the object's Connect V2 ID. The field will only be present for objects that have been created or modified by legacy APIs.
 	///   - category_data: Structured data for a `CatalogCategory`, set for CatalogObjects of type `CATEGORY`.
 	///   - custom_attribute_definition_data: Structured data for a `CatalogCustomAttributeDefinition`, set for CatalogObjects of type `CUSTOM_ATTRIBUTE_DEFINITION`.
-	///   - custom_attribute_values: A map (key-value pairs) of application-defined custom attribute values. The value of a key-value pair is a [CatalogCustomAttributeValue](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogCustomAttributeValue) object. The key is the `key` attribute value defined in the associated [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogCustomAttributeDefinition) object defined by the application making the request.  If the `CatalogCustomAttributeDefinition` object is defined by another application, the `CatalogCustomAttributeDefinition`'s key attribute value is prefixed by the defining application ID. For example, if the `CatalogCustomAttributeDefinition` has a `key` attribute of `"cocoa_brand"` and the defining application ID is `"abcd1234"`, the key in the map is `"abcd1234:cocoa_brand"` if the application making the request is different from the application defining the custom attribute definition. Otherwise, the key used in the map is simply `"cocoa_brand"`.  Application-defined custom attributes that are set at a global (location-independent) level. Custom attribute values are intended to store additional information about a catalog object or associations with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.).
+	///   - custom_attribute_values: A map (key-value pairs) of application-defined custom attribute values. The value of a key-value pair is a [CatalogCustomAttributeValue](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogCustomAttributeValue) object. The key is the `key` attribute value defined in the associated [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogCustomAttributeDefinition) object defined by the application making the request.  If the `CatalogCustomAttributeDefinition` object is defined by another application, the `CatalogCustomAttributeDefinition`'s key attribute value is prefixed by the defining application ID. For example, if the `CatalogCustomAttributeDefinition` has a `key` attribute of `"cocoa_brand"` and the defining application ID is `"abcd1234"`, the key in the map is `"abcd1234:cocoa_brand"` if the application making the request is different from the application defining the custom attribute definition. Otherwise, the key used in the map is simply `"cocoa_brand"`.  Application-defined custom attributes that are set at a global (location-independent) level. Custom attribute values are intended to store additional information about a catalog object or associations with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.).
 	///   - discount_data: Structured data for a `CatalogDiscount`, set for CatalogObjects of type `DISCOUNT`.
 	///   - id: An identifier to reference this object in the catalog. When a new `CatalogObject` is inserted, the client should set the id to a temporary identifier starting with a "`#`" character. Other objects being inserted or updated within the same request may use this identifier to refer to the new object.  When the server receives the new object, it will supply a unique identifier that replaces the temporary identifier for all future references.
 	///   - image_data: Structured data for a `CatalogImage`, set for CatalogObjects of type `IMAGE`.
@@ -2605,7 +2633,7 @@ public enum CatalogObjectType: String, Codable {
 	case TIME_PERIOD
 	/// A measurement unit, corresponding to `CatalogMeasurementUnit`. The unit of measure and precision in which an item variation should be sold.
 	case MEASUREMENT_UNIT
-	/// A subscription plan, corresponding to [CatalogSubscriptionPlan](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogSubscriptionPlan).  The subscription plan data is stored in the `subscription_plan_data` field of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject).
+	/// A subscription plan, corresponding to [CatalogSubscriptionPlan](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogSubscriptionPlan).  The subscription plan data is stored in the `subscription_plan_data` field of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject).
 	case SUBSCRIPTION_PLAN
 	/// Represents a list of item option values that can be assigned to item variations. For example, a color option or size option for a t-shirt.
 	case ITEM_OPTION
@@ -2719,11 +2747,11 @@ public struct CatalogProductSet: Codable {
 	}
 }
 
-/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-objects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryText) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
+/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-objects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryText) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 public struct CatalogQuery: Codable {
 	/// An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	public var exact_query: CatalogQueryExact?
-	/// A query expression to return item variations (of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) type) that contain all of the specified `CatalogItemOption` IDs.
+	/// A query expression to return item variations (of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) type) that contain all of the specified `CatalogItemOption` IDs.
 	public var item_variations_for_item_option_values_query: CatalogQueryItemVariationsForItemOptionValues?
 	/// A query expression to return items that contains the specified item options (as identified the corresponding `CatalogItemOption` IDs).
 	public var items_for_item_options_query: CatalogQueryItemsForItemOptions?
@@ -2742,10 +2770,10 @@ public struct CatalogQuery: Codable {
 	/// A text query expression to return objects whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
 	public var text_query: CatalogQueryText?
 
-	/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-objects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogQueryText) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
+	/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-objects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogQueryText) All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  * Searchable attribute and objects queryable by searchable attributes ** - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, 'CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 	/// - Parameters:
 	///   - exact_query: An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
-	///   - item_variations_for_item_option_values_query: A query expression to return item variations (of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) type) that contain all of the specified `CatalogItemOption` IDs.
+	///   - item_variations_for_item_option_values_query: A query expression to return item variations (of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) type) that contain all of the specified `CatalogItemOption` IDs.
 	///   - items_for_item_options_query: A query expression to return items that contains the specified item options (as identified the corresponding `CatalogItemOption` IDs).
 	///   - items_for_modifier_list_query: A query expression to return items that have any of the given modifier list (as identified by the corresponding `CatalogModifierList`s IDs) enabled.
 	///   - items_for_tax_query: A query expression to return items that have any of the specified taxes (as identified by the corresponding `CatalogTax` object IDs) enabled.
@@ -2990,21 +3018,35 @@ public enum CatalogQuickAmountsSettingsOption: String, Codable {
 	case AUTO
 }
 
+/// Represents the rule of conversion between a stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) and a non-stockable sell-by or receive-by `CatalogItemVariation` that share the same underlying stock.
+public struct CatalogStockConversion: Codable {
+	/// The converted equivalent quantity of the non-stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation)  in its measurement unit. The `stockable_quantity` value and this `nonstockable_quantity` value together define the conversion ratio between stockable item variation and the non-stockable item variation. It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	public var nonstockable_quantity: String
+	/// References to the stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) for this stock conversion. Selling, receiving or recounting the non-stockable `CatalogItemVariation`  defined with a stock conversion results in adjustments of this stockable `CatalogItemVariation`. This immutable field must reference a stockable `CatalogItemVariation` that shares the parent [CatalogItem](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItem) of the converted `CatalogItemVariation.`
+	public var stockable_item_variation_id: String
+	/// The quantity of the stockable item variation (as identified by `stockable_item_variation_id`)  equivalent to the non-stockable item variation quantity (as specified in `nonstockable_quantity`)  as defined by this stock conversion.  It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	public var stockable_quantity: String
+
+	/// Represents the rule of conversion between a stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) and a non-stockable sell-by or receive-by `CatalogItemVariation` that share the same underlying stock.
+	/// - Parameters:
+	///   - nonstockable_quantity: The converted equivalent quantity of the non-stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation)  in its measurement unit. The `stockable_quantity` value and this `nonstockable_quantity` value together define the conversion ratio between stockable item variation and the non-stockable item variation. It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	///   - stockable_item_variation_id: References to the stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) for this stock conversion. Selling, receiving or recounting the non-stockable `CatalogItemVariation`  defined with a stock conversion results in adjustments of this stockable `CatalogItemVariation`. This immutable field must reference a stockable `CatalogItemVariation` that shares the parent [CatalogItem](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItem) of the converted `CatalogItemVariation.`
+	///   - stockable_quantity: The quantity of the stockable item variation (as identified by `stockable_item_variation_id`)  equivalent to the non-stockable item variation quantity (as specified in `nonstockable_quantity`)  as defined by this stock conversion.  It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	public init(nonstockable_quantity: String, stockable_item_variation_id: String, stockable_quantity: String) {
+		self.nonstockable_quantity = nonstockable_quantity
+		self.stockable_item_variation_id = stockable_item_variation_id
+		self.stockable_quantity = stockable_quantity
+	}
+}
+
 /// Describes a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
 public struct CatalogSubscriptionPlan: Codable {
 	/// The name of the plan.
 	public var name: String
-	/// A list of SubscriptionPhase containing the [SubscriptionPhase](https://developer.squareup.com/reference/square_2021-05-13/objects/SubscriptionPhase) for this plan.
-	public var phases: [SubscriptionPhase]
+	/// A list of SubscriptionPhase containing the [SubscriptionPhase](https://developer.squareup.com/reference/square_2021-06-16/objects/SubscriptionPhase) for this plan.
+	public let phases: [SubscriptionPhase]
 
-	/// Describes a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
-	/// - Parameters:
-	///   - name: The name of the plan.
-	///   - phases: A list of SubscriptionPhase containing the [SubscriptionPhase](https://developer.squareup.com/reference/square_2021-05-13/objects/SubscriptionPhase) for this plan.
-	public init(name: String, phases: [SubscriptionPhase]) {
-		self.name = name
-		self.phases = phases
-	}
+	// no init-- this struct is read-only
 }
 
 /// A tax applicable to an item.
@@ -3070,7 +3112,7 @@ public struct CatalogV1Id: Codable {
 	}
 }
 
-/// Defines the parameters that can be included in the body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/charge) endpoint.  Deprecated - recommend using [CreatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/create-payment)
+/// Defines the parameters that can be included in the body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint.  Deprecated - recommend using [CreatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/create-payment)
 public struct ChargeRequest: Codable {
 	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `amount_money` value in the charge request. The `location_id` must be the valid location of the app owner merchant.  This field requires the `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
 	public var additional_recipients: [AdditionalRecipient]?
@@ -3080,13 +3122,13 @@ public struct ChargeRequest: Codable {
 	public var billing_address: Address?
 	/// The buyer's email address, if available. This value is optional, but this transaction is ineligible for chargeback protection if it is not provided.
 	public var buyer_email_address: String?
-	/// A nonce generated from the `SqPaymentForm` that represents the card to charge.  The application that provides a nonce to this endpoint must be the _same application_ that generated the nonce with the `SqPaymentForm`. Otherwise, the nonce is invalid.  Do not provide a value for this field if you provide a value for `customer_card_id`.
+	/// A payment token generated from the [Card.tokenize()](https://developer.squareup.com/reference/sdks/web/payments/objects/Card#Card.tokenize) that represents the card to charge.  The application that provides a payment token to this endpoint must be the _same application_ that generated the payment token with the Web Payments SDK. Otherwise, the nonce is invalid.  Do not provide a value for this field if you provide a value for `customer_card_id`.
 	public var card_nonce: String?
 	/// The ID of the customer card on file to charge. Do not provide a value for this field if you provide a value for `card_nonce`.  If you provide this value, you _must_ also provide a value for `customer_id`.
 	public var customer_card_id: String?
 	/// The ID of the customer to associate this transaction with. This field is required if you provide a value for `customer_card_id`, and optional otherwise.
 	public var customer_id: String?
-	/// If `true`, the request will only perform an Auth on the provided card. You can then later perform either a Capture (with the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/capture-transaction) endpoint) or a Void (with the [VoidTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/void-transaction) endpoint).  Default value: `false`
+	/// If `true`, the request will only perform an Auth on the provided card. You can then later perform either a Capture (with the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/capture-transaction) endpoint) or a Void (with the [VoidTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/void-transaction) endpoint).  Default value: `false`
 	public var delay_capture: Bool?
 	/// A value you specify that uniquely identifies this transaction among transactions you've created.  If you're unsure whether a particular transaction succeeded, you can reattempt it with the same idempotency key without worrying about double-charging the buyer.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
 	public var idempotency_key: String
@@ -3101,16 +3143,16 @@ public struct ChargeRequest: Codable {
 	/// A token generated by SqPaymentForm's verifyBuyer() that represents customer's device info and 3ds challenge result.
 	public var verification_token: String?
 
-	/// Defines the parameters that can be included in the body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/charge) endpoint.  Deprecated - recommend using [CreatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/create-payment)
+	/// Defines the parameters that can be included in the body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint.  Deprecated - recommend using [CreatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/create-payment)
 	/// - Parameters:
 	///   - additional_recipients: The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `amount_money` value in the charge request. The `location_id` must be the valid location of the app owner merchant.  This field requires the `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
 	///   - amount_money: The amount of money to charge.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  The value of `currency` must match the currency associated with the business that is charging the card.
 	///   - billing_address: The buyer's billing address. This value is optional, but this transaction is ineligible for chargeback protection if neither this parameter nor `shipping_address` is provided.
 	///   - buyer_email_address: The buyer's email address, if available. This value is optional, but this transaction is ineligible for chargeback protection if it is not provided.
-	///   - card_nonce: A nonce generated from the `SqPaymentForm` that represents the card to charge.  The application that provides a nonce to this endpoint must be the _same application_ that generated the nonce with the `SqPaymentForm`. Otherwise, the nonce is invalid.  Do not provide a value for this field if you provide a value for `customer_card_id`.
+	///   - card_nonce: A payment token generated from the [Card.tokenize()](https://developer.squareup.com/reference/sdks/web/payments/objects/Card#Card.tokenize) that represents the card to charge.  The application that provides a payment token to this endpoint must be the _same application_ that generated the payment token with the Web Payments SDK. Otherwise, the nonce is invalid.  Do not provide a value for this field if you provide a value for `customer_card_id`.
 	///   - customer_card_id: The ID of the customer card on file to charge. Do not provide a value for this field if you provide a value for `card_nonce`.  If you provide this value, you _must_ also provide a value for `customer_id`.
 	///   - customer_id: The ID of the customer to associate this transaction with. This field is required if you provide a value for `customer_card_id`, and optional otherwise.
-	///   - delay_capture: If `true`, the request will only perform an Auth on the provided card. You can then later perform either a Capture (with the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/capture-transaction) endpoint) or a Void (with the [VoidTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/void-transaction) endpoint).  Default value: `false`
+	///   - delay_capture: If `true`, the request will only perform an Auth on the provided card. You can then later perform either a Capture (with the [CaptureTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/capture-transaction) endpoint) or a Void (with the [VoidTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/void-transaction) endpoint).  Default value: `false`
 	///   - idempotency_key: A value you specify that uniquely identifies this transaction among transactions you've created.  If you're unsure whether a particular transaction succeeded, you can reattempt it with the same idempotency key without worrying about double-charging the buyer.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
 	///   - note: An optional note to associate with the transaction.  This value cannot exceed 60 characters.
 	///   - order_id: The ID of the order to associate with this transaction.  If you provide this value, the `amount_money` value of your request must __exactly match__ the value of the order's `total_money` field.
@@ -3156,14 +3198,14 @@ public struct ChargeRequestAdditionalRecipient: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct ChargeResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The created transaction.
 	public var transaction: Transaction?
 
-	/// Defines the fields that are included in the response body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - transaction: The created transaction.
@@ -3228,22 +3270,38 @@ public struct Checkout: Codable {
 	}
 }
 
-/// Describes a request to complete (capture) a payment using  [CompletePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/complete-payment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+/// 
+public enum CheckoutOptionsPaymentType: String, Codable {
+	/// Accept credit card or debit card payments via tap, dip or swipe.
+	case CARD_PRESENT
+	/// Launches the manual credit or debit card entry screen for the buyer to complete.
+	case MANUAL_CARD_ENTRY
+	/// Launches the iD checkout screen for the buyer to complete.
+	case FELICA_ID
+	/// Launches the QUICPay checkout screen for the buyer to complete.
+	case FELICA_QUICPAY
+	/// Launches the Transportation Group checkout screen for the buyer to complete.
+	case FELICA_TRANSPORTATION_GROUP
+	/// Launches a checkout screen for the buyer on the Square Terminal that allows them to select a specific FeliCa brand or select the check balance screen.
+	case FELICA_ALL
+}
+
+/// Describes a request to complete (capture) a payment using  [CompletePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/complete-payment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 public struct CompletePaymentRequest: Codable {
 
-	/// Describes a request to complete (capture) a payment using  [CompletePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/complete-payment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+	/// Describes a request to complete (capture) a payment using  [CompletePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/complete-payment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 	public init() {
 	}
 }
 
-/// Defines the response returned by[CompletePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/complete-payment).
+/// Defines the response returned by[CompletePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/complete-payment).
 public struct CompletePaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully completed payment.
 	public var payment: Payment?
 
-	/// Defines the response returned by[CompletePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/complete-payment).
+	/// Defines the response returned by[CompletePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/complete-payment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully completed payment.
@@ -3832,6 +3890,48 @@ public struct CreateBreakTypeResponse: Codable {
 	}
 }
 
+/// Creates a card from the source (nonce, payment id, etc). Accessible via HTTP requests at POST https://connect.squareup.com/v2/cards
+public struct CreateCardRequest: Codable {
+	/// Payment details associated with the card to be stored.
+	public var card: Card
+	/// A unique string that identifies this CreateCard request. Keys can be any valid string and must be unique for every request.  Max: 45 characters  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
+	public var idempotency_key: String
+	/// The ID of the source which represents the card information to be stored. This can be a card nonce or a payment id.
+	public var source_id: String
+	/// An identifying token generated by [Payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  See the [SCA Overview](https://developer.squareup.com/docs/sca-overview).
+	public var verification_token: String?
+
+	/// Creates a card from the source (nonce, payment id, etc). Accessible via HTTP requests at POST https://connect.squareup.com/v2/cards
+	/// - Parameters:
+	///   - card: Payment details associated with the card to be stored.
+	///   - idempotency_key: A unique string that identifies this CreateCard request. Keys can be any valid string and must be unique for every request.  Max: 45 characters  See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
+	///   - source_id: The ID of the source which represents the card information to be stored. This can be a card nonce or a payment id.
+	///   - verification_token: An identifying token generated by [Payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  See the [SCA Overview](https://developer.squareup.com/docs/sca-overview).
+	public init(card: Card, idempotency_key: String, source_id: String, verification_token: String? = nil) {
+		self.card = card
+		self.idempotency_key = idempotency_key
+		self.source_id = source_id
+		self.verification_token = verification_token
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [CreateCard](#endpoint-cards-createcard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+public struct CreateCardResponse: Codable {
+	/// The newly created card.
+	public var card: Card?
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields that are included in the response body of a request to the [CreateCard](#endpoint-cards-createcard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// - Parameters:
+	///   - card: The newly created card.
+	///   - errors: Information on errors encountered during the request.
+	public init(card: Card? = nil, errors: [SquareError]? = nil) {
+		self.card = card
+		self.errors = errors
+	}
+}
+
 /// Defines the parameters that can be included in the body of a request to the `CreateCheckout` endpoint.
 public struct CreateCheckoutRequest: Codable {
 	/// The basic primitive of a multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your `additional_recipients` field cannot be more than 90% of the `total_money` calculated by Square for your order. The `location_id` must be a valid seller location where the checkout is occurring.  This field requires `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in the Square Sandbox.
@@ -3850,7 +3950,7 @@ public struct CreateCheckoutRequest: Codable {
 	public var pre_populate_buyer_email: String?
 	/// If provided, the buyer's shipping information is prepopulated on the checkout page as editable text fields.  Default: none; only exists if explicitly set.
 	public var pre_populate_shipping_address: Address?
-	/// The URL to redirect to after the checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect URL is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout displays an order confirmation page on your behalf; however, it is strongly recommended that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
+	/// The URL to redirect to after the checkout is completed with `checkoutId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect URL is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout displays an order confirmation page on your behalf; however, it is strongly recommended that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
 	public var redirect_url: String?
 
 	/// Defines the parameters that can be included in the body of a request to the `CreateCheckout` endpoint.
@@ -3863,7 +3963,7 @@ public struct CreateCheckoutRequest: Codable {
 	///   - order: The order including line items to be checked out.
 	///   - pre_populate_buyer_email: If provided, the buyer's email is prepopulated on the checkout page as an editable text field.  Default: none; only exists if explicitly set.
 	///   - pre_populate_shipping_address: If provided, the buyer's shipping information is prepopulated on the checkout page as editable text fields.  Default: none; only exists if explicitly set.
-	///   - redirect_url: The URL to redirect to after the checkout is completed with `checkoutId`, Square's `orderId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect URL is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;orderId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout displays an order confirmation page on your behalf; however, it is strongly recommended that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
+	///   - redirect_url: The URL to redirect to after the checkout is completed with `checkoutId`, `transactionId`, and `referenceId` appended as URL parameters. For example, if the provided redirect URL is `http://www.example.com/order-complete`, a successful transaction redirects the customer to:  <pre><code>http://www.example.com/order-complete?checkoutId=xxxxxx&amp;referenceId=xxxxxx&amp;transactionId=xxxxxx</code></pre>  If you do not provide a redirect URL, Square Checkout displays an order confirmation page on your behalf; however, it is strongly recommended that you provide a redirect URL so you can verify the transaction results and finalize the order through your existing/normal confirmation workflow.  Default: none; only exists if explicitly set.
 	public init(idempotency_key: String, order: CreateOrderRequest, additional_recipients: [ChargeRequestAdditionalRecipient]? = nil, ask_for_shipping_address: Bool? = nil, merchant_support_email: String? = nil, note: String? = nil, pre_populate_buyer_email: String? = nil, pre_populate_shipping_address: Address? = nil, redirect_url: String? = nil) {
 		self.idempotency_key = idempotency_key
 		self.order = order
@@ -3898,19 +3998,19 @@ public struct CreateCheckoutResponse: Codable {
 public struct CreateCustomerCardRequest: Codable {
 	/// Address information for the card on file.   __NOTE:__ If a billing address is provided in the request, the   `CreateCustomerCardRequest.billing_address.postal_code` must match  the postal code encoded in the card nonce.
 	public var billing_address: Address?
-	/// A card nonce representing the credit card to link to the customer.  Card nonces are generated by the Square payment form when customers enter their card information. For more information, see [Walkthrough: Integrate Square Payments in a Website](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough).  __NOTE:__ Card nonces generated by digital wallets (such as Apple Pay) cannot be used to create a customer card.
+	/// A card nonce representing the credit card to link to the customer.  Card nonces are generated by the Square payment form when customers enter their card information. For more information, see [Walkthrough: Integrate Square Payments in a Website](https://developer.squareup.com/docs/web-payments/take-card-payment).  __NOTE:__ Card nonces generated by digital wallets (such as Apple Pay) cannot be used to create a customer card.
 	public var card_nonce: String
 	/// The full name printed on the credit card.
 	public var cardholder_name: String?
-	/// An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.
+	/// An identifying token generated by [Payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.
 	public var verification_token: String?
 
 	/// Defines the fields that are included in the request body of a request to the `CreateCustomerCard` endpoint.
 	/// - Parameters:
 	///   - billing_address: Address information for the card on file.   __NOTE:__ If a billing address is provided in the request, the   `CreateCustomerCardRequest.billing_address.postal_code` must match  the postal code encoded in the card nonce.
-	///   - card_nonce: A card nonce representing the credit card to link to the customer.  Card nonces are generated by the Square payment form when customers enter their card information. For more information, see [Walkthrough: Integrate Square Payments in a Website](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough).  __NOTE:__ Card nonces generated by digital wallets (such as Apple Pay) cannot be used to create a customer card.
+	///   - card_nonce: A card nonce representing the credit card to link to the customer.  Card nonces are generated by the Square payment form when customers enter their card information. For more information, see [Walkthrough: Integrate Square Payments in a Website](https://developer.squareup.com/docs/web-payments/take-card-payment).  __NOTE:__ Card nonces generated by digital wallets (such as Apple Pay) cannot be used to create a customer card.
 	///   - cardholder_name: The full name printed on the credit card.
-	///   - verification_token: An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.
+	///   - verification_token: An identifying token generated by [Payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.
 	public init(card_nonce: String, billing_address: Address? = nil, cardholder_name: String? = nil, verification_token: String? = nil) {
 		self.card_nonce = card_nonce
 		self.billing_address = billing_address
@@ -3936,14 +4036,14 @@ public struct CreateCustomerCardResponse: Codable {
 	}
 }
 
-/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/create-customer-group) endpoint.
+/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/create-customer-group) endpoint.
 public struct CreateCustomerGroupRequest: Codable {
 	/// The customer group to create.
 	public var group: CustomerGroup
 	/// The idempotency key for the request. For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
 	public var idempotency_key: String?
 
-	/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/create-customer-group) endpoint.
+	/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/create-customer-group) endpoint.
 	/// - Parameters:
 	///   - group: The customer group to create.
 	///   - idempotency_key: The idempotency key for the request. For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
@@ -3953,14 +4053,14 @@ public struct CreateCustomerGroupRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/create-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/create-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
 public struct CreateCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully created customer group.
 	public var group: CustomerGroup?
 
-	/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/create-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/create-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The successfully created customer group.
@@ -4102,6 +4202,78 @@ public struct CreateDisputeEvidenceTextResponse: Codable {
 	}
 }
 
+/// A request to create a gift card activity.
+public struct CreateGiftCardActivityRequest: Codable {
+	/// An activity to create on the gift card. This includes  the type of gift card activity and corresponding activity details.
+	public var gift_card_activity: GiftCardActivity
+	/// A unique string that identifies the `CreateGiftCardActivity` request.
+	public var idempotency_key: String
+
+	/// A request to create a gift card activity.
+	/// - Parameters:
+	///   - gift_card_activity: An activity to create on the gift card. This includes  the type of gift card activity and corresponding activity details.
+	///   - idempotency_key: A unique string that identifies the `CreateGiftCardActivity` request.
+	public init(gift_card_activity: GiftCardActivity, idempotency_key: String) {
+		self.gift_card_activity = gift_card_activity
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// A response that contains a `GiftCardActivity` that was created. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct CreateGiftCardActivityResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A gift card activity that was created.
+	public var gift_card_activity: GiftCardActivity?
+
+	/// A response that contains a `GiftCardActivity` that was created. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card_activity: A gift card activity that was created.
+	public init(errors: [SquareError]? = nil, gift_card_activity: GiftCardActivity? = nil) {
+		self.errors = errors
+		self.gift_card_activity = gift_card_activity
+	}
+}
+
+/// A request to create a gift card.
+public struct CreateGiftCardRequest: Codable {
+	/// The gift card to create. Only the type field needs to be set.
+	public var gift_card: GiftCard
+	/// A unique string that identifies the `CreateGiftCard` request.
+	public var idempotency_key: String
+	/// The location ID where the gift card that will be created should be registered.
+	public var location_id: String
+
+	/// A request to create a gift card.
+	/// - Parameters:
+	///   - gift_card: The gift card to create. Only the type field needs to be set.
+	///   - idempotency_key: A unique string that identifies the `CreateGiftCard` request.
+	///   - location_id: The location ID where the gift card that will be created should be registered.
+	public init(gift_card: GiftCard, idempotency_key: String, location_id: String) {
+		self.gift_card = gift_card
+		self.idempotency_key = idempotency_key
+		self.location_id = location_id
+	}
+}
+
+/// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct CreateGiftCardResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A gift card that was created with the DIGITAL type.
+	public var gift_card: GiftCard?
+
+	/// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card: A gift card that was created with the DIGITAL type.
+	public init(errors: [SquareError]? = nil, gift_card: GiftCard? = nil) {
+		self.errors = errors
+		self.gift_card = gift_card
+	}
+}
+
 /// Describes a `CreateInvoice` request.
 public struct CreateInvoiceRequest: Codable {
 	/// A unique string that identifies the `CreateInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
@@ -4136,12 +4308,12 @@ public struct CreateInvoiceResponse: Codable {
 	}
 }
 
-/// Request object for the [CreateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/create-location) endpoint.
+/// Request object for the [CreateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/create-location) endpoint.
 public struct CreateLocationRequest: Codable {
 	/// The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional. Unspecified fields will be set to default values using existing location data.
 	public var location: Location?
 
-	/// Request object for the [CreateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/create-location) endpoint.
+	/// Request object for the [CreateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/create-location) endpoint.
 	/// - Parameters:
 	///   - location: The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional. Unspecified fields will be set to default values using existing location data.
 	public init(location: Location? = nil) {
@@ -4149,14 +4321,14 @@ public struct CreateLocationRequest: Codable {
 	}
 }
 
-/// Response object returned by the [CreateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/create-location) endpoint.
+/// Response object returned by the [CreateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/create-location) endpoint.
 public struct CreateLocationResponse: Codable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created `Location`.
 	public var location: Location?
 
-	/// Response object returned by the [CreateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/create-location) endpoint.
+	/// Response object returned by the [CreateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/create-location) endpoint.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - location: The newly created `Location`.
@@ -4297,7 +4469,7 @@ public struct CreateOrderResponse: Codable {
 	}
 }
 
-/// Describes a request to create a payment using  [CreatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/create-payment).
+/// Describes a request to create a payment using  [CreatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/create-payment).
 public struct CreatePaymentRequest: Codable {
 	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	public var accept_partial_authorization: Bool?
@@ -4313,7 +4485,7 @@ public struct CreatePaymentRequest: Codable {
 	public var buyer_email_address: String?
 	/// Additional details required when recording a cash payment (`source_id` is CASH).
 	public var cash_details: CashPaymentDetails?
-	/// The [Customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
+	/// The [Customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
 	public var customer_id: String?
 	/// The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	public var delay_duration: Timestamp?
@@ -4340,7 +4512,7 @@ public struct CreatePaymentRequest: Codable {
 	/// An identifying token generated by `SqPaymentForm.verifyBuyer()`. Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
 	public var verification_token: String?
 
-	/// Describes a request to create a payment using  [CreatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/create-payment).
+	/// Describes a request to create a payment using  [CreatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/create-payment).
 	/// - Parameters:
 	///   - accept_partial_authorization: If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	///   - amount_money: The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
@@ -4349,7 +4521,7 @@ public struct CreatePaymentRequest: Codable {
 	///   - billing_address: The buyer's billing address.
 	///   - buyer_email_address: The buyer's email address.
 	///   - cash_details: Additional details required when recording a cash payment (`source_id` is CASH).
-	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
+	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
 	///   - delay_duration: The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	///   - external_details: Additional details required when recording an external payment (`source_id` is EXTERNAL).
 	///   - idempotency_key: A unique string that identifies this `CreatePayment` request. Keys can be any valid string but must be unique for every `CreatePayment` request.  Max: 45 characters  Note: The number of allowed characters might be less than the stated maximum, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
@@ -4386,14 +4558,14 @@ public struct CreatePaymentRequest: Codable {
 	}
 }
 
-/// Defines the response returned by [CreatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/create-payment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
+/// Defines the response returned by [CreatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/create-payment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
 public struct CreatePaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created payment.
 	public var payment: Payment?
 
-	/// Defines the response returned by [CreatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/create-payment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
+	/// Defines the response returned by [CreatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/create-payment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The newly created payment.
@@ -4403,7 +4575,7 @@ public struct CreatePaymentResponse: Codable {
 	}
 }
 
-/// Defines the body parameters that can be included in a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/create-refund) endpoint.  Deprecated - recommend using [RefundPayment](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/refund-payment)
+/// Defines the body parameters that can be included in a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/create-refund) endpoint.  Deprecated - recommend using [RefundPayment](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/refund-payment)
 public struct CreateRefundRequest: Codable {
 	/// The amount of money to refund.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  This amount cannot exceed the amount that was originally charged to the tender that corresponds to `tender_id`.
 	public var amount_money: Money
@@ -4411,15 +4583,15 @@ public struct CreateRefundRequest: Codable {
 	public var idempotency_key: String
 	/// A description of the reason for the refund.  Default value: `Refund via API`
 	public var reason: String?
-	/// The ID of the tender to refund.  A [`Transaction`](https://developer.squareup.com/reference/square_2021-05-13/objects/Transaction) has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
+	/// The ID of the tender to refund.  A [`Transaction`](https://developer.squareup.com/reference/square_2021-06-16/objects/Transaction) has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
 	public var tender_id: String
 
-	/// Defines the body parameters that can be included in a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/create-refund) endpoint.  Deprecated - recommend using [RefundPayment](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/refund-payment)
+	/// Defines the body parameters that can be included in a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/create-refund) endpoint.  Deprecated - recommend using [RefundPayment](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/refund-payment)
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  This amount cannot exceed the amount that was originally charged to the tender that corresponds to `tender_id`.
 	///   - idempotency_key: A value you specify that uniquely identifies this refund among refunds you've created for the tender.  If you're unsure whether a particular refund succeeded, you can reattempt it with the same idempotency key without worrying about duplicating the refund.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
 	///   - reason: A description of the reason for the refund.  Default value: `Refund via API`
-	///   - tender_id: The ID of the tender to refund.  A [`Transaction`](https://developer.squareup.com/reference/square_2021-05-13/objects/Transaction) has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
+	///   - tender_id: The ID of the tender to refund.  A [`Transaction`](https://developer.squareup.com/reference/square_2021-06-16/objects/Transaction) has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
 	public init(amount_money: Money, idempotency_key: String, tender_id: String, reason: String? = nil) {
 		self.amount_money = amount_money
 		self.idempotency_key = idempotency_key
@@ -4428,14 +4600,14 @@ public struct CreateRefundRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/create-refund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/create-refund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
 public struct CreateRefundResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The created refund.
 	public var refund: Refund?
 
-	/// Defines the fields that are included in the response body of a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/create-refund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [CreateRefund](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/create-refund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - refund: The created refund.
@@ -4479,19 +4651,19 @@ public struct CreateShiftResponse: Codable {
 	}
 }
 
-/// Defines parameters in a [CreateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/create-subscription) endpoint request.
+/// Defines parameters in a [CreateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/create-subscription) endpoint request.
 public struct CreateSubscriptionRequest: Codable {
 	/// The date when the subscription should be canceled, in YYYY-MM-DD format (for example, 2025-02-29). This overrides the plan configuration if it comes before the date the subscription would otherwise end.
 	public var canceled_date: String?
-	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-05-13/objects/Card) to charge. If not specified, Square sends an invoice via email. For an example to create a customer and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
+	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-06-16/objects/Card) to charge. If not specified, Square sends an invoice via email. For an example to create a customer and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
 	public var card_id: String?
-	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) profile.
+	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) profile.
 	public var customer_id: String
 	/// A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	public var idempotency_key: String
+	public var idempotency_key: String?
 	/// The ID of the location the subscription is associated with.
 	public var location_id: String
-	/// The ID of the subscription plan. For more information, see [Subscription Plan Overview](https://developer.squareup.com/docs/subscriptions/overview).
+	/// The ID of the subscription plan created using the Catalog API. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan) and  [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
 	public var plan_id: String
 	/// A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	public var price_override_money: Money?
@@ -4502,25 +4674,25 @@ public struct CreateSubscriptionRequest: Codable {
 	/// The timezone that is used in date calculations for the subscription. If unset, defaults to the location timezone. If a timezone is not configured for the location, defaults to "America/New_York". Format: the IANA Timezone Database identifier for the location timezone. For a list of time zones, see [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 	public var timezone: String?
 
-	/// Defines parameters in a [CreateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/create-subscription) endpoint request.
+	/// Defines parameters in a [CreateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/create-subscription) endpoint request.
 	/// - Parameters:
 	///   - canceled_date: The date when the subscription should be canceled, in YYYY-MM-DD format (for example, 2025-02-29). This overrides the plan configuration if it comes before the date the subscription would otherwise end.
-	///   - card_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-05-13/objects/Card) to charge. If not specified, Square sends an invoice via email. For an example to create a customer and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
-	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) profile.
+	///   - card_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-06-16/objects/Card) to charge. If not specified, Square sends an invoice via email. For an example to create a customer and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
+	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) profile.
 	///   - idempotency_key: A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	///   - location_id: The ID of the location the subscription is associated with.
-	///   - plan_id: The ID of the subscription plan. For more information, see [Subscription Plan Overview](https://developer.squareup.com/docs/subscriptions/overview).
+	///   - plan_id: The ID of the subscription plan created using the Catalog API. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan) and  [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
 	///   - price_override_money: A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	///   - start_date: The start date of the subscription, in YYYY-MM-DD format. For example, 2013-01-15. If the start date is left empty, the subscription begins immediately.
 	///   - tax_percentage: The tax to add when billing the subscription. The percentage is expressed in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. For example, a value of 7.5 corresponds to 7.5%.
 	///   - timezone: The timezone that is used in date calculations for the subscription. If unset, defaults to the location timezone. If a timezone is not configured for the location, defaults to "America/New_York". Format: the IANA Timezone Database identifier for the location timezone. For a list of time zones, see [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-	public init(customer_id: String, idempotency_key: String, location_id: String, plan_id: String, canceled_date: String? = nil, card_id: String? = nil, price_override_money: Money? = nil, start_date: String? = nil, tax_percentage: String? = nil, timezone: String? = nil) {
+	public init(customer_id: String, location_id: String, plan_id: String, canceled_date: String? = nil, card_id: String? = nil, idempotency_key: String? = nil, price_override_money: Money? = nil, start_date: String? = nil, tax_percentage: String? = nil, timezone: String? = nil) {
 		self.customer_id = customer_id
-		self.idempotency_key = idempotency_key
 		self.location_id = location_id
 		self.plan_id = plan_id
 		self.canceled_date = canceled_date
 		self.card_id = card_id
+		self.idempotency_key = idempotency_key
 		self.price_override_money = price_override_money
 		self.start_date = start_date
 		self.tax_percentage = tax_percentage
@@ -4528,14 +4700,14 @@ public struct CreateSubscriptionRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response from the [CreateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/create-subscription) endpoint.
+/// Defines the fields that are included in the response from the [CreateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/create-subscription) endpoint.
 public struct CreateSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object).
 	public var subscription: Subscription?
 
-	/// Defines the fields that are included in the response from the [CreateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/create-subscription) endpoint.
+	/// Defines the fields that are included in the response from the [CreateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/create-subscription) endpoint.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object).
@@ -4547,29 +4719,29 @@ public struct CreateSubscriptionResponse: Codable {
 
 /// Represents a create request for a `TeamMember` object.
 public struct CreateTeamMemberRequest: Codable {
-	/// A unique string that identifies this CreateTeamMember request. Keys can be any valid string but must be unique for every request. See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information. <br> <b>Min Length 1    Max Length 45</b>
+	/// A unique string that identifies this `CreateTeamMember` request. Keys can be any valid string, but must be unique for every request. For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).  The minimum length is 1 and the maximum length is 45.
 	public var idempotency_key: String?
-	/// <b>Required</b> The data which will be used to create the `TeamMember` object.
+	/// **Required** The data which will be used to create the `TeamMember` object.
 	public var team_member: TeamMember?
 
 	/// Represents a create request for a `TeamMember` object.
 	/// - Parameters:
-	///   - idempotency_key: A unique string that identifies this CreateTeamMember request. Keys can be any valid string but must be unique for every request. See [Idempotency keys](https://developer.squareup.com/docs/basics/api101/idempotency) for more information. <br> <b>Min Length 1    Max Length 45</b>
-	///   - team_member: <b>Required</b> The data which will be used to create the `TeamMember` object.
+	///   - idempotency_key: A unique string that identifies this `CreateTeamMember` request. Keys can be any valid string, but must be unique for every request. For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).  The minimum length is 1 and the maximum length is 45.
+	///   - team_member: **Required** The data which will be used to create the `TeamMember` object.
 	public init(idempotency_key: String? = nil, team_member: TeamMember? = nil) {
 		self.idempotency_key = idempotency_key
 		self.team_member = team_member
 	}
 }
 
-/// Represents a response from a create request, containing the created `TeamMember` object or error messages.
+/// Represents a response from a create request containing the created `TeamMember` object or error messages.
 public struct CreateTeamMemberResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully created `TeamMember` object.
 	public var team_member: TeamMember?
 
-	/// Represents a response from a create request, containing the created `TeamMember` object or error messages.
+	/// Represents a response from a create request containing the created `TeamMember` object or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_member: The successfully created `TeamMember` object.
@@ -4993,7 +5165,7 @@ public enum Currency: String, Codable {
 	case BTC
 }
 
-/// Supported custom attribute query expressions for calling the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint to search for items or item variations.
+/// Supported custom attribute query expressions for calling the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint to search for items or item variations.
 public struct CustomAttributeFilter: Codable {
 	/// A query expression to filter items or item variations by matching their custom attributes' `boolean_value` property values against the specified Boolean expression.
 	public var bool_filter: Bool?
@@ -5008,7 +5180,7 @@ public struct CustomAttributeFilter: Codable {
 	/// A query expression to filter items or item variations by matching their custom attributes' `string_value`  property value against the specified text.
 	public var string_filter: String?
 
-	/// Supported custom attribute query expressions for calling the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint to search for items or item variations.
+	/// Supported custom attribute query expressions for calling the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint to search for items or item variations.
 	/// - Parameters:
 	///   - bool_filter: A query expression to filter items or item variations by matching their custom attributes' `boolean_value` property values against the specified Boolean expression.
 	///   - custom_attribute_definition_id: A query expression to filter items or item variations by matching their custom attributes' `custom_attribute_definition_id` property value against the the specified id.
@@ -5026,13 +5198,13 @@ public struct CustomAttributeFilter: Codable {
 	}
 }
 
-/// Represents a Square customer profile, which can have one or more cards on file associated with it.
+/// Represents a Square customer profile in the Customer Directory of a Square seller.
 public struct Customer: Codable {
 	/// The physical address associated with the customer profile.
 	public var address: Address?
 	/// The birthday associated with the customer profile, in RFC 3339 format. The year is optional. The timezone and time are not allowed. For example, `0000-09-21T00:00:00-00:00` represents a birthday on September 21 and `1998-09-21T00:00:00-00:00` represents a birthday on September 21, 1998.
 	public var birthday: Timestamp?
-	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.
+	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version 2021-06-16. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_2021-06-16/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_2021-06-16/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migrate to the Cards API and Gift Cards API](https://developer.squareup.com/docs/customers-api/use-the-api/integrate-with-other-services#migrate-customer-cards).
 	public var cards: [Card]?
 	/// A business name associated with the customer profile.
 	public var company_name: String?
@@ -5067,11 +5239,11 @@ public struct Customer: Codable {
 	/// The Square-assigned version number of the customer profile. The version number is incremented each time an update is committed to the customer profile, except for changes to customer segment membership and cards on file.
 	public var version: Int?
 
-	/// Represents a Square customer profile, which can have one or more cards on file associated with it.
+	/// Represents a Square customer profile in the Customer Directory of a Square seller.
 	/// - Parameters:
 	///   - address: The physical address associated with the customer profile.
 	///   - birthday: The birthday associated with the customer profile, in RFC 3339 format. The year is optional. The timezone and time are not allowed. For example, `0000-09-21T00:00:00-00:00` represents a birthday on September 21 and `1998-09-21T00:00:00-00:00` represents a birthday on September 21, 1998.
-	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.
+	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version 2021-06-16. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_2021-06-16/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_2021-06-16/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migrate to the Cards API and Gift Cards API](https://developer.squareup.com/docs/customers-api/use-the-api/integrate-with-other-services#migrate-customer-cards).
 	///   - company_name: A business name associated with the customer profile.
 	///   - created_at: The timestamp when the customer profile was created, in RFC 3339 format.
 	///   - creation_source: A creation source represents the method used to create the customer profile.
@@ -5424,20 +5596,20 @@ public struct DeleteCustomerCardResponse: Codable {
 	}
 }
 
-/// Defines the fields that can be included in a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/delete-customer-group) endpoint.
+/// Defines the fields that can be included in a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/delete-customer-group) endpoint.
 public struct DeleteCustomerGroupRequest: Codable {
 
-	/// Defines the fields that can be included in a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/delete-customer-group) endpoint.
+	/// Defines the fields that can be included in a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/delete-customer-group) endpoint.
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/delete-customer-group) endpoint.
+/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/delete-customer-group) endpoint.
 public struct DeleteCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/delete-customer-group) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/delete-customer-group) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -5471,14 +5643,35 @@ public struct DeleteCustomerResponse: Codable {
 	}
 }
 
+/// Defines the parameters for a `DeleteDisputeEvidence` request.
+public struct DeleteDisputeEvidenceRequest: Codable {
+
+	/// Defines the parameters for a `DeleteDisputeEvidence` request.
+	public init() {
+	}
+}
+
+/// Defines the fields in a `DeleteDisputeEvidence` response.
+public struct DeleteDisputeEvidenceResponse: Codable {
+	/// Information about errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields in a `DeleteDisputeEvidence` response.
+	/// - Parameters:
+	///   - errors: Information about errors encountered during the request.
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
 /// Describes a `DeleteInvoice` request.
 public struct DeleteInvoiceRequest: Codable {
-	/// The version of the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/get-invoice) or  [ListInvoices](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/list-invoices).
+	/// The version of the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/get-invoice) or  [ListInvoices](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/list-invoices).
 	public var version: Int?
 
 	/// Describes a `DeleteInvoice` request.
 	/// - Parameters:
-	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/get-invoice) or  [ListInvoices](https://developer.squareup.com/reference/square_2021-05-13/invoices-api/list-invoices).
+	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/get-invoice) or  [ListInvoices](https://developer.squareup.com/reference/square_2021-06-16/invoices-api/list-invoices).
 	public init(version: Int? = nil) {
 		self.version = version
 	}
@@ -5557,6 +5750,82 @@ public struct DeleteSnippetResponse: Codable {
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
+	}
+}
+
+/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceFile` request.
+public struct DeprecatedCreateDisputeEvidenceFileRequest: Codable {
+	/// The MIME type of the uploaded file. The type can be image/heic, image/heif, image/jpeg, application/pdf, image/png, or image/tiff.
+	public var content_type: String?
+	/// The type of evidence you are uploading.
+	public var evidence_type: String?
+	/// The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	public var idempotency_key: String
+
+	/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceFile` request.
+	/// - Parameters:
+	///   - content_type: The MIME type of the uploaded file. The type can be image/heic, image/heif, image/jpeg, application/pdf, image/png, or image/tiff.
+	///   - evidence_type: The type of evidence you are uploading.
+	///   - idempotency_key: The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	public init(idempotency_key: String, content_type: String? = nil, evidence_type: String? = nil) {
+		self.idempotency_key = idempotency_key
+		self.content_type = content_type
+		self.evidence_type = evidence_type
+	}
+}
+
+/// Defines the fields in a `DeprecatedCreateDisputeEvidenceFile` response.
+public struct DeprecatedCreateDisputeEvidenceFileResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The metadata of the newly uploaded dispute evidence.
+	public var evidence: DisputeEvidence?
+
+	/// Defines the fields in a `DeprecatedCreateDisputeEvidenceFile` response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - evidence: The metadata of the newly uploaded dispute evidence.
+	public init(errors: [SquareError]? = nil, evidence: DisputeEvidence? = nil) {
+		self.errors = errors
+		self.evidence = evidence
+	}
+}
+
+/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceText` request.
+public struct DeprecatedCreateDisputeEvidenceTextRequest: Codable {
+	/// The evidence string.
+	public var evidence_text: String
+	/// The type of evidence you are uploading.
+	public var evidence_type: String?
+	/// The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	public var idempotency_key: String
+
+	/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceText` request.
+	/// - Parameters:
+	///   - evidence_text: The evidence string.
+	///   - evidence_type: The type of evidence you are uploading.
+	///   - idempotency_key: The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	public init(evidence_text: String, idempotency_key: String, evidence_type: String? = nil) {
+		self.evidence_text = evidence_text
+		self.idempotency_key = idempotency_key
+		self.evidence_type = evidence_type
+	}
+}
+
+/// Defines the fields in a `DeprecatedCreateDisputeEvidenceText` response.
+public struct DeprecatedCreateDisputeEvidenceTextResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The newly uploaded dispute evidence metadata.
+	public var evidence: DisputeEvidence?
+
+	/// Defines the fields in a `DeprecatedCreateDisputeEvidenceText` response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - evidence: The newly uploaded dispute evidence metadata.
+	public init(errors: [SquareError]? = nil, evidence: DisputeEvidence? = nil) {
+		self.errors = errors
+		self.evidence = evidence
 	}
 }
 
@@ -5659,6 +5928,31 @@ public struct DeviceDetails: Codable {
 	}
 }
 
+/// Disables the card, preventing any further updates or charges. Disabling an already disabled card is allowed but has no effect. Accessible via HTTP requests at POST https://connect.squareup.com/v2/cards/{card_id}/disable
+public struct DisableCardRequest: Codable {
+
+	/// Disables the card, preventing any further updates or charges. Disabling an already disabled card is allowed but has no effect. Accessible via HTTP requests at POST https://connect.squareup.com/v2/cards/{card_id}/disable
+	public init() {
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [DisableCard](#endpoint-cards-disablecard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+public struct DisableCardResponse: Codable {
+	/// The retrieved card.
+	public var card: Card?
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields that are included in the response body of a request to the [DisableCard](#endpoint-cards-disablecard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// - Parameters:
+	///   - card: The retrieved card.
+	///   - errors: Information on errors encountered during the request.
+	public init(card: Card? = nil, errors: [SquareError]? = nil) {
+		self.card = card
+		self.errors = errors
+	}
+}
+
 /// Represents a dispute a cardholder initiated with their bank.
 public struct Dispute: Codable {
 	/// The disputed amount. The amount can be less than the entire transaction amount. For example, a cardholder purchased multiple items, however initiated dispute only for some of the items.
@@ -5677,10 +5971,14 @@ public struct Dispute: Codable {
 	public var due_at: Timestamp?
 	/// The IDs of the evidence associated with the dispute.
 	public var evidence_ids: [String]?
+	/// The unique ID for this `Dispute`, generated by Square.
+	public var id: String?
 	/// The ID of the location where the dispute originated.
 	public var location_id: String?
 	/// The dispute reason why the cardholder initiated the dispute with their bank.
 	public var reason: String?
+	/// The timestamp when the dispute was reported, in RFC 3339 format.
+	public var reported_at: Timestamp?
 	/// The timestamp when the dispute was reported, in RFC 3339 format.
 	public var reported_date: Timestamp?
 	/// The current state of this dispute.
@@ -5700,13 +5998,15 @@ public struct Dispute: Codable {
 	///   - disputed_payment: The payment challenged in this dispute.
 	///   - due_at: The time when the next action is due, in RFC 3339 format.
 	///   - evidence_ids: The IDs of the evidence associated with the dispute.
+	///   - id: The unique ID for this `Dispute`, generated by Square.
 	///   - location_id: The ID of the location where the dispute originated.
 	///   - reason: The dispute reason why the cardholder initiated the dispute with their bank.
+	///   - reported_at: The timestamp when the dispute was reported, in RFC 3339 format.
 	///   - reported_date: The timestamp when the dispute was reported, in RFC 3339 format.
 	///   - state: The current state of this dispute.
 	///   - updated_at: The timestamp when the dispute was last updated, in RFC 3339 format.
 	///   - version: The current version of the `Dispute`.
-	public init(amount_money: Money? = nil, brand_dispute_id: String? = nil, card_brand: String? = nil, created_at: Timestamp? = nil, dispute_id: String? = nil, disputed_payment: DisputedPayment? = nil, due_at: Timestamp? = nil, evidence_ids: [String]? = nil, location_id: String? = nil, reason: String? = nil, reported_date: Timestamp? = nil, state: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(amount_money: Money? = nil, brand_dispute_id: String? = nil, card_brand: String? = nil, created_at: Timestamp? = nil, dispute_id: String? = nil, disputed_payment: DisputedPayment? = nil, due_at: Timestamp? = nil, evidence_ids: [String]? = nil, id: String? = nil, location_id: String? = nil, reason: String? = nil, reported_at: Timestamp? = nil, reported_date: Timestamp? = nil, state: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.amount_money = amount_money
 		self.brand_dispute_id = brand_dispute_id
 		self.card_brand = card_brand
@@ -5715,8 +6015,10 @@ public struct Dispute: Codable {
 		self.disputed_payment = disputed_payment
 		self.due_at = due_at
 		self.evidence_ids = evidence_ids
+		self.id = id
 		self.location_id = location_id
 		self.reason = reason
+		self.reported_at = reported_at
 		self.reported_date = reported_date
 		self.state = state
 		self.updated_at = updated_at
@@ -5735,16 +6037,76 @@ public struct DisputeEvidence: Codable {
 	public var evidence_text: String?
 	/// The type of the evidence.
 	public var evidence_type: String?
+	/// The Square-generated ID of the evidence.
+	public var id: String?
 	/// The time when the next action is due, in RFC 3339 format.
 	public var uploaded_at: Timestamp?
 
-	public init(dispute_id: String? = nil, evidence_file: DisputeEvidenceFile? = nil, evidence_id: String? = nil, evidence_text: String? = nil, evidence_type: String? = nil, uploaded_at: Timestamp? = nil) {
+	public init(dispute_id: String? = nil, evidence_file: DisputeEvidenceFile? = nil, evidence_id: String? = nil, evidence_text: String? = nil, evidence_type: String? = nil, id: String? = nil, uploaded_at: Timestamp? = nil) {
 		self.dispute_id = dispute_id
 		self.evidence_file = evidence_file
 		self.evidence_id = evidence_id
 		self.evidence_text = evidence_text
 		self.evidence_type = evidence_type
+		self.id = id
 		self.uploaded_at = uploaded_at
+	}
+}
+
+/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_2021-06-16/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2021-06-16/disputes-api/create-dispute-evidence-file) or [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2021-06-16/disputes-api/create-dispute-evidence-text).
+public struct DisputeEvidenceCreatedWebhook: Codable {
+	/// Timestamp of when the webhook event was created, in RFC 3339 format.
+	public let created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeEvidenceCreatedWebhookData?
+	/// A unique ID for the webhook event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_2021-06-16/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2021-06-16/disputes-api/create-dispute-evidence-file) or [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2021-06-16/disputes-api/create-dispute-evidence-text).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the webhook event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the webhook event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeEvidenceCreatedWebhookData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceCreatedWebhookData: Codable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeEvidenceCreatedWebhookObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeEvidenceCreatedWebhookObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceCreatedWebhookObject: Codable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
 	}
 }
 
@@ -6444,22 +6806,22 @@ public struct GetInvoiceResponse: Codable {
 	}
 }
 
-/// Describes a request to retrieve a refund using  [GetPaymentRefund](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/get-payment-refund).
+/// Describes a request to retrieve a refund using  [GetPaymentRefund](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/get-payment-refund).
 public struct GetPaymentRefundRequest: Codable {
 
-	/// Describes a request to retrieve a refund using  [GetPaymentRefund](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/get-payment-refund).
+	/// Describes a request to retrieve a refund using  [GetPaymentRefund](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/get-payment-refund).
 	public init() {
 	}
 }
 
-/// Defines the response returned by [GetRefund](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/get-payment-refund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+/// Defines the response returned by [GetRefund](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/get-payment-refund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct GetPaymentRefundResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `PaymentRefund`.
 	public var refund: PaymentRefund?
 
-	/// Defines the response returned by [GetRefund](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/get-payment-refund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+	/// Defines the response returned by [GetRefund](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/get-payment-refund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The requested `PaymentRefund`.
@@ -6469,22 +6831,22 @@ public struct GetPaymentRefundResponse: Codable {
 	}
 }
 
-/// Describes a request to retrieve a payment using  [GetPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/get-payment).
+/// Describes a request to retrieve a payment using  [GetPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/get-payment).
 public struct GetPaymentRequest: Codable {
 
-	/// Describes a request to retrieve a payment using  [GetPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/get-payment).
+	/// Describes a request to retrieve a payment using  [GetPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/get-payment).
 	public init() {
 	}
 }
 
-/// Defines the response returned by [GetPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/get-payment).
+/// Defines the response returned by [GetPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/get-payment).
 public struct GetPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `Payment`.
 	public var payment: Payment?
 
-	/// Defines the response returned by [GetPayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/get-payment).
+	/// Defines the response returned by [GetPayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/get-payment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The requested `Payment`.
@@ -6580,6 +6942,483 @@ public struct GetTerminalRefundResponse: Codable {
 	}
 }
 
+/// Represents a Square gift card.
+public struct GiftCard: Codable {
+	/// The current gift card balance. This balance is always greater than or equal to zero.
+	public let balance_money: Money?
+	/// The timestamp when the gift card was created, in RFC 3339 format.  In the case of a digital gift card, it is the time when you create a card  (using the Square Point of Sale application, Seller Dashboard, or Gift Cards API).   In the case of a plastic gift card, it is the time when Square associates the card with the  seller at the time of activation.
+	public let created_at: Timestamp?
+	/// The IDs of the customers to whom this gift card is linked.
+	public let customer_ids: [String]?
+	/// The gift card account number.
+	public let gan: String?
+	/// Indicates whether the gift card account number (GAN) is generated by Square or  imported from a non-Square system. For more information, see  [Third-party gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#third-party-gift-cards).
+	public let gan_source: GANSource?
+	/// The Square-assigned ID of the gift card.
+	public let id: String?
+	/// The current gift card state.
+	public let state: Status?
+	/// Indicates the gift card type.
+	public var type: Type
+
+	/// Represents a Square gift card.
+	/// - Parameters:
+	///   - balance_money: The current gift card balance. This balance is always greater than or equal to zero.
+	///   - created_at: The timestamp when the gift card was created, in RFC 3339 format.  In the case of a digital gift card, it is the time when you create a card  (using the Square Point of Sale application, Seller Dashboard, or Gift Cards API).   In the case of a plastic gift card, it is the time when Square associates the card with the  seller at the time of activation.
+	///   - customer_ids: The IDs of the customers to whom this gift card is linked.
+	///   - gan: The gift card account number.
+	///   - gan_source: Indicates whether the gift card account number (GAN) is generated by Square or  imported from a non-Square system. For more information, see  [Third-party gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#third-party-gift-cards).
+	///   - id: The Square-assigned ID of the gift card.
+	///   - state: The current gift card state.
+	///   - type: Indicates the gift card type.
+	public init(type: Type, balance_money: Money? = nil, created_at: Timestamp? = nil, customer_ids: [String]? = nil, gan: String? = nil, gan_source: GANSource? = nil, id: String? = nil, state: Status? = nil) {
+		self.type = type
+		self.balance_money = balance_money
+		self.created_at = created_at
+		self.customer_ids = customer_ids
+		self.gan = gan
+		self.gan_source = gan_source
+		self.id = id
+		self.state = state
+	}
+}
+
+/// Represents an action performed on a gift card that affects its state or balance.
+public struct GiftCardActivity: Codable {
+	/// Gift card activity data for activating a gift card. This data is present only when the type is ACTIVATE.
+	public var activate_activity_details: GiftCardActivityActivate?
+	/// Gift card activity data for manually decreasing the balance of a gift card. Present only when type is ADJUST_DECREMENT
+	public var adjust_decrement_activity_details: GiftCardActivityAdjustDecrement?
+	/// Gift card activity data for manually increasing the balance of a gift card. Present only when type is ADJUST_INCREMENT
+	public var adjust_increment_activity_details: GiftCardActivityAdjustIncrement?
+	/// Gift card activity data for blocking a gift card. This data is present only when the type is BLOCK.
+	public let block_activity_details: GiftCardActivityBlock?
+	/// Gift card activity data for clearing the balance on a gift card. Present only when type is CLEAR_BALANCE
+	public var clear_balance_activity_details: GiftCardActivityClearBalance?
+	/// The timestamp when the gift card activity was created, in RFC 3339 format.
+	public let created_at: Timestamp?
+	/// Gift card activity data for deactivating a gift card. Present only when type is DEACTIVATE
+	public var deactivate_activity_details: GiftCardActivityDeactivate?
+	/// The final balance on the gift card after the action is completed.
+	public let gift_card_balance_money: Money?
+	/// The gift card GAN. The GAN is not required if `gift_card_id` is present.
+	public var gift_card_gan: String?
+	/// The gift card ID. The ID is not required if a GAN is present.
+	public var gift_card_id: String?
+	/// The unique ID of the gift card activity.
+	public let id: String?
+	/// Gift card activity data for when a third-party gift card is imported to Square with a balance. This data is present only when the type is IMPORT.
+	public let import_activity_details: GiftCardActivityImport?
+	/// Gift card activity data for reversing a third party import. Present only when type = IMPORT_REVERSAL
+	public let import_reversal_activity_details: GiftCardActivityImportReversal?
+	/// Gift card activity data for adding value to the gift card. This data is present only when the type is LOAD.
+	public var load_activity_details: GiftCardActivityLoad?
+	/// The ID of the location at which the activity occurred.
+	public var location_id: String
+	/// Gift card activity data for redeeming a gift card. This data is present only when the type is REDEEM.
+	public var redeem_activity_details: GiftCardActivityRedeem?
+	/// Gift card activity data for refunding an activity. This data is present only when the type is REFUND.
+	public var refund_activity_details: GiftCardActivityRefund?
+	/// The type of the gift card activity.
+	public var type: Type
+	/// Gift card activity data for unblocking a gift card. This data is present only when the type is UNBLOCK.
+	public let unblock_activity_details: GiftCardActivityUnblock?
+	/// Gift card activity data for refunding an unlinked activity. Present only when type is `UNLINKED_ACTIVITY_REFUND`.
+	public var unlinked_activity_refund_activity_details: GiftCardActivityUnlinkedActivityRefund?
+
+	/// Represents an action performed on a gift card that affects its state or balance.
+	/// - Parameters:
+	///   - activate_activity_details: Gift card activity data for activating a gift card. This data is present only when the type is ACTIVATE.
+	///   - adjust_decrement_activity_details: Gift card activity data for manually decreasing the balance of a gift card. Present only when type is ADJUST_DECREMENT
+	///   - adjust_increment_activity_details: Gift card activity data for manually increasing the balance of a gift card. Present only when type is ADJUST_INCREMENT
+	///   - block_activity_details: Gift card activity data for blocking a gift card. This data is present only when the type is BLOCK.
+	///   - clear_balance_activity_details: Gift card activity data for clearing the balance on a gift card. Present only when type is CLEAR_BALANCE
+	///   - created_at: The timestamp when the gift card activity was created, in RFC 3339 format.
+	///   - deactivate_activity_details: Gift card activity data for deactivating a gift card. Present only when type is DEACTIVATE
+	///   - gift_card_balance_money: The final balance on the gift card after the action is completed.
+	///   - gift_card_gan: The gift card GAN. The GAN is not required if `gift_card_id` is present.
+	///   - gift_card_id: The gift card ID. The ID is not required if a GAN is present.
+	///   - id: The unique ID of the gift card activity.
+	///   - import_activity_details: Gift card activity data for when a third-party gift card is imported to Square with a balance. This data is present only when the type is IMPORT.
+	///   - import_reversal_activity_details: Gift card activity data for reversing a third party import. Present only when type = IMPORT_REVERSAL
+	///   - load_activity_details: Gift card activity data for adding value to the gift card. This data is present only when the type is LOAD.
+	///   - location_id: The ID of the location at which the activity occurred.
+	///   - redeem_activity_details: Gift card activity data for redeeming a gift card. This data is present only when the type is REDEEM.
+	///   - refund_activity_details: Gift card activity data for refunding an activity. This data is present only when the type is REFUND.
+	///   - type: The type of the gift card activity.
+	///   - unblock_activity_details: Gift card activity data for unblocking a gift card. This data is present only when the type is UNBLOCK.
+	///   - unlinked_activity_refund_activity_details: Gift card activity data for refunding an unlinked activity. Present only when type is `UNLINKED_ACTIVITY_REFUND`.
+	public init(location_id: String, type: Type, activate_activity_details: GiftCardActivityActivate? = nil, adjust_decrement_activity_details: GiftCardActivityAdjustDecrement? = nil, adjust_increment_activity_details: GiftCardActivityAdjustIncrement? = nil, block_activity_details: GiftCardActivityBlock? = nil, clear_balance_activity_details: GiftCardActivityClearBalance? = nil, created_at: Timestamp? = nil, deactivate_activity_details: GiftCardActivityDeactivate? = nil, gift_card_balance_money: Money? = nil, gift_card_gan: String? = nil, gift_card_id: String? = nil, id: String? = nil, import_activity_details: GiftCardActivityImport? = nil, import_reversal_activity_details: GiftCardActivityImportReversal? = nil, load_activity_details: GiftCardActivityLoad? = nil, redeem_activity_details: GiftCardActivityRedeem? = nil, refund_activity_details: GiftCardActivityRefund? = nil, unblock_activity_details: GiftCardActivityUnblock? = nil, unlinked_activity_refund_activity_details: GiftCardActivityUnlinkedActivityRefund? = nil) {
+		self.location_id = location_id
+		self.type = type
+		self.activate_activity_details = activate_activity_details
+		self.adjust_decrement_activity_details = adjust_decrement_activity_details
+		self.adjust_increment_activity_details = adjust_increment_activity_details
+		self.block_activity_details = block_activity_details
+		self.clear_balance_activity_details = clear_balance_activity_details
+		self.created_at = created_at
+		self.deactivate_activity_details = deactivate_activity_details
+		self.gift_card_balance_money = gift_card_balance_money
+		self.gift_card_gan = gift_card_gan
+		self.gift_card_id = gift_card_id
+		self.id = id
+		self.import_activity_details = import_activity_details
+		self.import_reversal_activity_details = import_reversal_activity_details
+		self.load_activity_details = load_activity_details
+		self.redeem_activity_details = redeem_activity_details
+		self.refund_activity_details = refund_activity_details
+		self.unblock_activity_details = unblock_activity_details
+		self.unlinked_activity_refund_activity_details = unlinked_activity_refund_activity_details
+	}
+}
+
+/// Describes a gift card activity of the ACTIVATE type.
+public struct GiftCardActivityActivate: Codable {
+	/// The amount of money to add to the card.  This is required if your application does not use the Square Orders API.
+	public var amount_money: Money?
+	/// Required if your application does not use the Square Orders API.  This is a list of client-provided payment instrument IDs.  Square uses this information to perform compliance checks. If you use the Square Orders API, Square has the necessary instrument IDs to perform necessary  compliance checks.
+	public var buyer_payment_instrument_ids: [String]?
+	/// The `line_item_uid` of the gift card line item in an order.  This is required if your application uses the Square Orders API.
+	public var line_item_uid: String?
+	/// The ID of the order associated with the activity.  This is required if your application uses the Square Orders API.
+	public var order_id: String?
+	/// If your application does not use the Square Orders API, you can optionally use this field  to associate the gift card activity with a client-side entity.
+	public var reference_id: String?
+
+	/// Describes a gift card activity of the ACTIVATE type.
+	/// - Parameters:
+	///   - amount_money: The amount of money to add to the card.  This is required if your application does not use the Square Orders API.
+	///   - buyer_payment_instrument_ids: Required if your application does not use the Square Orders API.  This is a list of client-provided payment instrument IDs.  Square uses this information to perform compliance checks. If you use the Square Orders API, Square has the necessary instrument IDs to perform necessary  compliance checks.
+	///   - line_item_uid: The `line_item_uid` of the gift card line item in an order.  This is required if your application uses the Square Orders API.
+	///   - order_id: The ID of the order associated with the activity.  This is required if your application uses the Square Orders API.
+	///   - reference_id: If your application does not use the Square Orders API, you can optionally use this field  to associate the gift card activity with a client-side entity.
+	public init(amount_money: Money? = nil, buyer_payment_instrument_ids: [String]? = nil, line_item_uid: String? = nil, order_id: String? = nil, reference_id: String? = nil) {
+		self.amount_money = amount_money
+		self.buyer_payment_instrument_ids = buyer_payment_instrument_ids
+		self.line_item_uid = line_item_uid
+		self.order_id = order_id
+		self.reference_id = reference_id
+	}
+}
+
+/// Describes a gift card activity of the ADJUST_DECREMENT type.
+public struct GiftCardActivityAdjustDecrement: Codable {
+	/// The amount of money to add or remove, depending on the activity `type`. This value is  always positive.
+	public var amount_money: Money
+	/// The reason to decrease the gift card balance.
+	public var reason: Reason
+
+	/// Describes a gift card activity of the ADJUST_DECREMENT type.
+	/// - Parameters:
+	///   - amount_money: The amount of money to add or remove, depending on the activity `type`. This value is  always positive.
+	///   - reason: The reason to decrease the gift card balance.
+	public init(amount_money: Money, reason: Reason) {
+		self.amount_money = amount_money
+		self.reason = reason
+	}
+}
+
+/// 
+public enum GiftCardActivityAdjustDecrementReason: String, Codable {
+	/// The seller determined suspicious activity by the buyer.
+	case SUSPICIOUS_ACTIVITY
+	/// The seller previously increased the gift card balance by accident.
+	case BALANCE_ACCIDENTALLY_INCREASED
+	/// The seller decreased the gift card balance to  accommodate support issues.
+	case SUPPORT_ISSUE
+}
+
+/// Describes a gift card activity of the ADJUST_INCREMENT type.
+public struct GiftCardActivityAdjustIncrement: Codable {
+	/// The amount of money to add or remove, depending on the activity `type`. This value is  always positive.
+	public var amount_money: Money
+	/// The reason to increase the balance.
+	public var reason: Reason
+
+	/// Describes a gift card activity of the ADJUST_INCREMENT type.
+	/// - Parameters:
+	///   - amount_money: The amount of money to add or remove, depending on the activity `type`. This value is  always positive.
+	///   - reason: The reason to increase the balance.
+	public init(amount_money: Money, reason: Reason) {
+		self.amount_money = amount_money
+		self.reason = reason
+	}
+}
+
+/// 
+public enum GiftCardActivityAdjustIncrementReason: String, Codable {
+	/// Seller gifted a complimentary gift card balance increase.
+	case COMPLIMENTARY
+	/// The seller increased the gift card balance  to accommodate support issues.
+	case SUPPORT_ISSUE
+	/// The transaction is voided.
+	case TRANSACTION_VOIDED
+}
+
+/// Describes a gift card activity of the BLOCK type.
+public struct GiftCardActivityBlock: Codable {
+	/// The reason to block the gift card.
+	public var reason: Reason
+
+	/// Describes a gift card activity of the BLOCK type.
+	/// - Parameters:
+	///   - reason: The reason to block the gift card.
+	public init(reason: Reason) {
+		self.reason = reason
+	}
+}
+
+/// 
+public enum GiftCardActivityBlockReason: String, Codable {
+	/// The gift card is blocked because the buyer initiated a chargeback on the gift card purchase.
+	case CHARGEBACK_BLOCK
+}
+
+/// Describes a gift card activity of the CLEAR_BALANCE type.
+public struct GiftCardActivityClearBalance: Codable {
+	/// The reason to decrease the gift card balance.
+	public var reason: Reason
+
+	/// Describes a gift card activity of the CLEAR_BALANCE type.
+	/// - Parameters:
+	///   - reason: The reason to decrease the gift card balance.
+	public init(reason: Reason) {
+		self.reason = reason
+	}
+}
+
+/// 
+public enum GiftCardActivityClearBalanceReason: String, Codable {
+	/// The seller suspects suspicious activity.
+	case SUSPICIOUS_ACTIVITY
+	/// The seller cleared the balance to reuse the gift card.
+	case REUSE_GIFTCARD
+	/// The gift card balance was cleared for an unknown reason.
+	case UNKNOWN_REASON
+}
+
+/// Describes a gift card activity of the DEACTIVATE type.
+public struct GiftCardActivityDeactivate: Codable {
+	/// The reason to decrease the balance.
+	public var reason: Reason
+
+	/// Describes a gift card activity of the DEACTIVATE type.
+	/// - Parameters:
+	///   - reason: The reason to decrease the balance.
+	public init(reason: Reason) {
+		self.reason = reason
+	}
+}
+
+/// 
+public enum GiftCardActivityDeactivateReason: String, Codable {
+	/// The seller suspects suspicious activity.
+	case SUSPICIOUS_ACTIVITY
+	/// The gift card deactivated for an unknown reason.
+	case UNKNOWN_REASON
+	/// A chargeback on the gift card purchase (or the gift card load) was ruled in favor of the buyer.
+	case CHARGEBACK_DEACTIVATE
+}
+
+/// Describes a gift card activity of the IMPORT type and the `GiftCardGANSource` is OTHER  (a third-party gift card).
+public struct GiftCardActivityImport: Codable {
+	/// The balance amount on the third-party gift card.
+	public var amount_money: Money
+
+	/// Describes a gift card activity of the IMPORT type and the `GiftCardGANSource` is OTHER  (a third-party gift card).
+	/// - Parameters:
+	///   - amount_money: The balance amount on the third-party gift card.
+	public init(amount_money: Money) {
+		self.amount_money = amount_money
+	}
+}
+
+/// Present only when GiftCardActivityType is IMPORT_REVERSAL and GiftCardGANSource is OTHER
+public struct GiftCardActivityImportReversal: Codable {
+	/// The amount of money that the third-party gift card was  imported with is now cleared.
+	public var amount_money: Money
+
+	/// Present only when GiftCardActivityType is IMPORT_REVERSAL and GiftCardGANSource is OTHER
+	/// - Parameters:
+	///   - amount_money: The amount of money that the third-party gift card was  imported with is now cleared.
+	public init(amount_money: Money) {
+		self.amount_money = amount_money
+	}
+}
+
+/// Present only when `GiftCardActivityType` is LOAD.
+public struct GiftCardActivityLoad: Codable {
+	/// The amount of money to be added or removed, depending on the activity. The value of the field is always positive. This is not needed if `order_id` and `line_item_id` are provided.
+	public var amount_money: Money?
+	/// If you are not using the Orders API, this field is required because it is used to identify a buyer  to perform compliance checks.
+	public var buyer_payment_instrument_ids: [String]?
+	/// The `line_item_uid` of the gift card’s line item in the order associated with the activity. It is populated along with `order_id` and is required if using the Square Orders API.
+	public var line_item_uid: String?
+	/// The `order_id` of the order associated with the activity. It is populated along with `line_item_uid` and is required if using the Square Orders API.
+	public var order_id: String?
+	/// A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public var reference_id: String?
+
+	/// Present only when `GiftCardActivityType` is LOAD.
+	/// - Parameters:
+	///   - amount_money: The amount of money to be added or removed, depending on the activity. The value of the field is always positive. This is not needed if `order_id` and `line_item_id` are provided.
+	///   - buyer_payment_instrument_ids: If you are not using the Orders API, this field is required because it is used to identify a buyer  to perform compliance checks.
+	///   - line_item_uid: The `line_item_uid` of the gift card’s line item in the order associated with the activity. It is populated along with `order_id` and is required if using the Square Orders API.
+	///   - order_id: The `order_id` of the order associated with the activity. It is populated along with `line_item_uid` and is required if using the Square Orders API.
+	///   - reference_id: A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public init(amount_money: Money? = nil, buyer_payment_instrument_ids: [String]? = nil, line_item_uid: String? = nil, order_id: String? = nil, reference_id: String? = nil) {
+		self.amount_money = amount_money
+		self.buyer_payment_instrument_ids = buyer_payment_instrument_ids
+		self.line_item_uid = line_item_uid
+		self.order_id = order_id
+		self.reference_id = reference_id
+	}
+}
+
+/// Present only when `GiftCardActivityType` is REDEEM.
+public struct GiftCardActivityRedeem: Codable {
+	/// The amount of money to be added or removed, depending on the activity. The value of the field is always positive.
+	public var amount_money: Money
+	/// When the Square Payments API is used, Redeem is not called on the Gift Cards API. However, when Square reads a Redeem activity from the Gift Cards API, developers need to know the associated `payment_id`.
+	public let payment_id: String?
+	/// A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public var reference_id: String?
+
+	/// Present only when `GiftCardActivityType` is REDEEM.
+	/// - Parameters:
+	///   - amount_money: The amount of money to be added or removed, depending on the activity. The value of the field is always positive.
+	///   - payment_id: When the Square Payments API is used, Redeem is not called on the Gift Cards API. However, when Square reads a Redeem activity from the Gift Cards API, developers need to know the associated `payment_id`.
+	///   - reference_id: A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public init(amount_money: Money, payment_id: String? = nil, reference_id: String? = nil) {
+		self.amount_money = amount_money
+		self.payment_id = payment_id
+		self.reference_id = reference_id
+	}
+}
+
+/// Present only when `GiftCardActivityType` is REFUND.
+public struct GiftCardActivityRefund: Codable {
+	/// The amount of money to be refunded. When creating an activity of the REFUND type, this field can be used for partially refunding money from the Redeem activity denoted by `redeem_activity_id`. Hence, its value cannot be greater than the amount in the activity denoted by `redeem_activity_id`. If a full refund is being sought, this field can be left empty because only the amount in the activity denoted by `redeem_activity_id` is refunded. While reading an event of this type, this field is always present. It shows the amount refunded.
+	public var amount_money: Money?
+	/// When the Square Payments API is used, Refund is not called on the Gift Cards API. However, when Square reads a Refund activity from the Gift Cards API, the developer needs to know the ID of the payment (made using this gift card) that is being refunded.
+	public let payment_id: String?
+	/// The ID for the Redeem activity that needs to be refunded. Hence, the activity it refers to has to be of the REDEEM type.
+	public var redeem_activity_id: String
+	/// A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public var reference_id: String?
+
+	/// Present only when `GiftCardActivityType` is REFUND.
+	/// - Parameters:
+	///   - amount_money: The amount of money to be refunded. When creating an activity of the REFUND type, this field can be used for partially refunding money from the Redeem activity denoted by `redeem_activity_id`. Hence, its value cannot be greater than the amount in the activity denoted by `redeem_activity_id`. If a full refund is being sought, this field can be left empty because only the amount in the activity denoted by `redeem_activity_id` is refunded. While reading an event of this type, this field is always present. It shows the amount refunded.
+	///   - payment_id: When the Square Payments API is used, Refund is not called on the Gift Cards API. However, when Square reads a Refund activity from the Gift Cards API, the developer needs to know the ID of the payment (made using this gift card) that is being refunded.
+	///   - redeem_activity_id: The ID for the Redeem activity that needs to be refunded. Hence, the activity it refers to has to be of the REDEEM type.
+	///   - reference_id: A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public init(redeem_activity_id: String, amount_money: Money? = nil, payment_id: String? = nil, reference_id: String? = nil) {
+		self.redeem_activity_id = redeem_activity_id
+		self.amount_money = amount_money
+		self.payment_id = payment_id
+		self.reference_id = reference_id
+	}
+}
+
+/// 
+public enum GiftCardActivityType: String, Codable {
+	/// Activated a gift card with a balance.
+	case ACTIVATE
+	/// Loaded a gift card with additional funds.
+	case LOAD
+	/// Redeemed a gift card.
+	case REDEEM
+	/// Cleared a gift card balance to zero.
+	case CLEAR_BALANCE
+	/// Permanently blocked a gift card from a balance-changing  activity.
+	case DEACTIVATE
+	/// Manually increased a gift card balance.
+	case ADJUST_INCREMENT
+	/// Manually decreased a gift card balance.
+	case ADJUST_DECREMENT
+	/// Added money to a gift card because a transaction  paid with this gift card was refunded.
+	case REFUND
+	///  Added money to a gift card because a transaction  not linked to this gift card was refunded to this gift card.
+	case UNLINKED_ACTIVITY_REFUND
+	/// Imported a third-party gift card.
+	case IMPORT
+	/// Temporarily blocked a gift card from balance-changing  activities.
+	case BLOCK
+	/// Unblocked a gift card. It can resume balance-changing activities.
+	case UNBLOCK
+	/// A third-party gift card was imported with a balance.  The import is reversed.
+	case IMPORT_REVERSAL
+}
+
+/// Present only when `GiftCardActivityType` is UNBLOCK.
+public struct GiftCardActivityUnblock: Codable {
+	/// The reason to unblock a gift card.
+	public var reason: Reason
+
+	/// Present only when `GiftCardActivityType` is UNBLOCK.
+	/// - Parameters:
+	///   - reason: The reason to unblock a gift card.
+	public init(reason: Reason) {
+		self.reason = reason
+	}
+}
+
+/// 
+public enum GiftCardActivityUnblockReason: String, Codable {
+	/// The gift card is unblocked because a chargeback was ruled in favor of the seller.
+	case CHARGEBACK_UNBLOCK
+}
+
+/// Present only when `GiftCardActivityType` is UNLINKED_ACTIVITY_REFUND.
+public struct GiftCardActivityUnlinkedActivityRefund: Codable {
+	/// The amount to add to the gift card.
+	public var amount_money: Money
+	/// When the Square Payments API is used, Refund is not called on the Gift Cards API. However, when Square reads a Refund activity from the Gift Cards API, the developer needs to know the ID of the payment (made using this gift card) that is being refunded.
+	public let payment_id: String?
+	/// A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public var reference_id: String?
+
+	/// Present only when `GiftCardActivityType` is UNLINKED_ACTIVITY_REFUND.
+	/// - Parameters:
+	///   - amount_money: The amount to add to the gift card.
+	///   - payment_id: When the Square Payments API is used, Refund is not called on the Gift Cards API. However, when Square reads a Refund activity from the Gift Cards API, the developer needs to know the ID of the payment (made using this gift card) that is being refunded.
+	///   - reference_id: A client-specified ID to associate an entity, in another system, with this gift card activity. This can be used to track the order or payment related information when the Square Orders API is not being used.
+	public init(amount_money: Money, payment_id: String? = nil, reference_id: String? = nil) {
+		self.amount_money = amount_money
+		self.payment_id = payment_id
+		self.reference_id = reference_id
+	}
+}
+
+/// Indicates the source that generated the gift card  account number (GAN).
+public enum GiftCardGANSource: String, Codable {
+	/// The gift card account number (GAN) is generated by Square.
+	case SQUARE
+	/// The gift card account number (GAN) is imported from a non-Square system.  For more information, see  [Third-party gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#third-party-gift-cards).
+	case OTHER
+}
+
+/// Indicates the gift card state.
+public enum GiftCardStatus: String, Codable {
+	/// The gift card is active and can be used as a payment source.
+	case ACTIVE
+	/// Any activity that changes the gift card balance is permanently forbidden.
+	case DEACTIVATED
+	/// Any activity that changes the gift card balance is temporarily forbidden.
+	case BLOCKED
+	/// The gift card is pending activation. This is the state when a gift card is initially created. You must activate the gift card before you can use it.
+	case PENDING
+}
+
+/// 
+public enum GiftCardType: String, Codable {
+	/// A plastic gift card.
+	case PHYSICAL
+	/// A digital gift card.
+	case DIGITAL
+}
+
 /// Object types to inline under their respective parent object in certain connect v2 responses
 public enum InlineTypes: String, Codable {
 	case INLINE_NONE
@@ -6589,21 +7428,23 @@ public enum InlineTypes: String, Codable {
 
 /// Represents a change in state or quantity of product inventory at a particular time and location.
 public struct InventoryAdjustment: Codable {
-	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
+	/// An adjustment group bundling the related adjustments of item variations through stock conversions in a single inventory event.
+	public let adjustment_group: InventoryAdjustmentGroup?
+	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
 	public var catalog_object_id: String?
-	/// The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
+	/// The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
 	public var catalog_object_type: String?
 	/// An RFC 3339-formatted timestamp that indicates when the inventory adjustment is received.
 	public let created_at: Timestamp?
-	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-05-13/objects/Employee) responsible for the inventory adjustment.
+	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-06-16/objects/Employee) responsible for the inventory adjustment.
 	public var employee_id: String?
-	/// The [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) of the related quantity of items before the adjustment.
+	/// The [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) of the related quantity of items before the adjustment.
 	public var from_state: String?
 	/// The Square-generated ID of the goods receipt that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	public let goods_receipt_id: String?
 	/// A unique ID generated by Square for the `InventoryAdjustment`.
 	public var id: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items is being tracked.
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items is being tracked.
 	public var location_id: String?
 	/// A client-generated RFC 3339-formatted timestamp that indicates when the inventory adjustment took place. For inventory adjustment updates, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
 	public var occurred_at: Timestamp?
@@ -6617,7 +7458,7 @@ public struct InventoryAdjustment: Codable {
 	public let refund_id: String?
 	/// Information about the application that caused the inventory adjustment.
 	public let source: SourceApplication?
-	/// The [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) of the related quantity of items after the adjustment.
+	/// The [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) of the related quantity of items after the adjustment.
 	public var to_state: String?
 	/// The total price paid for goods associated with the adjustment. Present if and only if `to_state` is `SOLD`. Always non-negative.
 	public let total_price_money: Money?
@@ -6626,24 +7467,26 @@ public struct InventoryAdjustment: Codable {
 
 	/// Represents a change in state or quantity of product inventory at a particular time and location.
 	/// - Parameters:
-	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
-	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
+	///   - adjustment_group: An adjustment group bundling the related adjustments of item variations through stock conversions in a single inventory event.
+	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
+	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
 	///   - created_at: An RFC 3339-formatted timestamp that indicates when the inventory adjustment is received.
-	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-05-13/objects/Employee) responsible for the inventory adjustment.
-	///   - from_state: The [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) of the related quantity of items before the adjustment.
+	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-06-16/objects/Employee) responsible for the inventory adjustment.
+	///   - from_state: The [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) of the related quantity of items before the adjustment.
 	///   - goods_receipt_id: The Square-generated ID of the goods receipt that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	///   - id: A unique ID generated by Square for the `InventoryAdjustment`.
-	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items is being tracked.
+	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items is being tracked.
 	///   - occurred_at: A client-generated RFC 3339-formatted timestamp that indicates when the inventory adjustment took place. For inventory adjustment updates, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
 	///   - purchase_order_id: The Square-generated ID of the purchase order that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	///   - quantity: The number of items affected by the adjustment as a decimal string. Can support up to 5 digits after the decimal point.
 	///   - reference_id: An optional ID provided by the application to tie the `InventoryAdjustment` to an external system.
 	///   - refund_id: The Square-generated ID of the [Refund][#type-refund] that caused the adjustment. Only relevant for refund-related state transitions.
 	///   - source: Information about the application that caused the inventory adjustment.
-	///   - to_state: The [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) of the related quantity of items after the adjustment.
+	///   - to_state: The [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) of the related quantity of items after the adjustment.
 	///   - total_price_money: The total price paid for goods associated with the adjustment. Present if and only if `to_state` is `SOLD`. Always non-negative.
 	///   - transaction_id: The Square-generated ID of the [Transaction][#type-transaction] that caused the adjustment. Only relevant for payment-related state transitions.
-	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_state: String? = nil, goods_receipt_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, purchase_order_id: String? = nil, quantity: String? = nil, reference_id: String? = nil, refund_id: String? = nil, source: SourceApplication? = nil, to_state: String? = nil, total_price_money: Money? = nil, transaction_id: String? = nil) {
+	public init(adjustment_group: InventoryAdjustmentGroup? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_state: String? = nil, goods_receipt_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, purchase_order_id: String? = nil, quantity: String? = nil, reference_id: String? = nil, refund_id: String? = nil, source: SourceApplication? = nil, to_state: String? = nil, total_price_money: Money? = nil, transaction_id: String? = nil) {
+		self.adjustment_group = adjustment_group
 		self.catalog_object_id = catalog_object_id
 		self.catalog_object_type = catalog_object_type
 		self.created_at = created_at
@@ -6664,6 +7507,24 @@ public struct InventoryAdjustment: Codable {
 	}
 }
 
+public struct InventoryAdjustmentGroup: Codable {
+	/// Representative `from_state` for adjustments within the group. For example, for a group adjustment from `IN_STOCK` to `SOLD`, there can be two component adjustments in the group: one from `IN_STOCK`to `COMPOSED` and the other one from `COMPOSED` to `SOLD`. Here, the representative `from_state` for the `InventoryAdjustmentGroup` is `IN_STOCK`.
+	public let from_state: String?
+	/// A unique ID generated by Square for the `InventoryAdjustmentGroup`.
+	public let id: String?
+	/// The inventory adjustment of the composed variation.
+	public let root_adjustment_id: String?
+	/// Representative `to_state` for adjustments within group. For example, for a group adjustment from `IN_STOCK` to `SOLD`, the two component adjustments in the group can be from `IN_STOCK` to `COMPOSED` and from `COMPOSED` to `SOLD`.  Here, the representative `to_state` of the `InvetoryAdjustmentGroup` is `SOLD`.
+	public let to_state: String?
+
+	public init(from_state: String? = nil, id: String? = nil, root_adjustment_id: String? = nil, to_state: String? = nil) {
+		self.from_state = from_state
+		self.id = id
+		self.root_adjustment_id = root_adjustment_id
+		self.to_state = to_state
+	}
+}
+
 /// Indicates whether Square should alert the merchant when the inventory quantity of a CatalogItemVariation is low.
 public enum InventoryAlertType: String, Codable {
 	/// The variation does not display an alert.
@@ -6672,29 +7533,29 @@ public enum InventoryAlertType: String, Codable {
 	case LOW_QUANTITY
 }
 
-/// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance.
+/// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance.
 public struct InventoryChange: Codable {
 	/// Contains details about the inventory adjustment when `type` is `ADJUSTMENT` and unset for all other types.
 	public var adjustment: InventoryAdjustment?
-	/// The [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
+	/// The [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
 	public let measurement_unit: CatalogMeasurementUnit?
-	/// The ID of the [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
+	/// The ID of the [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
 	public let measurement_unit_id: String?
 	/// Contains details about the physical count when `type` is `PHYSICAL_COUNT` and unset for all other types.
 	public var physical_count: InventoryPhysicalCount?
-	/// Contains details about the inventory transfer when `type` is `TRANSFER` and unset for all other types.  _Note:_ An [InventoryTransfer](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryTransfer) object is read-only and can only be present in a [RetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-05-13/objects/RetrieveInventoryChangesResponse) or [BatchRetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-05-13/objects/BatchRetrieveInventoryChangesResponse) object.
+	/// Contains details about the inventory transfer when `type` is `TRANSFER` and unset for all other types.  _Note:_ An [InventoryTransfer](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryTransfer) object is read-only and can only be present in a [RetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-06-16/objects/RetrieveInventoryChangesResponse) or [BatchRetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-06-16/objects/BatchRetrieveInventoryChangesResponse) object.
 	public var transfer: InventoryTransfer?
-	/// Indicates how the inventory change was applied. See [InventoryChangeType](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryChangeType) for all possible values.
+	/// Indicates how the inventory change was applied. See [InventoryChangeType](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryChangeType) for all possible values.
 	public var type: String?
 
-	/// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) instance.
+	/// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) instance.
 	/// - Parameters:
 	///   - adjustment: Contains details about the inventory adjustment when `type` is `ADJUSTMENT` and unset for all other types.
-	///   - measurement_unit: The [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
-	///   - measurement_unit_id: The ID of the [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
+	///   - measurement_unit: The [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
+	///   - measurement_unit_id: The ID of the [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
 	///   - physical_count: Contains details about the physical count when `type` is `PHYSICAL_COUNT` and unset for all other types.
-	///   - transfer: Contains details about the inventory transfer when `type` is `TRANSFER` and unset for all other types.  _Note:_ An [InventoryTransfer](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryTransfer) object is read-only and can only be present in a [RetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-05-13/objects/RetrieveInventoryChangesResponse) or [BatchRetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-05-13/objects/BatchRetrieveInventoryChangesResponse) object.
-	///   - type: Indicates how the inventory change was applied. See [InventoryChangeType](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryChangeType) for all possible values.
+	///   - transfer: Contains details about the inventory transfer when `type` is `TRANSFER` and unset for all other types.  _Note:_ An [InventoryTransfer](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryTransfer) object is read-only and can only be present in a [RetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-06-16/objects/RetrieveInventoryChangesResponse) or [BatchRetrieveInventoryChangesResponse](https://developer.squareup.com/reference/square_2021-06-16/objects/BatchRetrieveInventoryChangesResponse) object.
+	///   - type: Indicates how the inventory change was applied. See [InventoryChangeType](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryChangeType) for all possible values.
 	public init(adjustment: InventoryAdjustment? = nil, measurement_unit: CatalogMeasurementUnit? = nil, measurement_unit_id: String? = nil, physical_count: InventoryPhysicalCount? = nil, transfer: InventoryTransfer? = nil, type: String? = nil) {
 		self.adjustment = adjustment
 		self.measurement_unit = measurement_unit
@@ -6719,29 +7580,33 @@ public enum InventoryChangeType: String, Codable {
 public struct InventoryCount: Codable {
 	/// An RFC 3339-formatted timestamp that indicates when the most recent physical count or adjustment affecting the estimated count is received.
 	public let calculated_at: Timestamp?
-	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
+	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
 	public var catalog_object_id: String?
-	/// The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
+	/// The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
 	public var catalog_object_type: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items is being tracked.
+	/// Whether the inventory count is for composed variation (TRUE) or not (FALSE). If true, the inventory count will not be present in the response of any of these endpoints: [BatchChangeInventory](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/batch-change-inventory),  [BatchRetrieveInventoryChanges](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/batch-retrieve-inventory-changes),  [BatchRetrieveInventoryCounts](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/batch-retrieve-inventory-counts), and  [RetrieveInventoryChanges](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/retrieve-inventory-changes).
+	public let is_estimated: Bool?
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items is being tracked.
 	public var location_id: String?
 	/// The number of items affected by the estimated count as a decimal string. Can support up to 5 digits after the decimal point.
 	public var quantity: String?
-	/// The current [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) for the related quantity of items.
+	/// The current [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) for the related quantity of items.
 	public var state: String?
 
 	/// Represents Square-estimated quantity of items in a particular state at a particular seller location based on the known history of physical counts and inventory adjustments.
 	/// - Parameters:
 	///   - calculated_at: An RFC 3339-formatted timestamp that indicates when the most recent physical count or adjustment affecting the estimated count is received.
-	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
-	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
-	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items is being tracked.
+	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
+	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
+	///   - is_estimated: Whether the inventory count is for composed variation (TRUE) or not (FALSE). If true, the inventory count will not be present in the response of any of these endpoints: [BatchChangeInventory](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/batch-change-inventory),  [BatchRetrieveInventoryChanges](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/batch-retrieve-inventory-changes),  [BatchRetrieveInventoryCounts](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/batch-retrieve-inventory-counts), and  [RetrieveInventoryChanges](https://developer.squareup.com/reference/square_2021-06-16/inventory-api/retrieve-inventory-changes).
+	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items is being tracked.
 	///   - quantity: The number of items affected by the estimated count as a decimal string. Can support up to 5 digits after the decimal point.
-	///   - state: The current [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) for the related quantity of items.
-	public init(calculated_at: Timestamp? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, location_id: String? = nil, quantity: String? = nil, state: String? = nil) {
+	///   - state: The current [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) for the related quantity of items.
+	public init(calculated_at: Timestamp? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, is_estimated: Bool? = nil, location_id: String? = nil, quantity: String? = nil, state: String? = nil) {
 		self.calculated_at = calculated_at
 		self.catalog_object_id = catalog_object_id
 		self.catalog_object_type = catalog_object_type
+		self.is_estimated = is_estimated
 		self.location_id = location_id
 		self.quantity = quantity
 		self.state = state
@@ -6750,42 +7615,42 @@ public struct InventoryCount: Codable {
 
 /// Represents the quantity of an item variation that is physically present at a specific location, verified by a seller or a seller's employee. For example, a physical count might come from an employee counting the item variations on hand or from syncing with an external system.
 public struct InventoryPhysicalCount: Codable {
-	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
+	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
 	public var catalog_object_id: String?
-	/// The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
+	/// The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
 	public var catalog_object_type: String?
 	/// An RFC 3339-formatted timestamp that indicates when the physical count is received.
 	public let created_at: Timestamp?
-	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-05-13/objects/Employee) responsible for the physical count.
+	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-06-16/objects/Employee) responsible for the physical count.
 	public var employee_id: String?
-	/// A unique Square-generated ID for the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryPhysicalCount).
+	/// A unique Square-generated ID for the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryPhysicalCount).
 	public var id: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items is being tracked.
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items is being tracked.
 	public var location_id: String?
 	/// A client-generated RFC 3339-formatted timestamp that indicates when the physical count was examined. For physical count updates, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
 	public var occurred_at: Timestamp?
 	/// The number of items affected by the physical count as a decimal string. The number can support up to 5 digits after the decimal point.
 	public var quantity: String?
-	/// An optional ID provided by the application to tie the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryPhysicalCount) to an external system.
+	/// An optional ID provided by the application to tie the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryPhysicalCount) to an external system.
 	public var reference_id: String?
 	/// Information about the application with which the physical count is submitted.
 	public let source: SourceApplication?
-	/// The current [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) for the related quantity of items.
+	/// The current [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) for the related quantity of items.
 	public var state: String?
 
 	/// Represents the quantity of an item variation that is physically present at a specific location, verified by a seller or a seller's employee. For example, a physical count might come from an employee counting the item variations on hand or from syncing with an external system.
 	/// - Parameters:
-	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
-	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
+	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
+	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked. Tracking is only supported for the `ITEM_VARIATION` type.
 	///   - created_at: An RFC 3339-formatted timestamp that indicates when the physical count is received.
-	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-05-13/objects/Employee) responsible for the physical count.
-	///   - id: A unique Square-generated ID for the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryPhysicalCount).
-	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items is being tracked.
+	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-06-16/objects/Employee) responsible for the physical count.
+	///   - id: A unique Square-generated ID for the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryPhysicalCount).
+	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items is being tracked.
 	///   - occurred_at: A client-generated RFC 3339-formatted timestamp that indicates when the physical count was examined. For physical count updates, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
 	///   - quantity: The number of items affected by the physical count as a decimal string. The number can support up to 5 digits after the decimal point.
-	///   - reference_id: An optional ID provided by the application to tie the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryPhysicalCount) to an external system.
+	///   - reference_id: An optional ID provided by the application to tie the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryPhysicalCount) to an external system.
 	///   - source: Information about the application with which the physical count is submitted.
-	///   - state: The current [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) for the related quantity of items.
+	///   - state: The current [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) for the related quantity of items.
 	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: String? = nil) {
 		self.catalog_object_id = catalog_object_id
 		self.catalog_object_type = catalog_object_type
@@ -6827,19 +7692,25 @@ public enum InventoryState: String, Codable {
 	case WASTE
 	/// The related quantity of items were returned but not linked to a previous transaction. Unlinked returns are not tracked in Square. Transferring a quantity from `UNLINKED_RETURN` to a tracked state (e.g., `IN_STOCK`) introduces new stock into the system.
 	case UNLINKED_RETURN
+	/// The related quantity of items that are part of a composition consisting one or more components.
+	case COMPOSED
+	/// The related quantity of items that are part of a component.
+	case DECOMPOSED
+	/// This state is not supported by this version of the Square API. We recommend that you upgrade the client to use the appropriate version of the Square API supporting this state.
+	case SUPPORTED_BY_NEWER_VERSION
 }
 
 /// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
 public struct InventoryTransfer: Codable {
-	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
+	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
 	public var catalog_object_id: String?
-	/// The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.Tracking is only supported for the `ITEM_VARIATION` type.
+	/// The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.Tracking is only supported for the `ITEM_VARIATION` type.
 	public var catalog_object_type: String?
 	/// An RFC 3339-formatted timestamp that indicates when Square received the transfer request.
 	public let created_at: Timestamp?
-	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-05-13/objects/Employee) responsible for the inventory transfer.
+	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-06-16/objects/Employee) responsible for the inventory transfer.
 	public var employee_id: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items was tracked before the transfer.
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items was tracked before the transfer.
 	public var from_location_id: String?
 	/// A unique ID generated by Square for the `InventoryTransfer`.
 	public var id: String?
@@ -6851,25 +7722,25 @@ public struct InventoryTransfer: Codable {
 	public var reference_id: String?
 	/// Information about the application that initiated the inventory transfer.
 	public let source: SourceApplication?
-	/// The [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) for the quantity of items being transferred.
+	/// The [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) for the quantity of items being transferred.
 	public var state: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items was tracked after the transfer.
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items was tracked after the transfer.
 	public var to_location_id: String?
 
 	/// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
 	/// - Parameters:
-	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.
-	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-05-13/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) being tracked.Tracking is only supported for the `ITEM_VARIATION` type.
+	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.
+	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) being tracked.Tracking is only supported for the `ITEM_VARIATION` type.
 	///   - created_at: An RFC 3339-formatted timestamp that indicates when Square received the transfer request.
-	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-05-13/objects/Employee) responsible for the inventory transfer.
-	///   - from_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items was tracked before the transfer.
+	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_2021-06-16/objects/Employee) responsible for the inventory transfer.
+	///   - from_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items was tracked before the transfer.
 	///   - id: A unique ID generated by Square for the `InventoryTransfer`.
 	///   - occurred_at: A client-generated RFC 3339-formatted timestamp that indicates when the transfer took place. For write actions, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
 	///   - quantity: The number of items affected by the transfer as a decimal string. Can support up to 5 digits after the decimal point.
 	///   - reference_id: An optional ID provided by the application to tie the `InventoryTransfer` to an external system.
 	///   - source: Information about the application that initiated the inventory transfer.
-	///   - state: The [inventory state](https://developer.squareup.com/reference/square_2021-05-13/enums/InventoryState) for the quantity of items being transferred.
-	///   - to_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the related quantity of items was tracked after the transfer.
+	///   - state: The [inventory state](https://developer.squareup.com/reference/square_2021-06-16/enums/InventoryState) for the quantity of items being transferred.
+	///   - to_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the related quantity of items was tracked after the transfer.
 	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_location_id: String? = nil, id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: String? = nil, to_location_id: String? = nil) {
 		self.catalog_object_id = catalog_object_id
 		self.catalog_object_type = catalog_object_type
@@ -6902,11 +7773,11 @@ public struct Invoice: Codable {
 	public let id: String?
 	/// A user-friendly invoice number. The value is unique within a location. If not provided when creating an invoice, Square assigns a value. It increments from 1 and padded with zeros making it 7 characters long (for example, 0000001 and 0000002).
 	public var invoice_number: String?
-	/// The ID of the location that this invoice is associated with. This field is required when creating an invoice.
+	/// The ID of the location that this invoice is associated with.   If specified in a `CreateInvoice` request, the value must match the `location_id` of the associated order.
 	public var location_id: String?
 	/// The current amount due for the invoice. In addition to the amount due on the next payment request, this includes any overdue payment amounts.
 	public let next_payment_amount_money: Money?
-	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) for which the invoice is created.  This order must be in the `OPEN` state and must belong to the `location_id` specified for this invoice. This field is required when creating an invoice.
+	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) for which the invoice is created.  This order must be in the `OPEN` state. This field is required when creating an invoice.
 	public var order_id: String?
 	/// The payment schedule for the invoice, represented by one or more payment requests that define payment settings, such as amount due and due date. You can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types. For more information, see [Payment requests](https://developer.squareup.com/docs/invoices-api/overview#payment-requests).  This field is required when creating an invoice. It must contain at least one payment request.
 	public var payment_requests: [InvoicePaymentRequest]?
@@ -6918,7 +7789,7 @@ public struct Invoice: Codable {
 	public var scheduled_at: Timestamp?
 	/// The status of the invoice.
 	public let status: String?
-	/// The ID of the [subscription](https://developer.squareup.com/reference/square_2021-05-13/objects/Subscription) associated with the invoice. This field is present only on subscription billing invoices.
+	/// The ID of the [subscription](https://developer.squareup.com/reference/square_2021-06-16/objects/Subscription) associated with the invoice. This field is present only on subscription billing invoices.
 	public let subscription_id: String?
 	/// The time zone used to interpret calendar dates on the invoice, such as `due_date`. When an invoice is created, this field is set to the `timezone` specified for the seller location. The value cannot be changed.  For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	public let timezone: String?
@@ -6938,15 +7809,15 @@ public struct Invoice: Codable {
 	///   - description: The description of the invoice. This is visible to the customer receiving the invoice.
 	///   - id: The Square-assigned ID of the invoice.
 	///   - invoice_number: A user-friendly invoice number. The value is unique within a location. If not provided when creating an invoice, Square assigns a value. It increments from 1 and padded with zeros making it 7 characters long (for example, 0000001 and 0000002).
-	///   - location_id: The ID of the location that this invoice is associated with. This field is required when creating an invoice.
+	///   - location_id: The ID of the location that this invoice is associated with.   If specified in a `CreateInvoice` request, the value must match the `location_id` of the associated order.
 	///   - next_payment_amount_money: The current amount due for the invoice. In addition to the amount due on the next payment request, this includes any overdue payment amounts.
-	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) for which the invoice is created.  This order must be in the `OPEN` state and must belong to the `location_id` specified for this invoice. This field is required when creating an invoice.
+	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) for which the invoice is created.  This order must be in the `OPEN` state. This field is required when creating an invoice.
 	///   - payment_requests: The payment schedule for the invoice, represented by one or more payment requests that define payment settings, such as amount due and due date. You can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types. For more information, see [Payment requests](https://developer.squareup.com/docs/invoices-api/overview#payment-requests).  This field is required when creating an invoice. It must contain at least one payment request.
 	///   - primary_recipient: The customer who gets the invoice. Square uses the contact information to deliver the invoice. This field is required to publish an invoice.
 	///   - public_url: The URL of the Square-hosted invoice page. After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice page and returns the page URL in the response.
 	///   - scheduled_at: The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, according to the delivery method and payment request settings.  If the field is not set, Square processes the invoice immediately after it is published.
 	///   - status: The status of the invoice.
-	///   - subscription_id: The ID of the [subscription](https://developer.squareup.com/reference/square_2021-05-13/objects/Subscription) associated with the invoice. This field is present only on subscription billing invoices.
+	///   - subscription_id: The ID of the [subscription](https://developer.squareup.com/reference/square_2021-06-16/objects/Subscription) associated with the invoice. This field is present only on subscription billing invoices.
 	///   - timezone: The time zone used to interpret calendar dates on the invoice, such as `due_date`. When an invoice is created, this field is set to the `timezone` specified for the seller location. The value cannot be changed.  For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	///   - title: The title of the invoice.
 	///   - updated_at: The timestamp when the invoice was last updated, in RFC 3339 format.
@@ -6996,7 +7867,7 @@ public struct InvoiceAcceptedPaymentMethods: Codable {
 	}
 }
 
-/// Indicates the automatic payment method for an [invoice payment request](https://developer.squareup.com/reference/square_2021-05-13/objects/InvoicePaymentRequest).
+/// Indicates the automatic payment method for an [invoice payment request](https://developer.squareup.com/reference/square_2021-06-16/objects/InvoicePaymentRequest).
 public enum InvoiceAutomaticPaymentSource: String, Codable {
 	/// An automatic payment is not configured for the payment request.
 	case NONE
@@ -7035,7 +7906,7 @@ public enum InvoiceCustomFieldPlacement: String, Codable {
 	case BELOW_LINE_ITEMS
 }
 
-/// Indicates how Square delivers the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to the customer.
+/// Indicates how Square delivers the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to the customer.
 public enum InvoiceDeliveryMethod: String, Codable {
 	/// Directs Square to send invoices, reminders, and receipts to the customer using email.
 	case EMAIL
@@ -7101,11 +7972,11 @@ public enum InvoicePaymentReminderStatus: String, Codable {
 	case SENT
 }
 
-/// Represents a payment request for an [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](https://developer.squareup.com/docs/invoices-api/overview#payment-requests).
+/// Represents a payment request for an [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](https://developer.squareup.com/docs/invoices-api/overview#payment-requests).
 public struct InvoicePaymentRequest: Codable {
 	/// The payment method for an automatic payment.  The default value is `NONE`.
 	public var automatic_payment_source: String?
-	/// The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call [RetrieveCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/retrieve-customer) in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
+	/// The ID of the credit or debit card on file to charge for the payment request. To get the cards on file for a customer, call [ListCards](https://developer.squareup.com/reference/square_2021-06-16/cards-api/list-cards) and include the `customer_id` of the invoice recipient.
 	public var card_id: String?
 	/// The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`, `fixed_amount_requested_money`, and `percentage_requested`).
 	public let computed_amount_money: Money?
@@ -7127,13 +7998,13 @@ public struct InvoicePaymentRequest: Codable {
 	public var tipping_enabled: Bool?
 	/// The amount of money already paid for the specific payment request.  This amount might include a rounding adjustment if the most recent invoice payment  was in cash in a currency that rounds cash payments (such as, `CAD` or `AUD`).
 	public let total_completed_amount_money: Money?
-	/// The Square-generated ID of the payment request in an [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice).
+	/// The Square-generated ID of the payment request in an [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice).
 	public let uid: String?
 
-	/// Represents a payment request for an [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](https://developer.squareup.com/docs/invoices-api/overview#payment-requests).
+	/// Represents a payment request for an [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types.  For more information,  see [Payment requests](https://developer.squareup.com/docs/invoices-api/overview#payment-requests).
 	/// - Parameters:
 	///   - automatic_payment_source: The payment method for an automatic payment.  The default value is `NONE`.
-	///   - card_id: The ID of the card on file to charge for the payment request. To get the customer’s card on file, use the `customer_id` of the invoice recipient to call [RetrieveCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/retrieve-customer) in the Customers API. Then, get the ID of the target card from the `cards` field in the response.
+	///   - card_id: The ID of the credit or debit card on file to charge for the payment request. To get the cards on file for a customer, call [ListCards](https://developer.squareup.com/reference/square_2021-06-16/cards-api/list-cards) and include the `customer_id` of the invoice recipient.
 	///   - computed_amount_money: The amount of the payment request, computed using the order amount and information from the various payment request fields (`request_type`, `fixed_amount_requested_money`, and `percentage_requested`).
 	///   - due_date: The due date (in the invoice's time zone) for the payment request, in `YYYY-MM-DD` format. This field is required to create a payment request.  After this date, the invoice becomes overdue. For example, a payment `due_date` of 2021-03-09 with a `timezone` of America/Los\_Angeles becomes overdue at midnight on March 9 in America/Los\_Angeles (which equals a UTC timestamp of 2021-03-10T08:00:00Z).
 	///   - fixed_amount_requested_money: If the payment request specifies `DEPOSIT` or `INSTALLMENT` as the `request_type`,  this indicates the request amount. You cannot specify this when `request_type` is `BALANCE` or when the  payment request includes the `percentage_requested` field.
@@ -7144,7 +8015,7 @@ public struct InvoicePaymentRequest: Codable {
 	///   - rounding_adjustment_included_money: If the most recent payment was a cash payment  in a currency that rounds cash payments (such as, `CAD` or `AUD`) and the payment  is rounded from `computed_amount_money` in the payment request, then this  field specifies the rounding adjustment applied. This amount  might be negative.
 	///   - tipping_enabled: If set to true, the Square-hosted invoice page (the `public_url` field of the invoice)  provides a place for the customer to pay a tip.   This field is allowed only on the final payment request   and the payment `request_type` must be `BALANCE` or `INSTALLMENT`.
 	///   - total_completed_amount_money: The amount of money already paid for the specific payment request.  This amount might include a rounding adjustment if the most recent invoice payment  was in cash in a currency that rounds cash payments (such as, `CAD` or `AUD`).
-	///   - uid: The Square-generated ID of the payment request in an [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice).
+	///   - uid: The Square-generated ID of the payment request in an [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice).
 	public init(automatic_payment_source: String? = nil, card_id: String? = nil, computed_amount_money: Money? = nil, due_date: String? = nil, fixed_amount_requested_money: Money? = nil, percentage_requested: String? = nil, reminders: [InvoicePaymentReminder]? = nil, request_method: String? = nil, request_type: String? = nil, rounding_adjustment_included_money: Money? = nil, tipping_enabled: Bool? = nil, total_completed_amount_money: Money? = nil, uid: String? = nil) {
 		self.automatic_payment_source = automatic_payment_source
 		self.card_id = card_id
@@ -7218,7 +8089,7 @@ public struct InvoiceRecipient: Codable {
 
 /// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing. DEPRECATED at version 2021-01-21. The corresponding `request_method` field is replaced by the `Invoice.delivery_method` and `InvoicePaymentRequest.automatic_payment_source` fields.
 public enum InvoiceRequestMethod: String, Codable {
-	/// Directs Square to send invoices, reminders, and receipts to the customer using email. Square sends the invoice after it is published (either immediately or at the `scheduled_at` time, if specified in the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice)).
+	/// Directs Square to send invoices, reminders, and receipts to the customer using email. Square sends the invoice after it is published (either immediately or at the `scheduled_at` time, if specified in the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice)).
 	case EMAIL
 	/// Directs Square to charge the card on file on the `due_date` specified in the payment request and to use email to send invoices, reminders, and receipts.
 	case CHARGE_CARD_ON_FILE
@@ -7226,7 +8097,7 @@ public enum InvoiceRequestMethod: String, Codable {
 	case SHARE_MANUALLY
 	/// Directs Square to charge the bank account on file on the `due_date` specified in the payment request and to use email to send invoices, reminders, and receipts.  The bank on file payment method applies only to recurring invoices that sellers create in the Seller Dashboard or other Square first-party applications. The bank account is provided by the customer during the payment flow. You  cannot set `CHARGE_BANK_ON_FILE` as a request method using the Invoices API.
 	case CHARGE_BANK_ON_FILE
-	/// Directs Square to send invoices and receipts to the customer using SMS (text message). Square sends the invoice after it is published (either immediately or at the `scheduled_at` time, if specified in the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice)).   You cannot set `SMS` as a request method using the Invoices API.
+	/// Directs Square to send invoices and receipts to the customer using SMS (text message). Square sends the invoice after it is published (either immediately or at the `scheduled_at` time, if specified in the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice)).   You cannot set `SMS` as a request method using the Invoices API.
 	case SMS
 	/// Directs Square to charge the card on file on the `due_date` specified in the payment request and to use SMS (text message) to send invoices and receipts.   You cannot set `SMS_CHARGE_CARD_ON_FILE` as a request method using the Invoices API.
 	case SMS_CHARGE_CARD_ON_FILE
@@ -7326,7 +8197,7 @@ public struct ItemVariationLocationOverrides: Codable {
 
 /// An object describing a job that a team member is assigned to.
 public struct JobAssignment: Codable {
-	/// The total pay amount for a 12 month period on the job. Set if the job `PayType` is `SALARY`.
+	/// The total pay amount for a 12-month period on the job. Set if the job `PayType` is `SALARY`.
 	public var annual_rate: Money?
 	/// The hourly pay rate of the job.
 	public var hourly_rate: Money?
@@ -7339,7 +8210,7 @@ public struct JobAssignment: Codable {
 
 	/// An object describing a job that a team member is assigned to.
 	/// - Parameters:
-	///   - annual_rate: The total pay amount for a 12 month period on the job. Set if the job `PayType` is `SALARY`.
+	///   - annual_rate: The total pay amount for a 12-month period on the job. Set if the job `PayType` is `SALARY`.
 	///   - hourly_rate: The hourly pay rate of the job.
 	///   - job_title: The title of the job.
 	///   - pay_type: The current pay type for the job assignment used to calculate the pay amount in a pay period.
@@ -7357,10 +8228,40 @@ public struct JobAssignment: Codable {
 public enum JobAssignmentPayType: String, Codable {
 	/// The job does not have a defined pay type.
 	case NONE
-	/// The job pays on an hourly basis.
+	/// The job pays an hourly rate.
 	case HOURLY
 	/// The job pays an annual salary.
 	case SALARY
+}
+
+/// A request to link a customer to a gift card
+public struct LinkCustomerToGiftCardRequest: Codable {
+	/// The ID of the customer to be linked.
+	public var customer_id: String
+
+	/// A request to link a customer to a gift card
+	/// - Parameters:
+	///   - customer_id: The ID of the customer to be linked.
+	public init(customer_id: String) {
+		self.customer_id = customer_id
+	}
+}
+
+/// A response that contains one `GiftCard` that was linked. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct LinkCustomerToGiftCardResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// Gift card linked to customer.
+	public var gift_card: GiftCard?
+
+	/// A response that contains one `GiftCard` that was linked. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card: Gift card linked to customer.
+	public init(errors: [SquareError]? = nil, gift_card: GiftCard? = nil) {
+		self.errors = errors
+		self.gift_card = gift_card
+	}
 }
 
 /// Request object for fetching all `BankAccount` objects linked to a account.
@@ -7447,6 +8348,56 @@ public struct ListBreakTypesResponse: Codable {
 	}
 }
 
+/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards
+public struct ListCardsRequest: Codable {
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+	public var cursor: String?
+	/// Limit results to cards associated with the customer supplied. By default, all cards owned by the merchant are returned.
+	public var customer_id: String?
+	/// Includes disabled cards. By default, all enabled cards owned by the merchant are returned.
+	public var include_disabled: Bool?
+	/// Limit results to cards associated with the reference_id supplied.
+	public var reference_id: String?
+	/// Sorts the returned list by when the card was created with the specified order. This field defaults to ASC.
+	public var sort_order: String?
+
+	/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards
+	/// - Parameters:
+	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+	///   - customer_id: Limit results to cards associated with the customer supplied. By default, all cards owned by the merchant are returned.
+	///   - include_disabled: Includes disabled cards. By default, all enabled cards owned by the merchant are returned.
+	///   - reference_id: Limit results to cards associated with the reference_id supplied.
+	///   - sort_order: Sorts the returned list by when the card was created with the specified order. This field defaults to ASC.
+	public init(cursor: String? = nil, customer_id: String? = nil, include_disabled: Bool? = nil, reference_id: String? = nil, sort_order: String? = nil) {
+		self.cursor = cursor
+		self.customer_id = customer_id
+		self.include_disabled = include_disabled
+		self.reference_id = reference_id
+		self.sort_order = sort_order
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [ListCards](#endpoint-cards-listcards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+public struct ListCardsResponse: Codable {
+	/// The requested list of `Card`s.
+	public var cards: [Card]?
+	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+	public var cursor: String?
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields that are included in the response body of a request to the [ListCards](#endpoint-cards-listcards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// - Parameters:
+	///   - cards: The requested list of `Card`s.
+	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+	///   - errors: Information on errors encountered during the request.
+	public init(cards: [Card]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
+		self.cards = cards
+		self.cursor = cursor
+		self.errors = errors
+	}
+}
+
 public struct ListCashDrawerShiftEventsRequest: Codable {
 	/// Opaque cursor for fetching the next page of results.
 	public var cursor: String?
@@ -7517,11 +8468,11 @@ public struct ListCashDrawerShiftsResponse: Codable {
 }
 
 public struct ListCatalogRequest: Codable {
-	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject)s' `version` attribute.
+	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject)s' `version` attribute.
 	public var catalog_version: Int?
 	/// The pagination cursor returned in the previous response. Leave unset for an initial request. The page size is currently set to be 100. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
 	public var cursor: String?
-	/// An optional case-insensitive, comma-separated list of object types to retrieve, for example `ITEM,ITEM_VARIATION,CATEGORY,IMAGE`.  The legal values are taken from the CatalogObjectType enum: `ITEM`, `ITEM_VARIATION`, `CATEGORY`, `DISCOUNT`, `TAX`, `MODIFIER`, `MODIFIER_LIST`, or `IMAGE`.
+	/// An optional case-insensitive, comma-separated list of object types to retrieve.  The valid values are defined in the [CatalogObjectType](https://developer.squareup.com/reference/square_2021-06-16/enums/CatalogObjectType) enum, including `ITEM`, `ITEM_VARIATION`, `CATEGORY`, `DISCOUNT`, `TAX`, `MODIFIER`, `MODIFIER_LIST`, or `IMAGE`.  If this is unspecified, the operation returns objects of all the types at the version of the Square API used to make the request.
 	public var types: String?
 
 	public init(catalog_version: Int? = nil, cursor: String? = nil, types: String? = nil) {
@@ -7546,12 +8497,12 @@ public struct ListCatalogResponse: Codable {
 	}
 }
 
-/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/list-customer-groups) endpoint.
+/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/list-customer-groups) endpoint.
 public struct ListCustomerGroupsRequest: Codable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
 
-	/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/list-customer-groups) endpoint.
+	/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/list-customer-groups) endpoint.
 	/// - Parameters:
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public init(cursor: String? = nil) {
@@ -7559,7 +8510,7 @@ public struct ListCustomerGroupsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/list-customer-groups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/list-customer-groups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
 public struct ListCustomerGroupsResponse: Codable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
@@ -7568,7 +8519,7 @@ public struct ListCustomerGroupsResponse: Codable {
 	/// A list of customer groups belonging to the current seller.
 	public var groups: [CustomerGroup]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/list-customer-groups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/list-customer-groups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	///   - errors: Any errors that occurred during the request.
@@ -7691,14 +8642,21 @@ public struct ListDeviceCodesResponse: Codable {
 
 /// Defines the parameters for a `ListDisputeEvidence` request.
 public struct ListDisputeEvidenceRequest: Codable {
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
+	public var cursor: String?
 
 	/// Defines the parameters for a `ListDisputeEvidence` request.
-	public init() {
+	/// - Parameters:
+	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
+	public init(cursor: String? = nil) {
+		self.cursor = cursor
 	}
 }
 
 /// Defines the fields in a `ListDisputeEvidence` response.
 public struct ListDisputeEvidenceResponse: Codable {
+	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
+	public var cursor: String?
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The list of evidence previously uploaded to the specified dispute.
@@ -7706,9 +8664,11 @@ public struct ListDisputeEvidenceResponse: Codable {
 
 	/// Defines the fields in a `ListDisputeEvidence` response.
 	/// - Parameters:
+	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
 	///   - evidence: The list of evidence previously uploaded to the specified dispute.
-	public init(errors: [SquareError]? = nil, evidence: [DisputeEvidence]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, evidence: [DisputeEvidence]? = nil) {
+		self.cursor = cursor
 		self.errors = errors
 		self.evidence = evidence
 	}
@@ -7829,6 +8789,118 @@ public struct ListEmployeesResponse: Codable {
 	}
 }
 
+/// Returns a list of gift card activities. You can optionally specify a filter to retrieve a subset of activites.
+public struct ListGiftCardActivitiesRequest: Codable {
+	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
+	public var begin_time: Timestamp?
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If you do not provide the cursor, the call returns the first page of the results.
+	public var cursor: String?
+	/// The timestamp for the end of the reporting period, in RFC 3339 format. Inclusive. Default: The current time.
+	public var end_time: Timestamp?
+	/// If you provide a gift card ID, the endpoint returns activities that belong  to the specified gift card. Otherwise, the endpoint returns all gift card activities for  the seller.
+	public var gift_card_id: String?
+	/// If you provide a limit value, the endpoint returns the specified number  of results (or less) per page. A maximum value is 100. The default value is 50.
+	public var limit: Int?
+	/// If you provide a location ID, the endpoint returns gift card activities for that location.  Otherwise, the endpoint returns gift card activities for all locations.
+	public var location_id: String?
+	/// The order in which the endpoint returns the activities, based on `created_at`. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
+	public var sort_order: String?
+	/// If you provide a type, the endpoint returns gift card activities of this type.  Otherwise, the endpoint returns all types of gift card activities.
+	public var type: String?
+
+	/// Returns a list of gift card activities. You can optionally specify a filter to retrieve a subset of activites.
+	/// - Parameters:
+	///   - begin_time: The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
+	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If you do not provide the cursor, the call returns the first page of the results.
+	///   - end_time: The timestamp for the end of the reporting period, in RFC 3339 format. Inclusive. Default: The current time.
+	///   - gift_card_id: If you provide a gift card ID, the endpoint returns activities that belong  to the specified gift card. Otherwise, the endpoint returns all gift card activities for  the seller.
+	///   - limit: If you provide a limit value, the endpoint returns the specified number  of results (or less) per page. A maximum value is 100. The default value is 50.
+	///   - location_id: If you provide a location ID, the endpoint returns gift card activities for that location.  Otherwise, the endpoint returns gift card activities for all locations.
+	///   - sort_order: The order in which the endpoint returns the activities, based on `created_at`. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
+	///   - type: If you provide a type, the endpoint returns gift card activities of this type.  Otherwise, the endpoint returns all types of gift card activities.
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, gift_card_id: String? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: String? = nil, type: String? = nil) {
+		self.begin_time = begin_time
+		self.cursor = cursor
+		self.end_time = end_time
+		self.gift_card_id = gift_card_id
+		self.limit = limit
+		self.location_id = location_id
+		self.sort_order = sort_order
+		self.type = type
+	}
+}
+
+/// A response that contains one or more `GiftCardActivity`. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct ListGiftCardActivitiesResponse: Codable {
+	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of activities. If empty, this is the final response.
+	public var cursor: String?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// Gift card activities retrieved.
+	public var gift_card_activities: [GiftCardActivity]?
+
+	/// A response that contains one or more `GiftCardActivity`. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - cursor: When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of activities. If empty, this is the final response.
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card_activities: Gift card activities retrieved.
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, gift_card_activities: [GiftCardActivity]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.gift_card_activities = gift_card_activities
+	}
+}
+
+/// A request to list gift cards. You can optionally specify a filter to retrieve a subset of  gift cards.
+public struct ListGiftCardsRequest: Codable {
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, it returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
+	public var cursor: String?
+	/// If a value is provided, returns only the gift cards linked to the specified customer
+	public var customer_id: String?
+	/// If a value is provided, it returns only that number of results per page. The maximum number of results allowed per page is 50. The default value is 30.
+	public var limit: Int?
+	/// If the state is provided, it returns the gift cards in the specified state  (see [GiftCardStatus](https://developer.squareup.com/reference/square_2021-06-16/enums/GiftCardStatus)). Otherwise, it returns the gift cards of all states.
+	public var state: String?
+	/// If a type is provided, gift cards of this type are returned  (see [GiftCardType](https://developer.squareup.com/reference/square_2021-06-16/enums/GiftCardType)). If no type is provided, it returns gift cards of all types.
+	public var type: String?
+
+	/// A request to list gift cards. You can optionally specify a filter to retrieve a subset of  gift cards.
+	/// - Parameters:
+	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, it returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
+	///   - customer_id: If a value is provided, returns only the gift cards linked to the specified customer
+	///   - limit: If a value is provided, it returns only that number of results per page. The maximum number of results allowed per page is 50. The default value is 30.
+	///   - state: If the state is provided, it returns the gift cards in the specified state  (see [GiftCardStatus](https://developer.squareup.com/reference/square_2021-06-16/enums/GiftCardStatus)). Otherwise, it returns the gift cards of all states.
+	///   - type: If a type is provided, gift cards of this type are returned  (see [GiftCardType](https://developer.squareup.com/reference/square_2021-06-16/enums/GiftCardType)). If no type is provided, it returns gift cards of all types.
+	public init(cursor: String? = nil, customer_id: String? = nil, limit: Int? = nil, state: String? = nil, type: String? = nil) {
+		self.cursor = cursor
+		self.customer_id = customer_id
+		self.limit = limit
+		self.state = state
+		self.type = type
+	}
+}
+
+/// A response that contains one or more `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct ListGiftCardsResponse: Codable {
+	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of gift cards. If empty, this is the final response.
+	public var cursor: String?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// Gift cards retrieved.
+	public var gift_cards: [GiftCard]?
+
+	/// A response that contains one or more `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - cursor: When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of gift cards. If empty, this is the final response.
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_cards: Gift cards retrieved.
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, gift_cards: [GiftCard]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.gift_cards = gift_cards
+	}
+}
+
 /// Describes a `ListInvoice` request.
 public struct ListInvoicesRequest: Codable {
 	/// A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
@@ -7921,12 +8993,12 @@ public struct ListLoyaltyProgramsResponse: Codable {
 	}
 }
 
-/// Request object for the [ListMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/list-merchants) endpoint.
+/// Request object for the [ListMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/list-merchants) endpoint.
 public struct ListMerchantsRequest: Codable {
 	/// The cursor generated by the previous response.
 	public var cursor: Int?
 
-	/// Request object for the [ListMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/list-merchants) endpoint.
+	/// Request object for the [ListMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/list-merchants) endpoint.
 	/// - Parameters:
 	///   - cursor: The cursor generated by the previous response.
 	public init(cursor: Int? = nil) {
@@ -7934,7 +9006,7 @@ public struct ListMerchantsRequest: Codable {
 	}
 }
 
-/// The response object returned by the [ListMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/list-merchants) endpoint.
+/// The response object returned by the [ListMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/list-merchants) endpoint.
 public struct ListMerchantsResponse: Codable {
 	/// If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	public var cursor: Int?
@@ -7943,7 +9015,7 @@ public struct ListMerchantsResponse: Codable {
 	/// The requested `Merchant` entities.
 	public var merchant: [Merchant]?
 
-	/// The response object returned by the [ListMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/list-merchants) endpoint.
+	/// The response object returned by the [ListMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/list-merchants) endpoint.
 	/// - Parameters:
 	///   - cursor: If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	///   - errors: Information on errors encountered during the request.
@@ -7955,7 +9027,7 @@ public struct ListMerchantsResponse: Codable {
 	}
 }
 
-/// Describes a request to list refunds using  [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/list-payment-refunds).  The maximum results per page is 100.
+/// Describes a request to list refunds using  [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/list-payment-refunds).  The maximum results per page is 100.
 public struct ListPaymentRefundsRequest: Codable {
 	/// The timestamp for the beginning of the requested reporting period, in RFC 3339 format.  Default: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -7971,10 +9043,10 @@ public struct ListPaymentRefundsRequest: Codable {
 	public var sort_order: String?
 	/// If provided, only refunds with the given source type are returned. - `CARD` - List refunds only for payments where `CARD` was specified as the payment source.  Default: If omitted, refunds are returned regardless of the source type.
 	public var source_type: String?
-	/// If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_2021-05-13/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
+	/// If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_2021-06-16/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
 	public var status: String?
 
-	/// Describes a request to list refunds using  [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/list-payment-refunds).  The maximum results per page is 100.
+	/// Describes a request to list refunds using  [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/list-payment-refunds).  The maximum results per page is 100.
 	/// - Parameters:
 	///   - begin_time: The timestamp for the beginning of the requested reporting period, in RFC 3339 format.  Default: The current time minus one year.
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
@@ -7983,7 +9055,7 @@ public struct ListPaymentRefundsRequest: Codable {
 	///   - location_id: Limit results to the location supplied. By default, results are returned for all locations associated with the seller.
 	///   - sort_order: The order in which results are listed: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	///   - source_type: If provided, only refunds with the given source type are returned. - `CARD` - List refunds only for payments where `CARD` was specified as the payment source.  Default: If omitted, refunds are returned regardless of the source type.
-	///   - status: If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_2021-05-13/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
+	///   - status: If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_2021-06-16/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
 	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: String? = nil, source_type: String? = nil, status: String? = nil) {
 		self.begin_time = begin_time
 		self.cursor = cursor
@@ -7996,7 +9068,7 @@ public struct ListPaymentRefundsRequest: Codable {
 	}
 }
 
-/// Defines the response returned by [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/list-payment-refunds).  Either `errors` or `refunds` is present in a given response (never both).
+/// Defines the response returned by [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/list-payment-refunds).  Either `errors` or `refunds` is present in a given response (never both).
 public struct ListPaymentRefundsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
@@ -8005,7 +9077,7 @@ public struct ListPaymentRefundsResponse: Codable {
 	/// The list of requested refunds.
 	public var refunds: [PaymentRefund]?
 
-	/// Defines the response returned by [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/list-payment-refunds).  Either `errors` or `refunds` is present in a given response (never both).
+	/// Defines the response returned by [ListPaymentRefunds](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/list-payment-refunds).  Either `errors` or `refunds` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -8017,7 +9089,7 @@ public struct ListPaymentRefundsResponse: Codable {
 	}
 }
 
-/// Describes a request to list payments using  [ListPayments](https://developer.squareup.com/reference/square_2021-05-13/payments-api/list-payments).  The maximum results per page is 100.
+/// Describes a request to list payments using  [ListPayments](https://developer.squareup.com/reference/square_2021-06-16/payments-api/list-payments).  The maximum results per page is 100.
 public struct ListPaymentsRequest: Codable {
 	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -8038,7 +9110,7 @@ public struct ListPaymentsRequest: Codable {
 	/// The exact amount in the `total_money` for a payment.
 	public var total: Int?
 
-	/// Describes a request to list payments using  [ListPayments](https://developer.squareup.com/reference/square_2021-05-13/payments-api/list-payments).  The maximum results per page is 100.
+	/// Describes a request to list payments using  [ListPayments](https://developer.squareup.com/reference/square_2021-06-16/payments-api/list-payments).  The maximum results per page is 100.
 	/// - Parameters:
 	///   - begin_time: The timestamp for the beginning of the reporting period, in RFC 3339 format. Inclusive. Default: The current time minus one year.
 	///   - card_brand: The brand of the payment card (for example, VISA).
@@ -8062,7 +9134,7 @@ public struct ListPaymentsRequest: Codable {
 	}
 }
 
-/// Defines the response returned by [ListPayments](https://developer.squareup.com/reference/square_2021-05-13/payments-api/list-payments).
+/// Defines the response returned by [ListPayments](https://developer.squareup.com/reference/square_2021-06-16/payments-api/list-payments).
 public struct ListPaymentsResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
@@ -8071,7 +9143,7 @@ public struct ListPaymentsResponse: Codable {
 	/// The requested list of payments.
 	public var payments: [Payment]?
 
-	/// Defines the response returned by [ListPayments](https://developer.squareup.com/reference/square_2021-05-13/payments-api/list-payments).
+	/// Defines the response returned by [ListPayments](https://developer.squareup.com/reference/square_2021-06-16/payments-api/list-payments).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -8083,7 +9155,7 @@ public struct ListPaymentsResponse: Codable {
 	}
 }
 
-/// Defines the query parameters that can be included in a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-refunds) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders)
+/// Defines the query parameters that can be included in a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-refunds) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders)
 public struct ListRefundsRequest: Codable {
 	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -8094,7 +9166,7 @@ public struct ListRefundsRequest: Codable {
 	/// The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC`
 	public var sort_order: String?
 
-	/// Defines the query parameters that can be included in a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-refunds) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders)
+	/// Defines the query parameters that can be included in a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-refunds) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders)
 	/// - Parameters:
 	///   - begin_time: The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
@@ -8108,7 +9180,7 @@ public struct ListRefundsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-refunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-refunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
 public struct ListRefundsResponse: Codable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	public var cursor: String?
@@ -8117,7 +9189,7 @@ public struct ListRefundsResponse: Codable {
 	/// An array of refunds that match your query.
 	public var refunds: [Refund]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-refunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [ListRefunds](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-refunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	///   - errors: Any errors that occurred during the request.
@@ -8154,14 +9226,14 @@ public struct ListSitesResponse: Codable {
 	}
 }
 
-/// Defines parameters in a [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/list-subscription-events) endpoint request.
+/// Defines parameters in a [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/list-subscription-events) endpoint request.
 public struct ListSubscriptionEventsRequest: Codable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// The upper limit on the number of subscription events to return in the response.  Default: `200`
 	public var limit: Int?
 
-	/// Defines parameters in a [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/list-subscription-events) endpoint request.
+	/// Defines parameters in a [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/list-subscription-events) endpoint request.
 	/// - Parameters:
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	///   - limit: The upper limit on the number of subscription events to return in the response.  Default: `200`
@@ -8171,7 +9243,7 @@ public struct ListSubscriptionEventsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response from the [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/list-subscription-events) endpoint.
+/// Defines the fields that are included in the response from the [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/list-subscription-events) endpoint.
 public struct ListSubscriptionEventsResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of events. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
@@ -8180,7 +9252,7 @@ public struct ListSubscriptionEventsResponse: Codable {
 	/// The `SubscriptionEvents` retrieved.
 	public var subscription_events: [SubscriptionEvent]?
 
-	/// Defines the fields that are included in the response from the [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/list-subscription-events) endpoint.
+	/// Defines the fields that are included in the response from the [ListSubscriptionEvents](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/list-subscription-events) endpoint.
 	/// - Parameters:
 	///   - cursor: When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of events. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -8267,7 +9339,7 @@ public struct ListTeamMemberWagesResponse: Codable {
 	}
 }
 
-/// Defines the query parameters that can be included in a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-transactions) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders)
+/// Defines the query parameters that can be included in a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-transactions) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders)
 public struct ListTransactionsRequest: Codable {
 	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -8278,7 +9350,7 @@ public struct ListTransactionsRequest: Codable {
 	/// The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC`
 	public var sort_order: String?
 
-	/// Defines the query parameters that can be included in a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-transactions) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders)
+	/// Defines the query parameters that can be included in a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-transactions) endpoint.  Deprecated - recommend using [SearchOrders](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders)
 	/// - Parameters:
 	///   - begin_time: The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
@@ -8292,7 +9364,7 @@ public struct ListTransactionsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-transactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-transactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
 public struct ListTransactionsResponse: Codable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	public var cursor: String?
@@ -8301,7 +9373,7 @@ public struct ListTransactionsResponse: Codable {
 	/// An array of transactions that match your query.
 	public var transactions: [Transaction]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/list-transactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [ListTransactions](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/list-transactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	///   - errors: Any errors that occurred during the request.
@@ -8360,15 +9432,15 @@ public struct Location: Codable {
 	public var business_hours: BusinessHours?
 	/// The business name of the location This is the name visible to the customers of the location. For example, this name appears on customer receipts.
 	public var business_name: String?
-	/// The Square features that are enabled for the location. See [LocationCapability](https://developer.squareup.com/reference/square_2021-05-13/enums/LocationCapability) for possible values.
+	/// The Square features that are enabled for the location. See [LocationCapability](https://developer.squareup.com/reference/square_2021-06-16/enums/LocationCapability) for possible values.
 	public let capabilities: [String]?
 	/// The physical coordinates (latitude and longitude) of the location.
 	public var coordinates: Coordinates?
-	/// The country of the location, in ISO 3166-1-alpha-2 format.  See [Country](https://developer.squareup.com/reference/square_2021-05-13/enums/Country) for possible values.
+	/// The country of the location, in ISO 3166-1-alpha-2 format.  See [Country](https://developer.squareup.com/reference/square_2021-06-16/enums/Country) for possible values.
 	public let country: String?
 	/// The time when the location was created, in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// The currency used for all transactions at this location, in ISO 4217 format. See [Currency](https://developer.squareup.com/reference/square_2021-05-13/enums/Currency) for possible values.
+	/// The currency used for all transactions at this location, in ISO 4217 format. See [Currency](https://developer.squareup.com/reference/square_2021-06-16/enums/Currency) for possible values.
 	public let currency: String?
 	/// The description of the location.
 	public var description: String?
@@ -8459,13 +9531,13 @@ public enum LocationType: String, Codable {
 	case MOBILE
 }
 
-/// Describes a loyalty account. For more information, see  [Loyalty Overview](https://developer.squareup.com/docs/loyalty/overview).
+/// Describes a loyalty account. For more information, see [Loyalty Overview](https://developer.squareup.com/docs/loyalty/overview).
 public struct LoyaltyAccount: Codable {
 	/// The available point balance in the loyalty account.    Your application should be able to handle loyalty accounts that have a negative point balance (`balance` is less than 0). This might occur if a seller makes a manual adjustment or as a result of a refund or exchange.
 	public let balance: Int?
 	/// The timestamp when the loyalty account was created, in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// The Square-assigned ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) that is associated with the account.
+	/// The Square-assigned ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) that is associated with the account.
 	public var customer_id: String?
 	/// The timestamp when enrollment occurred, in RFC 3339 format.
 	public let enrolled_at: Timestamp?
@@ -8475,21 +9547,21 @@ public struct LoyaltyAccount: Codable {
 	public let lifetime_points: Int?
 	/// The mapping that associates the loyalty account with a buyer. Currently, a loyalty account can only be mapped to a buyer by phone number.  To create a loyalty account, you must specify the `mapping` field, with the buyer's phone number in the `phone_number` field.
 	public var mapping: LoyaltyAccountMapping?
-	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram) to which the account belongs.
+	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram) to which the account belongs.
 	public var program_id: String
 	/// The timestamp when the loyalty account was last updated, in RFC 3339 format.
 	public let updated_at: Timestamp?
 
-	/// Describes a loyalty account. For more information, see  [Loyalty Overview](https://developer.squareup.com/docs/loyalty/overview).
+	/// Describes a loyalty account. For more information, see [Loyalty Overview](https://developer.squareup.com/docs/loyalty/overview).
 	/// - Parameters:
 	///   - balance: The available point balance in the loyalty account.    Your application should be able to handle loyalty accounts that have a negative point balance (`balance` is less than 0). This might occur if a seller makes a manual adjustment or as a result of a refund or exchange.
 	///   - created_at: The timestamp when the loyalty account was created, in RFC 3339 format.
-	///   - customer_id: The Square-assigned ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) that is associated with the account.
+	///   - customer_id: The Square-assigned ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) that is associated with the account.
 	///   - enrolled_at: The timestamp when enrollment occurred, in RFC 3339 format.
 	///   - id: The Square-assigned ID of the loyalty account.
 	///   - lifetime_points: The total points accrued during the lifetime of the account.
 	///   - mapping: The mapping that associates the loyalty account with a buyer. Currently, a loyalty account can only be mapped to a buyer by phone number.  To create a loyalty account, you must specify the `mapping` field, with the buyer's phone number in the `phone_number` field.
-	///   - program_id: The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram) to which the account belongs.
+	///   - program_id: The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram) to which the account belongs.
 	///   - updated_at: The timestamp when the loyalty account was last updated, in RFC 3339 format.
 	public init(program_id: String, balance: Int? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, enrolled_at: Timestamp? = nil, id: String? = nil, lifetime_points: Int? = nil, mapping: LoyaltyAccountMapping? = nil, updated_at: Timestamp? = nil) {
 		self.program_id = program_id
@@ -8547,9 +9619,9 @@ public struct LoyaltyEvent: Codable {
 	public let expire_points: LoyaltyEventExpirePoints?
 	/// The Square-assigned ID of the loyalty event.
 	public let id: String
-	/// The ID of the [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the event occurred.
+	/// The ID of the [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the event occurred.
 	public let location_id: String?
-	/// The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) in which the event occurred.
+	/// The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) in which the event occurred.
 	public let loyalty_account_id: String
 	/// Provides metadata when the event `type` is `OTHER`.
 	public let other_event: LoyaltyEventOther?
@@ -8565,17 +9637,17 @@ public struct LoyaltyEvent: Codable {
 
 /// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 public struct LoyaltyEventAccumulatePoints: Codable {
-	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String?
-	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
+	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
 	public var order_id: String?
 	/// The number of points accumulated by the event.
 	public var points: Int?
 
 	/// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 	/// - Parameters:
-	///   - loyalty_program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
-	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
+	///   - loyalty_program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
+	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
 	///   - points: The number of points accumulated by the event.
 	public init(loyalty_program_id: String? = nil, order_id: String? = nil, points: Int? = nil) {
 		self.loyalty_program_id = loyalty_program_id
@@ -8586,7 +9658,7 @@ public struct LoyaltyEventAccumulatePoints: Codable {
 
 /// Provides metadata when the event `type` is `ADJUST_POINTS`.
 public struct LoyaltyEventAdjustPoints: Codable {
-	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String?
 	/// The number of points added or removed.
 	public var points: Int
@@ -8595,7 +9667,7 @@ public struct LoyaltyEventAdjustPoints: Codable {
 
 	/// Provides metadata when the event `type` is `ADJUST_POINTS`.
 	/// - Parameters:
-	///   - loyalty_program_id: The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	///   - loyalty_program_id: The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	///   - points: The number of points added or removed.
 	///   - reason: The reason for the adjustment of points.
 	public init(points: Int, loyalty_program_id: String? = nil, reason: String? = nil) {
@@ -8607,11 +9679,11 @@ public struct LoyaltyEventAdjustPoints: Codable {
 
 /// Provides metadata when the event `type` is `CREATE_REWARD`.
 public struct LoyaltyEventCreateReward: Codable {
-	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String
 	/// The loyalty points used to create the reward.
 	public let points: Int
-	/// The Square-assigned ID of the created [loyalty reward](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyReward). This field is returned only if the event source is `LOYALTY_API`.
+	/// The Square-assigned ID of the created [loyalty reward](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyReward). This field is returned only if the event source is `LOYALTY_API`.
 	public let reward_id: String?
 
 	// no init-- this struct is read-only
@@ -8632,11 +9704,11 @@ public struct LoyaltyEventDateTimeFilter: Codable {
 
 /// Provides metadata when the event `type` is `DELETE_REWARD`.
 public struct LoyaltyEventDeleteReward: Codable {
-	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String
 	/// The number of points returned to the loyalty account.
 	public let points: Int
-	/// The ID of the deleted [loyalty reward](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyReward). This field is returned only if the event source is `LOYALTY_API`.
+	/// The ID of the deleted [loyalty reward](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyReward). This field is returned only if the event source is `LOYALTY_API`.
 	public let reward_id: String?
 
 	// no init-- this struct is read-only
@@ -8644,7 +9716,7 @@ public struct LoyaltyEventDeleteReward: Codable {
 
 /// Provides metadata when the event `type` is `EXPIRE_POINTS`.
 public struct LoyaltyEventExpirePoints: Codable {
-	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String
 	/// The number of points expired.
 	public var points: Int
@@ -8683,12 +9755,12 @@ public struct LoyaltyEventFilter: Codable {
 
 /// Filter events by location.
 public struct LoyaltyEventLocationFilter: Codable {
-	/// The [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) IDs for loyalty events to query. If multiple values are specified, the endpoint uses  a logical OR to combine them.
+	/// The [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) IDs for loyalty events to query. If multiple values are specified, the endpoint uses  a logical OR to combine them.
 	public var location_ids: [String]
 
 	/// Filter events by location.
 	/// - Parameters:
-	///   - location_ids: The [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) IDs for loyalty events to query. If multiple values are specified, the endpoint uses  a logical OR to combine them.
+	///   - location_ids: The [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) IDs for loyalty events to query. If multiple values are specified, the endpoint uses  a logical OR to combine them.
 	public init(location_ids: [String]) {
 		self.location_ids = location_ids
 	}
@@ -8696,12 +9768,12 @@ public struct LoyaltyEventLocationFilter: Codable {
 
 /// Filter events by loyalty account.
 public struct LoyaltyEventLoyaltyAccountFilter: Codable {
-	/// The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) associated with loyalty events.
+	/// The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) associated with loyalty events.
 	public var loyalty_account_id: String
 
 	/// Filter events by loyalty account.
 	/// - Parameters:
-	///   - loyalty_account_id: The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) associated with loyalty events.
+	///   - loyalty_account_id: The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) associated with loyalty events.
 	public init(loyalty_account_id: String) {
 		self.loyalty_account_id = loyalty_account_id
 	}
@@ -8709,12 +9781,12 @@ public struct LoyaltyEventLoyaltyAccountFilter: Codable {
 
 /// Filter events by the order associated with the event.
 public struct LoyaltyEventOrderFilter: Codable {
-	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) associated with the event.
+	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) associated with the event.
 	public var order_id: String
 
 	/// Filter events by the order associated with the event.
 	/// - Parameters:
-	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) associated with the event.
+	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) associated with the event.
 	public init(order_id: String) {
 		self.order_id = order_id
 	}
@@ -8722,7 +9794,7 @@ public struct LoyaltyEventOrderFilter: Codable {
 
 /// Provides metadata when the event `type` is `OTHER`.
 public struct LoyaltyEventOther: Codable {
-	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String
 	/// The number of points added or removed.
 	public var points: Int
@@ -8745,11 +9817,11 @@ public struct LoyaltyEventQuery: Codable {
 
 /// Provides metadata when the event `type` is `REDEEM_REWARD`.
 public struct LoyaltyEventRedeemReward: Codable {
-	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram).
+	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram).
 	public let loyalty_program_id: String
-	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) that redeemed the reward. This field is returned only if the Orders API is used to process orders.
+	/// The ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) that redeemed the reward. This field is returned only if the Orders API is used to process orders.
 	public let order_id: String?
-	/// The ID of the redeemed [loyalty reward](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyReward). This field is returned only if the event source is `LOYALTY_API`.
+	/// The ID of the redeemed [loyalty reward](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyReward). This field is returned only if the event source is `LOYALTY_API`.
 	public let reward_id: String?
 
 	// no init-- this struct is read-only
@@ -8794,6 +9866,7 @@ public struct LoyaltyEventTypeFilter: Codable {
 	}
 }
 
+/// Represents a Square loyalty program. Loyalty programs define how buyers can earn points and redeem points for rewards.  Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard.  For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).
 public struct LoyaltyProgram: Codable {
 	/// Defines how buyers can earn loyalty points.
 	public let accrual_rules: [LoyaltyProgramAccrualRule]
@@ -8803,7 +9876,7 @@ public struct LoyaltyProgram: Codable {
 	public let expiration_policy: LoyaltyProgramExpirationPolicy?
 	/// The Square-assigned ID of the loyalty program. Updates to  the loyalty program do not modify the identifier.
 	public let id: String
-	/// The [locations](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) at which the program is active.
+	/// The [locations](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) at which the program is active.
 	public let location_ids: [String]
 	/// The list of rewards for buyers, sorted by ascending points.
 	public let reward_tiers: [LoyaltyProgramRewardTier]
@@ -8821,8 +9894,12 @@ public struct LoyaltyProgram: Codable {
 public struct LoyaltyProgramAccrualRule: Codable {
 	/// The type of the accrual rule that defines how buyers can earn points.
 	public let accrual_type: String
-	/// The ID of the [catalog object](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject) to purchase to earn the number of points defined by the rule. This is either an item variation or a category, depending on the type. This is defined on `ITEM_VARIATION` rules and `CATEGORY` rules.
+	/// When the accrual rule is item-based or category-based, this field specifies the ID  of the [catalog object](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject) that buyers can purchase to earn points.  If `accrual_type` is `ITEM_VARIATION`, the object is an item variation.  If `accrual_type` is `CATEGORY`, the object is a category.
 	public let catalog_object_id: String?
+	/// When the accrual rule is spend-based (`accrual_type` is `SPEND`), this field  lists the IDs of any `CATEGORY` catalog objects that are excluded from points accrual.   You can use the [BatchRetrieveCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/batch-retrieve-catalog-objects)  endpoint to retrieve information about the excluded categories.
+	public let excluded_category_ids: [String]?
+	/// When the accrual rule is spend-based (`accrual_type` is `SPEND`), this field  lists the IDs of any `ITEM_VARIATION` catalog objects that are excluded from points accrual.   You can use the [BatchRetrieveCatalogObjects](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/batch-retrieve-catalog-objects)  endpoint to retrieve information about the excluded item variations.
+	public let excluded_item_variation_ids: [String]?
 	/// The number of points that  buyers earn based on the `accrual_type`.
 	public let points: Int?
 	/// When the accrual rule is spend-based (`accrual_type` is `SPEND`), this field indicates the amount that a buyer must spend  to earn the points. For example, suppose the accrual rule is "earn 1 point for every $10 you spend".  Then, buyer earns a point for every $10 they spend. If  buyer spends $105, the buyer earns 10 points.
@@ -8901,7 +9978,7 @@ public struct LoyaltyProgramRewardTier: Codable {
 	public let name: String
 	/// The points exchanged for the reward tier.
 	public let points: Int
-	/// A reference to the specific version of a `PRICING_RULE` catalog object that contains information about the reward tier discount.  Use `object_id` and `catalog_version` with the [RetrieveCatalogObject](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/retrieve-catalog-object) endpoint to get discount details. Make sure to set `include_related_objects` to true in the request to retrieve all catalog objects that define the discount. For more information, see [Get discount details for the reward](https://developer.squareup.com/docs/loyalty-api/overview#get-discount-details).
+	/// A reference to the specific version of a `PRICING_RULE` catalog object that contains information about the reward tier discount.  Use `object_id` and `catalog_version` with the [RetrieveCatalogObject](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/retrieve-catalog-object) endpoint to get discount details. Make sure to set `include_related_objects` to true in the request to retrieve all catalog objects that define the discount. For more information, see [Get discount details for the reward](https://developer.squareup.com/docs/loyalty-api/overview#get-discount-details).
 	public let pricing_rule_reference: CatalogObjectReference?
 
 	// no init-- this struct is read-only
@@ -8915,6 +9992,7 @@ public enum LoyaltyProgramStatus: String, Codable {
 	case ACTIVE
 }
 
+/// Represents the naming used for loyalty points.
 public struct LoyaltyProgramTerminology: Codable {
 	/// A singular unit for a point (for example, 1 point is called 1 star).
 	public let one: String
@@ -8924,36 +10002,36 @@ public struct LoyaltyProgramTerminology: Codable {
 	// no init-- this struct is read-only
 }
 
-/// Represents a contract to redeem loyalty points for a [reward tier](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgramRewardTier) discount. Loyalty rewards can be in an ISSUED, REDEEMED, or DELETED state. For more information, see [Redeem loyalty rewards](https://developer.squareup.com/docs/loyalty-api/overview#redeem-loyalty-rewards).
+/// Represents a contract to redeem loyalty points for a [reward tier](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgramRewardTier) discount. Loyalty rewards can be in an ISSUED, REDEEMED, or DELETED state. For more information, see [Redeem loyalty rewards](https://developer.squareup.com/docs/loyalty-api/overview#redeem-loyalty-rewards).
 public struct LoyaltyReward: Codable {
 	/// The timestamp when the reward was created, in RFC 3339 format.
 	public let created_at: Timestamp?
 	/// The Square-assigned ID of the loyalty reward.
 	public let id: String?
-	/// The Square-assigned ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) to which the reward belongs.
+	/// The Square-assigned ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) to which the reward belongs.
 	public var loyalty_account_id: String
-	/// The Square-assigned ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) to which the reward is attached.
+	/// The Square-assigned ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) to which the reward is attached.
 	public var order_id: String?
 	/// The number of loyalty points used for the reward.
 	public let points: Int?
 	/// The timestamp when the reward was redeemed, in RFC 3339 format.
 	public let redeemed_at: Timestamp?
-	/// The Square-assigned ID of the [reward tier](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgramRewardTier) used to create the reward.
+	/// The Square-assigned ID of the [reward tier](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgramRewardTier) used to create the reward.
 	public var reward_tier_id: String
 	/// The status of a loyalty reward.
 	public let status: String?
 	/// The timestamp when the reward was last updated, in RFC 3339 format.
 	public let updated_at: Timestamp?
 
-	/// Represents a contract to redeem loyalty points for a [reward tier](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgramRewardTier) discount. Loyalty rewards can be in an ISSUED, REDEEMED, or DELETED state. For more information, see [Redeem loyalty rewards](https://developer.squareup.com/docs/loyalty-api/overview#redeem-loyalty-rewards).
+	/// Represents a contract to redeem loyalty points for a [reward tier](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgramRewardTier) discount. Loyalty rewards can be in an ISSUED, REDEEMED, or DELETED state. For more information, see [Redeem loyalty rewards](https://developer.squareup.com/docs/loyalty-api/overview#redeem-loyalty-rewards).
 	/// - Parameters:
 	///   - created_at: The timestamp when the reward was created, in RFC 3339 format.
 	///   - id: The Square-assigned ID of the loyalty reward.
-	///   - loyalty_account_id: The Square-assigned ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) to which the reward belongs.
-	///   - order_id: The Square-assigned ID of the [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) to which the reward is attached.
+	///   - loyalty_account_id: The Square-assigned ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) to which the reward belongs.
+	///   - order_id: The Square-assigned ID of the [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) to which the reward is attached.
 	///   - points: The number of loyalty points used for the reward.
 	///   - redeemed_at: The timestamp when the reward was redeemed, in RFC 3339 format.
-	///   - reward_tier_id: The Square-assigned ID of the [reward tier](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgramRewardTier) used to create the reward.
+	///   - reward_tier_id: The Square-assigned ID of the [reward tier](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgramRewardTier) used to create the reward.
 	///   - status: The status of a loyalty reward.
 	///   - updated_at: The timestamp when the reward was last updated, in RFC 3339 format.
 	public init(loyalty_account_id: String, reward_tier_id: String, created_at: Timestamp? = nil, id: String? = nil, order_id: String? = nil, points: Int? = nil, redeemed_at: Timestamp? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
@@ -9204,13 +10282,13 @@ public enum MerchantStatus: String, Codable {
 public struct Money: Codable {
 	/// The amount of money, in the smallest denomination of the currency indicated by `currency`. For example, when `currency` is `USD`, `amount` is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.
 	public var amount: Int?
-	/// The type of currency, in __ISO 4217 format__. For example, the currency code for US dollars is `USD`.  See [Currency](https://developer.squareup.com/reference/square_2021-05-13/enums/Currency) for possible values.
+	/// The type of currency, in __ISO 4217 format__. For example, the currency code for US dollars is `USD`.  See [Currency](https://developer.squareup.com/reference/square_2021-06-16/enums/Currency) for possible values.
 	public var currency: String?
 
 	/// Represents an amount of money. `Money` fields can be signed or unsigned. Fields that do not explicitly define whether they are signed or unsigned are considered unsigned and can only hold positive amounts. For signed fields, the sign of the value indicates the purpose of the money transfer. See [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for more information.
 	/// - Parameters:
 	///   - amount: The amount of money, in the smallest denomination of the currency indicated by `currency`. For example, when `currency` is `USD`, `amount` is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.
-	///   - currency: The type of currency, in __ISO 4217 format__. For example, the currency code for US dollars is `USD`.  See [Currency](https://developer.squareup.com/reference/square_2021-05-13/enums/Currency) for possible values.
+	///   - currency: The type of currency, in __ISO 4217 format__. For example, the currency code for US dollars is `USD`.  See [Currency](https://developer.squareup.com/reference/square_2021-06-16/enums/Currency) for possible values.
 	public init(amount: Int? = nil, currency: String? = nil) {
 		self.amount = amount
 		self.currency = currency
@@ -9218,9 +10296,9 @@ public struct Money: Codable {
 }
 
 public struct ObtainTokenRequest: Codable {
-	/// The Square-issued ID of your application, available from the [application dashboard](https://connect.squareup.com/apps).
+	/// The Square-issued ID of your application, available from the [developer dashboard](https://developer.squareup.com/apps).
 	public var client_id: String
-	/// The Square-issued application secret for your application, available from the [application dashboard](https://connect.squareup.com/apps).
+	/// The Square-issued application secret for your application, available from the [developer dashboard](https://developer.squareup.com/apps).
 	public var client_secret: String
 	/// The authorization code to exchange. This is required if `grant_type` is set to `authorization_code`, to indicate that the application wants to exchange an authorization code for an OAuth access token.
 	public var code: String?
@@ -9228,13 +10306,13 @@ public struct ObtainTokenRequest: Codable {
 	public var grant_type: String
 	/// Legacy OAuth access token obtained using a Connect API version prior to 2019-03-13. This parameter is required if `grant_type` is set to `migration_token` to indicate that the application wants to get a replacement OAuth access token. The response also returns a refresh token. For more information, see [Migrate to Using Refresh Tokens](https://developer.squareup.com/docs/oauth-api/migrate-to-refresh-tokens).
 	public var migration_token: String?
-	/// The redirect URL assigned in the [application dashboard](https://connect.squareup.com/apps).
+	/// The redirect URL assigned in the [developer dashboard](https://developer.squareup.com/apps).
 	public var redirect_uri: String?
 	/// A valid refresh token for generating a new OAuth access token. A valid refresh token is required if `grant_type` is set to `refresh_token` , to indicate the application wants a replacement for an expired OAuth access token.
 	public var refresh_token: String?
-	/// __OPTIONAL__  A JSON list of strings representing the permissions the application is requesting. For example: "`["MERCHANT_PROFILE_READ","PAYMENTS_READ","BANK_ACCOUNTS_READ"]`" The access token returned in the response is granted the permissions that comprise the intersection between the requested list of permissions, and those that belong to the provided refresh token.
+	/// A JSON list of strings representing the permissions the application is requesting. For example: "`["MERCHANT_PROFILE_READ","PAYMENTS_READ","BANK_ACCOUNTS_READ"]`" The access token returned in the response is granted the permissions that comprise the intersection between the requested list of permissions, and those that belong to the provided refresh token.
 	public var scopes: [String]?
-	/// __OPTIONAL__  A boolean indicating a request for a short-lived access token. The short-lived access token returned in the response will expire in 24 hours.
+	/// A boolean indicating a request for a short-lived access token. The short-lived access token returned in the response will expire in 24 hours.
 	public var short_lived: Bool?
 
 	public init(client_id: String, client_secret: String, grant_type: String, code: String? = nil, migration_token: String? = nil, redirect_uri: String? = nil, refresh_token: String? = nil, scopes: [String]? = nil, short_lived: Bool? = nil) {
@@ -9291,11 +10369,11 @@ public struct OnboardAppointmentsRequest: Codable {
 
 /// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. `Order` objects also include information about any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
 public struct Order: Codable {
-	/// The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_2021-05-13/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
+	/// The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_2021-06-16/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
 	public let closed_at: Timestamp?
 	/// The timestamp for when the order was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let created_at: Timestamp?
-	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) associated with the order.
+	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) associated with the order.
 	public var customer_id: String?
 	/// The list of all discounts associated with the order.  Discounts can be scoped to either `ORDER` or `LINE_ITEM`. For discounts scoped to `LINE_ITEM`, an `OrderLineItemAppliedDiscount` must be added to each line item that the discount applies to. For discounts with `ORDER` scope, the server generates an `OrderLineItemAppliedDiscount` for every line item.  __IMPORTANT__: If `LINE_ITEM` scope is set on any discounts in this field, using the deprecated `line_items.discounts` field results in an error. Use `line_items.applied_discounts` instead.
 	public var discounts: [OrderLineItemDiscount]?
@@ -9311,7 +10389,7 @@ public struct Order: Codable {
 	public var metadata: String?
 	/// The net money amounts (sale money - return money).
 	public let net_amounts: OrderMoneyAmounts?
-	/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on  preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogPricingRule).
+	/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on  preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogPricingRule).
 	public var pricing_options: OrderPricingOptions?
 	/// A client-specified ID to associate an entity in another system with this order.
 	public var reference_id: String?
@@ -9352,9 +10430,9 @@ public struct Order: Codable {
 
 	/// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. `Order` objects also include information about any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
 	/// - Parameters:
-	///   - closed_at: The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_2021-05-13/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
+	///   - closed_at: The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_2021-06-16/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
 	///   - created_at: The timestamp for when the order was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) associated with the order.
+	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) associated with the order.
 	///   - discounts: The list of all discounts associated with the order.  Discounts can be scoped to either `ORDER` or `LINE_ITEM`. For discounts scoped to `LINE_ITEM`, an `OrderLineItemAppliedDiscount` must be added to each line item that the discount applies to. For discounts with `ORDER` scope, the server generates an `OrderLineItemAppliedDiscount` for every line item.  __IMPORTANT__: If `LINE_ITEM` scope is set on any discounts in this field, using the deprecated `line_items.discounts` field results in an error. Use `line_items.applied_discounts` instead.
 	///   - fulfillments: Details about order fulfillment.  Orders can only be created with at most one fulfillment. However, orders returned by the API might contain multiple fulfillments.
 	///   - id: The order's unique ID.
@@ -9362,7 +10440,7 @@ public struct Order: Codable {
 	///   - location_id: The ID of the seller location that this order is associated with.
 	///   - metadata: Application-defined data attached to this order. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see  [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - net_amounts: The net money amounts (sale money - return money).
-	///   - pricing_options: Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on  preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogPricingRule).
+	///   - pricing_options: Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on  preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogPricingRule).
 	///   - reference_id: A client-specified ID to associate an entity in another system with this order.
 	///   - refunds: The refunds that are part of this order.
 	///   - return_amounts: The rollup of the returned money amounts.
@@ -9444,7 +10522,7 @@ public struct OrderCreatedObject: Codable {
 	}
 }
 
-/// A lightweight description of an [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) that is returned when  `returned_entries` is `true` on a [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders).
+/// A lightweight description of an [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) that is returned when  `returned_entries` is `true` on a [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders).
 public struct OrderEntry: Codable {
 	/// The location ID the order belongs to.
 	public var location_id: String?
@@ -9453,7 +10531,7 @@ public struct OrderEntry: Codable {
 	/// The version number, which is incremented each time an update is committed to the order. Orders that were not created through the API do not include a version number and therefore cannot be updated.  [Read more about working with versions.](https://developer.squareup.com/docs/orders-api/manage-orders#update-orders)
 	public let version: Int?
 
-	/// A lightweight description of an [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) that is returned when  `returned_entries` is `true` on a [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders).
+	/// A lightweight description of an [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) that is returned when  `returned_entries` is `true` on a [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders).
 	/// - Parameters:
 	///   - location_id: The location ID the order belongs to.
 	///   - order_id: The ID of the order.
@@ -9720,7 +10798,7 @@ public enum OrderFulfillmentState: String, Codable {
 
 /// The type of fulfillment.
 public enum OrderFulfillmentType: String, Codable {
-	/// A fulfillment to be picked up from a physical [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) by a recipient.
+	/// A fulfillment to be picked up from a physical [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) by a recipient.
 	case PICKUP
 	/// A fulfillment to be shipped by a shipping carrier.
 	case SHIPMENT
@@ -9791,13 +10869,15 @@ public struct OrderLineItem: Codable {
 	public var applied_taxes: [OrderLineItemAppliedTax]?
 	/// The base price for a single unit of the line item.
 	public var base_price_money: Money?
-	/// The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) ID applied to this line item.
+	/// The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) ID applied to this line item.
 	public var catalog_object_id: String?
 	/// The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price.
 	public let gross_sales_money: Money?
+	/// The type of line item: an itemized sale, a non-itemized sale (custom amount), or the activation or reloading of a gift card.
+	public var item_type: String?
 	/// Application-defined data attached to this line item. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	public var metadata: String?
-	/// The [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier)s applied to this line item.
+	/// The [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier)s applied to this line item.
 	public var modifiers: [OrderLineItemModifier]?
 	/// The name of the line item.
 	public var name: String?
@@ -9827,10 +10907,11 @@ public struct OrderLineItem: Codable {
 	///   - applied_discounts: The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` is automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
 	///   - applied_taxes: The list of references to taxes applied to this line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderLineItemTax` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedTax` is automatically created on every line item for all `ORDER` scoped taxes added to the order. `OrderLineItemAppliedTax` records for `LINE_ITEM` scoped taxes must be added in requests for the tax to apply to any line items.  To change the amount of a tax, modify the referenced top-level tax.
 	///   - base_price_money: The base price for a single unit of the line item.
-	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) ID applied to this line item.
+	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) ID applied to this line item.
 	///   - gross_sales_money: The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price.
+	///   - item_type: The type of line item: an itemized sale, a non-itemized sale (custom amount), or the activation or reloading of a gift card.
 	///   - metadata: Application-defined data attached to this line item. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
-	///   - modifiers: The [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier)s applied to this line item.
+	///   - modifiers: The [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier)s applied to this line item.
 	///   - name: The name of the line item.
 	///   - note: The note of the line item.
 	///   - pricing_blocklists: Describes pricing adjustments that are blocked from manual and automatic application to a line item. For more information, see [Apply Taxes and Discounts](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts).
@@ -9842,13 +10923,14 @@ public struct OrderLineItem: Codable {
 	///   - uid: A unique ID that identifies the line item only within this order.
 	///   - variation_name: The name of the variation applied to this line item.
 	///   - variation_total_price_money: The total price of all item variations sold in this line item. The price is calculated as `base_price_money` multiplied by `quantity`. It does not include modifiers.
-	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, gross_sales_money: Money? = nil, metadata: String? = nil, modifiers: [OrderLineItemModifier]? = nil, name: String? = nil, note: String? = nil, pricing_blocklists: OrderLineItemPricingBlocklists? = nil, quantity_unit: OrderQuantityUnit? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
+	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, gross_sales_money: Money? = nil, item_type: String? = nil, metadata: String? = nil, modifiers: [OrderLineItemModifier]? = nil, name: String? = nil, note: String? = nil, pricing_blocklists: OrderLineItemPricingBlocklists? = nil, quantity_unit: OrderQuantityUnit? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
 		self.quantity = quantity
 		self.applied_discounts = applied_discounts
 		self.applied_taxes = applied_taxes
 		self.base_price_money = base_price_money
 		self.catalog_object_id = catalog_object_id
 		self.gross_sales_money = gross_sales_money
+		self.item_type = item_type
 		self.metadata = metadata
 		self.modifiers = modifiers
 		self.name = name
@@ -9912,7 +10994,7 @@ public struct OrderLineItemDiscount: Codable {
 	public var amount_money: Money?
 	/// The amount of discount actually applied to the line item.  The amount represents the amount of money applied as a line-item scoped discount. When an amount-based discount is scoped to the entire order, the value of `applied_money` is different than `amount_money` because the total amount of the discount is distributed across all line items.
 	public var applied_money: Money?
-	/// The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogDiscount).
+	/// The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogDiscount).
 	public var catalog_object_id: String?
 	/// Application-defined data attached to this discount. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	public var metadata: String?
@@ -9920,7 +11002,7 @@ public struct OrderLineItemDiscount: Codable {
 	public var name: String?
 	/// The percentage of the discount, as a string representation of a decimal number. A value of `7.25` corresponds to a percentage of 7.25%.  `percentage` is not set for amount-based discounts.
 	public var percentage: String?
-	/// The object ID of a [pricing rule](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogPricingRule) to be applied  automatically to this discount. The specification and application of the discounts, to  which a `pricing_rule_id` is assigned, are completely controlled by the corresponding  pricing rule.
+	/// The object ID of a [pricing rule](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogPricingRule) to be applied  automatically to this discount. The specification and application of the discounts, to  which a `pricing_rule_id` is assigned, are completely controlled by the corresponding  pricing rule.
 	public let pricing_rule_id: String?
 	/// The reward IDs corresponding to this discount. The application and specification of discounts that have `reward_ids` are completely controlled by the backing criteria corresponding to the reward tiers of the rewards that are added to the order through the Loyalty API. To manually unapply discounts that are the result of added rewards, the rewards must be removed from the order through the Loyalty API.
 	public let reward_ids: [String]?
@@ -9935,11 +11017,11 @@ public struct OrderLineItemDiscount: Codable {
 	/// - Parameters:
 	///   - amount_money: The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	///   - applied_money: The amount of discount actually applied to the line item.  The amount represents the amount of money applied as a line-item scoped discount. When an amount-based discount is scoped to the entire order, the value of `applied_money` is different than `amount_money` because the total amount of the discount is distributed across all line items.
-	///   - catalog_object_id: The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogDiscount).
+	///   - catalog_object_id: The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogDiscount).
 	///   - metadata: Application-defined data attached to this discount. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The discount's name.
 	///   - percentage: The percentage of the discount, as a string representation of a decimal number. A value of `7.25` corresponds to a percentage of 7.25%.  `percentage` is not set for amount-based discounts.
-	///   - pricing_rule_id: The object ID of a [pricing rule](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogPricingRule) to be applied  automatically to this discount. The specification and application of the discounts, to  which a `pricing_rule_id` is assigned, are completely controlled by the corresponding  pricing rule.
+	///   - pricing_rule_id: The object ID of a [pricing rule](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogPricingRule) to be applied  automatically to this discount. The specification and application of the discounts, to  which a `pricing_rule_id` is assigned, are completely controlled by the corresponding  pricing rule.
 	///   - reward_ids: The reward IDs corresponding to this discount. The application and specification of discounts that have `reward_ids` are completely controlled by the backing criteria corresponding to the reward tiers of the rewards that are added to the order through the Loyalty API. To manually unapply discounts that are the result of added rewards, the rewards must be removed from the order through the Loyalty API.
 	///   - scope: Indicates the level at which the discount applies. For `ORDER` scoped discounts, Square generates references in `applied_discounts` on all order line items that do not have them. For `LINE_ITEM` scoped discounts, the discount only applies to line items with a discount reference in their `applied_discounts` field.  This field is immutable. To change the scope of a discount, you must delete the discount and re-add it as a new discount.
 	///   - type: The type of the discount.  Discounts that do not reference a catalog object ID must have a type of `FIXED_PERCENTAGE` or `FIXED_AMOUNT`.
@@ -9983,11 +11065,21 @@ public enum OrderLineItemDiscountType: String, Codable {
 	case VARIABLE_AMOUNT
 }
 
-/// A [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier).
+/// Represents the line item type.
+public enum OrderLineItemItemType: String, Codable {
+	/// Indicates that the line item is an itemized sale.
+	case ITEM
+	/// Indicates that the line item is a non-itemized sale.
+	case CUSTOM_AMOUNT
+	/// Indicates that the line item is a gift card sale. Gift cards sold through the Orders API are sold in an unactivated state and can be activated through the Gift Cards API using the line item `uid`.
+	case GIFT_CARD
+}
+
+/// A [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier).
 public struct OrderLineItemModifier: Codable {
-	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier) price.
+	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier) price.
 	public var base_price_money: Money?
-	/// The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier).
+	/// The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier).
 	public var catalog_object_id: String?
 	/// The name of the item modifier.
 	public var name: String?
@@ -9996,10 +11088,10 @@ public struct OrderLineItemModifier: Codable {
 	/// A unique ID that identifies the modifier only within this order.
 	public var uid: String?
 
-	/// A [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier).
+	/// A [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier).
 	/// - Parameters:
-	///   - base_price_money: The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier) price.
-	///   - catalog_object_id: The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier).
+	///   - base_price_money: The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` will override the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier) price.
+	///   - catalog_object_id: The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier).
 	///   - name: The name of the item modifier.
 	///   - total_price_money: The total price of the item modifier for its line item. This is the modifier's `base_price_money` multiplied by the line item's quantity.
 	///   - uid: A unique ID that identifies the modifier only within this order.
@@ -10077,7 +11169,7 @@ public struct OrderLineItemTax: Codable {
 	public var applied_money: Money?
 	/// Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see  [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
 	public let auto_applied: Bool?
-	/// The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogTax).
+	/// The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogTax).
 	public var catalog_object_id: String?
 	/// Application-defined data attached to this tax. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	public var metadata: String?
@@ -10096,7 +11188,7 @@ public struct OrderLineItemTax: Codable {
 	/// - Parameters:
 	///   - applied_money: The amount of money applied by the tax in the order.
 	///   - auto_applied: Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see  [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
-	///   - catalog_object_id: The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogTax).
+	///   - catalog_object_id: The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogTax).
 	///   - metadata: Application-defined data attached to this tax. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The tax's name.
 	///   - percentage: The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.
@@ -10165,14 +11257,14 @@ public struct OrderMoneyAmounts: Codable {
 	}
 }
 
-/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogPricingRule).
+/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogPricingRule).
 public struct OrderPricingOptions: Codable {
 	/// The option to determine whether pricing rule-based discounts are automatically applied to an order.
 	public var auto_apply_discounts: Bool?
 	/// The option to determine whether rule-based taxes are automatically applied to an order when the criteria of the corresponding rules are met.
 	public var auto_apply_taxes: Bool?
 
-	/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogPricingRule).
+	/// Pricing options for an order. The options affect how the order's price is calculated. They can be used, for example, to apply automatic price adjustments that are based on preconfigured [pricing rules](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogPricingRule).
 	/// - Parameters:
 	///   - auto_apply_discounts: The option to determine whether pricing rule-based discounts are automatically applied to an order.
 	///   - auto_apply_taxes: The option to determine whether rule-based taxes are automatically applied to an order when the criteria of the corresponding rules are met.
@@ -10184,14 +11276,14 @@ public struct OrderPricingOptions: Codable {
 
 /// Contains the measurement unit for a quantity and a precision that specifies the number of digits after the decimal point for decimal quantities.
 public struct OrderQuantityUnit: Codable {
-	/// A [MeasurementUnit](https://developer.squareup.com/reference/square_2021-05-13/objects/MeasurementUnit) that represents the unit of measure for the quantity.
+	/// A [MeasurementUnit](https://developer.squareup.com/reference/square_2021-06-16/objects/MeasurementUnit) that represents the unit of measure for the quantity.
 	public var measurement_unit: MeasurementUnit?
 	/// For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities such as `"1.0"` and `"1.1"`, but not `"1.01"`.  Min: 0. Max: 5.
 	public var precision: Int?
 
 	/// Contains the measurement unit for a quantity and a precision that specifies the number of digits after the decimal point for decimal quantities.
 	/// - Parameters:
-	///   - measurement_unit: A [MeasurementUnit](https://developer.squareup.com/reference/square_2021-05-13/objects/MeasurementUnit) that represents the unit of measure for the quantity.
+	///   - measurement_unit: A [MeasurementUnit](https://developer.squareup.com/reference/square_2021-06-16/objects/MeasurementUnit) that represents the unit of measure for the quantity.
 	///   - precision: For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities such as `"1.0"` and `"1.1"`, but not `"1.01"`.  Min: 0. Max: 5.
 	public init(measurement_unit: MeasurementUnit? = nil, precision: Int? = nil) {
 		self.measurement_unit = measurement_unit
@@ -10246,7 +11338,7 @@ public struct OrderReturnDiscount: Codable {
 	public var amount_money: Money?
 	/// The amount of discount actually applied to this line item. When an amount-based discount is at the order level, this value is different from `amount_money` because the discount is distributed across the line items.
 	public var applied_money: Money?
-	/// The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogDiscount).
+	/// The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogDiscount).
 	public var catalog_object_id: String?
 	/// The discount's name.
 	public var name: String?
@@ -10265,7 +11357,7 @@ public struct OrderReturnDiscount: Codable {
 	/// - Parameters:
 	///   - amount_money: The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	///   - applied_money: The amount of discount actually applied to this line item. When an amount-based discount is at the order level, this value is different from `amount_money` because the discount is distributed across the line items.
-	///   - catalog_object_id: The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogDiscount).
+	///   - catalog_object_id: The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogDiscount).
 	///   - name: The discount's name.
 	///   - percentage: The percentage of the tax, as a string representation of a decimal number. A value of `"7.25"` corresponds to a percentage of 7.25%.  `percentage` is not set for amount-based discounts.
 	///   - scope: Indicates the level at which the `OrderReturnDiscount` applies. For `ORDER` scoped discounts, the server generates references in `applied_discounts` on all `OrderReturnLineItem`s. For `LINE_ITEM` scoped discounts, the discount is only applied to `OrderReturnLineItem`s with references in their `applied_discounts` field.
@@ -10293,10 +11385,12 @@ public struct OrderReturnLineItem: Codable {
 	public var applied_taxes: [OrderLineItemAppliedTax]?
 	/// The base price for a single unit of the line item.
 	public var base_price_money: Money?
-	/// The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) ID applied to this return line item.
+	/// The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) ID applied to this return line item.
 	public var catalog_object_id: String?
 	/// The gross return amount of money calculated as (item base price + modifiers price) * quantity.
 	public let gross_return_money: Money?
+	/// The type of line item: an itemized return, a non-itemized return (custom amount), or the return of an unactivated gift card sale.
+	public var item_type: String?
 	/// The name of the line item.
 	public var name: String?
 	/// The note of the return line item.
@@ -10305,7 +11399,7 @@ public struct OrderReturnLineItem: Codable {
 	public var quantity: String
 	/// The unit and precision that this return line item's quantity is measured in.
 	public var quantity_unit: OrderQuantityUnit?
-	/// The [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier)s applied to this line item.
+	/// The [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier)s applied to this line item.
 	public var return_modifiers: [OrderReturnLineItemModifier]?
 	/// The `uid` of the line item in the original sale order.
 	public var source_line_item_uid: String?
@@ -10327,13 +11421,14 @@ public struct OrderReturnLineItem: Codable {
 	///   - applied_discounts: The list of references to `OrderReturnDiscount` entities applied to the return line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderReturnDiscount` applied to the return line item. On reads, the applied amount is populated.
 	///   - applied_taxes: The list of references to `OrderReturnTax` entities applied to the return line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderReturnTax` applied to the return line item. On reads, the applied amount is populated.
 	///   - base_price_money: The base price for a single unit of the line item.
-	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) ID applied to this return line item.
+	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) ID applied to this return line item.
 	///   - gross_return_money: The gross return amount of money calculated as (item base price + modifiers price) * quantity.
+	///   - item_type: The type of line item: an itemized return, a non-itemized return (custom amount), or the return of an unactivated gift card sale.
 	///   - name: The name of the line item.
 	///   - note: The note of the return line item.
 	///   - quantity: The quantity returned, formatted as a decimal number. For example, `"3"`.  Line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
 	///   - quantity_unit: The unit and precision that this return line item's quantity is measured in.
-	///   - return_modifiers: The [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier)s applied to this line item.
+	///   - return_modifiers: The [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier)s applied to this line item.
 	///   - source_line_item_uid: The `uid` of the line item in the original sale order.
 	///   - total_discount_money: The total amount of discount money to return for the line item.
 	///   - total_money: The total amount of money to return for this line item.
@@ -10341,13 +11436,14 @@ public struct OrderReturnLineItem: Codable {
 	///   - uid: A unique ID for this return line-item entry.
 	///   - variation_name: The name of the variation applied to this return line item.
 	///   - variation_total_price_money: The total price of all item variations returned in this line item. The price is calculated as `base_price_money` multiplied by `quantity` and  does not include modifiers.
-	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, gross_return_money: Money? = nil, name: String? = nil, note: String? = nil, quantity_unit: OrderQuantityUnit? = nil, return_modifiers: [OrderReturnLineItemModifier]? = nil, source_line_item_uid: String? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
+	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, gross_return_money: Money? = nil, item_type: String? = nil, name: String? = nil, note: String? = nil, quantity_unit: OrderQuantityUnit? = nil, return_modifiers: [OrderReturnLineItemModifier]? = nil, source_line_item_uid: String? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
 		self.quantity = quantity
 		self.applied_discounts = applied_discounts
 		self.applied_taxes = applied_taxes
 		self.base_price_money = base_price_money
 		self.catalog_object_id = catalog_object_id
 		self.gross_return_money = gross_return_money
+		self.item_type = item_type
 		self.name = name
 		self.note = note
 		self.quantity_unit = quantity_unit
@@ -10364,9 +11460,9 @@ public struct OrderReturnLineItem: Codable {
 
 /// A line item modifier being returned.
 public struct OrderReturnLineItemModifier: Codable {
-	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` overrides the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier) price.
+	/// The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` overrides the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier) price.
 	public var base_price_money: Money?
-	/// The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier).
+	/// The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier).
 	public var catalog_object_id: String?
 	/// The name of the item modifier.
 	public var name: String?
@@ -10379,8 +11475,8 @@ public struct OrderReturnLineItemModifier: Codable {
 
 	/// A line item modifier being returned.
 	/// - Parameters:
-	///   - base_price_money: The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` overrides the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier) price.
-	///   - catalog_object_id: The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogModifier).
+	///   - base_price_money: The base price for the modifier.  `base_price_money` is required for ad hoc modifiers. If both `catalog_object_id` and `base_price_money` are set, `base_price_money` overrides the predefined [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier) price.
+	///   - catalog_object_id: The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogModifier).
 	///   - name: The name of the item modifier.
 	///   - source_modifier_uid: The modifier `uid` from the order's line item that contains the original sale of this line item modifier.
 	///   - total_price_money: The total price of the item modifier for its line item. This is the modifier's `base_price_money` multiplied by the line item's quantity.
@@ -10405,7 +11501,7 @@ public struct OrderReturnServiceCharge: Codable {
 	public var applied_taxes: [OrderLineItemAppliedTax]?
 	/// The calculation phase after which to apply the service charge.
 	public let calculation_phase: String?
-	/// The catalog object ID of the associated [OrderServiceCharge](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderServiceCharge).
+	/// The catalog object ID of the associated [OrderServiceCharge](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderServiceCharge).
 	public var catalog_object_id: String?
 	/// The name of the service charge.
 	public var name: String?
@@ -10428,7 +11524,7 @@ public struct OrderReturnServiceCharge: Codable {
 	///   - applied_money: The amount of money applied to the order by the service charge, including any inclusive tax amounts, as calculated by Square.  - For fixed-amount service charges, `applied_money` is equal to `amount_money`. - For percentage-based service charges, `applied_money` is the money calculated using the percentage.
 	///   - applied_taxes: The list of references to `OrderReturnTax` entities applied to the `OrderReturnServiceCharge`. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderReturnTax` that is being applied to the `OrderReturnServiceCharge`. On reads, the applied amount is populated.
 	///   - calculation_phase: The calculation phase after which to apply the service charge.
-	///   - catalog_object_id: The catalog object ID of the associated [OrderServiceCharge](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderServiceCharge).
+	///   - catalog_object_id: The catalog object ID of the associated [OrderServiceCharge](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderServiceCharge).
 	///   - name: The name of the service charge.
 	///   - percentage: The percentage of the service charge, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
 	///   - source_service_charge_uid: The service charge `uid` from the order containing the original service charge. `source_service_charge_uid` is `null` for unlinked returns.
@@ -10456,7 +11552,7 @@ public struct OrderReturnServiceCharge: Codable {
 public struct OrderReturnTax: Codable {
 	/// The amount of money applied by the tax in an order.
 	public var applied_money: Money?
-	/// The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogTax).
+	/// The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogTax).
 	public var catalog_object_id: String?
 	/// The tax's name.
 	public var name: String?
@@ -10474,7 +11570,7 @@ public struct OrderReturnTax: Codable {
 	/// Represents a tax being returned that applies to one or more return line items in an order.  Fixed-amount, order-scoped taxes are distributed across all non-zero return line item totals. The amount distributed to each return line item is relative to that item’s contribution to the order subtotal.
 	/// - Parameters:
 	///   - applied_money: The amount of money applied by the tax in an order.
-	///   - catalog_object_id: The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogTax).
+	///   - catalog_object_id: The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogTax).
 	///   - name: The tax's name.
 	///   - percentage: The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.
 	///   - scope: Indicates the level at which the `OrderReturnTax` applies. For `ORDER` scoped taxes, Square generates references in `applied_taxes` on all `OrderReturnLineItem`s. For `LINE_ITEM` scoped taxes, the tax is only applied to `OrderReturnLineItem`s with references in their `applied_discounts` field.
@@ -10541,7 +11637,7 @@ public struct OrderServiceCharge: Codable {
 	public var applied_taxes: [OrderLineItemAppliedTax]?
 	/// The calculation phase at which to apply the service charge.
 	public var calculation_phase: String?
-	/// The catalog object ID referencing the service charge [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject).
+	/// The catalog object ID referencing the service charge [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject).
 	public var catalog_object_id: String?
 	/// Application-defined data attached to this service charge. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	public var metadata: String?
@@ -10564,7 +11660,7 @@ public struct OrderServiceCharge: Codable {
 	///   - applied_money: The amount of money applied to the order by the service charge, including any inclusive tax amounts, as calculated by Square.  - For fixed-amount service charges, `applied_money` is equal to `amount_money`. - For percentage-based service charges, `applied_money` is the money calculated using the percentage.
 	///   - applied_taxes: The list of references to the taxes applied to this service charge. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderLineItemTax` that is being applied to this service charge. On reads, the amount applied is populated.  An `OrderLineItemAppliedTax` is automatically created on every taxable service charge for all `ORDER` scoped taxes that are added to the order. `OrderLineItemAppliedTax` records for `LINE_ITEM` scoped taxes must be added in requests for the tax to apply to any taxable service charge. Taxable service charges have the `taxable` field set to `true` and calculated in the `SUBTOTAL_PHASE`.  To change the amount of a tax, modify the referenced top-level tax.
 	///   - calculation_phase: The calculation phase at which to apply the service charge.
-	///   - catalog_object_id: The catalog object ID referencing the service charge [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject).
+	///   - catalog_object_id: The catalog object ID referencing the service charge [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject).
 	///   - metadata: Application-defined data attached to this service charge. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The name of the service charge.
 	///   - percentage: The service charge percentage as a string representation of a decimal number. For example, `"7.25"` indicates a service charge of 7.25%.  Exactly 1 of `percentage` or `amount_money` should be set.
@@ -10652,20 +11748,20 @@ public struct OrderUpdatedObject: Codable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [PayOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/pay-order) endpoint.
+/// Defines the fields that are included in requests to the [PayOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/pay-order) endpoint.
 public struct PayOrderRequest: Codable {
 	/// A value you specify that uniquely identifies this request among requests you have sent. If you are unsure whether a particular payment request was completed successfully, you can reattempt it with the same idempotency key without worrying about duplicate payments.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String
 	/// The version of the order being paid. If not supplied, the latest version will be paid.
 	public var order_version: Int?
-	/// The IDs of the [payments](https://developer.squareup.com/reference/square_2021-05-13/objects/Payment) to collect. The payment total must match the order total.
+	/// The IDs of the [payments](https://developer.squareup.com/reference/square_2021-06-16/objects/Payment) to collect. The payment total must match the order total.
 	public var payment_ids: [String]?
 
-	/// Defines the fields that are included in requests to the [PayOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/pay-order) endpoint.
+	/// Defines the fields that are included in requests to the [PayOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/pay-order) endpoint.
 	/// - Parameters:
 	///   - idempotency_key: A value you specify that uniquely identifies this request among requests you have sent. If you are unsure whether a particular payment request was completed successfully, you can reattempt it with the same idempotency key without worrying about duplicate payments.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	///   - order_version: The version of the order being paid. If not supplied, the latest version will be paid.
-	///   - payment_ids: The IDs of the [payments](https://developer.squareup.com/reference/square_2021-05-13/objects/Payment) to collect. The payment total must match the order total.
+	///   - payment_ids: The IDs of the [payments](https://developer.squareup.com/reference/square_2021-06-16/objects/Payment) to collect. The payment total must match the order total.
 	public init(idempotency_key: String, order_version: Int? = nil, payment_ids: [String]? = nil) {
 		self.idempotency_key = idempotency_key
 		self.order_version = order_version
@@ -10673,17 +11769,17 @@ public struct PayOrderRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [PayOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/pay-order) endpoint.
+/// Defines the fields that are included in the response body of a request to the [PayOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/pay-order) endpoint.
 public struct PayOrderResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
-	/// The paid, updated [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order).
+	/// The paid, updated [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order).
 	public var order: Order?
 
-	/// Defines the fields that are included in the response body of a request to the [PayOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/pay-order) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [PayOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/pay-order) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	///   - order: The paid, updated [order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order).
+	///   - order: The paid, updated [order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order).
 	public init(errors: [SquareError]? = nil, order: Order? = nil) {
 		self.errors = errors
 		self.order = order
@@ -10712,7 +11808,7 @@ public struct Payment: Codable {
 	public var cash_details: CashPaymentDetails?
 	/// The timestamp of when the payment was created, in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// The [Customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) ID of the customer associated with the payment.
+	/// The [Customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) ID of the customer associated with the payment.
 	public let customer_id: String?
 	/// The action to be applied to the payment when the `delay_duration` has elapsed. This field is read-only.  Current values include `CANCEL`.
 	public let delay_action: String?
@@ -10775,7 +11871,7 @@ public struct Payment: Codable {
 	///   - card_details: Details about a card payment. These details are only populated if the source_type is `CARD`.
 	///   - cash_details: Details about a cash payment. These details are only populated if the source_type is `CASH`.
 	///   - created_at: The timestamp of when the payment was created, in RFC 3339 format.
-	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) ID of the customer associated with the payment.
+	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) ID of the customer associated with the payment.
 	///   - delay_action: The action to be applied to the payment when the `delay_duration` has elapsed. This field is read-only.  Current values include `CANCEL`.
 	///   - delay_duration: The duration of time after the payment's creation when Square automatically applies the `delay_action` to the payment. This automatic `delay_action` applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This field is specified as a time duration, in RFC 3339 format.  Notes: This feature is only supported for card payments.  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	///   - delayed_until: The read-only timestamp of when the `delay_action` is automatically applied, in RFC 3339 format.  Note that this field is calculated by summing the payment's `delay_duration` and `created_at` fields. The `created_at` field is generated by Square and might not exactly match the time on your local machine.
@@ -10955,13 +12051,13 @@ public enum ProductType: String, Codable {
 public struct PublishInvoiceRequest: Codable {
 	/// A unique string that identifies the `PublishInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String?
-	/// The version of the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to publish. This must match the current version of the invoice; otherwise, the request is rejected.
+	/// The version of the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to publish. This must match the current version of the invoice; otherwise, the request is rejected.
 	public var version: Int
 
 	/// Describes a `PublishInvoice` request.
 	/// - Parameters:
 	///   - idempotency_key: A unique string that identifies the `PublishInvoice` request. If you do not  provide `idempotency_key` (or provide an empty string as the value), the endpoint  treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) to publish. This must match the current version of the invoice; otherwise, the request is rejected.
+	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) to publish. This must match the current version of the invoice; otherwise, the request is rejected.
 	public init(version: Int, idempotency_key: String? = nil) {
 		self.version = version
 		self.idempotency_key = idempotency_key
@@ -10982,6 +12078,23 @@ public struct PublishInvoiceResponse: Codable {
 	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
+	}
+}
+
+/// A whole number or unreduced fractional ratio.
+public struct QuantityRatio: Codable {
+	/// The whole or fractional quantity as the numerator.
+	public var quantity: Int?
+	/// The whole or fractional quantity as the denominator.  In the case of fractional quantity this field is the denominator and quantity is the numerator. When unspecified, the value is `1`. For example, when `quantity=3` and `quantity_donominator` is unspecified, the quantity ratio is `3` or `3/1`.
+	public var quantity_denominator: Int?
+
+	/// A whole number or unreduced fractional ratio.
+	/// - Parameters:
+	///   - quantity: The whole or fractional quantity as the numerator.
+	///   - quantity_denominator: The whole or fractional quantity as the denominator.  In the case of fractional quantity this field is the denominator and quantity is the numerator. When unspecified, the value is `1`. For example, when `quantity=3` and `quantity_donominator` is unspecified, the quantity ratio is `3` or `3/1`.
+	public init(quantity: Int? = nil, quantity_denominator: Int? = nil) {
+		self.quantity = quantity
+		self.quantity_denominator = quantity_denominator
 	}
 }
 
@@ -11006,13 +12119,13 @@ public struct Range: Codable {
 public struct RedeemLoyaltyRewardRequest: Codable {
 	/// A unique string that identifies this `RedeemLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
 	public var idempotency_key: String
-	/// The ID of the [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the reward is redeemed.
+	/// The ID of the [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the reward is redeemed.
 	public var location_id: String
 
 	/// A request to redeem a loyalty reward.
 	/// - Parameters:
 	///   - idempotency_key: A unique string that identifies this `RedeemLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
-	///   - location_id: The ID of the [location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) where the reward is redeemed.
+	///   - location_id: The ID of the [location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) where the reward is redeemed.
 	public init(idempotency_key: String, location_id: String) {
 		self.idempotency_key = idempotency_key
 		self.location_id = location_id
@@ -11085,7 +12198,7 @@ public struct Refund: Codable {
 	}
 }
 
-/// Describes a request to refund a payment using [RefundPayment](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/refund-payment).
+/// Describes a request to refund a payment using [RefundPayment](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/refund-payment).
 public struct RefundPaymentRequest: Codable {
 	/// The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	public var amount_money: Money
@@ -11098,7 +12211,7 @@ public struct RefundPaymentRequest: Codable {
 	/// A description of the reason for the refund.
 	public var reason: String?
 
-	/// Describes a request to refund a payment using [RefundPayment](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/refund-payment).
+	/// Describes a request to refund a payment using [RefundPayment](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/refund-payment).
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	///   - app_fee_money: The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example,  US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included  when taking the payment. This is part of the application fee scenario the API supports. For more  information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).
@@ -11114,14 +12227,14 @@ public struct RefundPaymentRequest: Codable {
 	}
 }
 
-/// Defines the response returned by  [RefundPayment](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/refund-payment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
+/// Defines the response returned by  [RefundPayment](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/refund-payment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
 public struct RefundPaymentResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully created `PaymentRefund`.
 	public var refund: PaymentRefund?
 
-	/// Defines the response returned by  [RefundPayment](https://developer.squareup.com/reference/square_2021-05-13/refunds-api/refund-payment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
+	/// Defines the response returned by  [RefundPayment](https://developer.squareup.com/reference/square_2021-06-16/refunds-api/refund-payment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The successfully created `PaymentRefund`.
@@ -11143,12 +12256,12 @@ public enum RefundStatus: String, Codable {
 	case FAILED
 }
 
-/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-05-13/apple-pay-api/register-domain) endpoint.
+/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-06-16/apple-pay-api/register-domain) endpoint.
 public struct RegisterDomainRequest: Codable {
 	/// A domain name as described in RFC-1034 that will be registered with ApplePay.
 	public var domain_name: String
 
-	/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-05-13/apple-pay-api/register-domain) endpoint.
+	/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-06-16/apple-pay-api/register-domain) endpoint.
 	/// - Parameters:
 	///   - domain_name: A domain name as described in RFC-1034 that will be registered with ApplePay.
 	public init(domain_name: String) {
@@ -11156,17 +12269,17 @@ public struct RegisterDomainRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-05-13/apple-pay-api/register-domain) endpoint.  Either `errors` or `status` are present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-06-16/apple-pay-api/register-domain) endpoint.  Either `errors` or `status` are present in a given response (never both).
 public struct RegisterDomainResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
-	/// The status of the domain registration.  See [RegisterDomainResponseStatus](https://developer.squareup.com/reference/square_2021-05-13/enums/RegisterDomainResponseStatus) for possible values.
+	/// The status of the domain registration.  See [RegisterDomainResponseStatus](https://developer.squareup.com/reference/square_2021-06-16/enums/RegisterDomainResponseStatus) for possible values.
 	public var status: String?
 
-	/// Defines the fields that are included in the response body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-05-13/apple-pay-api/register-domain) endpoint.  Either `errors` or `status` are present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [RegisterDomain](https://developer.squareup.com/reference/square_2021-06-16/apple-pay-api/register-domain) endpoint.  Either `errors` or `status` are present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
-	///   - status: The status of the domain registration.  See [RegisterDomainResponseStatus](https://developer.squareup.com/reference/square_2021-05-13/enums/RegisterDomainResponseStatus) for possible values.
+	///   - status: The status of the domain registration.  See [RegisterDomainResponseStatus](https://developer.squareup.com/reference/square_2021-06-16/enums/RegisterDomainResponseStatus) for possible values.
 	public init(errors: [SquareError]? = nil, status: String? = nil) {
 		self.errors = errors
 		self.status = status
@@ -11181,41 +12294,20 @@ public enum RegisterDomainResponseStatus: String, Codable {
 	case VERIFIED
 }
 
-/// Defines the parameters for a `RemoveDisputeEvidence` request.
-public struct RemoveDisputeEvidenceRequest: Codable {
-
-	/// Defines the parameters for a `RemoveDisputeEvidence` request.
-	public init() {
-	}
-}
-
-/// Defines the fields in a `RemoveDisputeEvidence` response.
-public struct RemoveDisputeEvidenceResponse: Codable {
-	/// Information about errors encountered during the request.
-	public var errors: [SquareError]?
-
-	/// Defines the fields in a `RemoveDisputeEvidence` response.
-	/// - Parameters:
-	///   - errors: Information about errors encountered during the request.
-	public init(errors: [SquareError]? = nil) {
-		self.errors = errors
-	}
-}
-
-/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/remove-group-from-customer) endpoint.
+/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/remove-group-from-customer) endpoint.
 public struct RemoveGroupFromCustomerRequest: Codable {
 
-	/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/remove-group-from-customer) endpoint.
+	/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/remove-group-from-customer) endpoint.
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/remove-group-from-customer) endpoint.
+/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/remove-group-from-customer) endpoint.
 public struct RemoveGroupFromCustomerResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-05-13/customers-api/remove-group-from-customer) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](https://developer.squareup.com/reference/square_2021-06-16/customers-api/remove-group-from-customer) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -11256,22 +12348,22 @@ public struct RenewTokenResponse: Codable {
 	}
 }
 
-/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/resume-subscription) endpoint request.
+/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/resume-subscription) endpoint request.
 public struct ResumeSubscriptionRequest: Codable {
 
-	/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/resume-subscription) endpoint request.
+	/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/resume-subscription) endpoint request.
 	public init() {
 	}
 }
 
-/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/resume-subscription) endpoint response.
+/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/resume-subscription) endpoint response.
 public struct ResumeSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The resumed subscription.
 	public var subscription: Subscription?
 
-	/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/resume-subscription) endpoint response.
+	/// Defines parameters in a [ResumeSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/resume-subscription) endpoint response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The resumed subscription.
@@ -11317,6 +12409,31 @@ public struct RetrieveBusinessBookingProfileResponse: Codable {
 	}
 }
 
+/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards/{card_id}
+public struct RetrieveCardRequest: Codable {
+
+	/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards/{card_id}
+	public init() {
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [RetrieveCard](#endpoint-cards-retrievecard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+public struct RetrieveCardResponse: Codable {
+	/// The retrieved card.
+	public var card: Card?
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields that are included in the response body of a request to the [RetrieveCard](#endpoint-cards-retrievecard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// - Parameters:
+	///   - card: The retrieved card.
+	///   - errors: Information on errors encountered during the request.
+	public init(card: Card? = nil, errors: [SquareError]? = nil) {
+		self.card = card
+		self.errors = errors
+	}
+}
+
 public struct RetrieveCashDrawerShiftRequest: Codable {
 	/// The ID of the location to retrieve cash drawer shifts from.
 	public var location_id: String
@@ -11339,7 +12456,7 @@ public struct RetrieveCashDrawerShiftResponse: Codable {
 }
 
 public struct RetrieveCatalogObjectRequest: Codable {
-	/// Requests objects as of a specific version of the catalog. This allows you to retrieve historical versions of objects. The value to retrieve a specific version of an object can be found in the version field of [CatalogObject](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogObject)s.
+	/// Requests objects as of a specific version of the catalog. This allows you to retrieve historical versions of objects. The value to retrieve a specific version of an object can be found in the version field of [CatalogObject](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogObject)s.
 	public var catalog_version: Int?
 	/// If `true`, the response will include additional objects that are related to the requested object, as follows:  If the `object` field of the response contains a `CatalogItem`, its associated `CatalogCategory`, `CatalogTax`, `CatalogImage` and `CatalogModifierList` objects will be returned in the `related_objects` field of the response. If the `object` field of the response contains a `CatalogItemVariation`, its parent `CatalogItem` will be returned in the `related_objects` field of the response.  Default value: `false`
 	public var include_related_objects: Bool?
@@ -11365,22 +12482,22 @@ public struct RetrieveCatalogObjectResponse: Codable {
 	}
 }
 
-/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/retrieve-customer-group) endpoint.
+/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/retrieve-customer-group) endpoint.
 public struct RetrieveCustomerGroupRequest: Codable {
 
-	/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/retrieve-customer-group) endpoint.
+	/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/retrieve-customer-group) endpoint.
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/retrieve-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/retrieve-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
 public struct RetrieveCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The retrieved customer group.
 	public var group: CustomerGroup?
 
-	/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/retrieve-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/retrieve-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The retrieved customer group.
@@ -11507,6 +12624,91 @@ public struct RetrieveEmployeeResponse: Codable {
 	}
 }
 
+/// A request to retrieve gift cards by their GANs.
+public struct RetrieveGiftCardFromGANRequest: Codable {
+	/// The gift card account number (GAN) of the gift card to retrieve. The maximum length of a GAN is 255 digits to account for third-party GANs that have been imported. Square-issued gift cards have 16-digit GANs.
+	public var gan: String
+
+	/// A request to retrieve gift cards by their GANs.
+	/// - Parameters:
+	///   - gan: The gift card account number (GAN) of the gift card to retrieve. The maximum length of a GAN is 255 digits to account for third-party GANs that have been imported. Square-issued gift cards have 16-digit GANs.
+	public init(gan: String) {
+		self.gan = gan
+	}
+}
+
+/// A response that contains a `GiftCard`. This response might contain a set of `Error` objects if the request resulted in errors.
+public struct RetrieveGiftCardFromGANResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A gift card that was fetched, if present. It returns empty if an error occurred.
+	public var gift_card: GiftCard?
+
+	/// A response that contains a `GiftCard`. This response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card: A gift card that was fetched, if present. It returns empty if an error occurred.
+	public init(errors: [SquareError]? = nil, gift_card: GiftCard? = nil) {
+		self.errors = errors
+		self.gift_card = gift_card
+	}
+}
+
+/// A request to retrieve gift cards by using nonces.
+public struct RetrieveGiftCardFromNonceRequest: Codable {
+	/// The nonce of the gift card to retrieve.
+	public var nonce: String
+
+	/// A request to retrieve gift cards by using nonces.
+	/// - Parameters:
+	///   - nonce: The nonce of the gift card to retrieve.
+	public init(nonce: String) {
+		self.nonce = nonce
+	}
+}
+
+/// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct RetrieveGiftCardFromNonceResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A gift card that was fetched, if present. It returns empty if an error occurred.
+	public var gift_card: GiftCard?
+
+	/// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card: A gift card that was fetched, if present. It returns empty if an error occurred.
+	public init(errors: [SquareError]? = nil, gift_card: GiftCard? = nil) {
+		self.errors = errors
+		self.gift_card = gift_card
+	}
+}
+
+/// A request to retrieve digital gift cards.
+public struct RetrieveGiftCardRequest: Codable {
+
+	/// A request to retrieve digital gift cards.
+	public init() {
+	}
+}
+
+/// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct RetrieveGiftCardResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The gift card retrieved.
+	public var gift_card: GiftCard?
+
+	/// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card: The gift card retrieved.
+	public init(errors: [SquareError]? = nil, gift_card: GiftCard? = nil) {
+		self.errors = errors
+		self.gift_card = gift_card
+	}
+}
+
 public struct RetrieveInventoryAdjustmentRequest: Codable {
 
 	public init() {
@@ -11514,7 +12716,7 @@ public struct RetrieveInventoryAdjustmentRequest: Codable {
 }
 
 public struct RetrieveInventoryAdjustmentResponse: Codable {
-	/// The requested [InventoryAdjustment](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryAdjustment).
+	/// The requested [InventoryAdjustment](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryAdjustment).
 	public var adjustment: InventoryAdjustment?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -11528,7 +12730,7 @@ public struct RetrieveInventoryAdjustmentResponse: Codable {
 public struct RetrieveInventoryChangesRequest: Codable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
-	/// The [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
+	/// The [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
 	public var location_ids: String?
 
 	public init(cursor: String? = nil, location_ids: String? = nil) {
@@ -11555,7 +12757,7 @@ public struct RetrieveInventoryChangesResponse: Codable {
 public struct RetrieveInventoryCountRequest: Codable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
-	/// The [Location](https://developer.squareup.com/reference/square_2021-05-13/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
+	/// The [Location](https://developer.squareup.com/reference/square_2021-06-16/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
 	public var location_ids: String?
 
 	public init(cursor: String? = nil, location_ids: String? = nil) {
@@ -11586,7 +12788,7 @@ public struct RetrieveInventoryPhysicalCountRequest: Codable {
 }
 
 public struct RetrieveInventoryPhysicalCountResponse: Codable {
-	/// The requested [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-05-13/objects/InventoryPhysicalCount).
+	/// The requested [InventoryPhysicalCount](https://developer.squareup.com/reference/square_2021-06-16/objects/InventoryPhysicalCount).
 	public var count: InventoryPhysicalCount?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -11605,14 +12807,14 @@ public struct RetrieveLocationRequest: Codable {
 	}
 }
 
-/// Defines the fields that the [RetrieveLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/retrieve-location) endpoint returns in a response.
+/// Defines the fields that the [RetrieveLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/retrieve-location) endpoint returns in a response.
 public struct RetrieveLocationResponse: Codable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested location.
 	public var location: Location?
 
-	/// Defines the fields that the [RetrieveLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/retrieve-location) endpoint returns in a response.
+	/// Defines the fields that the [RetrieveLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/retrieve-location) endpoint returns in a response.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - location: The requested location.
@@ -11647,10 +12849,10 @@ public struct RetrieveLoyaltyAccountResponse: Codable {
 	}
 }
 
-/// A request to retrieve the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram) that belongs to a seller. A seller can have only one loyalty program.
+/// A request to retrieve the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram) that belongs to a seller. A seller can have only one loyalty program.
 public struct RetrieveLoyaltyProgramRequest: Codable {
 
-	/// A request to retrieve the [loyalty program](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyProgram) that belongs to a seller. A seller can have only one loyalty program.
+	/// A request to retrieve the [loyalty program](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyProgram) that belongs to a seller. A seller can have only one loyalty program.
 	public init() {
 	}
 }
@@ -11697,22 +12899,22 @@ public struct RetrieveLoyaltyRewardResponse: Codable {
 	}
 }
 
-/// Request object for the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/retrieve-merchant) endpoint.
+/// Request object for the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/retrieve-merchant) endpoint.
 public struct RetrieveMerchantRequest: Codable {
 
-	/// Request object for the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/retrieve-merchant) endpoint.
+	/// Request object for the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/retrieve-merchant) endpoint.
 	public init() {
 	}
 }
 
-/// The response object returned by the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/retrieve-merchant) endpoint.
+/// The response object returned by the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/retrieve-merchant) endpoint.
 public struct RetrieveMerchantResponse: Codable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `Merchant` object.
 	public var merchant: Merchant?
 
-	/// The response object returned by the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-05-13/merchants-api/retrieve-merchant) endpoint.
+	/// The response object returned by the [RetrieveMerchant](https://developer.squareup.com/reference/square_2021-06-16/merchants-api/retrieve-merchant) endpoint.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - merchant: The requested `Merchant` object.
@@ -11771,22 +12973,22 @@ public struct RetrieveSnippetResponse: Codable {
 	}
 }
 
-/// Defines parameters in a [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/retrieve-subscription) endpoint request.
+/// Defines parameters in a [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/retrieve-subscription) endpoint request.
 public struct RetrieveSubscriptionRequest: Codable {
 
-	/// Defines parameters in a [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/retrieve-subscription) endpoint request.
+	/// Defines parameters in a [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/retrieve-subscription) endpoint request.
 	public init() {
 	}
 }
 
-/// Defines the fields that are included in the response from the [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/retrieve-subscription) endpoint.
+/// Defines the fields that are included in the response from the [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/retrieve-subscription) endpoint.
 public struct RetrieveSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The subscription retrieved.
 	public var subscription: Subscription?
 
-	/// Defines the fields that are included in the response from the [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/retrieve-subscription) endpoint.
+	/// Defines the fields that are included in the response from the [RetrieveSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/retrieve-subscription) endpoint.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The subscription retrieved.
@@ -11822,14 +13024,14 @@ public struct RetrieveTeamMemberRequest: Codable {
 	}
 }
 
-/// Represents a response from a retrieve request, containing a `TeamMember` object or error messages.
+/// Represents a response from a retrieve request containing a `TeamMember` object or error messages.
 public struct RetrieveTeamMemberResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully retrieved `TeamMember` object.
 	public var team_member: TeamMember?
 
-	/// Represents a response from a retrieve request, containing a `TeamMember` object or error messages.
+	/// Represents a response from a retrieve request containing a `TeamMember` object or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_member: The successfully retrieved `TeamMember` object.
@@ -11845,14 +13047,14 @@ public struct RetrieveTransactionRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/retrieve-transaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/retrieve-transaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct RetrieveTransactionResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The requested transaction.
 	public var transaction: Transaction?
 
-	/// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/retrieve-transaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/retrieve-transaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - transaction: The requested transaction.
@@ -11862,22 +13064,22 @@ public struct RetrieveTransactionResponse: Codable {
 	}
 }
 
-/// Represents a retrieve request for the wage setting of a team member
+/// Represents a retrieve request for the wage setting of a team member.
 public struct RetrieveWageSettingRequest: Codable {
 
-	/// Represents a retrieve request for the wage setting of a team member
+	/// Represents a retrieve request for the wage setting of a team member.
 	public init() {
 	}
 }
 
-/// Represents a response from a retrieve request, containing the specified `WageSetting` object or error messages.
+/// Represents a response from a retrieve request containing the specified `WageSetting` object or error messages.
 public struct RetrieveWageSettingResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully retrieved `WageSetting` object.
 	public var wage_setting: WageSetting?
 
-	/// Represents a response from a retrieve request, containing the specified `WageSetting` object or error messages.
+	/// Represents a response from a retrieve request containing the specified `WageSetting` object or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - wage_setting: The successfully retrieved `WageSetting` object.
@@ -11890,7 +13092,7 @@ public struct RetrieveWageSettingResponse: Codable {
 public struct RevokeTokenRequest: Codable {
 	/// The access token of the merchant whose token you want to revoke. Do not provide a value for merchant_id if you provide this parameter.
 	public var access_token: String?
-	/// The Square issued ID for your application, available from the [application dashboard](https://connect.squareup.com/apps).
+	/// The Square issued ID for your application, available from the [developer dashboard](https://developer.squareup.com/apps).
 	public var client_id: String?
 	/// The ID of the merchant whose token you want to revoke. Do not provide a value for access_token if you provide this parameter.
 	public var merchant_id: String?
@@ -12002,13 +13204,13 @@ public struct SearchAvailabilityResponse: Codable {
 	}
 }
 
-/// Defines the request body for the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint.
+/// Defines the request body for the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint.
 public struct SearchCatalogItemsRequest: Codable {
 	/// The category id query expression to return items containing the specified category IDs.
 	public var category_ids: [String]?
 	/// The pagination token, returned in the previous response, used to fetch the next batch of pending results.
 	public var cursor: String?
-	/// The customer-attribute filter to return items or item variations matching the specified custom attribute expressions. A maximum number of 10 custom attribute expressions are supported in a single call to the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint.
+	/// The customer-attribute filter to return items or item variations matching the specified custom attribute expressions. A maximum number of 10 custom attribute expressions are supported in a single call to the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint.
 	public var custom_attribute_filters: [CustomAttributeFilter]?
 	/// The enabled-location query expression to return items and item variations having specified enabled locations.
 	public var enabled_location_ids: [String]?
@@ -12023,11 +13225,11 @@ public struct SearchCatalogItemsRequest: Codable {
 	/// The text filter expression to return items or item variations containing specified text in the `name`, `description`, or `abbreviation` attribute value of an item, or in the `name`, `sku`, or `upc` attribute value of an item variation.
 	public var text_filter: String?
 
-	/// Defines the request body for the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint.
+	/// Defines the request body for the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint.
 	/// - Parameters:
 	///   - category_ids: The category id query expression to return items containing the specified category IDs.
 	///   - cursor: The pagination token, returned in the previous response, used to fetch the next batch of pending results.
-	///   - custom_attribute_filters: The customer-attribute filter to return items or item variations matching the specified custom attribute expressions. A maximum number of 10 custom attribute expressions are supported in a single call to the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint.
+	///   - custom_attribute_filters: The customer-attribute filter to return items or item variations matching the specified custom attribute expressions. A maximum number of 10 custom attribute expressions are supported in a single call to the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint.
 	///   - enabled_location_ids: The enabled-location query expression to return items and item variations having specified enabled locations.
 	///   - limit: The maximum number of results to return per page. The default value is 100.
 	///   - product_types: The product types query expression to return items or item variations having the specified product types.
@@ -12055,7 +13257,7 @@ public enum SearchCatalogItemsRequestStockLevel: String, Codable {
 	case LOW
 }
 
-/// Defines the response body returned from the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint.
+/// Defines the response body returned from the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint.
 public struct SearchCatalogItemsResponse: Codable {
 	/// Pagination token used in the next request to return more of the search result.
 	public var cursor: String?
@@ -12066,7 +13268,7 @@ public struct SearchCatalogItemsResponse: Codable {
 	/// Ids of returned item variations matching the specified query expression.
 	public var matched_variation_ids: [String]?
 
-	/// Defines the response body returned from the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-05-13/catalog-api/search-catalog-items) endpoint.
+	/// Defines the response body returned from the [SearchCatalogItems](https://developer.squareup.com/reference/square_2021-06-16/catalog-api/search-catalog-items) endpoint.
 	/// - Parameters:
 	///   - cursor: Pagination token used in the next request to return more of the search result.
 	///   - errors: Any errors that occurred during the request.
@@ -12336,14 +13538,14 @@ public struct SearchLoyaltyRewardsRequest: Codable {
 
 /// The set of search requirements.
 public struct SearchLoyaltyRewardsRequestLoyaltyRewardQuery: Codable {
-	/// The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) to which the loyalty reward belongs.
+	/// The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) to which the loyalty reward belongs.
 	public var loyalty_account_id: String
 	/// The status of the loyalty reward.
 	public var status: String?
 
 	/// The set of search requirements.
 	/// - Parameters:
-	///   - loyalty_account_id: The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-05-13/objects/LoyaltyAccount) to which the loyalty reward belongs.
+	///   - loyalty_account_id: The ID of the [loyalty account](https://developer.squareup.com/reference/square_2021-06-16/objects/LoyaltyAccount) to which the loyalty reward belongs.
 	///   - status: The status of the loyalty reward.
 	public init(loyalty_account_id: String, status: String? = nil) {
 		self.loyalty_account_id = loyalty_account_id
@@ -12372,12 +13574,12 @@ public struct SearchLoyaltyRewardsResponse: Codable {
 	}
 }
 
-/// A filter based on the order `customer_id` and any tender `customer_id` associated with the order. It does not filter based on the [FulfillmentRecipient](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderFulfillmentRecipient) `customer_id`.
+/// A filter based on the order `customer_id` and any tender `customer_id` associated with the order. It does not filter based on the [FulfillmentRecipient](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderFulfillmentRecipient) `customer_id`.
 public struct SearchOrdersCustomerFilter: Codable {
 	/// A list of customer IDs to filter by.  Max: 10 customer IDs.
 	public var customer_ids: [String]?
 
-	/// A filter based on the order `customer_id` and any tender `customer_id` associated with the order. It does not filter based on the [FulfillmentRecipient](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderFulfillmentRecipient) `customer_id`.
+	/// A filter based on the order `customer_id` and any tender `customer_id` associated with the order. It does not filter based on the [FulfillmentRecipient](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderFulfillmentRecipient) `customer_id`.
 	/// - Parameters:
 	///   - customer_ids: A list of customer IDs to filter by.  Max: 10 customer IDs.
 	public init(customer_ids: [String]? = nil) {
@@ -12385,7 +13587,7 @@ public struct SearchOrdersCustomerFilter: Codable {
 	}
 }
 
-/// Filter for `Order` objects based on whether their `CREATED_AT`, `CLOSED_AT`, or `UPDATED_AT` timestamps fall within a specified time range. You can specify the time range and which timestamp to filter for. You can filter for only one time range at a time.  For each time range, the start time and end time are inclusive. If the end time is absent, it defaults to the time of the first request for the cursor.  __Important:__ If you use the `DateTimeFilter` in a `SearchOrders` query, you must set the `sort_field` in [OrdersSort](https://developer.squareup.com/reference/square_2021-05-13/objects/SearchOrdersSort) to the same field you filter for. For example, if you set the `CLOSED_AT` field in `DateTimeFilter`, you must set the `sort_field` in `SearchOrdersSort` to `CLOSED_AT`. Otherwise, `SearchOrders` throws an error. [Learn more about filtering orders by time range.](https://developer.squareup.com/docs/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range)
+/// Filter for `Order` objects based on whether their `CREATED_AT`, `CLOSED_AT`, or `UPDATED_AT` timestamps fall within a specified time range. You can specify the time range and which timestamp to filter for. You can filter for only one time range at a time.  For each time range, the start time and end time are inclusive. If the end time is absent, it defaults to the time of the first request for the cursor.  __Important:__ If you use the `DateTimeFilter` in a `SearchOrders` query, you must set the `sort_field` in [OrdersSort](https://developer.squareup.com/reference/square_2021-06-16/objects/SearchOrdersSort) to the same field you filter for. For example, if you set the `CLOSED_AT` field in `DateTimeFilter`, you must set the `sort_field` in `SearchOrdersSort` to `CLOSED_AT`. Otherwise, `SearchOrders` throws an error. [Learn more about filtering orders by time range.](https://developer.squareup.com/docs/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range)
 public struct SearchOrdersDateTimeFilter: Codable {
 	/// The time range for filtering on the `closed_at` timestamp. If you use this value, you must set the `sort_field` in the `OrdersSearchSort` object to `CLOSED_AT`.
 	public var closed_at: TimeRange?
@@ -12394,7 +13596,7 @@ public struct SearchOrdersDateTimeFilter: Codable {
 	/// The time range for filtering on the `updated_at` timestamp. If you use this value, you must set the `sort_field` in the `OrdersSearchSort` object to `UPDATED_AT`.
 	public var updated_at: TimeRange?
 
-	/// Filter for `Order` objects based on whether their `CREATED_AT`, `CLOSED_AT`, or `UPDATED_AT` timestamps fall within a specified time range. You can specify the time range and which timestamp to filter for. You can filter for only one time range at a time.  For each time range, the start time and end time are inclusive. If the end time is absent, it defaults to the time of the first request for the cursor.  __Important:__ If you use the `DateTimeFilter` in a `SearchOrders` query, you must set the `sort_field` in [OrdersSort](https://developer.squareup.com/reference/square_2021-05-13/objects/SearchOrdersSort) to the same field you filter for. For example, if you set the `CLOSED_AT` field in `DateTimeFilter`, you must set the `sort_field` in `SearchOrdersSort` to `CLOSED_AT`. Otherwise, `SearchOrders` throws an error. [Learn more about filtering orders by time range.](https://developer.squareup.com/docs/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range)
+	/// Filter for `Order` objects based on whether their `CREATED_AT`, `CLOSED_AT`, or `UPDATED_AT` timestamps fall within a specified time range. You can specify the time range and which timestamp to filter for. You can filter for only one time range at a time.  For each time range, the start time and end time are inclusive. If the end time is absent, it defaults to the time of the first request for the cursor.  __Important:__ If you use the `DateTimeFilter` in a `SearchOrders` query, you must set the `sort_field` in [OrdersSort](https://developer.squareup.com/reference/square_2021-06-16/objects/SearchOrdersSort) to the same field you filter for. For example, if you set the `CLOSED_AT` field in `DateTimeFilter`, you must set the `sort_field` in `SearchOrdersSort` to `CLOSED_AT`. Otherwise, `SearchOrders` throws an error. [Learn more about filtering orders by time range.](https://developer.squareup.com/docs/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range)
 	/// - Parameters:
 	///   - closed_at: The time range for filtering on the `closed_at` timestamp. If you use this value, you must set the `sort_field` in the `OrdersSearchSort` object to `CLOSED_AT`.
 	///   - created_at: The time range for filtering on the `created_at` timestamp. If you use this value, you must set the `sort_field` in the `OrdersSearchSort` object to `CREATED_AT`.
@@ -12416,7 +13618,7 @@ public struct SearchOrdersFilter: Codable {
 	public var fulfillment_filter: SearchOrdersFulfillmentFilter?
 	/// Filter by the source of the order.
 	public var source_filter: SearchOrdersSourceFilter?
-	/// Filter by [OrderState](https://developer.squareup.com/reference/square_2021-05-13/enums/OrderState).
+	/// Filter by [OrderState](https://developer.squareup.com/reference/square_2021-06-16/enums/OrderState).
 	public var state_filter: SearchOrdersStateFilter?
 
 	/// Filtering criteria to use for a `SearchOrders` request. Multiple filters are ANDed together.
@@ -12425,7 +13627,7 @@ public struct SearchOrdersFilter: Codable {
 	///   - date_time_filter: Filter for results within a time range.  __Important:__ If you filter for orders by time range, you must set `SearchOrdersSort` to sort by the same field. [Learn more about filtering orders by time range.](https://developer.squareup.com/docs/orders-api/manage-orders#important-note-on-filtering-orders-by-time-range)
 	///   - fulfillment_filter: Filter by the fulfillment type or state.
 	///   - source_filter: Filter by the source of the order.
-	///   - state_filter: Filter by [OrderState](https://developer.squareup.com/reference/square_2021-05-13/enums/OrderState).
+	///   - state_filter: Filter by [OrderState](https://developer.squareup.com/reference/square_2021-06-16/enums/OrderState).
 	public init(customer_filter: SearchOrdersCustomerFilter? = nil, date_time_filter: SearchOrdersDateTimeFilter? = nil, fulfillment_filter: SearchOrdersFulfillmentFilter? = nil, source_filter: SearchOrdersSourceFilter? = nil, state_filter: SearchOrdersStateFilter? = nil) {
 		self.customer_filter = customer_filter
 		self.date_time_filter = date_time_filter
@@ -12435,17 +13637,17 @@ public struct SearchOrdersFilter: Codable {
 	}
 }
 
-/// Filter based on [order fulfillment](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderFulfillment) information.
+/// Filter based on [order fulfillment](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderFulfillment) information.
 public struct SearchOrdersFulfillmentFilter: Codable {
-	/// A list of [fulfillment states](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderFulfillmentState) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment states listed in this field.
+	/// A list of [fulfillment states](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderFulfillmentState) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment states listed in this field.
 	public var fulfillment_states: [String]?
-	/// A list of [fulfillment types](https://developer.squareup.com/reference/square_2021-05-13/enums/OrderFulfillmentType) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment types listed in this field.
+	/// A list of [fulfillment types](https://developer.squareup.com/reference/square_2021-06-16/enums/OrderFulfillmentType) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment types listed in this field.
 	public var fulfillment_types: [String]?
 
-	/// Filter based on [order fulfillment](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderFulfillment) information.
+	/// Filter based on [order fulfillment](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderFulfillment) information.
 	/// - Parameters:
-	///   - fulfillment_states: A list of [fulfillment states](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderFulfillmentState) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment states listed in this field.
-	///   - fulfillment_types: A list of [fulfillment types](https://developer.squareup.com/reference/square_2021-05-13/enums/OrderFulfillmentType) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment types listed in this field.
+	///   - fulfillment_states: A list of [fulfillment states](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderFulfillmentState) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment states listed in this field.
+	///   - fulfillment_types: A list of [fulfillment types](https://developer.squareup.com/reference/square_2021-06-16/enums/OrderFulfillmentType) to filter for. The list returns orders if any of its fulfillments match any of the fulfillment types listed in this field.
 	public init(fulfillment_states: [String]? = nil, fulfillment_types: [String]? = nil) {
 		self.fulfillment_states = fulfillment_states
 		self.fulfillment_types = fulfillment_types
@@ -12479,7 +13681,7 @@ public struct SearchOrdersRequest: Codable {
 	public var location_ids: [String]?
 	/// Query conditions used to filter or sort the results. Note that when retrieving additional pages using a cursor, you must use the original query.
 	public var query: SearchOrdersQuery?
-	/// A Boolean that controls the format of the search results. If `true`, `SearchOrders` returns [OrderEntry](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderEntry) objects. If `false`, `SearchOrders` returns complete order objects.  Default: `false`.
+	/// A Boolean that controls the format of the search results. If `true`, `SearchOrders` returns [OrderEntry](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderEntry) objects. If `false`, `SearchOrders` returns complete order objects.  Default: `false`.
 	public var return_entries: Bool?
 
 	/// The request does not have any required fields. When given no query criteria, `SearchOrders` returns all results for all of the seller's locations. When retrieving additional pages using a `cursor`, the `query` must be equal to the `query` used to retrieve the first page of results.
@@ -12488,7 +13690,7 @@ public struct SearchOrdersRequest: Codable {
 	///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page.  Default: `500`
 	///   - location_ids: The location IDs for the orders to query. All locations must belong to the same merchant.  Min: 1 location ID.  Max: 10 location IDs.
 	///   - query: Query conditions used to filter or sort the results. Note that when retrieving additional pages using a cursor, you must use the original query.
-	///   - return_entries: A Boolean that controls the format of the search results. If `true`, `SearchOrders` returns [OrderEntry](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderEntry) objects. If `false`, `SearchOrders` returns complete order objects.  Default: `false`.
+	///   - return_entries: A Boolean that controls the format of the search results. If `true`, `SearchOrders` returns [OrderEntry](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderEntry) objects. If `false`, `SearchOrders` returns complete order objects.  Default: `false`.
 	public init(cursor: String? = nil, limit: Int? = nil, location_ids: [String]? = nil, query: SearchOrdersQuery? = nil, return_entries: Bool? = nil) {
 		self.cursor = cursor
 		self.limit = limit
@@ -12498,23 +13700,23 @@ public struct SearchOrdersRequest: Codable {
 	}
 }
 
-/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders).
+/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders).
 public struct SearchOrdersResponse: Codable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
 	public var cursor: String?
-	/// [Errors](https://developer.squareup.com/reference/square_2021-05-13/objects/Error) encountered during the search.
+	/// [Errors](https://developer.squareup.com/reference/square_2021-06-16/objects/Error) encountered during the search.
 	public var errors: [SquareError]?
-	/// A list of [OrderEntries](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderEntry) that fit the query conditions. The list is populated only if `return_entries` is set to `true` in the request.
+	/// A list of [OrderEntries](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderEntry) that fit the query conditions. The list is populated only if `return_entries` is set to `true` in the request.
 	public var order_entries: [OrderEntry]?
-	/// A list of [Order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) objects that match the query conditions. The list is populated only if `return_entries` is set to `false` in the request.
+	/// A list of [Order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) objects that match the query conditions. The list is populated only if `return_entries` is set to `false` in the request.
 	public var orders: [Order]?
 
-	/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-05-13/orders-api/search-orders).
+	/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](https://developer.squareup.com/reference/square_2021-06-16/orders-api/search-orders).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
-	///   - errors: [Errors](https://developer.squareup.com/reference/square_2021-05-13/objects/Error) encountered during the search.
-	///   - order_entries: A list of [OrderEntries](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderEntry) that fit the query conditions. The list is populated only if `return_entries` is set to `true` in the request.
-	///   - orders: A list of [Order](https://developer.squareup.com/reference/square_2021-05-13/objects/Order) objects that match the query conditions. The list is populated only if `return_entries` is set to `false` in the request.
+	///   - errors: [Errors](https://developer.squareup.com/reference/square_2021-06-16/objects/Error) encountered during the search.
+	///   - order_entries: A list of [OrderEntries](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderEntry) that fit the query conditions. The list is populated only if `return_entries` is set to `true` in the request.
+	///   - orders: A list of [Order](https://developer.squareup.com/reference/square_2021-06-16/objects/Order) objects that match the query conditions. The list is populated only if `return_entries` is set to `false` in the request.
 	public init(cursor: String? = nil, errors: [SquareError]? = nil, order_entries: [OrderEntry]? = nil, orders: [Order]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
@@ -12525,14 +13727,14 @@ public struct SearchOrdersResponse: Codable {
 
 /// Sorting criteria for a `SearchOrders` request. Results can only be sorted by a timestamp field.
 public struct SearchOrdersSort: Codable {
-	/// The field to sort by.  __Important:__ When using a [DateTimeFilter](https://developer.squareup.com/reference/square_2021-05-13/objects/SearchOrdersFilter), `sort_field` must match the timestamp field that the `DateTimeFilter` uses to filter. For example, if you set your `sort_field` to `CLOSED_AT` and you use a `DateTimeFilter`, your `DateTimeFilter` must filter for orders by their `CLOSED_AT` date. If this field does not match the timestamp field in `DateTimeFilter`, `SearchOrders` returns an error.  Default: `CREATED_AT`.
+	/// The field to sort by.  __Important:__ When using a [DateTimeFilter](https://developer.squareup.com/reference/square_2021-06-16/objects/SearchOrdersFilter), `sort_field` must match the timestamp field that the `DateTimeFilter` uses to filter. For example, if you set your `sort_field` to `CLOSED_AT` and you use a `DateTimeFilter`, your `DateTimeFilter` must filter for orders by their `CLOSED_AT` date. If this field does not match the timestamp field in `DateTimeFilter`, `SearchOrders` returns an error.  Default: `CREATED_AT`.
 	public var sort_field: String
 	/// The chronological order in which results are returned. Defaults to `DESC`.
 	public var sort_order: String?
 
 	/// Sorting criteria for a `SearchOrders` request. Results can only be sorted by a timestamp field.
 	/// - Parameters:
-	///   - sort_field: The field to sort by.  __Important:__ When using a [DateTimeFilter](https://developer.squareup.com/reference/square_2021-05-13/objects/SearchOrdersFilter), `sort_field` must match the timestamp field that the `DateTimeFilter` uses to filter. For example, if you set your `sort_field` to `CLOSED_AT` and you use a `DateTimeFilter`, your `DateTimeFilter` must filter for orders by their `CLOSED_AT` date. If this field does not match the timestamp field in `DateTimeFilter`, `SearchOrders` returns an error.  Default: `CREATED_AT`.
+	///   - sort_field: The field to sort by.  __Important:__ When using a [DateTimeFilter](https://developer.squareup.com/reference/square_2021-06-16/objects/SearchOrdersFilter), `sort_field` must match the timestamp field that the `DateTimeFilter` uses to filter. For example, if you set your `sort_field` to `CLOSED_AT` and you use a `DateTimeFilter`, your `DateTimeFilter` must filter for orders by their `CLOSED_AT` date. If this field does not match the timestamp field in `DateTimeFilter`, `SearchOrders` returns an error.  Default: `CREATED_AT`.
 	///   - sort_order: The chronological order in which results are returned. Defaults to `DESC`.
 	public init(sort_field: String, sort_order: String? = nil) {
 		self.sort_field = sort_field
@@ -12552,12 +13754,12 @@ public enum SearchOrdersSortField: String, Codable {
 
 /// A filter based on order `source` information.
 public struct SearchOrdersSourceFilter: Codable {
-	/// Filters by the [Source](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderSource) `name`. The filter returns any orders with a `source.name` that matches any of the listed source names.  Max: 10 source names.
+	/// Filters by the [Source](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderSource) `name`. The filter returns any orders with a `source.name` that matches any of the listed source names.  Max: 10 source names.
 	public var source_names: [String]?
 
 	/// A filter based on order `source` information.
 	/// - Parameters:
-	///   - source_names: Filters by the [Source](https://developer.squareup.com/reference/square_2021-05-13/objects/OrderSource) `name`. The filter returns any orders with a `source.name` that matches any of the listed source names.  Max: 10 source names.
+	///   - source_names: Filters by the [Source](https://developer.squareup.com/reference/square_2021-06-16/objects/OrderSource) `name`. The filter returns any orders with a `source.name` that matches any of the listed source names.  Max: 10 source names.
 	public init(source_names: [String]? = nil) {
 		self.source_names = source_names
 	}
@@ -12648,7 +13850,7 @@ public struct SearchSubscriptionsQuery: Codable {
 	}
 }
 
-/// Defines parameters in a [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/search-subscriptions) endpoint request.
+/// Defines parameters in a [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/search-subscriptions) endpoint request.
 public struct SearchSubscriptionsRequest: Codable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
@@ -12657,7 +13859,7 @@ public struct SearchSubscriptionsRequest: Codable {
 	/// Query subscriptions based on the given conditions and sort order. Calling SearchSubscriptions without an explicit query parameter will return all subscriptions.
 	public var query: SearchSubscriptionsQuery?
 
-	/// Defines parameters in a [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/search-subscriptions) endpoint request.
+	/// Defines parameters in a [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/search-subscriptions) endpoint request.
 	/// - Parameters:
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	///   - limit: The upper limit on the number of subscriptions to return in the response.  Default: `200`
@@ -12669,7 +13871,7 @@ public struct SearchSubscriptionsRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response from the [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/search-subscriptions) endpoint.
+/// Defines the fields that are included in the response from the [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/search-subscriptions) endpoint.
 public struct SearchSubscriptionsResponse: Codable {
 	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of subscriptions. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
@@ -12678,7 +13880,7 @@ public struct SearchSubscriptionsResponse: Codable {
 	/// The search result.
 	public var subscriptions: [Subscription]?
 
-	/// Defines the fields that are included in the response from the [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/search-subscriptions) endpoint.
+	/// Defines the fields that are included in the response from the [SearchSubscriptions](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/search-subscriptions) endpoint.
 	/// - Parameters:
 	///   - cursor: When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of subscriptions. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -12690,17 +13892,17 @@ public struct SearchSubscriptionsResponse: Codable {
 	}
 }
 
-/// Represents a filter used in a search for `TeamMember` objects. `AND` logic is applied between the individual fields, and `OR` logic is applied within list-based fields. For example, setting this filter value, ``` filter = (locations_ids = ["A", "B"], status = ACTIVE) ``` returns only active team members assigned to either location "A" or "B".
+/// Represents a filter used in a search for `TeamMember` objects. `AND` logic is applied between the individual fields, and `OR` logic is applied within list-based fields. For example, setting this filter value: ``` filter = (locations_ids = ["A", "B"], status = ACTIVE) ``` returns only active team members assigned to either location "A" or "B".
 public struct SearchTeamMembersFilter: Codable {
-	/// When present, filter by team members assigned to the specified locations. When empty, include team members assigned to any location.
+	/// When present, filters by team members assigned to the specified locations. When empty, includes team members assigned to any location.
 	public var location_ids: [String]?
-	/// When present, filter by team members who match the given status. When empty, include team members of all statuses.
+	/// When present, filters by team members who match the given status. When empty, includes team members of all statuses.
 	public var status: String?
 
-	/// Represents a filter used in a search for `TeamMember` objects. `AND` logic is applied between the individual fields, and `OR` logic is applied within list-based fields. For example, setting this filter value, ``` filter = (locations_ids = ["A", "B"], status = ACTIVE) ``` returns only active team members assigned to either location "A" or "B".
+	/// Represents a filter used in a search for `TeamMember` objects. `AND` logic is applied between the individual fields, and `OR` logic is applied within list-based fields. For example, setting this filter value: ``` filter = (locations_ids = ["A", "B"], status = ACTIVE) ``` returns only active team members assigned to either location "A" or "B".
 	/// - Parameters:
-	///   - location_ids: When present, filter by team members assigned to the specified locations. When empty, include team members assigned to any location.
-	///   - status: When present, filter by team members who match the given status. When empty, include team members of all statuses.
+	///   - location_ids: When present, filters by team members assigned to the specified locations. When empty, includes team members assigned to any location.
+	///   - status: When present, filters by team members who match the given status. When empty, includes team members of all statuses.
 	public init(location_ids: [String]? = nil, status: String? = nil) {
 		self.location_ids = location_ids
 		self.status = status
@@ -12722,17 +13924,17 @@ public struct SearchTeamMembersQuery: Codable {
 
 /// Represents a search request for a filtered list of `TeamMember` objects.
 public struct SearchTeamMembersRequest: Codable {
-	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/working-with-apis/pagination) with Square APIs for more information.
+	/// The opaque cursor for fetching the next page. For more information, see [pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
-	/// The maximum number of `TeamMember` objects in a page (25 by default).
+	/// The maximum number of `TeamMember` objects in a page (100 by default).
 	public var limit: Int?
 	/// The query parameters.
 	public var query: SearchTeamMembersQuery?
 
 	/// Represents a search request for a filtered list of `TeamMember` objects.
 	/// - Parameters:
-	///   - cursor: The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/working-with-apis/pagination) with Square APIs for more information.
-	///   - limit: The maximum number of `TeamMember` objects in a page (25 by default).
+	///   - cursor: The opaque cursor for fetching the next page. For more information, see [pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	///   - limit: The maximum number of `TeamMember` objects in a page (100 by default).
 	///   - query: The query parameters.
 	public init(cursor: String? = nil, limit: Int? = nil, query: SearchTeamMembersQuery? = nil) {
 		self.cursor = cursor
@@ -12741,18 +13943,18 @@ public struct SearchTeamMembersRequest: Codable {
 	}
 }
 
-/// Represents a response from a search request, containing a filtered list of `TeamMember` objects.
+/// Represents a response from a search request containing a filtered list of `TeamMember` objects.
 public struct SearchTeamMembersResponse: Codable {
-	/// The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/working-with-apis/pagination) with Square APIs for more information.
+	/// The opaque cursor for fetching the next page. For more information, see [pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	public var cursor: String?
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The filtered list of `TeamMember` objects.
 	public var team_members: [TeamMember]?
 
-	/// Represents a response from a search request, containing a filtered list of `TeamMember` objects.
+	/// Represents a response from a search request containing a filtered list of `TeamMember` objects.
 	/// - Parameters:
-	///   - cursor: The opaque cursor for fetching the next page. Read about [pagination](https://developer.squareup.com/docs/working-with-apis/pagination) with Square APIs for more information.
+	///   - cursor: The opaque cursor for fetching the next page. For more information, see [pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 	///   - errors: The errors that occurred during the request.
 	///   - team_members: The filtered list of `TeamMember` objects.
 	public init(cursor: String? = nil, errors: [SquareError]? = nil, team_members: [TeamMember]? = nil) {
@@ -12824,14 +14026,14 @@ public struct SearchTerminalRefundsResponse: Codable {
 
 /// A query filter to search for appointment segments by.
 public struct SegmentFilter: Codable {
-	/// The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) representing the service booked in this segment.
+	/// The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) representing the service booked in this segment.
 	public var service_variation_id: String
 	/// A query expression specifying which team members satisfy the condition. Supported expressions are - `ANY`: include team members whose IDs match any member of the specified list. - `NONE`: exclude team members whose IDs match members of the specified list.  The `ALL` expression is not supported in the Bookings API. When no expression is specified, any service-providing team member is eligible to fulfill the Booking.
 	public var team_member_id_filter: FilterValue?
 
 	/// A query filter to search for appointment segments by.
 	/// - Parameters:
-	///   - service_variation_id: The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogItemVariation) representing the service booked in this segment.
+	///   - service_variation_id: The ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) representing the service booked in this segment.
 	///   - team_member_id_filter: A query expression specifying which team members satisfy the condition. Supported expressions are - `ANY`: include team members whose IDs match any member of the specified list. - `NONE`: exclude team members whose IDs match members of the specified list.  The `ALL` expression is not supported in the Bookings API. When no expression is specified, any service-providing team member is eligible to fulfill the Booking.
 	public init(service_variation_id: String, team_member_id_filter: FilterValue? = nil) {
 		self.service_variation_id = service_variation_id
@@ -13131,18 +14333,18 @@ public enum SortOrder: String, Codable {
 
 /// Provides information about the application used to generate a change.
 public struct SourceApplication: Codable {
-	/// Read-only Square ID assigned to the application. Only used for [Product](https://developer.squareup.com/reference/square_2021-05-13/enums/Product) type `EXTERNAL_API`.
+	/// Read-only Square ID assigned to the application. Only used for [Product](https://developer.squareup.com/reference/square_2021-06-16/enums/Product) type `EXTERNAL_API`.
 	public var application_id: String?
 	/// Read-only display name assigned to the application (e.g. `"Custom Application"`, `"Square POS 4.74 for Android"`).
 	public var name: String?
-	/// Read-only [Product](https://developer.squareup.com/reference/square_2021-05-13/enums/Product) type for the application.
+	/// Read-only [Product](https://developer.squareup.com/reference/square_2021-06-16/enums/Product) type for the application.
 	public var product: String?
 
 	/// Provides information about the application used to generate a change.
 	/// - Parameters:
-	///   - application_id: Read-only Square ID assigned to the application. Only used for [Product](https://developer.squareup.com/reference/square_2021-05-13/enums/Product) type `EXTERNAL_API`.
+	///   - application_id: Read-only Square ID assigned to the application. Only used for [Product](https://developer.squareup.com/reference/square_2021-06-16/enums/Product) type `EXTERNAL_API`.
 	///   - name: Read-only display name assigned to the application (e.g. `"Custom Application"`, `"Square POS 4.74 for Android"`).
-	///   - product: Read-only [Product](https://developer.squareup.com/reference/square_2021-05-13/enums/Product) type for the application.
+	///   - product: Read-only [Product](https://developer.squareup.com/reference/square_2021-06-16/enums/Product) type for the application.
 	public init(application_id: String? = nil, name: String? = nil, product: String? = nil) {
 		self.application_id = application_id
 		self.name = name
@@ -13217,21 +14419,21 @@ public struct SubmitEvidenceResponse: Codable {
 public struct Subscription: Codable {
 	/// The subscription cancellation date, in YYYY-MM-DD format (for example, 2013-01-15). On this date, the subscription status changes to `CANCELED` and the subscription billing stops. If you don't set this field, the subscription plan dictates if and when subscription ends.  You cannot update this field, you can only clear it.
 	public var canceled_date: String?
-	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-05-13/objects/Card) that is charged for the subscription.
+	/// The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-06-16/objects/Card) that is charged for the subscription.
 	public var card_id: String?
+	/// The date up to which the customer is invoiced for the subscription, in YYYY-MM-DD format (for example, 2013-01-15).  After the invoice is sent for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a customer gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
+	public let charged_through_date: String?
 	/// The timestamp when the subscription was created, in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// The ID of the associated [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) profile.
+	/// The ID of the associated [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) profile.
 	public let customer_id: String?
 	/// The Square-assigned ID of the subscription.
 	public let id: String?
-	/// The IDs of the [invoices](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) created for the subscription, listed in order when the invoices were created (oldest invoices appear first).
+	/// The IDs of the [invoices](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) created for the subscription, listed in order when the invoices were created (oldest invoices appear first).
 	public let invoice_ids: [String]?
 	/// The ID of the location associated with the subscription.
 	public let location_id: String?
-	/// The date up to which the customer is invoiced for the subscription, in YYYY-MM-DD format (for example, 2013-01-15).  After the invoice is paid for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a customer gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
-	public let paid_until_date: String?
-	/// The ID of the associated [subscription plan](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogSubscriptionPlan).
+	/// The ID of the associated [subscription plan](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogSubscriptionPlan).
 	public let plan_id: String?
 	/// A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	public var price_override_money: Money?
@@ -13249,29 +14451,29 @@ public struct Subscription: Codable {
 	/// Represents a customer subscription to a subscription plan. For an overview of the `Subscription` type, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object-overview).
 	/// - Parameters:
 	///   - canceled_date: The subscription cancellation date, in YYYY-MM-DD format (for example, 2013-01-15). On this date, the subscription status changes to `CANCELED` and the subscription billing stops. If you don't set this field, the subscription plan dictates if and when subscription ends.  You cannot update this field, you can only clear it.
-	///   - card_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-05-13/objects/Card) that is charged for the subscription.
+	///   - card_id: The ID of the [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) [card](https://developer.squareup.com/reference/square_2021-06-16/objects/Card) that is charged for the subscription.
+	///   - charged_through_date: The date up to which the customer is invoiced for the subscription, in YYYY-MM-DD format (for example, 2013-01-15).  After the invoice is sent for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a customer gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
 	///   - created_at: The timestamp when the subscription was created, in RFC 3339 format.
-	///   - customer_id: The ID of the associated [customer](https://developer.squareup.com/reference/square_2021-05-13/objects/Customer) profile.
+	///   - customer_id: The ID of the associated [customer](https://developer.squareup.com/reference/square_2021-06-16/objects/Customer) profile.
 	///   - id: The Square-assigned ID of the subscription.
-	///   - invoice_ids: The IDs of the [invoices](https://developer.squareup.com/reference/square_2021-05-13/objects/Invoice) created for the subscription, listed in order when the invoices were created (oldest invoices appear first).
+	///   - invoice_ids: The IDs of the [invoices](https://developer.squareup.com/reference/square_2021-06-16/objects/Invoice) created for the subscription, listed in order when the invoices were created (oldest invoices appear first).
 	///   - location_id: The ID of the location associated with the subscription.
-	///   - paid_until_date: The date up to which the customer is invoiced for the subscription, in YYYY-MM-DD format (for example, 2013-01-15).  After the invoice is paid for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a customer gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
-	///   - plan_id: The ID of the associated [subscription plan](https://developer.squareup.com/reference/square_2021-05-13/objects/CatalogSubscriptionPlan).
+	///   - plan_id: The ID of the associated [subscription plan](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogSubscriptionPlan).
 	///   - price_override_money: A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	///   - start_date: The start date of the subscription, in YYYY-MM-DD format (for example, 2013-01-15).
 	///   - status: The current status of the subscription.
 	///   - tax_percentage: The tax amount applied when billing the subscription. The percentage is expressed in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. For example, a value of `7.5` corresponds to 7.5%.
 	///   - timezone: Timezone that will be used in date calculations for the subscription. Defaults to the timezone of the location based on `location_id`. Format: the IANA Timezone Database identifier for the location timezone (for example, `America/Los_Angeles`).
 	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
-	public init(canceled_date: String? = nil, card_id: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, paid_until_date: String? = nil, plan_id: String? = nil, price_override_money: Money? = nil, start_date: String? = nil, status: String? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
+	public init(canceled_date: String? = nil, card_id: String? = nil, charged_through_date: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, plan_id: String? = nil, price_override_money: Money? = nil, start_date: String? = nil, status: String? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
 		self.canceled_date = canceled_date
 		self.card_id = card_id
+		self.charged_through_date = charged_through_date
 		self.created_at = created_at
 		self.customer_id = customer_id
 		self.id = id
 		self.invoice_ids = invoice_ids
 		self.location_id = location_id
-		self.paid_until_date = paid_until_date
 		self.plan_id = plan_id
 		self.price_override_money = price_override_money
 		self.start_date = start_date
@@ -13282,7 +14484,7 @@ public struct Subscription: Codable {
 	}
 }
 
-/// Determines the billing cadence of a [Subscription](https://developer.squareup.com/reference/square_2021-05-13/objects/Subscription)
+/// Determines the billing cadence of a [Subscription](https://developer.squareup.com/reference/square_2021-06-16/objects/Subscription)
 public enum SubscriptionCadence: String, Codable {
 	/// Once per day
 	case DAILY
@@ -13389,30 +14591,17 @@ public enum SubscriptionEventSubscriptionEventType: String, Codable {
 /// Describes a phase in a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
 public struct SubscriptionPhase: Codable {
 	/// The billing cadence of the phase. For example, weekly or monthly. This field cannot be changed after a `SubscriptionPhase` is created.
-	public var cadence: String
+	public let cadence: String
 	/// The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This field cannot be changed after a `SubscriptionPhase` is created.
-	public var ordinal: Int?
+	public let ordinal: Int?
 	/// The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can be indefinite. This field cannot be changed after a `SubscriptionPhase` is created.
-	public var periods: Int?
+	public let periods: Int?
 	/// The amount to bill for each `cadence`.
 	public var recurring_price_money: Money
 	/// The Square-assigned ID of the subscription phase. This field cannot be changed after a `SubscriptionPhase` is created.
-	public var uid: String?
+	public let uid: String?
 
-	/// Describes a phase in a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
-	/// - Parameters:
-	///   - cadence: The billing cadence of the phase. For example, weekly or monthly. This field cannot be changed after a `SubscriptionPhase` is created.
-	///   - ordinal: The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This field cannot be changed after a `SubscriptionPhase` is created.
-	///   - periods: The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can be indefinite. This field cannot be changed after a `SubscriptionPhase` is created.
-	///   - recurring_price_money: The amount to bill for each `cadence`.
-	///   - uid: The Square-assigned ID of the subscription phase. This field cannot be changed after a `SubscriptionPhase` is created.
-	public init(cadence: String, recurring_price_money: Money, ordinal: Int? = nil, periods: Int? = nil, uid: String? = nil) {
-		self.cadence = cadence
-		self.recurring_price_money = recurring_price_money
-		self.ordinal = ordinal
-		self.periods = periods
-		self.uid = uid
-	}
+	// no init-- this struct is read-only
 }
 
 /// Possible subscription status values.
@@ -13447,40 +14636,40 @@ public enum TaxInclusionType: String, Codable {
 public struct TeamMember: Codable {
 	/// Describes the team member's assigned locations.
 	public var assigned_locations: TeamMemberAssignedLocations?
-	/// The timestamp in RFC 3339 format describing when the team member was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
+	/// The timestamp, in RFC 3339 format, describing when the team member was created. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
 	public let created_at: Timestamp?
 	/// The email address associated with the team member.
 	public var email_address: String?
-	/// The family (i.e., last) name associated with the team member.
+	/// The family name (that is, the last name) associated with the team member.
 	public var family_name: String?
-	/// The given (i.e., first) name associated with the team member.
+	/// The given name (that is, the first name) associated with the team member.
 	public var given_name: String?
 	/// The unique ID for the team member.
 	public let id: String?
 	/// Whether the team member is the owner of the Square account.
 	public let is_owner: Bool?
-	/// The team member's phone number in E.164 format. Examples: +14155552671 - the country code is 1 for US +551155256325 - the country code is 55 for BR
+	/// The team member's phone number, in E.164 format. For example: +14155552671 - the country code is 1 for US +551155256325 - the country code is 55 for BR
 	public var phone_number: String?
 	/// A second ID used to associate the team member with an entity in another system.
 	public var reference_id: String?
 	/// Describes the status of the team member.
 	public var status: String?
-	/// The timestamp in RFC 3339 format describing when the team member was last updated. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
+	/// The timestamp, in RFC 3339 format, describing when the team member was last updated. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
 	public let updated_at: Timestamp?
 
 	/// A record representing an individual team member for a business.
 	/// - Parameters:
 	///   - assigned_locations: Describes the team member's assigned locations.
-	///   - created_at: The timestamp in RFC 3339 format describing when the team member was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
+	///   - created_at: The timestamp, in RFC 3339 format, describing when the team member was created. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
 	///   - email_address: The email address associated with the team member.
-	///   - family_name: The family (i.e., last) name associated with the team member.
-	///   - given_name: The given (i.e., first) name associated with the team member.
+	///   - family_name: The family name (that is, the last name) associated with the team member.
+	///   - given_name: The given name (that is, the first name) associated with the team member.
 	///   - id: The unique ID for the team member.
 	///   - is_owner: Whether the team member is the owner of the Square account.
-	///   - phone_number: The team member's phone number in E.164 format. Examples: +14155552671 - the country code is 1 for US +551155256325 - the country code is 55 for BR
+	///   - phone_number: The team member's phone number, in E.164 format. For example: +14155552671 - the country code is 1 for US +551155256325 - the country code is 55 for BR
 	///   - reference_id: A second ID used to associate the team member with an entity in another system.
 	///   - status: Describes the status of the team member.
-	///   - updated_at: The timestamp in RFC 3339 format describing when the team member was last updated. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
+	///   - updated_at: The timestamp, in RFC 3339 format, describing when the team member was last updated. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
 	public init(assigned_locations: TeamMemberAssignedLocations? = nil, created_at: Timestamp? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, id: String? = nil, is_owner: Bool? = nil, phone_number: String? = nil, reference_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
 		self.assigned_locations = assigned_locations
 		self.created_at = created_at
@@ -13513,11 +14702,11 @@ public struct TeamMemberAssignedLocations: Codable {
 	}
 }
 
-/// Enumerates the possible assignment types the team member can have
+/// Enumerates the possible assignment types that the team member can have.
 public enum TeamMemberAssignedLocationsAssignmentType: String, Codable {
-	/// The team member is assigned to all current and future locations - the location_ids field is empty if the team member has this assignment type.
+	/// The team member is assigned to all current and future locations. The `location_ids` field is empty if the team member has this assignment type.
 	case ALL_CURRENT_AND_FUTURE_LOCATIONS
-	/// The team member is assigned to an explicit subset of locations - the location_ids field is the list of locations that the team member is assigned to.
+	/// The team member is assigned to an explicit subset of locations. The `location_ids` field is the list of locations that the team member is assigned to.
 	case EXPLICIT_LOCATIONS
 }
 
@@ -13531,7 +14720,7 @@ public struct TeamMemberBookingProfile: Codable {
 	public var is_bookable: Bool?
 	/// The URL of the team member's image for the bookings profile.
 	public var profile_image_url: String?
-	/// The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-05-13/objects/TeamMember) object for the team member associated with the booking profile.
+	/// The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-06-16/objects/TeamMember) object for the team member associated with the booking profile.
 	public var team_member_id: String?
 
 	/// The booking profile of a seller's team member, including the team member's ID, display name, description and whether the team member can be booked as a service provider.
@@ -13540,7 +14729,7 @@ public struct TeamMemberBookingProfile: Codable {
 	///   - display_name: The display name of the team member.
 	///   - is_bookable: Indicates whether the team member can be booked through the Bookings API or the seller's online booking channel or site (`true) or not (`false`).
 	///   - profile_image_url: The URL of the team member's image for the bookings profile.
-	///   - team_member_id: The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-05-13/objects/TeamMember) object for the team member associated with the booking profile.
+	///   - team_member_id: The ID of the [TeamMember](https://developer.squareup.com/reference/square_2021-06-16/objects/TeamMember) object for the team member associated with the booking profile.
 	public init(description: String? = nil, display_name: String? = nil, is_bookable: Bool? = nil, profile_image_url: String? = nil, team_member_id: String? = nil) {
 		self.description = description
 		self.display_name = display_name
@@ -13550,11 +14739,21 @@ public struct TeamMemberBookingProfile: Codable {
 	}
 }
 
+/// Enumerates the possible invitation statuses the team member can have within a business.
+public enum TeamMemberInvitationStatus: String, Codable {
+	/// The team member has not received an invitation.
+	case UNINVITED
+	/// The team member has received an invitation, but had not accepted it.
+	case PENDING
+	/// The team member has both received and accepted an invitation.
+	case ACCEPTED
+}
+
 /// Enumerates the possible statuses the team member can have within a business.
 public enum TeamMemberStatus: String, Codable {
-	/// The team member can log in to Point of Sale and Dashboard.
+	/// The team member can sign in to Point of Sale and the Seller Dashboard.
 	case ACTIVE
-	/// The team member can no longer log in to Point of Sale or Dashboard, but their sales reports remain available.
+	/// The team member can no longer sign in to Point of Sale or the Seller Dashboard, but the team member's sales reports remain available.
 	case INACTIVE
 }
 
@@ -13587,7 +14786,7 @@ public struct TeamMemberWage: Codable {
 public struct Tender: Codable {
 	/// Additional recipients (other than the merchant) receiving a portion of this tender. For example, fees assessed on the purchase by a third party integration.
 	public var additional_recipients: [AdditionalRecipient]?
-	/// The total amount of the tender, including `tip_money`. If the tender has a `payment_id`, the `total_money` of the corresponding [Payment](https://developer.squareup.com/reference/square_2021-05-13/objects/Payment) will be equal to the `amount_money` of the tender.
+	/// The total amount of the tender, including `tip_money`. If the tender has a `payment_id`, the `total_money` of the corresponding [Payment](https://developer.squareup.com/reference/square_2021-06-16/objects/Payment) will be equal to the `amount_money` of the tender.
 	public var amount_money: Money?
 	/// The details of the card tender.  This value is present only if the value of `type` is `CARD`.
 	public var card_details: TenderCardDetails?
@@ -13603,7 +14802,7 @@ public struct Tender: Codable {
 	public var location_id: String?
 	/// An optional note associated with the tender at the time of payment.
 	public var note: String?
-	/// The ID of the [Payment](https://developer.squareup.com/reference/square_2021-05-13/objects/Payment) that corresponds to this tender. This value is only present for payments created with the v2 Payments API.
+	/// The ID of the [Payment](https://developer.squareup.com/reference/square_2021-06-16/objects/Payment) that corresponds to this tender. This value is only present for payments created with the v2 Payments API.
 	public var payment_id: String?
 	/// The amount of any Square processing fees applied to the tender.  This field is not immediately populated when a new transaction is created. It is usually available after about ten seconds.
 	public var processing_fee_money: Money?
@@ -13617,7 +14816,7 @@ public struct Tender: Codable {
 	/// Represents a tender (i.e., a method of payment) used in a Square transaction.
 	/// - Parameters:
 	///   - additional_recipients: Additional recipients (other than the merchant) receiving a portion of this tender. For example, fees assessed on the purchase by a third party integration.
-	///   - amount_money: The total amount of the tender, including `tip_money`. If the tender has a `payment_id`, the `total_money` of the corresponding [Payment](https://developer.squareup.com/reference/square_2021-05-13/objects/Payment) will be equal to the `amount_money` of the tender.
+	///   - amount_money: The total amount of the tender, including `tip_money`. If the tender has a `payment_id`, the `total_money` of the corresponding [Payment](https://developer.squareup.com/reference/square_2021-06-16/objects/Payment) will be equal to the `amount_money` of the tender.
 	///   - card_details: The details of the card tender.  This value is present only if the value of `type` is `CARD`.
 	///   - cash_details: The details of the cash tender.  This value is present only if the value of `type` is `CASH`.
 	///   - created_at: The timestamp for when the tender was created, in RFC 3339 format.
@@ -13625,7 +14824,7 @@ public struct Tender: Codable {
 	///   - id: The tender's unique ID.
 	///   - location_id: The ID of the transaction's associated location.
 	///   - note: An optional note associated with the tender at the time of payment.
-	///   - payment_id: The ID of the [Payment](https://developer.squareup.com/reference/square_2021-05-13/objects/Payment) that corresponds to this tender. This value is only present for payments created with the v2 Payments API.
+	///   - payment_id: The ID of the [Payment](https://developer.squareup.com/reference/square_2021-06-16/objects/Payment) that corresponds to this tender. This value is only present for payments created with the v2 Payments API.
 	///   - processing_fee_money: The amount of any Square processing fees applied to the tender.  This field is not immediately populated when a new transaction is created. It is usually available after about ten seconds.
 	///   - tip_money: The tip's amount of the tender.
 	///   - transaction_id: The ID of the tender's associated transaction.
@@ -13654,14 +14853,14 @@ public struct TenderCardDetails: Codable {
 	public var card: Card?
 	/// The method used to enter the card's details for the transaction.
 	public var entry_method: String?
-	/// The credit card payment's current state (such as `AUTHORIZED` or `CAPTURED`). See [TenderCardDetailsStatus](https://developer.squareup.com/reference/square_2021-05-13/objects/TenderCardDetailsStatus) for possible values.
+	/// The credit card payment's current state (such as `AUTHORIZED` or `CAPTURED`). See [TenderCardDetailsStatus](https://developer.squareup.com/reference/square_2021-06-16/objects/TenderCardDetailsStatus) for possible values.
 	public var status: String?
 
 	/// Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
 	/// - Parameters:
 	///   - card: The credit card's non-confidential details.
 	///   - entry_method: The method used to enter the card's details for the transaction.
-	///   - status: The credit card payment's current state (such as `AUTHORIZED` or `CAPTURED`). See [TenderCardDetailsStatus](https://developer.squareup.com/reference/square_2021-05-13/objects/TenderCardDetailsStatus) for possible values.
+	///   - status: The credit card payment's current state (such as `AUTHORIZED` or `CAPTURED`). See [TenderCardDetailsStatus](https://developer.squareup.com/reference/square_2021-06-16/objects/TenderCardDetailsStatus) for possible values.
 	public init(card: Card? = nil, entry_method: String? = nil, status: String? = nil) {
 		self.card = card
 		self.entry_method = entry_method
@@ -13776,22 +14975,6 @@ public struct TerminalCheckout: Codable {
 		self.status = status
 		self.updated_at = updated_at
 	}
-}
-
-/// 
-public enum TerminalCheckoutPaymentType: String, Codable {
-	/// Accept credit card or debit card payments via tap, dip or swipe.
-	case CARD_PRESENT
-	/// Launches the manual credit or debit card entry screen for the buyer to complete.
-	case MANUAL_CARD_ENTRY
-	/// Launches the iD checkout screen for the buyer to complete.
-	case FELICA_ID
-	/// Launches the QUICPay checkout screen for the buyer to complete.
-	case FELICA_QUICPAY
-	/// Launches the Transportation Group checkout screen for the buyer to complete.
-	case FELICA_TRANSPORTATION_GROUP
-	/// Launches a checkout screen for the buyer on the Square Terminal that allows them to select a specific FeliCa brand or select the check balance screen.
-	case FELICA_ALL
 }
 
 public struct TerminalCheckoutQuery: Codable {
@@ -13938,7 +15121,7 @@ public struct TipSettings: Codable {
 	public var custom_tip_field: Bool?
 	/// Indicates whether tip options should be presented on the screen before presenting the signature screen during card payment. Defaults to false.
 	public var separate_tip_screen: Bool?
-	/// Enables the "Smart Tip Amounts" behavior. Exact tipping options depend on the region in which the Square seller is active.  In the United States and Canada, tipping options are presented in whole dollar amounts for payments under $10 USD/CAD respectively.  If set to true, the `tip_percentages` settings is ignored. Defaults to false.  To learn more about smart tipping, see [Accept Tips with the Square App](https://squareup.com/help/us/en/article/5069-accept-tips-with-the-square-app).
+	/// Enables the "Smart Tip Amounts" behavior. Exact tipping options depend on the region in which the Square seller is active.  For payments under 10.00, in the Australia, Canada, Ireland, United Kingdom, and United States, tipping options are presented as no tip, .50, 1.00 or 2.00.  For payment amounts of 10.00 or greater, tipping options are presented as the following percentages: 0%, 5%, 10%, 15%.  If set to true, the `tip_percentages` settings is ignored. Defaults to false.  To learn more about smart tipping, see [Accept Tips with the Square App](https://squareup.com/help/us/en/article/5069-accept-tips-with-the-square-app).
 	public var smart_tipping: Bool?
 	/// A list of tip percentages that should be presented during the checkout flow, specified as up to 3 non-negative integers from 0 to 100 (inclusive). Defaults to 15, 20, and 25.
 	public var tip_percentages: [Int]?
@@ -13966,7 +15149,7 @@ public struct Transaction: Codable {
 	public var order_id: String?
 	/// The Square product that processed the transaction.
 	public var product: String?
-	/// If the transaction was created with the [Charge](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/charge) endpoint, this value is the same as the value provided for the `reference_id` parameter in the request to that endpoint. Otherwise, it is not set.
+	/// If the transaction was created with the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint, this value is the same as the value provided for the `reference_id` parameter in the request to that endpoint. Otherwise, it is not set.
 	public var reference_id: String?
 	/// Refunds that have been applied to any tender in the transaction.
 	public var refunds: [Refund]?
@@ -13983,7 +15166,7 @@ public struct Transaction: Codable {
 	///   - location_id: The ID of the transaction's associated location.
 	///   - order_id: The order_id is an identifier for the order associated with this transaction, if any.
 	///   - product: The Square product that processed the transaction.
-	///   - reference_id: If the transaction was created with the [Charge](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/charge) endpoint, this value is the same as the value provided for the `reference_id` parameter in the request to that endpoint. Otherwise, it is not set.
+	///   - reference_id: If the transaction was created with the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint, this value is the same as the value provided for the `reference_id` parameter in the request to that endpoint. Otherwise, it is not set.
 	///   - refunds: Refunds that have been applied to any tender in the transaction.
 	///   - shipping_address: The shipping address provided in the request, if any.
 	///   - tenders: The tenders used to pay in the transaction.
@@ -14025,6 +15208,35 @@ public enum TransactionProduct: String, Codable {
 public enum TransactionType: String, Codable {
 	case DEBIT
 	case CREDIT
+}
+
+/// A request to unlink a customer to a gift card
+public struct UnlinkCustomerFromGiftCardRequest: Codable {
+	public var customer_id: String
+
+	/// A request to unlink a customer to a gift card
+	/// - Parameters:
+	///   - customer_id: 
+	public init(customer_id: String) {
+		self.customer_id = customer_id
+	}
+}
+
+/// A response that contains one `GiftCard` that was unlinked. The response might contain a set of `Error` objects if the request resulted in errors.
+public struct UnlinkCustomerFromGiftCardResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A gift card that was unlinked.
+	public var gift_card: GiftCard?
+
+	/// A response that contains one `GiftCard` that was unlinked. The response might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - gift_card: A gift card that was unlinked.
+	public init(errors: [SquareError]? = nil, gift_card: GiftCard? = nil) {
+		self.errors = errors
+		self.gift_card = gift_card
+	}
 }
 
 public struct UpdateBookingRequest: Codable {
@@ -14081,12 +15293,12 @@ public struct UpdateBreakTypeResponse: Codable {
 	}
 }
 
-/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/update-customer-group) endpoint.
+/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/update-customer-group) endpoint.
 public struct UpdateCustomerGroupRequest: Codable {
 	/// The `CustomerGroup` object including all the updates you want to make.
 	public var group: CustomerGroup
 
-	/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/update-customer-group) endpoint.
+	/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/update-customer-group) endpoint.
 	/// - Parameters:
 	///   - group: The `CustomerGroup` object including all the updates you want to make.
 	public init(group: CustomerGroup) {
@@ -14094,14 +15306,14 @@ public struct UpdateCustomerGroupRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/update-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/update-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
 public struct UpdateCustomerGroupResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully updated customer group.
 	public var group: CustomerGroup?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-05-13/customer-groups-api/update-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](https://developer.squareup.com/reference/square_2021-06-16/customer-groups-api/update-customer-group) endpoint.  Either `errors` or `group` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The successfully updated customer group.
@@ -14273,12 +15485,12 @@ public struct UpdateItemTaxesResponse: Codable {
 	}
 }
 
-/// Request object for the [UpdateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/update-location) endpoint.
+/// Request object for the [UpdateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/update-location) endpoint.
 public struct UpdateLocationRequest: Codable {
 	/// The `Location` object with only the fields to update.
 	public var location: Location?
 
-	/// Request object for the [UpdateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/update-location) endpoint.
+	/// Request object for the [UpdateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/update-location) endpoint.
 	/// - Parameters:
 	///   - location: The `Location` object with only the fields to update.
 	public init(location: Location? = nil) {
@@ -14286,14 +15498,14 @@ public struct UpdateLocationRequest: Codable {
 	}
 }
 
-/// Response object returned by the [UpdateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/update-location) endpoint.
+/// Response object returned by the [UpdateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/update-location) endpoint.
 public struct UpdateLocationResponse: Codable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The updated `Location`.
 	public var location: Location?
 
-	/// Response object returned by the [UpdateLocation](https://developer.squareup.com/reference/square_2021-05-13/locations-api/update-location) endpoint.
+	/// Response object returned by the [UpdateLocation](https://developer.squareup.com/reference/square_2021-06-16/locations-api/update-location) endpoint.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - location: The updated `Location`.
@@ -14303,7 +15515,7 @@ public struct UpdateLocationResponse: Codable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/update-order) endpoint.
+/// Defines the fields that are included in requests to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/update-order) endpoint.
 public struct UpdateOrderRequest: Codable {
 	/// The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders#on-dot-notation) fields to clear. For example, `line_items[uid].note`. For more information, see [Deleting fields](https://developer.squareup.com/docs/orders-api/manage-orders#delete-fields).
 	public var fields_to_clear: [String]?
@@ -14312,7 +15524,7 @@ public struct UpdateOrderRequest: Codable {
 	/// The [sparse order](https://developer.squareup.com/docs/orders-api/manage-orders#sparse-order-objects) containing only the fields to update and the version to which the update is being applied.
 	public var order: Order?
 
-	/// Defines the fields that are included in requests to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/update-order) endpoint.
+	/// Defines the fields that are included in requests to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/update-order) endpoint.
 	/// - Parameters:
 	///   - fields_to_clear: The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders#on-dot-notation) fields to clear. For example, `line_items[uid].note`. For more information, see [Deleting fields](https://developer.squareup.com/docs/orders-api/manage-orders#delete-fields).
 	///   - idempotency_key: A value you specify that uniquely identifies this update request.  If you are unsure whether a particular update was applied to an order successfully, you can reattempt it with the same idempotency key without worrying about creating duplicate updates to the order. The latest order version is returned.  For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
@@ -14324,14 +15536,14 @@ public struct UpdateOrderRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/update-order) endpoint.
+/// Defines the fields that are included in the response body of a request to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/update-order) endpoint.
 public struct UpdateOrderResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The updated order.
 	public var order: Order?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-05-13/orders-api/update-order) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [UpdateOrder](https://developer.squareup.com/reference/square_2021-06-16/orders-api/update-order) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The updated order.
@@ -14341,14 +15553,14 @@ public struct UpdateOrderResponse: Codable {
 	}
 }
 
-/// Describes a request to update a payment using  [UpdatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/update-payment).
+/// Describes a request to update a payment using  [UpdatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/update-payment).
 public struct UpdatePaymentRequest: Codable {
 	/// A unique string that identifies this `UpdatePayment` request. Keys can be any valid string but must be unique for every `UpdatePayment` request.  The maximum is 45 characters.  For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
 	public var idempotency_key: String
 	/// The updated `Payment` object.
 	public var payment: Payment?
 
-	/// Describes a request to update a payment using  [UpdatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/update-payment).
+	/// Describes a request to update a payment using  [UpdatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/update-payment).
 	/// - Parameters:
 	///   - idempotency_key: A unique string that identifies this `UpdatePayment` request. Keys can be any valid string but must be unique for every `UpdatePayment` request.  The maximum is 45 characters.  For more information, see [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency).
 	///   - payment: The updated `Payment` object.
@@ -14358,14 +15570,14 @@ public struct UpdatePaymentRequest: Codable {
 	}
 }
 
-/// Defines the response returned by  [UpdatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/update-payment).
+/// Defines the response returned by  [UpdatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/update-payment).
 public struct UpdatePaymentResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The updated payment.
 	public var payment: Payment?
 
-	/// Defines the response returned by  [UpdatePayment](https://developer.squareup.com/reference/square_2021-05-13/payments-api/update-payment).
+	/// Defines the response returned by  [UpdatePayment](https://developer.squareup.com/reference/square_2021-06-16/payments-api/update-payment).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - payment: The updated payment.
@@ -14405,12 +15617,12 @@ public struct UpdateShiftResponse: Codable {
 	}
 }
 
-/// Defines parameters in a [UpdateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/update-subscription) endpoint request.
+/// Defines parameters in a [UpdateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/update-subscription) endpoint request.
 public struct UpdateSubscriptionRequest: Codable {
 	/// The subscription object containing the current version, and fields to update. Unset fields will be left at their current server values, and JSON `null` values will be treated as a request to clear the relevant data.
 	public var subscription: Subscription?
 
-	/// Defines parameters in a [UpdateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/update-subscription) endpoint request.
+	/// Defines parameters in a [UpdateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/update-subscription) endpoint request.
 	/// - Parameters:
 	///   - subscription: The subscription object containing the current version, and fields to update. Unset fields will be left at their current server values, and JSON `null` values will be treated as a request to clear the relevant data.
 	public init(subscription: Subscription? = nil) {
@@ -14418,14 +15630,14 @@ public struct UpdateSubscriptionRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response from the [UpdateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/update-subscription) endpoint.
+/// Defines the fields that are included in the response from the [UpdateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/update-subscription) endpoint.
 public struct UpdateSubscriptionResponse: Codable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The modified `Subscription` object.
 	public var subscription: Subscription?
 
-	/// Defines the fields that are included in the response from the [UpdateSubscription](https://developer.squareup.com/reference/square_2021-05-13/subscriptions-api/update-subscription) endpoint.
+	/// Defines the fields that are included in the response from the [UpdateSubscription](https://developer.squareup.com/reference/square_2021-06-16/subscriptions-api/update-subscription) endpoint.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - subscription: The modified `Subscription` object.
@@ -14437,25 +15649,25 @@ public struct UpdateSubscriptionResponse: Codable {
 
 /// Represents an update request for a `TeamMember` object.
 public struct UpdateTeamMemberRequest: Codable {
-	/// The data which will be used to update the `TeamMember` object.
+	/// The data used to update the `TeamMember` object.
 	public var team_member: TeamMember?
 
 	/// Represents an update request for a `TeamMember` object.
 	/// - Parameters:
-	///   - team_member: The data which will be used to update the `TeamMember` object.
+	///   - team_member: The data used to update the `TeamMember` object.
 	public init(team_member: TeamMember? = nil) {
 		self.team_member = team_member
 	}
 }
 
-/// Represents a response from an update request, containing the updated `TeamMember` object or error messages.
+/// Represents a response from an update request containing the updated `TeamMember` object or error messages.
 public struct UpdateTeamMemberResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully updated `TeamMember` object.
 	public var team_member: TeamMember?
 
-	/// Represents a response from an update request, containing the updated `TeamMember` object or error messages.
+	/// Represents a response from an update request containing the updated `TeamMember` object or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - team_member: The successfully updated `TeamMember` object.
@@ -14467,25 +15679,25 @@ public struct UpdateTeamMemberResponse: Codable {
 
 /// Represents an update request for the `WageSetting` object describing a `TeamMember`.
 public struct UpdateWageSettingRequest: Codable {
-	/// The new `WageSetting` object that will completely replace the existing one.
+	/// The new `WageSetting` object that completely replaces the existing one.
 	public var wage_setting: WageSetting
 
 	/// Represents an update request for the `WageSetting` object describing a `TeamMember`.
 	/// - Parameters:
-	///   - wage_setting: The new `WageSetting` object that will completely replace the existing one.
+	///   - wage_setting: The new `WageSetting` object that completely replaces the existing one.
 	public init(wage_setting: WageSetting) {
 		self.wage_setting = wage_setting
 	}
 }
 
-/// Represents a response from an update request, containing the updated `WageSetting` object or error messages.
+/// Represents a response from an update request containing the updated `WageSetting` object or error messages.
 public struct UpdateWageSettingResponse: Codable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully updated `WageSetting` object.
 	public var wage_setting: WageSetting?
 
-	/// Represents a response from an update request, containing the updated `WageSetting` object or error messages.
+	/// Represents a response from an update request containing the updated `WageSetting` object or error messages.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - wage_setting: The successfully updated `WageSetting` object.
@@ -15832,12 +17044,12 @@ public struct VoidTransactionRequest: Codable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [VoidTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/void-transaction) endpoint.
+/// Defines the fields that are included in the response body of a request to the [VoidTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/void-transaction) endpoint.
 public struct VoidTransactionResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [VoidTransaction](https://developer.squareup.com/reference/square_2021-05-13/transactions-api/void-transaction) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [VoidTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/void-transaction) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -15847,27 +17059,27 @@ public struct VoidTransactionResponse: Codable {
 
 /// An object representing a team member's wage information.
 public struct WageSetting: Codable {
-	/// The timestamp in RFC 3339 format describing when the wage setting object was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
+	/// The timestamp, in RFC 3339 format, describing when the wage setting object was created. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
 	public let created_at: Timestamp?
-	/// Whether the team member is exempt from the overtime rules of the seller country.
+	/// Whether the team member is exempt from the overtime rules of the seller's country.
 	public var is_overtime_exempt: Bool?
-	/// <b>Required</b> The ordered list of jobs that the team member is assigned to. The first job assignment is considered the team member's "Primary Job". <br> <b>Min Length 1    Max Length 12</b>
+	/// Required. The ordered list of jobs that the team member is assigned to. The first job assignment is considered the team member's primary job.  The minimum length is 1 and the maximum length is 12.
 	public var job_assignments: [JobAssignment]?
 	/// The unique ID of the `TeamMember` whom this wage setting describes.
 	public var team_member_id: String?
-	/// The timestamp in RFC 3339 format describing when the wage setting object was last updated. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
+	/// The timestamp, in RFC 3339 format, describing when the wage setting object was last updated. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
 	public let updated_at: Timestamp?
-	/// Used for resolving concurrency issues; request will fail if version provided does not match server version at time of request. If not provided, Square executes a blind write, potentially overwriting data from another write. Read about [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) in Square APIs for more information.
+	/// Used for resolving concurrency issues. The request fails if the version provided does not match the server version at the time of the request. If not provided, Square executes a blind write, potentially overwriting data from another write. For more information, see [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency).
 	public var version: Int?
 
 	/// An object representing a team member's wage information.
 	/// - Parameters:
-	///   - created_at: The timestamp in RFC 3339 format describing when the wage setting object was created. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
-	///   - is_overtime_exempt: Whether the team member is exempt from the overtime rules of the seller country.
-	///   - job_assignments: <b>Required</b> The ordered list of jobs that the team member is assigned to. The first job assignment is considered the team member's "Primary Job". <br> <b>Min Length 1    Max Length 12</b>
+	///   - created_at: The timestamp, in RFC 3339 format, describing when the wage setting object was created. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
+	///   - is_overtime_exempt: Whether the team member is exempt from the overtime rules of the seller's country.
+	///   - job_assignments: Required. The ordered list of jobs that the team member is assigned to. The first job assignment is considered the team member's primary job.  The minimum length is 1 and the maximum length is 12.
 	///   - team_member_id: The unique ID of the `TeamMember` whom this wage setting describes.
-	///   - updated_at: The timestamp in RFC 3339 format describing when the wage setting object was last updated. Ex: "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z"
-	///   - version: Used for resolving concurrency issues; request will fail if version provided does not match server version at time of request. If not provided, Square executes a blind write, potentially overwriting data from another write. Read about [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) in Square APIs for more information.
+	///   - updated_at: The timestamp, in RFC 3339 format, describing when the wage setting object was last updated. For example, "2018-10-04T04:00:00-07:00" or "2019-02-05T12:00:00Z".
+	///   - version: Used for resolving concurrency issues. The request fails if the version provided does not match the server version at the time of the request. If not provided, Square executes a blind write, potentially overwriting data from another write. For more information, see [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency).
 	public init(created_at: Timestamp? = nil, is_overtime_exempt: Bool? = nil, job_assignments: [JobAssignment]? = nil, team_member_id: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.created_at = created_at
 		self.is_overtime_exempt = is_overtime_exempt
