@@ -1355,6 +1355,27 @@ public struct CatalogSubscriptionPlan: Codable {
 	// no init-- this struct is read-only
 }
 
+/// Represents the rule of conversion between a stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) and a non-stockable sell-by or receive-by `CatalogItemVariation` that share the same underlying stock.
+public struct CatalogStockConversion: Codable {
+	/// The converted equivalent quantity of the non-stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation)  in its measurement unit. The `stockable_quantity` value and this `nonstockable_quantity` value together define the conversion ratio between stockable item variation and the non-stockable item variation. It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	public var nonstockable_quantity: String
+	/// References to the stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) for this stock conversion. Selling, receiving or recounting the non-stockable `CatalogItemVariation`  defined with a stock conversion results in adjustments of this stockable `CatalogItemVariation`. This immutable field must reference a stockable `CatalogItemVariation` that shares the parent [CatalogItem](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItem) of the converted `CatalogItemVariation.`
+	public var stockable_item_variation_id: String
+	/// The quantity of the stockable item variation (as identified by `stockable_item_variation_id`)  equivalent to the non-stockable item variation quantity (as specified in `nonstockable_quantity`)  as defined by this stock conversion.  It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	public var stockable_quantity: String
+	
+	/// Represents the rule of conversion between a stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) and a non-stockable sell-by or receive-by `CatalogItemVariation` that share the same underlying stock.
+	/// - Parameters:
+	///   - nonstockable_quantity: The converted equivalent quantity of the non-stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation)  in its measurement unit. The `stockable_quantity` value and this `nonstockable_quantity` value together define the conversion ratio between stockable item variation and the non-stockable item variation. It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	///   - stockable_item_variation_id: References to the stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItemVariation) for this stock conversion. Selling, receiving or recounting the non-stockable `CatalogItemVariation`  defined with a stock conversion results in adjustments of this stockable `CatalogItemVariation`. This immutable field must reference a stockable `CatalogItemVariation` that shares the parent [CatalogItem](https://developer.squareup.com/reference/square_2021-06-16/objects/CatalogItem) of the converted `CatalogItemVariation.`
+	///   - stockable_quantity: The quantity of the stockable item variation (as identified by `stockable_item_variation_id`)  equivalent to the non-stockable item variation quantity (as specified in `nonstockable_quantity`)  as defined by this stock conversion.  It accepts a decimal number in a string format that can take up to 10 digits before the decimal point and up to 5 digits after the decimal point.
+	public init(nonstockable_quantity: String, stockable_item_variation_id: String, stockable_quantity: String) {
+		self.nonstockable_quantity = nonstockable_quantity
+		self.stockable_item_variation_id = stockable_item_variation_id
+		self.stockable_quantity = stockable_quantity
+	}
+}
+
 /// A tax applicable to an item.
 public struct CatalogTax: Codable {
 	/// If `true`, the fee applies to custom amounts entered into the Square Point of Sale app that are not associated with a particular `CatalogItem`.
