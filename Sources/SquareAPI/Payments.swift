@@ -109,7 +109,7 @@ public struct UpdatePayment: SquareAPIEndpoint {
 		let payment_id: String
 		/// Updates a payment with the APPROVED status. You can update the `amount_money` and `tip_money` using this endpoint.
 		/// - Parameters:
-		///   - payment_id: (Beta) The ID of the payment to update.
+		///   - payment_id: The ID of the payment to update.
 		public init(payment_id: String) {
 			self.payment_id = payment_id
 		}

@@ -100,7 +100,7 @@ public struct RetrieveBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Retrieves a booking.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-06-16/objects/Booking) object representing the to-be-retrieved booking.
+		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-08-18/objects/Booking) object representing the to-be-retrieved booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
@@ -121,7 +121,7 @@ public struct UpdateBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Updates a booking.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-06-16/objects/Booking) object representing the to-be-updated booking.
+		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-08-18/objects/Booking) object representing the to-be-updated booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
@@ -141,7 +141,7 @@ public struct CancelBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Cancels an existing booking.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-06-16/objects/Booking) object representing the to-be-cancelled booking.
+		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-08-18/objects/Booking) object representing the to-be-cancelled booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}

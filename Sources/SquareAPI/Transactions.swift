@@ -86,7 +86,7 @@ public struct ListTransactions: SquareAPIEndpoint {
 	}
 }
 
-/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card payment token generated with the Web Payments SDK) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/retrieve-transaction). See the `processing_fee_money` field of each [Tender included](https://developer.squareup.com/reference/square_2021-06-16/objects/Tender) in the transaction.
+/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card payment token generated with the Web Payments SDK) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-08-18/transactions-api/retrieve-transaction). See the `processing_fee_money` field of each [Tender included](https://developer.squareup.com/reference/square_2021-08-18/objects/Tender) in the transaction.
 @available(*,deprecated)
 public struct Charge: SquareAPIEndpoint {
 	public typealias inputType = ChargeRequest
@@ -94,7 +94,7 @@ public struct Charge: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card payment token generated with the Web Payments SDK) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/retrieve-transaction). See the `processing_fee_money` field of each [Tender included](https://developer.squareup.com/reference/square_2021-06-16/objects/Tender) in the transaction.
+		/// Charges a card represented by a card nonce or a customer's card on file.  Your request to this endpoint must include _either_:  - A value for the `card_nonce` parameter (to charge a card payment token generated with the Web Payments SDK) - Values for the `customer_card_id` and `customer_id` parameters (to charge a customer's card on file)  In order for an eCommerce payment to potentially qualify for [Square chargeback protection](https://squareup.com/help/article/5394), you _must_ provide values for the following parameters in your request:  - `buyer_email_address` - At least one of `billing_address` or `shipping_address`  When this response is returned, the amount of Square's processing fee might not yet be calculated. To obtain the processing fee, wait about ten seconds and call [RetrieveTransaction](https://developer.squareup.com/reference/square_2021-08-18/transactions-api/retrieve-transaction). See the `processing_fee_money` field of each [Tender included](https://developer.squareup.com/reference/square_2021-08-18/objects/Tender) in the transaction.
 		/// - Parameters:
 		///   - location_id: The ID of the location to associate the created transaction with.
 		public init(location_id: String) {
@@ -132,7 +132,7 @@ public struct RetrieveTransaction: SquareAPIEndpoint {
 	}
 }
 
-/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-08-18/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 @available(*,deprecated)
 public struct CaptureTransaction: SquareAPIEndpoint {
 	public typealias inputType = Empty
@@ -141,7 +141,7 @@ public struct CaptureTransaction: SquareAPIEndpoint {
 	public struct Params {
 		let location_id: String
 		let transaction_id: String
-		/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+		/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-08-18/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 		/// - Parameters:
 		///   - location_id: 
 		///   - transaction_id: 
@@ -180,7 +180,7 @@ public struct CreateRefund: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-08-18/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 @available(*,deprecated)
 public struct VoidTransaction: SquareAPIEndpoint {
 	public typealias inputType = Empty
@@ -189,7 +189,7 @@ public struct VoidTransaction: SquareAPIEndpoint {
 	public struct Params {
 		let location_id: String
 		let transaction_id: String
-		/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-06-16/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+		/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2021-08-18/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 		/// - Parameters:
 		///   - location_id: 
 		///   - transaction_id: 

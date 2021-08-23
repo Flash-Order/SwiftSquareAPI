@@ -12,8 +12,8 @@ public struct ListGiftCards: SquareAPIEndpoint {
 		let customer_id: String?
 		/// Lists all gift cards. You can specify optional filters to retrieve  a subset of the gift cards.
 		/// - Parameters:
-		///   - type: (Beta) If a type is provided, gift cards of this type are returned  (see [GiftCardType](https://developer.squareup.com/reference/square_2021-06-16/enums/GiftCardType)). If no type is provided, it returns gift cards of all types.
-		///   - state: (Beta) If the state is provided, it returns the gift cards in the specified state  (see [GiftCardStatus](https://developer.squareup.com/reference/square_2021-06-16/enums/GiftCardStatus)). Otherwise, it returns the gift cards of all states.
+		///   - type: (Beta) If a type is provided, gift cards of this type are returned  (see [GiftCardType](https://developer.squareup.com/reference/square_2021-08-18/enums/GiftCardType)). If no type is provided, it returns gift cards of all types.
+		///   - state: (Beta) If the state is provided, it returns the gift cards in the specified state  (see [GiftCardStatus](https://developer.squareup.com/reference/square_2021-08-18/enums/GiftCardStatus)). Otherwise, it returns the gift cards of all states.
 		///   - limit: (Beta) If a value is provided, it returns only that number of results per page. The maximum number of results allowed per page is 50. The default value is 30.
 		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, it returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
 		///   - customer_id: (Beta) If a value is provided, returns only the gift cards linked to the specified customer
@@ -42,7 +42,7 @@ public struct ListGiftCards: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a digital gift card. You must activate the gift card before  it can be used. For more information, see  [Selling gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#selling-square-gift-cards).
+/// Creates a digital gift card or registers a physical (plastic) gift card. You must activate the gift card before  it can be used for payment. For more information, see  [Selling gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#selling-square-gift-cards).
 public struct CreateGiftCard: SquareAPIEndpoint {
 	public typealias inputType = CreateGiftCardRequest
 	public typealias outputType = CreateGiftCardResponse

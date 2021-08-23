@@ -28,7 +28,7 @@ public struct RetrieveSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Retrieves a subscription.
 		/// - Parameters:
-		///   - subscription_id: (Beta) The ID of the subscription to retrieve.
+		///   - subscription_id: The ID of the subscription to retrieve.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -49,7 +49,7 @@ public struct UpdateSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Updates a subscription. You can set, modify, and clear the `subscription` field values.
 		/// - Parameters:
-		///   - subscription_id: (Beta) The ID for the subscription to update.
+		///   - subscription_id: The ID for the subscription to update.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -69,7 +69,7 @@ public struct CancelSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Sets the `canceled_date` field to the end of the active billing period. After this date, the status changes from ACTIVE to CANCELED.
 		/// - Parameters:
-		///   - subscription_id: (Beta) The ID of the subscription to cancel.
+		///   - subscription_id: The ID of the subscription to cancel.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -92,9 +92,9 @@ public struct ListSubscriptionEvents: SquareAPIEndpoint {
 		let limit: Int?
 		/// Lists all events for a specific subscription. In the current implementation, only `START_SUBSCRIPTION` and `STOP_SUBSCRIPTION` (when the subscription was canceled) events are returned.
 		/// - Parameters:
-		///   - subscription_id: (Beta) The ID of the subscription to retrieve the events for.
-		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-		///   - limit: (Beta) The upper limit on the number of subscription events to return in the response.  Default: `200`
+		///   - subscription_id: The ID of the subscription to retrieve the events for.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - limit: The upper limit on the number of subscription events to return in the response.  Default: `200`
 		public init(subscription_id: String, cursor: String? = nil, limit: Int? = nil) {
 			self.subscription_id = subscription_id
 			self.cursor = cursor
@@ -124,7 +124,7 @@ public struct ResumeSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Resumes a deactivated subscription.
 		/// - Parameters:
-		///   - subscription_id: (Beta) The ID of the subscription to resume.
+		///   - subscription_id: The ID of the subscription to resume.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
