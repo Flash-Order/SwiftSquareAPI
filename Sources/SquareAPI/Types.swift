@@ -4515,6 +4515,8 @@ public struct OrderSource: Codable {
 }
 
 public typealias BankAccountPaymentDetails = Empty
+public typealias ApplicationDetails = Empty
+public typealias DigitalWalletDetails = Empty
 
 /// Represents a payment processed by the Square API.
 public struct Payment: Codable {
@@ -4677,6 +4679,7 @@ public struct Payment: Codable {
 		self.total_money = total_money
 		self.updated_at = updated_at
 		self.version_token = version_token
+		self.wallet_details = wallet_details
 	}
 }
 
