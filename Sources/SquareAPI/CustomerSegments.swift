@@ -10,7 +10,7 @@ public struct ListCustomerSegments: SquareAPIEndpoint {
 		/// Retrieves the list of customer segments of a business.
 		/// - Parameters:
 		///   - cursor: A pagination cursor returned by previous calls to `ListCustomerSegments`. This cursor is used to retrieve the next set of query results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results.  The limit is ignored if it is less than 1 or greater than 50. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. The limit is ignored if it is less than 1 or greater than 50. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 		public init(cursor: String? = nil, limit: Int? = nil) {
 			self.cursor = cursor
 			self.limit = limit

@@ -142,7 +142,7 @@ public struct CancelPayment: SquareAPIEndpoint {
 
 /// Completes (captures) a payment. By default, payments are set to complete immediately after they are created.  You can use this endpoint to complete a payment with the APPROVED `status`.
 public struct CompletePayment: SquareAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = CompletePaymentRequest
 	public typealias outputType = CompletePaymentResponse
 	public typealias paramType = Params
 	public struct Params {
