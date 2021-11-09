@@ -4514,6 +4514,18 @@ public struct OrderSource: Codable {
 	}
 }
 
+/// The state of the order.
+public enum OrderState: String, Codable {
+	/// Indicates that the order is open. Open orders can be updated.
+	case OPEN
+	/// Indicates that the order is completed. Completed orders are fully paid. This is a terminal state.
+	case COMPLETED
+	/// Indicates that the order is canceled. Canceled orders are not paid. This is a terminal state.
+	case CANCELED
+	/// Indicates that the order is in a draft state. Draft orders can be updated,  but cannot be paid or fulfilled.  For more information, see [Create Orders](https://developer.squareup.com/docs/orders-api/create-orders).
+	case DRAFT
+}
+
 public typealias BankAccountPaymentDetails = Empty
 public typealias ApplicationDetails = Empty
 public typealias DigitalWalletDetails = Empty
