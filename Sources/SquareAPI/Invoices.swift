@@ -34,7 +34,7 @@ public struct ListInvoices: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a draft [invoice](https://developer.squareup.com/reference/square_2021-10-20/objects/Invoice)  for an order created using the Orders API.  A draft invoice remains in your account and no action is taken.  You must publish the invoice before Square can process it (send it to the customer's email address or charge the customer’s card on file).
+/// Creates a draft [invoice](https://developer.squareup.com/reference/square_2021-12-15/objects/Invoice)  for an order created using the Orders API.  A draft invoice remains in your account and no action is taken.  You must publish the invoice before Square can process it (send it to the customer's email address or charge the customer’s card on file).
 public struct CreateInvoice: SquareAPIEndpoint {
 	public typealias inputType = CreateInvoiceRequest
 	public typealias outputType = CreateInvoiceResponse
@@ -108,7 +108,7 @@ public struct DeleteInvoice: SquareAPIEndpoint {
 		/// Deletes the specified invoice. When an invoice is deleted, the  associated order status changes to CANCELED. You can only delete a draft  invoice (you cannot delete a published invoice, including one that is scheduled for processing).
 		/// - Parameters:
 		///   - invoice_id: The ID of the invoice to delete.
-		///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-10-20/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](https://developer.squareup.com/reference/square_2021-10-20/invoices-api/get-invoice) or  [ListInvoices](https://developer.squareup.com/reference/square_2021-10-20/invoices-api/list-invoices).
+		///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_2021-12-15/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](https://developer.squareup.com/reference/square_2021-12-15/invoices-api/get-invoice) or  [ListInvoices](https://developer.squareup.com/reference/square_2021-12-15/invoices-api/list-invoices).
 		public init(invoice_id: String, version: Int? = nil) {
 			self.invoice_id = invoice_id
 			self.version = version
@@ -136,7 +136,7 @@ public struct CancelInvoice: SquareAPIEndpoint {
 		let invoice_id: String
 		/// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
 		/// - Parameters:
-		///   - invoice_id: The ID of the [invoice](https://developer.squareup.com/reference/square_2021-10-20/objects/Invoice) to cancel.
+		///   - invoice_id: The ID of the [invoice](https://developer.squareup.com/reference/square_2021-12-15/objects/Invoice) to cancel.
 		public init(invoice_id: String) {
 			self.invoice_id = invoice_id
 		}

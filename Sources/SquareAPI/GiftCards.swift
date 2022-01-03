@@ -12,11 +12,11 @@ public struct ListGiftCards: SquareAPIEndpoint {
 		let customer_id: String?
 		/// Lists all gift cards. You can specify optional filters to retrieve  a subset of the gift cards.
 		/// - Parameters:
-		///   - type: (Beta) If a type is provided, gift cards of this type are returned  (see [GiftCardType](https://developer.squareup.com/reference/square_2021-10-20/enums/GiftCardType)). If no type is provided, it returns gift cards of all types.
-		///   - state: (Beta) If the state is provided, it returns the gift cards in the specified state  (see [GiftCardStatus](https://developer.squareup.com/reference/square_2021-10-20/enums/GiftCardStatus)). Otherwise, it returns the gift cards of all states.
-		///   - limit: (Beta) If a value is provided, it returns only that number of results per page. The maximum number of results allowed per page is 50. The default value is 30.
-		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, it returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/docs/working-with-apis/pagination).
-		///   - customer_id: (Beta) If a value is provided, returns only the gift cards linked to the specified customer
+		///   - type: (Beta) If a [type](https://developer.squareup.com/reference/square_2021-12-15/enums/GiftCardType) is provided, the endpoint returns gift cards of the specified type. Otherwise, the endpoint returns gift cards of all types.
+		///   - state: (Beta) If a [state](https://developer.squareup.com/reference/square_2021-12-15/enums/GiftCardStatus) is provided, the endpoint returns the gift cards in the specified state. Otherwise, the endpoint returns the gift cards of all states.
+		///   - limit: (Beta) If a limit is provided, the endpoint returns only the specified number of results per page. The maximum value is 50. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - customer_id: (Beta) If a customer ID is provided, the endpoint returns only the gift cards linked to the specified customer.
 		public init(type: String? = nil, state: String? = nil, limit: Int? = nil, cursor: String? = nil, customer_id: String? = nil) {
 			self.type = type
 			self.state = state
@@ -62,7 +62,7 @@ public struct RetrieveGiftCardFromGAN: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a gift card using a nonce (a secure token) that represents the gift card.
+/// Retrieves a gift card using a secure payment token that represents the gift card.
 public struct RetrieveGiftCardFromNonce: SquareAPIEndpoint {
 	public typealias inputType = RetrieveGiftCardFromNonceRequest
 	public typealias outputType = RetrieveGiftCardFromNonceResponse
@@ -72,16 +72,16 @@ public struct RetrieveGiftCardFromNonce: SquareAPIEndpoint {
 	}
 }
 
-/// Links a customer to a gift card
+/// Links a customer to a gift card, which is also referred to as adding a card on file.
 public struct LinkCustomerToGiftCard: SquareAPIEndpoint {
 	public typealias inputType = LinkCustomerToGiftCardRequest
 	public typealias outputType = LinkCustomerToGiftCardResponse
 	public typealias paramType = Params
 	public struct Params {
 		let gift_card_id: String
-		/// Links a customer to a gift card
+		/// Links a customer to a gift card, which is also referred to as adding a card on file.
 		/// - Parameters:
-		///   - gift_card_id: (Beta) The ID of the gift card to link.
+		///   - gift_card_id: (Beta) The ID of the gift card to be linked.
 		public init(gift_card_id: String) {
 			self.gift_card_id = gift_card_id
 		}
@@ -92,16 +92,16 @@ public struct LinkCustomerToGiftCard: SquareAPIEndpoint {
 	}
 }
 
-/// Unlinks a customer from a gift card
+/// Unlinks a customer from a gift card, which is also referred to as removing a card on file.
 public struct UnlinkCustomerFromGiftCard: SquareAPIEndpoint {
 	public typealias inputType = UnlinkCustomerFromGiftCardRequest
 	public typealias outputType = UnlinkCustomerFromGiftCardResponse
 	public typealias paramType = Params
 	public struct Params {
 		let gift_card_id: String
-		/// Unlinks a customer from a gift card
+		/// Unlinks a customer from a gift card, which is also referred to as removing a card on file.
 		/// - Parameters:
-		///   - gift_card_id: (Beta) 
+		///   - gift_card_id: (Beta) The ID of the gift card to be unlinked.
 		public init(gift_card_id: String) {
 			self.gift_card_id = gift_card_id
 		}

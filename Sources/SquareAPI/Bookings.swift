@@ -1,3 +1,51 @@
+/// Retrieve a collection of bookings.
+public struct ListBookings: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListBookingsResponse
+	public typealias paramType = Params
+	public struct Params {
+		let limit: Int?
+		let cursor: String?
+		let team_member_id: String?
+		let location_id: String?
+		let start_at_min: String?
+		let start_at_max: String?
+		/// Retrieve a collection of bookings.
+		/// - Parameters:
+		///   - limit: (Beta) The maximum number of results per page to return in a paged response.
+		///   - cursor: (Beta) The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
+		///   - team_member_id: (Beta) The team member for whom to retrieve bookings. If this is not set, bookings of all members are retrieved.
+		///   - location_id: (Beta) The location for which to retrieve bookings. If this is not set, all locations' bookings are retrieved.
+		///   - start_at_min: (Beta) The RFC 3339 timestamp specifying the earliest of the start time. If this is not set, the current time is used.
+		///   - start_at_max: (Beta) The RFC 3339 timestamp specifying the latest of the start time. If this is not set, the time of 31 days after `start_at_min` is used.
+		public init(limit: Int? = nil, cursor: String? = nil, team_member_id: String? = nil, location_id: String? = nil, start_at_min: String? = nil, start_at_max: String? = nil) {
+			self.limit = limit
+			self.cursor = cursor
+			self.team_member_id = team_member_id
+			self.location_id = location_id
+			self.start_at_min = start_at_min
+			self.start_at_max = start_at_max
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/bookings"
+		var queries = [String]()
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if let v = inputs.team_member_id { queries.append("team_member_id=\(v)") }
+		if let v = inputs.location_id { queries.append("location_id=\(v)") }
+		if let v = inputs.start_at_min { queries.append("start_at_min=\(v)") }
+		if let v = inputs.start_at_max { queries.append("start_at_max=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
+	}
+}
+
 /// Creates a booking.
 public struct CreateBooking: SquareAPIEndpoint {
 	public typealias inputType = CreateBookingRequest
@@ -100,7 +148,7 @@ public struct RetrieveBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Retrieves a booking.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-10-20/objects/Booking) object representing the to-be-retrieved booking.
+		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-12-15/objects/Booking) object representing the to-be-retrieved booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
@@ -121,7 +169,7 @@ public struct UpdateBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Updates a booking.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-10-20/objects/Booking) object representing the to-be-updated booking.
+		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-12-15/objects/Booking) object representing the to-be-updated booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
@@ -141,7 +189,7 @@ public struct CancelBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Cancels an existing booking.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-10-20/objects/Booking) object representing the to-be-cancelled booking.
+		///   - booking_id: (Beta) The ID of the [Booking](https://developer.squareup.com/reference/square_2021-12-15/objects/Booking) object representing the to-be-cancelled booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}

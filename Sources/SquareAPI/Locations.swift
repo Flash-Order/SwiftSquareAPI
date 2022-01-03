@@ -1,4 +1,4 @@
-/// Provides information of all locations of a business.  Many Square API endpoints require a `location_id` parameter. The `id` field of the [`Location`](https://developer.squareup.com/reference/square_2021-10-20/objects/Location) objects returned by this endpoint correspond to that `location_id` parameter.
+/// Provides details about all of the seller's locations, including those with an inactive status.
 public struct ListLocations: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -9,7 +9,7 @@ public struct ListLocations: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a location.
+/// Creates a [location](https://developer.squareup.com/docs/locations-api). Creating new locations allows for separate configuration of receipt layouts, item prices,  and sales reports. Developers can use locations to separate sales activity via applications  that integrate with Square from sales activity elsewhere in a seller's account.  Locations created programmatically with the Locations API will last forever and  are visible to the seller for their own management, so ensure that  each location has a sensible and unique name.
 public struct CreateLocation: SquareAPIEndpoint {
 	public typealias inputType = CreateLocationRequest
 	public typealias outputType = CreateLocationResponse
@@ -19,7 +19,7 @@ public struct CreateLocation: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves details of a location. You can specify "main"  as the location ID to retrieve details of the  main location.
+/// Retrieves details of a single location. Specify "main" as the location ID to retrieve details of the [main location](https://developer.squareup.com/docs/locations-api#about-the-main-location).
 public struct RetrieveLocation: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -27,9 +27,9 @@ public struct RetrieveLocation: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		/// Retrieves details of a location. You can specify "main"  as the location ID to retrieve details of the  main location.
+		/// Retrieves details of a single location. Specify "main" as the location ID to retrieve details of the [main location](https://developer.squareup.com/docs/locations-api#about-the-main-location).
 		/// - Parameters:
-		///   - location_id: The ID of the location to retrieve. If you specify the string "main", then the endpoint returns the main location.
+		///   - location_id: The ID of the location to retrieve. Specify the string "main" to return the main location.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}
