@@ -11,8 +11,8 @@ public struct ListCustomers: SquareAPIEndpoint {
 		let sort_order: String?
 		/// Lists customer profiles associated with a Square account.  Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. The limit is ignored if it is less than 1 or greater than 100. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - sort_field: Indicates how customers should be sorted.  The default value is `DEFAULT`.
 		///   - sort_order: Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  The default value is `ASC`.
 		public init(cursor: String? = nil, limit: Int? = nil, sort_field: String? = nil, sort_order: String? = nil) {
@@ -79,7 +79,7 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_2021-12-15/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_2021-12-15/gift-cards-api).
+/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_2022-04-20/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_2022-04-20/gift-cards-api).
 public struct UpdateCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateCustomerRequest
@@ -87,7 +87,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_2021-12-15/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_2021-12-15/gift-cards-api).
+		/// Updates a customer profile. To change an attribute, specify the new value. To remove an attribute, specify the value as an empty string or empty object.  As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_2022-04-20/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_2022-04-20/gift-cards-api).
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to update.
 		public init(customer_id: String) {
@@ -112,7 +112,7 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.   As a best practice, you should include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control. The value must be set to the current version of the customer profile.   To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to delete.
-		///   - version: The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/working-with-apis/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
+		///   - version: The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
 		public init(customer_id: String, version: Int? = nil) {
 			self.customer_id = customer_id
 			self.version = version

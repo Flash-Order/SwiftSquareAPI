@@ -8,7 +8,7 @@ public struct CreateTerminalCheckout: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a filtered list of Terminal checkout requests created by the account making the request.
+/// Returns a filtered list of Terminal checkout requests created by the application making the request. Only Terminal checkout requests created for the merchant scoped to the OAuth token are returned. Terminal checkout requests are available for 30 days.
 public struct SearchTerminalCheckouts: SquareAPIEndpoint {
 	public typealias inputType = SearchTerminalCheckoutsRequest
 	public typealias outputType = SearchTerminalCheckoutsResponse
@@ -18,7 +18,7 @@ public struct SearchTerminalCheckouts: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a Terminal checkout request by `checkout_id`.
+/// Retrieves a Terminal checkout request by `checkout_id`. Terminal checkout requests are available for 30 days.
 public struct GetTerminalCheckout: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -26,7 +26,7 @@ public struct GetTerminalCheckout: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let checkout_id: String
-		/// Retrieves a Terminal checkout request by `checkout_id`.
+		/// Retrieves a Terminal checkout request by `checkout_id`. Terminal checkout requests are available for 30 days.
 		/// - Parameters:
 		///   - checkout_id: The unique ID for the desired `TerminalCheckout`.
 		public init(checkout_id: String) {
@@ -59,7 +59,7 @@ public struct CancelTerminalCheckout: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a request to refund an Interac payment completed on a Square Terminal.
+/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_2022-04-20/refunds-api).
 public struct CreateTerminalRefund: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalRefundRequest
 	public typealias outputType = CreateTerminalRefundResponse
@@ -69,7 +69,7 @@ public struct CreateTerminalRefund: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a filtered list of Interac Terminal refund requests created by the seller making the request.
+/// Retrieves a filtered list of Interac Terminal refund requests created by the seller making the request. Terminal refund requests are available for 30 days.
 public struct SearchTerminalRefunds: SquareAPIEndpoint {
 	public typealias inputType = SearchTerminalRefundsRequest
 	public typealias outputType = SearchTerminalRefundsResponse
@@ -79,7 +79,7 @@ public struct SearchTerminalRefunds: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves an Interac Terminal refund object by ID.
+/// Retrieves an Interac Terminal refund object by ID. Terminal refund objects are available for 30 days.
 public struct GetTerminalRefund: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -87,7 +87,7 @@ public struct GetTerminalRefund: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let terminal_refund_id: String
-		/// Retrieves an Interac Terminal refund object by ID.
+		/// Retrieves an Interac Terminal refund object by ID. Terminal refund objects are available for 30 days.
 		/// - Parameters:
 		///   - terminal_refund_id: The unique ID for the desired `TerminalRefund`.
 		public init(terminal_refund_id: String) {

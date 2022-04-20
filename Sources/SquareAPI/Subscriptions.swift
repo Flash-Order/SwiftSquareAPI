@@ -114,7 +114,7 @@ public struct CancelSubscription: SquareAPIEndpoint {
 	}
 }
 
-/// Lists all events for a specific subscription. In the current implementation, only `START_SUBSCRIPTION` and `STOP_SUBSCRIPTION` (when the subscription was canceled) events are returned.
+/// Lists all events for a specific subscription.
 public struct ListSubscriptionEvents: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -124,7 +124,7 @@ public struct ListSubscriptionEvents: SquareAPIEndpoint {
 		let subscription_id: String
 		let cursor: String?
 		let limit: Int?
-		/// Lists all events for a specific subscription. In the current implementation, only `START_SUBSCRIPTION` and `STOP_SUBSCRIPTION` (when the subscription was canceled) events are returned.
+		/// Lists all events for a specific subscription.
 		/// - Parameters:
 		///   - subscription_id: The ID of the subscription to retrieve the events for.
 		///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
