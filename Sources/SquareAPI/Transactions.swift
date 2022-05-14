@@ -67,7 +67,7 @@ public struct RetrieveTransaction: SquareAPIEndpoint {
 	}
 }
 
-/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-04-20/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-05-12/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 @available(*,deprecated)
 public struct CaptureTransaction: SquareAPIEndpoint {
 	public typealias inputType = Empty
@@ -76,7 +76,7 @@ public struct CaptureTransaction: SquareAPIEndpoint {
 	public struct Params {
 		let location_id: String
 		let transaction_id: String
-		/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-04-20/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+		/// Captures a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-05-12/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 		/// - Parameters:
 		///   - location_id: 
 		///   - transaction_id: 
@@ -91,7 +91,7 @@ public struct CaptureTransaction: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-04-20/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-05-12/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 @available(*,deprecated)
 public struct VoidTransaction: SquareAPIEndpoint {
 	public typealias inputType = Empty
@@ -100,7 +100,7 @@ public struct VoidTransaction: SquareAPIEndpoint {
 	public struct Params {
 		let location_id: String
 		let transaction_id: String
-		/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-04-20/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
+		/// Cancels a transaction that was created with the [Charge](https://developer.squareup.com/reference/square_2022-05-12/transactions-api/charge) endpoint with a `delay_capture` value of `true`.   See [Delayed capture transactions](https://developer.squareup.com/docs/payments/transactions/overview#delayed-capture) for more information.
 		/// - Parameters:
 		///   - location_id: 
 		///   - transaction_id: 

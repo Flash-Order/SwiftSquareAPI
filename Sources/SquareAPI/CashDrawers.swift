@@ -46,7 +46,7 @@ public struct ListCashDrawerShifts: SquareAPIEndpoint {
 	}
 }
 
-/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents](https://developer.squareup.com/reference/square_2022-04-20/cash-drawers-api/list-cash-drawer-shift-events) for a list of cash drawer shift events.
+/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents](https://developer.squareup.com/reference/square_2022-05-12/cash-drawers-api/list-cash-drawer-shift-events) for a list of cash drawer shift events.
 public struct RetrieveCashDrawerShift: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -55,7 +55,7 @@ public struct RetrieveCashDrawerShift: SquareAPIEndpoint {
 	public struct Params {
 		let shift_id: String
 		let location_id: String
-		/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents](https://developer.squareup.com/reference/square_2022-04-20/cash-drawers-api/list-cash-drawer-shift-events) for a list of cash drawer shift events.
+		/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents](https://developer.squareup.com/reference/square_2022-05-12/cash-drawers-api/list-cash-drawer-shift-events) for a list of cash drawer shift events.
 		/// - Parameters:
 		///   - shift_id: The shift ID.
 		///   - location_id: The ID of the location to retrieve cash drawer shifts from.

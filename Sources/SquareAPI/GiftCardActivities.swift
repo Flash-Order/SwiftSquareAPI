@@ -16,7 +16,7 @@ public struct ListGiftCardActivities: SquareAPIEndpoint {
 		/// Lists gift card activities. By default, you get gift card activities for all gift cards in the seller's account. You can optionally specify query parameters to filter the list. For example, you can get a list of gift card activities for a gift card, for all gift cards in a specific region, or for activities within a time window.
 		/// - Parameters:
 		///   - gift_card_id: (Beta) If a gift card ID is provided, the endpoint returns activities related  to the specified gift card. Otherwise, the endpoint returns all gift card activities for  the seller.
-		///   - type: (Beta) If a [type](https://developer.squareup.com/reference/square_2022-04-20/enums/GiftCardActivityType) is provided, the endpoint returns gift card activities of the specified type.  Otherwise, the endpoint returns all types of gift card activities.
+		///   - type: (Beta) If a [type](https://developer.squareup.com/reference/square_2022-05-12/objects/GiftCardActivityType) is provided, the endpoint returns gift card activities of the specified type.  Otherwise, the endpoint returns all types of gift card activities.
 		///   - location_id: (Beta) If a location ID is provided, the endpoint returns gift card activities for the specified location.  Otherwise, the endpoint returns gift card activities for all locations.
 		///   - begin_time: (Beta) The timestamp for the beginning of the reporting period, in RFC 3339 format. This start time is inclusive. The default value is the current time minus one year.
 		///   - end_time: (Beta) The timestamp for the end of the reporting period, in RFC 3339 format. This end time is inclusive. The default value is the current time.
@@ -54,7 +54,7 @@ public struct ListGiftCardActivities: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a gift card activity. For more information, see  [GiftCardActivity](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#giftcardactivity) and  [Using activated gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#using-activated-gift-cards).
+/// Creates a gift card activity to manage the balance or state of a [gift card](https://developer.squareup.com/reference/square_2022-05-12/objects/GiftCard).  For example, you create an `ACTIVATE` activity to activate a gift card with an initial balance  before the gift card can be used.
 public struct CreateGiftCardActivity: SquareAPIEndpoint {
 	public typealias inputType = CreateGiftCardActivityRequest
 	public typealias outputType = CreateGiftCardActivityResponse

@@ -50,7 +50,7 @@ public struct UpdateLocation: SquareAPIEndpoint {
 		let location_id: String
 		/// Updates a [location](https://developer.squareup.com/docs/locations-api).
 		/// - Parameters:
-		///   - location_id: (Beta) The ID of the location to update.
+		///   - location_id: The ID of the location to update.
 		public init(location_id: String) {
 			self.location_id = location_id
 		}

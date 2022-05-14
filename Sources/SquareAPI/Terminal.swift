@@ -1,3 +1,64 @@
+/// Creates a Terminal action request and sends it to the specified device to take a payment for the requested amount.
+public struct CreateTerminalAction: SquareAPIEndpoint {
+	public typealias inputType = CreateTerminalActionRequest
+	public typealias outputType = CreateTerminalActionResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/terminals/actions"
+	}
+}
+
+/// Retrieves a filtered list of Terminal action requests created by the account making the request. Terminal action requests are available for 30 days.
+public struct SearchTerminalActions: SquareAPIEndpoint {
+	public typealias inputType = SearchTerminalActionsRequest
+	public typealias outputType = SearchTerminalActionsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/terminals/actions/search"
+	}
+}
+
+/// Retrieves a Terminal action request by `action_id`. Terminal action requests are available for 30 days.
+public struct GetTerminalAction: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = GetTerminalActionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let action_id: String
+		/// Retrieves a Terminal action request by `action_id`. Terminal action requests are available for 30 days.
+		/// - Parameters:
+		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`
+		public init(action_id: String) {
+			self.action_id = action_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/terminals/actions/\(inputs.action_id)"
+		return url
+	}
+}
+
+/// Cancels a Terminal action request if the status of the request permits it.
+public struct CancelTerminalAction: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = CancelTerminalActionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let action_id: String
+		/// Cancels a Terminal action request if the status of the request permits it.
+		/// - Parameters:
+		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`
+		public init(action_id: String) {
+			self.action_id = action_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/terminals/actions/\(inputs.action_id)/cancel"
+		return url
+	}
+}
+
 /// Creates a Terminal checkout request and sends it to the specified device to take a payment for the requested amount.
 public struct CreateTerminalCheckout: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalCheckoutRequest
@@ -59,7 +120,7 @@ public struct CancelTerminalCheckout: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_2022-04-20/refunds-api).
+/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_2022-05-12/refunds-api).
 public struct CreateTerminalRefund: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalRefundRequest
 	public typealias outputType = CreateTerminalRefundResponse
