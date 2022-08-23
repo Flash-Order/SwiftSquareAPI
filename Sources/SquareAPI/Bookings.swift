@@ -148,7 +148,7 @@ public struct RetrieveBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Retrieves a booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
-		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_2022-05-12/objects/Booking) object representing the to-be-retrieved booking.
+		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_2022-08-23/objects/Booking) object representing the to-be-retrieved booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
@@ -169,7 +169,7 @@ public struct UpdateBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Updates a booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
-		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_2022-05-12/objects/Booking) object representing the to-be-updated booking.
+		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_2022-08-23/objects/Booking) object representing the to-be-updated booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
@@ -189,7 +189,7 @@ public struct CancelBooking: SquareAPIEndpoint {
 		let booking_id: String
 		/// Cancels an existing booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
-		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_2022-05-12/objects/Booking) object representing the to-be-cancelled booking.
+		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_2022-08-23/objects/Booking) object representing the to-be-cancelled booking.
 		public init(booking_id: String) {
 			self.booking_id = booking_id
 		}
