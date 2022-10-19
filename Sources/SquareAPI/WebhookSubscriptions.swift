@@ -40,9 +40,9 @@ public struct ListWebhookSubscriptions: SquareAPIEndpoint {
 		/// Lists all webhook subscriptions owned by your application.
 		/// - Parameters:
 		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
-		///   - include_disabled: (Beta) Includes disabled [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription)s. By default, all enabled [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription)s are returned.
-		///   - sort_order: (Beta) Sorts the returned list by when the [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription) was created with the specified order. This field defaults to ASC.
-		///   - limit: (Beta) The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. If the provided value is greater than 100, it is ignored and the default value is used instead.  Default: 100
+		///   - include_disabled: (Beta) Includes disabled [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription)s. By default, all enabled [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription)s are returned.
+		///   - sort_order: (Beta) Sorts the returned list by when the [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription) was created with the specified order. This field defaults to ASC.
+		///   - limit: (Beta) The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value.  Default: 100
 		public init(cursor: String? = nil, include_disabled: Bool? = nil, sort_order: String? = nil, limit: Int? = nil) {
 			self.cursor = cursor
 			self.include_disabled = include_disabled
@@ -86,7 +86,7 @@ public struct RetrieveWebhookSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Retrieves a webhook subscription identified by its ID.
 		/// - Parameters:
-		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription) to retrieve.
+		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription) to retrieve.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -107,7 +107,7 @@ public struct UpdateWebhookSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Updates a webhook subscription.
 		/// - Parameters:
-		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription) to update.
+		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription) to update.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -128,7 +128,7 @@ public struct DeleteWebhookSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Deletes a webhook subscription.
 		/// - Parameters:
-		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription) to delete.
+		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription) to delete.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -148,7 +148,7 @@ public struct UpdateWebhookSubscriptionSignatureKey: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Updates a webhook subscription by replacing the existing signature key with a new one.
 		/// - Parameters:
-		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription) to update.
+		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription) to update.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
@@ -168,7 +168,7 @@ public struct TestWebhookSubscription: SquareAPIEndpoint {
 		let subscription_id: String
 		/// Tests a webhook subscription by sending a test event to the notification URL.
 		/// - Parameters:
-		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-08-23/objects/WebhookSubscription) to test.
+		///   - subscription_id: (Beta) [REQUIRED] The ID of the [Subscription](https://developer.squareup.com/reference/square_2022-10-19/objects/WebhookSubscription) to test.
 		public init(subscription_id: String) {
 			self.subscription_id = subscription_id
 		}
