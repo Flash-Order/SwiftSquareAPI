@@ -28,7 +28,7 @@ public struct RetrieveLoyaltyAccount: SquareAPIEndpoint {
 		let account_id: String
 		/// Retrieves a loyalty account.
 		/// - Parameters:
-		///   - account_id: The ID of the [loyalty account](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyAccount) to retrieve.
+		///   - account_id: The ID of the [loyalty account](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyAccount) to retrieve.
 		public init(account_id: String) {
 			self.account_id = account_id
 		}
@@ -39,16 +39,16 @@ public struct RetrieveLoyaltyAccount: SquareAPIEndpoint {
 	}
 }
 
-/// Adds points earned from a purchase to a [loyalty account](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyAccount).  - If you are using the Orders API to manage orders, provide the `order_id`. Square reads the order to compute the points earned from both the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyPromotion). For purchases that qualify for multiple accrual rules, Square computes points based on the accrual rule that grants the most points. For purchases that qualify for multiple promotions, Square computes points based on the most recently created promotion. A purchase must first qualify for program points to be eligible for promotion points.  - If you are not using the Orders API to manage orders, provide `points` with the number of points to add. You must first perform a client-side computation of the points earned from the loyalty program and loyalty promotion. For spend-based and visit-based programs, you can call [CalculateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/calculate-loyalty-points) to compute the points earned from the base loyalty program. For information about computing points earned from a loyalty promotion, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
+/// Adds points earned from a purchase to a [loyalty account](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyAccount).  - If you are using the Orders API to manage orders, provide the `order_id`. Square reads the order to compute the points earned from both the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyPromotion). For purchases that qualify for multiple accrual rules, Square computes points based on the accrual rule that grants the most points. For purchases that qualify for multiple promotions, Square computes points based on the most recently created promotion. A purchase must first qualify for program points to be eligible for promotion points.  - If you are not using the Orders API to manage orders, provide `points` with the number of points to add. You must first perform a client-side computation of the points earned from the loyalty program and loyalty promotion. For spend-based and visit-based programs, you can call [CalculateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/calculate-loyalty-points) to compute the points earned from the base loyalty program. For information about computing points earned from a loyalty promotion, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
 public struct AccumulateLoyaltyPoints: SquareAPIEndpoint {
 	public typealias inputType = AccumulateLoyaltyPointsRequest
 	public typealias outputType = AccumulateLoyaltyPointsResponse
 	public typealias paramType = Params
 	public struct Params {
 		let account_id: String
-		/// Adds points earned from a purchase to a [loyalty account](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyAccount).  - If you are using the Orders API to manage orders, provide the `order_id`. Square reads the order to compute the points earned from both the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyPromotion). For purchases that qualify for multiple accrual rules, Square computes points based on the accrual rule that grants the most points. For purchases that qualify for multiple promotions, Square computes points based on the most recently created promotion. A purchase must first qualify for program points to be eligible for promotion points.  - If you are not using the Orders API to manage orders, provide `points` with the number of points to add. You must first perform a client-side computation of the points earned from the loyalty program and loyalty promotion. For spend-based and visit-based programs, you can call [CalculateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/calculate-loyalty-points) to compute the points earned from the base loyalty program. For information about computing points earned from a loyalty promotion, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
+		/// Adds points earned from a purchase to a [loyalty account](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyAccount).  - If you are using the Orders API to manage orders, provide the `order_id`. Square reads the order to compute the points earned from both the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyPromotion). For purchases that qualify for multiple accrual rules, Square computes points based on the accrual rule that grants the most points. For purchases that qualify for multiple promotions, Square computes points based on the most recently created promotion. A purchase must first qualify for program points to be eligible for promotion points.  - If you are not using the Orders API to manage orders, provide `points` with the number of points to add. You must first perform a client-side computation of the points earned from the loyalty program and loyalty promotion. For spend-based and visit-based programs, you can call [CalculateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/calculate-loyalty-points) to compute the points earned from the base loyalty program. For information about computing points earned from a loyalty promotion, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
 		/// - Parameters:
-		///   - account_id: The ID of the target [loyalty account](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyAccount).
+		///   - account_id: The ID of the target [loyalty account](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyAccount).
 		public init(account_id: String) {
 			self.account_id = account_id
 		}
@@ -59,16 +59,16 @@ public struct AccumulateLoyaltyPoints: SquareAPIEndpoint {
 	}
 }
 
-/// Adds points to or subtracts points from a buyer's account.   Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call  [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/accumulate-loyalty-points)  to add points when a buyer pays for the purchase.
+/// Adds points to or subtracts points from a buyer's account.   Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call  [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/accumulate-loyalty-points)  to add points when a buyer pays for the purchase.
 public struct AdjustLoyaltyPoints: SquareAPIEndpoint {
 	public typealias inputType = AdjustLoyaltyPointsRequest
 	public typealias outputType = AdjustLoyaltyPointsResponse
 	public typealias paramType = Params
 	public struct Params {
 		let account_id: String
-		/// Adds points to or subtracts points from a buyer's account.   Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call  [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/accumulate-loyalty-points)  to add points when a buyer pays for the purchase.
+		/// Adds points to or subtracts points from a buyer's account.   Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call  [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/accumulate-loyalty-points)  to add points when a buyer pays for the purchase.
 		/// - Parameters:
-		///   - account_id: The ID of the target [loyalty account](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyAccount).
+		///   - account_id: The ID of the target [loyalty account](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyAccount).
 		public init(account_id: String) {
 			self.account_id = account_id
 		}
@@ -89,7 +89,7 @@ public struct SearchLoyaltyEvents: SquareAPIEndpoint {
 	}
 }
 
-/// Returns a list of loyalty programs in the seller's account. Loyalty programs define how buyers can earn points and redeem points for rewards. Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard. For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).   Replaced with [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/retrieve-loyalty-program) when used with the keyword `main`.
+/// Returns a list of loyalty programs in the seller's account. Loyalty programs define how buyers can earn points and redeem points for rewards. Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard. For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).   Replaced with [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/retrieve-loyalty-program) when used with the keyword `main`.
 @available(*,deprecated)
 public struct ListLoyaltyPrograms: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -122,16 +122,16 @@ public struct RetrieveLoyaltyProgram: SquareAPIEndpoint {
 	}
 }
 
-/// Calculates the number of points a buyer can earn from a purchase. Applications might call this endpoint to display the points to the buyer.  - If you are using the Orders API to manage orders, provide the `order_id` and (optional) `loyalty_account_id`. Square reads the order to compute the points earned from the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyPromotion).  - If you are not using the Orders API to manage orders, provide `transaction_amount_money` with the purchase amount. Square uses this amount to calculate the points earned from the base loyalty program, but not points earned from a loyalty promotion. For spend-based and visit-based programs, the `tax_mode` setting of the accrual rule indicates how taxes should be treated for loyalty points accrual. If the purchase qualifies for program points, call [ListLoyaltyPromotions](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/list-loyalty-promotions) and perform a client-side computation to calculate whether the purchase also qualifies for promotion points. For more information, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
+/// Calculates the number of points a buyer can earn from a purchase. Applications might call this endpoint to display the points to the buyer.  - If you are using the Orders API to manage orders, provide the `order_id` and (optional) `loyalty_account_id`. Square reads the order to compute the points earned from the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyPromotion).  - If you are not using the Orders API to manage orders, provide `transaction_amount_money` with the purchase amount. Square uses this amount to calculate the points earned from the base loyalty program, but not points earned from a loyalty promotion. For spend-based and visit-based programs, the `tax_mode` setting of the accrual rule indicates how taxes should be treated for loyalty points accrual. If the purchase qualifies for program points, call [ListLoyaltyPromotions](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/list-loyalty-promotions) and perform a client-side computation to calculate whether the purchase also qualifies for promotion points. For more information, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
 public struct CalculateLoyaltyPoints: SquareAPIEndpoint {
 	public typealias inputType = CalculateLoyaltyPointsRequest
 	public typealias outputType = CalculateLoyaltyPointsResponse
 	public typealias paramType = Params
 	public struct Params {
 		let program_id: String
-		/// Calculates the number of points a buyer can earn from a purchase. Applications might call this endpoint to display the points to the buyer.  - If you are using the Orders API to manage orders, provide the `order_id` and (optional) `loyalty_account_id`. Square reads the order to compute the points earned from the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyPromotion).  - If you are not using the Orders API to manage orders, provide `transaction_amount_money` with the purchase amount. Square uses this amount to calculate the points earned from the base loyalty program, but not points earned from a loyalty promotion. For spend-based and visit-based programs, the `tax_mode` setting of the accrual rule indicates how taxes should be treated for loyalty points accrual. If the purchase qualifies for program points, call [ListLoyaltyPromotions](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/list-loyalty-promotions) and perform a client-side computation to calculate whether the purchase also qualifies for promotion points. For more information, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
+		/// Calculates the number of points a buyer can earn from a purchase. Applications might call this endpoint to display the points to the buyer.  - If you are using the Orders API to manage orders, provide the `order_id` and (optional) `loyalty_account_id`. Square reads the order to compute the points earned from the base loyalty program and an associated [loyalty promotion](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyPromotion).  - If you are not using the Orders API to manage orders, provide `transaction_amount_money` with the purchase amount. Square uses this amount to calculate the points earned from the base loyalty program, but not points earned from a loyalty promotion. For spend-based and visit-based programs, the `tax_mode` setting of the accrual rule indicates how taxes should be treated for loyalty points accrual. If the purchase qualifies for program points, call [ListLoyaltyPromotions](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/list-loyalty-promotions) and perform a client-side computation to calculate whether the purchase also qualifies for promotion points. For more information, see [Calculating promotion points](https://developer.squareup.com/docs/loyalty-api/loyalty-promotions#calculate-promotion-points).
 		/// - Parameters:
-		///   - program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram), which defines the rules for accruing points.
+		///   - program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram), which defines the rules for accruing points.
 		public init(program_id: String) {
 			self.program_id = program_id
 		}
@@ -142,7 +142,7 @@ public struct CalculateLoyaltyPoints: SquareAPIEndpoint {
 	}
 }
 
-/// Lists the loyalty promotions associated with a [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram). Results are sorted by the `created_at` date in descending order (newest to oldest).
+/// Lists the loyalty promotions associated with a [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram). Results are sorted by the `created_at` date in descending order (newest to oldest).
 public struct ListLoyaltyPromotions: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -153,9 +153,9 @@ public struct ListLoyaltyPromotions: SquareAPIEndpoint {
 		let status: String?
 		let cursor: String?
 		let limit: Int?
-		/// Lists the loyalty promotions associated with a [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram). Results are sorted by the `created_at` date in descending order (newest to oldest).
+		/// Lists the loyalty promotions associated with a [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram). Results are sorted by the `created_at` date in descending order (newest to oldest).
 		/// - Parameters:
-		///   - program_id: The ID of the base [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram). To get the program ID, call [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/retrieve-loyalty-program) using the `main` keyword.
+		///   - program_id: The ID of the base [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram). To get the program ID, call [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/retrieve-loyalty-program) using the `main` keyword.
 		///   - status: The status to filter the results by. If a status is provided, only loyalty promotions with the specified status are returned. Otherwise, all loyalty promotions associated with the loyalty program are returned.
 		///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - limit: The maximum number of results to return in a single paged response. The minimum value is 1 and the maximum value is 30. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -181,16 +181,16 @@ public struct ListLoyaltyPromotions: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a loyalty promotion for a [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram). A loyalty promotion enables buyers to earn points in addition to those earned from the base loyalty program.  This endpoint sets the loyalty promotion to the `ACTIVE` or `SCHEDULED` status, depending on the `available_time` setting. A loyalty program can have a maximum of 10 loyalty promotions with an `ACTIVE` or `SCHEDULED` status.
+/// Creates a loyalty promotion for a [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram). A loyalty promotion enables buyers to earn points in addition to those earned from the base loyalty program.  This endpoint sets the loyalty promotion to the `ACTIVE` or `SCHEDULED` status, depending on the `available_time` setting. A loyalty program can have a maximum of 10 loyalty promotions with an `ACTIVE` or `SCHEDULED` status.
 public struct CreateLoyaltyPromotion: SquareAPIEndpoint {
 	public typealias inputType = CreateLoyaltyPromotionRequest
 	public typealias outputType = CreateLoyaltyPromotionResponse
 	public typealias paramType = Params
 	public struct Params {
 		let program_id: String
-		/// Creates a loyalty promotion for a [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram). A loyalty promotion enables buyers to earn points in addition to those earned from the base loyalty program.  This endpoint sets the loyalty promotion to the `ACTIVE` or `SCHEDULED` status, depending on the `available_time` setting. A loyalty program can have a maximum of 10 loyalty promotions with an `ACTIVE` or `SCHEDULED` status.
+		/// Creates a loyalty promotion for a [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram). A loyalty promotion enables buyers to earn points in addition to those earned from the base loyalty program.  This endpoint sets the loyalty promotion to the `ACTIVE` or `SCHEDULED` status, depending on the `available_time` setting. A loyalty program can have a maximum of 10 loyalty promotions with an `ACTIVE` or `SCHEDULED` status.
 		/// - Parameters:
-		///   - program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram) to associate with the promotion. To get the program ID, call [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/retrieve-loyalty-program) using the `main` keyword.
+		///   - program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram) to associate with the promotion. To get the program ID, call [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/retrieve-loyalty-program) using the `main` keyword.
 		public init(program_id: String) {
 			self.program_id = program_id
 		}
@@ -212,8 +212,8 @@ public struct RetrieveLoyaltyPromotion: SquareAPIEndpoint {
 		let promotion_id: String
 		/// Retrieves a loyalty promotion.
 		/// - Parameters:
-		///   - program_id: The ID of the base [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram). To get the program ID, call [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/retrieve-loyalty-program) using the `main` keyword.
-		///   - promotion_id: The ID of the [loyalty promotion](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyPromotion) to retrieve.
+		///   - program_id: The ID of the base [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram). To get the program ID, call [RetrieveLoyaltyProgram](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/retrieve-loyalty-program) using the `main` keyword.
+		///   - promotion_id: The ID of the [loyalty promotion](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyPromotion) to retrieve.
 		public init(program_id: String, promotion_id: String) {
 			self.program_id = program_id
 			self.promotion_id = promotion_id
@@ -235,8 +235,8 @@ public struct CancelLoyaltyPromotion: SquareAPIEndpoint {
 		let promotion_id: String
 		/// Cancels a loyalty promotion. Use this endpoint to cancel an `ACTIVE` promotion earlier than the end date, cancel an `ACTIVE` promotion when an end date is not specified, or cancel a `SCHEDULED` promotion. Because updating a promotion is not supported, you can also use this endpoint to cancel a promotion before you create a new one.  This endpoint sets the loyalty promotion to the `CANCELED` state
 		/// - Parameters:
-		///   - program_id: The ID of the base [loyalty program](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyProgram).
-		///   - promotion_id: The ID of the [loyalty promotion](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyPromotion) to cancel. You can cancel a promotion that has an `ACTIVE` or `SCHEDULED` status.
+		///   - program_id: The ID of the base [loyalty program](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyProgram).
+		///   - promotion_id: The ID of the [loyalty promotion](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyPromotion) to cancel. You can cancel a promotion that has an `ACTIVE` or `SCHEDULED` status.
 		public init(program_id: String, promotion_id: String) {
 			self.program_id = program_id
 			self.promotion_id = promotion_id
@@ -258,7 +258,7 @@ public struct CreateLoyaltyReward: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for loyalty rewards. This endpoint accepts a request with no query filters and returns results for all loyalty accounts.  If you include a `query` object, `loyalty_account_id` is required and `status` is  optional.  If you know a reward ID, use the  [RetrieveLoyaltyReward](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/retrieve-loyalty-reward) endpoint.  Search results are sorted by `updated_at` in descending order.
+/// Searches for loyalty rewards. This endpoint accepts a request with no query filters and returns results for all loyalty accounts.  If you include a `query` object, `loyalty_account_id` is required and `status` is  optional.  If you know a reward ID, use the  [RetrieveLoyaltyReward](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/retrieve-loyalty-reward) endpoint.  Search results are sorted by `updated_at` in descending order.
 public struct SearchLoyaltyRewards: SquareAPIEndpoint {
 	public typealias inputType = SearchLoyaltyRewardsRequest
 	public typealias outputType = SearchLoyaltyRewardsResponse
@@ -278,7 +278,7 @@ public struct RetrieveLoyaltyReward: SquareAPIEndpoint {
 		let reward_id: String
 		/// Retrieves a loyalty reward.
 		/// - Parameters:
-		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyReward) to retrieve.
+		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyReward) to retrieve.
 		public init(reward_id: String) {
 			self.reward_id = reward_id
 		}
@@ -289,7 +289,7 @@ public struct RetrieveLoyaltyReward: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/create-loyalty-reward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
+/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/create-loyalty-reward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
 public struct DeleteLoyaltyReward: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -297,9 +297,9 @@ public struct DeleteLoyaltyReward: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let reward_id: String
-		/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_2022-10-19/loyalty-api/create-loyalty-reward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
+		/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_2022-11-16/loyalty-api/create-loyalty-reward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
 		/// - Parameters:
-		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyReward) to delete.
+		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyReward) to delete.
 		public init(reward_id: String) {
 			self.reward_id = reward_id
 		}
@@ -319,7 +319,7 @@ public struct RedeemLoyaltyReward: SquareAPIEndpoint {
 		let reward_id: String
 		/// Redeems a loyalty reward.  The endpoint sets the reward to the `REDEEMED` terminal state.   If you are using your own order processing system (not using the  Orders API), you call this endpoint after the buyer paid for the  purchase.  After the reward reaches the terminal state, it cannot be deleted.  In other words, points used for the reward cannot be returned  to the account.
 		/// - Parameters:
-		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_2022-10-19/objects/LoyaltyReward) to redeem.
+		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_2022-11-16/objects/LoyaltyReward) to redeem.
 		public init(reward_id: String) {
 			self.reward_id = reward_id
 		}

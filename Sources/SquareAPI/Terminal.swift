@@ -120,7 +120,7 @@ public struct CancelTerminalCheckout: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_2022-10-19/refunds-api).
+/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_2022-11-16/refunds-api).
 public struct CreateTerminalRefund: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalRefundRequest
 	public typealias outputType = CreateTerminalRefundResponse

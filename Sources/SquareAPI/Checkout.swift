@@ -1,4 +1,4 @@
-/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights). We recommend that you use the new [CreatePaymentLink](https://developer.squareup.com/reference/square_2022-10-19/checkout-api/create-payment-link)  endpoint in place of this previously released endpoint.
+/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights). We recommend that you use the new [CreatePaymentLink](https://developer.squareup.com/reference/square_2022-11-16/checkout-api/create-payment-link)  endpoint in place of this previously released endpoint.
 @available(*,deprecated)
 public struct CreateCheckout: SquareAPIEndpoint {
 	public typealias inputType = CreateCheckoutRequest
@@ -6,7 +6,7 @@ public struct CreateCheckout: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights). We recommend that you use the new [CreatePaymentLink](https://developer.squareup.com/reference/square_2022-10-19/checkout-api/create-payment-link)  endpoint in place of this previously released endpoint.
+		/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights). We recommend that you use the new [CreatePaymentLink](https://developer.squareup.com/reference/square_2022-11-16/checkout-api/create-payment-link)  endpoint in place of this previously released endpoint.
 		/// - Parameters:
 		///   - location_id: The ID of the business location to associate the checkout with.
 		public init(location_id: String) {
