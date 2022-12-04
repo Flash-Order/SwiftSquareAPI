@@ -9,3 +9,5 @@ import Foundation
 
 // this is a place where many of Square's mistakes can be repaired without making special casses in the parser
 
+public typealias CatalogSubscriptionPlan = AnyCodable
+public typealias BuyNowPayLaterDetails = AnyCodable

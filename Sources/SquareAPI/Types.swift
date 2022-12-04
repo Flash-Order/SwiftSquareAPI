@@ -2274,74 +2274,6 @@ public struct CreateDeviceCodeResponse: Codable {
 	}
 }
 
-/// Represents an input to a call to [CreateVendor](https://developer.squareup.com/reference/square_2022-11-16/vendors-api/create-vendor).
-public struct CreateVendorRequest: Codable {
-	/// A client-supplied, universally unique identifier (UUID) to make this [CreateVendor](https://developer.squareup.com/reference/square_2022-11-16/vendors-api/create-vendor) call idempotent.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) in the [API Development 101](https://developer.squareup.com/docs/basics/api101/overview) section for more information.
-	public var idempotency_key: String
-	/// The requested [Vendor](https://developer.squareup.com/reference/square_2022-11-16/objects/Vendor) to be created.
-	public var vendor: Vendor?
-
-	/// Represents an input to a call to [CreateVendor](https://developer.squareup.com/reference/square_2022-11-16/vendors-api/create-vendor).
-	/// - Parameters:
-	///   - idempotency_key: A client-supplied, universally unique identifier (UUID) to make this [CreateVendor](https://developer.squareup.com/reference/square_2022-11-16/vendors-api/create-vendor) call idempotent.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) in the [API Development 101](https://developer.squareup.com/docs/basics/api101/overview) section for more information.
-	///   - vendor: The requested [Vendor](https://developer.squareup.com/reference/square_2022-11-16/objects/Vendor) to be created.
-	public init(idempotency_key: String, vendor: Vendor? = nil) {
-		self.idempotency_key = idempotency_key
-		self.vendor = vendor
-	}
-}
-
-/// Represents an output from a call to [CreateVendor](https://developer.squareup.com/reference/square_2022-11-16/vendors-api/create-vendor).
-public struct CreateVendorResponse: Codable {
-	/// Errors encountered when the request fails.
-	public var errors: [SquareError]?
-	/// The successfully created [Vendor](https://developer.squareup.com/reference/square_2022-11-16/objects/Vendor) object.
-	public var vendor: Vendor?
-
-	/// Represents an output from a call to [CreateVendor](https://developer.squareup.com/reference/square_2022-11-16/vendors-api/create-vendor).
-	/// - Parameters:
-	///   - errors: Errors encountered when the request fails.
-	///   - vendor: The successfully created [Vendor](https://developer.squareup.com/reference/square_2022-11-16/objects/Vendor) object.
-	public init(errors: [SquareError]? = nil, vendor: Vendor? = nil) {
-		self.errors = errors
-		self.vendor = vendor
-	}
-}
-
-/// Creates a [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription).
-public struct CreateWebhookSubscriptionRequest: Codable {
-	/// A unique string that identifies the [CreateWebhookSubscription](https://developer.squareup.com/reference/square_2022-11-16/webhook-subscriptions-api/create-webhook-subscription) request.
-	public var idempotency_key: String?
-	/// The [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription) to create.
-	public var subscription: WebhookSubscription
-
-	/// Creates a [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription).
-	/// - Parameters:
-	///   - idempotency_key: A unique string that identifies the [CreateWebhookSubscription](https://developer.squareup.com/reference/square_2022-11-16/webhook-subscriptions-api/create-webhook-subscription) request.
-	///   - subscription: The [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription) to create.
-	public init(subscription: WebhookSubscription, idempotency_key: String? = nil) {
-		self.subscription = subscription
-		self.idempotency_key = idempotency_key
-	}
-}
-
-/// Defines the fields that are included in the response body of a request to the [CreateWebhookSubscription](https://developer.squareup.com/reference/square_2022-11-16/webhook-subscriptions-api/create-webhook-subscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription) will not be present.
-public struct CreateWebhookSubscriptionResponse: Codable {
-	/// Information on errors encountered during the request.
-	public var errors: [SquareError]?
-	/// The new [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription).
-	public var subscription: WebhookSubscription?
-
-	/// Defines the fields that are included in the response body of a request to the [CreateWebhookSubscription](https://developer.squareup.com/reference/square_2022-11-16/webhook-subscriptions-api/create-webhook-subscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription) will not be present.
-	/// - Parameters:
-	///   - errors: Information on errors encountered during the request.
-	///   - subscription: The new [Subscription](https://developer.squareup.com/reference/square_2022-11-16/objects/WebhookSubscription).
-	public init(errors: [SquareError]? = nil, subscription: WebhookSubscription? = nil) {
-		self.errors = errors
-		self.subscription = subscription
-	}
-}
-
 /// Indicates the associated currency for an amount of money. Values correspond to [ISO 4217](https://wikipedia.org/wiki/ISO_4217).
 public enum Currency: String, Codable {
 	/// Unknown currency
@@ -2768,6 +2700,48 @@ public struct DeviceCode: Codable {
 	}
 }
 
+public struct DeviceMetadata: Codable {
+	/// The current version of the application running on the Terminal.
+	public var app_version: String?
+	/// The Terminal’s remaining battery percentage, between 1-100.
+	public var battery_percentage: String?
+	/// The current charging state of the Terminal. Options: `CHARGING`, `NOT_CHARGING`
+	public var charging_state: String?
+	/// The IP address of the Terminal.
+	public var ip_address: String?
+	/// The ID of the Square seller business location associated with the Terminal.
+	public var location_id: String?
+	/// The ID of the Square merchant account that is currently signed-in to the Terminal.
+	public var merchant_id: String?
+	/// The Terminal’s current network connection type. Options: `WIFI`, `ETHERNET`
+	public var network_connection_type: String?
+	/// The current version of the Terminal’s operating system.
+	public var os_version: String?
+	/// The country in which the Terminal is authorized to take payments.
+	public var payment_region: String?
+	/// The unique identifier assigned to the Terminal, which can be found on the lower back of the device.
+	public var serial_number: String?
+	/// The name of the Wi-Fi network to which the Terminal is connected.
+	public var wifi_network_name: String?
+	/// The signal strength of the Wi-FI network connection. Options: `POOR`, `FAIR`, `GOOD`, `EXCELLENT`
+	public var wifi_network_strength: String?
+	
+	public init(app_version: String? = nil, battery_percentage: String? = nil, charging_state: String? = nil, ip_address: String? = nil, location_id: String? = nil, merchant_id: String? = nil, network_connection_type: String? = nil, os_version: String? = nil, payment_region: String? = nil, serial_number: String? = nil, wifi_network_name: String? = nil, wifi_network_strength: String? = nil) {
+		self.app_version = app_version
+		self.battery_percentage = battery_percentage
+		self.charging_state = charging_state
+		self.ip_address = ip_address
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.network_connection_type = network_connection_type
+		self.os_version = os_version
+		self.payment_region = payment_region
+		self.serial_number = serial_number
+		self.wifi_network_name = wifi_network_name
+		self.wifi_network_strength = wifi_network_strength
+	}
+}
+
 /// Represents an error encountered during a request to the Connect API.  See [Handling errors](https://developer.squareup.com/docs/build-basics/handling-errors) for more information.
 public struct SquareError: Codable {
 	/// The high-level category for the error.
@@ -3141,12 +3115,428 @@ public struct ExternalPaymentDetails: Codable {
 	}
 }
 
+// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
+public struct Fulfillment: Codable {
+	public var delivery_details: FulfillmentDeliveryDetails?
+	/// A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.  Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself.  An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
+	public let entries: [FulfillmentFulfillmentEntry]?
+	/// Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
+	public let line_item_application: String?
+	/// Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
+	public var metadata: String?
+	/// Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
+	public var pickup_details: FulfillmentPickupDetails?
+	/// Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`.  A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment accepted. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
+	public var shipment_details: FulfillmentShipmentDetails?
+	/// The state of the fulfillment.
+	public var state: String?
+	/// The type of the fulfillment.
+	public var type: String?
+	/// A unique ID that identifies the fulfillment only within this order.
+	public var uid: String?
+	
+	/// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
+	/// - Parameters:
+	///   - delivery_details:
+	///   - entries: A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.  Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself.  An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
+	///   - line_item_application: Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
+	///   - metadata: Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
+	///   - pickup_details: Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
+	///   - shipment_details: Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`.  A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment accepted. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
+	///   - state: The state of the fulfillment.
+	///   - type: The type of the fulfillment.
+	///   - uid: A unique ID that identifies the fulfillment only within this order.
+	public init(delivery_details: FulfillmentDeliveryDetails? = nil, entries: [FulfillmentFulfillmentEntry]? = nil, line_item_application: String? = nil, metadata: String? = nil, pickup_details: FulfillmentPickupDetails? = nil, shipment_details: FulfillmentShipmentDetails? = nil, state: String? = nil, type: String? = nil, uid: String? = nil) {
+		self.delivery_details = delivery_details
+		self.entries = entries
+		self.line_item_application = line_item_application
+		self.metadata = metadata
+		self.pickup_details = pickup_details
+		self.shipment_details = shipment_details
+		self.state = state
+		self.type = type
+		self.uid = uid
+	}
+}
+
+/// Describes delivery details of an order fulfillment.
+public struct FulfillmentDeliveryDetails: Codable {
+	/// The delivery cancellation reason. Max length: 100 characters.
+	public var cancel_reason: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`.  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let canceled_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller completed the fulfillment. This field is automatically set when  fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var completed_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var courier_pickup_at: Timestamp?
+	/// The period of time in which the order should be picked up by the courier after the `courier_pickup_at` timestamp. The time must be in RFC 3339 format (for example, "P1W3D").
+	public var courier_pickup_window_duration: Timestamp?
+	/// The name of the courier provider.
+	public var courier_provider_name: String?
+	/// The support phone number of the courier.
+	public var courier_support_phone_number: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the delivery period. When the fulfillment `schedule_type` is `ASAP`, the field is automatically set to the current time plus the `prep_time_duration`. Otherwise, the application can set this field while the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var deliver_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let delivered_at: Timestamp?
+	/// The time period after the `deliver_at` timestamp in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	public var delivery_window_duration: Timestamp?
+	/// A note to provide additional instructions about how to deliver the order.
+	public var dropoff_notes: String?
+	/// The identifier for the delivery created by the third-party courier service.
+	public var external_delivery_id: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let in_progress_at: Timestamp?
+	/// Whether the delivery is preferred to be no contact.
+	public var is_no_contact_delivery: Bool?
+	/// The flag to indicate the delivery is managed by a third party (ie DoorDash), which means we may not receive all recipient information for PII purposes.
+	public var managed_delivery: Bool?
+	/// Provides additional instructions about the delivery fulfillment. It is displayed in the Square Point of Sale application and set by the API.
+	public var note: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").  Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
+	public let placed_at: Timestamp?
+	/// The duration of time it takes to prepare and deliver this fulfillment. The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	public var prep_time_duration: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let ready_at: Timestamp?
+	/// The contact information for the person to receive the fulfillment.
+	public var recipient: FulfillmentRecipient?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. This field is automatically set when the fulfillment `state` changes to `FAILED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let rejected_at: Timestamp?
+	/// Indicates the fulfillment delivery schedule type. If `SCHEDULED`, then `deliver_at` is required. If `ASAP`, then `prep_time_duration` is required. The default is `SCHEDULED`.
+	public var schedule_type: String?
+	/// The identifier for the delivery created by Square.
+	public var square_delivery_id: String?
+	
+	/// Describes delivery details of an order fulfillment.
+	/// - Parameters:
+	///   - cancel_reason: The delivery cancellation reason. Max length: 100 characters.
+	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`.  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - completed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller completed the fulfillment. This field is automatically set when  fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - courier_pickup_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - courier_pickup_window_duration: The period of time in which the order should be picked up by the courier after the `courier_pickup_at` timestamp. The time must be in RFC 3339 format (for example, "P1W3D").
+	///   - courier_provider_name: The name of the courier provider.
+	///   - courier_support_phone_number: The support phone number of the courier.
+	///   - deliver_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the delivery period. When the fulfillment `schedule_type` is `ASAP`, the field is automatically set to the current time plus the `prep_time_duration`. Otherwise, the application can set this field while the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - delivered_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - delivery_window_duration: The time period after the `deliver_at` timestamp in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	///   - dropoff_notes: A note to provide additional instructions about how to deliver the order.
+	///   - external_delivery_id: The identifier for the delivery created by the third-party courier service.
+	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - is_no_contact_delivery: Whether the delivery is preferred to be no contact.
+	///   - managed_delivery: The flag to indicate the delivery is managed by a third party (ie DoorDash), which means we may not receive all recipient information for PII purposes.
+	///   - note: Provides additional instructions about the delivery fulfillment. It is displayed in the Square Point of Sale application and set by the API.
+	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").  Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
+	///   - prep_time_duration: The duration of time it takes to prepare and deliver this fulfillment. The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	///   - ready_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - recipient: The contact information for the person to receive the fulfillment.
+	///   - rejected_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. This field is automatically set when the fulfillment `state` changes to `FAILED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - schedule_type: Indicates the fulfillment delivery schedule type. If `SCHEDULED`, then `deliver_at` is required. If `ASAP`, then `prep_time_duration` is required. The default is `SCHEDULED`.
+	///   - square_delivery_id: The identifier for the delivery created by Square.
+	public init(cancel_reason: String? = nil, canceled_at: Timestamp? = nil, completed_at: Timestamp? = nil, courier_pickup_at: Timestamp? = nil, courier_pickup_window_duration: Timestamp? = nil, courier_provider_name: String? = nil, courier_support_phone_number: String? = nil, deliver_at: Timestamp? = nil, delivered_at: Timestamp? = nil, delivery_window_duration: Timestamp? = nil, dropoff_notes: String? = nil, external_delivery_id: String? = nil, in_progress_at: Timestamp? = nil, is_no_contact_delivery: Bool? = nil, managed_delivery: Bool? = nil, note: String? = nil, placed_at: Timestamp? = nil, prep_time_duration: Timestamp? = nil, ready_at: Timestamp? = nil, recipient: FulfillmentRecipient? = nil, rejected_at: Timestamp? = nil, schedule_type: String? = nil, square_delivery_id: String? = nil) {
+		self.cancel_reason = cancel_reason
+		self.canceled_at = canceled_at
+		self.completed_at = completed_at
+		self.courier_pickup_at = courier_pickup_at
+		self.courier_pickup_window_duration = courier_pickup_window_duration
+		self.courier_provider_name = courier_provider_name
+		self.courier_support_phone_number = courier_support_phone_number
+		self.deliver_at = deliver_at
+		self.delivered_at = delivered_at
+		self.delivery_window_duration = delivery_window_duration
+		self.dropoff_notes = dropoff_notes
+		self.external_delivery_id = external_delivery_id
+		self.in_progress_at = in_progress_at
+		self.is_no_contact_delivery = is_no_contact_delivery
+		self.managed_delivery = managed_delivery
+		self.note = note
+		self.placed_at = placed_at
+		self.prep_time_duration = prep_time_duration
+		self.ready_at = ready_at
+		self.recipient = recipient
+		self.rejected_at = rejected_at
+		self.schedule_type = schedule_type
+		self.square_delivery_id = square_delivery_id
+	}
+}
+
+/// The schedule type of the delivery fulfillment.
+public enum FulfillmentDeliveryDetailsOrderFulfillmentDeliveryDetailsScheduleType: String, Codable {
+	/// Indicates the fulfillment to deliver at a scheduled deliver time.
+	case SCHEDULED
+	/// Indicates that the fulfillment to deliver as soon as possible and should be prepared immediately.
+	case ASAP
+}
+
+/// Links an order line item to a fulfillment. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.
+public struct FulfillmentFulfillmentEntry: Codable {
+	/// The `uid` from the order line item.
+	public var line_item_uid: String
+	/// Application-defined data attached to this fulfillment entry. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
+	public var metadata: String?
+	/// The quantity of the line item being fulfilled, formatted as a decimal number. For example, `"3"`.  Fulfillments for line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
+	public var quantity: String
+	/// A unique ID that identifies the fulfillment entry only within this order.
+	public var uid: String?
+	
+	/// Links an order line item to a fulfillment. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.
+	/// - Parameters:
+	///   - line_item_uid: The `uid` from the order line item.
+	///   - metadata: Application-defined data attached to this fulfillment entry. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
+	///   - quantity: The quantity of the line item being fulfilled, formatted as a decimal number. For example, `"3"`.  Fulfillments for line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
+	///   - uid: A unique ID that identifies the fulfillment entry only within this order.
+	public init(line_item_uid: String, quantity: String, metadata: String? = nil, uid: String? = nil) {
+		self.line_item_uid = line_item_uid
+		self.quantity = quantity
+		self.metadata = metadata
+		self.uid = uid
+	}
+}
+
+/// The `line_item_application` describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
+public enum FulfillmentFulfillmentLineItemApplication: String, Codable {
+	/// If `ALL`, `entries` must be unset.
+	case ALL
+	/// If `ENTRY_LIST`, supply a list of `entries`.
+	case ENTRY_LIST
+}
+
+/// Contains details necessary to fulfill a pickup order.
+public struct FulfillmentPickupDetails: Codable {
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let accepted_at: Timestamp?
+	/// The duration of time after which an open and accepted pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains accepted until it is canceled or completed.
+	public var auto_complete_duration: Timestamp?
+	/// A description of why the pickup was canceled. The maximum length: 100 characters.
+	public var cancel_reason: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let canceled_at: Timestamp?
+	/// Specific details for curbside pickup. These details can only be populated if `is_curbside_pickup` is set to `true`.
+	public var curbside_pickup_details: FulfillmentPickupDetailsCurbsidePickupDetails?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let expired_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, this pickup fulfillment is automatically accepted when placed.
+	public var expires_at: Timestamp?
+	/// If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
+	public var is_curbside_pickup: Bool?
+	/// A note to provide additional instructions about the pickup fulfillment displayed in the Square Point of Sale application and set by the API.
+	public var note: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was picked up by the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let picked_up_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the pickup window. Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".  For fulfillments with the schedule type `ASAP`, this is automatically set to the current time plus the expected duration to prepare the fulfillment.
+	public var pickup_at: Timestamp?
+	/// The window of time in which the order should be picked up after the `pickup_at` timestamp. Must be in RFC 3339 duration format, e.g., "P1W3D". Can be used as an informational guideline for merchants.
+	public var pickup_window_duration: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let placed_at: Timestamp?
+	/// The duration of time it takes to prepare this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
+	public var prep_time_duration: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment is marked as ready for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let ready_at: Timestamp?
+	/// Information about the person to pick up this fulfillment from a physical location.
+	public var recipient: FulfillmentRecipient?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let rejected_at: Timestamp?
+	/// The schedule type of the pickup fulfillment. Defaults to `SCHEDULED`.
+	public var schedule_type: String?
+	
+	/// Contains details necessary to fulfill a pickup order.
+	/// - Parameters:
+	///   - accepted_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - auto_complete_duration: The duration of time after which an open and accepted pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains accepted until it is canceled or completed.
+	///   - cancel_reason: A description of why the pickup was canceled. The maximum length: 100 characters.
+	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - curbside_pickup_details: Specific details for curbside pickup. These details can only be populated if `is_curbside_pickup` is set to `true`.
+	///   - expired_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - expires_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, this pickup fulfillment is automatically accepted when placed.
+	///   - is_curbside_pickup: If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
+	///   - note: A note to provide additional instructions about the pickup fulfillment displayed in the Square Point of Sale application and set by the API.
+	///   - picked_up_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was picked up by the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - pickup_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the pickup window. Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".  For fulfillments with the schedule type `ASAP`, this is automatically set to the current time plus the expected duration to prepare the fulfillment.
+	///   - pickup_window_duration: The window of time in which the order should be picked up after the `pickup_at` timestamp. Must be in RFC 3339 duration format, e.g., "P1W3D". Can be used as an informational guideline for merchants.
+	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - prep_time_duration: The duration of time it takes to prepare this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
+	///   - ready_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment is marked as ready for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - recipient: Information about the person to pick up this fulfillment from a physical location.
+	///   - rejected_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - schedule_type: The schedule type of the pickup fulfillment. Defaults to `SCHEDULED`.
+	public init(accepted_at: Timestamp? = nil, auto_complete_duration: Timestamp? = nil, cancel_reason: String? = nil, canceled_at: Timestamp? = nil, curbside_pickup_details: FulfillmentPickupDetailsCurbsidePickupDetails? = nil, expired_at: Timestamp? = nil, expires_at: Timestamp? = nil, is_curbside_pickup: Bool? = nil, note: String? = nil, picked_up_at: Timestamp? = nil, pickup_at: Timestamp? = nil, pickup_window_duration: Timestamp? = nil, placed_at: Timestamp? = nil, prep_time_duration: Timestamp? = nil, ready_at: Timestamp? = nil, recipient: FulfillmentRecipient? = nil, rejected_at: Timestamp? = nil, schedule_type: String? = nil) {
+		self.accepted_at = accepted_at
+		self.auto_complete_duration = auto_complete_duration
+		self.cancel_reason = cancel_reason
+		self.canceled_at = canceled_at
+		self.curbside_pickup_details = curbside_pickup_details
+		self.expired_at = expired_at
+		self.expires_at = expires_at
+		self.is_curbside_pickup = is_curbside_pickup
+		self.note = note
+		self.picked_up_at = picked_up_at
+		self.pickup_at = pickup_at
+		self.pickup_window_duration = pickup_window_duration
+		self.placed_at = placed_at
+		self.prep_time_duration = prep_time_duration
+		self.ready_at = ready_at
+		self.recipient = recipient
+		self.rejected_at = rejected_at
+		self.schedule_type = schedule_type
+	}
+}
+
+/// Specific details for curbside pickup.
+public struct FulfillmentPickupDetailsCurbsidePickupDetails: Codable {
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the buyer arrived and is waiting for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var buyer_arrived_at: Timestamp?
+	/// Specific details for curbside pickup, such as parking number and vehicle model.
+	public var curbside_details: String?
+	
+	/// Specific details for curbside pickup.
+	/// - Parameters:
+	///   - buyer_arrived_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the buyer arrived and is waiting for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - curbside_details: Specific details for curbside pickup, such as parking number and vehicle model.
+	public init(buyer_arrived_at: Timestamp? = nil, curbside_details: String? = nil) {
+		self.buyer_arrived_at = buyer_arrived_at
+		self.curbside_details = curbside_details
+	}
+}
+
+/// The schedule type of the pickup fulfillment.
+public enum FulfillmentPickupDetailsScheduleType: String, Codable {
+	/// Indicates that the fulfillment will be picked up at a scheduled pickup time.
+	case SCHEDULED
+	/// Indicates that the fulfillment will be picked up as soon as possible and should be prepared immediately.
+	case ASAP
+}
+
+/// Information about the fulfillment recipient.
+public struct FulfillmentRecipient: Codable {
+	/// The address of the fulfillment recipient. This field is required.  If provided, the address overrides the corresponding customer profile value indicated by `customer_id`.
+	public var address: Address?
+	/// The ID of the customer associated with the fulfillment.  If `customer_id` is provided, the fulfillment recipient's `display_name`, `email_address`, and `phone_number` are automatically populated from the targeted customer profile. If these fields are set in the request, the request values override the information from the customer profile. If the targeted customer profile does not contain the necessary information and these fields are left unset, the request results in an error.
+	public var customer_id: String?
+	/// The display name of the fulfillment recipient. This field is required.  If provided, the display name overrides the corresponding customer profile value indicated by `customer_id`.
+	public var display_name: String?
+	/// The email address of the fulfillment recipient.  If provided, the email address overrides the corresponding customer profile value indicated by `customer_id`.
+	public var email_address: String?
+	/// The phone number of the fulfillment recipient. This field is required.  If provided, the phone number overrides the corresponding customer profile value indicated by `customer_id`.
+	public var phone_number: String?
+	
+	/// Information about the fulfillment recipient.
+	/// - Parameters:
+	///   - address: The address of the fulfillment recipient. This field is required.  If provided, the address overrides the corresponding customer profile value indicated by `customer_id`.
+	///   - customer_id: The ID of the customer associated with the fulfillment.  If `customer_id` is provided, the fulfillment recipient's `display_name`, `email_address`, and `phone_number` are automatically populated from the targeted customer profile. If these fields are set in the request, the request values override the information from the customer profile. If the targeted customer profile does not contain the necessary information and these fields are left unset, the request results in an error.
+	///   - display_name: The display name of the fulfillment recipient. This field is required.  If provided, the display name overrides the corresponding customer profile value indicated by `customer_id`.
+	///   - email_address: The email address of the fulfillment recipient.  If provided, the email address overrides the corresponding customer profile value indicated by `customer_id`.
+	///   - phone_number: The phone number of the fulfillment recipient. This field is required.  If provided, the phone number overrides the corresponding customer profile value indicated by `customer_id`.
+	public init(address: Address? = nil, customer_id: String? = nil, display_name: String? = nil, email_address: String? = nil, phone_number: String? = nil) {
+		self.address = address
+		self.customer_id = customer_id
+		self.display_name = display_name
+		self.email_address = email_address
+		self.phone_number = phone_number
+	}
+}
+
+/// Contains the details necessary to fulfill a shipment order.
+public struct FulfillmentShipmentDetails: Codable {
+	/// A description of why the shipment was canceled.
+	public var cancel_reason: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating the shipment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var canceled_at: Timestamp?
+	/// The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
+	public var carrier: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment is expected to be delivered to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var expected_shipped_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment failed to be completed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let failed_at: Timestamp?
+	/// A description of why the shipment failed to be completed.
+	public var failure_reason: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `RESERVED` state, which  indicates that preparation of this shipment has begun. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let in_progress_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `PREPARED` state, which indicates that the fulfillment is packaged. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let packaged_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment was requested. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let placed_at: Timestamp?
+	/// Information about the person to receive this shipment fulfillment.
+	public var recipient: FulfillmentRecipient?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `COMPLETED` state, which indicates that the fulfillment has been given to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public let shipped_at: Timestamp?
+	/// A note with additional information for the shipping carrier.
+	public var shipping_note: String?
+	/// A description of the type of shipping product purchased from the carrier (such as First Class, Priority, or Express).
+	public var shipping_type: String?
+	/// The reference number provided by the carrier to track the shipment's progress.
+	public var tracking_number: String?
+	/// A link to the tracking webpage on the carrier's website.
+	public var tracking_url: String?
+	
+	/// Contains the details necessary to fulfill a shipment order.
+	/// - Parameters:
+	///   - cancel_reason: A description of why the shipment was canceled.
+	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating the shipment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - carrier: The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
+	///   - expected_shipped_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment is expected to be delivered to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - failed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment failed to be completed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - failure_reason: A description of why the shipment failed to be completed.
+	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `RESERVED` state, which  indicates that preparation of this shipment has begun. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - packaged_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `PREPARED` state, which indicates that the fulfillment is packaged. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment was requested. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - recipient: Information about the person to receive this shipment fulfillment.
+	///   - shipped_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `COMPLETED` state, which indicates that the fulfillment has been given to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - shipping_note: A note with additional information for the shipping carrier.
+	///   - shipping_type: A description of the type of shipping product purchased from the carrier (such as First Class, Priority, or Express).
+	///   - tracking_number: The reference number provided by the carrier to track the shipment's progress.
+	///   - tracking_url: A link to the tracking webpage on the carrier's website.
+	public init(cancel_reason: String? = nil, canceled_at: Timestamp? = nil, carrier: String? = nil, expected_shipped_at: Timestamp? = nil, failed_at: Timestamp? = nil, failure_reason: String? = nil, in_progress_at: Timestamp? = nil, packaged_at: Timestamp? = nil, placed_at: Timestamp? = nil, recipient: FulfillmentRecipient? = nil, shipped_at: Timestamp? = nil, shipping_note: String? = nil, shipping_type: String? = nil, tracking_number: String? = nil, tracking_url: String? = nil) {
+		self.cancel_reason = cancel_reason
+		self.canceled_at = canceled_at
+		self.carrier = carrier
+		self.expected_shipped_at = expected_shipped_at
+		self.failed_at = failed_at
+		self.failure_reason = failure_reason
+		self.in_progress_at = in_progress_at
+		self.packaged_at = packaged_at
+		self.placed_at = placed_at
+		self.recipient = recipient
+		self.shipped_at = shipped_at
+		self.shipping_note = shipping_note
+		self.shipping_type = shipping_type
+		self.tracking_number = tracking_number
+		self.tracking_url = tracking_url
+	}
+}
+
+/// The current state of this fulfillment.
+public enum FulfillmentState: String, Codable {
+	/// Indicates that the fulfillment has been proposed.
+	case PROPOSED
+	/// Indicates that the fulfillment has been reserved.
+	case RESERVED
+	/// Indicates that the fulfillment has been prepared.
+	case PREPARED
+	/// Indicates that the fulfillment was successfully completed.
+	case COMPLETED
+	/// Indicates that the fulfillment was canceled.
+	case CANCELED
+	/// Indicates that the fulfillment failed to be completed, but was not explicitly canceled.
+	case FAILED
+}
+
+/// The type of fulfillment.
+public enum FulfillmentType: String, Codable {
+	/// A recipient to pick up the fulfillment from a physical [location](https://developer.squareup.com/reference/square_2022-11-16/objects/Location).
+	case PICKUP
+	/// A shipping carrier to ship the fulfillment.
+	case SHIPMENT
+	/// A courier to deliver the fulfillment.
+	case DELIVERY
+}
+
 public struct GetDeviceCodeResponse: Codable {
 	/// The queried DeviceCode.
 	public var device_code: DeviceCode?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
-
+	
 	public init(device_code: DeviceCode? = nil, errors: [SquareError]? = nil) {
 		self.device_code = device_code
 		self.errors = errors
@@ -5061,6 +5451,21 @@ public struct Payment: Codable {
 	}
 }
 
+public struct PaymentOptions: Codable {
+	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment.  This field cannot be `true` when `autocomplete = true`. This field cannot be `true` when an `order_id` isn't specified.  For more information, see [Take Partial Payments](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/partial-payments-with-gift-cards).  Default: false
+	public var accept_partial_authorization: Bool?
+	/// Indicates whether the `Payment` objects created from this `TerminalCheckout` are automatically `COMPLETED` or left in an `APPROVED` state for later modification.
+	public var autocomplete: Bool?
+	/// The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`). Default: - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
+	public var delay_duration: Timestamp?
+	
+	public init(accept_partial_authorization: Bool? = nil, autocomplete: Bool? = nil, delay_duration: Timestamp? = nil) {
+		self.accept_partial_authorization = accept_partial_authorization
+		self.autocomplete = autocomplete
+		self.delay_duration = delay_duration
+	}
+}
+
 /// Represents the Square processing fee.
 public struct ProcessingFee: Codable {
 	/// The fee amount, which might be negative, that is assessed or adjusted by Square.  Positive values represent funds being assessed, while negative values represent funds being returned.
@@ -5079,6 +5484,27 @@ public struct ProcessingFee: Codable {
 		self.amount_money = amount_money
 		self.effective_at = effective_at
 		self.type = type
+	}
+}
+
+/// Describes receipt action fields.
+public struct ReceiptOptions: Codable {
+	/// Identify the receipt as a reprint rather than an original receipt. Defaults to false.
+	public var is_duplicate: Bool?
+	/// The reference to the Square payment ID for the receipt.
+	public var payment_id: String
+	/// Instructs the device to print the receipt without displaying the receipt selection screen. Defaults to false.
+	public var print_only: Bool?
+	
+	/// Describes receipt action fields.
+	/// - Parameters:
+	///   - is_duplicate: Identify the receipt as a reprint rather than an original receipt. Defaults to false.
+	///   - payment_id: The reference to the Square payment ID for the receipt.
+	///   - print_only: Instructs the device to print the receipt without displaying the receipt selection screen. Defaults to false.
+	public init(payment_id: String, is_duplicate: Bool? = nil, print_only: Bool? = nil) {
+		self.payment_id = payment_id
+		self.is_duplicate = is_duplicate
+		self.print_only = print_only
 	}
 }
 
@@ -5145,6 +5571,27 @@ public struct RiskEvaluation: Codable {
 	public init(created_at: Timestamp? = nil, risk_level: String? = nil) {
 		self.created_at = created_at
 		self.risk_level = risk_level
+	}
+}
+
+/// Describes save-card action fields.
+public struct SaveCardOptions: Codable {
+	/// The id of the created card-on-file.
+	public let card_id: String?
+	/// The square-assigned ID of the customer linked to the saved card.
+	public var customer_id: String
+	/// An optional user-defined reference ID that can be used to associate this `Card` to another entity in an external system. For example, a customer ID generated by a third-party system.
+	public var reference_id: String?
+	
+	/// Describes save-card action fields.
+	/// - Parameters:
+	///   - card_id: The id of the created card-on-file.
+	///   - customer_id: The square-assigned ID of the customer linked to the saved card.
+	///   - reference_id: An optional user-defined reference ID that can be used to associate this `Card` to another entity in an external system. For example, a customer ID generated by a third-party system.
+	public init(customer_id: String, card_id: String? = nil, reference_id: String? = nil) {
+		self.customer_id = customer_id
+		self.card_id = card_id
+		self.reference_id = reference_id
 	}
 }
 
@@ -5537,6 +5984,23 @@ public struct TerminalCheckout: Codable {
 		self.reference_id = reference_id
 		self.status = status
 		self.updated_at = updated_at
+	}
+}
+
+// Represents a generic time range. The start and end values are represented in RFC 3339 format. Time ranges are customized to be inclusive or exclusive based on the needs of a particular endpoint. Refer to the relevant endpoint-specific documentation to determine how time ranges are handled.
+public struct TimeRange: Codable {
+	/// A datetime value in RFC 3339 format indicating when the time range ends.
+	public var end_at: Timestamp?
+	/// A datetime value in RFC 3339 format indicating when the time range starts.
+	public var start_at: Timestamp?
+	
+	/// Represents a generic time range. The start and end values are represented in RFC 3339 format. Time ranges are customized to be inclusive or exclusive based on the needs of a particular endpoint. Refer to the relevant endpoint-specific documentation to determine how time ranges are handled.
+	/// - Parameters:
+	///   - end_at: A datetime value in RFC 3339 format indicating when the time range ends.
+	///   - start_at: A datetime value in RFC 3339 format indicating when the time range starts.
+	public init(end_at: Timestamp? = nil, start_at: Timestamp? = nil) {
+		self.end_at = end_at
+		self.start_at = start_at
 	}
 }
 
