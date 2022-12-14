@@ -7709,63 +7709,6 @@ public struct DisputeEvidence: Codable {
 	}
 }
 
-/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_2022-11-16/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2022-11-16/disputes-api/create-dispute-evidence-file) or [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2022-11-16/disputes-api/create-dispute-evidence-text).
-public struct DisputeEvidenceCreatedWebhook: Codable {
-	/// Timestamp of when the webhook event was created, in RFC 3339 format.
-	public let created_at: Timestamp?
-	/// Data associated with the event.
-	public var data: DisputeEvidenceCreatedWebhookData?
-	/// A unique ID for the webhook event.
-	public var event_id: String?
-	/// The ID of the target location associated with the event.
-	public var location_id: String?
-	/// The ID of the target merchant associated with the event.
-	public var merchant_id: String?
-	/// The type of event this represents.
-	public var type: String?
-
-	/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_2022-11-16/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_2022-11-16/disputes-api/create-dispute-evidence-file) or [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_2022-11-16/disputes-api/create-dispute-evidence-text).
-	/// - Parameters:
-	///   - created_at: Timestamp of when the webhook event was created, in RFC 3339 format.
-	///   - data: Data associated with the event.
-	///   - event_id: A unique ID for the webhook event.
-	///   - location_id: The ID of the target location associated with the event.
-	///   - merchant_id: The ID of the target merchant associated with the event.
-	///   - type: The type of event this represents.
-	public init(created_at: Timestamp? = nil, data: DisputeEvidenceCreatedWebhookData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
-		self.created_at = created_at
-		self.data = data
-		self.event_id = event_id
-		self.location_id = location_id
-		self.merchant_id = merchant_id
-		self.type = type
-	}
-}
-
-public struct DisputeEvidenceCreatedWebhookData: Codable {
-	/// ID of the affected dispute.
-	public var id: String?
-	/// An object containing fields and values relevant to the event.
-	public var object: DisputeEvidenceCreatedWebhookObject?
-	/// Name of the affected dispute's type.
-	public var type: String?
-
-	public init(id: String? = nil, object: DisputeEvidenceCreatedWebhookObject? = nil, type: String? = nil) {
-		self.id = id
-		self.object = object
-		self.type = type
-	}
-}
-
-public struct DisputeEvidenceCreatedWebhookObject: Codable {
-	/// The dispute object.
-	public var object: Dispute?
-
-	public init(object: Dispute? = nil) {
-		self.object = object
-	}
-}
-
 /// A file to be uploaded as dispute evidence.
 public struct DisputeEvidenceFile: Codable {
 	/// The file name including the file extension. For example: "receipt.tiff".
