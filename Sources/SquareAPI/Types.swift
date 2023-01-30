@@ -1206,12 +1206,12 @@ public struct BulkDeleteBookingCustomAttributesResponse: Codable {
 /// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request.
 public struct BulkDeleteLocationCustomAttributesRequest: Codable {
 	/// The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
-	public var values: LocationCustomAttributeDeleteRequest
+	public var values: DeleteLocationCustomAttributeRequest
 
 	/// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request.
 	/// - Parameters:
 	///   - values: The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
-	public init(values: LocationCustomAttributeDeleteRequest) {
+	public init(values: DeleteLocationCustomAttributeRequest) {
 		self.values = values
 	}
 }
@@ -1234,13 +1234,13 @@ public struct BulkDeleteLocationCustomAttributesResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
-	public var values: LocationCustomAttributeDeleteResponse
+	public var values: DeleteLocationCustomAttributeResponse
 
 	/// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) response, which contains a map of responses that each corresponds to an individual delete request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
-	public init(values: LocationCustomAttributeDeleteResponse, errors: [SquareError]? = nil) {
+	public init(values: DeleteLocationCustomAttributeResponse, errors: [SquareError]? = nil) {
 		self.values = values
 		self.errors = errors
 	}
@@ -1505,12 +1505,12 @@ public struct BulkUpsertCustomerCustomAttributesResponseCustomerCustomAttributeU
 /// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request.
 public struct BulkUpsertLocationCustomAttributesRequest: Codable {
 	/// A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertLocationCustomAttributes` request and the information needed to create or update a custom attribute.
-	public var values: LocationCustomAttributeUpsertRequest
+	public var values: UpsertLocationCustomAttributeRequest
 
 	/// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request.
 	/// - Parameters:
 	///   - values: A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertLocationCustomAttributes` request and the information needed to create or update a custom attribute.
-	public init(values: LocationCustomAttributeUpsertRequest) {
+	public init(values: UpsertLocationCustomAttributeRequest) {
 		self.values = values
 	}
 }
@@ -1541,13 +1541,13 @@ public struct BulkUpsertLocationCustomAttributesResponse: Codable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `location_id` and `custom_attribute` or an `errors` field.
-	public var values: LocationCustomAttributeUpsertResponse?
+	public var values: UpsertLocationCustomAttributeResponse?
 
 	/// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `location_id` and `custom_attribute` or an `errors` field.
-	public init(errors: [SquareError]? = nil, values: LocationCustomAttributeUpsertResponse? = nil) {
+	public init(errors: [SquareError]? = nil, values: UpsertLocationCustomAttributeResponse? = nil) {
 		self.errors = errors
 		self.values = values
 	}
