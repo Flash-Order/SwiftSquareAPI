@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2022-11-16" }
+	public static var version: String { return "2023-01-19" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -1078,7 +1078,7 @@ public struct BreakType: Codable {
 	public var break_name: String
 	/// A read-only timestamp in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.
+	/// Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.  Example for break expected duration of 15 minutes: T15M
 	public var expected_duration: Timestamp
 	/// The UUID for this object.
 	public var id: String?
@@ -1095,7 +1095,7 @@ public struct BreakType: Codable {
 	/// - Parameters:
 	///   - break_name: A human-readable name for this type of break. The name is displayed to employees in Square products.
 	///   - created_at: A read-only timestamp in RFC 3339 format.
-	///   - expected_duration: Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.
+	///   - expected_duration: Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.  Example for break expected duration of 15 minutes: T15M
 	///   - id: The UUID for this object.
 	///   - is_paid: Whether this break counts towards time worked for compensation purposes.
 	///   - location_id: The ID of the business location this type of break applies to.
@@ -1200,6 +1200,66 @@ public struct BulkDeleteBookingCustomAttributesResponse: Codable {
 	public init(errors: [SquareError]? = nil, values: BookingCustomAttributeDeleteResponse? = nil) {
 		self.errors = errors
 		self.values = values
+	}
+}
+
+/// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request.
+public struct BulkDeleteLocationCustomAttributesRequest: Codable {
+	/// The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
+	public var values: LocationCustomAttributeDeleteRequest
+
+	/// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request.
+	/// - Parameters:
+	///   - values: The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
+	public init(values: LocationCustomAttributeDeleteRequest) {
+		self.values = values
+	}
+}
+
+/// Represents an individual delete request in a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
+public struct BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDeleteRequest: Codable {
+	/// The key of the associated custom attribute definition. Represented as a qualified key if the requesting app is not the definition owner.
+	public let key: String?
+
+	/// Represents an individual delete request in a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
+	/// - Parameters:
+	///   - key: The key of the associated custom attribute definition. Represented as a qualified key if the requesting app is not the definition owner.
+	public init(key: String? = nil) {
+		self.key = key
+	}
+}
+
+/// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) response, which contains a map of responses that each corresponds to an individual delete request.
+public struct BulkDeleteLocationCustomAttributesResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
+	public var values: LocationCustomAttributeDeleteResponse
+
+	/// Represents a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) response, which contains a map of responses that each corresponds to an individual delete request.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - values: A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
+	public init(values: LocationCustomAttributeDeleteResponse, errors: [SquareError]? = nil) {
+		self.values = values
+		self.errors = errors
+	}
+}
+
+/// Represents an individual delete response in a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request.
+public struct BulkDeleteLocationCustomAttributesResponseLocationCustomAttributeDeleteResponse: Codable {
+	/// Errors that occurred while processing the individual LocationCustomAttributeDeleteRequest request
+	public var errors: [SquareError]?
+	/// The ID of the location associated with the custom attribute.
+	public var location_id: String?
+
+	/// Represents an individual delete response in a [BulkDeleteLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-delete-location-custom-attributes) request.
+	/// - Parameters:
+	///   - errors: Errors that occurred while processing the individual LocationCustomAttributeDeleteRequest request
+	///   - location_id: The ID of the location associated with the custom attribute.
+	public init(errors: [SquareError]? = nil, location_id: String? = nil) {
+		self.errors = errors
+		self.location_id = location_id
 	}
 }
 
@@ -1439,6 +1499,78 @@ public struct BulkUpsertCustomerCustomAttributesResponseCustomerCustomAttributeU
 		self.custom_attribute = custom_attribute
 		self.customer_id = customer_id
 		self.errors = errors
+	}
+}
+
+/// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request.
+public struct BulkUpsertLocationCustomAttributesRequest: Codable {
+	/// A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertLocationCustomAttributes` request and the information needed to create or update a custom attribute.
+	public var values: LocationCustomAttributeUpsertRequest
+
+	/// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request.
+	/// - Parameters:
+	///   - values: A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertLocationCustomAttributes` request and the information needed to create or update a custom attribute.
+	public init(values: LocationCustomAttributeUpsertRequest) {
+		self.values = values
+	}
+}
+
+/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
+public struct BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest: Codable {
+	/// The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
+	public var custom_attribute: CustomAttribute
+	/// A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public var idempotency_key: String?
+	/// The ID of the target [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
+	public var location_id: String
+
+	/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
+	/// - Parameters:
+	///   - custom_attribute: The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
+	///   - idempotency_key: A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	///   - location_id: The ID of the target [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
+	public init(custom_attribute: CustomAttribute, location_id: String, idempotency_key: String? = nil) {
+		self.custom_attribute = custom_attribute
+		self.location_id = location_id
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+public struct BulkUpsertLocationCustomAttributesResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `location_id` and `custom_attribute` or an `errors` field.
+	public var values: LocationCustomAttributeUpsertResponse?
+
+	/// Represents a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - values: A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `location_id` and `custom_attribute` or an `errors` field.
+	public init(errors: [SquareError]? = nil, values: LocationCustomAttributeUpsertResponse? = nil) {
+		self.errors = errors
+		self.values = values
+	}
+}
+
+/// Represents a response for an individual upsert request in a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) operation.
+public struct BulkUpsertLocationCustomAttributesResponseLocationCustomAttributeUpsertResponse: Codable {
+	/// The new or updated custom attribute.
+	public var custom_attribute: CustomAttribute?
+	/// Any errors that occurred while processing the individual request.
+	public var errors: [SquareError]?
+	/// The ID of the location associated with the custom attribute.
+	public var location_id: String?
+
+	/// Represents a response for an individual upsert request in a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) operation.
+	/// - Parameters:
+	///   - custom_attribute: The new or updated custom attribute.
+	///   - errors: Any errors that occurred while processing the individual request.
+	///   - location_id: The ID of the location associated with the custom attribute.
+	public init(custom_attribute: CustomAttribute? = nil, errors: [SquareError]? = nil, location_id: String? = nil) {
+		self.custom_attribute = custom_attribute
+		self.errors = errors
+		self.location_id = location_id
 	}
 }
 
@@ -5222,6 +5354,40 @@ public struct CreateInvoiceResponse: Codable {
 	}
 }
 
+/// Represents a [CreateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/create-location-custom-attribute-definition) request.
+public struct CreateLocationCustomAttributeDefinitionRequest: Codable {
+	/// The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `name` is required unless `visibility` is set to `VISIBILITY_HIDDEN`.
+	public var custom_attribute_definition: CustomAttributeDefinition
+	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public var idempotency_key: String?
+
+	/// Represents a [CreateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/create-location-custom-attribute-definition) request.
+	/// - Parameters:
+	///   - custom_attribute_definition: The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `name` is required unless `visibility` is set to `VISIBILITY_HIDDEN`.
+	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public init(custom_attribute_definition: CustomAttributeDefinition, idempotency_key: String? = nil) {
+		self.custom_attribute_definition = custom_attribute_definition
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// Represents a [CreateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/create-location-custom-attribute-definition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+public struct CreateLocationCustomAttributeDefinitionResponse: Codable {
+	/// The new custom attribute definition.
+	public var custom_attribute_definition: CustomAttributeDefinition?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a [CreateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/create-location-custom-attribute-definition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// - Parameters:
+	///   - custom_attribute_definition: The new custom attribute definition.
+	///   - errors: Any errors that occurred during the request.
+	public init(custom_attribute_definition: CustomAttributeDefinition? = nil, errors: [SquareError]? = nil) {
+		self.custom_attribute_definition = custom_attribute_definition
+		self.errors = errors
+	}
+}
+
 /// The request object for the [CreateLocation](https://developer.squareup.com/reference/square_yyyy-mm-dd/locations-api/create-location) endpoint.
 public struct CreateLocationRequest: Codable {
 	/// The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional, but any information you care about for the location should be included. The remaining fields are automatically added based on the data from the [main location](https://developer.squareup.com/docs/locations-api#about-the-main-location).
@@ -6447,7 +6613,7 @@ public struct Customer: Codable {
 	public var family_name: String?
 	/// The given name (that is, the first name) associated with the customer profile.
 	public var given_name: String?
-	/// The IDs of customer groups the customer belongs to.
+	/// The IDs of [customer groups](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerGroup) the customer belongs to.
 	public var group_ids: [String]?
 	/// A unique Square-assigned ID for the customer profile.  If you need this ID for an API request, use the ID returned when you created the customer profile or call the [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers)  or [ListCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/list-customers) endpoint.
 	public var id: String?
@@ -6461,7 +6627,7 @@ public struct Customer: Codable {
 	public var preferences: CustomerPreferences?
 	/// An optional second ID used to associate the customer profile with an entity in another system.
 	public var reference_id: String?
-	/// The IDs of segments the customer belongs to.
+	/// The IDs of [customer segments](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerSegment) the customer belongs to.
 	public var segment_ids: [String]?
 	/// The tax ID associated with the customer profile. This field is present only for customers of sellers in EU countries or the United Kingdom.  For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	public var tax_ids: TaxIds?
@@ -6481,14 +6647,14 @@ public struct Customer: Codable {
 	///   - email_address: The email address associated with the customer profile.
 	///   - family_name: The family name (that is, the last name) associated with the customer profile.
 	///   - given_name: The given name (that is, the first name) associated with the customer profile.
-	///   - group_ids: The IDs of customer groups the customer belongs to.
+	///   - group_ids: The IDs of [customer groups](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerGroup) the customer belongs to.
 	///   - id: A unique Square-assigned ID for the customer profile.  If you need this ID for an API request, use the ID returned when you created the customer profile or call the [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers)  or [ListCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/list-customers) endpoint.
 	///   - nickname: A nickname for the customer profile.
 	///   - note: A custom note associated with the customer profile.
 	///   - phone_number: The phone number associated with the customer profile.
 	///   - preferences: Represents general customer preferences.
 	///   - reference_id: An optional second ID used to associate the customer profile with an entity in another system.
-	///   - segment_ids: The IDs of segments the customer belongs to.
+	///   - segment_ids: The IDs of [customer segments](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerSegment) the customer belongs to.
 	///   - tax_ids: The tax ID associated with the customer profile. This field is present only for customers of sellers in EU countries or the United Kingdom.  For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	///   - updated_at: The timestamp when the customer profile was last updated, in RFC 3339 format.
 	///   - version: The Square-assigned version number of the customer profile. The version number is incremented each time an update is committed to the customer profile, except for changes to customer segment membership and cards on file.
@@ -6667,7 +6833,7 @@ public struct CustomerCustomAttributeFilters: Codable {
 	}
 }
 
-/// Represents a set of `CustomerQuery` filters used to limit the set of customers returned by the [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) endpoint.
+/// Represents the filtering criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to filter customer profiles returned in [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) results.
 public struct CustomerFilter: Codable {
 	/// A filter to select customers based on when they were created.
 	public var created_at: TimeRange?
@@ -6677,26 +6843,29 @@ public struct CustomerFilter: Codable {
 	public var custom_attribute: CustomerCustomAttributeFilters?
 	/// A filter to [select customers by their email address](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-email-address)  visible to the seller.  This filter is case-insensitive.  For [exact matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#exact-search-by-email-address), this filter causes the search to return customer profiles  whose `email_address` field value are identical to the email address provided in the query.  For [fuzzy matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#fuzzy-search-by-email-address),  this filter causes the search to return customer profiles  whose `email_address` field value has a token-wise partial match against the filtering  expression in the query. For example, with `Steven gmail` provided in a search query, the search returns customers whose email address is `steven.johnson&#64;gmail.com`  or `mygmail&#64;stevensbakery.com`. Square removes any punctuation (including periods (.), underscores (_), and the &#64; symbol) and tokenizes the email addresses on spaces. A match is found if a tokenized email address contains all the tokens in the search query,  irrespective of the token order.
 	public var email_address: CustomerTextFilter?
-	/// A filter to select customers based on their group membership.  The `group_ids` is a JSON object of the following general format: ``` "group_ids": { "any":  ["{group_a_id}", "{group_b_id}", ...], "all":  ["{group_1_id}", "{group_2_id}", ...], "none": ["{group_i_id}", "{group_ii_id}", ...] } ```  You can use any combination of these `group_ids` fields (also known as `FilterValue` properties)  to specify how customers are selected based on their group membership.   With the `any` option, the search returns customers in Groups `a` or `b` or ... of the list. With the `all` option, the search returns customers in Groups `1` and `2` and ... of the list. With the `none` option, the search returns customers not in Groups `i` and not in `ii` and not in ... of the list.  If any of the search conditions are not met, including when an invalid or non-existent group ID is provided, the result is an empty list.   You can use the `group_ids` search filter with other available filters.   You cannot use the `group_ids` filter to select customers based on segment membership.
+	/// A filter to select customers based on the [groups](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerGroup) they belong to. Group membership is controlled by sellers and developers.  The `group_ids` filter has the following syntax: ``` "group_ids": { "any":  ["{group_a_id}", "{group_b_id}", ...], "all":  ["{group_1_id}", "{group_2_id}", ...], "none": ["{group_i_id}", "{group_ii_id}", ...] } ```  You can use any combination of the `any`, `all`, and `none` fields in the filter. With `any`, the search returns customers in groups `a` or `b` or any other group specified in the list. With `all`, the search returns customers in groups `1` and `2` and all other groups specified in the list. With `none`, the search returns customers not in groups `i` or `ii` or any other group specified in the list.  If any of the search conditions are not met, including when an invalid or non-existent group ID is provided, the result is an empty object (`{}`).
 	public var group_ids: FilterValue?
 	/// A filter to [select customers by their phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-phone-number) visible to the seller.  For [exact matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#exact-search-by-phone-number), this filter returns customers whose phone number matches the specified query expression. The number in the query must be of an E.164-compliant form. In particular, it must include the leading `+` sign followed by a country code and then a subscriber number. For example, the standard E.164 form of a US phone number is `+12062223333` and an E.164-compliant variation is `+1 (206) 222-3333`. To match the query expression, stored customer phone numbers are converted to the standard E.164 form.  For [fuzzy matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#fuzzy-search-by-phone-number), this filter returns customers whose phone number matches the token or tokens provided in the query expression. For example, with `415` provided in a search query, the search returns customers with the phone numbers `+1-415-212-1200`, `+1-212-415-1234`, and `+1 (551) 234-1567`. Similarly, a search query of `415 123` returns customers with the phone numbers `+1-212-415-1234` and `+1 (551) 234-1567` but not `+1-212-415-1200`. A match is found if a tokenized phone number contains all the tokens in the search query, irrespective of the token order.
 	public var phone_number: CustomerTextFilter?
 	/// A filter to [select customers by their reference IDs](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-reference-id). This filter is case-insensitive.  [Exact matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#exact-search-by-reference-id)  of a customer's reference ID against a query's reference ID is evaluated as an exact match between two strings, character by character in the given order.  [Fuzzy matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#fuzzy-search-by-reference-id)  of stored reference IDs against queried reference IDs works  exactly the same as fuzzy matching on email addresses. Non-alphanumeric characters  are replaced by spaces to tokenize stored and queried reference IDs. A match is found if a tokenized stored reference ID contains all tokens specified in any order in the query. For example, a query of `NYC M` matches customer profiles with the `reference_id` value of `NYC_M_35_JOHNSON` and `NYC_27_MURRAY`.
 	public var reference_id: CustomerTextFilter?
+	///  A filter to select customers based on the [segments](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerSegment) they belong to. Segment membership is dynamic and adjusts automatically based on whether customers meet the segment criteria.  You can provide up to three segment IDs in the filter, using any combination of the `all`, `any`, and `none` fields. For the following example, the results include customers who belong to both segment A and segment B but do not belong to segment C.  ``` "segment_ids": { "all":  ["{segment_A_id}", "{segment_B_id}"], "none":  ["{segment_C_id}"] } ```  If an invalid or non-existent segment ID is provided in the filter, Square stops processing the request and returns a `400 BAD_REQUEST` error that includes the segment ID.
+	public var segment_ids: FilterValue?
 	/// A filter to select customers based on when they were last updated.
 	public var updated_at: TimeRange?
 
-	/// Represents a set of `CustomerQuery` filters used to limit the set of customers returned by the [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) endpoint.
+	/// Represents the filtering criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to filter customer profiles returned in [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) results.
 	/// - Parameters:
 	///   - created_at: A filter to select customers based on when they were created.
 	///   - creation_source: A filter to select customers based on their creation source.
 	///   - custom_attribute: A filter to select customers based on one or more custom attributes.   This filter can contain up to 10 custom attribute filters. Each custom attribute filter specifies filtering criteria for a target custom attribute. If multiple custom attribute filters are provided, they are combined as an `AND` operation.  To be valid for a search, the custom attributes must be visible to the requesting application. For more information, including example queries, see [Search by custom attribute](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-custom-attribute).  Square returns matching customer profiles, which do not contain custom attributes. To retrieve customer-related custom attributes, use the [Customer Custom Attributes API](https://developer.squareup.com/reference/square_yyyy-mm-dd/customer-custom-attributes-api). For example, you can call [RetrieveCustomerCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/customer-custom-attributes-api/retrieve-customer-custom-attribute) using a customer ID from the result set.
 	///   - email_address: A filter to [select customers by their email address](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-email-address)  visible to the seller.  This filter is case-insensitive.  For [exact matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#exact-search-by-email-address), this filter causes the search to return customer profiles  whose `email_address` field value are identical to the email address provided in the query.  For [fuzzy matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#fuzzy-search-by-email-address),  this filter causes the search to return customer profiles  whose `email_address` field value has a token-wise partial match against the filtering  expression in the query. For example, with `Steven gmail` provided in a search query, the search returns customers whose email address is `steven.johnson&#64;gmail.com`  or `mygmail&#64;stevensbakery.com`. Square removes any punctuation (including periods (.), underscores (_), and the &#64; symbol) and tokenizes the email addresses on spaces. A match is found if a tokenized email address contains all the tokens in the search query,  irrespective of the token order.
-	///   - group_ids: A filter to select customers based on their group membership.  The `group_ids` is a JSON object of the following general format: ``` "group_ids": { "any":  ["{group_a_id}", "{group_b_id}", ...], "all":  ["{group_1_id}", "{group_2_id}", ...], "none": ["{group_i_id}", "{group_ii_id}", ...] } ```  You can use any combination of these `group_ids` fields (also known as `FilterValue` properties)  to specify how customers are selected based on their group membership.   With the `any` option, the search returns customers in Groups `a` or `b` or ... of the list. With the `all` option, the search returns customers in Groups `1` and `2` and ... of the list. With the `none` option, the search returns customers not in Groups `i` and not in `ii` and not in ... of the list.  If any of the search conditions are not met, including when an invalid or non-existent group ID is provided, the result is an empty list.   You can use the `group_ids` search filter with other available filters.   You cannot use the `group_ids` filter to select customers based on segment membership.
+	///   - group_ids: A filter to select customers based on the [groups](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerGroup) they belong to. Group membership is controlled by sellers and developers.  The `group_ids` filter has the following syntax: ``` "group_ids": { "any":  ["{group_a_id}", "{group_b_id}", ...], "all":  ["{group_1_id}", "{group_2_id}", ...], "none": ["{group_i_id}", "{group_ii_id}", ...] } ```  You can use any combination of the `any`, `all`, and `none` fields in the filter. With `any`, the search returns customers in groups `a` or `b` or any other group specified in the list. With `all`, the search returns customers in groups `1` and `2` and all other groups specified in the list. With `none`, the search returns customers not in groups `i` or `ii` or any other group specified in the list.  If any of the search conditions are not met, including when an invalid or non-existent group ID is provided, the result is an empty object (`{}`).
 	///   - phone_number: A filter to [select customers by their phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-phone-number) visible to the seller.  For [exact matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#exact-search-by-phone-number), this filter returns customers whose phone number matches the specified query expression. The number in the query must be of an E.164-compliant form. In particular, it must include the leading `+` sign followed by a country code and then a subscriber number. For example, the standard E.164 form of a US phone number is `+12062223333` and an E.164-compliant variation is `+1 (206) 222-3333`. To match the query expression, stored customer phone numbers are converted to the standard E.164 form.  For [fuzzy matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#fuzzy-search-by-phone-number), this filter returns customers whose phone number matches the token or tokens provided in the query expression. For example, with `415` provided in a search query, the search returns customers with the phone numbers `+1-415-212-1200`, `+1-212-415-1234`, and `+1 (551) 234-1567`. Similarly, a search query of `415 123` returns customers with the phone numbers `+1-212-415-1234` and `+1 (551) 234-1567` but not `+1-212-415-1200`. A match is found if a tokenized phone number contains all the tokens in the search query, irrespective of the token order.
 	///   - reference_id: A filter to [select customers by their reference IDs](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#search-by-reference-id). This filter is case-insensitive.  [Exact matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#exact-search-by-reference-id)  of a customer's reference ID against a query's reference ID is evaluated as an exact match between two strings, character by character in the given order.  [Fuzzy matching](https://developer.squareup.com/docs/customers-api/use-the-api/search-customers#fuzzy-search-by-reference-id)  of stored reference IDs against queried reference IDs works  exactly the same as fuzzy matching on email addresses. Non-alphanumeric characters  are replaced by spaces to tokenize stored and queried reference IDs. A match is found if a tokenized stored reference ID contains all tokens specified in any order in the query. For example, a query of `NYC M` matches customer profiles with the `reference_id` value of `NYC_M_35_JOHNSON` and `NYC_27_MURRAY`.
+	///   - segment_ids:  A filter to select customers based on the [segments](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerSegment) they belong to. Segment membership is dynamic and adjusts automatically based on whether customers meet the segment criteria.  You can provide up to three segment IDs in the filter, using any combination of the `all`, `any`, and `none` fields. For the following example, the results include customers who belong to both segment A and segment B but do not belong to segment C.  ``` "segment_ids": { "all":  ["{segment_A_id}", "{segment_B_id}"], "none":  ["{segment_C_id}"] } ```  If an invalid or non-existent segment ID is provided in the filter, Square stops processing the request and returns a `400 BAD_REQUEST` error that includes the segment ID.
 	///   - updated_at: A filter to select customers based on when they were last updated.
-	public init(created_at: TimeRange? = nil, creation_source: CustomerCreationSourceFilter? = nil, custom_attribute: CustomerCustomAttributeFilters? = nil, email_address: CustomerTextFilter? = nil, group_ids: FilterValue? = nil, phone_number: CustomerTextFilter? = nil, reference_id: CustomerTextFilter? = nil, updated_at: TimeRange? = nil) {
+	public init(created_at: TimeRange? = nil, creation_source: CustomerCreationSourceFilter? = nil, custom_attribute: CustomerCustomAttributeFilters? = nil, email_address: CustomerTextFilter? = nil, group_ids: FilterValue? = nil, phone_number: CustomerTextFilter? = nil, reference_id: CustomerTextFilter? = nil, segment_ids: FilterValue? = nil, updated_at: TimeRange? = nil) {
 		self.created_at = created_at
 		self.creation_source = creation_source
 		self.custom_attribute = custom_attribute
@@ -6704,6 +6873,7 @@ public struct CustomerFilter: Codable {
 		self.group_ids = group_ids
 		self.phone_number = phone_number
 		self.reference_id = reference_id
+		self.segment_ids = segment_ids
 		self.updated_at = updated_at
 	}
 }
@@ -6754,16 +6924,16 @@ public struct CustomerPreferences: Codable {
 	}
 }
 
-/// Represents a query (including filtering criteria, sorting criteria, or both) used to search for customer profiles.
+/// Represents filtering and sorting criteria for a [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) request.
 public struct CustomerQuery: Codable {
-	/// A list of filtering criteria.
+	/// The filtering criteria for the search query. A query can contain multiple filters in any combination. Multiple filters are combined as `AND` statements.  __Note:__ Combining multiple filters as `OR` statements is not supported. Instead, send multiple single-filter searches and join the result sets.
 	public var filter: CustomerFilter?
 	/// Sorting criteria for query results. The default behavior is to sort  customers alphabetically by `given_name` and `family_name`.
 	public var sort: CustomerSort?
 
-	/// Represents a query (including filtering criteria, sorting criteria, or both) used to search for customer profiles.
+	/// Represents filtering and sorting criteria for a [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) request.
 	/// - Parameters:
-	///   - filter: A list of filtering criteria.
+	///   - filter: The filtering criteria for the search query. A query can contain multiple filters in any combination. Multiple filters are combined as `AND` statements.  __Note:__ Combining multiple filters as `OR` statements is not supported. Instead, send multiple single-filter searches and join the result sets.
 	///   - sort: Sorting criteria for query results. The default behavior is to sort  customers alphabetically by `given_name` and `family_name`.
 	public init(filter: CustomerFilter? = nil, sort: CustomerSort? = nil) {
 		self.filter = filter
@@ -6785,17 +6955,17 @@ public struct CustomerSegment: Codable {
 	// no init-- this struct is read-only
 }
 
-/// Specifies how searched customers profiles are sorted, including the sort key and sort order.
+/// Represents the sorting criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to sort customer profiles returned in [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) results.
 public struct CustomerSort: Codable {
-	/// Use one or more customer attributes as the sort key to sort searched customer profiles.  For example, use the creation date (`created_at`) of customers or default attributes as the sort key.   Default: `DEFAULT`.
+	/// Indicates the fields to use as the sort key, which is either the default set of fields or `created_at`.  The default value is `DEFAULT`.
 	public var field: String?
-	/// Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  Default: `ASC`.
+	/// Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  The default value is `ASC`.
 	public var order: String?
 
-	/// Specifies how searched customers profiles are sorted, including the sort key and sort order.
+	/// Represents the sorting criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to sort customer profiles returned in [SearchCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/search-customers) results.
 	/// - Parameters:
-	///   - field: Use one or more customer attributes as the sort key to sort searched customer profiles.  For example, use the creation date (`created_at`) of customers or default attributes as the sort key.   Default: `DEFAULT`.
-	///   - order: Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  Default: `ASC`.
+	///   - field: Indicates the fields to use as the sort key, which is either the default set of fields or `created_at`.  The default value is `DEFAULT`.
+	///   - order: Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  The default value is `ASC`.
 	public init(field: String? = nil, order: String? = nil) {
 		self.field = field
 		self.order = order
@@ -7111,6 +7281,48 @@ public struct DeleteInvoiceResponse: Codable {
 	/// Describes a `DeleteInvoice` response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
+/// Represents a [DeleteLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/delete-location-custom-attributeDefinition) request.
+public struct DeleteLocationCustomAttributeDefinitionRequest: Codable {
+
+	/// Represents a [DeleteLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/delete-location-custom-attributeDefinition) request.
+	public init() {
+	}
+}
+
+/// Represents a response from a delete request containing error messages if there are any.
+public struct DeleteLocationCustomAttributeDefinitionResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a response from a delete request containing error messages if there are any.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
+/// Represents a [DeleteLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/delete-location-custom-attribute) request.
+public struct DeleteLocationCustomAttributeRequest: Codable {
+
+	/// Represents a [DeleteLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/delete-location-custom-attribute) request.
+	public init() {
+	}
+}
+
+/// Represents a [DeleteLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/delete-location-custom-attribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+public struct DeleteLocationCustomAttributeResponse: Codable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a [DeleteLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/delete-location-custom-attribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
@@ -8062,6 +8274,10 @@ public enum ErrorCode: String, Codable {
 	case INVALID_PAUSE_LENGTH
 	/// The subscription cannot be paused/resumed on the given date.
 	case INVALID_DATE
+	/// The API request references an unsupported country.
+	case UNSUPPORTED_COUNTRY
+	/// The API request references an unsupported currency.
+	case UNSUPPORTED_CURRENCY
 	/// The card issuer declined the request because the card is expired.
 	case CARD_EXPIRED
 	/// The expiration date for the payment card is invalid. For example, it indicates a date in the past.
@@ -8100,7 +8316,7 @@ public enum ErrorCode: String, Codable {
 	case INVALID_LOCATION
 	/// The card issuer has determined the payment amount is either too high or too low. The API returns the error code mostly for credit cards (for example, the card reached the credit limit). However, sometimes the issuer bank can indicate the error for debit or prepaid cards (for example, card has insufficient funds).
 	case TRANSACTION_LIMIT
-	/// The card issuer declined the request because the issuer requires voice authorization from the cardholder.
+	/// The card issuer declined the request because the issuer requires voice authorization from the cardholder. The seller should ask the customer to contact the card issuing bank to authorize the payment.
 	case VOICE_FAILURE
 	/// The specified card number is invalid. For example, it is of incorrect length or is incorrectly formatted.
 	case PAN_FAILURE
@@ -8142,7 +8358,7 @@ public enum ErrorCode: String, Codable {
 	case CARD_TOKEN_USED
 	/// The requested payment amount is too high for the provided payment source.
 	case AMOUNT_TOO_HIGH
-	/// The API request references an unsupported instrument type/
+	/// The API request references an unsupported instrument type.
 	case UNSUPPORTED_INSTRUMENT_TYPE
 	/// The requested refund amount exceeds the amount available to refund.
 	case REFUND_AMOUNT_INVALID
@@ -8182,6 +8398,12 @@ public enum ErrorCode: String, Codable {
 	case INVALID_SQUARE_VERSION_FORMAT
 	/// The provided Square-Version is incompatible with the requested action.
 	case API_VERSION_INCOMPATIBLE
+	/// The transaction requires that a card be present.
+	case CARD_PRESENCE_REQUIRED
+	/// The API request references an unsupported source type.
+	case UNSUPPORTED_SOURCE_TYPE
+	/// The provided card does not match what is expected.
+	case CARD_MISMATCH
 	/// The card was declined.
 	case CARD_DECLINED
 	/// The CVV could not be verified.
@@ -9136,6 +9358,10 @@ public struct GiftCardActivity: Codable {
 	public var redeem_activity_details: GiftCardActivityRedeem?
 	/// Additional details about a `REFUND` activity, which is used to add money to a gift card when  refunding a payment.  For applications that process payments using the Square Payments API, Square creates a `REFUND` activity that  updates the gift card balance after the corresponding [RefundPayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/refunds-api/refund-payment)  request is completed. Applications that use a custom payment processing system must call  [CreateGiftCardActivity](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-card-activities-api/create-gift-card-activity) to create the `REFUND` activity.
 	public var refund_activity_details: GiftCardActivityRefund?
+	/// Additional details about a `TRANSFER_BALANCE_FROM` activity, which Square uses to deduct money from a gift as the result of a transfer to another gift card.
+	public let transfer_balance_from_activity_details: GiftCardActivityTransferBalanceFrom?
+	/// Additional details about a `TRANSFER_BALANCE_TO` activity, which Square uses to add money to a gift card as the result of a transfer from another gift card.
+	public let transfer_balance_to_activity_details: GiftCardActivityTransferBalanceTo?
 	/// The type of the gift card activity.
 	public var type: GiftCardActivityType
 	/// Additional details about an `UNBLOCK` activity, which Square uses to unblock a gift card.
@@ -9162,10 +9388,12 @@ public struct GiftCardActivity: Codable {
 	///   - location_id: The ID of the [business location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the activity occurred.
 	///   - redeem_activity_details: Additional details about a `REDEEM` activity, which is used to redeem a gift card for a purchase.  For applications that process payments using the Square Payments API, Square creates a `REDEEM` activity that  updates the gift card balance after the corresponding [CreatePayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/payments-api/create-payment)  request is completed. Applications that use a custom payment processing system must call  [CreateGiftCardActivity](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-card-activities-api/create-gift-card-activity) to create the `REDEEM` activity.
 	///   - refund_activity_details: Additional details about a `REFUND` activity, which is used to add money to a gift card when  refunding a payment.  For applications that process payments using the Square Payments API, Square creates a `REFUND` activity that  updates the gift card balance after the corresponding [RefundPayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/refunds-api/refund-payment)  request is completed. Applications that use a custom payment processing system must call  [CreateGiftCardActivity](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-card-activities-api/create-gift-card-activity) to create the `REFUND` activity.
+	///   - transfer_balance_from_activity_details: Additional details about a `TRANSFER_BALANCE_FROM` activity, which Square uses to deduct money from a gift as the result of a transfer to another gift card.
+	///   - transfer_balance_to_activity_details: Additional details about a `TRANSFER_BALANCE_TO` activity, which Square uses to add money to a gift card as the result of a transfer from another gift card.
 	///   - type: The type of the gift card activity.
 	///   - unblock_activity_details: Additional details about an `UNBLOCK` activity, which Square uses to unblock a gift card.
 	///   - unlinked_activity_refund_activity_details: Additional details about an `UNLINKED_ACTIVITY_REFUND` activity. This activity is used to add money  to a gift card when refunding a payment that was processed using a custom payment processing system and not linked to the gift card.
-	public init(location_id: String, type: GiftCardActivityType, activate_activity_details: GiftCardActivityActivate? = nil, adjust_decrement_activity_details: GiftCardActivityAdjustDecrement? = nil, adjust_increment_activity_details: GiftCardActivityAdjustIncrement? = nil, block_activity_details: GiftCardActivityBlock? = nil, clear_balance_activity_details: GiftCardActivityClearBalance? = nil, created_at: Timestamp? = nil, deactivate_activity_details: GiftCardActivityDeactivate? = nil, gift_card_balance_money: Money? = nil, gift_card_gan: String? = nil, gift_card_id: String? = nil, id: String? = nil, import_activity_details: GiftCardActivityImport? = nil, import_reversal_activity_details: GiftCardActivityImportReversal? = nil, load_activity_details: GiftCardActivityLoad? = nil, redeem_activity_details: GiftCardActivityRedeem? = nil, refund_activity_details: GiftCardActivityRefund? = nil, unblock_activity_details: GiftCardActivityUnblock? = nil, unlinked_activity_refund_activity_details: GiftCardActivityUnlinkedActivityRefund? = nil) {
+	public init(location_id: String, type: GiftCardActivityType, activate_activity_details: GiftCardActivityActivate? = nil, adjust_decrement_activity_details: GiftCardActivityAdjustDecrement? = nil, adjust_increment_activity_details: GiftCardActivityAdjustIncrement? = nil, block_activity_details: GiftCardActivityBlock? = nil, clear_balance_activity_details: GiftCardActivityClearBalance? = nil, created_at: Timestamp? = nil, deactivate_activity_details: GiftCardActivityDeactivate? = nil, gift_card_balance_money: Money? = nil, gift_card_gan: String? = nil, gift_card_id: String? = nil, id: String? = nil, import_activity_details: GiftCardActivityImport? = nil, import_reversal_activity_details: GiftCardActivityImportReversal? = nil, load_activity_details: GiftCardActivityLoad? = nil, redeem_activity_details: GiftCardActivityRedeem? = nil, refund_activity_details: GiftCardActivityRefund? = nil, transfer_balance_from_activity_details: GiftCardActivityTransferBalanceFrom? = nil, transfer_balance_to_activity_details: GiftCardActivityTransferBalanceTo? = nil, unblock_activity_details: GiftCardActivityUnblock? = nil, unlinked_activity_refund_activity_details: GiftCardActivityUnlinkedActivityRefund? = nil) {
 		self.location_id = location_id
 		self.type = type
 		self.activate_activity_details = activate_activity_details
@@ -9184,6 +9412,8 @@ public struct GiftCardActivity: Codable {
 		self.load_activity_details = load_activity_details
 		self.redeem_activity_details = redeem_activity_details
 		self.refund_activity_details = refund_activity_details
+		self.transfer_balance_from_activity_details = transfer_balance_from_activity_details
+		self.transfer_balance_to_activity_details = transfer_balance_to_activity_details
 		self.unblock_activity_details = unblock_activity_details
 		self.unlinked_activity_refund_activity_details = unlinked_activity_refund_activity_details
 	}
@@ -9454,6 +9684,40 @@ public struct GiftCardActivityRefund: Codable {
 	}
 }
 
+/// Represents details about a `TRANSFER_BALANCE_FROM` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
+public struct GiftCardActivityTransferBalanceFrom: Codable {
+	/// The amount deducted from the gift card for the transfer. This value is a positive integer.
+	public var amount_money: Money
+	/// The ID of the gift card to which the specified amount was transferred.
+	public var transfer_to_gift_card_id: String
+
+	/// Represents details about a `TRANSFER_BALANCE_FROM` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
+	/// - Parameters:
+	///   - amount_money: The amount deducted from the gift card for the transfer. This value is a positive integer.
+	///   - transfer_to_gift_card_id: The ID of the gift card to which the specified amount was transferred.
+	public init(amount_money: Money, transfer_to_gift_card_id: String) {
+		self.amount_money = amount_money
+		self.transfer_to_gift_card_id = transfer_to_gift_card_id
+	}
+}
+
+/// Represents details about a `TRANSFER_BALANCE_TO` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
+public struct GiftCardActivityTransferBalanceTo: Codable {
+	/// The amount added to the gift card balance for the transfer. This value is a positive integer.
+	public var amount_money: Money
+	/// The ID of the gift card from which the specified amount was transferred.
+	public var transfer_from_gift_card_id: String
+
+	/// Represents details about a `TRANSFER_BALANCE_TO` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
+	/// - Parameters:
+	///   - amount_money: The amount added to the gift card balance for the transfer. This value is a positive integer.
+	///   - transfer_from_gift_card_id: The ID of the gift card from which the specified amount was transferred.
+	public init(amount_money: Money, transfer_from_gift_card_id: String) {
+		self.amount_money = amount_money
+		self.transfer_from_gift_card_id = transfer_from_gift_card_id
+	}
+}
+
 /// Indicates the type of [gift card activity](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivity).
 public enum GiftCardActivityType: String, Codable {
 	/// Activated a gift card with a balance. When a gift card is activated, Square changes  the gift card state from `PENDING` to `ACTIVE`. A gift card must be in the `ACTIVE` state  to be used for other balance-changing activities.
@@ -9482,6 +9746,10 @@ public enum GiftCardActivityType: String, Codable {
 	case UNBLOCK
 	/// Reversed the import of a third-party gift card, which sets the gift card state to  `PENDING` and clears the balance. `IMPORT_REVERSAL` activities are managed by Square and  cannot be created using the Gift Card Activities API.
 	case IMPORT_REVERSAL
+	/// Deducted money from a gift card as the result of a transfer to the balance of another gift card. `TRANSFER_BALANCE_FROM` activities are managed by Square and cannot be created using the Gift Card Activities API.
+	case TRANSFER_BALANCE_FROM
+	/// Added money to a gift card as the result of a transfer from the balance of another gift card. `TRANSFER_BALANCE_TO` activities are managed by Square and cannot be created using the Gift Card Activities API.
+	case TRANSFER_BALANCE_TO
 }
 
 /// Represents details about an `UNBLOCK` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -10980,7 +11248,7 @@ public struct ListCustomersRequest: Codable {
 public struct ListCustomersResponse: Codable {
 	/// A pagination cursor to retrieve the next set of results for the original query. A cursor is only present if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
-	/// An array of `Customer` objects that match the provided query.
+	/// The customer profiles associated with the Square account or an empty object (`{}`) if none are found.
 	public var customers: [Customer]?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -10988,7 +11256,7 @@ public struct ListCustomersResponse: Codable {
 	/// Defines the fields that are included in the response body of a request to the `ListCustomers` endpoint.  Either `errors` or `customers` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor to retrieve the next set of results for the original query. A cursor is only present if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - customers: An array of `Customer` objects that match the provided query.
+	///   - customers: The customer profiles associated with the Square account or an empty object (`{}`) if none are found.
 	///   - errors: Any errors that occurred during the request.
 	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
@@ -11330,6 +11598,94 @@ public struct ListInvoicesResponse: Codable {
 		self.cursor = cursor
 		self.errors = errors
 		self.invoices = invoices
+	}
+}
+
+/// Represents a [ListLocationCustomAttributeDefinitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attribute-definitions) request.
+public struct ListLocationCustomAttributeDefinitionsRequest: Codable {
+	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var limit: Int?
+	/// Filters the `CustomAttributeDefinition` results by their `visibility` values.
+	public var visibility_filter: String?
+
+	/// Represents a [ListLocationCustomAttributeDefinitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attribute-definitions) request.
+	/// - Parameters:
+	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values.
+	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: String? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.visibility_filter = visibility_filter
+	}
+}
+
+/// Represents a [ListLocationCustomAttributeDefinitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attribute-definitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+public struct ListLocationCustomAttributeDefinitionsResponse: Codable {
+	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// The retrieved custom attribute definitions. If no custom attribute definitions are found, Square returns an empty object (`{}`).
+	public var custom_attribute_definitions: [CustomAttributeDefinition]?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a [ListLocationCustomAttributeDefinitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attribute-definitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+	/// - Parameters:
+	///   - cursor: The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - custom_attribute_definitions: The retrieved custom attribute definitions. If no custom attribute definitions are found, Square returns an empty object (`{}`).
+	///   - errors: Any errors that occurred during the request.
+	public init(cursor: String? = nil, custom_attribute_definitions: [CustomAttributeDefinition]? = nil, errors: [SquareError]? = nil) {
+		self.cursor = cursor
+		self.custom_attribute_definitions = custom_attribute_definitions
+		self.errors = errors
+	}
+}
+
+/// Represents a [ListLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attributes) request.
+public struct ListLocationCustomAttributesRequest: Codable {
+	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var limit: Int?
+	/// Filters the `CustomAttributeDefinition` results by their `visibility` values.
+	public var visibility_filter: String?
+	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
+	public var with_definitions: Bool?
+
+	/// Represents a [ListLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attributes) request.
+	/// - Parameters:
+	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values.
+	///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
+	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: String? = nil, with_definitions: Bool? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.visibility_filter = visibility_filter
+		self.with_definitions = with_definitions
+	}
+}
+
+/// Represents a [ListLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+public struct ListLocationCustomAttributesResponse: Codable {
+	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// The retrieved custom attributes. If `with_definitions` was set to `true` in the request, the custom attribute definition is returned in the `definition` field of each custom attribute. If no custom attributes are found, Square returns an empty object (`{}`).
+	public var custom_attributes: [CustomAttribute]?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a [ListLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/list-location-custom-attributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+	/// - Parameters:
+	///   - cursor: The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - custom_attributes: The retrieved custom attributes. If `with_definitions` was set to `true` in the request, the custom attribute definition is returned in the `definition` field of each custom attribute. If no custom attributes are found, Square returns an empty object (`{}`).
+	///   - errors: Any errors that occurred during the request.
+	public init(cursor: String? = nil, custom_attributes: [CustomAttribute]? = nil, errors: [SquareError]? = nil) {
+		self.cursor = cursor
+		self.custom_attributes = custom_attributes
+		self.errors = errors
 	}
 }
 
@@ -12664,7 +13020,7 @@ public struct LoyaltyEventTypeFilter: Codable {
 /// Represents a Square loyalty program. Loyalty programs define how buyers can earn points and redeem points for rewards.  Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard.  For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).
 public struct LoyaltyProgram: Codable {
 	/// Defines how buyers can earn loyalty points from the base loyalty program. To check for associated [loyalty promotions](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion) that enable buyers to earn extra points, call [ListLoyaltyPromotions](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/list-loyalty-promotions).
-	public var accrual_rules: [LoyaltyProgramAccrualRule]
+	public var accrual_rules: [LoyaltyProgramAccrualRule]?
 	/// The timestamp when the program was created, in RFC 3339 format.
 	public let created_at: Timestamp?
 	/// If present, details for how points expire.
@@ -12674,11 +13030,11 @@ public struct LoyaltyProgram: Codable {
 	/// The [locations](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) at which the program is active.
 	public var location_ids: [String]
 	/// The list of rewards for buyers, sorted by ascending points.
-	public var reward_tiers: [LoyaltyProgramRewardTier]
+	public var reward_tiers: [LoyaltyProgramRewardTier]?
 	/// Whether the program is currently active.
 	public let status: String?
 	/// A cosmetic name for the “points” currency.
-	public var terminology: LoyaltyProgramTerminology
+	public var terminology: LoyaltyProgramTerminology?
 	/// The timestamp when the reward was last updated, in RFC 3339 format.
 	public let updated_at: Timestamp?
 
@@ -12693,15 +13049,15 @@ public struct LoyaltyProgram: Codable {
 	///   - status: Whether the program is currently active.
 	///   - terminology: A cosmetic name for the “points” currency.
 	///   - updated_at: The timestamp when the reward was last updated, in RFC 3339 format.
-	public init(accrual_rules: [LoyaltyProgramAccrualRule], location_ids: [String], reward_tiers: [LoyaltyProgramRewardTier], terminology: LoyaltyProgramTerminology, created_at: Timestamp? = nil, expiration_policy: LoyaltyProgramExpirationPolicy? = nil, id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
-		self.accrual_rules = accrual_rules
+	public init(location_ids: [String], accrual_rules: [LoyaltyProgramAccrualRule]? = nil, created_at: Timestamp? = nil, expiration_policy: LoyaltyProgramExpirationPolicy? = nil, id: String? = nil, reward_tiers: [LoyaltyProgramRewardTier]? = nil, status: String? = nil, terminology: LoyaltyProgramTerminology? = nil, updated_at: Timestamp? = nil) {
 		self.location_ids = location_ids
-		self.reward_tiers = reward_tiers
-		self.terminology = terminology
+		self.accrual_rules = accrual_rules
 		self.created_at = created_at
 		self.expiration_policy = expiration_policy
 		self.id = id
+		self.reward_tiers = reward_tiers
 		self.status = status
+		self.terminology = terminology
 		self.updated_at = updated_at
 	}
 }
@@ -12889,7 +13245,7 @@ public struct LoyaltyProgramRewardTier: Codable {
 	/// The points exchanged for the reward tier.
 	public var points: Int
 	/// A reference to the specific version of a `PRICING_RULE` catalog object that contains information about the reward tier discount.  Use `object_id` and `catalog_version` with the [RetrieveCatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/catalog-api/retrieve-catalog-object) endpoint to get discount details. Make sure to set `include_related_objects` to true in the request to retrieve all catalog objects that define the discount. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-	public let pricing_rule_reference: CatalogObjectReference?
+	public var pricing_rule_reference: CatalogObjectReference
 
 	/// Represents a reward tier in a loyalty program. A reward tier defines how buyers can redeem points for a reward, such as the number of points required and the value and scope of the discount. A loyalty program can offer multiple reward tiers.
 	/// - Parameters:
@@ -12899,13 +13255,13 @@ public struct LoyaltyProgramRewardTier: Codable {
 	///   - name: The name of the reward tier.
 	///   - points: The points exchanged for the reward tier.
 	///   - pricing_rule_reference: A reference to the specific version of a `PRICING_RULE` catalog object that contains information about the reward tier discount.  Use `object_id` and `catalog_version` with the [RetrieveCatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/catalog-api/retrieve-catalog-object) endpoint to get discount details. Make sure to set `include_related_objects` to true in the request to retrieve all catalog objects that define the discount. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-	public init(points: Int, created_at: Timestamp? = nil, definition: LoyaltyProgramRewardDefinition? = nil, id: String? = nil, name: String? = nil, pricing_rule_reference: CatalogObjectReference? = nil) {
+	public init(points: Int, pricing_rule_reference: CatalogObjectReference, created_at: Timestamp? = nil, definition: LoyaltyProgramRewardDefinition? = nil, id: String? = nil, name: String? = nil) {
 		self.points = points
+		self.pricing_rule_reference = pricing_rule_reference
 		self.created_at = created_at
 		self.definition = definition
 		self.id = id
 		self.name = name
-		self.pricing_rule_reference = pricing_rule_reference
 	}
 }
 
@@ -16100,14 +16456,14 @@ public struct ReceiptOptions: Codable {
 	public var is_duplicate: Bool?
 	/// The reference to the Square payment ID for the receipt.
 	public var payment_id: String
-	/// Instructs the device to print the receipt without displaying the receipt selection screen. Defaults to false.
+	/// Instructs the device to print the receipt without displaying the receipt selection screen. Requires `printer_enabled` set to true. Defaults to false.
 	public var print_only: Bool?
 
 	/// Describes receipt action fields.
 	/// - Parameters:
 	///   - is_duplicate: Identify the receipt as a reprint rather than an original receipt. Defaults to false.
 	///   - payment_id: The reference to the Square payment ID for the receipt.
-	///   - print_only: Instructs the device to print the receipt without displaying the receipt selection screen. Defaults to false.
+	///   - print_only: Instructs the device to print the receipt without displaying the receipt selection screen. Requires `printer_enabled` set to true. Defaults to false.
 	public init(payment_id: String, is_duplicate: Bool? = nil, print_only: Bool? = nil) {
 		self.payment_id = payment_id
 		self.is_duplicate = is_duplicate
@@ -16985,6 +17341,70 @@ public struct RetrieveInventoryTransferResponse: Codable {
 	}
 }
 
+/// Represents a [RetrieveLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attributeDefinition) request.
+public struct RetrieveLocationCustomAttributeDefinitionRequest: Codable {
+	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+	public var version: Int?
+
+	/// Represents a [RetrieveLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attributeDefinition) request.
+	/// - Parameters:
+	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+	public init(version: Int? = nil) {
+		self.version = version
+	}
+}
+
+/// Represents a [RetrieveLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+public struct RetrieveLocationCustomAttributeDefinitionResponse: Codable {
+	/// The retrieved custom attribute definition.
+	public var custom_attribute_definition: CustomAttributeDefinition?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a [RetrieveLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// - Parameters:
+	///   - custom_attribute_definition: The retrieved custom attribute definition.
+	///   - errors: Any errors that occurred during the request.
+	public init(custom_attribute_definition: CustomAttributeDefinition? = nil, errors: [SquareError]? = nil) {
+		self.custom_attribute_definition = custom_attribute_definition
+		self.errors = errors
+	}
+}
+
+/// Represents a [RetrieveLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attribute) request.
+public struct RetrieveLocationCustomAttributeRequest: Codable {
+	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+	public var version: Int?
+	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
+	public var with_definition: Bool?
+
+	/// Represents a [RetrieveLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attribute) request.
+	/// - Parameters:
+	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
+	public init(version: Int? = nil, with_definition: Bool? = nil) {
+		self.version = version
+		self.with_definition = with_definition
+	}
+}
+
+/// Represents a [RetrieveLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+public struct RetrieveLocationCustomAttributeResponse: Codable {
+	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
+	public var custom_attribute: CustomAttribute?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents a [RetrieveLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/retrieve-location-custom-attribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// - Parameters:
+	///   - custom_attribute: The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
+	///   - errors: Any errors that occurred during the request.
+	public init(custom_attribute: CustomAttribute? = nil, errors: [SquareError]? = nil) {
+		self.custom_attribute = custom_attribute
+		self.errors = errors
+	}
+}
+
 /// Defines the fields that are included in the request body for the [RetrieveLocation](https://developer.squareup.com/reference/square_yyyy-mm-dd/locations-api/retrieve-location) endpoint.
 public struct RetrieveLocationRequest: Codable {
 
@@ -17330,6 +17750,43 @@ public struct RetrieveTeamMemberResponse: Codable {
 	public init(errors: [SquareError]? = nil, team_member: TeamMember? = nil) {
 		self.errors = errors
 		self.team_member = team_member
+	}
+}
+
+/// Request object for [RetrieveTokenStatus] endpoint.
+public struct RetrieveTokenStatusRequest: Codable {
+
+	/// Request object for [RetrieveTokenStatus] endpoint.
+	public init() {
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint
+public struct RetrieveTokenStatusResponse: Codable {
+	/// The Square-issued application ID associated with the access token. This is the same application ID used to obtain the token.
+	public var client_id: String?
+	///  Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The date and time when the `access_token` expires, in RFC 3339 format. Empty if token never expires.
+	public var expires_at: Timestamp?
+	/// The ID of the authorizing merchant's business.
+	public var merchant_id: String?
+	/// The list of scopes associated with an access token.
+	public var scopes: [String]?
+
+	/// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint
+	/// - Parameters:
+	///   - client_id: The Square-issued application ID associated with the access token. This is the same application ID used to obtain the token.
+	///   - errors:  Any errors that occurred during the request.
+	///   - expires_at: The date and time when the `access_token` expires, in RFC 3339 format. Empty if token never expires.
+	///   - merchant_id: The ID of the authorizing merchant's business.
+	///   - scopes: The list of scopes associated with an access token.
+	public init(client_id: String? = nil, errors: [SquareError]? = nil, expires_at: Timestamp? = nil, merchant_id: String? = nil, scopes: [String]? = nil) {
+		self.client_id = client_id
+		self.errors = errors
+		self.expires_at = expires_at
+		self.merchant_id = merchant_id
+		self.scopes = scopes
 	}
 }
 
@@ -17702,14 +18159,14 @@ public struct SearchCustomersRequest: Codable {
 	public var cursor: String?
 	/// The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is invalid, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var limit: Int?
-	/// Query customers based on the given conditions and sort order. Calling `SearchCustomers` without an explicit query parameter returns all customers ordered alphabetically based on `given_name` and `family_name`.
+	/// The filtering and sorting criteria for the search request. If a query is not specified, Square returns all customer profiles ordered alphabetically by `given_name` and `family_name`.
 	public var query: CustomerQuery?
 
 	/// Defines the fields that are included in the request body of a request to the `SearchCustomers` endpoint.
 	/// - Parameters:
 	///   - cursor: Include the pagination cursor in subsequent calls to this endpoint to retrieve the next set of results associated with the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is invalid, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - query: Query customers based on the given conditions and sort order. Calling `SearchCustomers` without an explicit query parameter returns all customers ordered alphabetically based on `given_name` and `family_name`.
+	///   - query: The filtering and sorting criteria for the search request. If a query is not specified, Square returns all customer profiles ordered alphabetically by `given_name` and `family_name`.
 	public init(cursor: String? = nil, limit: Int? = nil, query: CustomerQuery? = nil) {
 		self.cursor = cursor
 		self.limit = limit
@@ -17721,7 +18178,7 @@ public struct SearchCustomersRequest: Codable {
 public struct SearchCustomersResponse: Codable {
 	/// A pagination cursor that can be used during subsequent calls to `SearchCustomers` to retrieve the next set of results associated with the original query. Pagination cursors are only present when a request succeeds and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
-	/// An array of `Customer` objects that match a query.
+	/// The customer profiles that match the search query. If any search condition is not met, the result is an empty object (`{}`).
 	public var customers: [Customer]?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -17729,7 +18186,7 @@ public struct SearchCustomersResponse: Codable {
 	/// Defines the fields that are included in the response body of a request to the `SearchCustomers` endpoint.  Either `errors` or `customers` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor that can be used during subsequent calls to `SearchCustomers` to retrieve the next set of results associated with the original query. Pagination cursors are only present when a request succeeds and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - customers: An array of `Customer` objects that match a query.
+	///   - customers: The customer profiles that match the search query. If any search condition is not met, the result is an empty object (`{}`).
 	///   - errors: Any errors that occurred during the request.
 	public init(cursor: String? = nil, customers: [Customer]? = nil, errors: [SquareError]? = nil) {
 		self.cursor = cursor
@@ -20408,6 +20865,40 @@ public struct UpdateItemTaxesResponse: Codable {
 	}
 }
 
+/// Represents an [UpdateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/update-location-custom-attribute-definition) request.
+public struct UpdateLocationCustomAttributeDefinitionRequest: Codable {
+	/// The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported. For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include the optional `version` field and specify the current version of the custom attribute definition.
+	public var custom_attribute_definition: CustomAttributeDefinition
+	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public var idempotency_key: String?
+
+	/// Represents an [UpdateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/update-location-custom-attribute-definition) request.
+	/// - Parameters:
+	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported. For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include the optional `version` field and specify the current version of the custom attribute definition.
+	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public init(custom_attribute_definition: CustomAttributeDefinition, idempotency_key: String? = nil) {
+		self.custom_attribute_definition = custom_attribute_definition
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// Represents an [UpdateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/update-location-custom-attribute-definition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+public struct UpdateLocationCustomAttributeDefinitionResponse: Codable {
+	/// The updated custom attribute definition.
+	public var custom_attribute_definition: CustomAttributeDefinition?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents an [UpdateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/update-location-custom-attribute-definition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// - Parameters:
+	///   - custom_attribute_definition: The updated custom attribute definition.
+	///   - errors: Any errors that occurred during the request.
+	public init(custom_attribute_definition: CustomAttributeDefinition? = nil, errors: [SquareError]? = nil) {
+		self.custom_attribute_definition = custom_attribute_definition
+		self.errors = errors
+	}
+}
+
 /// The request object for the [UpdateLocation](https://developer.squareup.com/reference/square_yyyy-mm-dd/locations-api/update-location) endpoint.
 public struct UpdateLocationRequest: Codable {
 	/// The `Location` object with only the fields to update.
@@ -20895,6 +21386,40 @@ public struct UpsertCustomerCustomAttributeResponse: Codable {
 	public var errors: [SquareError]?
 
 	/// Represents an [UpsertCustomerCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/customer-custom-attributes-api/upsert-customer-custom-attribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// - Parameters:
+	///   - custom_attribute: The new or updated custom attribute.
+	///   - errors: Any errors that occurred during the request.
+	public init(custom_attribute: CustomAttribute? = nil, errors: [SquareError]? = nil) {
+		self.custom_attribute = custom_attribute
+		self.errors = errors
+	}
+}
+
+/// Represents an [UpsertLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/upsert-location-custom-attribute) request.
+public struct UpsertLocationCustomAttributeRequest: Codable {
+	/// The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
+	public var custom_attribute: CustomAttribute
+	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public var idempotency_key: String?
+
+	/// Represents an [UpsertLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/upsert-location-custom-attribute) request.
+	/// - Parameters:
+	///   - custom_attribute: The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
+	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
+	public init(custom_attribute: CustomAttribute, idempotency_key: String? = nil) {
+		self.custom_attribute = custom_attribute
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// Represents an [UpsertLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/upsert-location-custom-attribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+public struct UpsertLocationCustomAttributeResponse: Codable {
+	/// The new or updated custom attribute.
+	public var custom_attribute: CustomAttribute?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// Represents an [UpsertLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/upsert-location-custom-attribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred during the request.
