@@ -1,4 +1,4 @@
-/// Lists the order-related [custom attribute definitions](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) that belong to a Square seller account.  When all response pages are retrieved, the results include all custom attribute definitions that are visible to the requesting application, including those that are created by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Lists the order-related [custom attribute definitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that belong to a Square seller account.  When all response pages are retrieved, the results include all custom attribute definitions that are visible to the requesting application, including those that are created by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct ListOrderCustomAttributeDefinitions: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -8,7 +8,7 @@ public struct ListOrderCustomAttributeDefinitions: SquareAPIEndpoint {
 		let visibility_filter: String?
 		let cursor: String?
 		let limit: Int?
-		/// Lists the order-related [custom attribute definitions](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) that belong to a Square seller account.  When all response pages are retrieved, the results include all custom attribute definitions that are visible to the requesting application, including those that are created by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+		/// Lists the order-related [custom attribute definitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that belong to a Square seller account.  When all response pages are retrieved, the results include all custom attribute definitions that are visible to the requesting application, including those that are created by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
 		///   - visibility_filter: (Beta) Requests that all of the custom attributes be returned, or only those that are read-only or read-write.
 		///   - cursor: (Beta) The cursor returned in the paged response from the previous call to this endpoint.  Provide this cursor to retrieve the next page of results for your original request.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
@@ -44,7 +44,7 @@ public struct CreateOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves an order-related [custom attribute definition](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) from a Square seller account.  To retrieve a custom attribute definition created by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Retrieves an order-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) from a Square seller account.  To retrieve a custom attribute definition created by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct RetrieveOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -53,7 +53,7 @@ public struct RetrieveOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	public struct Params {
 		let key: String
 		let version: Int?
-		/// Retrieves an order-related [custom attribute definition](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) from a Square seller account.  To retrieve a custom attribute definition created by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+		/// Retrieves an order-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) from a Square seller account.  To retrieve a custom attribute definition created by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
 		///   - key: (Beta) The key of the custom attribute definition to retrieve.
 		///   - version: (Beta) To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include this optional field and specify the current version of the custom attribute.
@@ -96,7 +96,7 @@ public struct UpdateOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes an order-related [custom attribute definition](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) from a Square seller account.  Only the definition owner can delete a custom attribute definition.
+/// Deletes an order-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) from a Square seller account.  Only the definition owner can delete a custom attribute definition.
 public struct DeleteOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -104,7 +104,7 @@ public struct DeleteOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let key: String
-		/// Deletes an order-related [custom attribute definition](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) from a Square seller account.  Only the definition owner can delete a custom attribute definition.
+		/// Deletes an order-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) from a Square seller account.  Only the definition owner can delete a custom attribute definition.
 		/// - Parameters:
 		///   - key: (Beta) The key of the custom attribute definition to delete.
 		public init(key: String) {
@@ -117,7 +117,7 @@ public struct DeleteOrderCustomAttributeDefinition: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes order [custom attributes](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) as a bulk operation.  Use this endpoint to delete one or more custom attributes from one or more orders. A custom attribute is based on a custom attribute definition in a Square seller account.  (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_2022-11-16/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  This `BulkDeleteOrderCustomAttributes` endpoint accepts a map of 1 to 25 individual delete requests and returns a map of individual delete responses. Each delete request has a unique ID and provides an order ID and custom attribute. Each delete response is returned with the ID of the corresponding request.  To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Deletes order [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) as a bulk operation.  Use this endpoint to delete one or more custom attributes from one or more orders. A custom attribute is based on a custom attribute definition in a Square seller account.  (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  This `BulkDeleteOrderCustomAttributes` endpoint accepts a map of 1 to 25 individual delete requests and returns a map of individual delete responses. Each delete request has a unique ID and provides an order ID and custom attribute. Each delete response is returned with the ID of the corresponding request.  To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct BulkDeleteOrderCustomAttributes: SquareAPIEndpoint {
 	public typealias inputType = BulkDeleteOrderCustomAttributesRequest
 	public typealias outputType = BulkDeleteOrderCustomAttributesResponse
@@ -127,7 +127,7 @@ public struct BulkDeleteOrderCustomAttributes: SquareAPIEndpoint {
 	}
 }
 
-/// Creates or updates order [custom attributes](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) as a bulk operation.  Use this endpoint to delete one or more custom attributes from one or more orders. A custom attribute is based on a custom attribute definition in a Square seller account.  (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_2022-11-16/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  This `BulkUpsertOrderCustomAttributes` endpoint accepts a map of 1 to 25 individual upsert requests and returns a map of individual upsert responses. Each upsert request has a unique ID and provides an order ID and custom attribute. Each upsert response is returned with the ID of the corresponding request.  To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Creates or updates order [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) as a bulk operation.  Use this endpoint to delete one or more custom attributes from one or more orders. A custom attribute is based on a custom attribute definition in a Square seller account.  (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  This `BulkUpsertOrderCustomAttributes` endpoint accepts a map of 1 to 25 individual upsert requests and returns a map of individual upsert responses. Each upsert request has a unique ID and provides an order ID and custom attribute. Each upsert response is returned with the ID of the corresponding request.  To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct BulkUpsertOrderCustomAttributes: SquareAPIEndpoint {
 	public typealias inputType = BulkUpsertOrderCustomAttributesRequest
 	public typealias outputType = BulkUpsertOrderCustomAttributesResponse
@@ -137,7 +137,7 @@ public struct BulkUpsertOrderCustomAttributes: SquareAPIEndpoint {
 	}
 }
 
-/// Lists the [custom attributes](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) associated with an order.  You can use the `with_definitions` query parameter to also retrieve custom attribute definitions in the same call.  When all response pages are retrieved, the results include all custom attributes that are visible to the requesting application, including those that are owned by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+/// Lists the [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with an order.  You can use the `with_definitions` query parameter to also retrieve custom attribute definitions in the same call.  When all response pages are retrieved, the results include all custom attributes that are visible to the requesting application, including those that are owned by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 public struct ListOrderCustomAttributes: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -149,13 +149,13 @@ public struct ListOrderCustomAttributes: SquareAPIEndpoint {
 		let cursor: String?
 		let limit: Int?
 		let with_definitions: Bool?
-		/// Lists the [custom attributes](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) associated with an order.  You can use the `with_definitions` query parameter to also retrieve custom attribute definitions in the same call.  When all response pages are retrieved, the results include all custom attributes that are visible to the requesting application, including those that are owned by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+		/// Lists the [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with an order.  You can use the `with_definitions` query parameter to also retrieve custom attribute definitions in the same call.  When all response pages are retrieved, the results include all custom attributes that are visible to the requesting application, including those that are owned by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_2022-11-16/objects/Order).
+		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order).
 		///   - visibility_filter: (Beta) Requests that all of the custom attributes be returned, or only those that are read-only or read-write.
 		///   - cursor: (Beta) The cursor returned in the paged response from the previous call to this endpoint.  Provide this cursor to retrieve the next page of results for your original request.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
 		///   - limit: (Beta) The maximum number of results to return in a single paged response. This limit is advisory.  The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.  The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-		///   - with_definitions: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
+		///   - with_definitions: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
 		public init(order_id: String, visibility_filter: String? = nil, cursor: String? = nil, limit: Int? = nil, with_definitions: Bool? = nil) {
 			self.order_id = order_id
 			self.visibility_filter = visibility_filter
@@ -180,7 +180,7 @@ public struct ListOrderCustomAttributes: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a [custom attribute](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) associated with an order.  You can use the `with_definition` query parameter to also retrieve the custom attribute definition in the same call.  To retrieve a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Retrieves a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with an order.  You can use the `with_definition` query parameter to also retrieve the custom attribute definition in the same call.  To retrieve a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct RetrieveOrderCustomAttribute: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -191,12 +191,12 @@ public struct RetrieveOrderCustomAttribute: SquareAPIEndpoint {
 		let custom_attribute_key: String
 		let version: Int?
 		let with_definition: Bool?
-		/// Retrieves a [custom attribute](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) associated with an order.  You can use the `with_definition` query parameter to also retrieve the custom attribute definition in the same call.  To retrieve a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+		/// Retrieves a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with an order.  You can use the `with_definition` query parameter to also retrieve the custom attribute definition in the same call.  To retrieve a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_2022-11-16/objects/Order).
+		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order).
 		///   - custom_attribute_key: (Beta) The key of the custom attribute to retrieve.  This key must match the key of an existing custom attribute definition.
 		///   - version: (Beta) To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include this optional field and specify the current version of the custom attribute.
-		///   - with_definition: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttributeDefinition) in the `definition` field of each  custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
+		///   - with_definition: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each  custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
 		public init(order_id: String, custom_attribute_key: String, version: Int? = nil, with_definition: Bool? = nil) {
 			self.order_id = order_id
 			self.custom_attribute_key = custom_attribute_key
@@ -218,7 +218,7 @@ public struct RetrieveOrderCustomAttribute: SquareAPIEndpoint {
 	}
 }
 
-/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) for an order.  Use this endpoint to set the value of a custom attribute for a specific order. A custom attribute is based on a custom attribute definition in a Square seller account. (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_2022-11-16/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for an order.  Use this endpoint to set the value of a custom attribute for a specific order. A custom attribute is based on a custom attribute definition in a Square seller account. (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct UpsertOrderCustomAttribute: SquareAPIEndpoint {
 	public typealias inputType = UpsertOrderCustomAttributeRequest
 	public typealias outputType = UpsertOrderCustomAttributeResponse
@@ -226,9 +226,9 @@ public struct UpsertOrderCustomAttribute: SquareAPIEndpoint {
 	public struct Params {
 		let order_id: String
 		let custom_attribute_key: String
-		/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) for an order.  Use this endpoint to set the value of a custom attribute for a specific order. A custom attribute is based on a custom attribute definition in a Square seller account. (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_2022-11-16/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+		/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for an order.  Use this endpoint to set the value of a custom attribute for a specific order. A custom attribute is based on a custom attribute definition in a Square seller account. (To create a custom attribute definition, use the [CreateOrderCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/order-custom-attributes-api/create-order-custom-attribute-definition) endpoint.)  To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_2022-11-16/objects/Order).
+		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order).
 		///   - custom_attribute_key: (Beta) The key of the custom attribute to create or update.  This key must match the key  of an existing custom attribute definition.
 		public init(order_id: String, custom_attribute_key: String) {
 			self.order_id = order_id
@@ -241,7 +241,7 @@ public struct UpsertOrderCustomAttribute: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a [custom attribute](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) associated with a customer profile.  To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+/// Deletes a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a customer profile.  To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 public struct DeleteOrderCustomAttribute: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -250,9 +250,9 @@ public struct DeleteOrderCustomAttribute: SquareAPIEndpoint {
 	public struct Params {
 		let order_id: String
 		let custom_attribute_key: String
-		/// Deletes a [custom attribute](https://developer.squareup.com/reference/square_2022-11-16/objects/CustomAttribute) associated with a customer profile.  To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
+		/// Deletes a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a customer profile.  To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`. Note that seller-defined custom attributes (also known as custom fields) are always set to `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_2022-11-16/objects/Order).
+		///   - order_id: (Beta) The ID of the target [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order).
 		///   - custom_attribute_key: (Beta) The key of the custom attribute to delete.  This key must match the key of an existing custom attribute definition.
 		public init(order_id: String, custom_attribute_key: String) {
 			self.order_id = order_id
