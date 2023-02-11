@@ -7,7 +7,7 @@ public struct SquareAPIInfo {
 }
 
 /// An empty structure for a useful codable placeholder
-public struct Empty: Codable {
+public struct Empty: Codable, Equatable {
 	public init() { }
 }
 
