@@ -7,7 +7,7 @@ public struct SquareAPIInfo {
 }
 
 /// An empty structure for a useful codable placeholder
-public struct Empty: Codable {
+public struct Empty: Codable, Equatable {
 	public init() { }
 }
 
@@ -660,161 +660,6 @@ public struct CatalogCategory: Codable, Equatable {
 	}
 }
 
-/// Contains information defining a custom attribute. Custom attributes are intended to store additional information about a catalog object or to associate a catalog object with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.). [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes)
-public struct CatalogCustomAttributeDefinition: Codable, Equatable {
-	/// The set of Catalog Object Types that this Custom Attribute may be applied to. Currently, only `ITEM` and `ITEM_VARIATION` are allowed. At least one type must be included.
-	public var allowed_object_types: [String]
-	/// The visibility of a custom attribute to applications other than the application that created the attribute.
-	public var app_visibility: String?
-	/// The number of custom attributes that reference this custom attribute definition. Set by the server in response to a ListCatalog request with `include_counts` set to `true`.  If the actual count is greater than 100, `custom_attribute_usage_count` will be set to `100`.
-	public let custom_attribute_usage_count: Int?
-	/// Seller-oriented description of the meaning of this Custom Attribute, any constraints that the seller should observe, etc. May be displayed as a tooltip in Square UIs.
-	public var description: String?
-	/// The name of the desired custom attribute key that can be used to access the custom attribute value on catalog objects. Cannot be modified after the custom attribute definition has been created. Must be between 1 and 60 characters, and may only contain the characters `[a-zA-Z0-9_-]`.
-	public var key: String?
-	///  The name of this definition for API and seller-facing UI purposes. The name must be unique within the (merchant, application) pair. Required. May not be empty and may not exceed 255 characters. Can be modified after creation.
-	public var name: String
-	/// Optionally, populated when `type` = `NUMBER`, unset otherwise.
-	public var number_config: CatalogCustomAttributeDefinitionNumberConfig?
-	/// Populated when `type` is set to `SELECTION`, unset otherwise.
-	public var selection_config: CatalogCustomAttributeDefinitionSelectionConfig?
-	/// The visibility of a custom attribute in seller-facing UIs (including Square Point of Sale applications and Square Dashboard). May be modified.
-	public var seller_visibility: String?
-	/// __Read only.__ Contains information about the application that created this custom attribute definition.
-	public var source_application: SourceApplication?
-	/// Optionally, populated when `type` = `STRING`, unset otherwise.
-	public var string_config: CatalogCustomAttributeDefinitionStringConfig?
-	/// The type of this custom attribute. Cannot be modified after creation. Required.
-	public var type: String
-
-	/// Contains information defining a custom attribute. Custom attributes are intended to store additional information about a catalog object or to associate a catalog object with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.). [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes)
-	/// - Parameters:
-	///   - allowed_object_types: The set of Catalog Object Types that this Custom Attribute may be applied to. Currently, only `ITEM` and `ITEM_VARIATION` are allowed. At least one type must be included.
-	///   - app_visibility: The visibility of a custom attribute to applications other than the application that created the attribute.
-	///   - custom_attribute_usage_count: The number of custom attributes that reference this custom attribute definition. Set by the server in response to a ListCatalog request with `include_counts` set to `true`.  If the actual count is greater than 100, `custom_attribute_usage_count` will be set to `100`.
-	///   - description: Seller-oriented description of the meaning of this Custom Attribute, any constraints that the seller should observe, etc. May be displayed as a tooltip in Square UIs.
-	///   - key: The name of the desired custom attribute key that can be used to access the custom attribute value on catalog objects. Cannot be modified after the custom attribute definition has been created. Must be between 1 and 60 characters, and may only contain the characters `[a-zA-Z0-9_-]`.
-	///   - name:  The name of this definition for API and seller-facing UI purposes. The name must be unique within the (merchant, application) pair. Required. May not be empty and may not exceed 255 characters. Can be modified after creation.
-	///   - number_config: Optionally, populated when `type` = `NUMBER`, unset otherwise.
-	///   - selection_config: Populated when `type` is set to `SELECTION`, unset otherwise.
-	///   - seller_visibility: The visibility of a custom attribute in seller-facing UIs (including Square Point of Sale applications and Square Dashboard). May be modified.
-	///   - source_application: __Read only.__ Contains information about the application that created this custom attribute definition.
-	///   - string_config: Optionally, populated when `type` = `STRING`, unset otherwise.
-	///   - type: The type of this custom attribute. Cannot be modified after creation. Required.
-	public init(allowed_object_types: [String], name: String, type: String, app_visibility: String? = nil, custom_attribute_usage_count: Int? = nil, description: String? = nil, key: String? = nil, number_config: CatalogCustomAttributeDefinitionNumberConfig? = nil, selection_config: CatalogCustomAttributeDefinitionSelectionConfig? = nil, seller_visibility: String? = nil, source_application: SourceApplication? = nil, string_config: CatalogCustomAttributeDefinitionStringConfig? = nil) {
-		self.allowed_object_types = allowed_object_types
-		self.name = name
-		self.type = type
-		self.app_visibility = app_visibility
-		self.custom_attribute_usage_count = custom_attribute_usage_count
-		self.description = description
-		self.key = key
-		self.number_config = number_config
-		self.selection_config = selection_config
-		self.seller_visibility = seller_visibility
-		self.source_application = source_application
-		self.string_config = string_config
-	}
-}
-
-public struct CatalogCustomAttributeDefinitionNumberConfig: Codable {
-	/// An integer between 0 and 5 that represents the maximum number of positions allowed after the decimal in number custom attribute values For example:  - if the precision is 0, the quantity can be 1, 2, 3, etc. - if the precision is 1, the quantity can be 0.1, 0.2, etc. - if the precision is 2, the quantity can be 0.01, 0.12, etc.  Default: 5
-	public var precision: Int?
-
-	public init(precision: Int? = nil) {
-		self.precision = precision
-	}
-}
-
-/// Configuration associated with `SELECTION`-type custom attribute definitions.
-public struct CatalogCustomAttributeDefinitionSelectionConfig: Codable, Equatable {
-	/// The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100 selections can be defined. Can be modified.
-	public var allowed_selections: [CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection]?
-	/// The maximum number of selections that can be set. The maximum value for this attribute is 100. The default value is 1. The value can be modified, but changing the value will not affect existing custom attribute values on objects. Clients need to handle custom attributes with more selected values than allowed by this limit.
-	public var max_allowed_selections: Int?
-
-	/// Configuration associated with `SELECTION`-type custom attribute definitions.
-	/// - Parameters:
-	///   - allowed_selections: The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100 selections can be defined. Can be modified.
-	///   - max_allowed_selections: The maximum number of selections that can be set. The maximum value for this attribute is 100. The default value is 1. The value can be modified, but changing the value will not affect existing custom attribute values on objects. Clients need to handle custom attributes with more selected values than allowed by this limit.
-	public init(allowed_selections: [CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection]? = nil, max_allowed_selections: Int? = nil) {
-		self.allowed_selections = allowed_selections
-		self.max_allowed_selections = max_allowed_selections
-	}
-}
-
-/// A named selection for this `SELECTION`-type custom attribute definition.
-public struct CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection: Codable, Equatable {
-	/// Selection name, unique within `allowed_selections`.
-	public var name: String
-	/// Unique ID set by Square.
-	public var uid: String?
-
-	/// A named selection for this `SELECTION`-type custom attribute definition.
-	/// - Parameters:
-	///   - name: Selection name, unique within `allowed_selections`.
-	///   - uid: Unique ID set by Square.
-	public init(name: String, uid: String? = nil) {
-		self.name = name
-		self.uid = uid
-	}
-}
-
-/// Configuration associated with Custom Attribute Definitions of type `STRING`.
-public struct CatalogCustomAttributeDefinitionStringConfig: Codable, Equatable {
-	/// If true, each Custom Attribute instance associated with this Custom Attribute Definition must have a unique value within the seller's catalog. For example, this may be used for a value like a SKU that should not be duplicated within a seller's catalog. May not be modified after the definition has been created.
-	public var enforce_uniqueness: Bool?
-
-	/// Configuration associated with Custom Attribute Definitions of type `STRING`.
-	/// - Parameters:
-	///   - enforce_uniqueness: If true, each Custom Attribute instance associated with this Custom Attribute Definition must have a unique value within the seller's catalog. For example, this may be used for a value like a SKU that should not be duplicated within a seller's catalog. May not be modified after the definition has been created.
-	public init(enforce_uniqueness: Bool? = nil) {
-		self.enforce_uniqueness = enforce_uniqueness
-	}
-}
-
-
-/// An instance of a custom attribute. Custom attributes can be defined and added to `ITEM` and `ITEM_VARIATION` type catalog objects. [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes).
-public struct CatalogCustomAttributeValue: Codable, Equatable {
-	/// A `true` or `false` value. Populated if `type` = `BOOLEAN`.
-	public var boolean_value: Bool?
-	/// The id of the [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogCustomAttributeDefinition) this value belongs to.
-	public let custom_attribute_definition_id: String?
-	/// A copy of key from the associated `CatalogCustomAttributeDefinition`.
-	public let key: String?
-	/// The name of the custom attribute.
-	public var name: String?
-	/// Populated if `type` = `NUMBER`. Contains a string representation of a decimal number, using a `.` as the decimal separator.
-	public var number_value: String?
-	/// One or more choices from `allowed_selections`. Populated if `type` = `SELECTION`.
-	public var selection_uid_values: [String]?
-	/// The string value of the custom attribute.  Populated if `type` = `STRING`.
-	public var string_value: String?
-	/// A copy of type from the associated `CatalogCustomAttributeDefinition`.
-	public let type: String?
-
-	/// An instance of a custom attribute. Custom attributes can be defined and added to `ITEM` and `ITEM_VARIATION` type catalog objects. [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes).
-	/// - Parameters:
-	///   - boolean_value: A `true` or `false` value. Populated if `type` = `BOOLEAN`.
-	///   - custom_attribute_definition_id: The id of the [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogCustomAttributeDefinition) this value belongs to.
-	///   - key: A copy of key from the associated `CatalogCustomAttributeDefinition`.
-	///   - name: The name of the custom attribute.
-	///   - number_value: Populated if `type` = `NUMBER`. Contains a string representation of a decimal number, using a `.` as the decimal separator.
-	///   - selection_uid_values: One or more choices from `allowed_selections`. Populated if `type` = `SELECTION`.
-	///   - string_value: The string value of the custom attribute.  Populated if `type` = `STRING`.
-	///   - type: A copy of type from the associated `CatalogCustomAttributeDefinition`.
-	public init(boolean_value: Bool? = nil, custom_attribute_definition_id: String? = nil, key: String? = nil, name: String? = nil, number_value: String? = nil, selection_uid_values: [String]? = nil, string_value: String? = nil, type: String? = nil) {
-		self.boolean_value = boolean_value
-		self.custom_attribute_definition_id = custom_attribute_definition_id
-		self.key = key
-		self.name = name
-		self.number_value = number_value
-		self.selection_uid_values = selection_uid_values
-		self.string_value = string_value
-		self.type = type
-	}
-}
-
 /// A discount applicable to items.
 public struct CatalogDiscount: Codable, Equatable {
 	/// The amount of the discount. Specify an amount of `0` if `discount_type` is `VARIABLE_AMOUNT`.  Do not use this field for percentage-based or variable discounts.
@@ -1328,9 +1173,9 @@ public struct CatalogObject: Codable, Equatable {
 	/// Structured data for a `CatalogCategory`, set for CatalogObjects of type `CATEGORY`.
 	public var category_data: CatalogCategory?
 	/// Structured data for a `CatalogCustomAttributeDefinition`, set for CatalogObjects of type `CUSTOM_ATTRIBUTE_DEFINITION`.
-	public var custom_attribute_definition_data: CatalogCustomAttributeDefinition?
+	public var custom_attribute_definition_data: Empty?
 	/// A map (key-value pairs) of application-defined custom attribute values. The value of a key-value pair is a [CatalogCustomAttributeValue](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogCustomAttributeValue) object. The key is the `key` attribute value defined in the associated [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogCustomAttributeDefinition) object defined by the application making the request.  If the `CatalogCustomAttributeDefinition` object is defined by another application, the `CatalogCustomAttributeDefinition`'s key attribute value is prefixed by the defining application ID. For example, if the `CatalogCustomAttributeDefinition` has a `key` attribute of `"cocoa_brand"` and the defining application ID is `"abcd1234"`, the key in the map is `"abcd1234:cocoa_brand"` if the application making the request is different from the application defining the custom attribute definition. Otherwise, the key used in the map is simply `"cocoa_brand"`.  Application-defined custom attributes are set at a global (location-independent) level. Custom attribute values are intended to store additional information about a catalog object or associations with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.).
-	public var custom_attribute_values: CatalogCustomAttributeValue?
+	public var custom_attribute_values: Empty?
 	/// Structured data for a `CatalogDiscount`, set for CatalogObjects of type `DISCOUNT`.
 	public var discount_data: CatalogDiscount?
 	/// An identifier to reference this object in the catalog. When a new `CatalogObject` is inserted, the client should set the id to a temporary identifier starting with a "`#`" character. Other objects being inserted or updated within the same request may use this identifier to refer to the new object.  When the server receives the new object, it will supply a unique identifier that replaces the temporary identifier for all future references.
@@ -1405,7 +1250,7 @@ public struct CatalogObject: Codable, Equatable {
 	///   - type: The type of this object. Each object type has expected properties expressed in a structured format within its corresponding `*_data` field below.
 	///   - updated_at: Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) in RFC 3339 format, e.g., `"2016-08-15T23:59:33.123Z"` would indicate the UTC time (denoted by `Z`) of August 15, 2016 at 23:59:33 and 123 milliseconds.
 	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
-	public init(id: String, type: String, absent_at_location_ids: [String]? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: CatalogCustomAttributeDefinition? = nil, custom_attribute_values: CatalogCustomAttributeValue? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(id: String, type: String, absent_at_location_ids: [String]? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: Empty? = nil, custom_attribute_values: Empty? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.id = id
 		self.type = type
 		self.absent_at_location_ids = absent_at_location_ids
@@ -2768,7 +2613,7 @@ public struct SquareError: Codable, Equatable {
 }
 
 /// Details about the device that took the payment.
-public struct DeviceDetails: Codable {
+public struct DeviceDetails: Codable, Equatable {
 	/// The Square-issued ID of the device.
 	public var device_id: String?
 	/// The Square-issued installation ID for the device.
@@ -5875,45 +5720,6 @@ public enum TerminalActionActionType: String, Codable {
 	case SAVE_CARD
 	/// The action represents a request to display the receipt screen options. Details are contained in the `receipt_options` object.
 	case RECEIPT
-}
-
-public struct TerminalActionQuery: Codable, Equatable {
-	/// Options for filtering returned `TerminalAction`s
-	public var filter: TerminalActionQueryFilter?
-	/// Option for sorting returned `TerminalAction` objects.
-	public var sort: TerminalActionQuerySort?
-
-	public init(filter: TerminalActionQueryFilter? = nil, sort: TerminalActionQuerySort? = nil) {
-		self.filter = filter
-		self.sort = sort
-	}
-}
-
-public struct TerminalActionQueryFilter: Codable, Equatable {
-	/// Time range for the beginning of the reporting period. Inclusive. Default value: The current time minus one day. Note that `TerminalAction`s are available for 30 days after creation.
-	public var created_at: TimeRange?
-	/// `TerminalAction`s associated with a specific device. If no device is specified then all `TerminalAction`s for the merchant will be displayed.
-	public var device_id: String?
-	/// Filter results with the desired status of the `TerminalAction` Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
-	public var status: String?
-	/// Filter results with the requested ActionType.
-	public var type: String?
-
-	public init(created_at: TimeRange? = nil, device_id: String? = nil, status: String? = nil, type: String? = nil) {
-		self.created_at = created_at
-		self.device_id = device_id
-		self.status = status
-		self.type = type
-	}
-}
-
-public struct TerminalActionQuerySort: Codable, Equatable {
-	/// The order in which results are listed. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	public var sort_order: String?
-
-	public init(sort_order: String? = nil) {
-		self.sort_order = sort_order
-	}
 }
 
 /// Represents a checkout processed by the Square Terminal.
