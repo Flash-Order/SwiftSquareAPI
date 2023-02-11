@@ -31,7 +31,7 @@ enum DecodeError: Error {
 //extension Timestamp {
 //	var date3339: Date? { return iso3339.date(from: self) }
 //}
-public struct StringNumber: Codable {
+public struct StringNumber: Codable, Equatable {
 	public var rawValue: String
 	
 	public var floatValue: Float? {
