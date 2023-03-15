@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2023-01-19" }
+	public static var version: String { return "2023-03-15" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -531,7 +531,7 @@ public struct BankAccount: Codable, Equatable {
 
 /// Additional details about BANK_ACCOUNT type payments.
 public struct BankAccountPaymentDetails: Codable, Equatable {
-	/// The ownership type of the bank account performing the transfer. The type can be `INDIVIDUAL`, `COMPANY`, or `UNKNOWN`.
+	/// The ownership type of the bank account performing the transfer. The type can be `INDIVIDUAL`, `COMPANY`, or `ACCOUNT_TYPE_UNKNOWN`.
 	public var account_ownership_type: String?
 	/// ACH-specific information about the transfer. The information is only populated if the `transfer_type` is `ACH`.
 	public var ach_details: ACHDetails?
@@ -550,7 +550,7 @@ public struct BankAccountPaymentDetails: Codable, Equatable {
 
 	/// Additional details about BANK_ACCOUNT type payments.
 	/// - Parameters:
-	///   - account_ownership_type: The ownership type of the bank account performing the transfer. The type can be `INDIVIDUAL`, `COMPANY`, or `UNKNOWN`.
+	///   - account_ownership_type: The ownership type of the bank account performing the transfer. The type can be `INDIVIDUAL`, `COMPANY`, or `ACCOUNT_TYPE_UNKNOWN`.
 	///   - ach_details: ACH-specific information about the transfer. The information is only populated if the `transfer_type` is `ACH`.
 	///   - bank_name: The name of the bank associated with the bank account.
 	///   - country: The two-letter ISO code representing the country the bank account is located in.
@@ -1517,7 +1517,7 @@ public struct BulkUpsertLocationCustomAttributesRequest: Codable, Equatable {
 
 /// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
 public struct BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest: Codable, Equatable {
-	/// The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
+	/// The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute.  If this is not important for your application, `version` can be set to -1.
 	public var custom_attribute: CustomAttribute
 	/// A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
@@ -1526,7 +1526,7 @@ public struct BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUp
 
 	/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/bulk-upsert-location-custom-attributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
 	/// - Parameters:
-	///   - custom_attribute: The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
+	///   - custom_attribute: The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute.  If this is not important for your application, `version` can be set to -1.
 	///   - idempotency_key: A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	///   - location_id: The ID of the target [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
 	public init(custom_attribute: CustomAttribute, location_id: String, idempotency_key: String? = nil) {
@@ -5675,7 +5675,7 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	public var buyer_email_address: String?
 	/// Additional details required when recording a cash payment (`source_id` is CASH).
 	public var cash_details: CashPaymentDetails?
-	/// The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
+	/// The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Cards API.
 	public var customer_id: String?
 	/// The action to be applied to the payment when the `delay_duration` has elapsed. The action must be CANCEL or COMPLETE. For more information, see  [Time Threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   Default: CANCEL
 	public var delay_action: String?
@@ -5695,7 +5695,7 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	public var reference_id: String?
 	/// The buyer's shipping address.
 	public var shipping_address: Address?
-	/// The ID for the source of funds for this payment. This can be a payment token  (card nonce) generated by the Square payment form or a card on file made with the  Customers API. If recording a payment that the seller  received outside of Square, specify either "CASH" or "EXTERNAL".  For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
+	/// The ID for the source of funds for this payment. This could be a payment token generated by the Web Payments SDK for any of its [supported methods](https://developer.squareup.com/docs/web-payments/overview#explore-payment-methods), including cards, bank transfers, Afterpay or Cash App Pay. If recording a payment that the seller received outside of Square, specify either "CASH" or "EXTERNAL". For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
 	public var source_id: String
 	/// Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and name of the seller taking the payment.
 	public var statement_description_identifier: String?
@@ -5715,7 +5715,7 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	///   - billing_address: The buyer's billing address.
 	///   - buyer_email_address: The buyer's email address.
 	///   - cash_details: Additional details required when recording a cash payment (`source_id` is CASH).
-	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Customers API.
+	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Cards API.
 	///   - delay_action: The action to be applied to the payment when the `delay_duration` has elapsed. The action must be CANCEL or COMPLETE. For more information, see  [Time Threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   Default: CANCEL
 	///   - delay_duration: The duration of time after the payment's creation when Square automatically  either completes or cancels the payment depending on the `delay_action` field value.  For more information, see  [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   This parameter should be specified as a time duration, in RFC 3339 format.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	///   - external_details: Additional details required when recording an external payment (`source_id` is EXTERNAL).
@@ -5725,7 +5725,7 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	///   - order_id: Associates a previously created order with this payment.
 	///   - reference_id: A user-defined ID to associate with the payment.  You can use this field to associate the payment to an entity in an external system  (for example, you might specify an order ID that is generated by a third-party shopping cart).
 	///   - shipping_address: The buyer's shipping address.
-	///   - source_id: The ID for the source of funds for this payment. This can be a payment token  (card nonce) generated by the Square payment form or a card on file made with the  Customers API. If recording a payment that the seller  received outside of Square, specify either "CASH" or "EXTERNAL".  For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
+	///   - source_id: The ID for the source of funds for this payment. This could be a payment token generated by the Web Payments SDK for any of its [supported methods](https://developer.squareup.com/docs/web-payments/overview#explore-payment-methods), including cards, bank transfers, Afterpay or Cash App Pay. If recording a payment that the seller received outside of Square, specify either "CASH" or "EXTERNAL". For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
 	///   - statement_description_identifier: Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and name of the seller taking the payment.
 	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with  this payment.
 	///   - tip_money: The amount designated as a tip, in addition to `amount_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
@@ -16006,7 +16006,7 @@ public struct PaymentRefund: Codable, Equatable {
 	public let created_at: Timestamp?
 	/// Contains information about the refund destination. This field is populated only if `destination_id` is defined in the `RefundPayment` request.
 	public let destination_details: DestinationDetails?
-	/// The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, or `EXTERNAL`.
+	/// The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `BUY_NOW_PAY_LATER`, `CASH`, and `EXTERNAL`.
 	public var destination_type: String?
 	/// The unique ID for this refund, generated by Square.
 	public var id: String
@@ -16035,7 +16035,7 @@ public struct PaymentRefund: Codable, Equatable {
 	///   - app_fee_money: The amount of money the application developer contributed to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - created_at: The timestamp of when the refund was created, in RFC 3339 format.
 	///   - destination_details: Contains information about the refund destination. This field is populated only if `destination_id` is defined in the `RefundPayment` request.
-	///   - destination_type: The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, or `EXTERNAL`.
+	///   - destination_type: The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `BUY_NOW_PAY_LATER`, `CASH`, and `EXTERNAL`.
 	///   - id: The unique ID for this refund, generated by Square.
 	///   - location_id: The location ID associated with the payment this refund is attached to.
 	///   - order_id: The ID of the order associated with the refund.
@@ -16560,15 +16560,15 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	public var amount_money: Money
 	/// The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	public var app_fee_money: Money?
-	/// The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Customers API. Only allowed when `unlinked=true`.
+	/// The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Cards API. Only allowed when `unlinked=true`.
 	public var customer_id: String?
-	/// The ID indicating where funds will be refunded to, if this is an unlinked refund. This can be any of the following: A token generated by Web Payments SDK or RSDK2; a card-on-file identifier. Required for requests specifying unlinked=true. Otherwise, if included when `unlinked=false`, will throw an error.
+	/// The ID indicating where funds will be refunded to, if this is an unlinked refund. This can be any of the following: A token generated by Web Payments SDK; a card-on-file identifier. Required for requests specifying unlinked=true. Otherwise, if included when `unlinked=false`, will throw an error.
 	public var destination_id: String?
 	///  A unique string that identifies this `RefundPayment` request. The key can be any valid string but must be unique for every `RefundPayment` request.  Keys are limited to a max of 45 characters - however, the number of allowed characters might be less than 45, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String
-	/// The location ID associated with the unlinked refund. Required for requests specifying `unlinked=true`. Otherwise, if included when `unlinked=false` or unset, will throw an error.
+	/// The location ID associated with the unlinked refund. Required for requests specifying `unlinked=true`. Otherwise, if included when `unlinked=false`, will throw an error.
 	public var location_id: String?
-	/// The unique ID of the payment being refunded. Must not be provided if `unlinked=true`. Required if `unlinked=false` or `unlinked` is unset.
+	/// The unique ID of the payment being refunded. Required when unlinked=false, otherwise must not be set.
 	public var payment_id: String?
 	///  Used for optimistic concurrency. This opaque token identifies the current `Payment` version that the caller expects. If the server has a different version of the Payment, the update fails and a response with a VERSION_MISMATCH error is returned. If the versions match, or the field is not provided, the refund proceeds as normal.
 	public var payment_version_token: String?
@@ -16583,11 +16583,11 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	///   - app_fee_money: The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
-	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Customers API. Only allowed when `unlinked=true`.
-	///   - destination_id: The ID indicating where funds will be refunded to, if this is an unlinked refund. This can be any of the following: A token generated by Web Payments SDK or RSDK2; a card-on-file identifier. Required for requests specifying unlinked=true. Otherwise, if included when `unlinked=false`, will throw an error.
+	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Cards API. Only allowed when `unlinked=true`.
+	///   - destination_id: The ID indicating where funds will be refunded to, if this is an unlinked refund. This can be any of the following: A token generated by Web Payments SDK; a card-on-file identifier. Required for requests specifying unlinked=true. Otherwise, if included when `unlinked=false`, will throw an error.
 	///   - idempotency_key:  A unique string that identifies this `RefundPayment` request. The key can be any valid string but must be unique for every `RefundPayment` request.  Keys are limited to a max of 45 characters - however, the number of allowed characters might be less than 45, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	///   - location_id: The location ID associated with the unlinked refund. Required for requests specifying `unlinked=true`. Otherwise, if included when `unlinked=false` or unset, will throw an error.
-	///   - payment_id: The unique ID of the payment being refunded. Must not be provided if `unlinked=true`. Required if `unlinked=false` or `unlinked` is unset.
+	///   - location_id: The location ID associated with the unlinked refund. Required for requests specifying `unlinked=true`. Otherwise, if included when `unlinked=false`, will throw an error.
+	///   - payment_id: The unique ID of the payment being refunded. Required when unlinked=false, otherwise must not be set.
 	///   - payment_version_token:  Used for optimistic concurrency. This opaque token identifies the current `Payment` version that the caller expects. If the server has a different version of the Payment, the update fails and a response with a VERSION_MISMATCH error is returned. If the versions match, or the field is not provided, the refund proceeds as normal.
 	///   - reason: A description of the reason for the refund.
 	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with this refund.
@@ -17976,7 +17976,7 @@ public struct SearchAvailabilityFilter: Codable, Equatable {
 	public var location_id: String?
 	/// The query expression to search for buyer-accessible availabilities matching the specified list of segment filters. If the size of the `segment_filters` list is `n`, the search returns availabilities with `n` segments per availability.  This query expression cannot be set if `booking_id` is set.
 	public var segment_filters: [SegmentFilter]?
-	/// The query expression to search for buy-accessible availabilities with their starting times falling within the specified time range. The time range must be at least 24 hours and at most 32 days long. For waitlist availabilities, the time range can be 0 or more up to 366 days long.
+	/// The query expression to search for buy-accessible availabilities with their starting times falling within the specified time range. The time range must be at least 24 hours and at most 32 days long. For waitlist availabilities, the time range can be 0 or more up to 367 days long.
 	public var start_at_range: TimeRange
 
 	/// A query filter to search for buyer-accessible availabilities by.
@@ -17984,7 +17984,7 @@ public struct SearchAvailabilityFilter: Codable, Equatable {
 	///   - booking_id: The query expression to search for buyer-accessible availabilities for an existing booking by matching the specified `booking_id` value. This is commonly used to reschedule an appointment. If this expression is set, the `location_id` and `segment_filters` expressions cannot be set.
 	///   - location_id: The query expression to search for buyer-accessible availabilities with their location IDs matching the specified location ID. This query expression cannot be set if `booking_id` is set.
 	///   - segment_filters: The query expression to search for buyer-accessible availabilities matching the specified list of segment filters. If the size of the `segment_filters` list is `n`, the search returns availabilities with `n` segments per availability.  This query expression cannot be set if `booking_id` is set.
-	///   - start_at_range: The query expression to search for buy-accessible availabilities with their starting times falling within the specified time range. The time range must be at least 24 hours and at most 32 days long. For waitlist availabilities, the time range can be 0 or more up to 366 days long.
+	///   - start_at_range: The query expression to search for buy-accessible availabilities with their starting times falling within the specified time range. The time range must be at least 24 hours and at most 32 days long. For waitlist availabilities, the time range can be 0 or more up to 367 days long.
 	public init(start_at_range: TimeRange, booking_id: String? = nil, location_id: String? = nil, segment_filters: [SegmentFilter]? = nil) {
 		self.start_at_range = start_at_range
 		self.booking_id = booking_id
@@ -19313,6 +19313,48 @@ public struct SourceApplication: Codable, Equatable {
 	}
 }
 
+public struct SquareEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public let created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: SquareEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	public init(created_at: Timestamp? = nil, data: SquareEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct SquareEventData: Codable, Equatable {
+	/// Is true if the affected object was deleted. Otherwise absent.
+	public var deleted: Bool?
+	/// ID of the affected object.
+	public var id: String?
+	/// An object containing fields and values relevant to the event. Is absent if affected object was deleted.
+	public var object: AnyCodable?
+	/// Name of the affected object’s type.
+	public var type: String?
+
+	public init(deleted: Bool? = nil, id: String? = nil, object: AnyCodable? = nil, type: String? = nil) {
+		self.deleted = deleted
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
 /// Contains the name and abbreviation for standard measurement unit.
 public struct StandardUnitDescription: Codable, Equatable {
 	/// UI display abbreviation for the measurement unit. For example, 'lb'.
@@ -19810,13 +19852,13 @@ public struct TeamMember: Codable, Equatable {
 public struct TeamMemberAssignedLocations: Codable, Equatable {
 	/// The current assignment type of the team member.
 	public var assignment_type: String?
-	/// The locations that the team member is assigned to.
+	/// The explicit locations that the team member is assigned to.
 	public var location_ids: [String]?
 
 	/// An object that represents a team member's assignment to locations.
 	/// - Parameters:
 	///   - assignment_type: The current assignment type of the team member.
-	///   - location_ids: The locations that the team member is assigned to.
+	///   - location_ids: The explicit locations that the team member is assigned to.
 	public init(assignment_type: String? = nil, location_ids: [String]? = nil) {
 		self.assignment_type = assignment_type
 		self.location_ids = location_ids
@@ -20867,14 +20909,14 @@ public struct UpdateItemTaxesResponse: Codable, Equatable {
 
 /// Represents an [UpdateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/update-location-custom-attribute-definition) request.
 public struct UpdateLocationCustomAttributeDefinitionRequest: Codable, Equatable {
-	/// The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported. For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include the optional `version` field and specify the current version of the custom attribute definition.
+	/// The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute definition.  If this is not important for your application, `version` can be set to -1.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
 	/// Represents an [UpdateLocationCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/update-location-custom-attribute-definition) request.
 	/// - Parameters:
-	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported. For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include the optional `version` field and specify the current version of the custom attribute definition.
+	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute definition.  If this is not important for your application, `version` can be set to -1.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public init(custom_attribute_definition: CustomAttributeDefinition, idempotency_key: String? = nil) {
 		self.custom_attribute_definition = custom_attribute_definition
@@ -21397,14 +21439,14 @@ public struct UpsertCustomerCustomAttributeResponse: Codable, Equatable {
 
 /// Represents an [UpsertLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/upsert-location-custom-attribute) request.
 public struct UpsertLocationCustomAttributeRequest: Codable, Equatable {
-	/// The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
+	/// The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include the current version of the custom attribute. If this is not important for your application, version can be set to -1.
 	public var custom_attribute: CustomAttribute
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
 	/// Represents an [UpsertLocationCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/location-custom-attributes-api/upsert-location-custom-attribute) request.
 	/// - Parameters:
-	///   - custom_attribute: The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
+	///   - custom_attribute: The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include the current version of the custom attribute. If this is not important for your application, version can be set to -1.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public init(custom_attribute: CustomAttribute, idempotency_key: String? = nil) {
 		self.custom_attribute = custom_attribute
