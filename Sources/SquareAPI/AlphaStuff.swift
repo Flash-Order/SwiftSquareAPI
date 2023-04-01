@@ -33,7 +33,7 @@ public struct Check: Codable, Equatable {
 	public var id: String
 	
 	/// RFC 3339 timestamp
-	public var created_at: Timestamp
+	public var created_at: Timestamp?
 	
 	/// RFC 3339 timestamp
 	public var updated_at: Timestamp?
