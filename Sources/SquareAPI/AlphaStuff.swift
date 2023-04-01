@@ -16,7 +16,17 @@ public typealias GANSource = GiftCardGANSource
 public typealias Reason = String
 
 
-/// The Check resource contains the line items the customer has ordered (within the Order child object), the history of those line items, coursing and seating details, and other restaurant-specific information
+/// (Alpha) How they want their order
+public struct DiningOption: Codable, Equatable {
+	public let catalog_object_id: String?
+	public let catalog_version: Int
+	public let name: String
+	public let id: String?
+	public let ordinal: Int?
+}
+
+
+/// (Alpha) The Check resource contains the line items the customer has ordered (within the Order child object), the history of those line items, coursing and seating details, and other restaurant-specific information
 public struct Check: Codable, Equatable {
 	
 	/// Unique id for the check
