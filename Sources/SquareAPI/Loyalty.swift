@@ -8,7 +8,7 @@ public struct CreateLoyaltyAccount: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for loyalty accounts in a loyalty program.    You can search for a loyalty account using the phone number or customer ID associated with the account. To return all loyalty accounts, specify an empty `query` object or omit it entirely.    Search results are sorted by `created_at` in ascending order.
+/// Searches for loyalty accounts in a loyalty program.  You can search for a loyalty account using the phone number or customer ID associated with the account. To return all loyalty accounts, specify an empty `query` object or omit it entirely.  Search results are sorted by `created_at` in ascending order.
 public struct SearchLoyaltyAccounts: SquareAPIEndpoint {
 	public typealias inputType = SearchLoyaltyAccountsRequest
 	public typealias outputType = SearchLoyaltyAccountsResponse
@@ -59,14 +59,14 @@ public struct AccumulateLoyaltyPoints: SquareAPIEndpoint {
 	}
 }
 
-/// Adds points to or subtracts points from a buyer's account.   Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call  [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/accumulate-loyalty-points)  to add points when a buyer pays for the purchase.
+/// Adds points to or subtracts points from a buyer's account.  Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/accumulate-loyalty-points) to add points when a buyer pays for the purchase.
 public struct AdjustLoyaltyPoints: SquareAPIEndpoint {
 	public typealias inputType = AdjustLoyaltyPointsRequest
 	public typealias outputType = AdjustLoyaltyPointsResponse
 	public typealias paramType = Params
 	public struct Params {
 		let account_id: String
-		/// Adds points to or subtracts points from a buyer's account.   Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call  [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/accumulate-loyalty-points)  to add points when a buyer pays for the purchase.
+		/// Adds points to or subtracts points from a buyer's account.  Use this endpoint only when you need to manually adjust points. Otherwise, in your application flow, you call [AccumulateLoyaltyPoints](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/accumulate-loyalty-points) to add points when a buyer pays for the purchase.
 		/// - Parameters:
 		///   - account_id: The ID of the target [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount).
 		public init(account_id: String) {
@@ -79,7 +79,7 @@ public struct AdjustLoyaltyPoints: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for loyalty events.  A Square loyalty program maintains a ledger of events that occur during the lifetime of a  buyer's loyalty account. Each change in the point balance  (for example, points earned, points redeemed, and points expired) is  recorded in the ledger. Using this endpoint, you can search the ledger for events.  Search results are sorted by `created_at` in descending order.
+/// Searches for loyalty events.  A Square loyalty program maintains a ledger of events that occur during the lifetime of a buyer's loyalty account. Each change in the point balance (for example, points earned, points redeemed, and points expired) is recorded in the ledger. Using this endpoint, you can search the ledger for events.  Search results are sorted by `created_at` in descending order.
 public struct SearchLoyaltyEvents: SquareAPIEndpoint {
 	public typealias inputType = SearchLoyaltyEventsRequest
 	public typealias outputType = SearchLoyaltyEventsResponse
@@ -101,7 +101,7 @@ public struct ListLoyaltyPrograms: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves the loyalty program in a seller's account, specified by the program ID or the keyword `main`.   Loyalty programs define how buyers can earn points and redeem points for rewards. Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard. For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).
+/// Retrieves the loyalty program in a seller's account, specified by the program ID or the keyword `main`.  Loyalty programs define how buyers can earn points and redeem points for rewards. Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard. For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).
 public struct RetrieveLoyaltyProgram: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -109,7 +109,7 @@ public struct RetrieveLoyaltyProgram: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let program_id: String
-		/// Retrieves the loyalty program in a seller's account, specified by the program ID or the keyword `main`.   Loyalty programs define how buyers can earn points and redeem points for rewards. Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard. For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).
+		/// Retrieves the loyalty program in a seller's account, specified by the program ID or the keyword `main`.  Loyalty programs define how buyers can earn points and redeem points for rewards. Square sellers can have only one loyalty program, which is created and managed from the Seller Dashboard. For more information, see [Loyalty Program Overview](https://developer.squareup.com/docs/loyalty/overview).
 		/// - Parameters:
 		///   - program_id: The ID of the loyalty program or the keyword `main`. Either value can be used to retrieve the single loyalty program that belongs to the seller.
 		public init(program_id: String) {
@@ -248,7 +248,7 @@ public struct CancelLoyaltyPromotion: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a loyalty reward. In the process, the endpoint does following:  - Uses the `reward_tier_id` in the request to determine the number of points  to lock for this reward.  - If the request includes `order_id`, it adds the reward and related discount to the order.   After a reward is created, the points are locked and  not available for the buyer to redeem another reward.
+/// Creates a loyalty reward. In the process, the endpoint does following:  - Uses the `reward_tier_id` in the request to determine the number of points to lock for this reward. - If the request includes `order_id`, it adds the reward and related discount to the order.  After a reward is created, the points are locked and not available for the buyer to redeem another reward.
 public struct CreateLoyaltyReward: SquareAPIEndpoint {
 	public typealias inputType = CreateLoyaltyRewardRequest
 	public typealias outputType = CreateLoyaltyRewardResponse
@@ -258,7 +258,7 @@ public struct CreateLoyaltyReward: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for loyalty rewards. This endpoint accepts a request with no query filters and returns results for all loyalty accounts.  If you include a `query` object, `loyalty_account_id` is required and `status` is  optional.  If you know a reward ID, use the  [RetrieveLoyaltyReward](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/retrieve-loyalty-reward) endpoint.  Search results are sorted by `updated_at` in descending order.
+/// Searches for loyalty rewards. This endpoint accepts a request with no query filters and returns results for all loyalty accounts. If you include a `query` object, `loyalty_account_id` is required and `status` is  optional.  If you know a reward ID, use the [RetrieveLoyaltyReward](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/retrieve-loyalty-reward) endpoint.  Search results are sorted by `updated_at` in descending order.
 public struct SearchLoyaltyRewards: SquareAPIEndpoint {
 	public typealias inputType = SearchLoyaltyRewardsRequest
 	public typealias outputType = SearchLoyaltyRewardsResponse
@@ -289,7 +289,7 @@ public struct RetrieveLoyaltyReward: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/create-loyalty-reward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
+/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/create-loyalty-reward)), it updates the order by removing the reward and related discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
 public struct DeleteLoyaltyReward: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -297,7 +297,7 @@ public struct DeleteLoyaltyReward: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let reward_id: String
-		/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created  (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/create-loyalty-reward)),  it updates the order by removing the reward and related  discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
+		/// Deletes a loyalty reward by doing the following:  - Returns the loyalty points back to the loyalty account. - If an order ID was specified when the reward was created (see [CreateLoyaltyReward](https://developer.squareup.com/reference/square_yyyy-mm-dd/loyalty-api/create-loyalty-reward)), it updates the order by removing the reward and related discounts.  You cannot delete a reward that has reached the terminal state (REDEEMED).
 		/// - Parameters:
 		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyReward) to delete.
 		public init(reward_id: String) {
@@ -310,14 +310,14 @@ public struct DeleteLoyaltyReward: SquareAPIEndpoint {
 	}
 }
 
-/// Redeems a loyalty reward.  The endpoint sets the reward to the `REDEEMED` terminal state.   If you are using your own order processing system (not using the  Orders API), you call this endpoint after the buyer paid for the  purchase.  After the reward reaches the terminal state, it cannot be deleted.  In other words, points used for the reward cannot be returned  to the account.
+/// Redeems a loyalty reward.  The endpoint sets the reward to the `REDEEMED` terminal state.  If you are using your own order processing system (not using the Orders API), you call this endpoint after the buyer paid for the purchase.  After the reward reaches the terminal state, it cannot be deleted. In other words, points used for the reward cannot be returned to the account.
 public struct RedeemLoyaltyReward: SquareAPIEndpoint {
 	public typealias inputType = RedeemLoyaltyRewardRequest
 	public typealias outputType = RedeemLoyaltyRewardResponse
 	public typealias paramType = Params
 	public struct Params {
 		let reward_id: String
-		/// Redeems a loyalty reward.  The endpoint sets the reward to the `REDEEMED` terminal state.   If you are using your own order processing system (not using the  Orders API), you call this endpoint after the buyer paid for the  purchase.  After the reward reaches the terminal state, it cannot be deleted.  In other words, points used for the reward cannot be returned  to the account.
+		/// Redeems a loyalty reward.  The endpoint sets the reward to the `REDEEMED` terminal state.  If you are using your own order processing system (not using the Orders API), you call this endpoint after the buyer paid for the purchase.  After the reward reaches the terminal state, it cannot be deleted. In other words, points used for the reward cannot be returned to the account.
 		/// - Parameters:
 		///   - reward_id: The ID of the [loyalty reward](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyReward) to redeem.
 		public init(reward_id: String) {

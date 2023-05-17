@@ -11,7 +11,7 @@ public struct ListInvoices: SquareAPIEndpoint {
 		/// Returns a list of invoices for a given location. The response  is paginated. If truncated, the response includes a `cursor` that you     use in a subsequent request to retrieve the next set of invoices.
 		/// - Parameters:
 		///   - location_id: The ID of the location for which to list invoices.
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - limit: The maximum number of invoices to return (200 is the maximum `limit`).  If not provided, the server uses a default limit of 100 invoices.
 		public init(location_id: String, cursor: String? = nil, limit: Int? = nil) {
 			self.location_id = location_id

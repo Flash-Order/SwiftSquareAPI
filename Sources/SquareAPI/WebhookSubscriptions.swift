@@ -39,7 +39,7 @@ public struct ListWebhookSubscriptions: SquareAPIEndpoint {
 		let limit: Int?
 		/// Lists all webhook subscriptions owned by your application.
 		/// - Parameters:
-		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
+		///   - cursor: (Beta) A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - include_disabled: (Beta) Includes disabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s. By default, all enabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s are returned.
 		///   - sort_order: (Beta) Sorts the returned list by when the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) was created with the specified order. This field defaults to ASC.
 		///   - limit: (Beta) The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value.  Default: 100
