@@ -19325,48 +19325,6 @@ public struct SourceApplication: Codable, Equatable {
 	}
 }
 
-public struct SquareEvent: Codable, Equatable {
-	/// Timestamp of when the event was created, in RFC 3339 format.
-	public let created_at: Timestamp?
-	/// Data associated with the event.
-	public var data: SquareEventData?
-	/// A unique ID for the event.
-	public var event_id: String?
-	/// The ID of the location associated with the event.
-	public var location_id: String?
-	/// The ID of the target merchant associated with the event.
-	public var merchant_id: String?
-	/// The type of event this represents.
-	public var type: String?
-
-	public init(created_at: Timestamp? = nil, data: SquareEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
-		self.created_at = created_at
-		self.data = data
-		self.event_id = event_id
-		self.location_id = location_id
-		self.merchant_id = merchant_id
-		self.type = type
-	}
-}
-
-public struct SquareEventData: Codable, Equatable {
-	/// Is true if the affected object was deleted. Otherwise absent.
-	public var deleted: Bool?
-	/// ID of the affected object.
-	public var id: String?
-	/// An object containing fields and values relevant to the event. Is absent if affected object was deleted.
-	public var object: AnyCodable?
-	/// Name of the affected object’s type.
-	public var type: String?
-
-	public init(deleted: Bool? = nil, id: String? = nil, object: AnyCodable? = nil, type: String? = nil) {
-		self.deleted = deleted
-		self.id = id
-		self.object = object
-		self.type = type
-	}
-}
-
 /// Contains the name and abbreviation for standard measurement unit.
 public struct StandardUnitDescription: Codable, Equatable {
 	/// UI display abbreviation for the measurement unit. For example, 'lb'.
