@@ -14234,7 +14234,7 @@ public struct ObtainTokenResponse: Codable, Equatable {
 public struct Order: Codable, Equatable {
 	
 	/// (Alpha)
-	public let dining_option: DiningOption?
+	public var dining_option: DiningOption?
 	
 	
 	/// The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
@@ -14898,7 +14898,7 @@ public struct OrderLineItem: Codable, Equatable {
 	
 	// Begin Alpha Stuff
 	/// (Alpha)
-	public let dining_option: DiningOption?
+	public var dining_option: DiningOption?
 	// End Alpha Stuff
 	
 	
