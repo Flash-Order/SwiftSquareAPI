@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2023-01-19" }
+	public static var version: String { return "2023-05-17" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -195,7 +195,7 @@ public struct BatchRetrieveCatalogObjectsResponse: Codable, Equatable {
 public struct BatchUpsertCatalogObjectsRequest: Codable, Equatable {
 	/// A batch of CatalogObjects to be inserted/updated atomically. The objects within a batch will be inserted in an all-or-nothing fashion, i.e., if an error occurs attempting to insert or update an object within a batch, the entire batch will be rejected. However, an error in one batch will not affect other batches within the same request.  For each object, its `updated_at` field is ignored and replaced with a current [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates), and its `is_deleted` field must not be set to `true`.  To modify an existing object, supply its ID. To create a new object, use an ID starting with `#`. These IDs may be used to create relationships between an object and attributes of other objects that reference it. For example, you can create a CatalogItem with ID `#ABC` and a CatalogItemVariation with its `item_id` attribute set to `#ABC` in order to associate the CatalogItemVariation with its parent CatalogItem.  Any `#`-prefixed IDs are valid only within a single atomic batch, and will be replaced by server-generated IDs.  Each batch may contain up to 1,000 objects. The total number of objects across all batches for a single request may not exceed 10,000. If either of these limits is violated, an error will be returned and no objects will be inserted or updated.
 	public var batches: [CatalogObjectBatch]
-	/// A value you specify that uniquely identifies this request among all your requests. A common way to create a valid idempotency key is to use a Universally unique identifier (UUID).  If you're unsure whether a particular request was successful, you can reattempt it with the same idempotency key without worrying about creating duplicate objects.  See [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency) for more information.
+	/// A value you specify that uniquely identifies this request among all your requests. A common way to create a valid idempotency key is to use a Universally unique identifier (UUID).  If you're unsure whether a particular request was successful, you can reattempt it with the same idempotency key without worrying about creating duplicate objects.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) for more information.
 	public var idempotency_key: String
 
 	public init(batches: [CatalogObjectBatch], idempotency_key: String) {
@@ -480,30 +480,36 @@ public struct CashDrawerShift: Codable, Equatable {
 	public var closed_at: String?
 	/// The amount of money found in the cash drawer at the end of the shift by an auditing employee. The amount should be positive.
 	public var closed_cash_money: Money?
-	/// The ID of the employee that closed the cash drawer shift by auditing the cash drawer contents.
-	public var closing_employee_id: String?
+	/// The ID of the team member that closed the cash drawer shift by auditing the cash drawer contents.
+	public let closing_team_member_id: String?
+	/// The shift start time in RFC 3339 format.
+	public let created_at: Timestamp?
 	/// The free-form text description of a cash drawer by an employee.
 	public var description: String?
 	/// The device running Square Point of Sale that was connected to the cash drawer.
 	public var device: CashDrawerDevice?
-	/// The IDs of all employees that were logged into Square Point of Sale at any point while the cash drawer shift was open.
-	public var employee_ids: [String]?
 	/// The time when the shift ended, in ISO 8601 format.
 	public var ended_at: String?
-	/// The ID of the employee that ended the cash drawer shift.
-	public var ending_employee_id: String?
+	/// The ID of the team member that ended the cash drawer shift.
+	public let ending_team_member_id: String?
 	/// The amount of money that should be in the cash drawer at the end of the shift, based on the shift's other money amounts. This can be negative if employees have not correctly recorded all the events on the cash drawer. cash_paid_out_money is a summation of amounts from cash_payment_money (zero or positive), cash_refunds_money (zero or negative), cash_paid_in_money (zero or positive), and cash_paid_out_money (zero or negative) event types.
 	public var expected_cash_money: Money?
 	/// The shift unique ID.
 	public var id: String?
+	/// The ID of the location the cash drawer shift belongs to.
+	public let location_id: String?
 	/// The time when the shift began, in ISO 8601 format.
 	public var opened_at: String?
 	/// The amount of money in the cash drawer at the start of the shift. The amount must be greater than or equal to zero.
 	public var opened_cash_money: Money?
-	/// The ID of the employee that started the cash drawer shift.
-	public var opening_employee_id: String?
+	/// The ID of the team member that started the cash drawer shift.
+	public let opening_team_member_id: String?
 	/// The shift current state.
 	public var state: String?
+	/// The IDs of all team members that were logged into Square Point of Sale at any point while the cash drawer shift was open.
+	public let team_member_ids: [String]?
+	/// The shift updated at time in RFC 3339 format.
+	public let updated_at: Timestamp?
 
 	/// This model gives the details of a cash drawer shift. The cash_payment_money, cash_refund_money, cash_paid_in_money, and cash_paid_out_money fields are all computed by summing their respective event types.
 	/// - Parameters:
@@ -513,61 +519,67 @@ public struct CashDrawerShift: Codable, Equatable {
 	///   - cash_refunds_money: The amount of money removed from the cash drawer from cash refunds. It is computed by summing the events of type CASH_TENDER_REFUND. The amount is always greater than or equal to zero.
 	///   - closed_at: The time when the shift was closed, in ISO 8601 format.
 	///   - closed_cash_money: The amount of money found in the cash drawer at the end of the shift by an auditing employee. The amount should be positive.
-	///   - closing_employee_id: The ID of the employee that closed the cash drawer shift by auditing the cash drawer contents.
+	///   - closing_team_member_id: The ID of the team member that closed the cash drawer shift by auditing the cash drawer contents.
+	///   - created_at: The shift start time in RFC 3339 format.
 	///   - description: The free-form text description of a cash drawer by an employee.
 	///   - device: The device running Square Point of Sale that was connected to the cash drawer.
-	///   - employee_ids: The IDs of all employees that were logged into Square Point of Sale at any point while the cash drawer shift was open.
 	///   - ended_at: The time when the shift ended, in ISO 8601 format.
-	///   - ending_employee_id: The ID of the employee that ended the cash drawer shift.
+	///   - ending_team_member_id: The ID of the team member that ended the cash drawer shift.
 	///   - expected_cash_money: The amount of money that should be in the cash drawer at the end of the shift, based on the shift's other money amounts. This can be negative if employees have not correctly recorded all the events on the cash drawer. cash_paid_out_money is a summation of amounts from cash_payment_money (zero or positive), cash_refunds_money (zero or negative), cash_paid_in_money (zero or positive), and cash_paid_out_money (zero or negative) event types.
 	///   - id: The shift unique ID.
+	///   - location_id: The ID of the location the cash drawer shift belongs to.
 	///   - opened_at: The time when the shift began, in ISO 8601 format.
 	///   - opened_cash_money: The amount of money in the cash drawer at the start of the shift. The amount must be greater than or equal to zero.
-	///   - opening_employee_id: The ID of the employee that started the cash drawer shift.
+	///   - opening_team_member_id: The ID of the team member that started the cash drawer shift.
 	///   - state: The shift current state.
-	public init(cash_paid_in_money: Money? = nil, cash_paid_out_money: Money? = nil, cash_payment_money: Money? = nil, cash_refunds_money: Money? = nil, closed_at: String? = nil, closed_cash_money: Money? = nil, closing_employee_id: String? = nil, description: String? = nil, device: CashDrawerDevice? = nil, employee_ids: [String]? = nil, ended_at: String? = nil, ending_employee_id: String? = nil, expected_cash_money: Money? = nil, id: String? = nil, opened_at: String? = nil, opened_cash_money: Money? = nil, opening_employee_id: String? = nil, state: String? = nil) {
+	///   - team_member_ids: The IDs of all team members that were logged into Square Point of Sale at any point while the cash drawer shift was open.
+	///   - updated_at: The shift updated at time in RFC 3339 format.
+	public init(cash_paid_in_money: Money? = nil, cash_paid_out_money: Money? = nil, cash_payment_money: Money? = nil, cash_refunds_money: Money? = nil, closed_at: String? = nil, closed_cash_money: Money? = nil, closing_team_member_id: String? = nil, created_at: Timestamp? = nil, description: String? = nil, device: CashDrawerDevice? = nil, ended_at: String? = nil, ending_team_member_id: String? = nil, expected_cash_money: Money? = nil, id: String? = nil, location_id: String? = nil, opened_at: String? = nil, opened_cash_money: Money? = nil, opening_team_member_id: String? = nil, state: String? = nil, team_member_ids: [String]? = nil, updated_at: Timestamp? = nil) {
 		self.cash_paid_in_money = cash_paid_in_money
 		self.cash_paid_out_money = cash_paid_out_money
 		self.cash_payment_money = cash_payment_money
 		self.cash_refunds_money = cash_refunds_money
 		self.closed_at = closed_at
 		self.closed_cash_money = closed_cash_money
-		self.closing_employee_id = closing_employee_id
+		self.closing_team_member_id = closing_team_member_id
+		self.created_at = created_at
 		self.description = description
 		self.device = device
-		self.employee_ids = employee_ids
 		self.ended_at = ended_at
-		self.ending_employee_id = ending_employee_id
+		self.ending_team_member_id = ending_team_member_id
 		self.expected_cash_money = expected_cash_money
 		self.id = id
+		self.location_id = location_id
 		self.opened_at = opened_at
 		self.opened_cash_money = opened_cash_money
-		self.opening_employee_id = opening_employee_id
+		self.opening_team_member_id = opening_team_member_id
 		self.state = state
+		self.team_member_ids = team_member_ids
+		self.updated_at = updated_at
 	}
 }
 
 public struct CashDrawerShiftEvent: Codable, Equatable {
-	/// The event time in ISO 8601 format.
-	public let created_at: String?
+	/// The event time in RFC 3339 format.
+	public let created_at: Timestamp?
 	/// An optional description of the event, entered by the employee that created the event.
 	public var description: String?
-	/// The ID of the employee that created the event.
-	public var employee_id: String?
 	/// The amount of money that was added to or removed from the cash drawer in the event. The amount can be positive (for added money) or zero (for other tender type payments). The addition or removal of money can be determined by by the event type.
 	public var event_money: Money?
 	/// The type of cash drawer shift event.
 	public var event_type: String?
 	/// The unique ID of the event.
 	public var id: String?
+	/// The ID of the team member that created the event.
+	public let team_member_id: String?
 
-	public init(created_at: String? = nil, description: String? = nil, employee_id: String? = nil, event_money: Money? = nil, event_type: String? = nil, id: String? = nil) {
+	public init(created_at: Timestamp? = nil, description: String? = nil, event_money: Money? = nil, event_type: String? = nil, id: String? = nil, team_member_id: String? = nil) {
 		self.created_at = created_at
 		self.description = description
-		self.employee_id = employee_id
 		self.event_money = event_money
 		self.event_type = event_type
 		self.id = id
+		self.team_member_id = team_member_id
 	}
 }
 
@@ -587,6 +599,8 @@ public struct CashDrawerShiftSummary: Codable, Equatable {
 	public var closed_at: String?
 	/// The amount of money found in the cash drawer at the end of the shift by an auditing employee. The amount must be greater than or equal to zero.
 	public var closed_cash_money: Money?
+	/// The shift start time in RFC 3339 format.
+	public let created_at: Timestamp?
 	/// An employee free-text description of a cash drawer shift.
 	public var description: String?
 	/// The shift end time in ISO 8601 format.
@@ -595,34 +609,44 @@ public struct CashDrawerShiftSummary: Codable, Equatable {
 	public var expected_cash_money: Money?
 	/// The shift unique ID.
 	public var id: String?
+	/// The ID of the location the cash drawer shift belongs to.
+	public let location_id: String?
 	/// The shift start time in ISO 8601 format.
 	public var opened_at: String?
 	/// The amount of money in the cash drawer at the start of the shift. This must be a positive amount.
 	public var opened_cash_money: Money?
 	/// The shift current state.
 	public var state: String?
+	/// The shift updated at time in RFC 3339 format.
+	public let updated_at: Timestamp?
 
 	/// The summary of a closed cash drawer shift. This model contains only the money counted to start a cash drawer shift, counted at the end of the shift, and the amount that should be in the drawer at shift end based on summing all cash drawer shift events.
 	/// - Parameters:
 	///   - closed_at: The shift close time in ISO 8601 format.
 	///   - closed_cash_money: The amount of money found in the cash drawer at the end of the shift by an auditing employee. The amount must be greater than or equal to zero.
+	///   - created_at: The shift start time in RFC 3339 format.
 	///   - description: An employee free-text description of a cash drawer shift.
 	///   - ended_at: The shift end time in ISO 8601 format.
 	///   - expected_cash_money: The amount of money that should be in the cash drawer at the end of the shift, based on the cash drawer events on the shift. The amount is correct if all shift employees accurately recorded their cash drawer shift events. Unrecorded events and events with the wrong amount result in an incorrect expected_cash_money amount that can be negative.
 	///   - id: The shift unique ID.
+	///   - location_id: The ID of the location the cash drawer shift belongs to.
 	///   - opened_at: The shift start time in ISO 8601 format.
 	///   - opened_cash_money: The amount of money in the cash drawer at the start of the shift. This must be a positive amount.
 	///   - state: The shift current state.
-	public init(closed_at: String? = nil, closed_cash_money: Money? = nil, description: String? = nil, ended_at: String? = nil, expected_cash_money: Money? = nil, id: String? = nil, opened_at: String? = nil, opened_cash_money: Money? = nil, state: String? = nil) {
+	///   - updated_at: The shift updated at time in RFC 3339 format.
+	public init(closed_at: String? = nil, closed_cash_money: Money? = nil, created_at: Timestamp? = nil, description: String? = nil, ended_at: String? = nil, expected_cash_money: Money? = nil, id: String? = nil, location_id: String? = nil, opened_at: String? = nil, opened_cash_money: Money? = nil, state: String? = nil, updated_at: Timestamp? = nil) {
 		self.closed_at = closed_at
 		self.closed_cash_money = closed_cash_money
+		self.created_at = created_at
 		self.description = description
 		self.ended_at = ended_at
 		self.expected_cash_money = expected_cash_money
 		self.id = id
+		self.location_id = location_id
 		self.opened_at = opened_at
 		self.opened_cash_money = opened_cash_money
 		self.state = state
+		self.updated_at = updated_at
 	}
 }
 
@@ -795,7 +819,7 @@ public struct CatalogItem: Codable, Equatable {
 	public var product_type: String?
 	/// If `false`, the Square Point of Sale app will present the `CatalogItem`'s details screen immediately, allowing the merchant to choose `CatalogModifier`s before adding the item to the cart.  This is the default behavior.  If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-selected modifiers, and merchants can edit modifiers by drilling down onto the item's details.  Third-party clients are encouraged to implement similar behaviors.
 	public var skip_modifier_screen: Bool?
-	/// A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting.  It is currently supported for sellers of the Japanese locale only.
+	/// A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting. Its value must not be empty.  It is currently supported for sellers of the Japanese locale only.
 	public var sort_name: String?
 	/// A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
 	public var tax_ids: [String]?
@@ -819,7 +843,7 @@ public struct CatalogItem: Codable, Equatable {
 	///   - name: The item's name. This is a searchable attribute for use in applicable query filters, its value must not be empty, and the length is of Unicode code points.
 	///   - product_type: The product type of the item. May not be changed once an item has been created.  Only items of product type `REGULAR` or `APPOINTMENTS_SERVICE` may be created by this API; items with other product types are read-only.
 	///   - skip_modifier_screen: If `false`, the Square Point of Sale app will present the `CatalogItem`'s details screen immediately, allowing the merchant to choose `CatalogModifier`s before adding the item to the cart.  This is the default behavior.  If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-selected modifiers, and merchants can edit modifiers by drilling down onto the item's details.  Third-party clients are encouraged to implement similar behaviors.
-	///   - sort_name: A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting.  It is currently supported for sellers of the Japanese locale only.
+	///   - sort_name: A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting. Its value must not be empty.  It is currently supported for sellers of the Japanese locale only.
 	///   - tax_ids: A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
 	///   - variations: A list of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) objects for this item. An item must have at least one variation.
 	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, category_id: String? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, image_ids: [String]? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: String? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
@@ -971,7 +995,7 @@ public enum CatalogItemProductType: String, Codable {
 	case APPOINTMENTS_SERVICE
 }
 
-/// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one  item variation and can have at most 250 item variations.   An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked  number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both  stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass  variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be  converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes  the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count  decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
+/// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one item variation and can have at most 250 item variations.  An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
 public struct CatalogItemVariation: Codable, Equatable {
 	/// If the `CatalogItem` that owns this item variation is of type `APPOINTMENTS_SERVICE`, a bool representing whether this service is available for booking.
 	public var available_for_booking: Bool?
@@ -985,6 +1009,8 @@ public struct CatalogItemVariation: Codable, Equatable {
 	public var item_id: String?
 	/// List of item option values associated with this item variation. Listed in the same order as the item options of the parent item.
 	public var item_option_values: [CatalogItemOptionValueForItemVariation]?
+	/// A list of ids of [CatalogItemVariationVendorInfo](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariationVendorInfo) objects that reference this ItemVariation. (Deprecated in favor of item_variation_vendor_infos)
+	public var item_variation_vendor_info_ids: [String]?
 	/// Per-location price and inventory overrides.
 	public var location_overrides: [ItemVariationLocationOverrides]?
 	/// ID of the ‘CatalogMeasurementUnit’ that is used to measure the quantity sold of this item variation. If left unset, the item will be sold in whole quantities.
@@ -1016,7 +1042,7 @@ public struct CatalogItemVariation: Codable, Equatable {
 	/// Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
 	public var user_data: String?
 
-	/// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one  item variation and can have at most 250 item variations.   An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked  number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both  stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass  variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be  converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes  the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count  decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
+	/// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one item variation and can have at most 250 item variations.  An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
 	/// - Parameters:
 	///   - available_for_booking: If the `CatalogItem` that owns this item variation is of type `APPOINTMENTS_SERVICE`, a bool representing whether this service is available for booking.
 	///   - image_ids: The IDs of images associated with this `CatalogItemVariation` instance. These images will be shown to customers in Square Online Store.
@@ -1024,6 +1050,7 @@ public struct CatalogItemVariation: Codable, Equatable {
 	///   - inventory_alert_type: Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its `inventory_alert_threshold`.
 	///   - item_id: The ID of the `CatalogItem` associated with this item variation.
 	///   - item_option_values: List of item option values associated with this item variation. Listed in the same order as the item options of the parent item.
+	///   - item_variation_vendor_info_ids: A list of ids of [CatalogItemVariationVendorInfo](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariationVendorInfo) objects that reference this ItemVariation. (Deprecated in favor of item_variation_vendor_infos)
 	///   - location_overrides: Per-location price and inventory overrides.
 	///   - measurement_unit_id: ID of the ‘CatalogMeasurementUnit’ that is used to measure the quantity sold of this item variation. If left unset, the item will be sold in whole quantities.
 	///   - name: The item variation's name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
@@ -1039,13 +1066,14 @@ public struct CatalogItemVariation: Codable, Equatable {
 	///   - track_inventory: If `true`, inventory tracking is active for the variation.
 	///   - upc: The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard, Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps unless it is updated to fit the expected format.
 	///   - user_data: Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
-	public init(available_for_booking: Bool? = nil, image_ids: [String]? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: String? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: String? = nil, sellable: Bool? = nil, service_duration: Int? = nil, sku: String? = nil, stockable: Bool? = nil, stockable_conversion: CatalogStockConversion? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
+	public init(available_for_booking: Bool? = nil, image_ids: [String]? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: String? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, item_variation_vendor_info_ids: [String]? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: String? = nil, sellable: Bool? = nil, service_duration: Int? = nil, sku: String? = nil, stockable: Bool? = nil, stockable_conversion: CatalogStockConversion? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
 		self.available_for_booking = available_for_booking
 		self.image_ids = image_ids
 		self.inventory_alert_threshold = inventory_alert_threshold
 		self.inventory_alert_type = inventory_alert_type
 		self.item_id = item_id
 		self.item_option_values = item_option_values
+		self.item_variation_vendor_info_ids = item_variation_vendor_info_ids
 		self.location_overrides = location_overrides
 		self.measurement_unit_id = measurement_unit_id
 		self.name = name
@@ -1081,10 +1109,12 @@ public struct CatalogMeasurementUnit: Codable, Equatable {
 	}
 }
 
-/// A modifier applicable to items at the time of sale.
+/// A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a Burger item.
 public struct CatalogModifier: Codable, Equatable {
 	/// The ID of the image associated with this `CatalogModifier` instance. Currently this image is not displayed by Square, but is free to be displayed in 3rd party applications.
 	public var image_id: String?
+	/// Location-specific price overrides.
+	public var location_overrides: [ModifierLocationOverrides]?
 	/// The ID of the `CatalogModifierList` associated with this modifier.
 	public var modifier_list_id: String?
 	/// The modifier name.  This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
@@ -1094,15 +1124,17 @@ public struct CatalogModifier: Codable, Equatable {
 	/// The modifier price.
 	public var price_money: Money?
 
-	/// A modifier applicable to items at the time of sale.
+	/// A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a Burger item.
 	/// - Parameters:
 	///   - image_id: The ID of the image associated with this `CatalogModifier` instance. Currently this image is not displayed by Square, but is free to be displayed in 3rd party applications.
+	///   - location_overrides: Location-specific price overrides.
 	///   - modifier_list_id: The ID of the `CatalogModifierList` associated with this modifier.
 	///   - name: The modifier name.  This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	///   - ordinal: Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
 	///   - price_money: The modifier price.
-	public init(image_id: String? = nil, modifier_list_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
+	public init(image_id: String? = nil, location_overrides: [ModifierLocationOverrides]? = nil, modifier_list_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
 		self.image_id = image_id
+		self.location_overrides = location_overrides
 		self.modifier_list_id = modifier_list_id
 		self.name = name
 		self.ordinal = ordinal
@@ -1544,6 +1576,8 @@ public struct CatalogStockConversion: Codable, Equatable {
 public struct CatalogTax: Codable, Equatable {
 	/// If `true`, the fee applies to custom amounts entered into the Square Point of Sale app that are not associated with a particular `CatalogItem`.
 	public var applies_to_custom_amounts: Bool?
+	/// The ID of a `CatalogProductSet` object. If set, the tax is applicable to all products in the product set.
+	public var applies_to_product_set_id: String?
 	/// Whether the tax is calculated based on a payment's subtotal or total.
 	public var calculation_phase: String?
 	/// A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the Square Point of Sale app or not (`false`).
@@ -1558,13 +1592,15 @@ public struct CatalogTax: Codable, Equatable {
 	/// A tax applicable to an item.
 	/// - Parameters:
 	///   - applies_to_custom_amounts: If `true`, the fee applies to custom amounts entered into the Square Point of Sale app that are not associated with a particular `CatalogItem`.
+	///   - applies_to_product_set_id: The ID of a `CatalogProductSet` object. If set, the tax is applicable to all products in the product set.
 	///   - calculation_phase: Whether the tax is calculated based on a payment's subtotal or total.
 	///   - enabled: A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the Square Point of Sale app or not (`false`).
 	///   - inclusion_type: Whether the tax is `ADDITIVE` or `INCLUSIVE`.
 	///   - name: The tax's name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	///   - percentage: The percentage of the tax in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. A value of `7.5` corresponds to 7.5%. For a location-specific tax rate, contact the tax authority of the location or a tax consultant.
-	public init(applies_to_custom_amounts: Bool? = nil, calculation_phase: String? = nil, enabled: Bool? = nil, inclusion_type: String? = nil, name: String? = nil, percentage: String? = nil) {
+	public init(applies_to_custom_amounts: Bool? = nil, applies_to_product_set_id: String? = nil, calculation_phase: String? = nil, enabled: Bool? = nil, inclusion_type: String? = nil, name: String? = nil, percentage: String? = nil) {
 		self.applies_to_custom_amounts = applies_to_custom_amounts
+		self.applies_to_product_set_id = applies_to_product_set_id
 		self.calculation_phase = calculation_phase
 		self.enabled = enabled
 		self.inclusion_type = inclusion_type
@@ -3440,7 +3476,7 @@ public struct ItemVariationLocationOverrides: Codable, Equatable {
 }
 
 public struct ListCatalogResponse: Codable, Equatable {
-	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/basics/api101/pagination) for more information.
+	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
 	public var cursor: String?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -3671,6 +3707,23 @@ public struct Merchant: Codable, Equatable {
 	}
 }
 
+/// Location-specific overrides for specified properties of a `CatalogModifier` object.
+public struct ModifierLocationOverrides: Codable, Equatable {
+	/// The ID of the `Location` object representing the location. This can include a deactivated location.
+	public var location_id: String?
+	/// The overridden price at the specified location. If this is unspecified, the modifier price is not overridden.  The modifier becomes free of charge at the specified location, when this `price_money` field is set to 0.
+	public var price_money: Money?
+	
+	/// Location-specific overrides for specified properties of a `CatalogModifier` object.
+	/// - Parameters:
+	///   - location_id: The ID of the `Location` object representing the location. This can include a deactivated location.
+	///   - price_money: The overridden price at the specified location. If this is unspecified, the modifier price is not overridden.  The modifier becomes free of charge at the specified location, when this `price_money` field is set to 0.
+	public init(location_id: String? = nil, price_money: Money? = nil) {
+		self.location_id = location_id
+		self.price_money = price_money
+	}
+}
+
 /// Represents an amount of money. `Money` fields can be signed or unsigned. Fields that do not explicitly define whether they are signed or unsigned are considered unsigned and can only hold positive amounts. For signed fields, the sign of the value indicates the purpose of the money transfer. See [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for more information.
 public struct Money: Codable, Equatable {
 	/// The amount of money, in the smallest denomination of the currency indicated by `currency`. For example, when `currency` is `USD`, `amount` is in cents. Monetary amounts can be positive or negative. See the specific field description to determine the meaning of the sign in a particular case.
@@ -3690,11 +3743,16 @@ public struct Money: Codable, Equatable {
 
 /// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. `Order` objects also include information about any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
 public struct Order: Codable, Equatable {
+	
+	/// (Alpha)
+	public var dining_option: DiningOption?
+	
+	
 	/// The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
 	public let closed_at: Timestamp?
 	/// The timestamp for when the order was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let created_at: Timestamp?
-	/// The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) associated with the order.  __IMPORTANT:__ You should specify a `customer_id` if you want the corresponding payment transactions to be explicitly linked to the customer in the Seller Dashboard. If this field is omitted, the `customer_id` assigned to any underlying `Payment` objects is ignored and might result in the creation of new [instant profiles](https://developer.squareup.com/docs/customers-api/what-it-does#instant-profiles).
+	/// The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) associated with the order.  You should specify a `customer_id` on the order (or the payment) to ensure that transactions are reliably linked to customers. Omitting this field might result in the creation of new [instant profiles](https://developer.squareup.com/docs/customers-api/what-it-does#instant-profiles).
 	public var customer_id: String?
 	/// The list of all discounts associated with the order.  Discounts can be scoped to either `ORDER` or `LINE_ITEM`. For discounts scoped to `LINE_ITEM`, an `OrderLineItemAppliedDiscount` must be added to each line item that the discount applies to. For discounts with `ORDER` scope, the server generates an `OrderLineItemAppliedDiscount` for every line item.  __IMPORTANT__: If `LINE_ITEM` scope is set on any discounts in this field, using the deprecated `line_items.discounts` field results in an error. Use `line_items.applied_discounts` instead.
 	public var discounts: [OrderLineItemDiscount]?
@@ -3736,7 +3794,7 @@ public struct Order: Codable, Equatable {
 	public var taxes: [OrderLineItemTax]?
 	/// The tenders that were used to pay for the order.
 	public let tenders: [Tender]?
-	/// A short-term identifier for the order (such as a customer first name,  table number, or auto-generated order number that resets daily).
+	/// A short-term identifier for the order (such as a customer first name, table number, or auto-generated order number that resets daily).
 	public var ticket_name: String?
 	/// The total amount of discount money to collect for the order.
 	public let total_discount_money: Money?
@@ -3757,7 +3815,7 @@ public struct Order: Codable, Equatable {
 	/// - Parameters:
 	///   - closed_at: The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
 	///   - created_at: The timestamp for when the order was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) associated with the order.  __IMPORTANT:__ You should specify a `customer_id` if you want the corresponding payment transactions to be explicitly linked to the customer in the Seller Dashboard. If this field is omitted, the `customer_id` assigned to any underlying `Payment` objects is ignored and might result in the creation of new [instant profiles](https://developer.squareup.com/docs/customers-api/what-it-does#instant-profiles).
+	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) associated with the order.  You should specify a `customer_id` on the order (or the payment) to ensure that transactions are reliably linked to customers. Omitting this field might result in the creation of new [instant profiles](https://developer.squareup.com/docs/customers-api/what-it-does#instant-profiles).
 	///   - discounts: The list of all discounts associated with the order.  Discounts can be scoped to either `ORDER` or `LINE_ITEM`. For discounts scoped to `LINE_ITEM`, an `OrderLineItemAppliedDiscount` must be added to each line item that the discount applies to. For discounts with `ORDER` scope, the server generates an `OrderLineItemAppliedDiscount` for every line item.  __IMPORTANT__: If `LINE_ITEM` scope is set on any discounts in this field, using the deprecated `line_items.discounts` field results in an error. Use `line_items.applied_discounts` instead.
 	///   - fulfillments: Details about order fulfillment.  Orders can only be created with at most one fulfillment. However, orders returned by the API might contain multiple fulfillments.
 	///   - id: The order's unique ID.
@@ -3778,7 +3836,7 @@ public struct Order: Codable, Equatable {
 	///   - state: The current state of the order.
 	///   - taxes: The list of all taxes associated with the order.  Taxes can be scoped to either `ORDER` or `LINE_ITEM`. For taxes with `LINE_ITEM` scope, an `OrderLineItemAppliedTax` must be added to each line item that the tax applies to. For taxes with `ORDER` scope, the server generates an `OrderLineItemAppliedTax` for every line item.  On reads, each tax in the list includes the total amount of that tax applied to the order.  __IMPORTANT__: If `LINE_ITEM` scope is set on any taxes in this field, using the deprecated `line_items.taxes` field results in an error. Use `line_items.applied_taxes` instead.
 	///   - tenders: The tenders that were used to pay for the order.
-	///   - ticket_name: A short-term identifier for the order (such as a customer first name,  table number, or auto-generated order number that resets daily).
+	///   - ticket_name: A short-term identifier for the order (such as a customer first name, table number, or auto-generated order number that resets daily).
 	///   - total_discount_money: The total amount of discount money to collect for the order.
 	///   - total_money: The total amount of money to collect for the order.
 	///   - total_service_charge_money: The total amount of money collected in service charges for the order.  Note: `total_service_charge_money` is the sum of `applied_money` fields for each individual service charge. Therefore, `total_service_charge_money` only includes inclusive tax amounts, not additive tax amounts.
@@ -3823,6 +3881,7 @@ public struct Order: Codable, Equatable {
 
 /// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
 public struct OrderFulfillment: Codable, Equatable {
+	/// Describes delivery details of an order fulfillment.
 	public var delivery_details: OrderFulfillmentDeliveryDetails?
 	/// A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill. Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself. An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
 	public let entries: [OrderFulfillmentFulfillmentEntry]?
@@ -3843,7 +3902,7 @@ public struct OrderFulfillment: Codable, Equatable {
 
 	/// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
 	/// - Parameters:
-	///   - delivery_details: 
+	///   - delivery_details: Describes delivery details of an order fulfillment.
 	///   - entries: A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill. Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself. An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
 	///   - line_item_application: Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
 	///   - metadata: Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details). Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character. Values have a maximum length of 255 characters. An application can have up to 10 entries per metadata field. Entries written by applications are private and can only be read or modified by the same application. For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
@@ -4213,8 +4272,17 @@ public struct OrderFulfillmentShipmentDetails: Codable, Equatable {
 
 /// Represents a line item in an order. Each line item describes a different product to purchase, with its own quantity and price details.
 public struct OrderLineItem: Codable, Equatable {
+	
+	// Begin Alpha Stuff
+	/// (Alpha)
+	public var dining_option: DiningOption?
+	// End Alpha Stuff
+	
+	
 	/// The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` is automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
 	public var applied_discounts: [OrderLineItemAppliedDiscount]?
+	/// The list of references to service charges applied to this line item. Each `OrderLineItemAppliedServiceCharge` has a `service_charge_id` that references the `uid` of a top-level `OrderServiceCharge` applied to the line item. On reads, the amount applied is populated.  To change the amount of a service charge, modify the referenced top-level service charge.
+	public var applied_service_charges: [OrderLineItemAppliedServiceCharge]?
 	/// The list of references to taxes applied to this line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderLineItemTax` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedTax` is automatically created on every line item for all `ORDER` scoped taxes added to the order. `OrderLineItemAppliedTax` records for `LINE_ITEM` scoped taxes must be added in requests for the tax to apply to any line items.  To change the amount of a tax, modify the referenced top-level tax.
 	public var applied_taxes: [OrderLineItemAppliedTax]?
 	/// The base price for a single unit of the line item.
@@ -4245,6 +4313,8 @@ public struct OrderLineItem: Codable, Equatable {
 	public let total_discount_money: Money?
 	/// The total amount of money to collect for this line item.
 	public let total_money: Money?
+	/// The total amount of apportioned service charge money to collect for the line item.
+	public let total_service_charge_money: Money?
 	/// The total amount of tax money to collect for the line item.
 	public let total_tax_money: Money?
 	/// A unique ID that identifies the line item only within this order.
@@ -4257,6 +4327,7 @@ public struct OrderLineItem: Codable, Equatable {
 	/// Represents a line item in an order. Each line item describes a different product to purchase, with its own quantity and price details.
 	/// - Parameters:
 	///   - applied_discounts: The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` is automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
+	///   - applied_service_charges: The list of references to service charges applied to this line item. Each `OrderLineItemAppliedServiceCharge` has a `service_charge_id` that references the `uid` of a top-level `OrderServiceCharge` applied to the line item. On reads, the amount applied is populated.  To change the amount of a service charge, modify the referenced top-level service charge.
 	///   - applied_taxes: The list of references to taxes applied to this line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderLineItemTax` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedTax` is automatically created on every line item for all `ORDER` scoped taxes added to the order. `OrderLineItemAppliedTax` records for `LINE_ITEM` scoped taxes must be added in requests for the tax to apply to any line items.  To change the amount of a tax, modify the referenced top-level tax.
 	///   - base_price_money: The base price for a single unit of the line item.
 	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) ID applied to this line item.
@@ -4272,13 +4343,15 @@ public struct OrderLineItem: Codable, Equatable {
 	///   - quantity_unit: The unit and precision that this line item's quantity is measured in.
 	///   - total_discount_money: The total amount of discount money to collect for the line item.
 	///   - total_money: The total amount of money to collect for this line item.
+	///   - total_service_charge_money: The total amount of apportioned service charge money to collect for the line item.
 	///   - total_tax_money: The total amount of tax money to collect for the line item.
 	///   - uid: A unique ID that identifies the line item only within this order.
 	///   - variation_name: The name of the variation applied to this line item.
 	///   - variation_total_price_money: The total price of all item variations sold in this line item. The price is calculated as `base_price_money` multiplied by `quantity`. It does not include modifiers.
-	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, gross_sales_money: Money? = nil, item_type: String? = nil, metadata: String? = nil, modifiers: [OrderLineItemModifier]? = nil, name: String? = nil, note: String? = nil, pricing_blocklists: OrderLineItemPricingBlocklists? = nil, quantity_unit: OrderQuantityUnit? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
+	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_service_charges: [OrderLineItemAppliedServiceCharge]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, gross_sales_money: Money? = nil, item_type: String? = nil, metadata: String? = nil, modifiers: [OrderLineItemModifier]? = nil, name: String? = nil, note: String? = nil, pricing_blocklists: OrderLineItemPricingBlocklists? = nil, quantity_unit: OrderQuantityUnit? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_service_charge_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
 		self.quantity = quantity
 		self.applied_discounts = applied_discounts
+		self.applied_service_charges = applied_service_charges
 		self.applied_taxes = applied_taxes
 		self.base_price_money = base_price_money
 		self.catalog_object_id = catalog_object_id
@@ -4293,6 +4366,7 @@ public struct OrderLineItem: Codable, Equatable {
 		self.quantity_unit = quantity_unit
 		self.total_discount_money = total_discount_money
 		self.total_money = total_money
+		self.total_service_charge_money = total_service_charge_money
 		self.total_tax_money = total_tax_money
 		self.uid = uid
 		self.variation_name = variation_name
@@ -4316,6 +4390,21 @@ public struct OrderLineItemAppliedDiscount: Codable, Equatable {
 	///   - uid: A unique ID that identifies the applied discount only within this order.
 	public init(discount_uid: String, applied_money: Money? = nil, uid: String? = nil) {
 		self.discount_uid = discount_uid
+		self.applied_money = applied_money
+		self.uid = uid
+	}
+}
+
+public struct OrderLineItemAppliedServiceCharge: Codable, Equatable {
+	/// The amount of money applied by the service charge to the line item.
+	public let applied_money: Money?
+	/// The `uid` of the service charge that the applied service charge represents. It must reference a service charge present in the `order.service_charges` field.  This field is immutable. To change which service charges apply to a line item, delete and add a new `OrderLineItemAppliedServiceCharge`.
+	public var service_charge_uid: String
+	/// A unique ID that identifies the applied service charge only within this order.
+	public var uid: String?
+
+	public init(service_charge_uid: String, applied_money: Money? = nil, uid: String? = nil) {
+		self.service_charge_uid = service_charge_uid
 		self.applied_money = applied_money
 		self.uid = uid
 	}
@@ -4767,6 +4856,8 @@ public struct OrderReturnDiscount: Codable, Equatable {
 public struct OrderReturnLineItem: Codable, Equatable {
 	/// The list of references to `OrderReturnDiscount` entities applied to the return line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderReturnDiscount` applied to the return line item. On reads, the applied amount is populated.
 	public var applied_discounts: [OrderLineItemAppliedDiscount]?
+	/// The list of references to `OrderReturnServiceCharge` entities applied to the return line item. Each `OrderLineItemAppliedServiceCharge` has a `service_charge_uid` that references the `uid` of a top-level `OrderReturnServiceCharge` applied to the return line item. On reads, the applied amount is populated.
+	public var applied_service_charges: [OrderLineItemAppliedServiceCharge]?
 	/// The list of references to `OrderReturnTax` entities applied to the return line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderReturnTax` applied to the return line item. On reads, the applied amount is populated.
 	public var applied_taxes: [OrderLineItemAppliedTax]?
 	/// The base price for a single unit of the line item.
@@ -4795,6 +4886,8 @@ public struct OrderReturnLineItem: Codable, Equatable {
 	public let total_discount_money: Money?
 	/// The total amount of money to return for this line item.
 	public let total_money: Money?
+	/// The total amount of apportioned service charge money to return for the line item.
+	public let total_service_charge_money: Money?
 	/// The total amount of tax money to return for the line item.
 	public let total_tax_money: Money?
 	/// A unique ID for this return line-item entry.
@@ -4807,6 +4900,7 @@ public struct OrderReturnLineItem: Codable, Equatable {
 	/// The line item being returned in an order.
 	/// - Parameters:
 	///   - applied_discounts: The list of references to `OrderReturnDiscount` entities applied to the return line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderReturnDiscount` applied to the return line item. On reads, the applied amount is populated.
+	///   - applied_service_charges: The list of references to `OrderReturnServiceCharge` entities applied to the return line item. Each `OrderLineItemAppliedServiceCharge` has a `service_charge_uid` that references the `uid` of a top-level `OrderReturnServiceCharge` applied to the return line item. On reads, the applied amount is populated.
 	///   - applied_taxes: The list of references to `OrderReturnTax` entities applied to the return line item. Each `OrderLineItemAppliedTax` has a `tax_uid` that references the `uid` of a top-level `OrderReturnTax` applied to the return line item. On reads, the applied amount is populated.
 	///   - base_price_money: The base price for a single unit of the line item.
 	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) ID applied to this return line item.
@@ -4821,13 +4915,15 @@ public struct OrderReturnLineItem: Codable, Equatable {
 	///   - source_line_item_uid: The `uid` of the line item in the original sale order.
 	///   - total_discount_money: The total amount of discount money to return for the line item.
 	///   - total_money: The total amount of money to return for this line item.
+	///   - total_service_charge_money: The total amount of apportioned service charge money to return for the line item.
 	///   - total_tax_money: The total amount of tax money to return for the line item.
 	///   - uid: A unique ID for this return line-item entry.
 	///   - variation_name: The name of the variation applied to this return line item.
 	///   - variation_total_price_money: The total price of all item variations returned in this line item. The price is calculated as `base_price_money` multiplied by `quantity` and does not include modifiers.
-	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, gross_return_money: Money? = nil, item_type: String? = nil, name: String? = nil, note: String? = nil, quantity_unit: OrderQuantityUnit? = nil, return_modifiers: [OrderReturnLineItemModifier]? = nil, source_line_item_uid: String? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
+	public init(quantity: String, applied_discounts: [OrderLineItemAppliedDiscount]? = nil, applied_service_charges: [OrderLineItemAppliedServiceCharge]? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, gross_return_money: Money? = nil, item_type: String? = nil, name: String? = nil, note: String? = nil, quantity_unit: OrderQuantityUnit? = nil, return_modifiers: [OrderReturnLineItemModifier]? = nil, source_line_item_uid: String? = nil, total_discount_money: Money? = nil, total_money: Money? = nil, total_service_charge_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil, variation_name: String? = nil, variation_total_price_money: Money? = nil) {
 		self.quantity = quantity
 		self.applied_discounts = applied_discounts
+		self.applied_service_charges = applied_service_charges
 		self.applied_taxes = applied_taxes
 		self.base_price_money = base_price_money
 		self.catalog_object_id = catalog_object_id
@@ -4841,6 +4937,7 @@ public struct OrderReturnLineItem: Codable, Equatable {
 		self.source_line_item_uid = source_line_item_uid
 		self.total_discount_money = total_discount_money
 		self.total_money = total_money
+		self.total_service_charge_money = total_service_charge_money
 		self.total_tax_money = total_tax_money
 		self.uid = uid
 		self.variation_name = variation_name
@@ -4858,6 +4955,8 @@ public struct OrderReturnLineItemModifier: Codable, Equatable {
 	public var catalog_version: Int?
 	/// The name of the item modifier.
 	public var name: String?
+	/// The quantity of the line item modifier. The modifier quantity can be 0 or more. For example, suppose a restaurant offers a cheeseburger on the menu. When a buyer orders this item, the restaurant records the purchase by creating an `Order` object with a line item for a burger. The line item includes a line item modifier: the name is cheese and the quantity is 1. The buyer has the option to order extra cheese (or no cheese). If the buyer chooses the extra cheese option, the modifier quantity increases to 2. If the buyer does not want any cheese, the modifier quantity is set to 0.
+	public var quantity: String?
 	/// The modifier `uid` from the order's line item that contains the original sale of this line item modifier.
 	public var source_modifier_uid: String?
 	/// The total price of the item modifier for its line item. This is the modifier's `base_price_money` multiplied by the line item's quantity.
@@ -4871,14 +4970,16 @@ public struct OrderReturnLineItemModifier: Codable, Equatable {
 	///   - catalog_object_id: The catalog object ID referencing [CatalogModifier](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogModifier).
 	///   - catalog_version: The version of the catalog object that this line item modifier references.
 	///   - name: The name of the item modifier.
+	///   - quantity: The quantity of the line item modifier. The modifier quantity can be 0 or more. For example, suppose a restaurant offers a cheeseburger on the menu. When a buyer orders this item, the restaurant records the purchase by creating an `Order` object with a line item for a burger. The line item includes a line item modifier: the name is cheese and the quantity is 1. The buyer has the option to order extra cheese (or no cheese). If the buyer chooses the extra cheese option, the modifier quantity increases to 2. If the buyer does not want any cheese, the modifier quantity is set to 0.
 	///   - source_modifier_uid: The modifier `uid` from the order's line item that contains the original sale of this line item modifier.
 	///   - total_price_money: The total price of the item modifier for its line item. This is the modifier's `base_price_money` multiplied by the line item's quantity.
 	///   - uid: A unique ID that identifies the return modifier only within this order.
-	public init(base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, name: String? = nil, source_modifier_uid: String? = nil, total_price_money: Money? = nil, uid: String? = nil) {
+	public init(base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, name: String? = nil, quantity: String? = nil, source_modifier_uid: String? = nil, total_price_money: Money? = nil, uid: String? = nil) {
 		self.base_price_money = base_price_money
 		self.catalog_object_id = catalog_object_id
 		self.catalog_version = catalog_version
 		self.name = name
+		self.quantity = quantity
 		self.source_modifier_uid = source_modifier_uid
 		self.total_price_money = total_price_money
 		self.uid = uid
@@ -4903,6 +5004,8 @@ public struct OrderReturnServiceCharge: Codable, Equatable {
 	public var name: String?
 	/// The percentage of the service charge, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
 	public var percentage: String?
+	/// Indicates the level at which the apportioned service charge applies. For `ORDER` scoped service charges, Square generates references in `applied_service_charges` on all order line items that do not have them. For `LINE_ITEM` scoped service charges, the service charge only applies to line items with a service charge reference in their `applied_service_charges` field.  This field is immutable. To change the scope of an apportioned service charge, you must delete the apportioned service charge and re-add it as a new apportioned service charge.
+	public var scope: String?
 	/// The service charge `uid` from the order containing the original service charge. `source_service_charge_uid` is `null` for unlinked returns.
 	public var source_service_charge_uid: String?
 	/// Indicates whether the surcharge can be taxed. Service charges calculated in the `TOTAL_PHASE` cannot be marked as taxable.
@@ -4911,6 +5014,8 @@ public struct OrderReturnServiceCharge: Codable, Equatable {
 	public let total_money: Money?
 	/// The total amount of tax money to collect for the service charge.
 	public let total_tax_money: Money?
+	/// The treatment type of the service charge.
+	public let treatment_type: String?
 	/// A unique ID that identifies the return service charge only within this order.
 	public var uid: String?
 
@@ -4924,12 +5029,14 @@ public struct OrderReturnServiceCharge: Codable, Equatable {
 	///   - catalog_version: The version of the catalog object that this service charge references.
 	///   - name: The name of the service charge.
 	///   - percentage: The percentage of the service charge, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
+	///   - scope: Indicates the level at which the apportioned service charge applies. For `ORDER` scoped service charges, Square generates references in `applied_service_charges` on all order line items that do not have them. For `LINE_ITEM` scoped service charges, the service charge only applies to line items with a service charge reference in their `applied_service_charges` field.  This field is immutable. To change the scope of an apportioned service charge, you must delete the apportioned service charge and re-add it as a new apportioned service charge.
 	///   - source_service_charge_uid: The service charge `uid` from the order containing the original service charge. `source_service_charge_uid` is `null` for unlinked returns.
 	///   - taxable: Indicates whether the surcharge can be taxed. Service charges calculated in the `TOTAL_PHASE` cannot be marked as taxable.
 	///   - total_money: The total amount of money to collect for the service charge.  __NOTE__: If an inclusive tax is applied to the service charge, `total_money` does not equal `applied_money` plus `total_tax_money` because the inclusive tax amount is already included in both `applied_money` and `total_tax_money`.
 	///   - total_tax_money: The total amount of tax money to collect for the service charge.
+	///   - treatment_type: The treatment type of the service charge.
 	///   - uid: A unique ID that identifies the return service charge only within this order.
-	public init(amount_money: Money? = nil, applied_money: Money? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, calculation_phase: String? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, name: String? = nil, percentage: String? = nil, source_service_charge_uid: String? = nil, taxable: Bool? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, uid: String? = nil) {
+	public init(amount_money: Money? = nil, applied_money: Money? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, calculation_phase: String? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, name: String? = nil, percentage: String? = nil, scope: String? = nil, source_service_charge_uid: String? = nil, taxable: Bool? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, treatment_type: String? = nil, uid: String? = nil) {
 		self.amount_money = amount_money
 		self.applied_money = applied_money
 		self.applied_taxes = applied_taxes
@@ -4938,10 +5045,12 @@ public struct OrderReturnServiceCharge: Codable, Equatable {
 		self.catalog_version = catalog_version
 		self.name = name
 		self.percentage = percentage
+		self.scope = scope
 		self.source_service_charge_uid = source_service_charge_uid
 		self.taxable = taxable
 		self.total_money = total_money
 		self.total_tax_money = total_tax_money
+		self.treatment_type = treatment_type
 		self.uid = uid
 	}
 }
@@ -5049,12 +5158,16 @@ public struct OrderServiceCharge: Codable, Equatable {
 	public var name: String?
 	/// The service charge percentage as a string representation of a decimal number. For example, `"7.25"` indicates a service charge of 7.25%.  Exactly 1 of `percentage` or `amount_money` should be set.
 	public var percentage: String?
+	/// Indicates the level at which the apportioned service charge applies. For `ORDER` scoped service charges, Square generates references in `applied_service_charges` on all order line items that do not have them. For `LINE_ITEM` scoped service charges, the service charge only applies to line items with a service charge reference in their `applied_service_charges` field.  This field is immutable. To change the scope of an apportioned service charge, you must delete the apportioned service charge and re-add it as a new apportioned service charge.
+	public var scope: String?
 	/// Indicates whether the service charge can be taxed. If set to `true`, order-level taxes automatically apply to the service charge. Note that service charges calculated in the `TOTAL_PHASE` cannot be marked as taxable.
 	public var taxable: Bool?
 	/// The total amount of money to collect for the service charge.  __Note__: If an inclusive tax is applied to the service charge, `total_money` does not equal `applied_money` plus `total_tax_money` because the inclusive tax amount is already included in both `applied_money` and `total_tax_money`.
 	public let total_money: Money?
 	/// The total amount of tax money to collect for the service charge.
 	public let total_tax_money: Money?
+	/// The treatment type of the service charge.
+	public let treatment_type: String?
 	/// The type of the service charge.
 	public let type: String?
 	/// A unique ID that identifies the service charge only within this order.
@@ -5071,12 +5184,14 @@ public struct OrderServiceCharge: Codable, Equatable {
 	///   - metadata: Application-defined data attached to this service charge. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The name of the service charge.
 	///   - percentage: The service charge percentage as a string representation of a decimal number. For example, `"7.25"` indicates a service charge of 7.25%.  Exactly 1 of `percentage` or `amount_money` should be set.
+	///   - scope: Indicates the level at which the apportioned service charge applies. For `ORDER` scoped service charges, Square generates references in `applied_service_charges` on all order line items that do not have them. For `LINE_ITEM` scoped service charges, the service charge only applies to line items with a service charge reference in their `applied_service_charges` field.  This field is immutable. To change the scope of an apportioned service charge, you must delete the apportioned service charge and re-add it as a new apportioned service charge.
 	///   - taxable: Indicates whether the service charge can be taxed. If set to `true`, order-level taxes automatically apply to the service charge. Note that service charges calculated in the `TOTAL_PHASE` cannot be marked as taxable.
 	///   - total_money: The total amount of money to collect for the service charge.  __Note__: If an inclusive tax is applied to the service charge, `total_money` does not equal `applied_money` plus `total_tax_money` because the inclusive tax amount is already included in both `applied_money` and `total_tax_money`.
 	///   - total_tax_money: The total amount of tax money to collect for the service charge.
+	///   - treatment_type: The treatment type of the service charge.
 	///   - type: The type of the service charge.
 	///   - uid: A unique ID that identifies the service charge only within this order.
-	public init(amount_money: Money? = nil, applied_money: Money? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, calculation_phase: String? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, metadata: String? = nil, name: String? = nil, percentage: String? = nil, taxable: Bool? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, type: String? = nil, uid: String? = nil) {
+	public init(amount_money: Money? = nil, applied_money: Money? = nil, applied_taxes: [OrderLineItemAppliedTax]? = nil, calculation_phase: String? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, metadata: String? = nil, name: String? = nil, percentage: String? = nil, scope: String? = nil, taxable: Bool? = nil, total_money: Money? = nil, total_tax_money: Money? = nil, treatment_type: String? = nil, type: String? = nil, uid: String? = nil) {
 		self.amount_money = amount_money
 		self.applied_money = applied_money
 		self.applied_taxes = applied_taxes
@@ -5086,9 +5201,11 @@ public struct OrderServiceCharge: Codable, Equatable {
 		self.metadata = metadata
 		self.name = name
 		self.percentage = percentage
+		self.scope = scope
 		self.taxable = taxable
 		self.total_money = total_money
 		self.total_tax_money = total_tax_money
+		self.treatment_type = treatment_type
 		self.type = type
 		self.uid = uid
 	}
@@ -5100,6 +5217,26 @@ public enum OrderServiceChargeCalculationPhase: String, Codable {
 	case SUBTOTAL_PHASE
 	/// The service charge is applied after all discounts and taxes are applied.
 	case TOTAL_PHASE
+	/// The service charge is calculated as a compounding adjustment after any discounts, but before amount based apportioned service charges and any tax considerations.
+	case APPORTIONED_PERCENTAGE_PHASE
+	/// The service charge is calculated as a compounding adjustment after any discounts and percentage based apportioned service charges, but before any tax considerations.
+	case APPORTIONED_AMOUNT_PHASE
+}
+
+/// Indicates whether this is a line-item or order-level apportioned service charge.
+public enum OrderServiceChargeScope: String, Codable {
+	/// Used for reporting only. The original transaction service charge scope is currently not supported by the API.
+	case OTHER_SERVICE_CHARGE_SCOPE
+	/// The service charge should be applied to only line items specified by `OrderLineItemAppliedServiceCharge` reference records.
+	case LINE_ITEM
+	/// The service charge should be applied to the entire order.
+	case ORDER
+}
+
+/// Indicates whether the service charge will be treated as a value-holding line item or apportioned toward a line item.
+public enum OrderServiceChargeTreatmentType: String, Codable {
+	case LINE_ITEM_TREATMENT
+	case APPORTIONED_TREATMENT
 }
 
 /// 
@@ -5311,12 +5448,15 @@ public struct PaymentOptions: Codable, Equatable {
 	public var accept_partial_authorization: Bool?
 	/// Indicates whether the `Payment` objects created from this `TerminalCheckout` are automatically `COMPLETED` or left in an `APPROVED` state for later modification.
 	public var autocomplete: Bool?
-	/// The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`). Default: - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
+	/// The action to be applied to the payment when the delay_duration has elapsed. The action must be CANCEL or COMPLETE.  This parameter can only be set for a delayed capture payment (when `autocomplete` is `false`).
+	public var delay_action: String?
+	/// The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED or CANCELED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`). Default: - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	public var delay_duration: Timestamp?
 
-	public init(accept_partial_authorization: Bool? = nil, autocomplete: Bool? = nil, delay_duration: Timestamp? = nil) {
+	public init(accept_partial_authorization: Bool? = nil, autocomplete: Bool? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil) {
 		self.accept_partial_authorization = accept_partial_authorization
 		self.autocomplete = autocomplete
+		self.delay_action = delay_action
 		self.delay_duration = delay_duration
 	}
 }
@@ -5756,8 +5896,14 @@ public struct TerminalCheckout: Codable, Equatable {
 	public var payment_type: String?
 	/// An optional user-defined reference ID that can be used to associate this `TerminalCheckout` to another entity in an external system. For example, an order ID generated by a third-party shopping cart. The ID is also associated with any payments used to complete the checkout.
 	public var reference_id: String?
+	/// Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase. Supported only in the US.
+	public var statement_description_identifier: String?
 	/// The status of the `TerminalCheckout`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	public let status: String?
+	/// An optional ID of the team member associated with creating the checkout.
+	public var team_member_id: String?
+	/// The amount designated as a tip, in addition to `amount_money`. This may only be set for a checkout that has tipping disabled (`tip_settings.allow_tipping` is `false`). Supported only in the US.
+	public var tip_money: Money?
 	/// The time when the `TerminalCheckout` was last updated, as an RFC 3339 timestamp.
 	public let updated_at: Timestamp?
 
@@ -5779,9 +5925,12 @@ public struct TerminalCheckout: Codable, Equatable {
 	///   - payment_options: Payment-specific options for the checkout request. Supported only in the US.
 	///   - payment_type: The type of payment the terminal should attempt to capture from. Defaults to `CARD_PRESENT`.
 	///   - reference_id: An optional user-defined reference ID that can be used to associate this `TerminalCheckout` to another entity in an external system. For example, an order ID generated by a third-party shopping cart. The ID is also associated with any payments used to complete the checkout.
+	///   - statement_description_identifier: Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase. Supported only in the US.
 	///   - status: The status of the `TerminalCheckout`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
+	///   - team_member_id: An optional ID of the team member associated with creating the checkout.
+	///   - tip_money: The amount designated as a tip, in addition to `amount_money`. This may only be set for a checkout that has tipping disabled (`tip_settings.allow_tipping` is `false`). Supported only in the US.
 	///   - updated_at: The time when the `TerminalCheckout` was last updated, as an RFC 3339 timestamp.
-	public init(amount_money: Money, device_options: DeviceCheckoutOptions, app_fee_money: Money? = nil, app_id: String? = nil, cancel_reason: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, deadline_duration: Timestamp? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, payment_ids: [String]? = nil, payment_options: PaymentOptions? = nil, payment_type: String? = nil, reference_id: String? = nil, status: String? = nil, updated_at: Timestamp? = nil) {
+	public init(amount_money: Money, device_options: DeviceCheckoutOptions, app_fee_money: Money? = nil, app_id: String? = nil, cancel_reason: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, deadline_duration: Timestamp? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, payment_ids: [String]? = nil, payment_options: PaymentOptions? = nil, payment_type: String? = nil, reference_id: String? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, updated_at: Timestamp? = nil) {
 		self.amount_money = amount_money
 		self.device_options = device_options
 		self.app_fee_money = app_fee_money
@@ -5798,7 +5947,10 @@ public struct TerminalCheckout: Codable, Equatable {
 		self.payment_options = payment_options
 		self.payment_type = payment_type
 		self.reference_id = reference_id
+		self.statement_description_identifier = statement_description_identifier
 		self.status = status
+		self.team_member_id = team_member_id
+		self.tip_money = tip_money
 		self.updated_at = updated_at
 	}
 }
