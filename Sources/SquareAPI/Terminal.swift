@@ -28,7 +28,7 @@ public struct GetTerminalAction: SquareAPIEndpoint {
 		let action_id: String
 		/// Retrieves a Terminal action request by `action_id`. Terminal action requests are available for 30 days.
 		/// - Parameters:
-		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`
+		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`.
 		public init(action_id: String) {
 			self.action_id = action_id
 		}
@@ -48,13 +48,33 @@ public struct CancelTerminalAction: SquareAPIEndpoint {
 		let action_id: String
 		/// Cancels a Terminal action request if the status of the request permits it.
 		/// - Parameters:
-		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`
+		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`.
 		public init(action_id: String) {
 			self.action_id = action_id
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/terminals/actions/\(inputs.action_id)/cancel"
+		return url
+	}
+}
+
+/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
+public struct DismissTerminalAction: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = DismissTerminalActionResponse
+	public typealias paramType = Params
+	public struct Params {
+		let action_id: String
+		/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
+		/// - Parameters:
+		///   - action_id: (Beta) Unique ID for the `TerminalAction` associated with the waiting dialog to be dismissed.
+		public init(action_id: String) {
+			self.action_id = action_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/terminals/actions/\(inputs.action_id)/dismiss"
 		return url
 	}
 }

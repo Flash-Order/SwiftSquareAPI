@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2023-05-17" }
+	public static var version: String { return "2023-06-08" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -204,6 +204,14 @@ public enum ActivityType: String, Codable {
 	case THIRD_PARTY_FEE_REFUND
 	/// Balance change due to money transfer.
 	case PAYOUT
+	/// Indicates the withholding of a portion of each payment by Square that has been automatically converted into bitcoin using Cash App. The seller manages their bitcoin in their Cash App account.
+	case AUTOMATIC_BITCOIN_CONVERSIONS
+	/// Indicates a return of the payment withholding that had been scheduled to be converted into bitcoin using Cash App to the Square payments balance.
+	case AUTOMATIC_BITCOIN_CONVERSIONS_REVERSED
+	/// The repayment made toward the outstanding balance on the seller's Square credit card.
+	case CREDIT_CARD_REPAYMENT
+	/// The reversal of the repayment made toward the outstanding balance on the seller's Square credit card.
+	case CREDIT_CARD_REPAYMENT_REVERSED
 }
 
 /// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/add-group-to-customer) endpoint.
@@ -3668,6 +3676,8 @@ public enum CatalogObjectType: String, Codable {
 	case TIME_PERIOD
 	/// The `CatalogObject` instance is of the [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogMeasurementUnit) type and represents a measurement unit specifying the unit of measure and precision in which an item variation is sold. The measurement-unit-specific data must set on the `measurement_unit_data` field.
 	case MEASUREMENT_UNIT
+	/// The `CatalogObject` instance is of the [CatalogSubscriptionPlan](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlan) type and represents a subscription plan. The subscription-plan-specific data must be stored on the `subscription_plan_data` field.
+	case SUBSCRIPTION_PLAN_VARIATION
 	/// The `CatalogObject` instance is of the [CatalogItemOption](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemOption) type and represents a list of options (such as a color or size of a T-shirt) that can be assigned to item variations. The item-option-specific data must be on the `item_option_data` field.
 	case ITEM_OPTION
 	/// The `CatalogObject` instance is of the [CatalogItemOptionValue](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemOptionValue) type and represents a value associated with one or more item options. For example, an item option of "Size" may have item option values such as "Small" or "Medium". The item-option-value-specific data must be on the `item_option_value_data` field.
@@ -4078,20 +4088,57 @@ public struct CatalogStockConversion: Codable, Equatable {
 	}
 }
 
-/// Describes a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
+/// Describes a subscription plan. A subscription plan represents what you want to sell in a subscription model, and includes references to each of the associated subscription plan variations.  For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
 public struct CatalogSubscriptionPlan: Codable, Equatable {
+	/// If true, all items in the merchant's catalog are subscribable by this SubscriptionPlan.
+	public var all_items: Bool?
+	/// The list of IDs of `CatalogCategory` that are eligible for subscription by this SubscriptionPlan's variations.
+	public var eligible_category_ids: [String]?
+	/// The list of IDs of `CatalogItems` that are eligible for subscription by this SubscriptionPlan's variations.
+	public var eligible_item_ids: [String]?
 	/// The name of the plan.
 	public var name: String
 	/// A list of SubscriptionPhase containing the [SubscriptionPhase](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionPhase) for this plan. This field it required. Not including this field will throw a REQUIRED_FIELD_MISSING error
 	public var phases: [SubscriptionPhase]?
+	/// The list of subscription plan variations available for this product
+	public var subscription_plan_variations: [CatalogObject]?
 
-	/// Describes a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
+	/// Describes a subscription plan. A subscription plan represents what you want to sell in a subscription model, and includes references to each of the associated subscription plan variations.  For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
 	/// - Parameters:
+	///   - all_items: If true, all items in the merchant's catalog are subscribable by this SubscriptionPlan.
+	///   - eligible_category_ids: The list of IDs of `CatalogCategory` that are eligible for subscription by this SubscriptionPlan's variations.
+	///   - eligible_item_ids: The list of IDs of `CatalogItems` that are eligible for subscription by this SubscriptionPlan's variations.
 	///   - name: The name of the plan.
 	///   - phases: A list of SubscriptionPhase containing the [SubscriptionPhase](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionPhase) for this plan. This field it required. Not including this field will throw a REQUIRED_FIELD_MISSING error
-	public init(name: String, phases: [SubscriptionPhase]? = nil) {
+	///   - subscription_plan_variations: The list of subscription plan variations available for this product
+	public init(name: String, all_items: Bool? = nil, eligible_category_ids: [String]? = nil, eligible_item_ids: [String]? = nil, phases: [SubscriptionPhase]? = nil, subscription_plan_variations: [CatalogObject]? = nil) {
+		self.name = name
+		self.all_items = all_items
+		self.eligible_category_ids = eligible_category_ids
+		self.eligible_item_ids = eligible_item_ids
+		self.phases = phases
+		self.subscription_plan_variations = subscription_plan_variations
+	}
+}
+
+/// Describes a subscription plan variation. A subscription plan variation represents how the subscription for a product or service is sold. For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
+public struct CatalogSubscriptionPlanVariation: Codable, Equatable {
+	/// The name of the plan variation.
+	public var name: String
+	/// A list containing each [SubscriptionPhase](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionPhase) for this plan variation.
+	public var phases: [SubscriptionPhase]
+	/// The id of the subscription plan, if there is one.
+	public var subscription_plan_id: String?
+
+	/// Describes a subscription plan variation. A subscription plan variation represents how the subscription for a product or service is sold. For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
+	/// - Parameters:
+	///   - name: The name of the plan variation.
+	///   - phases: A list containing each [SubscriptionPhase](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionPhase) for this plan variation.
+	///   - subscription_plan_id: The id of the subscription plan, if there is one.
+	public init(name: String, phases: [SubscriptionPhase], subscription_plan_id: String? = nil) {
 		self.name = name
 		self.phases = phases
+		self.subscription_plan_id = subscription_plan_id
 	}
 }
 
@@ -4333,6 +4380,10 @@ public struct CheckoutOptions: Codable, Equatable {
 	public var ask_for_shipping_address: Bool?
 	/// The custom fields requesting information from the buyer.
 	public var custom_fields: [CustomField]?
+	/// Indicates whether to include the `Add coupon` section for the buyer to provide a Square marketing coupon in the payment form.
+	public var enable_coupon: Bool?
+	/// Indicates whether to include the `REWARDS` section for the buyer to opt in to loyalty, redeem rewards in the payment form, or both.
+	public var enable_loyalty: Bool?
 	/// The email address that buyers can use to contact the seller.
 	public var merchant_support_email: String?
 	/// The confirmation page URL to redirect the buyer to after Square processes the payment.
@@ -4342,12 +4393,14 @@ public struct CheckoutOptions: Codable, Equatable {
 	/// The ID of the subscription plan for the buyer to pay and subscribe. For more information, see [Subscription Plan Checkout](https://developer.squareup.com/docs/checkout-api/subscription-plan-checkout).
 	public var subscription_plan_id: String?
 
-	public init(accepted_payment_methods: AcceptedPaymentMethods? = nil, allow_tipping: Bool? = nil, app_fee_money: Money? = nil, ask_for_shipping_address: Bool? = nil, custom_fields: [CustomField]? = nil, merchant_support_email: String? = nil, redirect_url: String? = nil, shipping_fee: ShippingFee? = nil, subscription_plan_id: String? = nil) {
+	public init(accepted_payment_methods: AcceptedPaymentMethods? = nil, allow_tipping: Bool? = nil, app_fee_money: Money? = nil, ask_for_shipping_address: Bool? = nil, custom_fields: [CustomField]? = nil, enable_coupon: Bool? = nil, enable_loyalty: Bool? = nil, merchant_support_email: String? = nil, redirect_url: String? = nil, shipping_fee: ShippingFee? = nil, subscription_plan_id: String? = nil) {
 		self.accepted_payment_methods = accepted_payment_methods
 		self.allow_tipping = allow_tipping
 		self.app_fee_money = app_fee_money
 		self.ask_for_shipping_address = ask_for_shipping_address
 		self.custom_fields = custom_fields
+		self.enable_coupon = enable_coupon
+		self.enable_loyalty = enable_loyalty
 		self.merchant_support_email = merchant_support_email
 		self.redirect_url = redirect_url
 		self.shipping_fee = shipping_fee
@@ -4424,6 +4477,15 @@ public struct CloneOrderResponse: Codable, Equatable {
 	}
 }
 
+public struct CollectedData: Codable, Equatable {
+	/// The buyer's input text.
+	public let input_text: String?
+
+	public init(input_text: String? = nil) {
+		self.input_text = input_text
+	}
+}
+
 /// Describes a request to complete (capture) a payment using  [CompletePayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/payments-api/complete-payment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 public struct CompletePaymentRequest: Codable, Equatable {
 	/// Used for optimistic concurrency. This opaque token identifies the current `Payment`  version that the caller expects. If the server has a different version of the Payment,  the update fails and a response with a VERSION_MISMATCH error is returned.
@@ -4451,6 +4513,36 @@ public struct CompletePaymentResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, payment: Payment? = nil) {
 		self.errors = errors
 		self.payment = payment
+	}
+}
+
+public struct ConfirmationDecision: Codable, Equatable {
+	/// The buyer's decision to the displayed terms.
+	public let has_agreed: Bool?
+
+	public init(has_agreed: Bool? = nil) {
+		self.has_agreed = has_agreed
+	}
+}
+
+public struct ConfirmationOptions: Codable, Equatable {
+	/// The button text to display indicating the customer agrees to the displayed terms.
+	public var agree_button_text: String
+	/// The agreement details to display in the confirmation flow on the Terminal.
+	public var body: String
+	/// The result of the buyer’s actions when presented with the confirmation screen.
+	public let decision: ConfirmationDecision?
+	/// The button text to display indicating the customer does not agree to the displayed terms.
+	public var disagree_button_text: String?
+	/// The title text to display in the confirmation screen flow on the Terminal.
+	public var title: String
+
+	public init(agree_button_text: String, body: String, title: String, decision: ConfirmationDecision? = nil, disagree_button_text: String? = nil) {
+		self.agree_button_text = agree_button_text
+		self.body = body
+		self.title = title
+		self.decision = decision
+		self.disagree_button_text = disagree_button_text
 	}
 }
 
@@ -5740,19 +5832,19 @@ public struct CreateMobileAuthorizationCodeRequest: Codable, Equatable {
 public struct CreateMobileAuthorizationCodeResponse: Codable, Equatable {
 	/// The generated authorization code that connects a mobile application instance to a Square account.
 	public var authorization_code: String?
-	/// An error object that provides details about how creation of the authorization  code failed.
-	public var error: SquareError?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
 	/// The timestamp when `authorization_code` expires, in [RFC 3339](https://tools.ietf.org/html/rfc3339) format (for example, "2016-09-04T23:59:33.123Z").
 	public var expires_at: Timestamp?
 
 	/// Defines the fields that are included in the response body of a request to the `CreateMobileAuthorizationCode` endpoint.
 	/// - Parameters:
 	///   - authorization_code: The generated authorization code that connects a mobile application instance to a Square account.
-	///   - error: An error object that provides details about how creation of the authorization  code failed.
+	///   - errors: Any errors that occurred during the request.
 	///   - expires_at: The timestamp when `authorization_code` expires, in [RFC 3339](https://tools.ietf.org/html/rfc3339) format (for example, "2016-09-04T23:59:33.123Z").
-	public init(authorization_code: String? = nil, error: SquareError? = nil, expires_at: Timestamp? = nil) {
+	public init(authorization_code: String? = nil, errors: [SquareError]? = nil, expires_at: Timestamp? = nil) {
 		self.authorization_code = authorization_code
-		self.error = error
+		self.errors = errors
 		self.expires_at = expires_at
 	}
 }
@@ -6054,18 +6146,22 @@ public struct CreateShiftResponse: Codable, Equatable {
 
 /// Defines input parameters in a request to the  [CreateSubscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/create-subscription) endpoint.
 public struct CreateSubscriptionRequest: Codable, Equatable {
-	/// The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
+	/// The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
 	public var canceled_date: String?
-	/// The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email. For an example to create a customer profile for a subscriber and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
+	/// The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email with a link to pay for their subscription.
 	public var card_id: String?
-	/// The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) subscribing to the subscription plan.
+	/// The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) subscribing to the subscription plan variation.
 	public var customer_id: String
-	/// A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	/// A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 	/// The ID of the location the subscription is associated with.
 	public var location_id: String
-	/// The ID of the subscription plan created using the Catalog API. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan) and  [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
-	public var plan_id: String
+	/// array of phases for this subscription
+	public var phases: [Phase]?
+	/// The ID of the [subscription plan](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations) created using the Catalog API.  Deprecated in favour of `plan_variation_id`.  For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan) and  [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
+	public var plan_id: String?
+	/// The ID of the [subscription plan variation](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations#plan-variations) created using the Catalog API.
+	public var plan_variation_id: String?
 	/// A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	public var price_override_money: Money?
 	/// The origination details of the subscription.
@@ -6079,24 +6175,28 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 
 	/// Defines input parameters in a request to the  [CreateSubscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/create-subscription) endpoint.
 	/// - Parameters:
-	///   - canceled_date: The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
-	///   - card_id: The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email. For an example to create a customer profile for a subscriber and add a card on file, see [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
-	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) subscribing to the subscription plan.
-	///   - idempotency_key: A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency).
+	///   - canceled_date: The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
+	///   - card_id: The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email with a link to pay for their subscription.
+	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) subscribing to the subscription plan variation.
+	///   - idempotency_key: A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	///   - location_id: The ID of the location the subscription is associated with.
-	///   - plan_id: The ID of the subscription plan created using the Catalog API. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan) and  [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
+	///   - phases: array of phases for this subscription
+	///   - plan_id: The ID of the [subscription plan](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations) created using the Catalog API.  Deprecated in favour of `plan_variation_id`.  For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan) and  [Subscriptions Walkthrough](https://developer.squareup.com/docs/subscriptions-api/walkthrough).
+	///   - plan_variation_id: The ID of the [subscription plan variation](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations#plan-variations) created using the Catalog API.
 	///   - price_override_money: A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	///   - source: The origination details of the subscription.
 	///   - start_date: The `YYYY-MM-DD`-formatted date to start the subscription.  If it is unspecified, the subscription starts immediately.
 	///   - tax_percentage: The tax to add when billing the subscription. The percentage is expressed in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. For example, a value of 7.5 corresponds to 7.5%.
 	///   - timezone: The timezone that is used in date calculations for the subscription. If unset, defaults to the location timezone. If a timezone is not configured for the location, defaults to "America/New_York". Format: the IANA Timezone Database identifier for the location timezone. For a list of time zones, see [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-	public init(customer_id: String, location_id: String, plan_id: String, canceled_date: String? = nil, card_id: String? = nil, idempotency_key: String? = nil, price_override_money: Money? = nil, source: SubscriptionSource? = nil, start_date: String? = nil, tax_percentage: String? = nil, timezone: String? = nil) {
+	public init(customer_id: String, location_id: String, canceled_date: String? = nil, card_id: String? = nil, idempotency_key: String? = nil, phases: [Phase]? = nil, plan_id: String? = nil, plan_variation_id: String? = nil, price_override_money: Money? = nil, source: SubscriptionSource? = nil, start_date: String? = nil, tax_percentage: String? = nil, timezone: String? = nil) {
 		self.customer_id = customer_id
 		self.location_id = location_id
-		self.plan_id = plan_id
 		self.canceled_date = canceled_date
 		self.card_id = card_id
 		self.idempotency_key = idempotency_key
+		self.phases = phases
+		self.plan_id = plan_id
+		self.plan_variation_id = plan_variation_id
 		self.price_override_money = price_override_money
 		self.source = source
 		self.start_date = start_date
@@ -6109,13 +6209,13 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 public struct CreateSubscriptionResponse: Codable, Equatable {
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
-	/// The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object).
+	/// The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#subscription-object).
 	public var subscription: Subscription?
 
 	/// Defines output parameters in a response from the [CreateSubscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/create-subscription) endpoint.
 	/// - Parameters:
 	///   - errors: Errors encountered during the request.
-	///   - subscription: The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object).
+	///   - subscription: The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#subscription-object).
 	public init(errors: [SquareError]? = nil, subscription: Subscription? = nil) {
 		self.errors = errors
 		self.subscription = subscription
@@ -7213,6 +7313,32 @@ public struct CustomerTextFilter: Codable, Equatable {
 	}
 }
 
+public struct DataCollectionOptions: Codable, Equatable {
+	/// The body text to display under the title in the data collection screen flow on the Terminal.
+	public var body: String
+	/// The buyer’s input text from the data collection screen.
+	public let collected_data: CollectedData?
+	/// Represents the type of the input text.
+	public var input_type: String
+	/// The title text to display in the data collection flow on the Terminal.
+	public var title: String
+
+	public init(body: String, input_type: String, title: String, collected_data: CollectedData? = nil) {
+		self.body = body
+		self.input_type = input_type
+		self.title = title
+		self.collected_data = collected_data
+	}
+}
+
+/// Describes the input type of the data.
+public enum DataCollectionOptionsInputType: String, Codable {
+	/// This value is used to represent an input text that contains a email validation on the client.
+	case EMAIL
+	/// This value is used to represent an input text that contains a phone number validation on the client.
+	case PHONE_NUMBER
+}
+
 /// A range defined by two dates. Used for filtering a query for Connect v2 objects that have date properties.
 public struct DateRange: Codable, Equatable {
 	/// A string in `YYYY-MM-DD` format, such as `2017-10-31`, per the ISO 8601 extended format for calendar dates. The end of a date range (inclusive).
@@ -8066,6 +8192,24 @@ public struct DisableCardResponse: Codable, Equatable {
 	}
 }
 
+public struct DismissTerminalActionRequest: Codable, Equatable {
+
+	public init() {
+	}
+}
+
+public struct DismissTerminalActionResponse: Codable, Equatable {
+	/// The action associated with the waiting dialog requested to be dismissed.
+	public var action: TerminalAction?
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	public init(action: TerminalAction? = nil, errors: [SquareError]? = nil) {
+		self.action = action
+		self.errors = errors
+	}
+}
+
 /// Represents a [dispute](https://developer.squareup.com/docs/disputes-api/overview) a cardholder initiated with their bank.
 public struct Dispute: Codable, Equatable {
 	/// The disputed amount, which can be less than the total transaction amount. For instance, if multiple items were purchased but the cardholder only initiates a dispute over some of the items.
@@ -8341,7 +8485,7 @@ public enum EmployeeStatus: String, Codable {
 	case INACTIVE
 }
 
-/// The hourly wage rate that an employee earns on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at version yyyy-mm-dd. Use `TeamMemberWage` instead.
+/// The hourly wage rate that an employee earns on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at version yyyy-mm-dd. Use [TeamMemberWage](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMemberWage).
 public struct EmployeeWage: Codable, Equatable {
 	/// The `Employee` that this wage is assigned to.
 	public var employee_id: String?
@@ -8352,7 +8496,7 @@ public struct EmployeeWage: Codable, Equatable {
 	/// The job title that this wage relates to.
 	public var title: String?
 
-	/// The hourly wage rate that an employee earns on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at version yyyy-mm-dd. Use `TeamMemberWage` instead.
+	/// The hourly wage rate that an employee earns on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at version yyyy-mm-dd. Use [TeamMemberWage](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMemberWage).
 	/// - Parameters:
 	///   - employee_id: The `Employee` that this wage is assigned to.
 	///   - hourly_rate: Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
@@ -12602,14 +12746,14 @@ public struct ListSitesResponse: Codable, Equatable {
 
 /// Defines input parameters in a request to the  [ListSubscriptionEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/list-subscription-events) endpoint.
 public struct ListSubscriptionEventsRequest: Codable, Equatable {
-	/// When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	/// When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// The upper limit on the number of subscription events to return in a paged response.
 	public var limit: Int?
 
 	/// Defines input parameters in a request to the  [ListSubscriptionEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/list-subscription-events) endpoint.
 	/// - Parameters:
-	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The upper limit on the number of subscription events to return in a paged response.
 	public init(cursor: String? = nil, limit: Int? = nil) {
 		self.cursor = cursor
@@ -12619,7 +12763,7 @@ public struct ListSubscriptionEventsRequest: Codable, Equatable {
 
 /// Defines output parameters in a response from the [ListSubscriptionEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/list-subscription-events).
 public struct ListSubscriptionEventsResponse: Codable, Equatable {
-	/// When the total number of resulting subscription events exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of events. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	/// When the total number of resulting subscription events exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of events. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
@@ -12628,7 +12772,7 @@ public struct ListSubscriptionEventsResponse: Codable, Equatable {
 
 	/// Defines output parameters in a response from the [ListSubscriptionEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/list-subscription-events).
 	/// - Parameters:
-	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of events. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of events. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Errors encountered during the request.
 	///   - subscription_events: The retrieved subscription events.
 	public init(cursor: String? = nil, errors: [SquareError]? = nil, subscription_events: [SubscriptionEvent]? = nil) {
@@ -14156,19 +14300,19 @@ public struct Money: Codable, Equatable {
 }
 
 public struct ObtainTokenRequest: Codable, Equatable {
-	/// The Square-issued ID of your application, which is available in the OAuth page in the [Developer Dashboard](https://developer.squareup.com/apps).
+	/// The Square-issued ID of your application, which is available on the **OAuth** page in the [Developer Dashboard](https://developer.squareup.com/apps).
 	public var client_id: String
-	/// The Square-issued application secret for your application, which is available in the OAuth page in the [Developer Dashboard](https://developer.squareup.com/apps). This parameter is only required when you are not using the [OAuth PKCE (Proof Key for Code Exchange) flow](https://developer.squareup.com/docs/oauth-api/overview#pkce-flow).  The PKCE flow requires a `code_verifier` instead of a `client_secret`.
+	/// The Square-issued application secret for your application, which is available on the **OAuth** page in the [Developer Dashboard](https://developer.squareup.com/apps). This parameter is only required when  you're not using the [OAuth PKCE (Proof Key for Code Exchange) flow](https://developer.squareup.com/docs/oauth-api/overview#pkce-flow). The PKCE flow requires a `code_verifier` instead of a `client_secret` when `grant_type` is set to `authorization_code`.  If `grant_type` is set to `refresh_token` and the `refresh_token` is obtained uaing PKCE, the PKCE flow only requires `client_id`,  `grant_type`, and `refresh_token`.
 	public var client_secret: String?
 	/// The authorization code to exchange. This code is required if `grant_type` is set to `authorization_code` to indicate that the application wants to exchange an authorization code for an OAuth access token.
 	public var code: String?
-	/// Must be provided when using PKCE OAuth flow. The `code_verifier` will be used to verify against the `code_challenge` associated with the `authorization_code`.
+	/// Must be provided when using the PKCE OAuth flow if `grant_type` is set to `authorization_code`. The `code_verifier` is used to verify against the `code_challenge` associated with the `authorization_code`.
 	public var code_verifier: String?
 	/// Specifies the method to request an OAuth access token. Valid values are `authorization_code`, `refresh_token`, and `migration_token`.
 	public var grant_type: String
 	/// A legacy OAuth access token obtained using a Connect API version prior to 2019-03-13. This parameter is required if `grant_type` is set to `migration_token` to indicate that the application wants to get a replacement OAuth access token. The response also returns a refresh token. For more information, see [Migrate to Using Refresh Tokens](https://developer.squareup.com/docs/oauth-api/migrate-to-refresh-tokens).
 	public var migration_token: String?
-	/// The redirect URL assigned in the OAuth page for your application in the [Developer Dashboard](https://developer.squareup.com/apps).
+	/// The redirect URL assigned on the **OAuth** page for your application in the [Developer Dashboard](https://developer.squareup.com/apps).
 	public var redirect_uri: String?
 	/// A valid refresh token for generating a new OAuth access token.  A valid refresh token is required if `grant_type` is set to `refresh_token` to indicate that the application wants a replacement for an expired OAuth access token.
 	public var refresh_token: String?
@@ -14232,11 +14376,6 @@ public struct ObtainTokenResponse: Codable, Equatable {
 
 /// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. `Order` objects also include information about any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
 public struct Order: Codable, Equatable {
-	
-	/// (Alpha)
-	public var dining_option: DiningOption?
-	
-	
 	/// The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
 	public let closed_at: Timestamp?
 	/// The timestamp for when the order was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -14895,13 +15034,6 @@ public struct OrderFulfillmentUpdatedUpdate: Codable, Equatable {
 
 /// Represents a line item in an order. Each line item describes a different product to purchase, with its own quantity and price details.
 public struct OrderLineItem: Codable, Equatable {
-	
-	// Begin Alpha Stuff
-	/// (Alpha)
-	public var dining_option: DiningOption?
-	// End Alpha Stuff
-	
-	
 	/// The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` is automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
 	public var applied_discounts: [OrderLineItemAppliedDiscount]?
 	/// The list of references to service charges applied to this line item. Each `OrderLineItemAppliedServiceCharge` has a `service_charge_id` that references the `uid` of a top-level `OrderServiceCharge` applied to the line item. On reads, the amount applied is populated.  To change the amount of a service charge, modify the referenced top-level service charge.
@@ -16567,6 +16699,8 @@ public struct Payout: Codable, Equatable {
 	public var created_at: Timestamp?
 	/// Information about the banking destination (such as a bank account, Square checking account, or debit card) against which the payout was made.
 	public var destination: Destination?
+	/// A unique ID for each `Payout` object that might also appear on the seller’s bank statement. You can use this ID to automate the process of reconciling each payout with the corresponding line item on the bank statement.
+	public var end_to_end_id: String?
 	/// A unique ID for the payout.
 	public var id: String
 	/// The ID of the location associated with the payout.
@@ -16588,6 +16722,7 @@ public struct Payout: Codable, Equatable {
 	///   - arrival_date: The calendar date, in ISO 8601 format (YYYY-MM-DD), when the payout is due to arrive in the seller’s banking destination.
 	///   - created_at: The timestamp of when the payout was created and submitted for deposit to the seller's banking destination, in RFC 3339 format.
 	///   - destination: Information about the banking destination (such as a bank account, Square checking account, or debit card) against which the payout was made.
+	///   - end_to_end_id: A unique ID for each `Payout` object that might also appear on the seller’s bank statement. You can use this ID to automate the process of reconciling each payout with the corresponding line item on the bank statement.
 	///   - id: A unique ID for the payout.
 	///   - location_id: The ID of the location associated with the payout.
 	///   - payout_fee: A list of transfer fees and any taxes on the fees assessed by Square for this payout.
@@ -16595,13 +16730,14 @@ public struct Payout: Codable, Equatable {
 	///   - type: Indicates the payout type.
 	///   - updated_at: The timestamp of when the payout was last updated, in RFC 3339 format.
 	///   - version: The version number, which is incremented each time an update is made to this payout record. The version number helps developers receive event notifications or feeds out of order.
-	public init(id: String, location_id: String, amount_money: Money? = nil, arrival_date: String? = nil, created_at: Timestamp? = nil, destination: Destination? = nil, payout_fee: [PayoutFee]? = nil, status: String? = nil, type: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(id: String, location_id: String, amount_money: Money? = nil, arrival_date: String? = nil, created_at: Timestamp? = nil, destination: Destination? = nil, end_to_end_id: String? = nil, payout_fee: [PayoutFee]? = nil, status: String? = nil, type: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.id = id
 		self.location_id = location_id
 		self.amount_money = amount_money
 		self.arrival_date = arrival_date
 		self.created_at = created_at
 		self.destination = destination
+		self.end_to_end_id = end_to_end_id
 		self.payout_fee = payout_fee
 		self.status = status
 		self.type = type
@@ -16782,6 +16918,48 @@ public enum PayoutType: String, Codable {
 	case SIMPLE
 }
 
+/// Represents a phase, which can override subscription phases as defined by plan_id
+public struct Phase: Codable, Equatable {
+	/// id of order to be used in billing
+	public var order_template_id: String?
+	/// index of phase in total subscription plan
+	public var ordinal: Int?
+	/// the uid from the plan's phase in catalog
+	public var plan_phase_uid: String?
+	/// id of subscription phase
+	public var uid: String?
+
+	/// Represents a phase, which can override subscription phases as defined by plan_id
+	/// - Parameters:
+	///   - order_template_id: id of order to be used in billing
+	///   - ordinal: index of phase in total subscription plan
+	///   - plan_phase_uid: the uid from the plan's phase in catalog
+	///   - uid: id of subscription phase
+	public init(order_template_id: String? = nil, ordinal: Int? = nil, plan_phase_uid: String? = nil, uid: String? = nil) {
+		self.order_template_id = order_template_id
+		self.ordinal = ordinal
+		self.plan_phase_uid = plan_phase_uid
+		self.uid = uid
+	}
+}
+
+/// Represents the arguments used to construct a new phase.
+public struct PhaseInput: Codable, Equatable {
+	/// id of order to be used in billing
+	public var order_template_id: String?
+	/// index of phase in total subscription plan
+	public var ordinal: Int
+
+	/// Represents the arguments used to construct a new phase.
+	/// - Parameters:
+	///   - order_template_id: id of order to be used in billing
+	///   - ordinal: index of phase in total subscription plan
+	public init(ordinal: Int, order_template_id: String? = nil) {
+		self.ordinal = ordinal
+		self.order_template_id = order_template_id
+	}
+}
+
 /// Describes buyer data to prepopulate in the payment form. For more information, see [Optional Checkout Configurations](https://developer.squareup.com/docs/checkout-api/optional-checkout-configurations).
 public struct PrePopulatedData: Codable, Equatable {
 	/// The buyer address to prepopulate in the payment form.
@@ -16884,6 +17062,27 @@ public struct PublishInvoiceResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, invoice: Invoice? = nil) {
 		self.errors = errors
 		self.invoice = invoice
+	}
+}
+
+/// Fields to describe the action that displays QR-Codes.
+public struct QrCodeOptions: Codable, Equatable {
+	/// The text representation of the data to show in the QR code as UTF8-encoded data.
+	public var barcode_contents: String
+	/// The body text to display in the QR code flow on the Terminal.
+	public var body: String
+	/// The title text to display in the QR code flow on the Terminal.
+	public var title: String
+
+	/// Fields to describe the action that displays QR-Codes.
+	/// - Parameters:
+	///   - barcode_contents: The text representation of the data to show in the QR code as UTF8-encoded data.
+	///   - body: The body text to display in the QR code flow on the Terminal.
+	///   - title: The title text to display in the QR code flow on the Terminal.
+	public init(barcode_contents: String, body: String, title: String) {
+		self.barcode_contents = barcode_contents
+		self.body = body
+		self.title = title
 	}
 }
 
@@ -18317,24 +18516,24 @@ public struct RetrieveTokenStatusRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint
+/// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint.
 public struct RetrieveTokenStatusResponse: Codable, Equatable {
 	/// The Square-issued application ID associated with the access token. This is the same application ID used to obtain the token.
 	public var client_id: String?
 	///  Any errors that occurred during the request.
 	public var errors: [SquareError]?
-	/// The date and time when the `access_token` expires, in RFC 3339 format. Empty if token never expires.
+	/// The date and time when the `access_token` expires, in RFC 3339 format. Empty if the token never expires.
 	public var expires_at: Timestamp?
 	/// The ID of the authorizing merchant's business.
 	public var merchant_id: String?
 	/// The list of scopes associated with an access token.
 	public var scopes: [String]?
 
-	/// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint
+	/// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint.
 	/// - Parameters:
 	///   - client_id: The Square-issued application ID associated with the access token. This is the same application ID used to obtain the token.
 	///   - errors:  Any errors that occurred during the request.
-	///   - expires_at: The date and time when the `access_token` expires, in RFC 3339 format. Empty if token never expires.
+	///   - expires_at: The date and time when the `access_token` expires, in RFC 3339 format. Empty if the token never expires.
 	///   - merchant_id: The ID of the authorizing merchant's business.
 	///   - scopes: The list of scopes associated with an access token.
 	public init(client_id: String? = nil, errors: [SquareError]? = nil, expires_at: Timestamp? = nil, merchant_id: String? = nil, scopes: [String]? = nil) {
@@ -18447,7 +18646,7 @@ public struct RetrieveWebhookSubscriptionResponse: Codable, Equatable {
 public struct RevokeTokenRequest: Codable, Equatable {
 	/// The access token of the merchant whose token you want to revoke. Do not provide a value for `merchant_id` if you provide this parameter.
 	public var access_token: String?
-	/// The Square-issued ID for your application, which is available in the OAuth page in the [Developer Dashboard](https://developer.squareup.com/apps).
+	/// The Square-issued ID for your application, which is available on the **OAuth** page in the [Developer Dashboard](https://developer.squareup.com/apps).
 	public var client_id: String?
 	/// The ID of the merchant whose token you want to revoke. Do not provide a value for `access_token` if you provide this parameter.
 	public var merchant_id: String?
@@ -19235,7 +19434,7 @@ public struct SearchSubscriptionsQuery: Codable, Equatable {
 
 /// Defines input parameters in a request to the  [SearchSubscriptions](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/search-subscriptions) endpoint.
 public struct SearchSubscriptionsRequest: Codable, Equatable {
-	/// When the total number of resulting subscriptions exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	/// When the total number of resulting subscriptions exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// An option to include related information in the response.   The supported values are:   - `actions`: to include scheduled actions on the targeted subscriptions.
 	public var include: [String]?
@@ -19246,7 +19445,7 @@ public struct SearchSubscriptionsRequest: Codable, Equatable {
 
 	/// Defines input parameters in a request to the  [SearchSubscriptions](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/search-subscriptions) endpoint.
 	/// - Parameters:
-	///   - cursor: When the total number of resulting subscriptions exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	///   - cursor: When the total number of resulting subscriptions exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - include: An option to include related information in the response.   The supported values are:   - `actions`: to include scheduled actions on the targeted subscriptions.
 	///   - limit: The upper limit on the number of subscriptions to return in a paged response.
 	///   - query: A subscription query consisting of specified filtering conditions.  If this `query` field is unspecified, the `SearchSubscriptions` call will return all subscriptions.
@@ -19260,7 +19459,7 @@ public struct SearchSubscriptionsRequest: Codable, Equatable {
 
 /// Defines output parameters in a response from the [SearchSubscriptions](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/search-subscriptions) endpoint.
 public struct SearchSubscriptionsResponse: Codable, Equatable {
-	/// When the total number of resulting subscription exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	/// When the total number of resulting subscription exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
@@ -19269,7 +19468,7 @@ public struct SearchSubscriptionsResponse: Codable, Equatable {
 
 	/// Defines output parameters in a response from the [SearchSubscriptions](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/search-subscriptions) endpoint.
 	/// - Parameters:
-	///   - cursor: When the total number of resulting subscription exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
+	///   - cursor: When the total number of resulting subscription exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Errors encountered during the request.
 	///   - subscriptions: The subscriptions matching the specified query expressions.
 	public init(cursor: String? = nil, errors: [SquareError]? = nil, subscriptions: [Subscription]? = nil) {
@@ -19546,6 +19745,36 @@ public struct SegmentFilter: Codable, Equatable {
 	}
 }
 
+public struct SelectOption: Codable, Equatable {
+	/// The reference id for the option.
+	public var reference_id: String
+	/// The title text that displays in the select option button.
+	public var title: String
+
+	public init(reference_id: String, title: String) {
+		self.reference_id = reference_id
+		self.title = title
+	}
+}
+
+public struct SelectOptions: Codable, Equatable {
+	/// The body text to display in the select flow on the Terminal.
+	public var body: String
+	/// Represents the buttons/options that should be displayed in the select flow on the Terminal.
+	public var options: [SelectOption]
+	/// The buyer’s selected option.
+	public let selected_option: SelectOption?
+	/// The title text to display in the select flow on the Terminal.
+	public var title: String
+
+	public init(body: String, options: [SelectOption], title: String, selected_option: SelectOption? = nil) {
+		self.body = body
+		self.options = options
+		self.title = title
+		self.selected_option = selected_option
+	}
+}
+
 /// A record of the hourly rate, start, and end times for a single work shift for an employee. This might include a record of the start and end times for breaks taken during the shift.
 public struct Shift: Codable, Equatable {
 	/// A list of all the paid or unpaid breaks that were taken during this shift.
@@ -19710,15 +19939,19 @@ public enum ShiftStatus: String, Codable {
 public struct ShiftWage: Codable, Equatable {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
 	public var hourly_rate: Money?
-	/// The name of the job performed during this shift. Square labor-reporting UIs might group shifts together by title.
+	/// The id of the job performed during this shift. Square labor-reporting UIs might group shifts together by id. This cannot be used to retrieve the job.
+	public let job_id: String?
+	/// The name of the job performed during this shift.
 	public var title: String?
 
 	/// The hourly wage rate used to compensate an employee for this shift.
 	/// - Parameters:
 	///   - hourly_rate: Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
-	///   - title: The name of the job performed during this shift. Square labor-reporting UIs might group shifts together by title.
-	public init(hourly_rate: Money? = nil, title: String? = nil) {
+	///   - job_id: The id of the job performed during this shift. Square labor-reporting UIs might group shifts together by id. This cannot be used to retrieve the job.
+	///   - title: The name of the job performed during this shift.
+	public init(hourly_rate: Money? = nil, job_id: String? = nil, title: String? = nil) {
 		self.hourly_rate = hourly_rate
+		self.job_id = job_id
 		self.title = title
 	}
 }
@@ -19763,6 +19996,33 @@ public struct ShippingFee: Codable, Equatable {
 	public init(charge: Money, name: String? = nil) {
 		self.charge = charge
 		self.name = name
+	}
+}
+
+public struct SignatureImage: Codable, Equatable {
+	/// The base64 representation of the image.
+	public let data: String?
+	/// The mime/type of the image data. Use `image/png;base64` for png.
+	public let image_type: String?
+
+	public init(data: String? = nil, image_type: String? = nil) {
+		self.data = data
+		self.image_type = image_type
+	}
+}
+
+public struct SignatureOptions: Codable, Equatable {
+	/// The body text to display in the signature capture flow on the Terminal.
+	public var body: String
+	/// An image representation of the collected signature.
+	public let signature: [SignatureImage]?
+	/// The title text to display in the signature capture flow on the Terminal.
+	public var title: String
+
+	public init(body: String, title: String, signature: [SignatureImage]? = nil) {
+		self.body = body
+		self.title = title
+		self.signature = signature
 	}
 }
 
@@ -19932,7 +20192,7 @@ public struct SubmitEvidenceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a subscription to a subscription plan by a subscriber.  For an overview of the `Subscription` type, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object-overview).
+/// Represents a subscription purchased by a customer.  For more information, see [Manage Subscriptions](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions).
 public struct Subscription: Codable, Equatable {
 	/// The list of scheduled actions on this subscription. It is set only in the response from   [RetrieveSubscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/retrieve-subscription) with the query parameter of `include=actions` or from  [SearchSubscriptions](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/search-subscriptions) with the input parameter  of `include:["actions"]`.
 	public var actions: [SubscriptionAction]?
@@ -19952,8 +20212,10 @@ public struct Subscription: Codable, Equatable {
 	public let invoice_ids: [String]?
 	/// The ID of the location associated with the subscription.
 	public let location_id: String?
-	/// The ID of the subscribed-to [subscription plan](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlan).
-	public let plan_id: String?
+	/// array of phases for this subscription
+	public let phases: [Phase]?
+	/// The ID of the subscribed-to [subscription plan variation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlanVariation).
+	public let plan_variation_id: String?
 	/// A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	public var price_override_money: Money?
 	/// The origination details of the subscription.
@@ -19969,7 +20231,7 @@ public struct Subscription: Codable, Equatable {
 	/// The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
 	public var version: Int?
 
-	/// Represents a subscription to a subscription plan by a subscriber.  For an overview of the `Subscription` type, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/overview#subscription-object-overview).
+	/// Represents a subscription purchased by a customer.  For more information, see [Manage Subscriptions](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions).
 	/// - Parameters:
 	///   - actions: The list of scheduled actions on this subscription. It is set only in the response from   [RetrieveSubscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/retrieve-subscription) with the query parameter of `include=actions` or from  [SearchSubscriptions](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/search-subscriptions) with the input parameter  of `include:["actions"]`.
 	///   - canceled_date: The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,  when the subscription status changes to `CANCELED` and the subscription billing stops.  If this field is not set, the subscription ends according its subscription plan.  This field cannot be updated, other than being cleared.
@@ -19980,7 +20242,8 @@ public struct Subscription: Codable, Equatable {
 	///   - id: The Square-assigned ID of the subscription.
 	///   - invoice_ids: The IDs of the [invoices](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) created for the subscription, listed in order when the invoices were created (newest invoices appear first).
 	///   - location_id: The ID of the location associated with the subscription.
-	///   - plan_id: The ID of the subscribed-to [subscription plan](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlan).
+	///   - phases: array of phases for this subscription
+	///   - plan_variation_id: The ID of the subscribed-to [subscription plan variation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlanVariation).
 	///   - price_override_money: A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
 	///   - source: The origination details of the subscription.
 	///   - start_date: The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to start the subscription.
@@ -19988,7 +20251,7 @@ public struct Subscription: Codable, Equatable {
 	///   - tax_percentage: The tax amount applied when billing the subscription. The percentage is expressed in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. For example, a value of `7.5` corresponds to 7.5%.
 	///   - timezone: Timezone that will be used in date calculations for the subscription. Defaults to the timezone of the location based on `location_id`. Format: the IANA Timezone Database identifier for the location timezone (for example, `America/Los_Angeles`).
 	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
-	public init(actions: [SubscriptionAction]? = nil, canceled_date: String? = nil, card_id: String? = nil, charged_through_date: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, plan_id: String? = nil, price_override_money: Money? = nil, source: SubscriptionSource? = nil, start_date: String? = nil, status: String? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
+	public init(actions: [SubscriptionAction]? = nil, canceled_date: String? = nil, card_id: String? = nil, charged_through_date: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, phases: [Phase]? = nil, plan_variation_id: String? = nil, price_override_money: Money? = nil, source: SubscriptionSource? = nil, start_date: String? = nil, status: String? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
 		self.actions = actions
 		self.canceled_date = canceled_date
 		self.card_id = card_id
@@ -19998,7 +20261,8 @@ public struct Subscription: Codable, Equatable {
 		self.id = id
 		self.invoice_ids = invoice_ids
 		self.location_id = location_id
-		self.plan_id = plan_id
+		self.phases = phases
+		self.plan_variation_id = plan_variation_id
 		self.price_override_money = price_override_money
 		self.source = source
 		self.start_date = start_date
@@ -20015,8 +20279,10 @@ public struct SubscriptionAction: Codable, Equatable {
 	public var effective_date: String?
 	/// The ID of an action scoped to a subscription.
 	public var id: String?
-	/// The target subscription plan a subscription switches to, for a `SWAP_PLAN` action.
-	public var new_plan_id: String?
+	/// The target subscription plan variation that a subscription switches to, for a `SWAP_PLAN` action.
+	public var new_plan_variation_id: String?
+	/// A list of Phases, to pass phase-specific information used in the swap.
+	public var phases: [Phase]?
 	/// The type of the action.
 	public var type: String?
 
@@ -20024,12 +20290,14 @@ public struct SubscriptionAction: Codable, Equatable {
 	/// - Parameters:
 	///   - effective_date: The `YYYY-MM-DD`-formatted date when the action occurs on the subscription.
 	///   - id: The ID of an action scoped to a subscription.
-	///   - new_plan_id: The target subscription plan a subscription switches to, for a `SWAP_PLAN` action.
+	///   - new_plan_variation_id: The target subscription plan variation that a subscription switches to, for a `SWAP_PLAN` action.
+	///   - phases: A list of Phases, to pass phase-specific information used in the swap.
 	///   - type: The type of the action.
-	public init(effective_date: String? = nil, id: String? = nil, new_plan_id: String? = nil, type: String? = nil) {
+	public init(effective_date: String? = nil, id: String? = nil, new_plan_variation_id: String? = nil, phases: [Phase]? = nil, type: String? = nil) {
 		self.effective_date = effective_date
 		self.id = id
-		self.new_plan_id = new_plan_id
+		self.new_plan_variation_id = new_plan_variation_id
+		self.phases = phases
 		self.type = type
 	}
 }
@@ -20084,8 +20352,10 @@ public struct SubscriptionEvent: Codable, Equatable {
 	public var id: String
 	/// Additional information about the subscription event.
 	public var info: SubscriptionEventInfo?
-	/// The ID of the subscription plan associated with the subscription.
-	public var plan_id: String
+	/// A list of Phases, to pass phase-specific information used in the swap.
+	public var phases: [Phase]?
+	/// The ID of the subscription plan variation associated with the subscription.
+	public var plan_variation_id: String
 	/// Type of the subscription event.
 	public var subscription_event_type: String
 
@@ -20094,14 +20364,16 @@ public struct SubscriptionEvent: Codable, Equatable {
 	///   - effective_date: The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) when the subscription event occurred.
 	///   - id: The ID of the subscription event.
 	///   - info: Additional information about the subscription event.
-	///   - plan_id: The ID of the subscription plan associated with the subscription.
+	///   - phases: A list of Phases, to pass phase-specific information used in the swap.
+	///   - plan_variation_id: The ID of the subscription plan variation associated with the subscription.
 	///   - subscription_event_type: Type of the subscription event.
-	public init(effective_date: String, id: String, plan_id: String, subscription_event_type: String, info: SubscriptionEventInfo? = nil) {
+	public init(effective_date: String, id: String, plan_variation_id: String, subscription_event_type: String, info: SubscriptionEventInfo? = nil, phases: [Phase]? = nil) {
 		self.effective_date = effective_date
 		self.id = id
-		self.plan_id = plan_id
+		self.plan_variation_id = plan_variation_id
 		self.subscription_event_type = subscription_event_type
 		self.info = info
+		self.phases = phases
 	}
 }
 
@@ -20154,7 +20426,7 @@ public enum SubscriptionEventSubscriptionEventType: String, Codable {
 	case PAUSE_SUBSCRIPTION
 }
 
-/// Describes a phase in a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
+/// Describes a phase in a subscription plan variation. For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
 public struct SubscriptionPhase: Codable, Equatable {
 	/// The billing cadence of the phase. For example, weekly or monthly. This field cannot be changed after a `SubscriptionPhase` is created.
 	public var cadence: String
@@ -20162,31 +20434,64 @@ public struct SubscriptionPhase: Codable, Equatable {
 	public var ordinal: Int?
 	/// The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can be indefinite. This field cannot be changed after a `SubscriptionPhase` is created.
 	public var periods: Int?
+	/// The subscription pricing.
+	public var pricing: SubscriptionPricing?
 	/// The amount to bill for each `cadence`. Failure to specify this field results in a `MISSING_REQUIRED_PARAMETER` error at runtime.
 	public var recurring_price_money: Money?
 	/// The Square-assigned ID of the subscription phase. This field cannot be changed after a `SubscriptionPhase` is created.
 	public var uid: String?
 
-	/// Describes a phase in a subscription plan. For more information, see [Set Up and Manage a Subscription Plan](https://developer.squareup.com/docs/subscriptions-api/setup-plan).
+	/// Describes a phase in a subscription plan variation. For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
 	/// - Parameters:
 	///   - cadence: The billing cadence of the phase. For example, weekly or monthly. This field cannot be changed after a `SubscriptionPhase` is created.
 	///   - ordinal: The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This field cannot be changed after a `SubscriptionPhase` is created.
 	///   - periods: The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can be indefinite. This field cannot be changed after a `SubscriptionPhase` is created.
+	///   - pricing: The subscription pricing.
 	///   - recurring_price_money: The amount to bill for each `cadence`. Failure to specify this field results in a `MISSING_REQUIRED_PARAMETER` error at runtime.
 	///   - uid: The Square-assigned ID of the subscription phase. This field cannot be changed after a `SubscriptionPhase` is created.
-	public init(cadence: String, ordinal: Int? = nil, periods: Int? = nil, recurring_price_money: Money? = nil, uid: String? = nil) {
+	public init(cadence: String, ordinal: Int? = nil, periods: Int? = nil, pricing: SubscriptionPricing? = nil, recurring_price_money: Money? = nil, uid: String? = nil) {
 		self.cadence = cadence
 		self.ordinal = ordinal
 		self.periods = periods
+		self.pricing = pricing
 		self.recurring_price_money = recurring_price_money
 		self.uid = uid
 	}
 }
 
+/// Describes the pricing for the subscription.
+public struct SubscriptionPricing: Codable, Equatable {
+	/// The ids of the discount catalog objects
+	public var discount_ids: [String]?
+	/// The price of the subscription, if STATIC
+	public var price_money: Money?
+	/// RELATIVE or STATIC
+	public var type: String?
+
+	/// Describes the pricing for the subscription.
+	/// - Parameters:
+	///   - discount_ids: The ids of the discount catalog objects
+	///   - price_money: The price of the subscription, if STATIC
+	///   - type: RELATIVE or STATIC
+	public init(discount_ids: [String]? = nil, price_money: Money? = nil, type: String? = nil) {
+		self.discount_ids = discount_ids
+		self.price_money = price_money
+		self.type = type
+	}
+}
+
+/// Determines the pricing of a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription)
+public enum SubscriptionPricingType: String, Codable {
+	/// Static pricing
+	case STATIC
+	/// Relative pricing
+	case RELATIVE
+}
+
 /// The origination details of the subscription.
 public struct SubscriptionSource: Codable, Equatable {
 	/// The name used to identify the place (physical or digital) that a subscription originates. If unset, the name defaults to the name of the application that created the subscription.
-	public let name: String?
+	public var name: String?
 
 	/// The origination details of the subscription.
 	/// - Parameters:
@@ -20239,12 +20544,21 @@ public struct SubscriptionTestResult: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a call to the  [SwapPlan](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/swap-plan) endpoint.
+/// Defines input parameters in a call to the [SwapPlan](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/swap-plan) endpoint.
 public struct SwapPlanRequest: Codable, Equatable {
-	/// The ID of the new subscription plan.
-	public let new_plan_id: String
+	/// The ID of the new subscription plan variation.  This field is required.
+	public var new_plan_variation_id: String?
+	/// A list of PhaseInputs, to pass phase-specific information used in the swap.
+	public var phases: [PhaseInput]?
 
-	// no init-- this struct is read-only
+	/// Defines input parameters in a call to the [SwapPlan](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/swap-plan) endpoint.
+	/// - Parameters:
+	///   - new_plan_variation_id: The ID of the new subscription plan variation.  This field is required.
+	///   - phases: A list of PhaseInputs, to pass phase-specific information used in the swap.
+	public init(new_plan_variation_id: String? = nil, phases: [PhaseInput]? = nil) {
+		self.new_plan_variation_id = new_plan_variation_id
+		self.phases = phases
+	}
 }
 
 /// Defines output parameters in a response of the  [SwapPlan](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/swap-plan) endpoint.
@@ -20440,6 +20754,8 @@ public struct TeamMemberWage: Codable, Equatable {
 	public var hourly_rate: Money?
 	/// The UUID for this object.
 	public var id: String?
+	/// An identifier for the job that this wage relates to. This cannot be used to retrieve the job.
+	public var job_id: String?
 	/// The `TeamMember` that this wage is assigned to.
 	public var team_member_id: String?
 	/// The job title that this wage relates to.
@@ -20449,11 +20765,13 @@ public struct TeamMemberWage: Codable, Equatable {
 	/// - Parameters:
 	///   - hourly_rate: Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
 	///   - id: The UUID for this object.
+	///   - job_id: An identifier for the job that this wage relates to. This cannot be used to retrieve the job.
 	///   - team_member_id: The `TeamMember` that this wage is assigned to.
 	///   - title: The job title that this wage relates to.
-	public init(hourly_rate: Money? = nil, id: String? = nil, team_member_id: String? = nil, title: String? = nil) {
+	public init(hourly_rate: Money? = nil, id: String? = nil, job_id: String? = nil, team_member_id: String? = nil, title: String? = nil) {
 		self.hourly_rate = hourly_rate
 		self.id = id
+		self.job_id = job_id
 		self.team_member_id = team_member_id
 		self.title = title
 	}
@@ -20610,10 +20928,18 @@ public enum TenderType: String, Codable {
 public struct TerminalAction: Codable, Equatable {
 	/// The ID of the application that created the action.
 	public let app_id: String?
+	/// Indicates the action will be linked to another action and requires a waiting dialog to be displayed instead of returning to the idle screen on completion of the action.  Only supported on SIGNATURE, CONFIRMATION, DATA_COLLECTION, and SELECT types.
+	public var await_next_action: Bool?
+	/// The timeout duration of the waiting dialog as an RFC 3339 duration, after which the waiting dialog will no longer be displayed and the Terminal will return to the idle screen.  Default: 5 minutes from when the waiting dialog is displayed  Maximum: 5 minutes
+	public var await_next_action_duration: Timestamp?
 	/// The reason why `TerminalAction` is canceled. Present if the status is `CANCELED`.
 	public let cancel_reason: String?
+	/// Describes configuration for the confirmation action. Requires `CONFIRMATION` type.
+	public var confirmation_options: ConfirmationOptions?
 	/// The time when the `TerminalAction` was created as an RFC 3339 timestamp.
 	public let created_at: Timestamp?
+	/// Describes configuration for the data collection action. Requires `DATA_COLLECTION` type.
+	public var data_collection_options: DataCollectionOptions?
 	/// The duration as an RFC 3339 duration, after which the action will be automatically canceled. TerminalActions that are `PENDING` will be automatically `CANCELED` and have a cancellation reason of `TIMED_OUT`  Default: 5 minutes from creation  Maximum: 5 minutes
 	public var deadline_duration: Timestamp?
 	/// The unique Id of the device intended for this `TerminalAction`. The Id can be retrieved from /v2/devices api.
@@ -20622,10 +20948,16 @@ public struct TerminalAction: Codable, Equatable {
 	public let device_metadata: DeviceMetadata?
 	/// A unique ID for this `TerminalAction`.
 	public let id: String?
+	/// Describes configuration for the QR code action. Requires `QR_CODE` type.
+	public var qr_code_options: QrCodeOptions?
 	/// Describes configuration for the receipt action. Requires `RECEIPT` type.
 	public var receipt_options: ReceiptOptions?
 	/// Describes configuration for the save-card action. Requires `SAVE_CARD` type.
 	public var save_card_options: SaveCardOptions?
+	/// Describes configuration for the select action. Requires `SELECT` type.
+	public var select_options: SelectOptions?
+	/// Describes configuration for the signature capture action. Requires `SIGNATURE` type.
+	public var signature_options: SignatureOptions?
 	/// The status of the `TerminalAction`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	public let status: String?
 	/// Represents the type of the action.
@@ -20636,27 +20968,41 @@ public struct TerminalAction: Codable, Equatable {
 	/// Represents an action processed by the Square Terminal.
 	/// - Parameters:
 	///   - app_id: The ID of the application that created the action.
+	///   - await_next_action: Indicates the action will be linked to another action and requires a waiting dialog to be displayed instead of returning to the idle screen on completion of the action.  Only supported on SIGNATURE, CONFIRMATION, DATA_COLLECTION, and SELECT types.
+	///   - await_next_action_duration: The timeout duration of the waiting dialog as an RFC 3339 duration, after which the waiting dialog will no longer be displayed and the Terminal will return to the idle screen.  Default: 5 minutes from when the waiting dialog is displayed  Maximum: 5 minutes
 	///   - cancel_reason: The reason why `TerminalAction` is canceled. Present if the status is `CANCELED`.
+	///   - confirmation_options: Describes configuration for the confirmation action. Requires `CONFIRMATION` type.
 	///   - created_at: The time when the `TerminalAction` was created as an RFC 3339 timestamp.
+	///   - data_collection_options: Describes configuration for the data collection action. Requires `DATA_COLLECTION` type.
 	///   - deadline_duration: The duration as an RFC 3339 duration, after which the action will be automatically canceled. TerminalActions that are `PENDING` will be automatically `CANCELED` and have a cancellation reason of `TIMED_OUT`  Default: 5 minutes from creation  Maximum: 5 minutes
 	///   - device_id: The unique Id of the device intended for this `TerminalAction`. The Id can be retrieved from /v2/devices api.
 	///   - device_metadata: Details about the Terminal that received the action request (such as battery level, operating system version, and network connection settings).  Only available for `PING` action type.
 	///   - id: A unique ID for this `TerminalAction`.
+	///   - qr_code_options: Describes configuration for the QR code action. Requires `QR_CODE` type.
 	///   - receipt_options: Describes configuration for the receipt action. Requires `RECEIPT` type.
 	///   - save_card_options: Describes configuration for the save-card action. Requires `SAVE_CARD` type.
+	///   - select_options: Describes configuration for the select action. Requires `SELECT` type.
+	///   - signature_options: Describes configuration for the signature capture action. Requires `SIGNATURE` type.
 	///   - status: The status of the `TerminalAction`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	///   - type: Represents the type of the action.
 	///   - updated_at: The time when the `TerminalAction` was last updated as an RFC 3339 timestamp.
-	public init(app_id: String? = nil, cancel_reason: String? = nil, created_at: Timestamp? = nil, deadline_duration: Timestamp? = nil, device_id: String? = nil, device_metadata: DeviceMetadata? = nil, id: String? = nil, receipt_options: ReceiptOptions? = nil, save_card_options: SaveCardOptions? = nil, status: String? = nil, type: TerminalActionActionType? = nil, updated_at: Timestamp? = nil) {
+	public init(app_id: String? = nil, await_next_action: Bool? = nil, await_next_action_duration: Timestamp? = nil, cancel_reason: String? = nil, confirmation_options: ConfirmationOptions? = nil, created_at: Timestamp? = nil, data_collection_options: DataCollectionOptions? = nil, deadline_duration: Timestamp? = nil, device_id: String? = nil, device_metadata: DeviceMetadata? = nil, id: String? = nil, qr_code_options: QrCodeOptions? = nil, receipt_options: ReceiptOptions? = nil, save_card_options: SaveCardOptions? = nil, select_options: SelectOptions? = nil, signature_options: SignatureOptions? = nil, status: String? = nil, type: TerminalActionActionType? = nil, updated_at: Timestamp? = nil) {
 		self.app_id = app_id
+		self.await_next_action = await_next_action
+		self.await_next_action_duration = await_next_action_duration
 		self.cancel_reason = cancel_reason
+		self.confirmation_options = confirmation_options
 		self.created_at = created_at
+		self.data_collection_options = data_collection_options
 		self.deadline_duration = deadline_duration
 		self.device_id = device_id
 		self.device_metadata = device_metadata
 		self.id = id
+		self.qr_code_options = qr_code_options
 		self.receipt_options = receipt_options
 		self.save_card_options = save_card_options
+		self.select_options = select_options
+		self.signature_options = signature_options
 		self.status = status
 		self.type = type
 		self.updated_at = updated_at
@@ -20665,12 +21011,22 @@ public struct TerminalAction: Codable, Equatable {
 
 /// Describes the type of this unit and indicates which field contains the unit information. This is an ‘open’ enum.
 public enum TerminalActionActionType: String, Codable {
+	/// The action represents a request to display a QR code. Details are contained in the `qr_code_options` object.
+	case QR_CODE
 	/// The action represents a request to check if the specific device is online or currently active with the merchant in question. Does not require an action options value.
 	case PING
 	/// Represents a request to save a card for future card-on-file use. Details are contained in the `save_card_options` object.
 	case SAVE_CARD
+	/// The action represents a request to capture a buyer's signature. Details are contained in the `signature_options` object.
+	case SIGNATURE
+	/// The action represents a request to collect a buyer's confirmation decision to the displayed terms. Details are contained in the `confirmation_options` object.
+	case CONFIRMATION
 	/// The action represents a request to display the receipt screen options. Details are contained in the `receipt_options` object.
 	case RECEIPT
+	/// The action represents a request to collect a buyer's text data. Details are contained in the `data_collection_options` object.
+	case DATA_COLLECTION
+	/// The action represents a request to allow the buyer to select from provided options. Details are contained in the `select_options` object.
+	case SELECT
 }
 
 public struct TerminalActionQuery: Codable, Equatable {
