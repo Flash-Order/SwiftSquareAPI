@@ -14400,6 +14400,10 @@ public struct ObtainTokenResponse: Codable, Equatable {
 
 /// Contains all information related to a single order to process with Square, including line items that specify the products to purchase. `Order` objects also include information about any associated tenders, refunds, and returns.  All Connect V2 Transactions have all been converted to Orders including all associated itemization data.
 public struct Order: Codable, Equatable {
+	
+	// (Alpha)
+	public var dining_option: DiningOption?
+	
 	/// The timestamp for when the order reached a terminal [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/enums/OrderState), in RFC 3339 format (for example "2016-09-04T23:59:33.123Z").
 	public let closed_at: Timestamp?
 	/// The timestamp for when the order was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -15058,6 +15062,10 @@ public struct OrderFulfillmentUpdatedUpdate: Codable, Equatable {
 
 /// Represents a line item in an order. Each line item describes a different product to purchase, with its own quantity and price details.
 public struct OrderLineItem: Codable, Equatable {
+	
+	// (Alpha)
+	public var dining_option: DiningOption?
+	
 	/// The list of references to discounts applied to this line item. Each `OrderLineItemAppliedDiscount` has a `discount_uid` that references the `uid` of a top-level `OrderLineItemDiscounts` applied to the line item. On reads, the amount applied is populated.  An `OrderLineItemAppliedDiscount` is automatically created on every line item for all `ORDER` scoped discounts that are added to the order. `OrderLineItemAppliedDiscount` records for `LINE_ITEM` scoped discounts must be added in requests for the discount to apply to any line items.  To change the amount of a discount, modify the referenced top-level discount.
 	public var applied_discounts: [OrderLineItemAppliedDiscount]?
 	/// The list of references to service charges applied to this line item. Each `OrderLineItemAppliedServiceCharge` has a `service_charge_id` that references the `uid` of a top-level `OrderServiceCharge` applied to the line item. On reads, the amount applied is populated.  To change the amount of a service charge, modify the referenced top-level service charge.
