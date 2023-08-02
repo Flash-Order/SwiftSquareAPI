@@ -9,17 +9,20 @@ public struct ListCustomers: SquareAPIEndpoint {
 		let limit: Int?
 		let sort_field: String?
 		let sort_order: String?
+		let count: Bool?
 		/// Lists customer profiles associated with a Square account.  Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 		/// - Parameters:
 		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - sort_field: Indicates how customers should be sorted.  The default value is `DEFAULT`.
 		///   - sort_order: Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  The default value is `ASC`.
-		public init(cursor: String? = nil, limit: Int? = nil, sort_field: String? = nil, sort_order: String? = nil) {
+		///   - count: Indicates whether to return the total count of customers in the `count` field of the response.  The default value is `false`.
+		public init(cursor: String? = nil, limit: Int? = nil, sort_field: String? = nil, sort_order: String? = nil, count: Bool? = nil) {
 			self.cursor = cursor
 			self.limit = limit
 			self.sort_field = sort_field
 			self.sort_order = sort_order
+			self.count = count
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
@@ -29,6 +32,7 @@ public struct ListCustomers: SquareAPIEndpoint {
 		if let v = inputs.limit { queries.append("limit=\(v)") }
 		if let v = inputs.sort_field { queries.append("sort_field=\(v)") }
 		if let v = inputs.sort_order { queries.append("sort_order=\(v)") }
+		if let v = inputs.count { queries.append("count=\(v)") }
 		if queries.count > 0 {
 			let query = queries.joined(separator: "&")
 			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
