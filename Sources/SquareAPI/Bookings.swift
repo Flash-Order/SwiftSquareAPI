@@ -7,6 +7,7 @@ public struct ListBookings: SquareAPIEndpoint {
 	public struct Params {
 		let limit: Int?
 		let cursor: String?
+		let customer_id: String?
 		let team_member_id: String?
 		let location_id: String?
 		let start_at_min: String?
@@ -15,13 +16,15 @@ public struct ListBookings: SquareAPIEndpoint {
 		/// - Parameters:
 		///   - limit: The maximum number of results per page to return in a paged response.
 		///   - cursor: The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
+		///   - customer_id: The [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) for whom to retrieve bookings. If this is not set, bookings for all customers are retrieved.
 		///   - team_member_id: The team member for whom to retrieve bookings. If this is not set, bookings of all members are retrieved.
 		///   - location_id: The location for which to retrieve bookings. If this is not set, all locations' bookings are retrieved.
 		///   - start_at_min: The RFC 3339 timestamp specifying the earliest of the start time. If this is not set, the current time is used.
 		///   - start_at_max: The RFC 3339 timestamp specifying the latest of the start time. If this is not set, the time of 31 days after `start_at_min` is used.
-		public init(limit: Int? = nil, cursor: String? = nil, team_member_id: String? = nil, location_id: String? = nil, start_at_min: String? = nil, start_at_max: String? = nil) {
+		public init(limit: Int? = nil, cursor: String? = nil, customer_id: String? = nil, team_member_id: String? = nil, location_id: String? = nil, start_at_min: String? = nil, start_at_max: String? = nil) {
 			self.limit = limit
 			self.cursor = cursor
+			self.customer_id = customer_id
 			self.team_member_id = team_member_id
 			self.location_id = location_id
 			self.start_at_min = start_at_min
@@ -33,6 +36,7 @@ public struct ListBookings: SquareAPIEndpoint {
 		var queries = [String]()
 		if let v = inputs.limit { queries.append("limit=\(v)") }
 		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if let v = inputs.customer_id { queries.append("customer_id=\(v)") }
 		if let v = inputs.team_member_id { queries.append("team_member_id=\(v)") }
 		if let v = inputs.location_id { queries.append("location_id=\(v)") }
 		if let v = inputs.start_at_min { queries.append("start_at_min=\(v)") }
@@ -63,6 +67,16 @@ public struct SearchAvailability: SquareAPIEndpoint {
 	public typealias paramType = Empty
 	public static func endpoint(for inputs: Empty) throws -> String {
 		return "/v2/bookings/availability/search"
+	}
+}
+
+/// Bulk-Retrieves a list of bookings by booking IDs.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+public struct BulkRetrieveBookings: SquareAPIEndpoint {
+	public typealias inputType = BulkRetrieveBookingsRequest
+	public typealias outputType = BulkRetrieveBookingsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/bookings/bulk-retrieve"
 	}
 }
 

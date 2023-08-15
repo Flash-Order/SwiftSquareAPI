@@ -9,8 +9,8 @@ public struct ListBookingCustomAttributeDefinitions: SquareAPIEndpoint {
 		let cursor: String?
 		/// Get all bookings custom attribute definitions.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
-		///   - limit: (Beta) The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - cursor: (Beta) The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		public init(limit: Int? = nil, cursor: String? = nil) {
 			self.limit = limit
 			self.cursor = cursor
@@ -51,8 +51,8 @@ public struct RetrieveBookingCustomAttributeDefinition: SquareAPIEndpoint {
 		let version: Int?
 		/// Retrieves a bookings custom attribute definition.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
-		///   - key: (Beta) The key of the custom attribute definition to retrieve. If the requesting application is not the definition owner, you must use the qualified key.
-		///   - version: (Beta) The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+		///   - key: The key of the custom attribute definition to retrieve. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 		public init(key: String, version: Int? = nil) {
 			self.key = key
 			self.version = version
@@ -81,7 +81,7 @@ public struct UpdateBookingCustomAttributeDefinition: SquareAPIEndpoint {
 		let key: String
 		/// Updates a bookings custom attribute definition.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
-		///   - key: (Beta) The key of the custom attribute definition to update.
+		///   - key: The key of the custom attribute definition to update.
 		public init(key: String) {
 			self.key = key
 		}
@@ -102,7 +102,7 @@ public struct DeleteBookingCustomAttributeDefinition: SquareAPIEndpoint {
 		let key: String
 		/// Deletes a bookings custom attribute definition.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
-		///   - key: (Beta) The key of the custom attribute definition to delete.
+		///   - key: The key of the custom attribute definition to delete.
 		public init(key: String) {
 			self.key = key
 		}
@@ -146,10 +146,10 @@ public struct ListBookingCustomAttributes: SquareAPIEndpoint {
 		let with_definitions: Bool?
 		/// Lists a booking's custom attributes.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
-		///   - limit: (Beta) The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - cursor: (Beta) The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - with_definitions: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
+		///   - booking_id: The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
+		///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
 		public init(booking_id: String, limit: Int? = nil, cursor: String? = nil, with_definitions: Bool? = nil) {
 			self.booking_id = booking_id
 			self.limit = limit
@@ -185,10 +185,10 @@ public struct RetrieveBookingCustomAttribute: SquareAPIEndpoint {
 		let version: Int?
 		/// Retrieves a bookings custom attribute.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
-		///   - key: (Beta) The key of the custom attribute to retrieve. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
-		///   - with_definition: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-		///   - version: (Beta) The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+		///   - booking_id: The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
+		///   - key: The key of the custom attribute to retrieve. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
+		///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 		public init(booking_id: String, key: String, with_definition: Bool? = nil, version: Int? = nil) {
 			self.booking_id = booking_id
 			self.key = key
@@ -221,8 +221,8 @@ public struct UpsertBookingCustomAttribute: SquareAPIEndpoint {
 		let key: String
 		/// Upserts a bookings custom attribute.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
-		///   - key: (Beta) The key of the custom attribute to create or update. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - booking_id: The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
+		///   - key: The key of the custom attribute to create or update. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
 		public init(booking_id: String, key: String) {
 			self.booking_id = booking_id
 			self.key = key
@@ -245,8 +245,8 @@ public struct DeleteBookingCustomAttribute: SquareAPIEndpoint {
 		let key: String
 		/// Deletes a bookings custom attribute.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
-		///   - booking_id: (Beta) The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
-		///   - key: (Beta) The key of the custom attribute to delete. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - booking_id: The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
+		///   - key: The key of the custom attribute to delete. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
 		public init(booking_id: String, key: String) {
 			self.booking_id = booking_id
 			self.key = key
