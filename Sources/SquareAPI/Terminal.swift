@@ -68,7 +68,7 @@ public struct DismissTerminalAction: SquareAPIEndpoint {
 		let action_id: String
 		/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
 		/// - Parameters:
-		///   - action_id: (Beta) Unique ID for the `TerminalAction` associated with the waiting dialog to be dismissed.
+		///   - action_id: (Beta) Unique ID for the `TerminalAction` associated with the action to be dismissed.
 		public init(action_id: String) {
 			self.action_id = action_id
 		}
@@ -140,6 +140,26 @@ public struct CancelTerminalCheckout: SquareAPIEndpoint {
 	}
 }
 
+/// Dismisses a Terminal checkout request if the status and type of the request permits it.
+public struct DismissTerminalCheckout: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = DismissTerminalCheckoutResponse
+	public typealias paramType = Params
+	public struct Params {
+		let checkout_id: String
+		/// Dismisses a Terminal checkout request if the status and type of the request permits it.
+		/// - Parameters:
+		///   - checkout_id: (Beta) Unique ID for the `TerminalCheckout` associated with the checkout to be dismissed.
+		public init(checkout_id: String) {
+			self.checkout_id = checkout_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/terminals/checkouts/\(inputs.checkout_id)/dismiss"
+		return url
+	}
+}
+
 /// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_yyyy-mm-dd/refunds-api).
 public struct CreateTerminalRefund: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalRefundRequest
@@ -197,6 +217,26 @@ public struct CancelTerminalRefund: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/terminals/refunds/\(inputs.terminal_refund_id)/cancel"
+		return url
+	}
+}
+
+/// Dismisses a Terminal refund request if the status and type of the request permits it.
+public struct DismissTerminalRefund: SquareAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = DismissTerminalRefundResponse
+	public typealias paramType = Params
+	public struct Params {
+		let terminal_refund_id: String
+		/// Dismisses a Terminal refund request if the status and type of the request permits it.
+		/// - Parameters:
+		///   - terminal_refund_id: (Beta) Unique ID for the `TerminalRefund` associated with the refund to be dismissed.
+		public init(terminal_refund_id: String) {
+			self.terminal_refund_id = terminal_refund_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/terminals/refunds/\(inputs.terminal_refund_id)/dismiss"
 		return url
 	}
 }

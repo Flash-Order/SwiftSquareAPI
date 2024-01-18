@@ -95,15 +95,18 @@ public struct RetrieveCatalogObject: SquareAPIEndpoint {
 		let object_id: String
 		let include_related_objects: Bool?
 		let catalog_version: Int?
+		let include_category_path_to_root: Bool?
 		/// Returns a single [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) as a [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) based on the provided ID. The returned object includes all of the relevant [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) information including: [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) children, references to its [CatalogModifierList](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogModifierList) objects, and the ids of any [CatalogTax](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogTax) objects that apply to it.
 		/// - Parameters:
 		///   - object_id: The object ID of any type of catalog objects to be retrieved.
 		///   - include_related_objects: If `true`, the response will include additional objects that are related to the requested objects. Related objects are defined as any objects referenced by ID by the results in the `objects` field of the response. These objects are put in the `related_objects` field. Setting this to `true` is helpful when the objects are needed for immediate display to a user. This process only goes one level deep. Objects referenced by the related objects will not be included. For example,  if the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.  Default value: `false`
 		///   - catalog_version: (Beta) Requests objects as of a specific version of the catalog. This allows you to retrieve historical versions of objects. The value to retrieve a specific version of an object can be found in the version field of [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s. If not included, results will be from the current version of the catalog.
-		public init(object_id: String, include_related_objects: Bool? = nil, catalog_version: Int? = nil) {
+		///   - include_category_path_to_root: (Beta) Specifies whether or not to include the `path_to_root` list for each returned category instance. The `path_to_root` list consists of `CategoryPathToRootNode` objects and specifies the path that starts with the immediate parent category of the returned category and ends with its root category. If the returned category is a top-level category, the `path_to_root` list is empty and is not returned in the response payload.
+		public init(object_id: String, include_related_objects: Bool? = nil, catalog_version: Int? = nil, include_category_path_to_root: Bool? = nil) {
 			self.object_id = object_id
 			self.include_related_objects = include_related_objects
 			self.catalog_version = catalog_version
+			self.include_category_path_to_root = include_category_path_to_root
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
@@ -111,6 +114,7 @@ public struct RetrieveCatalogObject: SquareAPIEndpoint {
 		var queries = [String]()
 		if let v = inputs.include_related_objects { queries.append("include_related_objects=\(v)") }
 		if let v = inputs.catalog_version { queries.append("catalog_version=\(v)") }
+		if let v = inputs.include_category_path_to_root { queries.append("include_category_path_to_root=\(v)") }
 		if queries.count > 0 {
 			let query = queries.joined(separator: "&")
 			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

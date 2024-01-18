@@ -1,4 +1,4 @@
-/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights). We recommend that you use the new [CreatePaymentLink](https://developer.squareup.com/reference/square_yyyy-mm-dd/checkout-api/create-payment-link)  endpoint in place of this previously released endpoint.
+/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights).
 @available(*,deprecated)
 public struct CreateCheckout: SquareAPIEndpoint {
 	public typealias inputType = CreateCheckoutRequest
@@ -6,7 +6,7 @@ public struct CreateCheckout: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights). We recommend that you use the new [CreatePaymentLink](https://developer.squareup.com/reference/square_yyyy-mm-dd/checkout-api/create-payment-link)  endpoint in place of this previously released endpoint.
+		/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights).
 		/// - Parameters:
 		///   - location_id: The ID of the business location to associate the checkout with.
 		public init(location_id: String) {
@@ -16,6 +16,70 @@ public struct CreateCheckout: SquareAPIEndpoint {
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/locations/\(inputs.location_id)/checkouts"
 		return url
+	}
+}
+
+/// Retrieves the location-level settings for a Square-hosted checkout page.
+public struct RetrieveLocationSettings: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = RetrieveLocationSettingsResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Retrieves the location-level settings for a Square-hosted checkout page.
+		/// - Parameters:
+		///   - location_id: (Beta) The ID of the location for which to retrieve settings.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/online-checkout/location-settings/\(inputs.location_id)"
+		return url
+	}
+}
+
+/// Updates the location-level settings for a Square-hosted checkout page.
+public struct UpdateLocationSettings: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateLocationSettingsRequest
+	public typealias outputType = UpdateLocationSettingsResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Updates the location-level settings for a Square-hosted checkout page.
+		/// - Parameters:
+		///   - location_id: (Beta) The ID of the location for which to retrieve settings.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/online-checkout/location-settings/\(inputs.location_id)"
+		return url
+	}
+}
+
+/// Retrieves the merchant-level settings for a Square-hosted checkout page.
+public struct RetrieveMerchantSettings: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = RetrieveMerchantSettingsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/online-checkout/merchant-settings"
+	}
+}
+
+/// Updates the merchant-level settings for a Square-hosted checkout page.
+public struct UpdateMerchantSettings: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateMerchantSettingsRequest
+	public typealias outputType = UpdateMerchantSettingsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/online-checkout/merchant-settings"
 	}
 }
 

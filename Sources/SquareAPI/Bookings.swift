@@ -91,6 +91,59 @@ public struct RetrieveBusinessBookingProfile: SquareAPIEndpoint {
 	}
 }
 
+/// Lists location booking profiles of a seller.
+public struct ListLocationBookingProfiles: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListLocationBookingProfilesResponse
+	public typealias paramType = Params
+	public struct Params {
+		let limit: Int?
+		let cursor: String?
+		/// Lists location booking profiles of a seller.
+		/// - Parameters:
+		///   - limit: The maximum number of results to return in a paged response.
+		///   - cursor: The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
+		public init(limit: Int? = nil, cursor: String? = nil) {
+			self.limit = limit
+			self.cursor = cursor
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/bookings/location-booking-profiles"
+		var queries = [String]()
+		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.cursor { queries.append("cursor=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
+	}
+}
+
+/// Retrieves a seller's location booking profile.
+public struct RetrieveLocationBookingProfile: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = RetrieveLocationBookingProfileResponse
+	public typealias paramType = Params
+	public struct Params {
+		let location_id: String
+		/// Retrieves a seller's location booking profile.
+		/// - Parameters:
+		///   - location_id: The ID of the location to retrieve the booking profile.
+		public init(location_id: String) {
+			self.location_id = location_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/bookings/location-booking-profiles/\(inputs.location_id)"
+		return url
+	}
+}
+
 /// Lists booking profiles for team members.
 public struct ListTeamMemberBookingProfiles: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -128,6 +181,16 @@ public struct ListTeamMemberBookingProfiles: SquareAPIEndpoint {
 			return url + "?" + (encoded ?? query)
 		}
 		return url
+	}
+}
+
+/// Retrieves one or more team members' booking profiles.
+public struct BulkRetrieveTeamMemberBookingProfiles: SquareAPIEndpoint {
+	public typealias inputType = BulkRetrieveTeamMemberBookingProfilesRequest
+	public typealias outputType = BulkRetrieveTeamMemberBookingProfilesResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/bookings/team-member-booking-profiles/bulk-retrieve"
 	}
 }
 

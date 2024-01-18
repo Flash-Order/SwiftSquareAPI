@@ -127,6 +127,30 @@ public struct DeleteInvoice: SquareAPIEndpoint {
 	}
 }
 
+/// Removes an attachment from an invoice and permanently deletes the file. Attachments can be removed only from invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.
+public struct DeleteInvoiceAttachment: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteInvoiceAttachmentResponse
+	public typealias paramType = Params
+	public struct Params {
+		let invoice_id: String
+		let attachment_id: String
+		/// Removes an attachment from an invoice and permanently deletes the file. Attachments can be removed only from invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.
+		/// - Parameters:
+		///   - invoice_id: The ID of the [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) to delete the attachment from.
+		///   - attachment_id: The ID of the [attachment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InvoiceAttachment) to delete.
+		public init(invoice_id: String, attachment_id: String) {
+			self.invoice_id = invoice_id
+			self.attachment_id = attachment_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/invoices/\(inputs.invoice_id)/attachments/\(inputs.attachment_id)"
+		return url
+	}
+}
+
 /// Cancels an invoice. The seller cannot collect payments for  the canceled invoice.  You cannot cancel an invoice in the `DRAFT` state or in a terminal state: `PAID`, `REFUNDED`, `CANCELED`, or `FAILED`.
 public struct CancelInvoice: SquareAPIEndpoint {
 	public typealias inputType = CancelInvoiceRequest

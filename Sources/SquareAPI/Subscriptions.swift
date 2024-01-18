@@ -8,6 +8,16 @@ public struct CreateSubscription: SquareAPIEndpoint {
 	}
 }
 
+/// Schedules a plan variation change for all active subscriptions under a given plan variation. For more information, see [Swap Subscription Plan Variations](https://developer.squareup.com/docs/subscriptions-api/swap-plan-variations).
+public struct BulkSwapPlan: SquareAPIEndpoint {
+	public typealias inputType = BulkSwapPlanRequest
+	public typealias outputType = BulkSwapPlanResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/subscriptions/bulk-swap-plan"
+	}
+}
+
 /// Searches for subscriptions.  Results are ordered chronologically by subscription creation date. If the request specifies more than one location ID, the endpoint orders the result by location ID, and then by creation date within each location. If no locations are given in the query, all locations are searched.  You can also optionally specify `customer_ids` to search by customer. If left unset, all customers associated with the specified locations are returned. If the request specifies customer IDs, the endpoint orders results first by location, within location by customer ID, and within customer by subscription creation date.
 public struct SearchSubscriptions: SquareAPIEndpoint {
 	public typealias inputType = SearchSubscriptionsRequest
@@ -90,6 +100,26 @@ public struct DeleteSubscriptionAction: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/subscriptions/\(inputs.subscription_id)/actions/\(inputs.action_id)"
+		return url
+	}
+}
+
+/// Changes the [billing anchor date](https://developer.squareup.com/docs/subscriptions-api/subscription-billing#billing-dates) for a subscription.
+public struct ChangeBillingAnchorDate: SquareAPIEndpoint {
+	public typealias inputType = ChangeBillingAnchorDateRequest
+	public typealias outputType = ChangeBillingAnchorDateResponse
+	public typealias paramType = Params
+	public struct Params {
+		let subscription_id: String
+		/// Changes the [billing anchor date](https://developer.squareup.com/docs/subscriptions-api/subscription-billing#billing-dates) for a subscription.
+		/// - Parameters:
+		///   - subscription_id: (Beta) The ID of the subscription to update the billing anchor date.
+		public init(subscription_id: String) {
+			self.subscription_id = subscription_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/subscriptions/\(inputs.subscription_id)/billing-anchor"
 		return url
 	}
 }

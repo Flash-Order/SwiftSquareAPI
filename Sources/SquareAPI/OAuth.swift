@@ -17,10 +17,18 @@ public struct OAuth {
 		case BANK_ACCOUNTS_READ
 		/// __HTTP Method__: `GET`  Grants read access to cash drawer shift information. For example, to call the ListCashDrawerShifts endpoint.
 		case CASH_DRAWER_READ
+		/// __HTTP Method__: `POST`  Grants write access to create channels, for example, when calling the `CreateChannel` endpoint.
+		case CHANNELS_CREATE
+		/// __HTTP Method__: `GET`  Grants read access to view channels, for example, when calling the `RetrieveChannel` endpoint.
+		case CHANNELS_READ
+		/// __HTTP Method__: `PUT`  Grants write access to update channels, for example, when calling the `UpdateChannel` endpoint.
+		case CHANNELS_UPDATE
 		/// __HTTP Method__: `GET`  Grants read access to customer information. For example, to call the ListCustomers endpoint.
 		case CUSTOMERS_READ
 		/// __HTTP Method__: `POST`, `PUT`, `DELETE`  Grants write access to customer information. For example, to create and update customer profiles.
 		case CUSTOMERS_WRITE
+		/// __HTTP Method__: `GET`  Grants read access to device information. For example, to call the `GetDevice` and `ListDevices` endpoints.
+		case DEVICES_READ
 		/// __HTTP Method__: `POST`, `GET`  Grants read/write access to device credentials information. For example, to call the CreateDeviceCode endpoint.
 		case DEVICE_CREDENTIAL_MANAGEMENT
 		/// __HTTP Method__: `GET`  Grants read access to dispute information. For example, to call the RetrieveDispute endpoint.
@@ -126,7 +134,7 @@ public struct RenewToken: SquareAPIEndpoint {
 	}
 }
 
-/// Revokes an access token generated with the OAuth flow.  If an account has more than one OAuth access token for your application, this endpoint revokes all of them, regardless of which token you specify. When an OAuth access token is revoked, all of the active subscriptions associated with that OAuth token are canceled immediately.  __Important:__ The `Authorization` header for this endpoint must have the following format:  ``` Authorization: Client APPLICATION_SECRET ```  Replace `APPLICATION_SECRET` with the application secret on the **OAuth** page for your application in the Developer Dashboard.
+/// Revokes an access token generated with the OAuth flow.  If an account has more than one OAuth access token for your application, this endpoint revokes all of them, regardless of which token you specify.   __Important:__ The `Authorization` header for this endpoint must have the following format:  ``` Authorization: Client APPLICATION_SECRET ```  Replace `APPLICATION_SECRET` with the application secret on the **OAuth** page for your application in the Developer Dashboard.
 public struct RevokeToken: SquareAPIEndpoint {
 	public typealias inputType = RevokeTokenRequest
 	public typealias outputType = RevokeTokenResponse
