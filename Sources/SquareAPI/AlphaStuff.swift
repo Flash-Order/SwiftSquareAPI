@@ -25,6 +25,16 @@ public struct DiningOption: Codable, Equatable {
 	public let ordinal: Int?
 }
 
+/// just to remind me to manually put in the dining option
+extension Order {
+	var make_sure_to_not_forget_dining_option: DiningOption? { dining_option }
+}
+
+/// just to remind me to put in the dining option
+extension OrderLineItem {
+	var make_sure_to_not_forget_dining_option: DiningOption? { dining_option }
+}
+
 
 /// (Alpha) The Check resource contains the line items the customer has ordered (within the Order child object), the history of those line items, coursing and seating details, and other restaurant-specific information
 public struct Check: Codable, Equatable {
