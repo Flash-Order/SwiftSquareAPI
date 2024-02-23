@@ -1,4 +1,4 @@
-/// Provides details about all of the seller's [locations](https://developer.squareup.com/docs/locations-api), including those with an inactive status.
+/// Provides details about all of the seller's [locations](https://developer.squareup.com/docs/locations-api), including those with an inactive status. Locations are listed alphabetically by `name`.
 public struct ListLocations: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty

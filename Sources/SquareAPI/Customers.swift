@@ -52,6 +52,46 @@ public struct CreateCustomer: SquareAPIEndpoint {
 	}
 }
 
+/// Creates multiple [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) for a business.  This endpoint takes a map of individual create requests and returns a map of responses.  You must provide at least one of the following values in each create request:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
+public struct BulkCreateCustomers: SquareAPIEndpoint {
+	public typealias inputType = BulkCreateCustomersRequest
+	public typealias outputType = BulkCreateCustomersResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/customers/bulk-create"
+	}
+}
+
+/// Deletes multiple customer profiles.  The endpoint takes a list of customer IDs and returns a map of responses.
+public struct BulkDeleteCustomers: SquareAPIEndpoint {
+	public typealias inputType = BulkDeleteCustomersRequest
+	public typealias outputType = BulkDeleteCustomersResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/customers/bulk-delete"
+	}
+}
+
+/// Retrieves multiple customer profiles.  This endpoint takes a list of customer IDs and returns a map of responses.
+public struct BulkRetrieveCustomers: SquareAPIEndpoint {
+	public typealias inputType = BulkRetrieveCustomersRequest
+	public typealias outputType = BulkRetrieveCustomersResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/customers/bulk-retrieve"
+	}
+}
+
+/// Updates multiple customer profiles.  This endpoint takes a map of individual update requests and returns a map of responses.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api).
+public struct BulkUpdateCustomers: SquareAPIEndpoint {
+	public typealias inputType = BulkUpdateCustomersRequest
+	public typealias outputType = BulkUpdateCustomersResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/customers/bulk-update"
+	}
+}
+
 /// Searches the customer profiles associated with a Square account using one or more supported query filters.  Calling `SearchCustomers` without any explicit query filter returns all customer profiles ordered alphabetically based on `given_name` and `family_name`.  Under normal operating conditions, newly created or updated customer profiles become available for the search operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 public struct SearchCustomers: SquareAPIEndpoint {
 	public typealias inputType = SearchCustomersRequest
@@ -83,7 +123,7 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null` (recommended) or specify an empty string (string fields only).  As a best practice, include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If included, the value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api).
+/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api).
 public struct UpdateCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateCustomerRequest
@@ -91,7 +131,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null` (recommended) or specify an empty string (string fields only).  As a best practice, include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If included, the value must be set to the current version of the customer profile.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api).
+		/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api) or [Gift Cards API](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api).
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to update.
 		public init(customer_id: String) {
@@ -104,7 +144,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  As a best practice, include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If included, the value must be set to the current version of the customer profile.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 public struct DeleteCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -113,7 +153,7 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let version: Int?
-		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  As a best practice, include the `version` field in the request to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If included, the value must be set to the current version of the customer profile.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to delete.
 		///   - version: The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).

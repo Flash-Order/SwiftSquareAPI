@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-01-18" }
+	public static var version: String { return "2024-02-22" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -140,9 +140,9 @@ public enum ActivityType: String, Codable {
 	case APP_FEE_REFUND
 	/// Revenue generated from an application fee on a payment.
 	case APP_FEE_REVENUE
-	/// An automatic transfer from the payment processing balance to the Square Savings account. These are, generally, proportional to the seller's sales.
+	/// An automatic transfer from the payment processing balance to the Square Savings account. These are generally proportional to the seller's sales.
 	case AUTOMATIC_SAVINGS
-	/// An automatic transfer from the Square Savings account back to the processing balance. These are, generally, proportional to the seller's refunds.
+	/// An automatic transfer from the Square Savings account back to the processing balance. These are generally proportional to the seller's refunds.
 	case AUTOMATIC_SAVINGS_REVERSED
 	/// A credit card payment capture.
 	case CHARGE
@@ -152,27 +152,27 @@ public enum ActivityType: String, Codable {
 	case DISPUTE
 	/// An escheatment entry for remittance.
 	case ESCHEATMENT
-	/// The Square processing fee.
+	/// The cost plus adjustment fee.
 	case FEE
 	/// Square offers free payments processing for a variety of business scenarios, including seller referrals or when Square wants to apologize (for example, for a bug, customer service, or repricing complication). This entry represents a credit to the seller for the purposes of free processing.
 	case FREE_PROCESSING
 	/// An adjustment made by Square related to holding a payment.
 	case HOLD_ADJUSTMENT
-	/// An external change to a seller's balance. Initial, in the sense that it causes the creation of the other activity types, such as hold and refund.
+	/// An external change to a seller's balance (initial, in the sense that it causes the creation of the other activity types, such as a hold and refund).
 	case INITIAL_BALANCE_CHANGE
 	/// The balance change from a money transfer.
 	case MONEY_TRANSFER
 	/// The reversal of a money transfer.
 	case MONEY_TRANSFER_REVERSAL
-	/// The balance change for a chargeback that has been filed.
+	/// The balance change for a chargeback that's been filed.
 	case OPEN_DISPUTE
-	/// Any other type that does not belong in the rest of the types.
+	/// Any other type that doesn't belong in the rest of the types.
 	case OTHER
-	/// Any other type of adjustment that does not fall under existing types.
+	/// Any other type of adjustment that doesn't fall under existing types.
 	case OTHER_ADJUSTMENT
-	/// A fee paid to a third-party merchant.
+	/// A fee paid to a third-party seller.
 	case PAID_SERVICE_FEE
-	/// A fee paid to a third-party merchant.
+	/// A fee refunded to a third-party seller.
 	case PAID_SERVICE_FEE_REFUND
 	/// Repayment for a redemption code.
 	case REDEMPTION_CODE
@@ -180,19 +180,19 @@ public enum ActivityType: String, Codable {
 	case REFUND
 	/// An adjustment made by Square related to releasing a payment.
 	case RELEASE_ADJUSTMENT
-	/// Fees paid for funding risk reserve.
+	/// Fees paid for a funding risk reserve.
 	case RESERVE_HOLD
-	/// Fees released from risk reserve.
+	/// Fees released from a risk reserve.
 	case RESERVE_RELEASE
 	/// An entry created when Square receives a response for the ACH file that Square sent indicating that the settlement of the original entry failed.
 	case RETURNED_PAYOUT
-	/// A capital merchant cash advance (MCA) assessment. These are, generally, proportional to the merchant's sales but can be issued for other reasons related to the MCA.
+	/// A capital merchant cash advance (MCA) assessment. These are generally proportional to the merchant's sales but can be issued for other reasons related to the MCA.
 	case SQUARE_CAPITAL_PAYMENT
-	/// A capital merchant cash advance (MCA) assessment refund. These are, generally, proportional to the merchant's refunds but can be issued for other reasons related to the MCA.
+	/// A capital merchant cash advance (MCA) assessment refund. These are generally proportional to the merchant's refunds but can be issued for other reasons related to the MCA.
 	case SQUARE_CAPITAL_REVERSED_PAYMENT
 	/// A fee charged for subscription to a Square product.
 	case SUBSCRIPTION_FEE
-	/// A Square subscription fee that has been refunded.
+	/// A Square subscription fee that's been refunded.
 	case SUBSCRIPTION_FEE_PAID_REFUND
 	/// The refund of a previously charged Square product subscription fee.
 	case SUBSCRIPTION_FEE_REFUND
@@ -202,16 +202,48 @@ public enum ActivityType: String, Codable {
 	case THIRD_PARTY_FEE
 	/// Refunded fees from a third-party platform.
 	case THIRD_PARTY_FEE_REFUND
-	/// Balance change due to money transfer.
+	/// The balance change due to money transfer.
 	case PAYOUT
-	/// Indicates the withholding of a portion of each payment by Square that has been automatically converted into bitcoin using Cash App. The seller manages their bitcoin in their Cash App account.
+	/// Indicates that the portion of each payment withheld by Square was automatically converted into bitcoin using Cash App. The seller manages their bitcoin in their Cash App account.
 	case AUTOMATIC_BITCOIN_CONVERSIONS
-	/// Indicates a return of the payment withholding that had been scheduled to be converted into bitcoin using Cash App to the Square payments balance.
+	/// Indicates that a withheld payment, which was scheduled to be converted into bitcoin using Cash App, was deposited back to the Square payments balance.
 	case AUTOMATIC_BITCOIN_CONVERSIONS_REVERSED
-	/// The repayment made toward the outstanding balance on the seller's Square credit card.
+	/// Indicates that a repayment toward the outstanding balance on the seller's Square credit card was made.
 	case CREDIT_CARD_REPAYMENT
-	/// The reversal of the repayment made toward the outstanding balance on the seller's Square credit card.
+	/// Indicates that a repayment toward the outstanding balance on the seller's Square credit card was reversed.
 	case CREDIT_CARD_REPAYMENT_REVERSED
+	/// Cashback amount given by a Square Local Offers seller to their customer for a purchase.
+	case LOCAL_OFFERS_CASHBACK
+	/// A commission fee paid by a Square Local Offers seller to Square for a purchase discovered through Square Local Offers.
+	case LOCAL_OFFERS_FEE
+	/// When activating Percentage Processing, a credit is applied to the seller’s account to offset any negative balance caused by a dispute.
+	case PERCENTAGE_PROCESSING_ENROLLMENT
+	/// Deducting the outstanding Percentage Processing balance from the seller’s account. It's the final installment in repaying the dispute-induced negative balance through percentage processing.
+	case PERCENTAGE_PROCESSING_DEACTIVATION
+	/// Withheld funds from a payment to cover a negative balance. It's an installment to repay the amount from a dispute that had been offset during Percentage Processing enrollment.
+	case PERCENTAGE_PROCESSING_REPAYMENT
+	/// The reversal of a percentage processing repayment that happens for example when a refund is issued for a payment.
+	case PERCENTAGE_PROCESSING_REPAYMENT_REVERSED
+	/// The processing fee for a payment. If sellers opt for Gross Settlement, i.e., direct bank withdrawal instead of deducting fees from daily sales, the processing fee is recorded separately as a new payout entry, not part of the CHARGE payout entry.
+	case PROCESSING_FEE
+	/// The processing fee for a payment refund issued by sellers enrolled in Gross Settlement. The refunded processing fee is recorded separately as a new payout entry, not part of the REFUND payout entry.
+	case PROCESSING_FEE_REFUND
+	/// When undoing a processing fee refund in a Gross Settlement payment, this payout entry type is used.
+	case UNDO_PROCESSING_FEE_REFUND
+	/// Fee collected during the sale or reload of a gift card. This fee, which is a portion of the amount loaded on the gift card, is deducted from the merchant's payment balance.
+	case GIFT_CARD_LOAD_FEE
+	/// Refund for fee charged during the sale or reload of a gift card.
+	case GIFT_CARD_LOAD_FEE_REFUND
+	/// The undo of a refund for a fee charged during the sale or reload of a gift card.
+	case UNDO_GIFT_CARD_LOAD_FEE_REFUND
+	/// A transfer of funds to a banking folder. In the United States, the folder name is 'Checking Folder'; in Canada, it's 'Balance Folder.'
+	case BALANCE_FOLDERS_TRANSFER
+	/// A reversal of transfer of funds from a banking folder. In the United States, the folder name is 'Checking Folder'; in Canada, it's 'Balance Folder.'
+	case BALANCE_FOLDERS_TRANSFER_REVERSED
+	/// A transfer of gift card funds to a central gift card pool account. In franchises, when gift cards are loaded or reloaded at any location, the money transfers to the franchisor's account.
+	case GIFT_CARD_POOL_TRANSFER
+	/// A reversal of transfer of gift card funds from a central gift card pool account. In franchises, when gift cards are loaded or reloaded at any location, the money transfers to the franchisor's account.
+	case GIFT_CARD_POOL_TRANSFER_REVERSED
 }
 
 /// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/add-group-to-customer) endpoint.
@@ -1144,6 +1176,89 @@ public struct BreakType: Codable, Equatable {
 	}
 }
 
+/// Defines the customer data provided in individual create requests for a [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) operation.
+public struct BulkCreateCustomerData: Codable, Equatable {
+	/// The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
+	public var address: Address?
+	/// The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example, specify `1998-09-21` for September 21, 1998, or `09-21` for September 21. Birthdays are returned in `YYYY-MM-DD` format, where `YYYY` is the specified birth year or `0000` if a birth year is not specified.
+	public var birthday: String?
+	/// A business name associated with the customer profile.
+	public var company_name: String?
+	/// The email address associated with the customer profile.
+	public var email_address: String?
+	/// The family name (that is, the last name) associated with the customer profile.
+	public var family_name: String?
+	/// The given name (that is, the first name) associated with the customer profile.
+	public var given_name: String?
+	/// A nickname for the customer profile.
+	public var nickname: String?
+	/// A custom note associated with the customer profile.
+	public var note: String?
+	/// The phone number associated with the customer profile. The phone number must be valid and can contain 9–16 digits, with an optional `+` prefix and country code. For more information, see [Customer phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#phone-number).
+	public var phone_number: String?
+	/// An optional second ID used to associate the customer profile with an entity in another system.
+	public var reference_id: String?
+	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	public var tax_ids: CustomerTaxIds?
+
+	/// Defines the customer data provided in individual create requests for a [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) operation.
+	/// - Parameters:
+	///   - address: The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
+	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example, specify `1998-09-21` for September 21, 1998, or `09-21` for September 21. Birthdays are returned in `YYYY-MM-DD` format, where `YYYY` is the specified birth year or `0000` if a birth year is not specified.
+	///   - company_name: A business name associated with the customer profile.
+	///   - email_address: The email address associated with the customer profile.
+	///   - family_name: The family name (that is, the last name) associated with the customer profile.
+	///   - given_name: The given name (that is, the first name) associated with the customer profile.
+	///   - nickname: A nickname for the customer profile.
+	///   - note: A custom note associated with the customer profile.
+	///   - phone_number: The phone number associated with the customer profile. The phone number must be valid and can contain 9–16 digits, with an optional `+` prefix and country code. For more information, see [Customer phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#phone-number).
+	///   - reference_id: An optional second ID used to associate the customer profile with an entity in another system.
+	///   - tax_ids: The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	public init(address: Address? = nil, birthday: String? = nil, company_name: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, reference_id: String? = nil, tax_ids: CustomerTaxIds? = nil) {
+		self.address = address
+		self.birthday = birthday
+		self.company_name = company_name
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.nickname = nickname
+		self.note = note
+		self.phone_number = phone_number
+		self.reference_id = reference_id
+		self.tax_ids = tax_ids
+	}
+}
+
+/// Defines the body parameters that can be included in requests to the [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) endpoint.
+public struct BulkCreateCustomersRequest: Codable, Equatable {
+	/// A map of 1 to 100 individual create requests, represented by `idempotency key: { customer data }` key-value pairs.  Each key is an [idempotency key](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) that uniquely identifies the create request. Each value contains the customer data used to create the customer profile.
+	public var customers: BulkCreateCustomerData
+
+	/// Defines the body parameters that can be included in requests to the [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) endpoint.
+	/// - Parameters:
+	///   - customers: A map of 1 to 100 individual create requests, represented by `idempotency key: { customer data }` key-value pairs.  Each key is an [idempotency key](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) that uniquely identifies the create request. Each value contains the customer data used to create the customer profile.
+	public init(customers: BulkCreateCustomerData) {
+		self.customers = customers
+	}
+}
+
+/// Defines the fields included in the response body from the [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) endpoint.
+public struct BulkCreateCustomersResponse: Codable, Equatable {
+	/// Any top-level errors that prevented the bulk operation from running.
+	public var errors: [SquareError]?
+	/// A map of responses that correspond to individual create requests, represented by key-value pairs.  Each key is the idempotency key that was provided for a create request and each value is the corresponding response. If the request succeeds, the value is the new customer profile. If the request fails, the value contains any errors that occurred during the request.
+	public var responses: CreateCustomerResponse?
+
+	/// Defines the fields included in the response body from the [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) endpoint.
+	/// - Parameters:
+	///   - errors: Any top-level errors that prevented the bulk operation from running.
+	///   - responses: A map of responses that correspond to individual create requests, represented by key-value pairs.  Each key is the idempotency key that was provided for a create request and each value is the corresponding response. If the request succeeds, the value is the new customer profile. If the request fails, the value contains any errors that occurred during the request.
+	public init(errors: [SquareError]? = nil, responses: CreateCustomerResponse? = nil) {
+		self.errors = errors
+		self.responses = responses
+	}
+}
+
 /// Represents a bulk create request for `TeamMember` objects.
 public struct BulkCreateTeamMembersRequest: Codable, Equatable {
 	/// The data used to create the `TeamMember` objects. Each key is the `idempotency_key` that maps to the `CreateTeamMemberRequest`. The maximum number of create objects is 25.
@@ -1231,6 +1346,36 @@ public struct BulkDeleteBookingCustomAttributesResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, values: BookingCustomAttributeDeleteResponse? = nil) {
 		self.errors = errors
 		self.values = values
+	}
+}
+
+/// Defines the body parameters that can be included in requests to the [BulkDeleteCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-delete-customers) endpoint.
+public struct BulkDeleteCustomersRequest: Codable, Equatable {
+	/// The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to delete.
+	public var customer_ids: [String]
+
+	/// Defines the body parameters that can be included in requests to the [BulkDeleteCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-delete-customers) endpoint.
+	/// - Parameters:
+	///   - customer_ids: The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to delete.
+	public init(customer_ids: [String]) {
+		self.customer_ids = customer_ids
+	}
+}
+
+/// Defines the fields included in the response body from the [BulkDeleteCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-delete-customers) endpoint.
+public struct BulkDeleteCustomersResponse: Codable, Equatable {
+	/// Any top-level errors that prevented the bulk operation from running.
+	public var errors: [SquareError]?
+	/// A map of responses that correspond to individual delete requests, represented by key-value pairs.  Each key is the customer ID that was specified for a delete request and each value is the corresponding response. If the request succeeds, the value is an empty object (`{ }`). If the request fails, the value contains any errors that occurred during the request.
+	public var responses: DeleteCustomerResponse?
+
+	/// Defines the fields included in the response body from the [BulkDeleteCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-delete-customers) endpoint.
+	/// - Parameters:
+	///   - errors: Any top-level errors that prevented the bulk operation from running.
+	///   - responses: A map of responses that correspond to individual delete requests, represented by key-value pairs.  Each key is the customer ID that was specified for a delete request and each value is the corresponding response. If the request succeeds, the value is an empty object (`{ }`). If the request fails, the value contains any errors that occurred during the request.
+	public init(errors: [SquareError]? = nil, responses: DeleteCustomerResponse? = nil) {
+		self.errors = errors
+		self.responses = responses
 	}
 }
 
@@ -1427,6 +1572,36 @@ public struct BulkRetrieveBookingsResponse: Codable, Equatable {
 	}
 }
 
+/// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-retrieve-customers) endpoint.
+public struct BulkRetrieveCustomersRequest: Codable, Equatable {
+	/// The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to retrieve.
+	public var customer_ids: [String]
+
+	/// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-retrieve-customers) endpoint.
+	/// - Parameters:
+	///   - customer_ids: The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to retrieve.
+	public init(customer_ids: [String]) {
+		self.customer_ids = customer_ids
+	}
+}
+
+/// Defines the fields included in the response body from the [BulkRetrieveCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-retrieve-customers) endpoint.
+public struct BulkRetrieveCustomersResponse: Codable, Equatable {
+	/// Any top-level errors that prevented the bulk operation from running.
+	public var errors: [SquareError]?
+	/// A map of responses that correspond to individual retrieve requests, represented by key-value pairs.  Each key is the customer ID that was specified for a retrieve request and each value is the corresponding response. If the request succeeds, the value is the requested customer profile. If the request fails, the value contains any errors that occurred during the request.
+	public var responses: RetrieveCustomerResponse?
+
+	/// Defines the fields included in the response body from the [BulkRetrieveCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-retrieve-customers) endpoint.
+	/// - Parameters:
+	///   - errors: Any top-level errors that prevented the bulk operation from running.
+	///   - responses: A map of responses that correspond to individual retrieve requests, represented by key-value pairs.  Each key is the customer ID that was specified for a retrieve request and each value is the corresponding response. If the request succeeds, the value is the requested customer profile. If the request fails, the value contains any errors that occurred during the request.
+	public init(errors: [SquareError]? = nil, responses: RetrieveCustomerResponse? = nil) {
+		self.errors = errors
+		self.responses = responses
+	}
+}
+
 /// Request payload for the [BulkRetrieveTeamMemberBookingProfiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/bookings-api/bulk-retrieve-team-member-booking-profiles) endpoint.
 public struct BulkRetrieveTeamMemberBookingProfilesRequest: Codable, Equatable {
 	/// A non-empty list of IDs of team members whose booking profiles you want to retrieve.
@@ -1522,6 +1697,93 @@ public struct BulkSwapPlanResponse: Codable, Equatable {
 	public init(affected_subscriptions: Int? = nil, errors: [SquareError]? = nil) {
 		self.affected_subscriptions = affected_subscriptions
 		self.errors = errors
+	}
+}
+
+/// Defines the customer data provided in individual update requests for a [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) operation.
+public struct BulkUpdateCustomerData: Codable, Equatable {
+	/// The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
+	public var address: Address?
+	/// The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example, specify `1998-09-21` for September 21, 1998, or `09-21` for September 21. Birthdays are returned in `YYYY-MM-DD` format, where `YYYY` is the specified birth year or `0000` if a birth year is not specified.
+	public var birthday: String?
+	/// A business name associated with the customer profile.
+	public var company_name: String?
+	/// The email address associated with the customer profile.
+	public var email_address: String?
+	/// The family name (that is, the last name) associated with the customer profile.
+	public var family_name: String?
+	/// The given name (that is, the first name) associated with the customer profile.
+	public var given_name: String?
+	/// A nickname for the customer profile.
+	public var nickname: String?
+	/// An custom note associates with the customer profile.
+	public var note: String?
+	/// The phone number associated with the customer profile. The phone number must be valid and can contain 9–16 digits, with an optional `+` prefix and country code. For more information, see [Customer phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#phone-number).
+	public var phone_number: String?
+	/// An optional second ID used to associate the customer profile with an entity in another system.
+	public var reference_id: String?
+	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	public var tax_ids: CustomerTaxIds?
+	/// The current version of the customer profile.  As a best practice, you should include this field to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.
+	public var version: Int?
+
+	/// Defines the customer data provided in individual update requests for a [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) operation.
+	/// - Parameters:
+	///   - address: The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
+	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example, specify `1998-09-21` for September 21, 1998, or `09-21` for September 21. Birthdays are returned in `YYYY-MM-DD` format, where `YYYY` is the specified birth year or `0000` if a birth year is not specified.
+	///   - company_name: A business name associated with the customer profile.
+	///   - email_address: The email address associated with the customer profile.
+	///   - family_name: The family name (that is, the last name) associated with the customer profile.
+	///   - given_name: The given name (that is, the first name) associated with the customer profile.
+	///   - nickname: A nickname for the customer profile.
+	///   - note: An custom note associates with the customer profile.
+	///   - phone_number: The phone number associated with the customer profile. The phone number must be valid and can contain 9–16 digits, with an optional `+` prefix and country code. For more information, see [Customer phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#phone-number).
+	///   - reference_id: An optional second ID used to associate the customer profile with an entity in another system.
+	///   - tax_ids: The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	///   - version: The current version of the customer profile.  As a best practice, you should include this field to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.
+	public init(address: Address? = nil, birthday: String? = nil, company_name: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, reference_id: String? = nil, tax_ids: CustomerTaxIds? = nil, version: Int? = nil) {
+		self.address = address
+		self.birthday = birthday
+		self.company_name = company_name
+		self.email_address = email_address
+		self.family_name = family_name
+		self.given_name = given_name
+		self.nickname = nickname
+		self.note = note
+		self.phone_number = phone_number
+		self.reference_id = reference_id
+		self.tax_ids = tax_ids
+		self.version = version
+	}
+}
+
+/// Defines the body parameters that can be included in requests to the [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) endpoint.
+public struct BulkUpdateCustomersRequest: Codable, Equatable {
+	/// A map of 1 to 100 individual update requests, represented by `customer ID: { customer data }` key-value pairs.  Each key is the ID of the [customer profile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to update. To update a customer profile that was created by merging existing profiles, provide the ID of the newly created profile.  Each value contains the updated customer data. Only new or changed fields are required. To add or update a field, specify the new value. To remove a field, specify `null`.
+	public var customers: BulkUpdateCustomerData
+
+	/// Defines the body parameters that can be included in requests to the [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) endpoint.
+	/// - Parameters:
+	///   - customers: A map of 1 to 100 individual update requests, represented by `customer ID: { customer data }` key-value pairs.  Each key is the ID of the [customer profile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to update. To update a customer profile that was created by merging existing profiles, provide the ID of the newly created profile.  Each value contains the updated customer data. Only new or changed fields are required. To add or update a field, specify the new value. To remove a field, specify `null`.
+	public init(customers: BulkUpdateCustomerData) {
+		self.customers = customers
+	}
+}
+
+/// Defines the fields included in the response body from the [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) endpoint.
+public struct BulkUpdateCustomersResponse: Codable, Equatable {
+	/// Any top-level errors that prevented the bulk operation from running.
+	public var errors: [SquareError]?
+	/// A map of responses that correspond to individual update requests, represented by key-value pairs.  Each key is the customer ID that was specified for an update request and each value is the corresponding response. If the request succeeds, the value is the updated customer profile. If the request fails, the value contains any errors that occurred during the request.
+	public var responses: UpdateCustomerResponse?
+
+	/// Defines the fields included in the response body from the [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) endpoint.
+	/// - Parameters:
+	///   - errors: Any top-level errors that prevented the bulk operation from running.
+	///   - responses: A map of responses that correspond to individual update requests, represented by key-value pairs.  Each key is the customer ID that was specified for an update request and each value is the corresponding response. If the request succeeds, the value is the updated customer profile. If the request fails, the value contains any errors that occurred during the request.
+	public init(errors: [SquareError]? = nil, responses: UpdateCustomerResponse? = nil) {
+		self.errors = errors
+		self.responses = responses
 	}
 }
 
@@ -3514,7 +3776,7 @@ public enum CatalogItemFoodAndBeverageDetailsIngredientStandardIngredient: Strin
 	case TREE_NUTS
 }
 
-/// Options to control the properties of a `CatalogModifierList` applied to a `CatalogItem` instance.
+/// References a text-based modifier or a list of non text-based modifiers applied to a `CatalogItem` instance and specifies supported behaviors of the application.
 public struct CatalogItemModifierListInfo: Codable, Equatable {
 	/// If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	public var enabled: Bool?
@@ -3526,20 +3788,24 @@ public struct CatalogItemModifierListInfo: Codable, Equatable {
 	public var modifier_list_id: String
 	/// A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
 	public var modifier_overrides: [CatalogModifierOverride]?
+	/// The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
+	public var ordinal: Int?
 
-	/// Options to control the properties of a `CatalogModifierList` applied to a `CatalogItem` instance.
+	/// References a text-based modifier or a list of non text-based modifiers applied to a `CatalogItem` instance and specifies supported behaviors of the application.
 	/// - Parameters:
 	///   - enabled: If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	///   - max_selected_modifiers: If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`.
 	///   - min_selected_modifiers: If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`.
 	///   - modifier_list_id: The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	///   - modifier_overrides: A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
-	public init(modifier_list_id: String, enabled: Bool? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil) {
+	///   - ordinal: The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
+	public init(modifier_list_id: String, enabled: Bool? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil, ordinal: Int? = nil) {
 		self.modifier_list_id = modifier_list_id
 		self.enabled = enabled
 		self.max_selected_modifiers = max_selected_modifiers
 		self.min_selected_modifiers = min_selected_modifiers
 		self.modifier_overrides = modifier_overrides
+		self.ordinal = ordinal
 	}
 }
 
@@ -3796,33 +4062,57 @@ public struct CatalogModifier: Codable, Equatable {
 	}
 }
 
-/// A list of modifiers applicable to items at the time of sale.  For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers. Use the `selection_type` field to specify whether or not multiple selections from the modifier list are allowed.
+/// For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.  For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the buyer-supplied  text string to be selected for the T-shirt at the time of sale.  For non text-based modifiers, this encapsulates a non-empty list of modifiers applicable to items  at the time of sale. Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.    For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers.   A non text-based modifier can be applied to the modified item once or multiple times, if the `selection_type` field  is set to `SINGLE` or `MULTIPLE`, respectively. On the other hand, a text-based modifier can be applied to the item  only once and the `selection_type` field is always set to `SINGLE`.
 public struct CatalogModifierList: Codable, Equatable {
-	/// The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed by Square, but are free to be displayed in 3rd party applications.
+	/// The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
 	public var image_ids: [String]?
-	/// The options included in the `CatalogModifierList`. You must include at least one `CatalogModifier`. Each CatalogObject must have type `MODIFIER` and contain `CatalogModifier` data.
+	/// A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	public var internal_name: String?
+	/// The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	public var max_length: Int?
+	/// The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects.
+	public var modifier_type: String?
+	/// A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
 	public var modifiers: [CatalogObject]?
-	/// The name for the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
+	/// The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
 	public var name: String?
-	/// Determines where this modifier list appears in a list of `CatalogModifierList` values.
+	/// The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
 	public var ordinal: Int?
-	/// Indicates whether multiple options from the modifier list can be applied to a single `CatalogItem`.
+	/// Indicates whether a single (`SINGLE`) or multiple (`MULTIPLE`) modifiers from the list can be applied to a single `CatalogItem`.  For text-based modifiers, the `selection_type` attribute is always `SINGLE`. The other value is ignored.
 	public var selection_type: String?
+	/// Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	public var text_required: Bool?
 
-	/// A list of modifiers applicable to items at the time of sale.  For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers. Use the `selection_type` field to specify whether or not multiple selections from the modifier list are allowed.
+	/// For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.  For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the buyer-supplied  text string to be selected for the T-shirt at the time of sale.  For non text-based modifiers, this encapsulates a non-empty list of modifiers applicable to items  at the time of sale. Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.    For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers.   A non text-based modifier can be applied to the modified item once or multiple times, if the `selection_type` field  is set to `SINGLE` or `MULTIPLE`, respectively. On the other hand, a text-based modifier can be applied to the item  only once and the `selection_type` field is always set to `SINGLE`.
 	/// - Parameters:
-	///   - image_ids: The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed by Square, but are free to be displayed in 3rd party applications.
-	///   - modifiers: The options included in the `CatalogModifierList`. You must include at least one `CatalogModifier`. Each CatalogObject must have type `MODIFIER` and contain `CatalogModifier` data.
-	///   - name: The name for the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
-	///   - ordinal: Determines where this modifier list appears in a list of `CatalogModifierList` values.
-	///   - selection_type: Indicates whether multiple options from the modifier list can be applied to a single `CatalogItem`.
-	public init(image_ids: [String]? = nil, modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: String? = nil) {
+	///   - image_ids: The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
+	///   - internal_name: A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	///   - max_length: The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	///   - modifier_type: The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects.
+	///   - modifiers: A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
+	///   - name: The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
+	///   - ordinal: The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
+	///   - selection_type: Indicates whether a single (`SINGLE`) or multiple (`MULTIPLE`) modifiers from the list can be applied to a single `CatalogItem`.  For text-based modifiers, the `selection_type` attribute is always `SINGLE`. The other value is ignored.
+	///   - text_required: Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	public init(image_ids: [String]? = nil, internal_name: String? = nil, max_length: Int? = nil, modifier_type: String? = nil, modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: String? = nil, text_required: Bool? = nil) {
 		self.image_ids = image_ids
+		self.internal_name = internal_name
+		self.max_length = max_length
+		self.modifier_type = modifier_type
 		self.modifiers = modifiers
 		self.name = name
 		self.ordinal = ordinal
 		self.selection_type = selection_type
+		self.text_required = text_required
 	}
+}
+
+/// Defines the type of `CatalogModifierList`.
+public enum CatalogModifierListModifierType: String, Codable {
+	/// The `CatalogModifierList` instance is a non-empty list of non text-based modifiers.
+	case LIST
+	/// The `CatalogModifierList` instance is a single text-based modifier.
+	case TEXT
 }
 
 /// Indicates whether a CatalogModifierList supports multiple selections.
@@ -6057,7 +6347,7 @@ public struct CreateCustomerRequest: Codable, Equatable {
 	public var phone_number: String?
 	/// An optional second ID used to associate the customer profile with an entity in another system.  The maximum length for this value is 100 characters.
 	public var reference_id: String?
-	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom.  In other countries, this field is ignored when included in a `CreateCustomer` request. For more information,  see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	public var tax_ids: CustomerTaxIds?
 
 	/// Defines the body parameters that can be included in a request to the `CreateCustomer` endpoint.
@@ -6073,7 +6363,7 @@ public struct CreateCustomerRequest: Codable, Equatable {
 	///   - note: A custom note associated with the customer profile.
 	///   - phone_number: The phone number associated with the customer profile. The phone number must be valid and can contain 9–16 digits, with an optional `+` prefix and country code. For more information, see [Customer phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#phone-number).
 	///   - reference_id: An optional second ID used to associate the customer profile with an entity in another system.  The maximum length for this value is 100 characters.
-	///   - tax_ids: The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom.  In other countries, this field is ignored when included in a `CreateCustomer` request. For more information,  see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	///   - tax_ids: The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	public init(address: Address? = nil, birthday: String? = nil, company_name: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, idempotency_key: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, reference_id: String? = nil, tax_ids: CustomerTaxIds? = nil) {
 		self.address = address
 		self.birthday = birthday
@@ -6090,14 +6380,14 @@ public struct CreateCustomerRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the `CreateCustomer` endpoint.  Either `errors` or `customer` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [CreateCustomer](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/create-customer) or [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 public struct CreateCustomerResponse: Codable, Equatable {
 	/// The created customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the `CreateCustomer` endpoint.  Either `errors` or `customer` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [CreateCustomer](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/create-customer) or [BulkCreateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-create-customers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The created customer.
 	///   - errors: Any errors that occurred during the request.
@@ -6826,7 +7116,7 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 	public var phases: [Phase]?
 	/// The ID of the [subscription plan variation](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations#plan-variations) created using the Catalog API.
 	public var plan_variation_id: String?
-	/// A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
+	/// A custom price which overrides the cost of a subscription plan variation with `STATIC` pricing. This field does not affect itemized subscriptions with `RELATIVE` pricing. Instead,  you should edit the Subscription's [order template](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#phases-and-order-templates).
 	public var price_override_money: Money?
 	/// The origination details of the subscription.
 	public var source: SubscriptionSource?
@@ -6847,7 +7137,7 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 	///   - monthly_billing_anchor_date: The day-of-the-month to change the billing date to.
 	///   - phases: array of phases for this subscription
 	///   - plan_variation_id: The ID of the [subscription plan variation](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations#plan-variations) created using the Catalog API.
-	///   - price_override_money: A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
+	///   - price_override_money: A custom price which overrides the cost of a subscription plan variation with `STATIC` pricing. This field does not affect itemized subscriptions with `RELATIVE` pricing. Instead,  you should edit the Subscription's [order template](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#phases-and-order-templates).
 	///   - source: The origination details of the subscription.
 	///   - start_date: The `YYYY-MM-DD`-formatted date to start the subscription.  If it is unspecified, the subscription starts immediately.
 	///   - tax_percentage: The tax to add when billing the subscription. The percentage is expressed in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. For example, a value of 7.5 corresponds to 7.5%.
@@ -13477,7 +13767,7 @@ public struct ListOrderCustomAttributesResponse: Codable, Equatable {
 }
 
 public struct ListPaymentLinksRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results. For more  information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results. For more  information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// A limit on the number of results to return per page. The limit is advisory and the implementation might return more or less results. If the supplied limit is negative, zero, or greater than the maximum limit of 1000, it is ignored.  Default value: `100`
 	public var limit: Int?
@@ -13489,7 +13779,7 @@ public struct ListPaymentLinksRequest: Codable, Equatable {
 }
 
 public struct ListPaymentLinksResponse: Codable, Equatable {
-	///   When a response is truncated, it includes a cursor that you can use in a subsequent request to retrieve the next set of gift cards. If a cursor is not present, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/api101/pagination).
+	///   When a response is truncated, it includes a cursor that you can use in a subsequent request to retrieve the next set of gift cards. If a cursor is not present, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// Errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -16135,7 +16425,7 @@ public struct OrderLineItem: Codable, Equatable {
 	public var catalog_object_id: String?
 	/// The version of the catalog object that this line item references.
 	public var catalog_version: Int?
-	/// The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price. For inclusive tax items in the US and Japan, tax is deducted from `gross_sales_money`. For Europe and  Australia, inclusive tax remains as part of the gross sale calculation.
+	/// The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price. For inclusive tax items in the US, Canada, and Japan, tax is deducted from `gross_sales_money`. For Europe and Australia, inclusive tax remains as part of the gross sale calculation.
 	public let gross_sales_money: Money?
 	/// The type of line item: an itemized sale, a non-itemized sale (custom amount), or the activation or reloading of a gift card.
 	public var item_type: String?
@@ -16149,7 +16439,7 @@ public struct OrderLineItem: Codable, Equatable {
 	public var note: String?
 	/// Describes pricing adjustments that are blocked from automatic application to a line item. For more information, see [Apply Taxes and Discounts](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts).
 	public var pricing_blocklists: OrderLineItemPricingBlocklists?
-	/// The count, or measurement, of a line item being purchased:  If `quantity` is a whole number, and `quantity_unit` is not specified, then `quantity` denotes an item count.  For example: `3` apples.  If `quantity` is a whole or decimal number, and `quantity_unit` is also specified, then `quantity` denotes a measurement.  For example: `2.25` pounds of broccoli.    For more information, see [Specify item quantity and measurement unit](https://developer.squareup.com/docs/orders-api/create-orders#specify-item-quantity-and-measurement-unit).  Line items with a quantity of `0` are automatically removed when paying for or otherwise completing the order.
+	/// The count, or measurement, of a line item being purchased:  If `quantity` is a whole number, and `quantity_unit` is not specified, then `quantity` denotes an item count.  For example: `3` apples.  If `quantity` is a whole or decimal number, and `quantity_unit` is also specified, then `quantity` denotes a measurement.  For example: `2.25` pounds of broccoli.  For more information, see [Specify item quantity and measurement unit](https://developer.squareup.com/docs/orders-api/create-orders#specify-item-quantity-and-measurement-unit).  Line items with a quantity of `0` are automatically removed when paying for or otherwise completing the order.
 	public var quantity: String
 	/// The measurement unit and decimal precision that this line item's quantity is measured in.
 	public var quantity_unit: OrderQuantityUnit?
@@ -16176,14 +16466,14 @@ public struct OrderLineItem: Codable, Equatable {
 	///   - base_price_money: The base price for a single unit of the line item.
 	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) ID applied to this line item.
 	///   - catalog_version: The version of the catalog object that this line item references.
-	///   - gross_sales_money: The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price. For inclusive tax items in the US and Japan, tax is deducted from `gross_sales_money`. For Europe and  Australia, inclusive tax remains as part of the gross sale calculation.
+	///   - gross_sales_money: The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price. For inclusive tax items in the US, Canada, and Japan, tax is deducted from `gross_sales_money`. For Europe and Australia, inclusive tax remains as part of the gross sale calculation.
 	///   - item_type: The type of line item: an itemized sale, a non-itemized sale (custom amount), or the activation or reloading of a gift card.
 	///   - metadata: Application-defined data attached to this line item. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - modifiers: The [CatalogModifier](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogModifier)s applied to this line item.
 	///   - name: The name of the line item.
 	///   - note: An optional note associated with the line item.
 	///   - pricing_blocklists: Describes pricing adjustments that are blocked from automatic application to a line item. For more information, see [Apply Taxes and Discounts](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts).
-	///   - quantity: The count, or measurement, of a line item being purchased:  If `quantity` is a whole number, and `quantity_unit` is not specified, then `quantity` denotes an item count.  For example: `3` apples.  If `quantity` is a whole or decimal number, and `quantity_unit` is also specified, then `quantity` denotes a measurement.  For example: `2.25` pounds of broccoli.    For more information, see [Specify item quantity and measurement unit](https://developer.squareup.com/docs/orders-api/create-orders#specify-item-quantity-and-measurement-unit).  Line items with a quantity of `0` are automatically removed when paying for or otherwise completing the order.
+	///   - quantity: The count, or measurement, of a line item being purchased:  If `quantity` is a whole number, and `quantity_unit` is not specified, then `quantity` denotes an item count.  For example: `3` apples.  If `quantity` is a whole or decimal number, and `quantity_unit` is also specified, then `quantity` denotes a measurement.  For example: `2.25` pounds of broccoli.  For more information, see [Specify item quantity and measurement unit](https://developer.squareup.com/docs/orders-api/create-orders#specify-item-quantity-and-measurement-unit).  Line items with a quantity of `0` are automatically removed when paying for or otherwise completing the order.
 	///   - quantity_unit: The measurement unit and decimal precision that this line item's quantity is measured in.
 	///   - total_discount_money: The total amount of discount money to collect for the line item.
 	///   - total_money: The total amount of money to collect for this line item.
@@ -16468,7 +16758,7 @@ public struct OrderLineItemPricingBlocklistsBlockedTax: Codable, Equatable {
 
 /// Represents a tax that applies to one or more line item in the order.  Fixed-amount, order-scoped taxes are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount the item contributes to the order subtotal.
 public struct OrderLineItemTax: Codable, Equatable {
-	/// The amount of money applied by the tax in the order.
+	/// The amount of money applied to the order by the tax.  - For flat-amount taxes, `applied_money` is equal to `amount_money`. - For percentage-based taxes, `applied_money` is the money calculated using the percentage.
 	public var applied_money: Money?
 	/// Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
 	public let auto_applied: Bool?
@@ -16480,7 +16770,7 @@ public struct OrderLineItemTax: Codable, Equatable {
 	public var metadata: String?
 	/// The tax's name.
 	public var name: String?
-	/// The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.
+	/// The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
 	public var percentage: String?
 	/// Indicates the level at which the tax applies. For `ORDER` scoped taxes, Square generates references in `applied_taxes` on all order line items that do not have them. For `LINE_ITEM` scoped taxes, the tax only applies to line items with references in their `applied_taxes` field.  This field is immutable. To change the scope, you must delete the tax and re-add it as a new tax.
 	public var scope: String?
@@ -16491,13 +16781,13 @@ public struct OrderLineItemTax: Codable, Equatable {
 
 	/// Represents a tax that applies to one or more line item in the order.  Fixed-amount, order-scoped taxes are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount the item contributes to the order subtotal.
 	/// - Parameters:
-	///   - applied_money: The amount of money applied by the tax in the order.
+	///   - applied_money: The amount of money applied to the order by the tax.  - For flat-amount taxes, `applied_money` is equal to `amount_money`. - For percentage-based taxes, `applied_money` is the money calculated using the percentage.
 	///   - auto_applied: Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
 	///   - catalog_object_id: The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogTax).
 	///   - catalog_version: The version of the catalog object that this tax references.
 	///   - metadata: Application-defined data attached to this tax. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The tax's name.
-	///   - percentage: The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.
+	///   - percentage: The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
 	///   - scope: Indicates the level at which the tax applies. For `ORDER` scoped taxes, Square generates references in `applied_taxes` on all order line items that do not have them. For `LINE_ITEM` scoped taxes, the tax only applies to line items with references in their `applied_taxes` field.  This field is immutable. To change the scope, you must delete the tax and re-add it as a new tax.
 	///   - type: Indicates the calculation method used to apply the tax.
 	///   - uid: A unique ID that identifies the tax only within this order.
@@ -17285,7 +17575,7 @@ public struct Payment: Codable, Equatable {
 	public var app_fee_money: Money?
 	/// Details about the application that took the payment.
 	public let application_details: ApplicationDetails?
-	/// The initial amount of money approved for this payment.
+	/// The amount of money approved for this payment. This value may change if Square chooses to obtain reauthorization as part of a call to [UpdatePayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/payments-api/update-payment).
 	public var approved_money: Money?
 	/// Details about a bank account payment. These details are only populated if the source_type is `BANK_ACCOUNT`.
 	public let bank_account_details: BankAccountPaymentDetails?
@@ -17367,7 +17657,7 @@ public struct Payment: Codable, Equatable {
 	///   - amount_money: The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - app_fee_money: The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	///   - application_details: Details about the application that took the payment.
-	///   - approved_money: The initial amount of money approved for this payment.
+	///   - approved_money: The amount of money approved for this payment. This value may change if Square chooses to obtain reauthorization as part of a call to [UpdatePayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/payments-api/update-payment).
 	///   - bank_account_details: Details about a bank account payment. These details are only populated if the source_type is `BANK_ACCOUNT`.
 	///   - billing_address: The buyer's billing address.
 	///   - buy_now_pay_later_details: Details about a Buy Now Pay Later payment. The details are only populated if the `source_type` is `BUY_NOW_PAY_LATER`. For more information, see  [Afterpay Payments](https://developer.squareup.com/docs/payments-api/take-payments/afterpay-payments).
@@ -17532,7 +17822,7 @@ public struct PaymentBalanceActivityDisputeDetail: Codable, Equatable {
 }
 
 public struct PaymentBalanceActivityFeeDetail: Codable, Equatable {
-	/// The ID of the payment associated with this activity.
+	/// The ID of the payment associated with this activity This will only be populated when a principal LedgerEntryToken is also populated. If the fee is independent (there is no principal LedgerEntryToken) then this will likely not be populated.
 	public var payment_id: String?
 
 	public init(payment_id: String? = nil) {
@@ -17765,7 +18055,7 @@ public struct PaymentRefund: Codable, Equatable {
 	public let created_at: Timestamp?
 	/// Contains information about the refund destination. This field is populated only if `destination_id` is defined in the `RefundPayment` request.
 	public let destination_details: DestinationDetails?
-	/// The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `BUY_NOW_PAY_LATER`, `CASH`, and `EXTERNAL`.
+	/// The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `BUY_NOW_PAY_LATER`, `CASH`, `EXTERNAL`, and `SQUARE_ACCOUNT`.
 	public var destination_type: String?
 	/// The unique ID for this refund, generated by Square.
 	public var id: String
@@ -17794,7 +18084,7 @@ public struct PaymentRefund: Codable, Equatable {
 	///   - app_fee_money: The amount of money the application developer contributed to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - created_at: The timestamp of when the refund was created, in RFC 3339 format.
 	///   - destination_details: Contains information about the refund destination. This field is populated only if `destination_id` is defined in the `RefundPayment` request.
-	///   - destination_type: The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `BUY_NOW_PAY_LATER`, `CASH`, and `EXTERNAL`.
+	///   - destination_type: The destination type for this refund.  Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `BUY_NOW_PAY_LATER`, `CASH`, `EXTERNAL`, and `SQUARE_ACCOUNT`.
 	///   - id: The unique ID for this refund, generated by Square.
 	///   - location_id: The location ID associated with the payment this refund is attached to.
 	///   - order_id: The ID of the order associated with the refund.
@@ -20479,7 +20769,7 @@ public struct SearchOrdersRequest: Codable, Equatable {
 
 /// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](https://developer.squareup.com/reference/square_yyyy-mm-dd/orders-api/search-orders).
 public struct SearchOrdersResponse: Codable, Equatable {
-	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/build-basics/common-api-patterns/pagination).
+	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// [Errors](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Error) encountered during the search.
 	public var errors: [SquareError]?
@@ -20490,7 +20780,7 @@ public struct SearchOrdersResponse: Codable, Equatable {
 
 	/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](https://developer.squareup.com/reference/square_yyyy-mm-dd/orders-api/search-orders).
 	/// - Parameters:
-	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/basics/build-basics/common-api-patterns/pagination).
+	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: [Errors](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Error) encountered during the search.
 	///   - order_entries: A list of [OrderEntries](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderEntry) that fit the query conditions. The list is populated only if `return_entries` is set to `true` in the request.
 	///   - orders: A list of [Order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) objects that match the query conditions. The list is populated only if `return_entries` is set to `false` in the request.
@@ -21442,7 +21732,7 @@ public struct Subscription: Codable, Equatable {
 	public let phases: [Phase]?
 	/// The ID of the subscribed-to [subscription plan variation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlanVariation).
 	public let plan_variation_id: String?
-	/// A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
+	/// A custom price which overrides the cost of a subscription plan variation with `STATIC` pricing. This field does not affect itemized subscriptions with `RELATIVE` pricing. Instead,  you should edit the Subscription's [order template](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#phases-and-order-templates).
 	public var price_override_money: Money?
 	/// The origination details of the subscription.
 	public var source: SubscriptionSource?
@@ -21471,7 +21761,7 @@ public struct Subscription: Codable, Equatable {
 	///   - monthly_billing_anchor_date: The day of the month on which the subscription will issue invoices and publish orders.
 	///   - phases: array of phases for this subscription
 	///   - plan_variation_id: The ID of the subscribed-to [subscription plan variation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlanVariation).
-	///   - price_override_money: A custom price to apply for the subscription. If specified, it overrides the price configured by the subscription plan.
+	///   - price_override_money: A custom price which overrides the cost of a subscription plan variation with `STATIC` pricing. This field does not affect itemized subscriptions with `RELATIVE` pricing. Instead,  you should edit the Subscription's [order template](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#phases-and-order-templates).
 	///   - source: The origination details of the subscription.
 	///   - start_date: The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to start the subscription.
 	///   - status: The current status of the subscription.
@@ -22998,7 +23288,7 @@ public struct UpdateCustomerRequest: Codable, Equatable {
 	public var phone_number: String?
 	/// An optional second ID used to associate the customer profile with an entity in another system.  The maximum length for this value is 100 characters.
 	public var reference_id: String?
-	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom.  In other countries, this field is ignored when included in an `UpdateCustomer` request. For more information,  see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	public var tax_ids: CustomerTaxIds?
 	/// The current version of the customer profile.  As a best practice, you should include this field to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. For more information, see [Update a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#update-a-customer-profile).
 	public var version: Int?
@@ -23015,7 +23305,7 @@ public struct UpdateCustomerRequest: Codable, Equatable {
 	///   - note: A custom note associated with the customer profile.
 	///   - phone_number: The phone number associated with the customer profile. The phone number must be valid and can contain 9–16 digits, with an optional `+` prefix and country code. For more information, see [Customer phone numbers](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#phone-number).
 	///   - reference_id: An optional second ID used to associate the customer profile with an entity in another system.  The maximum length for this value is 100 characters.
-	///   - tax_ids: The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom.  In other countries, this field is ignored when included in an `UpdateCustomer` request. For more information,  see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
+	///   - tax_ids: The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	///   - version: The current version of the customer profile.  As a best practice, you should include this field to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. For more information, see [Update a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#update-a-customer-profile).
 	public init(address: Address? = nil, birthday: String? = nil, company_name: String? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, reference_id: String? = nil, tax_ids: CustomerTaxIds? = nil, version: Int? = nil) {
 		self.address = address
@@ -23033,14 +23323,14 @@ public struct UpdateCustomerRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the `UpdateCustomer` endpoint.  Either `errors` or `customer` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [UpdateCustomer](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/update-customer) or [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 public struct UpdateCustomerResponse: Codable, Equatable {
 	/// The updated customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the `UpdateCustomer` endpoint.  Either `errors` or `customer` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [UpdateCustomer](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/update-customer) or [BulkUpdateCustomers](https://developer.squareup.com/reference/square_yyyy-mm-dd/customers-api/bulk-update-customers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The updated customer.
 	///   - errors: Any errors that occurred during the request.
@@ -23880,41 +24170,6 @@ public struct UpsertSnippetResponse: Codable, Equatable {
 	}
 }
 
-/// V1CreateRefundRequest
-public struct V1CreateRefundRequest: Codable, Equatable {
-	/// The ID of the payment to refund. If you are creating a `PARTIAL` refund for a split tender payment, instead provide the id of the particular tender you want to refund.
-	public var payment_id: String
-	/// The reason for the refund.
-	public var reason: String
-	/// The amount of money to refund. Required only for PARTIAL refunds.
-	public var refunded_money: V1Money?
-	/// An optional key to ensure idempotence if you issue the same PARTIAL refund request more than once.
-	public var request_idempotence_key: String?
-	/// The type of refund (FULL or PARTIAL).
-	public var type: String
-
-	/// V1CreateRefundRequest
-	/// - Parameters:
-	///   - payment_id: The ID of the payment to refund. If you are creating a `PARTIAL` refund for a split tender payment, instead provide the id of the particular tender you want to refund.
-	///   - reason: The reason for the refund.
-	///   - refunded_money: The amount of money to refund. Required only for PARTIAL refunds.
-	///   - request_idempotence_key: An optional key to ensure idempotence if you issue the same PARTIAL refund request more than once.
-	///   - type: The type of refund (FULL or PARTIAL).
-	public init(payment_id: String, reason: String, type: String, refunded_money: V1Money? = nil, request_idempotence_key: String? = nil) {
-		self.payment_id = payment_id
-		self.reason = reason
-		self.type = type
-		self.refunded_money = refunded_money
-		self.request_idempotence_key = request_idempotence_key
-	}
-}
-
-/// 
-public enum V1CreateRefundRequestType: String, Codable {
-	case FULL
-	case PARTIAL
-}
-
 public struct V1Device: Codable, Equatable {
 	/// The device's Square-issued ID.
 	public var id: String?
@@ -23946,105 +24201,6 @@ public struct V1ListOrdersResponse: Codable, Equatable {
 	public var items: [V1Order]?
 
 	public init(items: [V1Order]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListPaymentsRequest: Codable, Equatable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-	/// The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
-	public var begin_time: String?
-	/// The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
-	public var end_time: String?
-	/// Indicates whether or not to include partial payments in the response. Partial payments will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
-	public var include_partial: Bool?
-	/// The maximum number of payments to return in a single response. This value cannot exceed 200.
-	public var limit: Int?
-	/// The order in which payments are listed in the response.
-	public var order: String?
-
-	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, include_partial: Bool? = nil, limit: Int? = nil, order: String? = nil) {
-		self.batch_token = batch_token
-		self.begin_time = begin_time
-		self.end_time = end_time
-		self.include_partial = include_partial
-		self.limit = limit
-		self.order = order
-	}
-}
-
-public struct V1ListPaymentsResponse: Codable, Equatable {
-	public var items: [V1Payment]?
-
-	public init(items: [V1Payment]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListRefundsRequest: Codable, Equatable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-	/// The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
-	public var begin_time: String?
-	/// The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
-	public var end_time: String?
-	/// The approximate number of refunds to return in a single response. Default: 100. Max: 200. Response may contain more results than the prescribed limit when refunds are made simultaneously to multiple tenders in a payment or when refunds are generated in an exchange to account for the value of returned goods.
-	public var limit: Int?
-	/// The order in which payments are listed in the response.
-	public var order: String?
-
-	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, order: String? = nil) {
-		self.batch_token = batch_token
-		self.begin_time = begin_time
-		self.end_time = end_time
-		self.limit = limit
-		self.order = order
-	}
-}
-
-public struct V1ListRefundsResponse: Codable, Equatable {
-	public var items: [V1Refund]?
-
-	public init(items: [V1Refund]? = nil) {
-		self.items = items
-	}
-}
-
-public struct V1ListSettlementsRequest: Codable, Equatable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-	/// The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
-	public var begin_time: String?
-	/// The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
-	public var end_time: String?
-	/// The maximum number of settlements to return in a single response. This value cannot exceed 200.
-	public var limit: Int?
-	/// The order in which settlements are listed in the response.
-	public var order: String?
-	/// Provide this parameter to retrieve only settlements with a particular status (SENT or FAILED).
-	public var status: String?
-
-	public init(batch_token: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, order: String? = nil, status: String? = nil) {
-		self.batch_token = batch_token
-		self.begin_time = begin_time
-		self.end_time = end_time
-		self.limit = limit
-		self.order = order
-		self.status = status
-	}
-}
-
-/// 
-public enum V1ListSettlementsRequestStatus: String, Codable {
-	case SENT
-	case FAILED
-}
-
-public struct V1ListSettlementsResponse: Codable, Equatable {
-	public var items: [V1Settlement]?
-
-	public init(items: [V1Settlement]? = nil) {
 		self.items = items
 	}
 }
@@ -24207,352 +24363,6 @@ public enum V1OrderState: String, Codable {
 	case REJECTED
 }
 
-/// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
-public struct V1Payment: Codable, Equatable {
-	/// All of the additive taxes associated with the payment.
-	public var additive_tax: [V1PaymentTax]?
-	/// The sum of all additive taxes associated with the payment.
-	public var additive_tax_money: V1Money?
-	/// The time when the payment was created, in ISO 8601 format. Reflects the time of the first payment if the object represents an incomplete partial payment, and the time of the last or complete payment otherwise.
-	public var created_at: String?
-	/// The unique identifier of the Square account that took the payment.
-	public var creator_id: String?
-	/// The device that took the payment.
-	public var device: V1Device?
-	/// The total of all discounts applied to the payment.
-	public var discount_money: V1Money?
-	/// The total of all sales, including any applicable taxes.
-	public var gross_sales_money: V1Money?
-	/// The payment's unique identifier.
-	public var id: String?
-	/// All of the inclusive taxes associated with the payment.
-	public var inclusive_tax: [V1PaymentTax]?
-	/// The sum of all inclusive taxes associated with the payment.
-	public var inclusive_tax_money: V1Money?
-	/// Indicates whether or not the payment is only partially paid for. If true, this payment will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
-	public var is_partial: Bool?
-	/// The items purchased in the payment.
-	public var itemizations: [V1PaymentItemization]?
-	/// The unique identifier of the merchant that took the payment.
-	public var merchant_id: String?
-	/// The total of all sales, minus any applicable taxes.
-	public var net_sales_money: V1Money?
-	/// The amount to be deposited into the merchant's bank account for the payment.
-	public var net_total_money: V1Money?
-	/// The URL of the payment's detail page in the merchant dashboard. The merchant must be signed in to the merchant dashboard to view this page.
-	public var payment_url: String?
-	/// The total of all processing fees collected by Square for the payment.
-	public var processing_fee_money: V1Money?
-	/// The URL of the receipt for the payment. Note that for split tender payments, this URL corresponds to the receipt for the first tender listed in the payment's tender field. Each Tender object has its own receipt_url field you can use to get the other receipts associated with a split tender payment.
-	public var receipt_url: String?
-	/// The total of all refunds applied to the payment.
-	public var refunded_money: V1Money?
-	/// All of the refunds applied to the payment. Note that the value of all refunds on a payment can exceed the value of all tenders if a merchant chooses to refund money to a tender after previously accepting returned goods as part of an exchange.
-	public var refunds: [V1Refund]?
-	/// The total of all surcharges applied to the payment.
-	public var surcharge_money: V1Money?
-	/// A list of all surcharges associated with the payment.
-	public var surcharges: [V1PaymentSurcharge]?
-	/// The total of all sales, including any applicable taxes, rounded to the smallest legal unit of currency (e.g., the nearest penny in USD, the nearest nickel in CAD)
-	public var swedish_rounding_money: V1Money?
-	/// The total of all taxes applied to the payment. This is always the sum of inclusive_tax_money and additive_tax_money.
-	public var tax_money: V1Money?
-	/// All of the tenders associated with the payment.
-	public var tender: [V1Tender]?
-	/// The total of all tips applied to the payment.
-	public var tip_money: V1Money?
-	/// The total of all discounts applied to the payment.
-	public var total_collected_money: V1Money?
-
-	/// A payment represents a paid transaction between a Square merchant and a customer. Payment details are usually available from Connect API endpoints within a few minutes after the transaction completes.  Each Payment object includes several fields that end in `_money`. These fields describe the various amounts of money that contribute to the payment total:  <ul> <li> Monetary values are <b>positive</b> if they represent an <em>increase</em> in the amount of money the merchant receives (e.g., <code>tax_money</code>, <code>tip_money</code>). </li> <li> Monetary values are <b>negative</b> if they represent an <em>decrease</em> in the amount of money the merchant receives (e.g., <code>discount_money</code>, <code>refunded_money</code>). </li> </ul>
-	/// - Parameters:
-	///   - additive_tax: All of the additive taxes associated with the payment.
-	///   - additive_tax_money: The sum of all additive taxes associated with the payment.
-	///   - created_at: The time when the payment was created, in ISO 8601 format. Reflects the time of the first payment if the object represents an incomplete partial payment, and the time of the last or complete payment otherwise.
-	///   - creator_id: The unique identifier of the Square account that took the payment.
-	///   - device: The device that took the payment.
-	///   - discount_money: The total of all discounts applied to the payment.
-	///   - gross_sales_money: The total of all sales, including any applicable taxes.
-	///   - id: The payment's unique identifier.
-	///   - inclusive_tax: All of the inclusive taxes associated with the payment.
-	///   - inclusive_tax_money: The sum of all inclusive taxes associated with the payment.
-	///   - is_partial: Indicates whether or not the payment is only partially paid for. If true, this payment will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
-	///   - itemizations: The items purchased in the payment.
-	///   - merchant_id: The unique identifier of the merchant that took the payment.
-	///   - net_sales_money: The total of all sales, minus any applicable taxes.
-	///   - net_total_money: The amount to be deposited into the merchant's bank account for the payment.
-	///   - payment_url: The URL of the payment's detail page in the merchant dashboard. The merchant must be signed in to the merchant dashboard to view this page.
-	///   - processing_fee_money: The total of all processing fees collected by Square for the payment.
-	///   - receipt_url: The URL of the receipt for the payment. Note that for split tender payments, this URL corresponds to the receipt for the first tender listed in the payment's tender field. Each Tender object has its own receipt_url field you can use to get the other receipts associated with a split tender payment.
-	///   - refunded_money: The total of all refunds applied to the payment.
-	///   - refunds: All of the refunds applied to the payment. Note that the value of all refunds on a payment can exceed the value of all tenders if a merchant chooses to refund money to a tender after previously accepting returned goods as part of an exchange.
-	///   - surcharge_money: The total of all surcharges applied to the payment.
-	///   - surcharges: A list of all surcharges associated with the payment.
-	///   - swedish_rounding_money: The total of all sales, including any applicable taxes, rounded to the smallest legal unit of currency (e.g., the nearest penny in USD, the nearest nickel in CAD)
-	///   - tax_money: The total of all taxes applied to the payment. This is always the sum of inclusive_tax_money and additive_tax_money.
-	///   - tender: All of the tenders associated with the payment.
-	///   - tip_money: The total of all tips applied to the payment.
-	///   - total_collected_money: The total of all discounts applied to the payment.
-	public init(additive_tax: [V1PaymentTax]? = nil, additive_tax_money: V1Money? = nil, created_at: String? = nil, creator_id: String? = nil, device: V1Device? = nil, discount_money: V1Money? = nil, gross_sales_money: V1Money? = nil, id: String? = nil, inclusive_tax: [V1PaymentTax]? = nil, inclusive_tax_money: V1Money? = nil, is_partial: Bool? = nil, itemizations: [V1PaymentItemization]? = nil, merchant_id: String? = nil, net_sales_money: V1Money? = nil, net_total_money: V1Money? = nil, payment_url: String? = nil, processing_fee_money: V1Money? = nil, receipt_url: String? = nil, refunded_money: V1Money? = nil, refunds: [V1Refund]? = nil, surcharge_money: V1Money? = nil, surcharges: [V1PaymentSurcharge]? = nil, swedish_rounding_money: V1Money? = nil, tax_money: V1Money? = nil, tender: [V1Tender]? = nil, tip_money: V1Money? = nil, total_collected_money: V1Money? = nil) {
-		self.additive_tax = additive_tax
-		self.additive_tax_money = additive_tax_money
-		self.created_at = created_at
-		self.creator_id = creator_id
-		self.device = device
-		self.discount_money = discount_money
-		self.gross_sales_money = gross_sales_money
-		self.id = id
-		self.inclusive_tax = inclusive_tax
-		self.inclusive_tax_money = inclusive_tax_money
-		self.is_partial = is_partial
-		self.itemizations = itemizations
-		self.merchant_id = merchant_id
-		self.net_sales_money = net_sales_money
-		self.net_total_money = net_total_money
-		self.payment_url = payment_url
-		self.processing_fee_money = processing_fee_money
-		self.receipt_url = receipt_url
-		self.refunded_money = refunded_money
-		self.refunds = refunds
-		self.surcharge_money = surcharge_money
-		self.surcharges = surcharges
-		self.swedish_rounding_money = swedish_rounding_money
-		self.tax_money = tax_money
-		self.tender = tender
-		self.tip_money = tip_money
-		self.total_collected_money = total_collected_money
-	}
-}
-
-/// V1PaymentDiscount
-public struct V1PaymentDiscount: Codable, Equatable {
-	/// The amount of money that this discount adds to the payment (note that this value is always negative or zero).
-	public var applied_money: V1Money?
-	/// The ID of the applied discount, if available. Discounts applied in older versions of Square Register might not have an ID.
-	public var discount_id: String?
-	/// The discount's name.
-	public var name: String?
-
-	/// V1PaymentDiscount
-	/// - Parameters:
-	///   - applied_money: The amount of money that this discount adds to the payment (note that this value is always negative or zero).
-	///   - discount_id: The ID of the applied discount, if available. Discounts applied in older versions of Square Register might not have an ID.
-	///   - name: The discount's name.
-	public init(applied_money: V1Money? = nil, discount_id: String? = nil, name: String? = nil) {
-		self.applied_money = applied_money
-		self.discount_id = discount_id
-		self.name = name
-	}
-}
-
-/// V1PaymentItemDetail
-public struct V1PaymentItemDetail: Codable, Equatable {
-	/// The name of the item's merchant-defined category, if any.
-	public var category_name: String?
-	/// The unique ID of the item purchased, if any.
-	public var item_id: String?
-	/// The unique ID of the item variation purchased, if any.
-	public var item_variation_id: String?
-	///  The item's merchant-defined SKU, if any.
-	public var sku: String?
-
-	/// V1PaymentItemDetail
-	/// - Parameters:
-	///   - category_name: The name of the item's merchant-defined category, if any.
-	///   - item_id: The unique ID of the item purchased, if any.
-	///   - item_variation_id: The unique ID of the item variation purchased, if any.
-	///   - sku:  The item's merchant-defined SKU, if any.
-	public init(category_name: String? = nil, item_id: String? = nil, item_variation_id: String? = nil, sku: String? = nil) {
-		self.category_name = category_name
-		self.item_id = item_id
-		self.item_variation_id = item_variation_id
-		self.sku = sku
-	}
-}
-
-/// Payment include an` itemizations` field that lists the items purchased, along with associated fees, modifiers, and discounts. Each itemization has an `itemization_type` field that indicates which of the following the itemization represents:  <ul> <li>An item variation from the merchant's item library</li> <li>A custom monetary amount</li> <li> An action performed on a Square gift card, such as activating or reloading it. </li> </ul>  *Note**: itemization information included in a `Payment` object reflects details collected **at the time of the payment**. Details such as the name or price of items might have changed since the payment was processed.
-public struct V1PaymentItemization: Codable, Equatable {
-	/// The total of all discounts applied to the itemization. This value is always negative or zero.
-	public var discount_money: V1Money?
-	/// All discounts applied to this itemization.
-	public var discounts: [V1PaymentDiscount]?
-	/// The total cost of the itemization and its modifiers, not including taxes or discounts.
-	public var gross_sales_money: V1Money?
-	/// Details of the item, including its unique identifier and the identifier of the item variation purchased.
-	public var item_detail: V1PaymentItemDetail?
-	/// The name of the item variation purchased, if any.
-	public var item_variation_name: String?
-	/// The type of purchase that the itemization represents, such as an ITEM or CUSTOM_AMOUNT
-	public var itemization_type: String?
-	/// All modifier options applied to this itemization.
-	public var modifiers: [V1PaymentModifier]?
-	/// The item's name.
-	public var name: String?
-	/// The sum of gross_sales_money and discount_money.
-	public var net_sales_money: V1Money?
-	/// Notes entered by the merchant about the item at the time of payment, if any.
-	public var notes: String?
-	/// The quantity of the item purchased. This can be a decimal value.
-	public var quantity: StringNumber?
-	/// The cost of a single unit of this item.
-	public var single_quantity_money: V1Money?
-	/// All taxes applied to this itemization.
-	public var taxes: [V1PaymentTax]?
-	/// The total cost of the item, including all taxes and discounts.
-	public var total_money: V1Money?
-
-	/// Payment include an` itemizations` field that lists the items purchased, along with associated fees, modifiers, and discounts. Each itemization has an `itemization_type` field that indicates which of the following the itemization represents:  <ul> <li>An item variation from the merchant's item library</li> <li>A custom monetary amount</li> <li> An action performed on a Square gift card, such as activating or reloading it. </li> </ul>  *Note**: itemization information included in a `Payment` object reflects details collected **at the time of the payment**. Details such as the name or price of items might have changed since the payment was processed.
-	/// - Parameters:
-	///   - discount_money: The total of all discounts applied to the itemization. This value is always negative or zero.
-	///   - discounts: All discounts applied to this itemization.
-	///   - gross_sales_money: The total cost of the itemization and its modifiers, not including taxes or discounts.
-	///   - item_detail: Details of the item, including its unique identifier and the identifier of the item variation purchased.
-	///   - item_variation_name: The name of the item variation purchased, if any.
-	///   - itemization_type: The type of purchase that the itemization represents, such as an ITEM or CUSTOM_AMOUNT
-	///   - modifiers: All modifier options applied to this itemization.
-	///   - name: The item's name.
-	///   - net_sales_money: The sum of gross_sales_money and discount_money.
-	///   - notes: Notes entered by the merchant about the item at the time of payment, if any.
-	///   - quantity: The quantity of the item purchased. This can be a decimal value.
-	///   - single_quantity_money: The cost of a single unit of this item.
-	///   - taxes: All taxes applied to this itemization.
-	///   - total_money: The total cost of the item, including all taxes and discounts.
-	public init(discount_money: V1Money? = nil, discounts: [V1PaymentDiscount]? = nil, gross_sales_money: V1Money? = nil, item_detail: V1PaymentItemDetail? = nil, item_variation_name: String? = nil, itemization_type: String? = nil, modifiers: [V1PaymentModifier]? = nil, name: String? = nil, net_sales_money: V1Money? = nil, notes: String? = nil, quantity: StringNumber? = nil, single_quantity_money: V1Money? = nil, taxes: [V1PaymentTax]? = nil, total_money: V1Money? = nil) {
-		self.discount_money = discount_money
-		self.discounts = discounts
-		self.gross_sales_money = gross_sales_money
-		self.item_detail = item_detail
-		self.item_variation_name = item_variation_name
-		self.itemization_type = itemization_type
-		self.modifiers = modifiers
-		self.name = name
-		self.net_sales_money = net_sales_money
-		self.notes = notes
-		self.quantity = quantity
-		self.single_quantity_money = single_quantity_money
-		self.taxes = taxes
-		self.total_money = total_money
-	}
-}
-
-/// 
-public enum V1PaymentItemizationItemizationType: String, Codable {
-	case ITEM
-	case CUSTOM_AMOUNT
-	case GIFT_CARD_ACTIVATION
-	case GIFT_CARD_RELOAD
-	case GIFT_CARD_UNKNOWN
-	case OTHER
-}
-
-/// V1PaymentModifier
-public struct V1PaymentModifier: Codable, Equatable {
-	/// The amount of money that this modifier option adds to the payment.
-	public var applied_money: V1Money?
-	/// The ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
-	public var modifier_option_id: String?
-	/// The modifier option's name.
-	public var name: String?
-
-	/// V1PaymentModifier
-	/// - Parameters:
-	///   - applied_money: The amount of money that this modifier option adds to the payment.
-	///   - modifier_option_id: The ID of the applied modifier option, if available. Modifier options applied in older versions of Square Register might not have an ID.
-	///   - name: The modifier option's name.
-	public init(applied_money: V1Money? = nil, modifier_option_id: String? = nil, name: String? = nil) {
-		self.applied_money = applied_money
-		self.modifier_option_id = modifier_option_id
-		self.name = name
-	}
-}
-
-/// V1PaymentSurcharge
-public struct V1PaymentSurcharge: Codable, Equatable {
-	/// The amount of the surcharge as a Money object. Exactly one of rate or amount_money should be set.
-	public var amount_money: V1Money?
-	/// The amount of money applied to the order as a result of the surcharge.
-	public var applied_money: V1Money?
-	/// The name of the surcharge.
-	public var name: String?
-	/// The amount of the surcharge as a percentage. The percentage is provided as a string representing the decimal equivalent of the percentage. For example, "0.7" corresponds to a 7% surcharge. Exactly one of rate or amount_money should be set.
-	public var rate: String?
-	/// A Square-issued unique identifier associated with the surcharge.
-	public var surcharge_id: String?
-	/// Indicates whether the surcharge is taxable.
-	public var taxable: Bool?
-	/// The list of taxes that should be applied to the surcharge.
-	public var taxes: [V1PaymentTax]?
-	/// Indicates the source of the surcharge. For example, if it was applied as an automatic gratuity for a large group.
-	public var type: String?
-
-	/// V1PaymentSurcharge
-	/// - Parameters:
-	///   - amount_money: The amount of the surcharge as a Money object. Exactly one of rate or amount_money should be set.
-	///   - applied_money: The amount of money applied to the order as a result of the surcharge.
-	///   - name: The name of the surcharge.
-	///   - rate: The amount of the surcharge as a percentage. The percentage is provided as a string representing the decimal equivalent of the percentage. For example, "0.7" corresponds to a 7% surcharge. Exactly one of rate or amount_money should be set.
-	///   - surcharge_id: A Square-issued unique identifier associated with the surcharge.
-	///   - taxable: Indicates whether the surcharge is taxable.
-	///   - taxes: The list of taxes that should be applied to the surcharge.
-	///   - type: Indicates the source of the surcharge. For example, if it was applied as an automatic gratuity for a large group.
-	public init(amount_money: V1Money? = nil, applied_money: V1Money? = nil, name: String? = nil, rate: String? = nil, surcharge_id: String? = nil, taxable: Bool? = nil, taxes: [V1PaymentTax]? = nil, type: String? = nil) {
-		self.amount_money = amount_money
-		self.applied_money = applied_money
-		self.name = name
-		self.rate = rate
-		self.surcharge_id = surcharge_id
-		self.taxable = taxable
-		self.taxes = taxes
-		self.type = type
-	}
-}
-
-/// 
-public enum V1PaymentSurchargeType: String, Codable {
-	case UNKNOWN
-	case AUTO_GRATUITY
-	case CUSTOM
-}
-
-/// V1PaymentTax
-public struct V1PaymentTax: Codable, Equatable {
-	/// The amount of money that this tax adds to the payment.
-	public var applied_money: V1Money?
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The ID of the tax, if available. Taxes applied in older versions of Square Register might not have an ID.
-	public var fee_id: String?
-	/// Whether the tax is an ADDITIVE tax or an INCLUSIVE tax.
-	public var inclusion_type: String?
-	/// The merchant-defined name of the tax.
-	public var name: String?
-	/// The rate of the tax, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%.
-	public var rate: String?
-
-	/// V1PaymentTax
-	/// - Parameters:
-	///   - applied_money: The amount of money that this tax adds to the payment.
-	///   - errors: Any errors that occurred during the request.
-	///   - fee_id: The ID of the tax, if available. Taxes applied in older versions of Square Register might not have an ID.
-	///   - inclusion_type: Whether the tax is an ADDITIVE tax or an INCLUSIVE tax.
-	///   - name: The merchant-defined name of the tax.
-	///   - rate: The rate of the tax, as a string representation of a decimal number. A value of 0.07 corresponds to a rate of 7%.
-	public init(applied_money: V1Money? = nil, errors: [SquareError]? = nil, fee_id: String? = nil, inclusion_type: String? = nil, name: String? = nil, rate: String? = nil) {
-		self.applied_money = applied_money
-		self.errors = errors
-		self.fee_id = fee_id
-		self.inclusion_type = inclusion_type
-		self.name = name
-		self.rate = rate
-	}
-}
-
-/// 
-public enum V1PaymentTaxInclusionType: String, Codable {
-	case ADDITIVE
-	case INCLUSIVE
-}
-
 /// Represents a phone number.
 public struct V1PhoneNumber: Codable, Equatable {
 	/// The phone number's international calling code. For US phone numbers, this value is +1.
@@ -24570,217 +24380,10 @@ public struct V1PhoneNumber: Codable, Equatable {
 	}
 }
 
-/// V1Refund
-public struct V1Refund: Codable, Equatable {
-	/// The time when the merchant initiated the refund for Square to process, in ISO 8601 format.
-	public var created_at: String?
-	/// Indicates whether or not the refund is associated with an exchange. If is_exchange is true, the refund reflects the value of goods returned in the exchange not the total money refunded.
-	public var is_exchange: Bool?
-	public var merchant_id: String?
-	/// A Square-issued ID associated with the refund. For single-tender refunds, payment_id is the ID of the original payment ID. For split-tender refunds, payment_id is the ID of the original tender. For exchange-based refunds (is_exchange == true), payment_id is the ID of the original payment ID even if the payment includes other tenders.
-	public var payment_id: String?
-	/// The time when Square processed the refund on behalf of the merchant, in ISO 8601 format.
-	public var processed_at: String?
-	/// The merchant-specified reason for the refund.
-	public var reason: String?
-	/// All of the additive taxes associated with the refund.
-	public var refunded_additive_tax: [V1PaymentTax]?
-	/// The amount of additive tax money refunded. This amount is always negative.
-	public var refunded_additive_tax_money: V1Money?
-	/// The amount of discount money refunded. This amount is always positive.
-	public var refunded_discount_money: V1Money?
-	/// All of the inclusive taxes associated with the refund.
-	public var refunded_inclusive_tax: [V1PaymentTax]?
-	/// The amount of inclusive tax money refunded. This amount is always negative.
-	public var refunded_inclusive_tax_money: V1Money?
-	/// The amount of money refunded. This amount is always negative.
-	public var refunded_money: V1Money?
-	/// The amount of processing fee money refunded. This amount is always positive.
-	public var refunded_processing_fee_money: V1Money?
-	/// The amount of surcharge money refunded. This amount is always negative.
-	public var refunded_surcharge_money: V1Money?
-	/// A list of all surcharges associated with the refund.
-	public var refunded_surcharges: [V1PaymentSurcharge]?
-	/// The total amount of tax money refunded. This amount is always negative.
-	public var refunded_tax_money: V1Money?
-	/// The amount of tip money refunded. This amount is always negative.
-	public var refunded_tip_money: V1Money?
-	/// The type of refund
-	public var type: String?
-
-	/// V1Refund
-	/// - Parameters:
-	///   - created_at: The time when the merchant initiated the refund for Square to process, in ISO 8601 format.
-	///   - is_exchange: Indicates whether or not the refund is associated with an exchange. If is_exchange is true, the refund reflects the value of goods returned in the exchange not the total money refunded.
-	///   - merchant_id: 
-	///   - payment_id: A Square-issued ID associated with the refund. For single-tender refunds, payment_id is the ID of the original payment ID. For split-tender refunds, payment_id is the ID of the original tender. For exchange-based refunds (is_exchange == true), payment_id is the ID of the original payment ID even if the payment includes other tenders.
-	///   - processed_at: The time when Square processed the refund on behalf of the merchant, in ISO 8601 format.
-	///   - reason: The merchant-specified reason for the refund.
-	///   - refunded_additive_tax: All of the additive taxes associated with the refund.
-	///   - refunded_additive_tax_money: The amount of additive tax money refunded. This amount is always negative.
-	///   - refunded_discount_money: The amount of discount money refunded. This amount is always positive.
-	///   - refunded_inclusive_tax: All of the inclusive taxes associated with the refund.
-	///   - refunded_inclusive_tax_money: The amount of inclusive tax money refunded. This amount is always negative.
-	///   - refunded_money: The amount of money refunded. This amount is always negative.
-	///   - refunded_processing_fee_money: The amount of processing fee money refunded. This amount is always positive.
-	///   - refunded_surcharge_money: The amount of surcharge money refunded. This amount is always negative.
-	///   - refunded_surcharges: A list of all surcharges associated with the refund.
-	///   - refunded_tax_money: The total amount of tax money refunded. This amount is always negative.
-	///   - refunded_tip_money: The amount of tip money refunded. This amount is always negative.
-	///   - type: The type of refund
-	public init(created_at: String? = nil, is_exchange: Bool? = nil, merchant_id: String? = nil, payment_id: String? = nil, processed_at: String? = nil, reason: String? = nil, refunded_additive_tax: [V1PaymentTax]? = nil, refunded_additive_tax_money: V1Money? = nil, refunded_discount_money: V1Money? = nil, refunded_inclusive_tax: [V1PaymentTax]? = nil, refunded_inclusive_tax_money: V1Money? = nil, refunded_money: V1Money? = nil, refunded_processing_fee_money: V1Money? = nil, refunded_surcharge_money: V1Money? = nil, refunded_surcharges: [V1PaymentSurcharge]? = nil, refunded_tax_money: V1Money? = nil, refunded_tip_money: V1Money? = nil, type: String? = nil) {
-		self.created_at = created_at
-		self.is_exchange = is_exchange
-		self.merchant_id = merchant_id
-		self.payment_id = payment_id
-		self.processed_at = processed_at
-		self.reason = reason
-		self.refunded_additive_tax = refunded_additive_tax
-		self.refunded_additive_tax_money = refunded_additive_tax_money
-		self.refunded_discount_money = refunded_discount_money
-		self.refunded_inclusive_tax = refunded_inclusive_tax
-		self.refunded_inclusive_tax_money = refunded_inclusive_tax_money
-		self.refunded_money = refunded_money
-		self.refunded_processing_fee_money = refunded_processing_fee_money
-		self.refunded_surcharge_money = refunded_surcharge_money
-		self.refunded_surcharges = refunded_surcharges
-		self.refunded_tax_money = refunded_tax_money
-		self.refunded_tip_money = refunded_tip_money
-		self.type = type
-	}
-}
-
-/// 
-public enum V1RefundType: String, Codable {
-	case FULL
-	case PARTIAL
-}
-
 public struct V1RetrieveOrderRequest: Codable, Equatable {
 
 	public init() {
 	}
-}
-
-public struct V1RetrievePaymentRequest: Codable, Equatable {
-
-	public init() {
-	}
-}
-
-public struct V1RetrieveSettlementRequest: Codable, Equatable {
-
-	public init() {
-	}
-}
-
-/// V1Settlement
-public struct V1Settlement: Codable, Equatable {
-	/// The Square-issued unique identifier for the bank account associated with the settlement.
-	public var bank_account_id: String?
-	/// The entries included in this settlement.
-	public var entries: [V1SettlementEntry]?
-	/// The settlement's unique identifier.
-	public var id: String?
-	/// The time when the settlement was submitted for deposit or withdrawal, in ISO 8601 format.
-	public var initiated_at: String?
-	/// The settlement's current status.
-	public var status: String?
-	/// The amount of money involved in the settlement. A positive amount indicates a deposit, and a negative amount indicates a withdrawal. This amount is never zero.
-	public var total_money: V1Money?
-
-	/// V1Settlement
-	/// - Parameters:
-	///   - bank_account_id: The Square-issued unique identifier for the bank account associated with the settlement.
-	///   - entries: The entries included in this settlement.
-	///   - id: The settlement's unique identifier.
-	///   - initiated_at: The time when the settlement was submitted for deposit or withdrawal, in ISO 8601 format.
-	///   - status: The settlement's current status.
-	///   - total_money: The amount of money involved in the settlement. A positive amount indicates a deposit, and a negative amount indicates a withdrawal. This amount is never zero.
-	public init(bank_account_id: String? = nil, entries: [V1SettlementEntry]? = nil, id: String? = nil, initiated_at: String? = nil, status: String? = nil, total_money: V1Money? = nil) {
-		self.bank_account_id = bank_account_id
-		self.entries = entries
-		self.id = id
-		self.initiated_at = initiated_at
-		self.status = status
-		self.total_money = total_money
-	}
-}
-
-/// V1SettlementEntry
-public struct V1SettlementEntry: Codable, Equatable {
-	/// The total amount of money this entry contributes to the total settlement amount.
-	public var amount_money: V1Money?
-	/// The amount of all Square fees associated with this settlement entry. This value is always negative or zero.
-	public var fee_money: V1Money?
-	/// The settlement's unique identifier.
-	public var payment_id: String?
-	/// The settlement's current status.
-	public var type: String?
-
-	/// V1SettlementEntry
-	/// - Parameters:
-	///   - amount_money: The total amount of money this entry contributes to the total settlement amount.
-	///   - fee_money: The amount of all Square fees associated with this settlement entry. This value is always negative or zero.
-	///   - payment_id: The settlement's unique identifier.
-	///   - type: The settlement's current status.
-	public init(amount_money: V1Money? = nil, fee_money: V1Money? = nil, payment_id: String? = nil, type: String? = nil) {
-		self.amount_money = amount_money
-		self.fee_money = fee_money
-		self.payment_id = payment_id
-		self.type = type
-	}
-}
-
-/// 
-public enum V1SettlementEntryType: String, Codable {
-	/// A manual adjustment applied to the merchant's account by Square
-	case ADJUSTMENT
-	/// A payment from an existing Square balance, such as a gift card
-	case BALANCE_CHARGE
-	/// A credit card payment CAPTURE
-	case CHARGE
-	/// Square offers Free Payments Processing for a variety of business scenarios including seller referral or when we want to apologize for a bug, customer service, repricing complication, etc. This entry represents a credit to the merchant for the purposes of Free Processing.
-	case FREE_PROCESSING
-	/// An adjustment made by Square related to holding/releasing a payment
-	case HOLD_ADJUSTMENT
-	/// a fee paid to a 3rd party merchant
-	case PAID_SERVICE_FEE
-	/// a refund for a 3rd party merchant fee
-	case PAID_SERVICE_FEE_REFUND
-	/// Repayment for a redemption code
-	case REDEMPTION_CODE
-	/// A refund for an existing card payment
-	case REFUND
-	/// An entry created when we receive a response for the ACH file we sent indicating that the settlement of the original entry failed.
-	case RETURNED_PAYOUT
-	/// Initial deposit to a merchant for a Capital merchant cash advance (MCA).
-	case SQUARE_CAPITAL_ADVANCE
-	/// Capital merchant cash advance (MCA) assessment. These are, generally, proportional to the merchant's sales but may be issued for other reasons related to the MCA.
-	case SQUARE_CAPITAL_PAYMENT
-	/// Capital merchant cash advance (MCA) assessment refund. These are, generally, proportional to the merchant's refunds but may be issued for other reasons related to the MCA.
-	case SQUARE_CAPITAL_REVERSED_PAYMENT
-	/// Fee charged for subscription to a Square product
-	case SUBSCRIPTION_FEE
-	/// Refund of a previously charged Square product subscription fee.
-	case SUBSCRIPTION_FEE_REFUND
-	case OTHER
-	/// A payment in which Square covers part of the funds for a purchase
-	case INCENTED_PAYMENT
-	/// A settlement failed to be processed and the settlement amount has been returned to the account
-	case RETURNED_ACH_ENTRY
-	/// Refund for cancelling a Square Plus subscription
-	case RETURNED_SQUARE_275
-	/// Fee charged for a Square Plus subscription ($275)
-	case SQUARE_275
-	/// Settlements to or withdrawals from the Square Card (an asset)
-	case SQUARE_CARD
-}
-
-/// 
-public enum V1SettlementStatus: String, Codable {
-	case FAILED
-	case SENT
 }
 
 /// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
