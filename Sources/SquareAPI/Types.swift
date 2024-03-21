@@ -1359,10 +1359,6 @@ public struct CatalogObject: Codable, Equatable {
 	public var catalog_v1_ids: [CatalogV1Id]?
 	/// Structured data for a `CatalogCategory`, set for CatalogObjects of type `CATEGORY`.
 	public var category_data: CatalogCategory?
-	/// Structured data for a `CatalogCustomAttributeDefinition`, set for CatalogObjects of type `CUSTOM_ATTRIBUTE_DEFINITION`.
-	public var custom_attribute_definition_data: Empty?
-	/// A map (key-value pairs) of application-defined custom attribute values. The value of a key-value pair is a [CatalogCustomAttributeValue](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogCustomAttributeValue) object. The key is the `key` attribute value defined in the associated [CatalogCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogCustomAttributeDefinition) object defined by the application making the request.  If the `CatalogCustomAttributeDefinition` object is defined by another application, the `CatalogCustomAttributeDefinition`'s key attribute value is prefixed by the defining application ID. For example, if the `CatalogCustomAttributeDefinition` has a `key` attribute of `"cocoa_brand"` and the defining application ID is `"abcd1234"`, the key in the map is `"abcd1234:cocoa_brand"` if the application making the request is different from the application defining the custom attribute definition. Otherwise, the key used in the map is simply `"cocoa_brand"`.  Application-defined custom attributes are set at a global (location-independent) level. Custom attribute values are intended to store additional information about a catalog object or associations with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.).
-	public var custom_attribute_values: Empty?
 	/// Structured data for a `CatalogDiscount`, set for CatalogObjects of type `DISCOUNT`.
 	public var discount_data: CatalogDiscount?
 	/// An identifier to reference this object in the catalog. When a new `CatalogObject` is inserted, the client should set the id to a temporary identifier starting with a "`#`" character. Other objects being inserted or updated within the same request may use this identifier to refer to the new object.  When the server receives the new object, it will supply a unique identifier that replaces the temporary identifier for all future references.
@@ -1395,10 +1391,6 @@ public struct CatalogObject: Codable, Equatable {
 	public var product_set_data: CatalogProductSet?
 	/// Structured data for a `CatalogQuickAmountsSettings`, set for CatalogObjects of type `QUICK_AMOUNTS_SETTINGS`.
 	public var quick_amounts_settings_data: CatalogQuickAmountsSettings?
-	/// Structured data for a `CatalogSubscriptionPlan`, set for CatalogObjects of type `SUBSCRIPTION_PLAN`.
-	public var subscription_plan_data: CatalogSubscriptionPlan?
-	/// Structured data for a `CatalogSubscriptionPlanVariation`, set for CatalogObjects of type `SUBSCRIPTION_PLAN_VARIATION`.
-	public var subscription_plan_variation_data: Empty?
 	/// Structured data for a `CatalogTax`, set for CatalogObjects of type `TAX`.
 	public var tax_data: CatalogTax?
 	/// Structured data for a `CatalogTimePeriod`, set for CatalogObjects of type `TIME_PERIOD`.
@@ -1441,15 +1433,13 @@ public struct CatalogObject: Codable, Equatable {
 	///   - type: The type of this object. Each object type has expected properties expressed in a structured format within its corresponding `*_data` field below.
 	///   - updated_at: Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) in RFC 3339 format, e.g., `"2016-08-15T23:59:33.123Z"` would indicate the UTC time (denoted by `Z`) of August 15, 2016 at 23:59:33 and 123 milliseconds.
 	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
-	public init(id: String, type: String, absent_at_location_ids: [String]? = nil, availability_period_data: CatalogAvailabilityPeriod? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: CatalogCustomAttributeDefinition? = nil, custom_attribute_values: CatalogCustomAttributeValue? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, subscription_plan_variation_data: CatalogSubscriptionPlanVariation? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(id: String, type: String, absent_at_location_ids: [String]? = nil, availability_period_data: CatalogAvailabilityPeriod? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.id = id
 		self.type = type
 		self.absent_at_location_ids = absent_at_location_ids
 		self.availability_period_data = availability_period_data
 		self.catalog_v1_ids = catalog_v1_ids
 		self.category_data = category_data
-		self.custom_attribute_definition_data = custom_attribute_definition_data
-		self.custom_attribute_values = custom_attribute_values
 		self.discount_data = discount_data
 		self.image_data = image_data
 		self.is_deleted = is_deleted
@@ -1465,8 +1455,6 @@ public struct CatalogObject: Codable, Equatable {
 		self.pricing_rule_data = pricing_rule_data
 		self.product_set_data = product_set_data
 		self.quick_amounts_settings_data = quick_amounts_settings_data
-		self.subscription_plan_data = subscription_plan_data
-		self.subscription_plan_variation_data = subscription_plan_variation_data
 		self.tax_data = tax_data
 		self.time_period_data = time_period_data
 		self.updated_at = updated_at
@@ -1818,6 +1806,23 @@ public struct CatalogV1Id: Codable, Equatable {
 	public init(catalog_v1_id: String? = nil, location_id: String? = nil) {
 		self.catalog_v1_id = catalog_v1_id
 		self.location_id = location_id
+	}
+}
+
+/// A node in the path from a retrieved category to its root node.
+public struct CategoryPathToRootNode: Codable, Equatable {
+	/// The category's ID.
+	public var category_id: String?
+	/// The category's name.
+	public var category_name: String?
+	
+	/// A node in the path from a retrieved category to its root node.
+	/// - Parameters:
+	///   - category_id: The category's ID.
+	///   - category_name: The category's name.
+	public init(category_id: String? = nil, category_name: String? = nil) {
+		self.category_id = category_id
+		self.category_name = category_name
 	}
 }
 
