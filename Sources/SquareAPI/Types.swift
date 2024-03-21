@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2023-08-16" }
+	public static var version: String { return "2024-03-20" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -172,6 +172,8 @@ public struct Availability: Codable, Equatable {
 public struct BatchRetrieveCatalogObjectsRequest: Codable, Equatable {
 	/// The specific version of the catalog objects to be included in the response.  This allows you to retrieve historical versions of objects. The specified version value is matched against the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s' `version` attribute. If not included, results will be from the current version of the catalog.
 	public var catalog_version: Int?
+	/// Specifies whether or not to include the `path_to_root` list for each returned category instance. The `path_to_root` list consists of `CategoryPathToRootNode` objects and specifies the path that starts with the immediate parent category of the returned category and ends with its root category. If the returned category is a top-level category, the `path_to_root` list is empty and is not returned in the response payload.
+	public var include_category_path_to_root: Bool?
 	/// Indicates whether to include (`true`) or not (`false`) in the response deleted objects, namely, those with the `is_deleted` attribute set to `true`.
 	public var include_deleted_objects: Bool?
 	/// If `true`, the response will include additional objects that are related to the requested objects. Related objects are defined as any objects referenced by ID by the results in the `objects` field of the response. These objects are put in the `related_objects` field. Setting this to `true` is helpful when the objects are needed for immediate display to a user. This process only goes one level deep. Objects referenced by the related objects will not be included. For example,  if the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.  Default value: `false`
@@ -179,9 +181,10 @@ public struct BatchRetrieveCatalogObjectsRequest: Codable, Equatable {
 	/// The IDs of the CatalogObjects to be retrieved.
 	public var object_ids: [String]
 
-	public init(object_ids: [String], catalog_version: Int? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil) {
+	public init(object_ids: [String], catalog_version: Int? = nil, include_category_path_to_root: Bool? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil) {
 		self.object_ids = object_ids
 		self.catalog_version = catalog_version
+		self.include_category_path_to_root = include_category_path_to_root
 		self.include_deleted_objects = include_deleted_objects
 		self.include_related_objects = include_related_objects
 	}
@@ -677,21 +680,88 @@ public struct CashPaymentDetails: Codable, Equatable {
 	}
 }
 
+/// Represents a time period of availability.
+public struct CatalogAvailabilityPeriod: Codable, Equatable {
+	/// The day of the week for this availability period.
+	public var day_of_week: String?
+	/// The end time of an availability period, specified in local time using partial-time RFC 3339 format. For example, `21:00:00` for a period ending at 9:00 in the evening. Note that the seconds value is always :00, but it is appended for conformance to the RFC.
+	public var end_local_time: Timestamp?
+	/// The start time of an availability period, specified in local time using partial-time RFC 3339 format. For example, `8:30:00` for a period starting at 8:30 in the morning. Note that the seconds value is always :00, but it is appended for conformance to the RFC.
+	public var start_local_time: Timestamp?
+
+	/// Represents a time period of availability.
+	/// - Parameters:
+	///   - day_of_week: The day of the week for this availability period.
+	///   - end_local_time: The end time of an availability period, specified in local time using partial-time RFC 3339 format. For example, `21:00:00` for a period ending at 9:00 in the evening. Note that the seconds value is always :00, but it is appended for conformance to the RFC.
+	///   - start_local_time: The start time of an availability period, specified in local time using partial-time RFC 3339 format. For example, `8:30:00` for a period starting at 8:30 in the morning. Note that the seconds value is always :00, but it is appended for conformance to the RFC.
+	public init(day_of_week: String? = nil, end_local_time: Timestamp? = nil, start_local_time: Timestamp? = nil) {
+		self.day_of_week = day_of_week
+		self.end_local_time = end_local_time
+		self.start_local_time = start_local_time
+	}
+}
+
 /// A category to which a `CatalogItem` instance belongs.
 public struct CatalogCategory: Codable, Equatable {
+	/// The IDs of the `CatalogAvailabilityPeriod` objects associated with the category.
+	public var availability_period_ids: [String]?
+	/// The type of the category.
+	public var category_type: String?
+	/// A list of IDs representing channels, such as a Square Online site, where the category can be made visible.
+	public var channels: [String]?
+	/// The SEO data for a seller's Square Online store.
+	public var ecom_seo_data: CatalogEcomSeoData?
 	/// The IDs of images associated with this `CatalogCategory` instance. Currently these images are not displayed by Square, but are free to be displayed in 3rd party applications.
 	public var image_ids: [String]?
+	/// Indicates whether a category is a top level category, which does not have any parent_category.
+	public var is_top_level: Bool?
 	/// The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	public var name: String?
+	/// Indicates whether the category is visible (`true`) or hidden (`false`) on all of the seller's Square Online sites.
+	public var online_visibility: Bool?
+	/// The ID of the parent category of this category instance.
+	public var parent_category: CatalogObjectCategory?
+	/// The path from the category to its root category. The first node of the path is the parent of the category and the last is the root category. The path is empty if the category is a root category.
+	public var path_to_root: [CategoryPathToRootNode]?
+	/// The top-level category in a category hierarchy.
+	public let root_category: String?
 
 	/// A category to which a `CatalogItem` instance belongs.
 	/// - Parameters:
+	///   - availability_period_ids: The IDs of the `CatalogAvailabilityPeriod` objects associated with the category.
+	///   - category_type: The type of the category.
+	///   - channels: A list of IDs representing channels, such as a Square Online site, where the category can be made visible.
+	///   - ecom_seo_data: The SEO data for a seller's Square Online store.
 	///   - image_ids: The IDs of images associated with this `CatalogCategory` instance. Currently these images are not displayed by Square, but are free to be displayed in 3rd party applications.
+	///   - is_top_level: Indicates whether a category is a top level category, which does not have any parent_category.
 	///   - name: The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
-	public init(image_ids: [String]? = nil, name: String? = nil) {
+	///   - online_visibility: Indicates whether the category is visible (`true`) or hidden (`false`) on all of the seller's Square Online sites.
+	///   - parent_category: The ID of the parent category of this category instance.
+	///   - path_to_root: The path from the category to its root category. The first node of the path is the parent of the category and the last is the root category. The path is empty if the category is a root category.
+	///   - root_category: The top-level category in a category hierarchy.
+	public init(availability_period_ids: [String]? = nil, category_type: String? = nil, channels: [String]? = nil, ecom_seo_data: CatalogEcomSeoData? = nil, image_ids: [String]? = nil, is_top_level: Bool? = nil, name: String? = nil, online_visibility: Bool? = nil, parent_category: CatalogObjectCategory? = nil, path_to_root: [CategoryPathToRootNode]? = nil, root_category: String? = nil) {
+		self.availability_period_ids = availability_period_ids
+		self.category_type = category_type
+		self.channels = channels
+		self.ecom_seo_data = ecom_seo_data
 		self.image_ids = image_ids
+		self.is_top_level = is_top_level
 		self.name = name
-	}
+        self.online_visibility = online_visibility
+        self.parent_category = parent_category
+        self.path_to_root = path_to_root
+        self.root_category = root_category
+    }
+}
+
+/// Indicates the type of a category.
+public enum CatalogCategoryType: String, Codable {
+    /// The regular category.
+    case REGULAR_CATEGORY
+    /// The menu category.
+    case MENU_CATEGORY
+    /// Kitchen categories are used by KDS (Kitchen Display System) to route items to specific clients
+    case KITCHEN_CATEGORY
 }
 
 /// A discount applicable to items.
@@ -755,6 +825,27 @@ public enum CatalogDiscountType: String, Codable {
 	case VARIABLE_AMOUNT
 }
 
+/// SEO data for for a seller's Square Online store.
+public struct CatalogEcomSeoData: Codable, Equatable {
+	/// The SEO description used for the Square Online store.
+	public var page_description: String?
+	/// The SEO title used for the Square Online store.
+	public var page_title: String?
+	/// The SEO permalink used for the Square Online store.
+	public var permalink: String?
+
+	/// SEO data for for a seller's Square Online store.
+	/// - Parameters:
+	///   - page_description: The SEO description used for the Square Online store.
+	///   - page_title: The SEO title used for the Square Online store.
+	///   - permalink: The SEO permalink used for the Square Online store.
+	public init(page_description: String? = nil, page_title: String? = nil, permalink: String? = nil) {
+		self.page_description = page_description
+		self.page_title = page_title
+		self.permalink = permalink
+	}
+}
+
 /// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/catalog-api/upsert-catalog-object) or [BatchUpsertCatalogObjects](https://developer.squareup.com/reference/square_yyyy-mm-dd/catalog-api/batch-upsert-catalog-objects) to create a [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
 public struct CatalogIdMapping: Codable, Equatable {
 	/// The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
@@ -807,8 +898,12 @@ public struct CatalogItem: Codable, Equatable {
 	public var available_for_pickup: Bool?
 	/// If `true`, the item can be added to shipping orders from the merchant's online store.
 	public var available_online: Bool?
-	/// The ID of the item's category, if any.
+	/// The list of categories.
+	public var categories: [CatalogObjectCategory]?
+	/// The ID of the item's category, if any. Deprecated since yyyy-mm-dd. Use `CatalogItem.categories`, instead.
 	public var category_id: String?
+	/// A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available.
+	public var channels: [String]?
 	/// The item's description. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.  Deprecated at yyyy-mm-dd, this field is planned to retire in 6 months. You should migrate to use `description_html` to set the description of the [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) instance.  The `description` and `description_html` field values are kept in sync. If you try to set the both fields, the `description_html` text value overwrites the `description` value. Updates in one field are also reflected in the other, except for when you use an early version before Square API yyyy-mm-dd and `description_html` is set to blank, setting the `description` value to null does not nullify `description_html`.
 	public var description: String?
 	/// The item's description as expressed in valid HTML elements. The length of this field value, including those of HTML tags, is of Unicode points. With application query filters, the text values of the HTML elements and attributes are searchable. Invalid or unsupported HTML elements or attributes are ignored.  Supported HTML elements include: - `a`: Link. Supports linking to website URLs, email address, and telephone numbers. - `b`, `strong`:  Bold text - `br`: Line break - `code`: Computer code - `div`: Section - `h1-h6`: Headings - `i`, `em`: Italics - `li`: List element - `ol`: Numbered list - `p`: Paragraph - `ul`: Bullet list - `u`: Underline   Supported HTML attributes include: - `align`: Alignment of the text content - `href`: Link destination - `rel`: Relationship between link's target and source - `target`: Place to open the linked document
@@ -827,8 +922,10 @@ public struct CatalogItem: Codable, Equatable {
 	public var modifier_list_info: [CatalogItemModifierListInfo]?
 	/// The item's name. This is a searchable attribute for use in applicable query filters, its value must not be empty, and the length is of Unicode code points.
 	public var name: String?
-	/// The product type of the item. May not be changed once an item has been created.  Only items of product type `REGULAR` or `APPOINTMENTS_SERVICE` may be created by this API; items with other product types are read-only.
+	/// The product type of the item. Once set, the `product_type` value cannot be modified.  Items of the `LEGACY_SQUARE_ONLINE_SERVICE` and `LEGACY_SQUARE_ONLINE_MEMBERSHIP` product types can be updated but cannot be created using the API.
 	public var product_type: String?
+	/// The item's reporting category.
+	public var reporting_category: CatalogObjectCategory?
 	/// If `false`, the Square Point of Sale app will present the `CatalogItem`'s details screen immediately, allowing the merchant to choose `CatalogModifier`s before adding the item to the cart.  This is the default behavior.  If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-selected modifiers, and merchants can edit modifiers by drilling down onto the item's details.  Third-party clients are encouraged to implement similar behaviors.
 	public var skip_modifier_screen: Bool?
 	/// A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting. Its value must not be empty.  It is currently supported for sellers of the Japanese locale only.
@@ -844,7 +941,9 @@ public struct CatalogItem: Codable, Equatable {
 	///   - available_electronically: If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
 	///   - available_for_pickup: If `true`, the item can be added to pickup orders from the merchant's online store.
 	///   - available_online: If `true`, the item can be added to shipping orders from the merchant's online store.
-	///   - category_id: The ID of the item's category, if any.
+	///   - categories: The list of categories.
+	///   - category_id: The ID of the item's category, if any. Deprecated since yyyy-mm-dd. Use `CatalogItem.categories`, instead.
+	///   - channels: A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available.
 	///   - description: The item's description. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.  Deprecated at yyyy-mm-dd, this field is planned to retire in 6 months. You should migrate to use `description_html` to set the description of the [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) instance.  The `description` and `description_html` field values are kept in sync. If you try to set the both fields, the `description_html` text value overwrites the `description` value. Updates in one field are also reflected in the other, except for when you use an early version before Square API yyyy-mm-dd and `description_html` is set to blank, setting the `description` value to null does not nullify `description_html`.
 	///   - description_html: The item's description as expressed in valid HTML elements. The length of this field value, including those of HTML tags, is of Unicode points. With application query filters, the text values of the HTML elements and attributes are searchable. Invalid or unsupported HTML elements or attributes are ignored.  Supported HTML elements include: - `a`: Link. Supports linking to website URLs, email address, and telephone numbers. - `b`, `strong`:  Bold text - `br`: Line break - `code`: Computer code - `div`: Section - `h1-h6`: Headings - `i`, `em`: Italics - `li`: List element - `ol`: Numbered list - `p`: Paragraph - `ul`: Bullet list - `u`: Underline   Supported HTML attributes include: - `align`: Alignment of the text content - `href`: Link destination - `rel`: Relationship between link's target and source - `target`: Place to open the linked document
 	///   - description_plaintext: A server-generated plaintext version of the `description_html` field, without formatting tags.
@@ -854,17 +953,20 @@ public struct CatalogItem: Codable, Equatable {
 	///   - label_color: The color of the item's display label in the Square Point of Sale app. This must be a valid hex color code.
 	///   - modifier_list_info: A set of `CatalogItemModifierListInfo` objects representing the modifier lists that apply to this item, along with the overrides and min and max limits that are specific to this item. Modifier lists may also be added to or deleted from an item using `UpdateItemModifierLists`.
 	///   - name: The item's name. This is a searchable attribute for use in applicable query filters, its value must not be empty, and the length is of Unicode code points.
-	///   - product_type: The product type of the item. May not be changed once an item has been created.  Only items of product type `REGULAR` or `APPOINTMENTS_SERVICE` may be created by this API; items with other product types are read-only.
+	///   - product_type: The product type of the item. Once set, the `product_type` value cannot be modified.  Items of the `LEGACY_SQUARE_ONLINE_SERVICE` and `LEGACY_SQUARE_ONLINE_MEMBERSHIP` product types can be updated but cannot be created using the API.
+	///   - reporting_category: The item's reporting category.
 	///   - skip_modifier_screen: If `false`, the Square Point of Sale app will present the `CatalogItem`'s details screen immediately, allowing the merchant to choose `CatalogModifier`s before adding the item to the cart.  This is the default behavior.  If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-selected modifiers, and merchants can edit modifiers by drilling down onto the item's details.  Third-party clients are encouraged to implement similar behaviors.
 	///   - sort_name: A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting. Its value must not be empty.  It is currently supported for sellers of the Japanese locale only.
 	///   - tax_ids: A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
 	///   - variations: A list of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) objects for this item. An item must have at least one variation.
-	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, category_id: String? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, image_ids: [String]? = nil, is_archived: Bool? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: String? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
+	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, categories: [CatalogObjectCategory]? = nil, category_id: String? = nil, channels: [String]? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, image_ids: [String]? = nil, is_archived: Bool? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: String? = nil, reporting_category: CatalogObjectCategory? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
 		self.abbreviation = abbreviation
 		self.available_electronically = available_electronically
 		self.available_for_pickup = available_for_pickup
 		self.available_online = available_online
+		self.categories = categories
 		self.category_id = category_id
+		self.channels = channels
 		self.description = description
 		self.description_html = description_html
 		self.description_plaintext = description_plaintext
@@ -875,6 +977,7 @@ public struct CatalogItem: Codable, Equatable {
 		self.modifier_list_info = modifier_list_info
 		self.name = name
 		self.product_type = product_type
+		self.reporting_category = reporting_category
 		self.skip_modifier_screen = skip_modifier_screen
 		self.sort_name = sort_name
 		self.tax_ids = tax_ids
@@ -886,28 +989,32 @@ public struct CatalogItem: Codable, Equatable {
 public struct CatalogItemModifierListInfo: Codable, Equatable {
 	/// If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	public var enabled: Bool?
-	/// If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`.
+	/// If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
 	public var max_selected_modifiers: Int?
-	/// If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`.
+	/// If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
 	public var min_selected_modifiers: Int?
 	/// The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	public var modifier_list_id: String
 	/// A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
 	public var modifier_overrides: [CatalogModifierOverride]?
+	/// The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
+	public var ordinal: Int?
 
-	/// Options to control the properties of a `CatalogModifierList` applied to a `CatalogItem` instance.
+	/// References a text-based modifier or a list of non text-based modifiers applied to a `CatalogItem` instance and specifies supported behaviors of the application.
 	/// - Parameters:
 	///   - enabled: If `true`, enable this `CatalogModifierList`. The default value is `true`.
-	///   - max_selected_modifiers: If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`.
-	///   - min_selected_modifiers: If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`.
+	///   - max_selected_modifiers: If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
+	///   - min_selected_modifiers: If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
 	///   - modifier_list_id: The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	///   - modifier_overrides: A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
-	public init(modifier_list_id: String, enabled: Bool? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil) {
+	///   - ordinal: The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
+	public init(modifier_list_id: String, enabled: Bool? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil, ordinal: Int? = nil) {
 		self.modifier_list_id = modifier_list_id
 		self.enabled = enabled
 		self.max_selected_modifiers = max_selected_modifiers
 		self.min_selected_modifiers = min_selected_modifiers
 		self.modifier_overrides = modifier_overrides
+		self.ordinal = ordinal
 	}
 }
 
@@ -1007,6 +1114,18 @@ public enum CatalogItemProductType: String, Codable {
 	case GIFT_CARD
 	/// A service that can be booked using the Square Appointments app.
 	case APPOINTMENTS_SERVICE
+	/// A food or beverage item that can be sold by restaurants and other food venues.
+	case FOOD_AND_BEV
+	/// An event which tickets can be sold for, including location, address, and times.
+	case EVENT
+	/// A digital item like an ebook or song.
+	case DIGITAL
+	/// A donation which site visitors can send for any cause.
+	case DONATION
+	/// A legacy Square Online service that is manually fulfilled. This corresponds to the `Other` item type displayed in the Square Seller Dashboard and Square POS apps.
+	case LEGACY_SQUARE_ONLINE_SERVICE
+	/// A legacy Square Online membership that is manually fulfilled. This corresponds to the `Membership` item type displayed in the Square Seller Dashboard and Square POS apps.
+	case LEGACY_SQUARE_ONLINE_MEMBERSHIP
 }
 
 /// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one item variation and can have at most 250 item variations.  An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
@@ -1027,7 +1146,7 @@ public struct CatalogItemVariation: Codable, Equatable {
 	public var location_overrides: [ItemVariationLocationOverrides]?
 	/// ID of the ‘CatalogMeasurementUnit’ that is used to measure the quantity sold of this item variation. If left unset, the item will be sold in whole quantities.
 	public var measurement_unit_id: String?
-	/// The item variation's name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
+	/// The item variation's name. This is a searchable attribute for use in applicable query filters.  Its value has a maximum length of 255 Unicode code points. However, when the parent [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) uses [item options](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemOption), this attribute is auto-generated, read-only, and can be longer than 255 Unicode code points.
 	public var name: String?
 	/// The order in which this item variation should be displayed. This value is read-only. On writes, the ordinal for each item variation within a parent `CatalogItem` is set according to the item variations's position. On reads, the value is not guaranteed to be sequential or unique.
 	public let ordinal: Int?
@@ -1064,7 +1183,7 @@ public struct CatalogItemVariation: Codable, Equatable {
 	///   - item_option_values: List of item option values associated with this item variation. Listed in the same order as the item options of the parent item.
 	///   - location_overrides: Per-location price and inventory overrides.
 	///   - measurement_unit_id: ID of the ‘CatalogMeasurementUnit’ that is used to measure the quantity sold of this item variation. If left unset, the item will be sold in whole quantities.
-	///   - name: The item variation's name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
+	///   - name: The item variation's name. This is a searchable attribute for use in applicable query filters.  Its value has a maximum length of 255 Unicode code points. However, when the parent [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) uses [item options](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemOption), this attribute is auto-generated, read-only, and can be longer than 255 Unicode code points.
 	///   - ordinal: The order in which this item variation should be displayed. This value is read-only. On writes, the ordinal for each item variation within a parent `CatalogItem` is set according to the item variations's position. On reads, the value is not guaranteed to be sequential or unique.
 	///   - price_money: The item variation's price, if fixed pricing is used.
 	///   - pricing_type: Indicates whether the item variation's price is fixed or determined at the time of sale.
@@ -1152,33 +1271,57 @@ public struct CatalogModifier: Codable, Equatable {
 	}
 }
 
-/// A list of modifiers applicable to items at the time of sale.  For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers. Use the `selection_type` field to specify whether or not multiple selections from the modifier list are allowed.
+/// For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.  For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the buyer-supplied  text string to be selected for the T-shirt at the time of sale.  For non text-based modifiers, this encapsulates a non-empty list of modifiers applicable to items  at the time of sale. Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.    For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers.   A non text-based modifier can be applied to the modified item once or multiple times, if the `selection_type` field  is set to `SINGLE` or `MULTIPLE`, respectively. On the other hand, a text-based modifier can be applied to the item  only once and the `selection_type` field is always set to `SINGLE`.
 public struct CatalogModifierList: Codable, Equatable {
-	/// The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed by Square, but are free to be displayed in 3rd party applications.
+	/// The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
 	public var image_ids: [String]?
-	/// The options included in the `CatalogModifierList`. You must include at least one `CatalogModifier`. Each CatalogObject must have type `MODIFIER` and contain `CatalogModifier` data.
+	/// A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	public var internal_name: String?
+	/// The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	public var max_length: Int?
+	/// The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects.
+	public var modifier_type: String?
+	/// A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
 	public var modifiers: [CatalogObject]?
-	/// The name for the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
+	/// The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
 	public var name: String?
-	/// Determines where this modifier list appears in a list of `CatalogModifierList` values.
+	/// The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
 	public var ordinal: Int?
-	/// Indicates whether multiple options from the modifier list can be applied to a single `CatalogItem`.
+	/// Indicates whether a single (`SINGLE`) or multiple (`MULTIPLE`) modifiers from the list can be applied to a single `CatalogItem`.  For text-based modifiers, the `selection_type` attribute is always `SINGLE`. The other value is ignored.
 	public var selection_type: String?
+	/// Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	public var text_required: Bool?
 
-	/// A list of modifiers applicable to items at the time of sale.  For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers. Use the `selection_type` field to specify whether or not multiple selections from the modifier list are allowed.
+	/// For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.  For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the buyer-supplied  text string to be selected for the T-shirt at the time of sale.  For non text-based modifiers, this encapsulates a non-empty list of modifiers applicable to items  at the time of sale. Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.    For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers.   A non text-based modifier can be applied to the modified item once or multiple times, if the `selection_type` field  is set to `SINGLE` or `MULTIPLE`, respectively. On the other hand, a text-based modifier can be applied to the item  only once and the `selection_type` field is always set to `SINGLE`.
 	/// - Parameters:
-	///   - image_ids: The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed by Square, but are free to be displayed in 3rd party applications.
-	///   - modifiers: The options included in the `CatalogModifierList`. You must include at least one `CatalogModifier`. Each CatalogObject must have type `MODIFIER` and contain `CatalogModifier` data.
-	///   - name: The name for the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
-	///   - ordinal: Determines where this modifier list appears in a list of `CatalogModifierList` values.
-	///   - selection_type: Indicates whether multiple options from the modifier list can be applied to a single `CatalogItem`.
-	public init(image_ids: [String]? = nil, modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: String? = nil) {
+	///   - image_ids: The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
+	///   - internal_name: A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	///   - max_length: The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	///   - modifier_type: The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects.
+	///   - modifiers: A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
+	///   - name: The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
+	///   - ordinal: The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
+	///   - selection_type: Indicates whether a single (`SINGLE`) or multiple (`MULTIPLE`) modifiers from the list can be applied to a single `CatalogItem`.  For text-based modifiers, the `selection_type` attribute is always `SINGLE`. The other value is ignored.
+	///   - text_required: Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	public init(image_ids: [String]? = nil, internal_name: String? = nil, max_length: Int? = nil, modifier_type: String? = nil, modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: String? = nil, text_required: Bool? = nil) {
 		self.image_ids = image_ids
+		self.internal_name = internal_name
+		self.max_length = max_length
+		self.modifier_type = modifier_type
 		self.modifiers = modifiers
 		self.name = name
 		self.ordinal = ordinal
 		self.selection_type = selection_type
+		self.text_required = text_required
 	}
+}
+
+/// Defines the type of `CatalogModifierList`.
+public enum CatalogModifierListModifierType: String, Codable {
+	/// The `CatalogModifierList` instance is a non-empty list of non text-based modifiers.
+	case LIST
+	/// The `CatalogModifierList` instance is a single text-based modifier.
+	case TEXT
 }
 
 /// Indicates whether a CatalogModifierList supports multiple selections.
@@ -1210,6 +1353,8 @@ public struct CatalogModifierOverride: Codable, Equatable {
 public struct CatalogObject: Codable, Equatable {
 	/// A list of locations where the object is not present, even if `present_at_all_locations` is `true`. This can include locations that are deactivated.
 	public var absent_at_location_ids: [String]?
+	/// Structured data for a `CatalogAvailabilityPeriod`, set for CatalogObjects of type `AVAILABILITY_PERIOD`.
+	public var availability_period_data: CatalogAvailabilityPeriod?
 	/// The Connect v1 IDs for this object at each location where it is present, where they differ from the object's Connect V2 ID. The field will only be present for objects that have been created or modified by legacy APIs.
 	public var catalog_v1_ids: [CatalogV1Id]?
 	/// Structured data for a `CatalogCategory`, set for CatalogObjects of type `CATEGORY`.
@@ -1268,6 +1413,7 @@ public struct CatalogObject: Codable, Equatable {
 	/// The wrapper object for the catalog entries of a given object type.  Depending on the `type` attribute value, a `CatalogObject` instance assumes a type-specific data to yield the corresponding type of catalog object.  For example, if `type=ITEM`, the `CatalogObject` instance must have the ITEM-specific data set on the `item_data` attribute. The resulting `CatalogObject` instance is also a `CatalogItem` instance.  In general, if `type=<OBJECT_TYPE>`, the `CatalogObject` instance must have the `<OBJECT_TYPE>`-specific data set on the `<object_type>_data` attribute. The resulting `CatalogObject` instance is also a `Catalog<ObjectType>` instance.  For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](https://developer.squareup.com/docs/catalog-api/design-a-catalog) guide.
 	/// - Parameters:
 	///   - absent_at_location_ids: A list of locations where the object is not present, even if `present_at_all_locations` is `true`. This can include locations that are deactivated.
+	///   - availability_period_data: Structured data for a `CatalogAvailabilityPeriod`, set for CatalogObjects of type `AVAILABILITY_PERIOD`.
 	///   - catalog_v1_ids: The Connect v1 IDs for this object at each location where it is present, where they differ from the object's Connect V2 ID. The field will only be present for objects that have been created or modified by legacy APIs.
 	///   - category_data: Structured data for a `CatalogCategory`, set for CatalogObjects of type `CATEGORY`.
 	///   - custom_attribute_definition_data: Structured data for a `CatalogCustomAttributeDefinition`, set for CatalogObjects of type `CUSTOM_ATTRIBUTE_DEFINITION`.
@@ -1295,10 +1441,11 @@ public struct CatalogObject: Codable, Equatable {
 	///   - type: The type of this object. Each object type has expected properties expressed in a structured format within its corresponding `*_data` field below.
 	///   - updated_at: Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) in RFC 3339 format, e.g., `"2016-08-15T23:59:33.123Z"` would indicate the UTC time (denoted by `Z`) of August 15, 2016 at 23:59:33 and 123 milliseconds.
 	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
-	public init(id: String, type: String, absent_at_location_ids: [String]? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: Empty? = nil, custom_attribute_values: Empty? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, subscription_plan_variation_data: Empty?, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(id: String, type: String, absent_at_location_ids: [String]? = nil, availability_period_data: CatalogAvailabilityPeriod? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: CatalogCustomAttributeDefinition? = nil, custom_attribute_values: CatalogCustomAttributeValue? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, subscription_plan_variation_data: CatalogSubscriptionPlanVariation? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.id = id
 		self.type = type
 		self.absent_at_location_ids = absent_at_location_ids
+		self.availability_period_data = availability_period_data
 		self.catalog_v1_ids = catalog_v1_ids
 		self.category_data = category_data
 		self.custom_attribute_definition_data = custom_attribute_definition_data
@@ -1337,6 +1484,23 @@ public struct CatalogObjectBatch: Codable, Equatable {
 	///   - objects: A list of CatalogObjects belonging to this batch.
 	public init(objects: [CatalogObject]) {
 		self.objects = objects
+	}
+}
+
+/// A category that can be assigned to an item or a parent category that can be assigned  to another category. For example, a clothing category can be assigned to a t-shirt item or  be made as the parent category to the pants category.
+public struct CatalogObjectCategory: Codable, Equatable {
+	/// The ID of the object's category.
+	public var id: String?
+	/// The order of the object within the context of the category.
+	public var ordinal: Int?
+
+	/// A category that can be assigned to an item or a parent category that can be assigned  to another category. For example, a clothing category can be assigned to a t-shirt item or  be made as the parent category to the pants category.
+	/// - Parameters:
+	///   - id: The ID of the object's category.
+	///   - ordinal: The order of the object within the context of the category.
+	public init(id: String? = nil, ordinal: Int? = nil) {
+		self.id = id
+		self.ordinal = ordinal
 	}
 }
 
@@ -1395,6 +1559,8 @@ public enum CatalogObjectType: String, Codable {
 	case QUICK_AMOUNTS_SETTINGS
 	/// The `CatalogObject` instance is of the [CatalogSubscriptionPlan](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogSubscriptionPlan) type and represents a subscription plan. The subscription plan specific data must be stored on the `subscription_plan_data` field.
 	case SUBSCRIPTION_PLAN
+	/// The `CatalogObject` instance is of the [CatalogAvailabilityPeriod](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogAvailabilityPeriod) type and represents an availability period. The availability period specific data must be stored on the `availability_period_data` field.
+	case AVAILABILITY_PERIOD
 }
 
 /// Defines how discounts are automatically applied to a set of items that match the pricing rule during the active time period.
@@ -2624,7 +2790,7 @@ public struct DeviceMetadata: Codable, Equatable {
 	public var wifi_network_name: String?
 	/// The signal strength of the Wi-FI network connection. Options: `POOR`, `FAIR`, `GOOD`, `EXCELLENT`
 	public var wifi_network_strength: String?
-	
+
 	public init(app_version: String? = nil, battery_percentage: String? = nil, charging_state: String? = nil, ip_address: String? = nil, location_id: String? = nil, merchant_id: String? = nil, network_connection_type: String? = nil, os_version: String? = nil, payment_region: String? = nil, serial_number: String? = nil, wifi_network_name: String? = nil, wifi_network_strength: String? = nil) {
 		self.app_version = app_version
 		self.battery_percentage = battery_percentage
@@ -3036,6 +3202,7 @@ public struct ExternalPaymentDetails: Codable, Equatable {
 
 /// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
 public struct Fulfillment: Codable, Equatable {
+	/// Describes delivery details of an order fulfillment.
 	public var delivery_details: FulfillmentDeliveryDetails?
 	/// A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.  Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself.  An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
 	public let entries: [FulfillmentFulfillmentEntry]?
@@ -3045,7 +3212,7 @@ public struct Fulfillment: Codable, Equatable {
 	public var metadata: String?
 	/// Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
 	public var pickup_details: FulfillmentPickupDetails?
-	/// Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`.  A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment accepted. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
+	/// Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`.  A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment in progress. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
 	public var shipment_details: FulfillmentShipmentDetails?
 	/// The state of the fulfillment.
 	public var state: String?
@@ -3056,12 +3223,12 @@ public struct Fulfillment: Codable, Equatable {
 
 	/// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
 	/// - Parameters:
-	///   - delivery_details: 
+	///   - delivery_details: Describes delivery details of an order fulfillment.
 	///   - entries: A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.  Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself.  An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
 	///   - line_item_application: Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
 	///   - metadata: Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - pickup_details: Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
-	///   - shipment_details: Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`.  A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment accepted. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
+	///   - shipment_details: Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`.  A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment in progress. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
 	///   - state: The state of the fulfillment.
 	///   - type: The type of the fulfillment.
 	///   - uid: A unique ID that identifies the fulfillment only within this order.
@@ -3088,7 +3255,7 @@ public struct FulfillmentDeliveryDetails: Codable, Equatable {
 	public var completed_at: Timestamp?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public var courier_pickup_at: Timestamp?
-	/// The period of time in which the order should be picked up by the courier after the `courier_pickup_at` timestamp. The time must be in RFC 3339 format (for example, "P1W3D").
+	/// The time period after `courier_pickup_at` in which the courier should pick up the order. The duration must be in RFC 3339 format (for example, "P1W3D").
 	public var courier_pickup_window_duration: Timestamp?
 	/// The name of the courier provider.
 	public var courier_provider_name: String?
@@ -3098,7 +3265,7 @@ public struct FulfillmentDeliveryDetails: Codable, Equatable {
 	public var deliver_at: Timestamp?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let delivered_at: Timestamp?
-	/// The time period after the `deliver_at` timestamp in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	/// The time period after `deliver_at` in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The duration must be in RFC 3339 format (for example, "P1W3D").
 	public var delivery_window_duration: Timestamp?
 	/// A note to provide additional instructions about how to deliver the order.
 	public var dropoff_notes: String?
@@ -3114,7 +3281,7 @@ public struct FulfillmentDeliveryDetails: Codable, Equatable {
 	public var note: String?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").  Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
 	public let placed_at: Timestamp?
-	/// The duration of time it takes to prepare and deliver this fulfillment. The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	/// The duration of time it takes to prepare and deliver this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
 	public var prep_time_duration: Timestamp?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let ready_at: Timestamp?
@@ -3133,12 +3300,12 @@ public struct FulfillmentDeliveryDetails: Codable, Equatable {
 	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`.  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - completed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller completed the fulfillment. This field is automatically set when  fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - courier_pickup_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - courier_pickup_window_duration: The period of time in which the order should be picked up by the courier after the `courier_pickup_at` timestamp. The time must be in RFC 3339 format (for example, "P1W3D").
+	///   - courier_pickup_window_duration: The time period after `courier_pickup_at` in which the courier should pick up the order. The duration must be in RFC 3339 format (for example, "P1W3D").
 	///   - courier_provider_name: The name of the courier provider.
 	///   - courier_support_phone_number: The support phone number of the courier.
 	///   - deliver_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the delivery period. When the fulfillment `schedule_type` is `ASAP`, the field is automatically set to the current time plus the `prep_time_duration`. Otherwise, the application can set this field while the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - delivered_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - delivery_window_duration: The time period after the `deliver_at` timestamp in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	///   - delivery_window_duration: The time period after `deliver_at` in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The duration must be in RFC 3339 format (for example, "P1W3D").
 	///   - dropoff_notes: A note to provide additional instructions about how to deliver the order.
 	///   - external_delivery_id: The identifier for the delivery created by the third-party courier service.
 	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -3146,7 +3313,7 @@ public struct FulfillmentDeliveryDetails: Codable, Equatable {
 	///   - managed_delivery: The flag to indicate the delivery is managed by a third party (ie DoorDash), which means we may not receive all recipient information for PII purposes.
 	///   - note: Provides additional instructions about the delivery fulfillment. It is displayed in the Square Point of Sale application and set by the API.
 	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").  Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
-	///   - prep_time_duration: The duration of time it takes to prepare and deliver this fulfillment. The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	///   - prep_time_duration: The duration of time it takes to prepare and deliver this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
 	///   - ready_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - recipient: The contact information for the person to receive the fulfillment.
 	///   - rejected_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. This field is automatically set when the fulfillment `state` changes to `FAILED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -3222,9 +3389,9 @@ public enum FulfillmentFulfillmentLineItemApplication: String, Codable {
 
 /// Contains details necessary to fulfill a pickup order.
 public struct FulfillmentPickupDetails: Codable, Equatable {
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let accepted_at: Timestamp?
-	/// The duration of time after which an open and accepted pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains accepted until it is canceled or completed.
+	/// The duration of time after which an in progress pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains in progress until it is canceled or completed.
 	public var auto_complete_duration: Timestamp?
 	/// A description of why the pickup was canceled. The maximum length: 100 characters.
 	public var cancel_reason: String?
@@ -3234,7 +3401,7 @@ public struct FulfillmentPickupDetails: Codable, Equatable {
 	public var curbside_pickup_details: FulfillmentPickupDetailsCurbsidePickupDetails?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let expired_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, this pickup fulfillment is automatically accepted when placed.
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, any new payments attached to the order are automatically completed.
 	public var expires_at: Timestamp?
 	/// If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
 	public var is_curbside_pickup: Bool?
@@ -3261,13 +3428,13 @@ public struct FulfillmentPickupDetails: Codable, Equatable {
 
 	/// Contains details necessary to fulfill a pickup order.
 	/// - Parameters:
-	///   - accepted_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - auto_complete_duration: The duration of time after which an open and accepted pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains accepted until it is canceled or completed.
+	///   - accepted_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - auto_complete_duration: The duration of time after which an in progress pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains in progress until it is canceled or completed.
 	///   - cancel_reason: A description of why the pickup was canceled. The maximum length: 100 characters.
 	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - curbside_pickup_details: Specific details for curbside pickup. These details can only be populated if `is_curbside_pickup` is set to `true`.
 	///   - expired_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - expires_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, this pickup fulfillment is automatically accepted when placed.
+	///   - expires_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, any new payments attached to the order are automatically completed.
 	///   - is_curbside_pickup: If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
 	///   - note: A note to provide additional instructions about the pickup fulfillment displayed in the Square Point of Sale application and set by the API.
 	///   - picked_up_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was picked up by the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -3739,16 +3906,20 @@ public struct Merchant: Codable, Equatable {
 public struct ModifierLocationOverrides: Codable, Equatable {
 	/// The ID of the `Location` object representing the location. This can include a deactivated location.
 	public var location_id: String?
-	/// The overridden price at the specified location. If this is unspecified, the modifier price is not overridden.  The modifier becomes free of charge at the specified location, when this `price_money` field is set to 0.
+	/// The overridden price at the specified location. If this is unspecified, the modifier price is not overridden. The modifier becomes free of charge at the specified location, when this `price_money` field is set to 0.
 	public var price_money: Money?
-	
+	/// Indicates whether the modifier is sold out at the specified location or not. As an example, for cheese (modifier) burger (item), when the modifier is sold out, it is the cheese, but not the burger, that is sold out. The seller can manually set this sold out status. Attempts by an application to set this attribute are ignored.
+	public let sold_out: Bool?
+
 	/// Location-specific overrides for specified properties of a `CatalogModifier` object.
 	/// - Parameters:
 	///   - location_id: The ID of the `Location` object representing the location. This can include a deactivated location.
-	///   - price_money: The overridden price at the specified location. If this is unspecified, the modifier price is not overridden.  The modifier becomes free of charge at the specified location, when this `price_money` field is set to 0.
-	public init(location_id: String? = nil, price_money: Money? = nil) {
+	///   - price_money: The overridden price at the specified location. If this is unspecified, the modifier price is not overridden. The modifier becomes free of charge at the specified location, when this `price_money` field is set to 0.
+	///   - sold_out: Indicates whether the modifier is sold out at the specified location or not. As an example, for cheese (modifier) burger (item), when the modifier is sold out, it is the cheese, but not the burger, that is sold out. The seller can manually set this sold out status. Attempts by an application to set this attribute are ignored.
+	public init(location_id: String? = nil, price_money: Money? = nil, sold_out: Bool? = nil) {
 		self.location_id = location_id
 		self.price_money = price_money
+		self.sold_out = sold_out
 	}
 }
 
@@ -3918,7 +4089,7 @@ public struct OrderFulfillment: Codable, Equatable {
 	public var metadata: String?
 	/// Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
 	public var pickup_details: OrderFulfillmentPickupDetails?
-	/// Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`. A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment accepted. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
+	/// Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`. A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment in progress. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
 	public var shipment_details: OrderFulfillmentShipmentDetails?
 	/// The state of the fulfillment.
 	public var state: String?
@@ -3934,7 +4105,7 @@ public struct OrderFulfillment: Codable, Equatable {
 	///   - line_item_application: Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
 	///   - metadata: Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details). Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character. Values have a maximum length of 255 characters. An application can have up to 10 entries per metadata field. Entries written by applications are private and can only be read or modified by the same application. For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - pickup_details: Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
-	///   - shipment_details: Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`. A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment accepted. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
+	///   - shipment_details: Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`. A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment in progress. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
 	///   - state: The state of the fulfillment.
 	///   - type: The type of the fulfillment.
 	///   - uid: A unique ID that identifies the fulfillment only within this order.
@@ -3961,7 +4132,7 @@ public struct OrderFulfillmentDeliveryDetails: Codable, Equatable {
 	public var completed_at: Timestamp?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public var courier_pickup_at: Timestamp?
-	/// The period of time in which the order should be picked up by the courier after the `courier_pickup_at` timestamp. The time must be in RFC 3339 format (for example, "P1W3D").
+	/// The time period after `courier_pickup_at` in which the courier should pick up the order. The duration must be in RFC 3339 format (for example, "P1W3D").
 	public var courier_pickup_window_duration: Timestamp?
 	/// The name of the courier provider.
 	public var courier_provider_name: String?
@@ -3971,7 +4142,7 @@ public struct OrderFulfillmentDeliveryDetails: Codable, Equatable {
 	public var deliver_at: Timestamp?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let delivered_at: Timestamp?
-	/// The time period after the `deliver_at` timestamp in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`). The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	/// The time period after `deliver_at` in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`). The duration must be in RFC 3339 format (for example, "P1W3D").
 	public var delivery_window_duration: Timestamp?
 	/// A note to provide additional instructions about how to deliver the order.
 	public var dropoff_notes: String?
@@ -3987,7 +4158,7 @@ public struct OrderFulfillmentDeliveryDetails: Codable, Equatable {
 	public var note: String?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
 	public let placed_at: Timestamp?
-	/// The duration of time it takes to prepare and deliver this fulfillment. The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	/// The duration of time it takes to prepare and deliver this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
 	public var prep_time_duration: Timestamp?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let ready_at: Timestamp?
@@ -4006,12 +4177,12 @@ public struct OrderFulfillmentDeliveryDetails: Codable, Equatable {
 	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`.  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - completed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller completed the fulfillment. This field is automatically set when  fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - courier_pickup_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - courier_pickup_window_duration: The period of time in which the order should be picked up by the courier after the `courier_pickup_at` timestamp. The time must be in RFC 3339 format (for example, "P1W3D").
+	///   - courier_pickup_window_duration: The time period after `courier_pickup_at` in which the courier should pick up the order. The duration must be in RFC 3339 format (for example, "P1W3D").
 	///   - courier_provider_name: The name of the courier provider.
 	///   - courier_support_phone_number: The support phone number of the courier.
 	///   - deliver_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the delivery period. When the fulfillment `schedule_type` is `ASAP`, the field is automatically set to the current time plus the `prep_time_duration`. Otherwise, the application can set this field while the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - delivered_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - delivery_window_duration: The time period after the `deliver_at` timestamp in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`). The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	///   - delivery_window_duration: The time period after `deliver_at` in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`). The duration must be in RFC 3339 format (for example, "P1W3D").
 	///   - dropoff_notes: A note to provide additional instructions about how to deliver the order.
 	///   - external_delivery_id: The identifier for the delivery created by the third-party courier service.
 	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -4019,7 +4190,7 @@ public struct OrderFulfillmentDeliveryDetails: Codable, Equatable {
 	///   - managed_delivery: The flag to indicate the delivery is managed by a third party (ie DoorDash), which means we may not receive all recipient information for PII purposes.
 	///   - note: Provides additional instructions about the delivery fulfillment. It is displayed in the Square Point of Sale application and set by the API.
 	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
-	///   - prep_time_duration: The duration of time it takes to prepare and deliver this fulfillment. The timestamp must be in RFC 3339 format (for example, "P1W3D").
+	///   - prep_time_duration: The duration of time it takes to prepare and deliver this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
 	///   - ready_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - recipient: The contact information for the person to receive the fulfillment.
 	///   - rejected_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. This field is automatically set when the fulfillment `state` changes to `FAILED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -4095,9 +4266,9 @@ public enum OrderFulfillmentFulfillmentLineItemApplication: String, Codable {
 
 /// Contains details necessary to fulfill a pickup order.
 public struct OrderFulfillmentPickupDetails: Codable, Equatable {
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let accepted_at: Timestamp?
-	/// The duration of time after which an open and accepted pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D"). If not set, this pickup fulfillment remains accepted until it is canceled or completed.
+	/// The duration of time after which an in progress pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains in progress until it is canceled or completed.
 	public var auto_complete_duration: Timestamp?
 	/// A description of why the pickup was canceled. The maximum length: 100 characters.
 	public var cancel_reason: String?
@@ -4107,7 +4278,7 @@ public struct OrderFulfillmentPickupDetails: Codable, Equatable {
 	public var curbside_pickup_details: OrderFulfillmentPickupDetailsCurbsidePickupDetails?
 	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	public let expired_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, this pickup fulfillment is automatically accepted when placed.
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, any new payments attached to the order are automatically completed.
 	public var expires_at: Timestamp?
 	/// If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
 	public var is_curbside_pickup: Bool?
@@ -4134,13 +4305,13 @@ public struct OrderFulfillmentPickupDetails: Codable, Equatable {
 
 	/// Contains details necessary to fulfill a pickup order.
 	/// - Parameters:
-	///   - accepted_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - auto_complete_duration: The duration of time after which an open and accepted pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D"). If not set, this pickup fulfillment remains accepted until it is canceled or completed.
+	///   - accepted_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - auto_complete_duration: The duration of time after which an in progress pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains in progress until it is canceled or completed.
 	///   - cancel_reason: A description of why the pickup was canceled. The maximum length: 100 characters.
 	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
 	///   - curbside_pickup_details: Specific details for curbside pickup. These details can only be populated if `is_curbside_pickup` is set to `true`.
 	///   - expired_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - expires_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not accepted. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, this pickup fulfillment is automatically accepted when placed.
+	///   - expires_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, any new payments attached to the order are automatically completed.
 	///   - is_curbside_pickup: If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
 	///   - note: A note to provide additional instructions about the pickup fulfillment displayed in the Square Point of Sale application and set by the API.
 	///   - picked_up_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was picked up by the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
@@ -4315,7 +4486,7 @@ public struct OrderLineItem: Codable, Equatable {
 	public var catalog_object_id: String?
 	/// The version of the catalog object that this line item references.
 	public var catalog_version: Int?
-	/// The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price.
+	/// The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price. For inclusive tax items in the US, Canada, and Japan, tax is deducted from `gross_sales_money`. For Europe and Australia, inclusive tax remains as part of the gross sale calculation.
 	public let gross_sales_money: Money?
 	/// The type of line item: an itemized sale, a non-itemized sale (custom amount), or the activation or reloading of a gift card.
 	public var item_type: String?
@@ -4325,13 +4496,13 @@ public struct OrderLineItem: Codable, Equatable {
 	public var modifiers: [OrderLineItemModifier]?
 	/// The name of the line item.
 	public var name: String?
-	/// The note of the line item.
+	/// An optional note associated with the line item.
 	public var note: String?
 	/// Describes pricing adjustments that are blocked from automatic application to a line item. For more information, see [Apply Taxes and Discounts](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts).
 	public var pricing_blocklists: OrderLineItemPricingBlocklists?
-	/// The quantity purchased, formatted as a decimal number. For example, `"3"`.  Line items with a quantity of `"0"` are automatically removed when paying for or otherwise completing the order.  Line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
+	/// The count, or measurement, of a line item being purchased:  If `quantity` is a whole number, and `quantity_unit` is not specified, then `quantity` denotes an item count.  For example: `3` apples.  If `quantity` is a whole or decimal number, and `quantity_unit` is also specified, then `quantity` denotes a measurement.  For example: `2.25` pounds of broccoli.  For more information, see [Specify item quantity and measurement unit](https://developer.squareup.com/docs/orders-api/create-orders#specify-item-quantity-and-measurement-unit).  Line items with a quantity of `0` are automatically removed when paying for or otherwise completing the order.
 	public var quantity: String
-	/// The unit and precision that this line item's quantity is measured in.
+	/// The measurement unit and decimal precision that this line item's quantity is measured in.
 	public var quantity_unit: OrderQuantityUnit?
 	/// The total amount of discount money to collect for the line item.
 	public let total_discount_money: Money?
@@ -4356,15 +4527,15 @@ public struct OrderLineItem: Codable, Equatable {
 	///   - base_price_money: The base price for a single unit of the line item.
 	///   - catalog_object_id: The [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) ID applied to this line item.
 	///   - catalog_version: The version of the catalog object that this line item references.
-	///   - gross_sales_money: The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price.
+	///   - gross_sales_money: The amount of money made in gross sales for this line item. The amount is calculated as the sum of the variation's total price and each modifier's total price. For inclusive tax items in the US, Canada, and Japan, tax is deducted from `gross_sales_money`. For Europe and Australia, inclusive tax remains as part of the gross sale calculation.
 	///   - item_type: The type of line item: an itemized sale, a non-itemized sale (custom amount), or the activation or reloading of a gift card.
 	///   - metadata: Application-defined data attached to this line item. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - modifiers: The [CatalogModifier](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogModifier)s applied to this line item.
 	///   - name: The name of the line item.
-	///   - note: The note of the line item.
+	///   - note: An optional note associated with the line item.
 	///   - pricing_blocklists: Describes pricing adjustments that are blocked from automatic application to a line item. For more information, see [Apply Taxes and Discounts](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts).
-	///   - quantity: The quantity purchased, formatted as a decimal number. For example, `"3"`.  Line items with a quantity of `"0"` are automatically removed when paying for or otherwise completing the order.  Line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
-	///   - quantity_unit: The unit and precision that this line item's quantity is measured in.
+	///   - quantity: The count, or measurement, of a line item being purchased:  If `quantity` is a whole number, and `quantity_unit` is not specified, then `quantity` denotes an item count.  For example: `3` apples.  If `quantity` is a whole or decimal number, and `quantity_unit` is also specified, then `quantity` denotes a measurement.  For example: `2.25` pounds of broccoli.  For more information, see [Specify item quantity and measurement unit](https://developer.squareup.com/docs/orders-api/create-orders#specify-item-quantity-and-measurement-unit).  Line items with a quantity of `0` are automatically removed when paying for or otherwise completing the order.
+	///   - quantity_unit: The measurement unit and decimal precision that this line item's quantity is measured in.
 	///   - total_discount_money: The total amount of discount money to collect for the line item.
 	///   - total_money: The total amount of money to collect for this line item.
 	///   - total_service_charge_money: The total amount of apportioned service charge money to collect for the line item.
@@ -4648,7 +4819,7 @@ public struct OrderLineItemPricingBlocklistsBlockedTax: Codable, Equatable {
 
 /// Represents a tax that applies to one or more line item in the order.  Fixed-amount, order-scoped taxes are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount the item contributes to the order subtotal.
 public struct OrderLineItemTax: Codable, Equatable {
-	/// The amount of money applied by the tax in the order.
+	/// The amount of money applied to the order by the tax.  - For flat-amount taxes, `applied_money` is equal to `amount_money`. - For percentage-based taxes, `applied_money` is the money calculated using the percentage.
 	public var applied_money: Money?
 	/// Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
 	public let auto_applied: Bool?
@@ -4660,7 +4831,7 @@ public struct OrderLineItemTax: Codable, Equatable {
 	public var metadata: String?
 	/// The tax's name.
 	public var name: String?
-	/// The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.
+	/// The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
 	public var percentage: String?
 	/// Indicates the level at which the tax applies. For `ORDER` scoped taxes, Square generates references in `applied_taxes` on all order line items that do not have them. For `LINE_ITEM` scoped taxes, the tax only applies to line items with references in their `applied_taxes` field.  This field is immutable. To change the scope, you must delete the tax and re-add it as a new tax.
 	public var scope: String?
@@ -4671,13 +4842,13 @@ public struct OrderLineItemTax: Codable, Equatable {
 
 	/// Represents a tax that applies to one or more line item in the order.  Fixed-amount, order-scoped taxes are distributed across all non-zero line item totals. The amount distributed to each line item is relative to the amount the item contributes to the order subtotal.
 	/// - Parameters:
-	///   - applied_money: The amount of money applied by the tax in the order.
+	///   - applied_money: The amount of money applied to the order by the tax.  - For flat-amount taxes, `applied_money` is equal to `amount_money`. - For percentage-based taxes, `applied_money` is the money calculated using the percentage.
 	///   - auto_applied: Determines whether the tax was automatically applied to the order based on the catalog configuration. For an example, see [Automatically Apply Taxes to an Order](https://developer.squareup.com/docs/orders-api/apply-taxes-and-discounts/auto-apply-taxes).
 	///   - catalog_object_id: The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogTax).
 	///   - catalog_version: The version of the catalog object that this tax references.
 	///   - metadata: Application-defined data attached to this tax. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The tax's name.
-	///   - percentage: The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.
+	///   - percentage: The percentage of the tax, as a string representation of a decimal number. For example, a value of `"7.25"` corresponds to a percentage of 7.25%.  Either `percentage` or `amount_money` should be set, but not both.
 	///   - scope: Indicates the level at which the tax applies. For `ORDER` scoped taxes, Square generates references in `applied_taxes` on all order line items that do not have them. For `LINE_ITEM` scoped taxes, the tax only applies to line items with references in their `applied_taxes` field.  This field is immutable. To change the scope, you must delete the tax and re-add it as a new tax.
 	///   - type: Indicates the calculation method used to apply the tax.
 	///   - uid: A unique ID that identifies the tax only within this order.
@@ -4791,13 +4962,15 @@ public struct OrderReturn: Codable, Equatable {
 	/// An aggregate monetary value being returned by this return entry.
 	public var return_amounts: OrderMoneyAmounts?
 	/// A collection of references to discounts being returned for an order, including the total applied discount amount to be returned. The discounts must reference a top-level discount ID from the source order.
-	public var return_discounts: [OrderReturnDiscount]?
+	public let return_discounts: [OrderReturnDiscount]?
 	/// A collection of line items that are being returned.
 	public var return_line_items: [OrderReturnLineItem]?
 	/// A collection of service charges that are being returned.
-	public let return_service_charges: [OrderReturnServiceCharge]?
+	public var return_service_charges: [OrderReturnServiceCharge]?
 	/// A collection of references to taxes being returned for an order, including the total applied tax amount to be returned. The taxes must reference a top-level tax ID from the source order.
-	public var return_taxes: [OrderReturnTax]?
+	public let return_taxes: [OrderReturnTax]?
+	/// A collection of references to tips being returned for an order.
+	public var return_tips: [OrderReturnTip]?
 	/// A positive or negative rounding adjustment to the total value being returned. Adjustments are commonly used to apply cash rounding when the minimum unit of the account is smaller than the lowest physical denomination of the currency.
 	public var rounding_adjustment: OrderRoundingAdjustment?
 	/// An order that contains the original sale of these return line items. This is unset for unlinked returns.
@@ -4812,15 +4985,17 @@ public struct OrderReturn: Codable, Equatable {
 	///   - return_line_items: A collection of line items that are being returned.
 	///   - return_service_charges: A collection of service charges that are being returned.
 	///   - return_taxes: A collection of references to taxes being returned for an order, including the total applied tax amount to be returned. The taxes must reference a top-level tax ID from the source order.
+	///   - return_tips: A collection of references to tips being returned for an order.
 	///   - rounding_adjustment: A positive or negative rounding adjustment to the total value being returned. Adjustments are commonly used to apply cash rounding when the minimum unit of the account is smaller than the lowest physical denomination of the currency.
 	///   - source_order_id: An order that contains the original sale of these return line items. This is unset for unlinked returns.
 	///   - uid: A unique ID that identifies the return only within this order.
-	public init(return_amounts: OrderMoneyAmounts? = nil, return_discounts: [OrderReturnDiscount]? = nil, return_line_items: [OrderReturnLineItem]? = nil, return_service_charges: [OrderReturnServiceCharge]? = nil, return_taxes: [OrderReturnTax]? = nil, rounding_adjustment: OrderRoundingAdjustment? = nil, source_order_id: String? = nil, uid: String? = nil) {
+	public init(return_amounts: OrderMoneyAmounts? = nil, return_discounts: [OrderReturnDiscount]? = nil, return_line_items: [OrderReturnLineItem]? = nil, return_service_charges: [OrderReturnServiceCharge]? = nil, return_taxes: [OrderReturnTax]? = nil, return_tips: [OrderReturnTip]? = nil, rounding_adjustment: OrderRoundingAdjustment? = nil, source_order_id: String? = nil, uid: String? = nil) {
 		self.return_amounts = return_amounts
 		self.return_discounts = return_discounts
 		self.return_line_items = return_line_items
 		self.return_service_charges = return_service_charges
 		self.return_taxes = return_taxes
+		self.return_tips = return_tips
 		self.rounding_adjustment = rounding_adjustment
 		self.source_order_id = source_order_id
 		self.uid = uid
@@ -4832,7 +5007,7 @@ public struct OrderReturnDiscount: Codable, Equatable {
 	/// The total declared monetary amount of the discount.  `amount_money` is not set for percentage-based discounts.
 	public var amount_money: Money?
 	/// The amount of discount actually applied to this line item. When an amount-based discount is at the order level, this value is different from `amount_money` because the discount is distributed across the line items.
-	public var applied_money: Money?
+	public let applied_money: Money?
 	/// The catalog object ID referencing [CatalogDiscount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogDiscount).
 	public var catalog_object_id: String?
 	/// The version of the catalog object that this discount references.
@@ -5039,7 +5214,7 @@ public struct OrderReturnServiceCharge: Codable, Equatable {
 	/// The total amount of tax money to collect for the service charge.
 	public let total_tax_money: Money?
 	/// The treatment type of the service charge.
-	public let treatment_type: String?
+	public var treatment_type: String?
 	/// A unique ID that identifies the return service charge only within this order.
 	public var uid: String?
 
@@ -5082,7 +5257,7 @@ public struct OrderReturnServiceCharge: Codable, Equatable {
 /// Represents a tax being returned that applies to one or more return line items in an order.  Fixed-amount, order-scoped taxes are distributed across all non-zero return line item totals. The amount distributed to each return line item is relative to that item’s contribution to the order subtotal.
 public struct OrderReturnTax: Codable, Equatable {
 	/// The amount of money applied by the tax in an order.
-	public var applied_money: Money?
+	public let applied_money: Money?
 	/// The catalog object ID referencing [CatalogTax](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogTax).
 	public var catalog_object_id: String?
 	/// The version of the catalog object that this tax references.
@@ -5120,6 +5295,31 @@ public struct OrderReturnTax: Codable, Equatable {
 		self.scope = scope
 		self.source_tax_uid = source_tax_uid
 		self.type = type
+		self.uid = uid
+	}
+}
+
+/// A tip being returned.
+public struct OrderReturnTip: Codable, Equatable {
+	/// The amount of tip being returned --
+	public let applied_money: Money?
+	/// The tender `id` from the order that contains the original application of this tip.
+	public var source_tender_id: String?
+	/// The tender `uid` from the order that contains the original application of this tip.
+	public var source_tender_uid: String?
+	/// A unique ID that identifies the tip only within this order.
+	public var uid: String?
+
+	/// A tip being returned.
+	/// - Parameters:
+	///   - applied_money: The amount of tip being returned --
+	///   - source_tender_id: The tender `id` from the order that contains the original application of this tip.
+	///   - source_tender_uid: The tender `uid` from the order that contains the original application of this tip.
+	///   - uid: A unique ID that identifies the tip only within this order.
+	public init(applied_money: Money? = nil, source_tender_id: String? = nil, source_tender_uid: String? = nil, uid: String? = nil) {
+		self.applied_money = applied_money
+		self.source_tender_id = source_tender_id
+		self.source_tender_uid = source_tender_uid
 		self.uid = uid
 	}
 }
@@ -5191,7 +5391,7 @@ public struct OrderServiceCharge: Codable, Equatable {
 	/// The total amount of tax money to collect for the service charge.
 	public let total_tax_money: Money?
 	/// The treatment type of the service charge.
-	public let treatment_type: String?
+	public var treatment_type: String?
 	/// The type of the service charge.
 	public let type: String?
 	/// A unique ID that identifies the service charge only within this order.
@@ -5306,7 +5506,7 @@ public struct Payment: Codable, Equatable {
 	public var app_fee_money: Money?
 	/// Details about the application that took the payment.
 	public let application_details: ApplicationDetails?
-	/// The initial amount of money approved for this payment.
+	/// The amount of money approved for this payment. This value may change if Square chooses to obtain reauthorization as part of a call to [UpdatePayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/payments-api/update-payment).
 	public var approved_money: Money?
 	/// Details about a bank account payment. These details are only populated if the source_type is `BANK_ACCOUNT`.
 	public let bank_account_details: BankAccountPaymentDetails?
@@ -5388,7 +5588,7 @@ public struct Payment: Codable, Equatable {
 	///   - amount_money: The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - app_fee_money: The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	///   - application_details: Details about the application that took the payment.
-	///   - approved_money: The initial amount of money approved for this payment.
+	///   - approved_money: The amount of money approved for this payment. This value may change if Square chooses to obtain reauthorization as part of a call to [UpdatePayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/payments-api/update-payment).
 	///   - bank_account_details: Details about a bank account payment. These details are only populated if the source_type is `BANK_ACCOUNT`.
 	///   - billing_address: The buyer's billing address.
 	///   - buy_now_pay_later_details: Details about a Buy Now Pay Later payment. The details are only populated if the `source_type` is `BUY_NOW_PAY_LATER`. For more information, see  [Afterpay Payments](https://developer.squareup.com/docs/payments-api/take-payments/afterpay-payments).
@@ -5885,7 +6085,7 @@ public enum TenderType: String, Codable {
 	case NO_SALE
 	/// A bank account payment.
 	case BANK_ACCOUNT
-	/// A payment from a digital wallet, e.g. Cash App.  Note: Some "digital wallets", including Google Pay and Apple Pay, facilitate card payments.  Those payments have the `CARD` type.
+	/// A payment from a digital wallet, e.g. Cash App, Paypay, Rakuten Pay, Au Pay, D Barai, Merpay, Wechat Pay, Alipay.  Note: Some "digital wallets", including Google Pay and Apple Pay, facilitate card payments.  Those payments have the `CARD` type.
 	case WALLET
 	/// A Buy Now Pay Later payment.
 	case BUY_NOW_PAY_LATER
@@ -5989,8 +6189,8 @@ public struct TerminalCheckout: Codable, Equatable {
 	}
 }
 
-// Represents a generic time range. The start and end values are represented in RFC 3339 format. Time ranges are customized to be inclusive or exclusive based on the needs of a particular endpoint. Refer to the relevant endpoint-specific documentation to determine how time ranges are handled.
-public struct TimeRange: Codable {
+/// Represents a generic time range. The start and end values are represented in RFC 3339 format. Time ranges are customized to be inclusive or exclusive based on the needs of a particular endpoint. Refer to the relevant endpoint-specific documentation to determine how time ranges are handled.
+public struct TimeRange: Codable, Equatable {
 	/// A datetime value in RFC 3339 format indicating when the time range ends.
 	public var end_at: Timestamp?
 	/// A datetime value in RFC 3339 format indicating when the time range starts.
