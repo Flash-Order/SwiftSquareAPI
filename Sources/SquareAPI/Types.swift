@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-02-22" }
+	public static var version: String { return "2024-03-20" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -3780,9 +3780,9 @@ public enum CatalogItemFoodAndBeverageDetailsIngredientStandardIngredient: Strin
 public struct CatalogItemModifierListInfo: Codable, Equatable {
 	/// If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	public var enabled: Bool?
-	/// If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`.
+	/// If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
 	public var max_selected_modifiers: Int?
-	/// If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`.
+	/// If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
 	public var min_selected_modifiers: Int?
 	/// The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	public var modifier_list_id: String
@@ -3794,8 +3794,8 @@ public struct CatalogItemModifierListInfo: Codable, Equatable {
 	/// References a text-based modifier or a list of non text-based modifiers applied to a `CatalogItem` instance and specifies supported behaviors of the application.
 	/// - Parameters:
 	///   - enabled: If `true`, enable this `CatalogModifierList`. The default value is `true`.
-	///   - max_selected_modifiers: If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`.
-	///   - min_selected_modifiers: If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`.
+	///   - max_selected_modifiers: If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
+	///   - min_selected_modifiers: If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
 	///   - modifier_list_id: The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	///   - modifier_overrides: A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
 	///   - ordinal: The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
@@ -9309,7 +9309,7 @@ public enum DeviceStatusCategory: String, Codable {
 
 /// Additional details about `WALLET` type payments. Contains only non-confidential information.
 public struct DigitalWalletDetails: Codable, Equatable {
-	/// The brand used for the `WALLET` payment. The brand can be `CASH_APP`, `PAYPAY` or `UNKNOWN`.
+	/// The brand used for the `WALLET` payment. The brand can be `CASH_APP`, `PAYPAY`, `ALIPAY`, `RAKUTEN_PAY`, `AU_PAY`, `D_BARAI`, `MERPAY`, `WECHAT_PAY` or `UNKNOWN`.
 	public var brand: String?
 	/// Brand-specific details for payments with the `brand` of `CASH_APP`.
 	public var cash_app_details: CashAppDetails?
@@ -9318,7 +9318,7 @@ public struct DigitalWalletDetails: Codable, Equatable {
 
 	/// Additional details about `WALLET` type payments. Contains only non-confidential information.
 	/// - Parameters:
-	///   - brand: The brand used for the `WALLET` payment. The brand can be `CASH_APP`, `PAYPAY` or `UNKNOWN`.
+	///   - brand: The brand used for the `WALLET` payment. The brand can be `CASH_APP`, `PAYPAY`, `ALIPAY`, `RAKUTEN_PAY`, `AU_PAY`, `D_BARAI`, `MERPAY`, `WECHAT_PAY` or `UNKNOWN`.
 	///   - cash_app_details: Brand-specific details for payments with the `brand` of `CASH_APP`.
 	///   - status: The status of the `WALLET` payment. The status can be `AUTHORIZED`, `CAPTURED`, `VOIDED`, or `FAILED`.
 	public init(brand: String? = nil, cash_app_details: CashAppDetails? = nil, status: String? = nil) {
@@ -22553,7 +22553,7 @@ public enum TenderType: String, Codable {
 	case NO_SALE
 	/// A bank account payment.
 	case BANK_ACCOUNT
-	/// A payment from a digital wallet, e.g. Cash App.  Note: Some "digital wallets", including Google Pay and Apple Pay, facilitate card payments.  Those payments have the `CARD` type.
+	/// A payment from a digital wallet, e.g. Cash App, Paypay, Rakuten Pay, Au Pay, D Barai, Merpay, Wechat Pay, Alipay.  Note: Some "digital wallets", including Google Pay and Apple Pay, facilitate card payments.  Those payments have the `CARD` type.
 	case WALLET
 	/// A Buy Now Pay Later payment.
 	case BUY_NOW_PAY_LATER

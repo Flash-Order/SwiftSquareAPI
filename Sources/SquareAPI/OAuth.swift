@@ -3,6 +3,10 @@
 public struct OAuth {
 	/// OAuth token permissions
 	public enum Scope: String, Codable, CaseIterable {
+		/// __HTTP Method__: `GET`  Grants write access for third-party Add-ons to read configurations of their Add-ons, for example, when calling `RetrieveConfiguration` endpoint.
+		case ADDON_CONFIGURATIONS_READ
+		/// __HTTP Method__: `POST`, `PUT`, `DELETE`  Grants write access for third-party Add-ons to store configurations of their Add-ons, for example, when calling `CreateConfiguration` endpoint.
+		case ADDON_CONFIGURATIONS_WRITE
 		/// __HTTP Method__: `GET`, `POST`  Grants read access to all of a seller's booking information, calendar, and business details. This permission must be accompanied by the `APPOINTMENTS_READ` permission.
 		case APPOINTMENTS_ALL_READ
 		/// __HTTP Method__: `POST`, `PUT`, `DELETE`  Grants write access to all booking details, including double-booking a seller. This permission must be accompanied by the `APPOINTMENTS_WRITE` permission.

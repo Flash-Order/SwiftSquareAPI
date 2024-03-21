@@ -166,7 +166,7 @@ public struct GetEmployeeWage: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new `Shift`.  A `Shift` represents a complete workday for a single employee. You must provide the following values in your request to this endpoint:  - `location_id` - `employee_id` - `start_at`  An attempt to create a new `Shift` can result in a `BAD_REQUEST` error when: - The `status` of the new `Shift` is `OPEN` and the employee has another shift with an `OPEN` status. - The `start_at` date is in the future. - The `start_at` or `end_at` date overlaps another shift for the same employee. - The `Break` instances are set in the request and a break `start_at` is before the `Shift.start_at`, a break `end_at` is after the `Shift.end_at`, or both.
+/// Creates a new `Shift`.  A `Shift` represents a complete workday for a single team member. You must provide the following values in your request to this endpoint:  - `location_id` - `team_member_id` - `start_at`  An attempt to create a new `Shift` can result in a `BAD_REQUEST` error when: - The `status` of the new `Shift` is `OPEN` and the team member has another shift with an `OPEN` status. - The `start_at` date is in the future. - The `start_at` or `end_at` date overlaps another shift for the same team member. - The `Break` instances are set in the request and a break `start_at` is before the `Shift.start_at`, a break `end_at` is after the `Shift.end_at`, or both.
 public struct CreateShift: SquareAPIEndpoint {
 	public typealias inputType = CreateShiftRequest
 	public typealias outputType = CreateShiftResponse
@@ -176,7 +176,7 @@ public struct CreateShift: SquareAPIEndpoint {
 	}
 }
 
-/// Returns a paginated list of `Shift` records for a business. The list to be returned can be filtered by: - Location IDs. - Employee IDs. - Shift status (`OPEN` and `CLOSED`). - Shift start. - Shift end. - Workday details.  The list can be sorted by: - `start_at`. - `end_at`. - `created_at`. - `updated_at`.
+/// Returns a paginated list of `Shift` records for a business. The list to be returned can be filtered by: - Location IDs - Team member IDs - Shift status (`OPEN` or `CLOSED`) - Shift start - Shift end - Workday details  The list can be sorted by: - `START_AT` - `END_AT` - `CREATED_AT` - `UPDATED_AT`
 public struct SearchShifts: SquareAPIEndpoint {
 	public typealias inputType = SearchShiftsRequest
 	public typealias outputType = SearchShiftsResponse
@@ -285,7 +285,7 @@ public struct ListTeamMemberWages: SquareAPIEndpoint {
 	}
 }
 
-/// Returns a single `TeamMemberWage` specified by `id `.
+/// Returns a single `TeamMemberWage` specified by `id`.
 public struct GetTeamMemberWage: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -293,7 +293,7 @@ public struct GetTeamMemberWage: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
-		/// Returns a single `TeamMemberWage` specified by `id `.
+		/// Returns a single `TeamMemberWage` specified by `id`.
 		/// - Parameters:
 		///   - id: The UUID for the `TeamMemberWage` being retrieved.
 		public init(id: String) {
