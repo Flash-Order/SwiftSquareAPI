@@ -2770,6 +2770,27 @@ public struct DeviceCode: Codable, Equatable {
 	}
 }
 
+/// Details about the device that took the payment.
+public struct DeviceDetails: Codable, Equatable {
+	/// The Square-issued ID of the device.
+	public var device_id: String?
+	/// The Square-issued installation ID for the device.
+	public var device_installation_id: String?
+	/// The name of the device set by the seller.
+	public var device_name: String?
+	
+	/// Details about the device that took the payment.
+	/// - Parameters:
+	///   - device_id: The Square-issued ID of the device.
+	///   - device_installation_id: The Square-issued installation ID for the device.
+	///   - device_name: The name of the device set by the seller.
+	public init(device_id: String? = nil, device_installation_id: String? = nil, device_name: String? = nil) {
+		self.device_id = device_id
+		self.device_installation_id = device_installation_id
+		self.device_name = device_name
+	}
+}
+
 public struct DeviceMetadata: Codable, Equatable {
 	/// The current version of the application running on the Terminal.
 	public var app_version: String?
@@ -2834,27 +2855,6 @@ public struct SquareError: Codable, Equatable {
 		self.code = code
 		self.detail = detail
 		self.field = field
-	}
-}
-
-/// Details about the device that took the payment.
-public struct DeviceDetails: Codable, Equatable {
-	/// The Square-issued ID of the device.
-	public var device_id: String?
-	/// The Square-issued installation ID for the device.
-	public var device_installation_id: String?
-	/// The name of the device set by the seller.
-	public var device_name: String?
-
-	/// Details about the device that took the payment.
-	/// - Parameters:
-	///   - device_id: The Square-issued ID of the device.
-	///   - device_installation_id: The Square-issued installation ID for the device.
-	///   - device_name: The name of the device set by the seller.
-	public init(device_id: String? = nil, device_installation_id: String? = nil, device_name: String? = nil) {
-		self.device_id = device_id
-		self.device_installation_id = device_installation_id
-		self.device_name = device_name
 	}
 }
 
