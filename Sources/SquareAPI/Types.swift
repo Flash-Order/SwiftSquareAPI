@@ -18811,42 +18811,6 @@ public struct RemoveGroupFromCustomerResponse: Codable, Equatable {
 	}
 }
 
-public struct RenewTokenRequest: Codable, Equatable {
-	/// The token you want to renew.
-	public var access_token: String?
-
-	public init(access_token: String? = nil) {
-		self.access_token = access_token
-	}
-}
-
-public struct RenewTokenResponse: Codable, Equatable {
-	/// The renewed access token. This value might be different from the `access_token` you provided in your request. You provide this token in a header with every request to Connect API endpoints. See [Request and response headers](https://developer.squareup.com/docs/api/connect/v2/#requestandresponseheaders) for the format of this header.
-	public var access_token: String?
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The date when the `access_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
-	public var expires_at: String?
-	/// The ID of the authorizing merchant's business.
-	public var merchant_id: String?
-	/// __LEGACY FIELD__. The ID of the subscription plan the merchant signed up for. The ID is only present if the merchant signed up for a subscription plan during authorization.
-	public var plan_id: String?
-	/// __LEGACY FIELD__. The ID of the merchant subscription associated with the authorization. The ID is only present if the merchant signed up for a subscription during authorization.
-	public var subscription_id: String?
-	/// This value is always _bearer_.
-	public var token_type: String?
-
-	public init(access_token: String? = nil, errors: [SquareError]? = nil, expires_at: String? = nil, merchant_id: String? = nil, plan_id: String? = nil, subscription_id: String? = nil, token_type: String? = nil) {
-		self.access_token = access_token
-		self.errors = errors
-		self.expires_at = expires_at
-		self.merchant_id = merchant_id
-		self.plan_id = plan_id
-		self.subscription_id = subscription_id
-		self.token_type = token_type
-	}
-}
-
 /// Defines input parameters in a request to the [ResumeSubscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/subscriptions-api/resume-subscription) endpoint.
 public struct ResumeSubscriptionRequest: Codable, Equatable {
 	/// The timing to resume a subscription, relative to the specified `resume_effective_date` attribute value.
