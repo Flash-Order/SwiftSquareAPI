@@ -89,6 +89,10 @@ public struct OAuth {
 		case PAYMENTS_WRITE_SHARED_ONFILE
 		/// __HTTP Method__: `GET`  Grants read access to payouts and payout entries information. For example, to call the Connect v2 `ListPayouts` endpoint.
 		case PAYOUTS_READ
+		/// __HTTP Method__: `GET`  Grants read access to Permission Sets. For example, to call the `ListPermissionSets` and `RetrievePermissionSet` endpoints.
+		case PERMISSION_SETS_READ
+		/// __HTTP Method__: `PUT`  Grants write access to Permission Sets.
+		case PERMISSION_SETS_WRITE
 		/// __HTTP Method__: `GET`  Grants read access to reservation information, for example, when calling the `RetrieveReservation` endpoint.
 		case RESERVATIONS_READ
 		/// __HTTP Method__:  `POST`, `PUT`, `DELETE`  Grants write access to reservation information, for example, when calling the `CreateReservation` endpoint.
