@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-04-17" }
+	public static var version: String { return "2024-05-15" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -5545,6 +5545,8 @@ public struct Payment: Codable, Equatable {
 	public let external_details: ExternalPaymentDetails?
 	/// A unique ID for the payment.
 	public let id: String?
+	/// Whether or not this payment was taken offline.
+	public let is_offline_payment: Bool?
 	/// The ID of the location associated with the payment.
 	public let location_id: String?
 	/// An optional note to include when creating a payment.
@@ -5585,6 +5587,8 @@ public struct Payment: Codable, Equatable {
 	public let updated_at: Timestamp?
 	/// Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
 	public var version: Int?
+	/// Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
+	public var version_token: String?
 	/// Details about an wallet payment. The details are only populated  if the `source_type` is `WALLET`.
 	public let wallet_details: DigitalWalletDetails?
 
@@ -5610,6 +5614,7 @@ public struct Payment: Codable, Equatable {
 	///   - employee_id: __Deprecated__: Use `Payment.team_member_id` instead.  An optional ID of the employee associated with taking the payment.
 	///   - external_details: Details about an external payment. The details are only populated  if the `source_type` is `EXTERNAL`.
 	///   - id: A unique ID for the payment.
+	///   - is_offline_payment: Whether or not this payment was taken offline.
 	///   - location_id: The ID of the location associated with the payment.
 	///   - note: An optional note to include when creating a payment.
 	///   - order_id: The ID of the order associated with the payment.
@@ -5630,8 +5635,9 @@ public struct Payment: Codable, Equatable {
 	///   - total_money: The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - updated_at: The timestamp of when the payment was last updated, in RFC 3339 format.
 	///   - version: Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
+	///   - version_token: Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
 	///   - wallet_details: Details about an wallet payment. The details are only populated  if the `source_type` is `WALLET`.
-	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, application_details: ApplicationDetails? = nil, approved_money: Money? = nil, bank_account_details: BankAccountPaymentDetails? = nil, billing_address: Address? = nil, buy_now_pay_later_details: BuyNowPayLaterDetails? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, device_details: DeviceDetails? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, square_account_details: Empty? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil, wallet_details: DigitalWalletDetails? = nil) {
+	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, application_details: ApplicationDetails? = nil, approved_money: Money? = nil, bank_account_details: BankAccountPaymentDetails? = nil, billing_address: Address? = nil, buy_now_pay_later_details: BuyNowPayLaterDetails? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, device_details: DeviceDetails? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, is_offline_payment: Bool? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, square_account_details: Empty? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil, version_token: String? = nil, wallet_details: DigitalWalletDetails? = nil) {
 		self.amount_money = amount_money
 		self.app_fee_money = app_fee_money
 		self.application_details = application_details
@@ -5652,6 +5658,7 @@ public struct Payment: Codable, Equatable {
 		self.employee_id = employee_id
 		self.external_details = external_details
 		self.id = id
+		self.is_offline_payment = is_offline_payment
 		self.location_id = location_id
 		self.note = note
 		self.order_id = order_id
@@ -5672,6 +5679,7 @@ public struct Payment: Codable, Equatable {
 		self.total_money = total_money
 		self.updated_at = updated_at
 		self.version = version
+		self.version_token = version_token
 		self.wallet_details = wallet_details
 	}
 }
