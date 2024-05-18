@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-04-17" }
+	public static var version: String { return "2024-05-15" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -3601,6 +3601,8 @@ public struct CatalogItem: Codable, Equatable {
 	public var image_ids: [String]?
 	/// Indicates whether this item is archived (`true`) or not (`false`).
 	public var is_archived: Bool?
+	/// Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
+	public var is_taxable: Bool?
 	/// List of item options IDs for this item. Used to manage and group item variations in a specified order.  Maximum: 6 item options.
 	public var item_options: [CatalogItemOptionForItem]?
 	/// The color of the item's display label in the Square Point of Sale app. This must be a valid hex color code.
@@ -3638,6 +3640,7 @@ public struct CatalogItem: Codable, Equatable {
 	///   - food_and_beverage_details: The food and beverage-specific details for the `FOOD_AND_BEV` item.
 	///   - image_ids: The IDs of images associated with this `CatalogItem` instance. These images will be shown to customers in Square Online Store. The first image will show up as the icon for this item in POS.
 	///   - is_archived: Indicates whether this item is archived (`true`) or not (`false`).
+	///   - is_taxable: Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
 	///   - item_options: List of item options IDs for this item. Used to manage and group item variations in a specified order.  Maximum: 6 item options.
 	///   - label_color: The color of the item's display label in the Square Point of Sale app. This must be a valid hex color code.
 	///   - modifier_list_info: A set of `CatalogItemModifierListInfo` objects representing the modifier lists that apply to this item, along with the overrides and min and max limits that are specific to this item. Modifier lists may also be added to or deleted from an item using `UpdateItemModifierLists`.
@@ -3648,7 +3651,7 @@ public struct CatalogItem: Codable, Equatable {
 	///   - sort_name: A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting. Its value must not be empty.  It is currently supported for sellers of the Japanese locale only.
 	///   - tax_ids: A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
 	///   - variations: A list of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) objects for this item. An item must have at least one variation.
-	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, categories: [CatalogObjectCategory]? = nil, category_id: String? = nil, channels: [String]? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, ecom_seo_data: CatalogEcomSeoData? = nil, food_and_beverage_details: CatalogItemFoodAndBeverageDetails? = nil, image_ids: [String]? = nil, is_archived: Bool? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: String? = nil, reporting_category: CatalogObjectCategory? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
+	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, categories: [CatalogObjectCategory]? = nil, category_id: String? = nil, channels: [String]? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, ecom_seo_data: CatalogEcomSeoData? = nil, food_and_beverage_details: CatalogItemFoodAndBeverageDetails? = nil, image_ids: [String]? = nil, is_archived: Bool? = nil, is_taxable: Bool? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: String? = nil, reporting_category: CatalogObjectCategory? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
 		self.abbreviation = abbreviation
 		self.available_electronically = available_electronically
 		self.available_for_pickup = available_for_pickup
@@ -3663,6 +3666,7 @@ public struct CatalogItem: Codable, Equatable {
 		self.food_and_beverage_details = food_and_beverage_details
 		self.image_ids = image_ids
 		self.is_archived = is_archived
+		self.is_taxable = is_taxable
 		self.item_options = item_options
 		self.label_color = label_color
 		self.modifier_list_info = modifier_list_info
@@ -8971,12 +8975,15 @@ public struct DestinationDetails: Codable, Equatable {
 }
 
 public struct DestinationDetailsCardRefundDetails: Codable, Equatable {
+	/// The authorization code provided by the issuer when a refund is approved.
+	public var auth_result_code: String?
 	/// The card's non-confidential details.
 	public var card: Card?
 	/// The method used to enter the card's details for the refund. The method can be `KEYED`, `SWIPED`, `EMV`, `ON_FILE`, or `CONTACTLESS`.
 	public var entry_method: String?
 
-	public init(card: Card? = nil, entry_method: String? = nil) {
+	public init(auth_result_code: String? = nil, card: Card? = nil, entry_method: String? = nil) {
+		self.auth_result_code = auth_result_code
 		self.card = card
 		self.entry_method = entry_method
 	}
@@ -17609,6 +17616,8 @@ public struct Payment: Codable, Equatable {
 	public let external_details: ExternalPaymentDetails?
 	/// A unique ID for the payment.
 	public let id: String?
+	/// Whether or not this payment was taken offline.
+	public let is_offline_payment: Bool?
 	/// The ID of the location associated with the payment.
 	public let location_id: String?
 	/// An optional note to include when creating a payment.
@@ -17649,6 +17658,8 @@ public struct Payment: Codable, Equatable {
 	public let updated_at: Timestamp?
 	/// Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
 	public var version: Int?
+	/// Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
+	public var version_token: String?
 	/// Details about an wallet payment. The details are only populated  if the `source_type` is `WALLET`.
 	public let wallet_details: DigitalWalletDetails?
 
@@ -17674,6 +17685,7 @@ public struct Payment: Codable, Equatable {
 	///   - employee_id: __Deprecated__: Use `Payment.team_member_id` instead.  An optional ID of the employee associated with taking the payment.
 	///   - external_details: Details about an external payment. The details are only populated  if the `source_type` is `EXTERNAL`.
 	///   - id: A unique ID for the payment.
+	///   - is_offline_payment: Whether or not this payment was taken offline.
 	///   - location_id: The ID of the location associated with the payment.
 	///   - note: An optional note to include when creating a payment.
 	///   - order_id: The ID of the order associated with the payment.
@@ -17694,8 +17706,9 @@ public struct Payment: Codable, Equatable {
 	///   - total_money: The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - updated_at: The timestamp of when the payment was last updated, in RFC 3339 format.
 	///   - version: Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
+	///   - version_token: Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
 	///   - wallet_details: Details about an wallet payment. The details are only populated  if the `source_type` is `WALLET`.
-	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, application_details: ApplicationDetails? = nil, approved_money: Money? = nil, bank_account_details: BankAccountPaymentDetails? = nil, billing_address: Address? = nil, buy_now_pay_later_details: BuyNowPayLaterDetails? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, device_details: DeviceDetails? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, square_account_details: SquareAccountDetails? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil, wallet_details: DigitalWalletDetails? = nil) {
+	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, application_details: ApplicationDetails? = nil, approved_money: Money? = nil, bank_account_details: BankAccountPaymentDetails? = nil, billing_address: Address? = nil, buy_now_pay_later_details: BuyNowPayLaterDetails? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, device_details: DeviceDetails? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, is_offline_payment: Bool? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, square_account_details: SquareAccountDetails? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil, version_token: String? = nil, wallet_details: DigitalWalletDetails? = nil) {
 		self.amount_money = amount_money
 		self.app_fee_money = app_fee_money
 		self.application_details = application_details
@@ -17716,6 +17729,7 @@ public struct Payment: Codable, Equatable {
 		self.employee_id = employee_id
 		self.external_details = external_details
 		self.id = id
+		self.is_offline_payment = is_offline_payment
 		self.location_id = location_id
 		self.note = note
 		self.order_id = order_id
@@ -17736,6 +17750,7 @@ public struct Payment: Codable, Equatable {
 		self.total_money = total_money
 		self.updated_at = updated_at
 		self.version = version
+		self.version_token = version_token
 		self.wallet_details = wallet_details
 	}
 }
