@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-05-15" }
+	public static var version: String { return "2024-06-04" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -9360,6 +9360,27 @@ public struct DisableCardResponse: Codable, Equatable {
 	}
 }
 
+/// Disables [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
+public struct DisableEventsRequest: Codable, Equatable {
+
+	/// Disables [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
+	public init() {
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [DisableEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/disable-events) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+public struct DisableEventsResponse: Codable, Equatable {
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields that are included in the response body of a request to the [DisableEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/disable-events) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+	/// - Parameters:
+	///   - errors: Information on errors encountered during the request.
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
 public struct DismissTerminalActionRequest: Codable, Equatable {
 
 	public init() {
@@ -9714,6 +9735,27 @@ public struct EmployeeWage: Codable, Equatable {
 	}
 }
 
+/// Enables [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
+public struct EnableEventsRequest: Codable, Equatable {
+
+	/// Enables [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
+	public init() {
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [EnableEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/enable-events) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+public struct EnableEventsResponse: Codable, Equatable {
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+
+	/// Defines the fields that are included in the response body of a request to the [EnableEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/enable-events) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+	/// - Parameters:
+	///   - errors: Information on errors encountered during the request.
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
 /// Represents an error encountered during a request to the Connect API.  See [Handling errors](https://developer.squareup.com/docs/build-basics/handling-errors) for more information.
 public struct SquareError: Codable, Equatable {
 	/// The high-level category for the error.
@@ -10064,11 +10106,11 @@ public enum ErrorCode: String, Codable {
 public struct Event: Codable, Equatable {
 	/// Timestamp of when the event was created, in RFC 3339 format.
 	public let created_at: Timestamp?
-	/// Data associated with the event.
+	/// The data associated with the event.
 	public var data: EventData?
 	/// A unique ID for the event.
 	public var event_id: String?
-	/// The ID of the location associated with the event.
+	/// The ID of the target location associated with the event.
 	public var location_id: String?
 	/// The ID of the target merchant associated with the event.
 	public var merchant_id: String?
@@ -10086,13 +10128,13 @@ public struct Event: Codable, Equatable {
 }
 
 public struct EventData: Codable, Equatable {
-	/// Is true if the affected object was deleted. Otherwise absent.
+	/// This is true if the affected object has been deleted; otherwise, it's absent.
 	public var deleted: Bool?
-	/// ID of the affected object.
+	/// The ID of the affected object.
 	public var id: String?
-	/// An object containing fields and values relevant to the event. Is absent if affected object was deleted.
+	/// An object containing fields and values relevant to the event. It is absent if the affected object has been deleted.
 	public var object: AnyCodable?
-	/// Name of the affected object’s type.
+	/// The name of the affected object’s type.
 	public var type: String?
 
 	public init(deleted: Bool? = nil, id: String? = nil, object: AnyCodable? = nil, type: String? = nil) {
@@ -10100,6 +10142,23 @@ public struct EventData: Codable, Equatable {
 		self.id = id
 		self.object = object
 		self.type = type
+	}
+}
+
+/// Contains metadata about a particular [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event).
+public struct EventMetadata: Codable, Equatable {
+	/// The API version of the event. This corresponds to the default API version of the developer application at the time when the event was created.
+	public var api_version: String?
+	/// A unique ID for the event.
+	public var event_id: String?
+
+	/// Contains metadata about a particular [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event).
+	/// - Parameters:
+	///   - api_version: The API version of the event. This corresponds to the default API version of the developer application at the time when the event was created.
+	///   - event_id: A unique ID for the event.
+	public init(api_version: String? = nil, event_id: String? = nil) {
+		self.api_version = api_version
+		self.event_id = event_id
 	}
 }
 
@@ -13199,6 +13258,40 @@ public struct ListEmployeesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.employees = employees
 		self.errors = errors
+	}
+}
+
+/// Lists all event types that can be subscribed to.
+public struct ListEventTypesRequest: Codable, Equatable {
+	/// The API version for which to list event types. Setting this field overrides the default version used by the application.
+	public var api_version: String?
+
+	/// Lists all event types that can be subscribed to.
+	/// - Parameters:
+	///   - api_version: The API version for which to list event types. Setting this field overrides the default version used by the application.
+	public init(api_version: String? = nil) {
+		self.api_version = api_version
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [ListEventTypes](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/list-event-types) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
+public struct ListEventTypesResponse: Codable, Equatable {
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+	/// The list of event types.
+	public var event_types: [String]?
+	/// Contains the metadata of an event type. For more information, see [EventTypeMetadata](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/EventTypeMetadata).
+	public var metadata: [EventTypeMetadata]?
+
+	/// Defines the fields that are included in the response body of a request to the [ListEventTypes](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/list-event-types) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
+	/// - Parameters:
+	///   - errors: Information on errors encountered during the request.
+	///   - event_types: The list of event types.
+	///   - metadata: Contains the metadata of an event type. For more information, see [EventTypeMetadata](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/EventTypeMetadata).
+	public init(errors: [SquareError]? = nil, event_types: [String]? = nil, metadata: [EventTypeMetadata]? = nil) {
+		self.errors = errors
+		self.event_types = event_types
+		self.metadata = metadata
 	}
 }
 
@@ -18530,13 +18623,13 @@ public struct QrCodeOptions: Codable, Equatable {
 public struct QuantityRatio: Codable, Equatable {
 	/// The whole or fractional quantity as the numerator.
 	public var quantity: Int?
-	/// The whole or fractional quantity as the denominator. In the case of fractional quantity this field is the denominator and quantity is the numerator. When unspecified, the value is `1`. For example, when `quantity=3` and `quantity_donominator` is unspecified, the quantity ratio is `3` or `3/1`.
+	/// The whole or fractional quantity as the denominator. With fractional quantity this field is the denominator and quantity is the numerator. The default value is `1`. For example, when `quantity=3` and `quantity_denominator` is unspecified, the quantity ratio is `3` or `3/1`.
 	public var quantity_denominator: Int?
 
 	/// A whole number or unreduced fractional ratio.
 	/// - Parameters:
 	///   - quantity: The whole or fractional quantity as the numerator.
-	///   - quantity_denominator: The whole or fractional quantity as the denominator. In the case of fractional quantity this field is the denominator and quantity is the numerator. When unspecified, the value is `1`. For example, when `quantity=3` and `quantity_donominator` is unspecified, the quantity ratio is `3` or `3/1`.
+	///   - quantity_denominator: The whole or fractional quantity as the denominator. With fractional quantity this field is the denominator and quantity is the numerator. The default value is `1`. For example, when `quantity=3` and `quantity_denominator` is unspecified, the quantity ratio is `3` or `3/1`.
 	public init(quantity: Int? = nil, quantity_denominator: Int? = nil) {
 		self.quantity = quantity
 		self.quantity_denominator = quantity_denominator
@@ -20424,6 +20517,117 @@ public struct SearchCustomersResponse: Codable, Equatable {
 		self.customers = customers
 		self.errors = errors
 	}
+}
+
+/// Criteria to filter events by.
+public struct SearchEventsFilter: Codable, Equatable {
+	/// Filter events by when they were created.
+	public var created_at: TimeRange?
+	/// Filter events by event types.
+	public var event_types: [String]?
+	/// Filter events by location.
+	public var location_ids: [String]?
+	/// Filter events by merchant.
+	public var merchant_ids: [String]?
+
+	/// Criteria to filter events by.
+	/// - Parameters:
+	///   - created_at: Filter events by when they were created.
+	///   - event_types: Filter events by event types.
+	///   - location_ids: Filter events by location.
+	///   - merchant_ids: Filter events by merchant.
+	public init(created_at: TimeRange? = nil, event_types: [String]? = nil, location_ids: [String]? = nil, merchant_ids: [String]? = nil) {
+		self.created_at = created_at
+		self.event_types = event_types
+		self.location_ids = location_ids
+		self.merchant_ids = merchant_ids
+	}
+}
+
+/// Contains query criteria for the search.
+public struct SearchEventsQuery: Codable, Equatable {
+	/// Criteria to filter events by.
+	public var filter: SearchEventsFilter?
+	/// Criteria to sort events by.
+	public var sort: SearchEventsSort?
+
+	/// Contains query criteria for the search.
+	/// - Parameters:
+	///   - filter: Criteria to filter events by.
+	///   - sort: Criteria to sort events by.
+	public init(filter: SearchEventsFilter? = nil, sort: SearchEventsSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
+}
+
+/// Searches [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
+public struct SearchEventsRequest: Codable, Equatable {
+	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of events for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// The maximum number of events to return in a single page. The response might contain fewer events. The default value is 100, which is also the maximum allowed value.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).  Default: 100
+	public var limit: Int?
+	/// The filtering and sorting criteria for the search request. To retrieve additional pages using a cursor, you must use the original query.
+	public var query: SearchEventsQuery?
+
+	/// Searches [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
+	/// - Parameters:
+	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of events for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - limit: The maximum number of events to return in a single page. The response might contain fewer events. The default value is 100, which is also the maximum allowed value.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).  Default: 100
+	///   - query: The filtering and sorting criteria for the search request. To retrieve additional pages using a cursor, you must use the original query.
+	public init(cursor: String? = nil, limit: Int? = nil, query: SearchEventsQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
+}
+
+/// Defines the fields that are included in the response body of a request to the [SearchEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/search-events) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+public struct SearchEventsResponse: Codable, Equatable {
+	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of events. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// Information on errors encountered during the request.
+	public var errors: [SquareError]?
+	/// The list of [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s returned by the search.
+	public var events: [Event]?
+	/// Contains the metadata of an event. For more information, see [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event).
+	public var metadata: [EventMetadata]?
+
+	/// Defines the fields that are included in the response body of a request to the [SearchEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/events-api/search-events) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+	/// - Parameters:
+	///   - cursor: When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of events. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - errors: Information on errors encountered during the request.
+	///   - events: The list of [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s returned by the search.
+	///   - metadata: Contains the metadata of an event. For more information, see [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event).
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, events: [Event]? = nil, metadata: [EventMetadata]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.events = events
+		self.metadata = metadata
+	}
+}
+
+/// Criteria to sort events by.
+public struct SearchEventsSort: Codable, Equatable {
+	/// Sort events by event types.
+	public var field: String?
+	/// The order to use for sorting the events.
+	public var order: String?
+
+	/// Criteria to sort events by.
+	/// - Parameters:
+	///   - field: Sort events by event types.
+	///   - order: The order to use for sorting the events.
+	public init(field: String? = nil, order: String? = nil) {
+		self.field = field
+		self.order = order
+	}
+}
+
+/// Specifies the sort key for events returned from a search.
+public enum SearchEventsSortField: String, Codable {
+	/// Use the default sort key. The default behavior is to sort events by when they were created (`created_at`).
+	case DEFAULT
 }
 
 /// Describes a `SearchInvoices` request.
