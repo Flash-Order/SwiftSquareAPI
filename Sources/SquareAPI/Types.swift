@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-06-04" }
+	public static var version: String { return "2024-07-17" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -23525,18 +23525,18 @@ public struct UpdateCustomerResponse: Codable, Equatable {
 
 /// Describes a `UpdateInvoice` request.
 public struct UpdateInvoiceRequest: Codable, Equatable {
-	/// The list of fields to clear. For examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
+	/// The list of fields to clear. Although this field is currently supported, we recommend using null values or the `remove` field when possible. For examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
 	public var fields_to_clear: [String]
 	/// A unique string that identifies the `UpdateInvoice` request. If you do not provide `idempotency_key` (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
-	/// The invoice fields to update.  The current invoice version must be specified in the `version` field. For more information, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
+	/// The invoice fields to add, change, or clear. Fields can be cleared using null values or the `remove` field (for individual payment requests or reminders). The current invoice `version` is also required. For more information, including requirements, limitations, and more examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
 	public var invoice: Invoice
 
 	/// Describes a `UpdateInvoice` request.
 	/// - Parameters:
-	///   - fields_to_clear: The list of fields to clear. For examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
+	///   - fields_to_clear: The list of fields to clear. Although this field is currently supported, we recommend using null values or the `remove` field when possible. For examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
 	///   - idempotency_key: A unique string that identifies the `UpdateInvoice` request. If you do not provide `idempotency_key` (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
-	///   - invoice: The invoice fields to update.  The current invoice version must be specified in the `version` field. For more information, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
+	///   - invoice: The invoice fields to add, change, or clear. Fields can be cleared using null values or the `remove` field (for individual payment requests or reminders). The current invoice `version` is also required. For more information, including requirements, limitations, and more examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
 	public init(fields_to_clear: [String], invoice: Invoice, idempotency_key: String? = nil) {
 		self.fields_to_clear = fields_to_clear
 		self.invoice = invoice
