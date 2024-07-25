@@ -127,6 +127,7 @@ public struct CheckLineItemEvent: Codable, Equatable {
 		case UNDISCOUNTED		// a discount on the line item was removed
 		case MOVED				// the item was moved from one check to another
 		case REOPENED			// the check the item belongs to has been reopened
+		case PRINTED
 	}
 	
 	public var uid: String
