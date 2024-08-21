@@ -14492,7 +14492,7 @@ public struct LoyaltyEventAccumulatePromotionPoints: Codable, Equatable {
 /// Provides metadata when the event `type` is `ADJUST_POINTS`.
 public struct LoyaltyEventAdjustPoints: Codable, Equatable {
 	/// The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram).
-	public let loyalty_program_id: String?
+	public var loyalty_program_id: String?
 	/// The number of points added or removed.
 	public var points: Int
 	/// The reason for the adjustment of points.
@@ -14500,11 +14500,12 @@ public struct LoyaltyEventAdjustPoints: Codable, Equatable {
 
 	/// Provides metadata when the event `type` is `ADJUST_POINTS`.
 	/// - Parameters:
+	///   - loyalty_program_id: The Square-assigned ID of the [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram).
 	///   - points: The number of points added or removed.
 	///   - reason: The reason for the adjustment of points.
-	public init(points: Int, reason: String? = nil) {
+	public init(points: Int, loyalty_program_id: String? = nil, reason: String? = nil) {
 		self.points = points
-		self.loyalty_program_id = nil
+		self.loyalty_program_id = loyalty_program_id
 		self.reason = reason
 	}
 }
