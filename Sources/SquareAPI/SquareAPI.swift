@@ -28,6 +28,10 @@ enum DecodeError: Error {
 	case message(String)
 }
 
+enum UsageError: Error {
+	case message(String)
+}
+
 //extension Timestamp {
 //	var date3339: Date? { return iso3339.date(from: self) }
 //}
