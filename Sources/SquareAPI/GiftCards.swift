@@ -42,7 +42,7 @@ public struct ListGiftCards: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a digital gift card or registers a physical (plastic) gift card. After the gift card  is created, you must call [CreateGiftCardActivity](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-card-activities-api/create-gift-card-activity)  to activate the card with an initial balance before it can be used for payment.
+/// Creates a digital gift card or registers a physical (plastic) gift card. The resulting gift card has a `PENDING` state. To activate a gift card so that it can be redeemed for purchases, call [CreateGiftCardActivity](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-card-activities-api/create-gift-card-activity) and create an `ACTIVATE` activity with the initial balance. Alternatively, you can use [RefundPayment](https://developer.squareup.com/reference/square_yyyy-mm-dd/refunds-api/refund-payment) to refund a payment to the new gift card.
 public struct CreateGiftCard: SquareAPIEndpoint {
 	public typealias inputType = CreateGiftCardRequest
 	public typealias outputType = CreateGiftCardResponse

@@ -14,6 +14,9 @@ public struct ListPayments: SquareAPIEndpoint {
 		let last_4: String?
 		let card_brand: String?
 		let limit: Int?
+		let is_offline_payment: Bool?
+		let offline_begin_time: String?
+		let offline_end_time: String?
 		/// Retrieves a list of payments taken by the account making the request.  Results are eventually consistent, and new payments or changes to payments might take several seconds to appear.  The maximum results per page is 100.
 		/// - Parameters:
 		///   - begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
@@ -25,7 +28,10 @@ public struct ListPayments: SquareAPIEndpoint {
 		///   - last_4: The last four digits of a payment card.
 		///   - card_brand: The brand of the payment card (for example, VISA).
 		///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page.  The default value of 100 is also the maximum allowed value. If the provided value is  greater than 100, it is ignored and the default value is used instead.  Default: `100`
-		public init(begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, location_id: String? = nil, total: Int? = nil, last_4: String? = nil, card_brand: String? = nil, limit: Int? = nil) {
+		///   - is_offline_payment: Whether the payment was taken offline or not.
+		///   - offline_begin_time: Indicates the start of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
+		///   - offline_end_time: Indicates the end of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
+		public init(begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, location_id: String? = nil, total: Int? = nil, last_4: String? = nil, card_brand: String? = nil, limit: Int? = nil, is_offline_payment: Bool? = nil, offline_begin_time: String? = nil, offline_end_time: String? = nil) {
 			self.begin_time = begin_time
 			self.end_time = end_time
 			self.sort_order = sort_order
@@ -35,6 +41,9 @@ public struct ListPayments: SquareAPIEndpoint {
 			self.last_4 = last_4
 			self.card_brand = card_brand
 			self.limit = limit
+			self.is_offline_payment = is_offline_payment
+			self.offline_begin_time = offline_begin_time
+			self.offline_end_time = offline_end_time
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
@@ -49,6 +58,9 @@ public struct ListPayments: SquareAPIEndpoint {
 		if let v = inputs.last_4 { queries.append("last_4=\(v)") }
 		if let v = inputs.card_brand { queries.append("card_brand=\(v)") }
 		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.is_offline_payment { queries.append("is_offline_payment=\(v)") }
+		if let v = inputs.offline_begin_time { queries.append("offline_begin_time=\(v)") }
+		if let v = inputs.offline_end_time { queries.append("offline_end_time=\(v)") }
 		if queries.count > 0 {
 			let query = queries.joined(separator: "&")
 			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

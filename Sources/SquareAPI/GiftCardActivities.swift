@@ -54,7 +54,7 @@ public struct ListGiftCardActivities: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a gift card activity to manage the balance or state of a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard).  For example, you create an `ACTIVATE` activity to activate a gift card with an initial balance  before the gift card can be used.
+/// Creates a gift card activity to manage the balance or state of a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard). For example, create an `ACTIVATE` activity to activate a gift card with an initial balance before first use.
 public struct CreateGiftCardActivity: SquareAPIEndpoint {
 	public typealias inputType = CreateGiftCardActivityRequest
 	public typealias outputType = CreateGiftCardActivityResponse
