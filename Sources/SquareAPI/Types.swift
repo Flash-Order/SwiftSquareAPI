@@ -14458,7 +14458,7 @@ public struct LoyaltyEvent: Codable, Equatable {
 /// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 public struct LoyaltyEventAccumulatePoints: Codable, Equatable {
 	/// The ID of the [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram).
-	public let loyalty_program_id: String?
+	public var loyalty_program_id: String?
 	/// The ID of the [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
 	public var order_id: String?
 	/// The number of points accumulated by the event.
@@ -14466,10 +14466,11 @@ public struct LoyaltyEventAccumulatePoints: Codable, Equatable {
 
 	/// Provides metadata when the event `type` is `ACCUMULATE_POINTS`.
 	/// - Parameters:
+	///   - loyalty_program_id: The ID of the [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram).
 	///   - order_id: The ID of the [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) for which the buyer accumulated the points. This field is returned only if the Orders API is used to process orders.
 	///   - points: The number of points accumulated by the event.
-	public init(order_id: String? = nil, points: Int? = nil) {
-		self.loyalty_program_id = nil
+	public init(loyalty_program_id: String? = nil, order_id: String? = nil, points: Int? = nil) {
+		self.loyalty_program_id = loyalty_program_id
 		self.order_id = order_id
 		self.points = points
 	}
