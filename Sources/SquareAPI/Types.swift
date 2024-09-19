@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-08-21" }
+	public static var version: String { return "2024-09-19" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -886,6 +886,8 @@ public struct BatchUpsertCatalogObjectsResponse: Codable, Equatable {
 
 /// Represents a booking as a time-bound service contract for a seller's staff member to provide a specified service at a given location to a requesting customer in one or more appointment segments.
 public struct Booking: Codable, Equatable {
+	/// Stores a customer address if the location type is `CUSTOMER_LOCATION`.
+	public var address: Address?
 	/// Whether the booking is of a full business day.
 	public let all_day: Bool?
 	/// A list of appointment segments for this booking.
@@ -902,7 +904,7 @@ public struct Booking: Codable, Equatable {
 	public let id: String?
 	/// The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) object representing the location where the booked service is provided. Once set when the booking is created, its value cannot be changed.
 	public var location_id: String?
-	/// The type of location where the booking is held. Access to this field requires seller-level permissions.
+	/// The type of location where the booking is held.
 	public var location_type: String?
 	/// The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance. This field should not be visible to customers.
 	public var seller_note: String?
@@ -921,15 +923,16 @@ public struct Booking: Codable, Equatable {
 
 	/// Represents a booking as a time-bound service contract for a seller's staff member to provide a specified service at a given location to a requesting customer in one or more appointment segments.
 	/// - Parameters:
+	///   - address: Stores a customer address if the location type is `CUSTOMER_LOCATION`.
 	///   - appointment_segments: A list of appointment segments for this booking.
 	///   - customer_id: The ID of the [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) object representing the customer receiving the booked service.
 	///   - customer_note: The free-text field for the customer to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a relevant [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance.
 	///   - location_id: The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) object representing the location where the booked service is provided. Once set when the booking is created, its value cannot be changed.
-	///   - location_type: The type of location where the booking is held. Access to this field requires seller-level permissions.
+	///   - location_type: The type of location where the booking is held.
 	///   - seller_note: The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance. This field should not be visible to customers.
 	///   - start_at: The RFC 3339 timestamp specifying the starting time of this booking.
 	///   - version: The revision number for the booking used for optimistic concurrency.
-	public init(appointment_segments: [AppointmentSegment]? = nil, customer_id: String? = nil, customer_note: String? = nil, location_id: String? = nil, location_type: String? = nil, seller_note: String? = nil, start_at: Timestamp? = nil, version: Int? = nil) {
+	public init(address: Address? = nil, appointment_segments: [AppointmentSegment]? = nil, customer_id: String? = nil, customer_note: String? = nil, location_id: String? = nil, location_type: String? = nil, seller_note: String? = nil, start_at: Timestamp? = nil, version: Int? = nil) {
 		self.all_day = nil
 		self.created_at = nil
 		self.creator_details = nil
@@ -938,6 +941,7 @@ public struct Booking: Codable, Equatable {
 		self.status = nil
 		self.transition_time_minutes = nil
 		self.updated_at = nil
+		self.address = address
 		self.appointment_segments = appointment_segments
 		self.customer_id = customer_id
 		self.customer_note = customer_note
@@ -7775,7 +7779,7 @@ public struct Customer: Codable, Equatable {
 	public var address: Address?
 	/// The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-21` represents September 21, 1998, and `0000-09-21` represents September 21 (without a birth year).
 	public var birthday: String?
-	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
+	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd and will be RETIRED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
 	public var cards: [Card]?
 	/// A business name associated with the customer profile.
 	public var company_name: String?
@@ -7816,7 +7820,7 @@ public struct Customer: Codable, Equatable {
 	/// - Parameters:
 	///   - address: The physical address associated with the customer profile.
 	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-21` represents September 21, 1998, and `0000-09-21` represents September 21 (without a birth year).
-	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
+	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd and will be RETIRED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
 	///   - company_name: A business name associated with the customer profile.
 	///   - creation_source: The method used to create the customer profile.
 	///   - email_address: The email address associated with the customer profile.
@@ -17359,6 +17363,8 @@ public struct Payment: Codable, Equatable {
 	public let status: String?
 	/// An optional ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) associated with taking the payment.
 	public var team_member_id: String?
+	/// An optional ID for a Terminal checkout that is associated with the payment.
+	public let terminal_checkout_id: String?
 	/// The amount designated as a tip.   This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	public var tip_money: Money?
 	/// The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
@@ -17416,6 +17422,7 @@ public struct Payment: Codable, Equatable {
 		self.square_account_details = nil
 		self.statement_description_identifier = nil
 		self.status = nil
+		self.terminal_checkout_id = nil
 		self.total_money = nil
 		self.updated_at = nil
 		self.wallet_details = nil
