@@ -36,3 +36,11 @@ extension Order {
 		return Order(id: id, location_id: self.location_id, version: self.version)
 	}
 }
+
+//extension Money: CustomStringConvertible {
+//	
+//}
+
+//extension Optional where Wrapped == Money {
+//	
+//}

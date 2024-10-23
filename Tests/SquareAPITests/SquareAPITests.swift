@@ -97,4 +97,11 @@ final class SquareAPITests: XCTestCase {
 		let data = locJSON.data(using: .utf8)!
 		XCTAssertNoThrow(try JSONDecoder().decode(SquareAPI.RetrieveLocationResponse.self, from: data))
 	}
+	
+	func testDebugDescriptions() throws {
+		let testMoney: Money? = Money(amount: 100, currency: "USD")
+		let testMoney2: Money? = nil
+		print("v1:  \(String(describing: testMoney))")
+		print("nil: \(String(describing: testMoney2))")
+	}
 }
