@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-08-21" }
+	public static var version: String { return "2024-10-17" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -886,6 +886,8 @@ public struct BatchUpsertCatalogObjectsResponse: Codable, Equatable {
 
 /// Represents a booking as a time-bound service contract for a seller's staff member to provide a specified service at a given location to a requesting customer in one or more appointment segments.
 public struct Booking: Codable, Equatable {
+	/// Stores a customer address if the location type is `CUSTOMER_LOCATION`.
+	public var address: Address?
 	/// Whether the booking is of a full business day.
 	public let all_day: Bool?
 	/// A list of appointment segments for this booking.
@@ -902,7 +904,7 @@ public struct Booking: Codable, Equatable {
 	public let id: String?
 	/// The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) object representing the location where the booked service is provided. Once set when the booking is created, its value cannot be changed.
 	public var location_id: String?
-	/// The type of location where the booking is held. Access to this field requires seller-level permissions.
+	/// The type of location where the booking is held.
 	public var location_type: String?
 	/// The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance. This field should not be visible to customers.
 	public var seller_note: String?
@@ -921,15 +923,16 @@ public struct Booking: Codable, Equatable {
 
 	/// Represents a booking as a time-bound service contract for a seller's staff member to provide a specified service at a given location to a requesting customer in one or more appointment segments.
 	/// - Parameters:
+	///   - address: Stores a customer address if the location type is `CUSTOMER_LOCATION`.
 	///   - appointment_segments: A list of appointment segments for this booking.
 	///   - customer_id: The ID of the [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) object representing the customer receiving the booked service.
 	///   - customer_note: The free-text field for the customer to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a relevant [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance.
 	///   - location_id: The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) object representing the location where the booked service is provided. Once set when the booking is created, its value cannot be changed.
-	///   - location_type: The type of location where the booking is held. Access to this field requires seller-level permissions.
+	///   - location_type: The type of location where the booking is held.
 	///   - seller_note: The free-text field for the seller to supply notes about the booking. For example, the note can be preferences that cannot be expressed by supported attributes of a specific [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance. This field should not be visible to customers.
 	///   - start_at: The RFC 3339 timestamp specifying the starting time of this booking.
 	///   - version: The revision number for the booking used for optimistic concurrency.
-	public init(appointment_segments: [AppointmentSegment]? = nil, customer_id: String? = nil, customer_note: String? = nil, location_id: String? = nil, location_type: String? = nil, seller_note: String? = nil, start_at: Timestamp? = nil, version: Int? = nil) {
+	public init(address: Address? = nil, appointment_segments: [AppointmentSegment]? = nil, customer_id: String? = nil, customer_note: String? = nil, location_id: String? = nil, location_type: String? = nil, seller_note: String? = nil, start_at: Timestamp? = nil, version: Int? = nil) {
 		self.all_day = nil
 		self.created_at = nil
 		self.creator_details = nil
@@ -938,6 +941,7 @@ public struct Booking: Codable, Equatable {
 		self.status = nil
 		self.transition_time_minutes = nil
 		self.updated_at = nil
+		self.address = address
 		self.appointment_segments = appointment_segments
 		self.customer_id = customer_id
 		self.customer_note = customer_note
@@ -7775,7 +7779,7 @@ public struct Customer: Codable, Equatable {
 	public var address: Address?
 	/// The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-21` represents September 21, 1998, and `0000-09-21` represents September 21 (without a birth year).
 	public var birthday: String?
-	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
+	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd and will be RETIRED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
 	public var cards: [Card]?
 	/// A business name associated with the customer profile.
 	public var company_name: String?
@@ -7816,7 +7820,7 @@ public struct Customer: Codable, Equatable {
 	/// - Parameters:
 	///   - address: The physical address associated with the customer profile.
 	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-21` represents September 21, 1998, and `0000-09-21` represents September 21 (without a birth year).
-	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
+	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd and will be RETIRED at version yyyy-mm-dd. Replaced by calling [ListCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/cards-api/list-cards) (for credit and debit cards on file)  or [ListGiftCards](https://developer.squareup.com/reference/square_yyyy-mm-dd/gift-cards-api/list-gift-cards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
 	///   - company_name: A business name associated with the customer profile.
 	///   - creation_source: The method used to create the customer profile.
 	///   - email_address: The email address associated with the customer profile.
@@ -8831,12 +8835,20 @@ public struct Destination: Codable, Equatable {
 public struct DestinationDetails: Codable, Equatable {
 	/// Details about a card refund. Only populated if the destination_type is `CARD`.
 	public var card_details: DestinationDetailsCardRefundDetails?
+	/// Details about a cash refund. Only populated if the destination_type is `CASH`.
+	public var cash_details: DestinationDetailsCashRefundDetails?
+	/// Details about an external refund. Only populated if the destination_type is `EXTERNAL`.
+	public var external_details: DestinationDetailsExternalRefundDetails?
 
 	/// Details about a refund's destination.
 	/// - Parameters:
 	///   - card_details: Details about a card refund. Only populated if the destination_type is `CARD`.
-	public init(card_details: DestinationDetailsCardRefundDetails? = nil) {
+	///   - cash_details: Details about a cash refund. Only populated if the destination_type is `CASH`.
+	///   - external_details: Details about an external refund. Only populated if the destination_type is `EXTERNAL`.
+	public init(card_details: DestinationDetailsCardRefundDetails? = nil, cash_details: DestinationDetailsCashRefundDetails? = nil, external_details: DestinationDetailsExternalRefundDetails? = nil) {
 		self.card_details = card_details
+		self.cash_details = cash_details
+		self.external_details = external_details
 	}
 }
 
@@ -8852,6 +8864,44 @@ public struct DestinationDetailsCardRefundDetails: Codable, Equatable {
 		self.auth_result_code = auth_result_code
 		self.card = card
 		self.entry_method = entry_method
+	}
+}
+
+/// Stores details about a cash refund. Contains only non-confidential information.
+public struct DestinationDetailsCashRefundDetails: Codable, Equatable {
+	/// The amount of change due back to the seller. This read-only field is calculated from the `amount_money` and `seller_supplied_money` fields.
+	public var change_back_money: Money?
+	/// The amount and currency of the money supplied by the seller.
+	public var seller_supplied_money: Money
+
+	/// Stores details about a cash refund. Contains only non-confidential information.
+	/// - Parameters:
+	///   - change_back_money: The amount of change due back to the seller. This read-only field is calculated from the `amount_money` and `seller_supplied_money` fields.
+	///   - seller_supplied_money: The amount and currency of the money supplied by the seller.
+	public init(seller_supplied_money: Money, change_back_money: Money? = nil) {
+		self.seller_supplied_money = seller_supplied_money
+		self.change_back_money = change_back_money
+	}
+}
+
+/// Stores details about an external refund. Contains only non-confidential information.
+public struct DestinationDetailsExternalRefundDetails: Codable, Equatable {
+	/// A description of the external refund source. For example, "Food Delivery Service".
+	public var source: String
+	/// An ID to associate the refund to its originating source.
+	public var source_id: String?
+	/// The type of external refund the seller paid to the buyer. It can be one of the following: - CHECK - Refunded using a physical check. - BANK_TRANSFER - Refunded using external bank transfer. - OTHER\_GIFT\_CARD - Refunded using a non-Square gift card. - CRYPTO - Refunded using a crypto currency. - SQUARE_CASH - Refunded using Square Cash App. - SOCIAL - Refunded using peer-to-peer payment applications. - EXTERNAL - A third-party application gathered this refund outside of Square. - EMONEY - Refunded using an E-money provider. - CARD - A credit or debit card that Square does not support. - STORED_BALANCE - Use for house accounts, store credit, and so forth. - FOOD_VOUCHER - Restaurant voucher provided by employers to employees to pay for meals - OTHER - A type not listed here.
+	public var type: String
+
+	/// Stores details about an external refund. Contains only non-confidential information.
+	/// - Parameters:
+	///   - source: A description of the external refund source. For example, "Food Delivery Service".
+	///   - source_id: An ID to associate the refund to its originating source.
+	///   - type: The type of external refund the seller paid to the buyer. It can be one of the following: - CHECK - Refunded using a physical check. - BANK_TRANSFER - Refunded using external bank transfer. - OTHER\_GIFT\_CARD - Refunded using a non-Square gift card. - CRYPTO - Refunded using a crypto currency. - SQUARE_CASH - Refunded using Square Cash App. - SOCIAL - Refunded using peer-to-peer payment applications. - EXTERNAL - A third-party application gathered this refund outside of Square. - EMONEY - Refunded using an E-money provider. - CARD - A credit or debit card that Square does not support. - STORED_BALANCE - Use for house accounts, store credit, and so forth. - FOOD_VOUCHER - Restaurant voucher provided by employers to employees to pay for meals - OTHER - A type not listed here.
+	public init(source: String, type: String, source_id: String? = nil) {
+		self.source = source
+		self.type = type
+		self.source_id = source_id
 	}
 }
 
@@ -17359,6 +17409,8 @@ public struct Payment: Codable, Equatable {
 	public let status: String?
 	/// An optional ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) associated with taking the payment.
 	public var team_member_id: String?
+	/// An optional ID for a Terminal checkout that is associated with the payment.
+	public let terminal_checkout_id: String?
 	/// The amount designated as a tip.   This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	public var tip_money: Money?
 	/// The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
@@ -17416,6 +17468,7 @@ public struct Payment: Codable, Equatable {
 		self.square_account_details = nil
 		self.statement_description_identifier = nil
 		self.status = nil
+		self.terminal_checkout_id = nil
 		self.total_money = nil
 		self.updated_at = nil
 		self.wallet_details = nil
@@ -18361,10 +18414,14 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	public var amount_money: Money
 	/// The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	public var app_fee_money: Money?
+	/// Additional details required when recording a cash refund (`destination_id` is CASH).
+	public var cash_details: DestinationDetailsCashRefundDetails?
 	/// The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Cards API. Only allowed when `unlinked=true`.
 	public var customer_id: String?
-	/// The ID indicating where funds will be refunded to, if this is an unlinked refund. This can be any of the following: A token generated by Web Payments SDK; a card-on-file identifier. Required for requests specifying unlinked=true. Otherwise, if included when `unlinked=false`, will throw an error.
+	/// The ID indicating where funds will be refunded to. Required for unlinked refunds. For more information, see [Create an unlinked refund](https://developer.squareup.com/docs/payments-api/refund-payments#create-an-unlinked-refund).  For refunds linked to Square payments, destination_id is usually omitted; in this case, funds will be returned to the original payment source. The field may be specified in order to request a cross-method refund to a gift card. For more information, see [Cross-method refunds to gift cards](https://developer.squareup.com/docs/payments-api/refund-payments#cross-method-refunds-to-gift-cards).
 	public var destination_id: String?
+	/// Additional details required when recording an external refund (`destination_id` is EXTERNAL).
+	public var external_details: DestinationDetailsExternalRefundDetails?
 	///  A unique string that identifies this `RefundPayment` request. The key can be any valid string but must be unique for every `RefundPayment` request.  Keys are limited to a max of 45 characters - however, the number of allowed characters might be less than 45, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String
 	/// The location ID associated with the unlinked refund. Required for requests specifying `unlinked=true`. Otherwise, if included when `unlinked=false`, will throw an error.
@@ -18384,8 +18441,10 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	///   - app_fee_money: The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
+	///   - cash_details: Additional details required when recording a cash refund (`destination_id` is CASH).
 	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Cards API. Only allowed when `unlinked=true`.
-	///   - destination_id: The ID indicating where funds will be refunded to, if this is an unlinked refund. This can be any of the following: A token generated by Web Payments SDK; a card-on-file identifier. Required for requests specifying unlinked=true. Otherwise, if included when `unlinked=false`, will throw an error.
+	///   - destination_id: The ID indicating where funds will be refunded to. Required for unlinked refunds. For more information, see [Create an unlinked refund](https://developer.squareup.com/docs/payments-api/refund-payments#create-an-unlinked-refund).  For refunds linked to Square payments, destination_id is usually omitted; in this case, funds will be returned to the original payment source. The field may be specified in order to request a cross-method refund to a gift card. For more information, see [Cross-method refunds to gift cards](https://developer.squareup.com/docs/payments-api/refund-payments#cross-method-refunds-to-gift-cards).
+	///   - external_details: Additional details required when recording an external refund (`destination_id` is EXTERNAL).
 	///   - idempotency_key:  A unique string that identifies this `RefundPayment` request. The key can be any valid string but must be unique for every `RefundPayment` request.  Keys are limited to a max of 45 characters - however, the number of allowed characters might be less than 45, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	///   - location_id: The location ID associated with the unlinked refund. Required for requests specifying `unlinked=true`. Otherwise, if included when `unlinked=false`, will throw an error.
 	///   - payment_id: The unique ID of the payment being refunded. Required when unlinked=false, otherwise must not be set.
@@ -18393,12 +18452,14 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	///   - reason: A description of the reason for the refund.
 	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with this refund.
 	///   - unlinked: Indicates that the refund is not linked to a Square payment. If set to true, `destination_id` and `location_id` must be supplied while `payment_id` must not be provided.
-	public init(amount_money: Money, idempotency_key: String, app_fee_money: Money? = nil, customer_id: String? = nil, destination_id: String? = nil, location_id: String? = nil, payment_id: String? = nil, payment_version_token: String? = nil, reason: String? = nil, team_member_id: String? = nil, unlinked: Bool? = nil) {
+	public init(amount_money: Money, idempotency_key: String, app_fee_money: Money? = nil, cash_details: DestinationDetailsCashRefundDetails? = nil, customer_id: String? = nil, destination_id: String? = nil, external_details: DestinationDetailsExternalRefundDetails? = nil, location_id: String? = nil, payment_id: String? = nil, payment_version_token: String? = nil, reason: String? = nil, team_member_id: String? = nil, unlinked: Bool? = nil) {
 		self.amount_money = amount_money
 		self.idempotency_key = idempotency_key
 		self.app_fee_money = app_fee_money
+		self.cash_details = cash_details
 		self.customer_id = customer_id
 		self.destination_id = destination_id
+		self.external_details = external_details
 		self.location_id = location_id
 		self.payment_id = payment_id
 		self.payment_version_token = payment_version_token
