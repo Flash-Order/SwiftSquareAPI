@@ -6,10 +6,10 @@ public struct ListEmployees: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String?
-		let status: String?
+		let status: EmployeeStatus?
 		let limit: Int?
 		let cursor: String?
-		public init(location_id: String? = nil, status: String? = nil, limit: Int? = nil, cursor: String? = nil) {
+		public init(location_id: String? = nil, status: EmployeeStatus? = nil, limit: Int? = nil, cursor: String? = nil) {
 			self.location_id = location_id
 			self.status = status
 			self.limit = limit

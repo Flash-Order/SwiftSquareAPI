@@ -40,7 +40,7 @@ public struct ListEventTypes: SquareAPIEndpoint {
 		let api_version: String?
 		/// Lists all event types that you can subscribe to as webhooks or query using the Events API.
 		/// - Parameters:
-		///   - api_version: (Beta) The API version for which to list event types. Setting this field overrides the default version used by the application.
+		///   - api_version: The API version for which to list event types. Setting this field overrides the default version used by the application.
 		public init(api_version: String? = nil) {
 			self.api_version = api_version
 		}

@@ -6,7 +6,7 @@ public struct ListCashDrawerShifts: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		let sort_order: String?
+		let sort_order: SortOrder?
 		let begin_time: String?
 		let end_time: String?
 		let limit: Int?
@@ -19,7 +19,7 @@ public struct ListCashDrawerShifts: SquareAPIEndpoint {
 		///   - end_time: The exclusive end date of the query on opened_at, in ISO 8601 format.
 		///   - limit: Number of cash drawer shift events in a page of results (200 by default, 1000 max).
 		///   - cursor: Opaque cursor for fetching the next page of results.
-		public init(location_id: String, sort_order: String? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, cursor: String? = nil) {
+		public init(location_id: String, sort_order: SortOrder? = nil, begin_time: String? = nil, end_time: String? = nil, limit: Int? = nil, cursor: String? = nil) {
 			self.location_id = location_id
 			self.sort_order = sort_order
 			self.begin_time = begin_time
@@ -46,7 +46,7 @@ public struct ListCashDrawerShifts: SquareAPIEndpoint {
 	}
 }
 
-/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/cash-drawers-api/list-cash-drawer-shift-events) for a list of cash drawer shift events.
+/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents]($e/CashDrawers/ListCashDrawerShiftEvents) for a list of cash drawer shift events.
 public struct RetrieveCashDrawerShift: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -55,7 +55,7 @@ public struct RetrieveCashDrawerShift: SquareAPIEndpoint {
 	public struct Params {
 		let shift_id: String
 		let location_id: String
-		/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents](https://developer.squareup.com/reference/square_yyyy-mm-dd/cash-drawers-api/list-cash-drawer-shift-events) for a list of cash drawer shift events.
+		/// Provides the summary details for a single cash drawer shift. See [ListCashDrawerShiftEvents]($e/CashDrawers/ListCashDrawerShiftEvents) for a list of cash drawer shift events.
 		/// - Parameters:
 		///   - shift_id: The shift ID.
 		///   - location_id: The ID of the location to retrieve cash drawer shifts from.

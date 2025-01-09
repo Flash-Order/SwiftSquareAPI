@@ -5,15 +5,15 @@ public struct ListMerchantCustomAttributeDefinitions: SquareAPIEndpoint {
 	public typealias outputType = ListMerchantCustomAttributeDefinitionsResponse
 	public typealias paramType = Params
 	public struct Params {
-		let visibility_filter: String?
+		let visibility_filter: VisibilityFilter?
 		let limit: Int?
 		let cursor: String?
 		/// Lists the merchant-related [custom attribute definitions](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that belong to a Square seller account. When all response pages are retrieved, the results include all custom attribute definitions that are visible to the requesting application, including those that are created by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - visibility_filter: (Beta) Filters the `CustomAttributeDefinition` results by their `visibility` values.
-		///   - limit: (Beta) The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - cursor: (Beta) The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		public init(visibility_filter: String? = nil, limit: Int? = nil, cursor: String? = nil) {
+		///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values.
+		///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		public init(visibility_filter: VisibilityFilter? = nil, limit: Int? = nil, cursor: String? = nil) {
 			self.visibility_filter = visibility_filter
 			self.limit = limit
 			self.cursor = cursor
@@ -34,7 +34,7 @@ public struct ListMerchantCustomAttributeDefinitions: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a merchant-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) for a Square seller account. Use this endpoint to define a custom attribute that can be associated with a merchant connecting to your application. A custom attribute definition specifies the `key`, `visibility`, `schema`, and other properties for a custom attribute. After the definition is created, you can call [UpsertMerchantCustomAttribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/merchant-custom-attributes-api/upsert-merchant-custom-attribute) or [BulkUpsertMerchantCustomAttributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/merchant-custom-attributes-api/bulk-upsert-merchant-custom-attributes) to set the custom attribute for a merchant.
+/// Creates a merchant-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) for a Square seller account. Use this endpoint to define a custom attribute that can be associated with a merchant connecting to your application. A custom attribute definition specifies the `key`, `visibility`, `schema`, and other properties for a custom attribute. After the definition is created, you can call [UpsertMerchantCustomAttribute]($e/MerchantCustomAttributes/UpsertMerchantCustomAttribute) or [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) to set the custom attribute for a merchant.
 public struct CreateMerchantCustomAttributeDefinition: SquareAPIEndpoint {
 	public typealias inputType = CreateMerchantCustomAttributeDefinitionRequest
 	public typealias outputType = CreateMerchantCustomAttributeDefinitionResponse
@@ -55,8 +55,8 @@ public struct RetrieveMerchantCustomAttributeDefinition: SquareAPIEndpoint {
 		let version: Int?
 		/// Retrieves a merchant-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) from a Square seller account. To retrieve a custom attribute definition created by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - key: (Beta) The key of the custom attribute definition to retrieve. If the requesting application is not the definition owner, you must use the qualified key.
-		///   - version: (Beta) The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+		///   - key: The key of the custom attribute definition to retrieve. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 		public init(key: String, version: Int? = nil) {
 			self.key = key
 			self.version = version
@@ -85,7 +85,7 @@ public struct UpdateMerchantCustomAttributeDefinition: SquareAPIEndpoint {
 		let key: String
 		/// Updates a merchant-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) for a Square seller account. Use this endpoint to update the following fields: `name`, `description`, `visibility`, or the `schema` for a `Selection` data type. Only the definition owner can update a custom attribute definition.
 		/// - Parameters:
-		///   - key: (Beta) The key of the custom attribute definition to update.
+		///   - key: The key of the custom attribute definition to update.
 		public init(key: String) {
 			self.key = key
 		}
@@ -106,7 +106,7 @@ public struct DeleteMerchantCustomAttributeDefinition: SquareAPIEndpoint {
 		let key: String
 		/// Deletes a merchant-related [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) from a Square seller account. Deleting a custom attribute definition also deletes the corresponding custom attribute from the merchant. Only the definition owner can delete a custom attribute definition.
 		/// - Parameters:
-		///   - key: (Beta) The key of the custom attribute definition to delete.
+		///   - key: The key of the custom attribute definition to delete.
 		public init(key: String) {
 			self.key = key
 		}
@@ -127,7 +127,7 @@ public struct BulkDeleteMerchantCustomAttributes: SquareAPIEndpoint {
 	}
 }
 
-/// Creates or updates [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for a merchant as a bulk operation. Use this endpoint to set the value of one or more custom attributes for a merchant. A custom attribute is based on a custom attribute definition in a Square seller account, which is created using the [CreateMerchantCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/merchant-custom-attributes-api/create-merchant-custom-attribute-definition) endpoint. This `BulkUpsertMerchantCustomAttributes` endpoint accepts a map of 1 to 25 individual upsert requests and returns a map of individual upsert responses. Each upsert request has a unique ID and provides a merchant ID and custom attribute. Each upsert response is returned with the ID of the corresponding request. To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
+/// Creates or updates [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for a merchant as a bulk operation. Use this endpoint to set the value of one or more custom attributes for a merchant. A custom attribute is based on a custom attribute definition in a Square seller account, which is created using the [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) endpoint. This `BulkUpsertMerchantCustomAttributes` endpoint accepts a map of 1 to 25 individual upsert requests and returns a map of individual upsert responses. Each upsert request has a unique ID and provides a merchant ID and custom attribute. Each upsert response is returned with the ID of the corresponding request. To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
 public struct BulkUpsertMerchantCustomAttributes: SquareAPIEndpoint {
 	public typealias inputType = BulkUpsertMerchantCustomAttributesRequest
 	public typealias outputType = BulkUpsertMerchantCustomAttributesResponse
@@ -145,18 +145,18 @@ public struct ListMerchantCustomAttributes: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let merchant_id: String
-		let visibility_filter: String?
+		let visibility_filter: VisibilityFilter?
 		let limit: Int?
 		let cursor: String?
 		let with_definitions: Bool?
 		/// Lists the [custom attributes](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a merchant. You can use the `with_definitions` query parameter to also retrieve custom attribute definitions in the same call. When all response pages are retrieved, the results include all custom attributes that are visible to the requesting application, including those that are owned by other applications and set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - merchant_id: (Beta) The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
-		///   - visibility_filter: (Beta) Filters the `CustomAttributeDefinition` results by their `visibility` values.
-		///   - limit: (Beta) The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - cursor: (Beta) The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - with_definitions: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-		public init(merchant_id: String, visibility_filter: String? = nil, limit: Int? = nil, cursor: String? = nil, with_definitions: Bool? = nil) {
+		///   - merchant_id: The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
+		///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values.
+		///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
+		public init(merchant_id: String, visibility_filter: VisibilityFilter? = nil, limit: Int? = nil, cursor: String? = nil, with_definitions: Bool? = nil) {
 			self.merchant_id = merchant_id
 			self.visibility_filter = visibility_filter
 			self.limit = limit
@@ -193,10 +193,10 @@ public struct RetrieveMerchantCustomAttribute: SquareAPIEndpoint {
 		let version: Int?
 		/// Retrieves a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a merchant. You can use the `with_definition` query parameter to also retrieve the custom attribute definition in the same call. To retrieve a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - merchant_id: (Beta) The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
-		///   - key: (Beta) The key of the custom attribute to retrieve. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
-		///   - with_definition: (Beta) Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-		///   - version: (Beta) The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
+		///   - merchant_id: The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
+		///   - key: The key of the custom attribute to retrieve. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
+		///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 		public init(merchant_id: String, key: String, with_definition: Bool? = nil, version: Int? = nil) {
 			self.merchant_id = merchant_id
 			self.key = key
@@ -218,7 +218,7 @@ public struct RetrieveMerchantCustomAttribute: SquareAPIEndpoint {
 	}
 }
 
-/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for a merchant. Use this endpoint to set the value of a custom attribute for a specified merchant. A custom attribute is based on a custom attribute definition in a Square seller account, which is created using the [CreateMerchantCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/merchant-custom-attributes-api/create-merchant-custom-attribute-definition) endpoint. To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
+/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for a merchant. Use this endpoint to set the value of a custom attribute for a specified merchant. A custom attribute is based on a custom attribute definition in a Square seller account, which is created using the [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) endpoint. To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
 public struct UpsertMerchantCustomAttribute: SquareAPIEndpoint {
 	public typealias inputType = UpsertMerchantCustomAttributeRequest
 	public typealias outputType = UpsertMerchantCustomAttributeResponse
@@ -226,10 +226,10 @@ public struct UpsertMerchantCustomAttribute: SquareAPIEndpoint {
 	public struct Params {
 		let merchant_id: String
 		let key: String
-		/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for a merchant. Use this endpoint to set the value of a custom attribute for a specified merchant. A custom attribute is based on a custom attribute definition in a Square seller account, which is created using the [CreateMerchantCustomAttributeDefinition](https://developer.squareup.com/reference/square_yyyy-mm-dd/merchant-custom-attributes-api/create-merchant-custom-attribute-definition) endpoint. To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
+		/// Creates or updates a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) for a merchant. Use this endpoint to set the value of a custom attribute for a specified merchant. A custom attribute is based on a custom attribute definition in a Square seller account, which is created using the [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) endpoint. To create or update a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - merchant_id: (Beta) The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
-		///   - key: (Beta) The key of the custom attribute to create or update. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - merchant_id: The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
+		///   - key: The key of the custom attribute to create or update. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
 		public init(merchant_id: String, key: String) {
 			self.merchant_id = merchant_id
 			self.key = key
@@ -252,8 +252,8 @@ public struct DeleteMerchantCustomAttribute: SquareAPIEndpoint {
 		let key: String
 		/// Deletes a [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a merchant. To delete a custom attribute owned by another application, the `visibility` setting must be `VISIBILITY_READ_WRITE_VALUES`.
 		/// - Parameters:
-		///   - merchant_id: (Beta) The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
-		///   - key: (Beta) The key of the custom attribute to delete. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
+		///   - merchant_id: The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
+		///   - key: The key of the custom attribute to delete. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
 		public init(merchant_id: String, key: String) {
 			self.merchant_id = merchant_id
 			self.key = key

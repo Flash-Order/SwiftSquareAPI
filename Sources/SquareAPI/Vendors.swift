@@ -59,7 +59,7 @@ public struct RetrieveVendor: SquareAPIEndpoint {
 		let vendor_id: String
 		/// Retrieves the vendor of a specified [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) ID.
 		/// - Parameters:
-		///   - vendor_id: (Beta) ID of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to retrieve.
+		///   - vendor_id: ID of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to retrieve.
 		public init(vendor_id: String) {
 			self.vendor_id = vendor_id
 		}
@@ -80,7 +80,7 @@ public struct UpdateVendor: SquareAPIEndpoint {
 		let vendor_id: String
 		/// Updates an existing [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) object as a supplier to a seller.
 		/// - Parameters:
-		///   - vendor_id: 
+		///   - vendor_id: ID of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to retrieve.
 		public init(vendor_id: String) {
 			self.vendor_id = vendor_id
 		}

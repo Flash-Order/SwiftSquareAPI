@@ -28,7 +28,7 @@ public struct GetTerminalAction: SquareAPIEndpoint {
 		let action_id: String
 		/// Retrieves a Terminal action request by `action_id`. Terminal action requests are available for 30 days.
 		/// - Parameters:
-		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`.
+		///   - action_id: Unique ID for the desired `TerminalAction`.
 		public init(action_id: String) {
 			self.action_id = action_id
 		}
@@ -48,7 +48,7 @@ public struct CancelTerminalAction: SquareAPIEndpoint {
 		let action_id: String
 		/// Cancels a Terminal action request if the status of the request permits it.
 		/// - Parameters:
-		///   - action_id: (Beta) Unique ID for the desired `TerminalAction`.
+		///   - action_id: Unique ID for the desired `TerminalAction`.
 		public init(action_id: String) {
 			self.action_id = action_id
 		}
@@ -59,16 +59,16 @@ public struct CancelTerminalAction: SquareAPIEndpoint {
 	}
 }
 
-/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
+/// Dismisses a Terminal action request if the status and type of the request permits it. See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
 public struct DismissTerminalAction: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DismissTerminalActionResponse
 	public typealias paramType = Params
 	public struct Params {
 		let action_id: String
-		/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
+		/// Dismisses a Terminal action request if the status and type of the request permits it. See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
 		/// - Parameters:
-		///   - action_id: (Beta) Unique ID for the `TerminalAction` associated with the action to be dismissed.
+		///   - action_id: Unique ID for the `TerminalAction` associated with the action to be dismissed.
 		public init(action_id: String) {
 			self.action_id = action_id
 		}
@@ -149,7 +149,7 @@ public struct DismissTerminalCheckout: SquareAPIEndpoint {
 		let checkout_id: String
 		/// Dismisses a Terminal checkout request if the status and type of the request permits it.
 		/// - Parameters:
-		///   - checkout_id: (Beta) Unique ID for the `TerminalCheckout` associated with the checkout to be dismissed.
+		///   - checkout_id: Unique ID for the `TerminalCheckout` associated with the checkout to be dismissed.
 		public init(checkout_id: String) {
 			self.checkout_id = checkout_id
 		}
@@ -160,7 +160,7 @@ public struct DismissTerminalCheckout: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API](https://developer.squareup.com/reference/square_yyyy-mm-dd/refunds-api).
+/// Creates a request to refund an Interac payment completed on a Square Terminal. Refunds for Interac payments on a Square Terminal are supported only for Interac debit cards in Canada. Other refunds for Terminal payments should use the Refunds API. For more information, see [Refunds API]($e/Refunds).
 public struct CreateTerminalRefund: SquareAPIEndpoint {
 	public typealias inputType = CreateTerminalRefundRequest
 	public typealias outputType = CreateTerminalRefundResponse
@@ -230,7 +230,7 @@ public struct DismissTerminalRefund: SquareAPIEndpoint {
 		let terminal_refund_id: String
 		/// Dismisses a Terminal refund request if the status and type of the request permits it.
 		/// - Parameters:
-		///   - terminal_refund_id: (Beta) Unique ID for the `TerminalRefund` associated with the refund to be dismissed.
+		///   - terminal_refund_id: Unique ID for the `TerminalRefund` associated with the refund to be dismissed.
 		public init(terminal_refund_id: String) {
 			self.terminal_refund_id = terminal_refund_id
 		}

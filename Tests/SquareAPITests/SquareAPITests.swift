@@ -99,7 +99,7 @@ final class SquareAPITests: XCTestCase {
 	}
 	
 	func testDebugDescriptions() throws {
-		let testMoney: Money? = Money(amount: 100, currency: "USD")
+		let testMoney: Money? = Money(amount: 100, currency: .USD)
 		let testMoney2: Money? = nil
 		print("v1:  \(String(describing: testMoney))")
 		print("nil: \(String(describing: testMoney2))")

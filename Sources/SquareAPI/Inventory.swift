@@ -1,4 +1,4 @@
-/// Deprecated version of [RetrieveInventoryAdjustment](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/retrieve-inventory-adjustment) after the endpoint URL is updated to conform to the standard convention.
+/// Deprecated version of [RetrieveInventoryAdjustment](api-endpoint:Inventory-RetrieveInventoryAdjustment) after the endpoint URL is updated to conform to the standard convention.
 @available(*,deprecated)
 public struct DeprecatedRetrieveInventoryAdjustment: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -7,7 +7,7 @@ public struct DeprecatedRetrieveInventoryAdjustment: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let adjustment_id: String
-		/// Deprecated version of [RetrieveInventoryAdjustment](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/retrieve-inventory-adjustment) after the endpoint URL is updated to conform to the standard convention.
+		/// Deprecated version of [RetrieveInventoryAdjustment](api-endpoint:Inventory-RetrieveInventoryAdjustment) after the endpoint URL is updated to conform to the standard convention.
 		/// - Parameters:
 		///   - adjustment_id: ID of the [InventoryAdjustment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryAdjustment) to retrieve.
 		public init(adjustment_id: String) {
@@ -41,7 +41,7 @@ public struct RetrieveInventoryAdjustment: SquareAPIEndpoint {
 	}
 }
 
-/// Deprecated version of [BatchChangeInventory](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/batch-change-inventory) after the endpoint URL is updated to conform to the standard convention.
+/// Deprecated version of [BatchChangeInventory](api-endpoint:Inventory-BatchChangeInventory) after the endpoint URL is updated to conform to the standard convention.
 @available(*,deprecated)
 public struct DeprecatedBatchChangeInventory: SquareAPIEndpoint {
 	public typealias inputType = BatchChangeInventoryRequest
@@ -52,7 +52,7 @@ public struct DeprecatedBatchChangeInventory: SquareAPIEndpoint {
 	}
 }
 
-/// Deprecated version of [BatchRetrieveInventoryChanges](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/batch-retrieve-inventory-changes) after the endpoint URL is updated to conform to the standard convention.
+/// Deprecated version of [BatchRetrieveInventoryChanges](api-endpoint:Inventory-BatchRetrieveInventoryChanges) after the endpoint URL is updated to conform to the standard convention.
 @available(*,deprecated)
 public struct DeprecatedBatchRetrieveInventoryChanges: SquareAPIEndpoint {
 	public typealias inputType = BatchRetrieveInventoryChangesRequest
@@ -63,7 +63,7 @@ public struct DeprecatedBatchRetrieveInventoryChanges: SquareAPIEndpoint {
 	}
 }
 
-/// Deprecated version of [BatchRetrieveInventoryCounts](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/batch-retrieve-inventory-counts) after the endpoint URL is updated to conform to the standard convention.
+/// Deprecated version of [BatchRetrieveInventoryCounts](api-endpoint:Inventory-BatchRetrieveInventoryCounts) after the endpoint URL is updated to conform to the standard convention.
 @available(*,deprecated)
 public struct DeprecatedBatchRetrieveInventoryCounts: SquareAPIEndpoint {
 	public typealias inputType = BatchRetrieveInventoryCountsRequest
@@ -74,7 +74,7 @@ public struct DeprecatedBatchRetrieveInventoryCounts: SquareAPIEndpoint {
 	}
 }
 
-/// Applies adjustments and counts to the provided item quantities.  On success: returns the current calculated counts for all objects referenced in the request. On failure: returns a list of related errors.
+/// Applies adjustments and counts to the provided item quantities. On success: returns the current calculated counts for all objects referenced in the request. On failure: returns a list of related errors.
 public struct BatchChangeInventory: SquareAPIEndpoint {
 	public typealias inputType = BatchChangeInventoryRequest
 	public typealias outputType = BatchChangeInventoryResponse
@@ -84,7 +84,7 @@ public struct BatchChangeInventory: SquareAPIEndpoint {
 	}
 }
 
-/// Returns historical physical counts and adjustments based on the provided filter criteria.  Results are paginated and sorted in ascending order according their `occurred_at` timestamp (oldest first).  BatchRetrieveInventoryChanges is a catch-all query endpoint for queries that cannot be handled by other, simpler endpoints.
+/// Returns historical physical counts and adjustments based on the provided filter criteria. Results are paginated and sorted in ascending order according their `occurred_at` timestamp (oldest first). BatchRetrieveInventoryChanges is a catch-all query endpoint for queries that cannot be handled by other, simpler endpoints.
 public struct BatchRetrieveInventoryChanges: SquareAPIEndpoint {
 	public typealias inputType = BatchRetrieveInventoryChangesRequest
 	public typealias outputType = BatchRetrieveInventoryChangesResponse
@@ -94,7 +94,7 @@ public struct BatchRetrieveInventoryChanges: SquareAPIEndpoint {
 	}
 }
 
-/// Returns current counts for the provided [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s at the requested [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s.  Results are paginated and sorted in descending order according to their `calculated_at` timestamp (newest first).  When `updated_after` is specified, only counts that have changed since that time (based on the server timestamp for the most recent change) are returned. This allows clients to perform a "sync" operation, for example in response to receiving a Webhook notification.
+/// Returns current counts for the provided [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s at the requested [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. Results are paginated and sorted in descending order according to their `calculated_at` timestamp (newest first). When `updated_after` is specified, only counts that have changed since that time (based on the server timestamp for the most recent change) are returned. This allows clients to perform a "sync" operation, for example in response to receiving a Webhook notification.
 public struct BatchRetrieveInventoryCounts: SquareAPIEndpoint {
 	public typealias inputType = BatchRetrieveInventoryCountsRequest
 	public typealias outputType = BatchRetrieveInventoryCountsResponse
@@ -104,7 +104,7 @@ public struct BatchRetrieveInventoryCounts: SquareAPIEndpoint {
 	}
 }
 
-/// Deprecated version of [RetrieveInventoryPhysicalCount](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/retrieve-inventory-physical-count) after the endpoint URL is updated to conform to the standard convention.
+/// Deprecated version of [RetrieveInventoryPhysicalCount](api-endpoint:Inventory-RetrieveInventoryPhysicalCount) after the endpoint URL is updated to conform to the standard convention.
 @available(*,deprecated)
 public struct DeprecatedRetrieveInventoryPhysicalCount: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -113,7 +113,7 @@ public struct DeprecatedRetrieveInventoryPhysicalCount: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let physical_count_id: String
-		/// Deprecated version of [RetrieveInventoryPhysicalCount](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/retrieve-inventory-physical-count) after the endpoint URL is updated to conform to the standard convention.
+		/// Deprecated version of [RetrieveInventoryPhysicalCount](api-endpoint:Inventory-RetrieveInventoryPhysicalCount) after the endpoint URL is updated to conform to the standard convention.
 		/// - Parameters:
 		///   - physical_count_id: ID of the [InventoryPhysicalCount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryPhysicalCount) to retrieve.
 		public init(physical_count_id: String) {
@@ -157,7 +157,7 @@ public struct RetrieveInventoryTransfer: SquareAPIEndpoint {
 		let transfer_id: String
 		/// Returns the [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) object with the provided `transfer_id`.
 		/// - Parameters:
-		///   - transfer_id: (Beta) ID of the [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) to retrieve.
+		///   - transfer_id: ID of the [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) to retrieve.
 		public init(transfer_id: String) {
 			self.transfer_id = transfer_id
 		}
@@ -182,7 +182,7 @@ public struct RetrieveInventoryCount: SquareAPIEndpoint {
 		/// - Parameters:
 		///   - catalog_object_id: ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) to retrieve.
 		///   - location_ids: The [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query. See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 		public init(catalog_object_id: String, location_ids: String? = nil, cursor: String? = nil) {
 			self.catalog_object_id = catalog_object_id
 			self.location_ids = location_ids
@@ -203,7 +203,7 @@ public struct RetrieveInventoryCount: SquareAPIEndpoint {
 	}
 }
 
-/// Returns a set of physical counts and inventory adjustments for the provided [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) at the requested [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s.  You can achieve the same result by calling [BatchRetrieveInventoryChanges](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/batch-retrieve-inventory-changes) and having the `catalog_object_ids` list contain a single element of the `CatalogObject` ID.  Results are paginated and sorted in descending order according to their `occurred_at` timestamp (newest first).  There are no limits on how far back the caller can page. This endpoint can be used to display recent changes for a specific item. For more sophisticated queries, use a batch endpoint.
+/// Returns a set of physical counts and inventory adjustments for the provided [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) at the requested [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. You can achieve the same result by calling [BatchRetrieveInventoryChanges](api-endpoint:Inventory-BatchRetrieveInventoryChanges) and having the `catalog_object_ids` list contain a single element of the `CatalogObject` ID. Results are paginated and sorted in descending order according to their `occurred_at` timestamp (newest first). There are no limits on how far back the caller can page. This endpoint can be used to display recent changes for a specific item. For more sophisticated queries, use a batch endpoint.
 @available(*,deprecated)
 public struct RetrieveInventoryChanges: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
@@ -214,11 +214,11 @@ public struct RetrieveInventoryChanges: SquareAPIEndpoint {
 		let catalog_object_id: String
 		let location_ids: String?
 		let cursor: String?
-		/// Returns a set of physical counts and inventory adjustments for the provided [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) at the requested [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s.  You can achieve the same result by calling [BatchRetrieveInventoryChanges](https://developer.squareup.com/reference/square_yyyy-mm-dd/inventory-api/batch-retrieve-inventory-changes) and having the `catalog_object_ids` list contain a single element of the `CatalogObject` ID.  Results are paginated and sorted in descending order according to their `occurred_at` timestamp (newest first).  There are no limits on how far back the caller can page. This endpoint can be used to display recent changes for a specific item. For more sophisticated queries, use a batch endpoint.
+		/// Returns a set of physical counts and inventory adjustments for the provided [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) at the requested [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. You can achieve the same result by calling [BatchRetrieveInventoryChanges](api-endpoint:Inventory-BatchRetrieveInventoryChanges) and having the `catalog_object_ids` list contain a single element of the `CatalogObject` ID. Results are paginated and sorted in descending order according to their `occurred_at` timestamp (newest first). There are no limits on how far back the caller can page. This endpoint can be used to display recent changes for a specific item. For more sophisticated queries, use a batch endpoint.
 		/// - Parameters:
 		///   - catalog_object_id: ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) to retrieve.
 		///   - location_ids: The [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query. See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 		public init(catalog_object_id: String, location_ids: String? = nil, cursor: String? = nil) {
 			self.catalog_object_id = catalog_object_id
 			self.location_ids = location_ids

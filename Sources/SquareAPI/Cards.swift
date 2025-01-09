@@ -9,15 +9,15 @@ public struct ListCards: SquareAPIEndpoint {
 		let customer_id: String?
 		let include_disabled: Bool?
 		let reference_id: String?
-		let sort_order: String?
+		let sort_order: SortOrder?
 		/// Retrieves a list of cards owned by the account making the request. A max of 25 cards will be returned.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
 		///   - customer_id: Limit results to cards associated with the customer supplied. By default, all cards owned by the merchant are returned.
 		///   - include_disabled: Includes disabled cards. By default, all enabled cards owned by the merchant are returned.
 		///   - reference_id: Limit results to cards associated with the reference_id supplied.
 		///   - sort_order: Sorts the returned list by when the card was created with the specified order. This field defaults to ASC.
-		public init(cursor: String? = nil, customer_id: String? = nil, include_disabled: Bool? = nil, reference_id: String? = nil, sort_order: String? = nil) {
+		public init(cursor: String? = nil, customer_id: String? = nil, include_disabled: Bool? = nil, reference_id: String? = nil, sort_order: SortOrder? = nil) {
 			self.cursor = cursor
 			self.customer_id = customer_id
 			self.include_disabled = include_disabled

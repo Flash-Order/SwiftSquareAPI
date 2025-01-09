@@ -7,7 +7,7 @@ public struct V1V1ListOrders: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		let order: String?
+		let order: SortOrder?
 		let limit: Int?
 		let batch_token: String?
 		/// Provides summary information for a merchant's online store orders.
@@ -16,7 +16,7 @@ public struct V1V1ListOrders: SquareAPIEndpoint {
 		///   - order: The order in which payments are listed in the response.
 		///   - limit: The maximum number of payments to return in a single response. This value cannot exceed 200.
 		///   - batch_token: A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-		public init(location_id: String, order: String? = nil, limit: Int? = nil, batch_token: String? = nil) {
+		public init(location_id: String, order: SortOrder? = nil, limit: Int? = nil, batch_token: String? = nil) {
 			self.location_id = location_id
 			self.order = order
 			self.limit = limit

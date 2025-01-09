@@ -6,14 +6,14 @@ public struct ListDisputes: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let cursor: String?
-		let states: String?
+		let states: DisputeState?
 		let location_id: String?
 		/// Returns a list of disputes associated with a particular account.
 		/// - Parameters:
 		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - states: The dispute states used to filter the result. If not specified, the endpoint returns all disputes.
 		///   - location_id: The ID of the location for which to return a list of disputes. If not specified, the endpoint returns disputes associated with all locations.
-		public init(cursor: String? = nil, states: String? = nil, location_id: String? = nil) {
+		public init(cursor: String? = nil, states: DisputeState? = nil, location_id: String? = nil) {
 			self.cursor = cursor
 			self.states = states
 			self.location_id = location_id
@@ -55,14 +55,14 @@ public struct RetrieveDispute: SquareAPIEndpoint {
 	}
 }
 
-/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED.  Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
+/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED. Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
 public struct AcceptDispute: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = AcceptDisputeResponse
 	public typealias paramType = Params
 	public struct Params {
 		let dispute_id: String
-		/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED.  Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
+		/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED. Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute you want to accept.
 		public init(dispute_id: String) {
@@ -106,6 +106,26 @@ public struct ListDisputeEvidence: SquareAPIEndpoint {
 	}
 }
 
+/// Uploads a file to use as evidence in a dispute challenge. The endpoint accepts HTTP multipart/form-data file uploads in HEIC, HEIF, JPEG, PDF, PNG, and TIFF formats.
+public struct CreateDisputeEvidenceFile: SquareAPIEndpoint {
+	public typealias inputType = Empty  // actual type not supported yet
+	public typealias outputType = CreateDisputeEvidenceFileResponse
+	public typealias paramType = Params
+	public struct Params {
+		let dispute_id: String
+		/// Uploads a file to use as evidence in a dispute challenge. The endpoint accepts HTTP multipart/form-data file uploads in HEIC, HEIF, JPEG, PDF, PNG, and TIFF formats.
+		/// - Parameters:
+		///   - dispute_id: The ID of the dispute for which you want to upload evidence.
+		public init(dispute_id: String) {
+			self.dispute_id = dispute_id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/disputes/\(inputs.dispute_id)/evidence-files"
+		return url
+	}
+}
+
 /// Uploads text to use as evidence for a dispute challenge.
 public struct CreateDisputeEvidenceText: SquareAPIEndpoint {
 	public typealias inputType = CreateDisputeEvidenceTextRequest
@@ -126,7 +146,7 @@ public struct CreateDisputeEvidenceText: SquareAPIEndpoint {
 	}
 }
 
-/// Returns the metadata for the evidence specified in the request URL path.  You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
+/// Returns the metadata for the evidence specified in the request URL path. You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
 public struct RetrieveDisputeEvidence: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -135,7 +155,7 @@ public struct RetrieveDisputeEvidence: SquareAPIEndpoint {
 	public struct Params {
 		let dispute_id: String
 		let evidence_id: String
-		/// Returns the metadata for the evidence specified in the request URL path.  You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
+		/// Returns the metadata for the evidence specified in the request URL path. You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute from which you want to retrieve evidence metadata.
 		///   - evidence_id: The ID of the evidence to retrieve.
@@ -174,14 +194,14 @@ public struct DeleteDisputeEvidence: SquareAPIEndpoint {
 	}
 }
 
-/// Submits evidence to the cardholder's bank.  The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_yyyy-mm-dd/disputes-api/create-dispute-evidence-file) and [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_yyyy-mm-dd/disputes-api/create-dispute-evidence-text) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
+/// Submits evidence to the cardholder's bank. The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile]($e/Disputes/CreateDisputeEvidenceFile) and [CreateDisputeEvidenceText]($e/Disputes/CreateDisputeEvidenceText) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
 public struct SubmitEvidence: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SubmitEvidenceResponse
 	public typealias paramType = Params
 	public struct Params {
 		let dispute_id: String
-		/// Submits evidence to the cardholder's bank.  The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile](https://developer.squareup.com/reference/square_yyyy-mm-dd/disputes-api/create-dispute-evidence-file) and [CreateDisputeEvidenceText](https://developer.squareup.com/reference/square_yyyy-mm-dd/disputes-api/create-dispute-evidence-text) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
+		/// Submits evidence to the cardholder's bank. The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile]($e/Disputes/CreateDisputeEvidenceFile) and [CreateDisputeEvidenceText]($e/Disputes/CreateDisputeEvidenceText) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute for which you want to submit evidence.
 		public init(dispute_id: String) {

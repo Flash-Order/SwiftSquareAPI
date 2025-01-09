@@ -6,10 +6,10 @@ public struct ListPayouts: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String?
-		let status: String?
+		let status: PayoutStatus?
 		let begin_time: String?
 		let end_time: String?
-		let sort_order: String?
+		let sort_order: SortOrder?
 		let cursor: String?
 		let limit: Int?
 		/// Retrieves a list of all payouts for the default location. You can filter payouts by location ID, status, time range, and order them in ascending or descending order. To call this endpoint, set `PAYOUTS_READ` for the OAuth scope.
@@ -21,7 +21,7 @@ public struct ListPayouts: SquareAPIEndpoint {
 		///   - sort_order: The order in which payouts are listed.
 		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). If request parameters change between requests, subsequent results may contain duplicates or missing records.
 		///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. If the provided value is greater than 100, it is ignored and the default value is used instead. Default: `100`
-		public init(location_id: String? = nil, status: String? = nil, begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, limit: Int? = nil) {
+		public init(location_id: String? = nil, status: PayoutStatus? = nil, begin_time: String? = nil, end_time: String? = nil, sort_order: SortOrder? = nil, cursor: String? = nil, limit: Int? = nil) {
 			self.location_id = location_id
 			self.status = status
 			self.begin_time = begin_time
@@ -79,7 +79,7 @@ public struct ListPayoutEntries: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payout_id: String
-		let sort_order: String?
+		let sort_order: SortOrder?
 		let cursor: String?
 		let limit: Int?
 		/// Retrieves a list of all payout entries for a specific payout. To call this endpoint, set `PAYOUTS_READ` for the OAuth scope.
@@ -88,7 +88,7 @@ public struct ListPayoutEntries: SquareAPIEndpoint {
 		///   - sort_order: The order in which payout entries are listed.
 		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). If request parameters change between requests, subsequent results may contain duplicates or missing records.
 		///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. If the provided value is greater than 100, it is ignored and the default value is used instead. Default: `100`
-		public init(payout_id: String, sort_order: String? = nil, cursor: String? = nil, limit: Int? = nil) {
+		public init(payout_id: String, sort_order: SortOrder? = nil, cursor: String? = nil, limit: Int? = nil) {
 			self.payout_id = payout_id
 			self.sort_order = sort_order
 			self.cursor = cursor
