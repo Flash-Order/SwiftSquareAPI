@@ -10,7 +10,7 @@ public struct ListBankAccounts: SquareAPIEndpoint {
 		let location_id: String?
 		/// Returns a list of [BankAccount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BankAccount) objects linked to a Square account.
 		/// - Parameters:
-		///   - cursor: The pagination cursor returned by a previous call to this endpoint. Use it in the next `ListBankAccounts` request to retrieve the next set  of results. See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
+		///   - cursor: The pagination cursor returned by a previous call to this endpoint. Use it in the next `ListBankAccounts` request to retrieve the next set  of results.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 		///   - limit: Upper limit on the number of bank accounts to return in the response.  Currently, 1000 is the largest supported limit. You can specify a limit  of up to 1000 bank accounts. This is also the default limit.
 		///   - location_id: Location ID. You can specify this optional filter  to retrieve only the linked bank accounts belonging to a specific location.
 		public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {

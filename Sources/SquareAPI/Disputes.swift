@@ -55,14 +55,14 @@ public struct RetrieveDispute: SquareAPIEndpoint {
 	}
 }
 
-/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED. Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
+/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED.  Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
 public struct AcceptDispute: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = AcceptDisputeResponse
 	public typealias paramType = Params
 	public struct Params {
 		let dispute_id: String
-		/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED. Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
+		/// Accepts the loss on a dispute. Square returns the disputed amount to the cardholder and updates the dispute state to ACCEPTED.  Square debits the disputed amount from the seller’s Square account. If the Square account does not have sufficient funds, Square debits the associated bank account.
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute you want to accept.
 		public init(dispute_id: String) {
@@ -146,7 +146,7 @@ public struct CreateDisputeEvidenceText: SquareAPIEndpoint {
 	}
 }
 
-/// Returns the metadata for the evidence specified in the request URL path. You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
+/// Returns the metadata for the evidence specified in the request URL path.  You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
 public struct RetrieveDisputeEvidence: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -155,7 +155,7 @@ public struct RetrieveDisputeEvidence: SquareAPIEndpoint {
 	public struct Params {
 		let dispute_id: String
 		let evidence_id: String
-		/// Returns the metadata for the evidence specified in the request URL path. You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
+		/// Returns the metadata for the evidence specified in the request URL path.  You must maintain a copy of any evidence uploaded if you want to reference it later. Evidence cannot be downloaded after you upload it.
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute from which you want to retrieve evidence metadata.
 		///   - evidence_id: The ID of the evidence to retrieve.
@@ -194,14 +194,14 @@ public struct DeleteDisputeEvidence: SquareAPIEndpoint {
 	}
 }
 
-/// Submits evidence to the cardholder's bank. The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile]($e/Disputes/CreateDisputeEvidenceFile) and [CreateDisputeEvidenceText]($e/Disputes/CreateDisputeEvidenceText) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
+/// Submits evidence to the cardholder's bank.  The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile]($e/Disputes/CreateDisputeEvidenceFile) and [CreateDisputeEvidenceText]($e/Disputes/CreateDisputeEvidenceText) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
 public struct SubmitEvidence: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SubmitEvidenceResponse
 	public typealias paramType = Params
 	public struct Params {
 		let dispute_id: String
-		/// Submits evidence to the cardholder's bank. The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile]($e/Disputes/CreateDisputeEvidenceFile) and [CreateDisputeEvidenceText]($e/Disputes/CreateDisputeEvidenceText) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
+		/// Submits evidence to the cardholder's bank.  The evidence submitted by this endpoint includes evidence uploaded using the [CreateDisputeEvidenceFile]($e/Disputes/CreateDisputeEvidenceFile) and [CreateDisputeEvidenceText]($e/Disputes/CreateDisputeEvidenceText) endpoints and evidence automatically provided by Square, when available. Evidence cannot be removed from a dispute after submission.
 		/// - Parameters:
 		///   - dispute_id: The ID of the dispute for which you want to submit evidence.
 		public init(dispute_id: String) {

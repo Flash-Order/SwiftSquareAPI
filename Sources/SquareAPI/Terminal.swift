@@ -59,14 +59,14 @@ public struct CancelTerminalAction: SquareAPIEndpoint {
 	}
 }
 
-/// Dismisses a Terminal action request if the status and type of the request permits it. See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
+/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
 public struct DismissTerminalAction: SquareAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DismissTerminalActionResponse
 	public typealias paramType = Params
 	public struct Params {
 		let action_id: String
-		/// Dismisses a Terminal action request if the status and type of the request permits it. See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
+		/// Dismisses a Terminal action request if the status and type of the request permits it.  See [Link and Dismiss Actions](https://developer.squareup.com/docs/terminal-api/advanced-features/custom-workflows/link-and-dismiss-actions) for more details.
 		/// - Parameters:
 		///   - action_id: Unique ID for the `TerminalAction` associated with the action to be dismissed.
 		public init(action_id: String) {

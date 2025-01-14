@@ -1,4 +1,4 @@
-/// Creates a single `TeamMember` object. The `TeamMember` object is returned on successful creates. You must provide the following values in your request to this endpoint: - `given_name` - `family_name` Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#createteammember).
+/// Creates a single `TeamMember` object. The `TeamMember` object is returned on successful creates. You must provide the following values in your request to this endpoint: - `given_name` - `family_name`  Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#createteammember).
 public struct CreateTeamMember: SquareAPIEndpoint {
 	public typealias inputType = CreateTeamMemberRequest
 	public typealias outputType = CreateTeamMemberResponse
@@ -8,7 +8,7 @@ public struct CreateTeamMember: SquareAPIEndpoint {
 	}
 }
 
-/// Creates multiple `TeamMember` objects. The created `TeamMember` objects are returned on successful creates. This process is non-transactional and processes as much of the request as possible. If one of the creates in the request cannot be successfully processed, the request is not marked as failed, but the body of the response contains explicit error information for the failed create. Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#bulk-create-team-members).
+/// Creates multiple `TeamMember` objects. The created `TeamMember` objects are returned on successful creates. This process is non-transactional and processes as much of the request as possible. If one of the creates in the request cannot be successfully processed, the request is not marked as failed, but the body of the response contains explicit error information for the failed create.  Learn about [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#bulk-create-team-members).
 public struct BulkCreateTeamMembers: SquareAPIEndpoint {
 	public typealias inputType = BulkCreateTeamMembersRequest
 	public typealias outputType = BulkCreateTeamMembersResponse
@@ -160,7 +160,7 @@ public struct UpdateTeamMember: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a `WageSetting` object for a team member specified by `TeamMember.id`. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#retrievewagesetting). Square recommends using [RetrieveTeamMember]($e/Team/RetrieveTeamMember) or [SearchTeamMembers]($e/Team/SearchTeamMembers) to get this information directly from the `TeamMember.wage_setting` field.
+/// Retrieves a `WageSetting` object for a team member specified by `TeamMember.id`. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#retrievewagesetting).  Square recommends using [RetrieveTeamMember]($e/Team/RetrieveTeamMember) or [SearchTeamMembers]($e/Team/SearchTeamMembers) to get this information directly from the `TeamMember.wage_setting` field.
 public struct RetrieveWageSetting: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -168,7 +168,7 @@ public struct RetrieveWageSetting: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let team_member_id: String
-		/// Retrieves a `WageSetting` object for a team member specified by `TeamMember.id`. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#retrievewagesetting). Square recommends using [RetrieveTeamMember]($e/Team/RetrieveTeamMember) or [SearchTeamMembers]($e/Team/SearchTeamMembers) to get this information directly from the `TeamMember.wage_setting` field.
+		/// Retrieves a `WageSetting` object for a team member specified by `TeamMember.id`. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#retrievewagesetting).  Square recommends using [RetrieveTeamMember]($e/Team/RetrieveTeamMember) or [SearchTeamMembers]($e/Team/SearchTeamMembers) to get this information directly from the `TeamMember.wage_setting` field.
 		/// - Parameters:
 		///   - team_member_id: The ID of the team member for which to retrieve the wage setting.
 		public init(team_member_id: String) {
@@ -181,7 +181,7 @@ public struct RetrieveWageSetting: SquareAPIEndpoint {
 	}
 }
 
-/// Creates or updates a `WageSetting` object. The object is created if a `WageSetting` with the specified `team_member_id` doesn't exist. Otherwise, it fully replaces the `WageSetting` object for the team member. The `WageSetting` is returned on a successful update. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#create-or-update-a-wage-setting). Square recommends using [CreateTeamMember]($e/Team/CreateTeamMember) or [UpdateTeamMember]($e/Team/UpdateTeamMember) to manage the `TeamMember.wage_setting` field directly.
+/// Creates or updates a `WageSetting` object. The object is created if a `WageSetting` with the specified `team_member_id` doesn't exist. Otherwise, it fully replaces the `WageSetting` object for the team member. The `WageSetting` is returned on a successful update. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#create-or-update-a-wage-setting).  Square recommends using [CreateTeamMember]($e/Team/CreateTeamMember) or [UpdateTeamMember]($e/Team/UpdateTeamMember) to manage the `TeamMember.wage_setting` field directly.
 public struct UpdateWageSetting: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateWageSettingRequest
@@ -189,7 +189,7 @@ public struct UpdateWageSetting: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let team_member_id: String
-		/// Creates or updates a `WageSetting` object. The object is created if a `WageSetting` with the specified `team_member_id` doesn't exist. Otherwise, it fully replaces the `WageSetting` object for the team member. The `WageSetting` is returned on a successful update. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#create-or-update-a-wage-setting). Square recommends using [CreateTeamMember]($e/Team/CreateTeamMember) or [UpdateTeamMember]($e/Team/UpdateTeamMember) to manage the `TeamMember.wage_setting` field directly.
+		/// Creates or updates a `WageSetting` object. The object is created if a `WageSetting` with the specified `team_member_id` doesn't exist. Otherwise, it fully replaces the `WageSetting` object for the team member. The `WageSetting` is returned on a successful update. For more information, see [Troubleshooting the Team API](https://developer.squareup.com/docs/team/troubleshooting#create-or-update-a-wage-setting).  Square recommends using [CreateTeamMember]($e/Team/CreateTeamMember) or [UpdateTeamMember]($e/Team/UpdateTeamMember) to manage the `TeamMember.wage_setting` field directly.
 		/// - Parameters:
 		///   - team_member_id: The ID of the team member for which to update the `WageSetting` object.
 		public init(team_member_id: String) {

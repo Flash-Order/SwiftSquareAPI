@@ -1,4 +1,4 @@
-/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.   NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights).
+/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights).
 @available(*,deprecated)
 public struct CreateCheckout: SquareAPIEndpoint {
 	public typealias inputType = CreateCheckoutRequest
@@ -6,7 +6,7 @@ public struct CreateCheckout: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location_id: String
-		/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.   NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights).
+		/// Links a `checkoutId` to a `checkout_page_url` that customers are directed to in order to provide their payment information using a payment processing workflow hosted on connect.squareup.com.    NOTE: The Checkout API has been updated with new features.  For more information, see [Checkout API highlights](https://developer.squareup.com/docs/checkout-api#checkout-api-highlights).
 		/// - Parameters:
 		///   - location_id: The ID of the business location to associate the checkout with.
 		public init(location_id: String) {
@@ -95,7 +95,7 @@ public struct ListPaymentLinks: SquareAPIEndpoint {
 		/// Lists all payment links.
 		/// - Parameters:
 		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results. For more  information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - limit: A limit on the number of results to return per page. The limit is advisory and the implementation might return more or less results. If the supplied limit is negative, zero, or greater than the maximum limit of 1000, it is ignored. Default value: `100`
+		///   - limit: A limit on the number of results to return per page. The limit is advisory and the implementation might return more or less results. If the supplied limit is negative, zero, or greater than the maximum limit of 1000, it is ignored.  Default value: `100`
 		public init(cursor: String? = nil, limit: Int? = nil) {
 			self.cursor = cursor
 			self.limit = limit

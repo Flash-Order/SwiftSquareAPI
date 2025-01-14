@@ -51,7 +51,7 @@ public struct ListDeviceCodes: SquareAPIEndpoint {
 		let status: DeviceCodeStatus?
 		/// Lists all DeviceCodes associated with the merchant.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 		///   - location_id: If specified, only returns DeviceCodes of the specified location. Returns DeviceCodes of all locations if empty.
 		///   - product_type: If specified, only returns DeviceCodes targeting the specified product type. Returns DeviceCodes of all product types if empty.
 		///   - status: If specified, returns DeviceCodes with the specified statuses. Returns DeviceCodes of status `PAIRED` and `UNPAIRED` if empty.

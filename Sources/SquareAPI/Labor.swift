@@ -34,7 +34,7 @@ public struct ListBreakTypes: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new `BreakType`. A `BreakType` is a template for creating `Break` objects. You must provide the following values in your request to this endpoint: - `location_id` - `break_name` - `expected_duration` - `is_paid` You can only have three `BreakType` instances per location. If you attempt to add a fourth `BreakType` for a location, an `INVALID_REQUEST_ERROR` "Exceeded limit of 3 breaks per location." is returned.
+/// Creates a new `BreakType`.  A `BreakType` is a template for creating `Break` objects. You must provide the following values in your request to this endpoint:  - `location_id` - `break_name` - `expected_duration` - `is_paid`  You can only have three `BreakType` instances per location. If you attempt to add a fourth `BreakType` for a location, an `INVALID_REQUEST_ERROR` "Exceeded limit of 3 breaks per location." is returned.
 public struct CreateBreakType: SquareAPIEndpoint {
 	public typealias inputType = CreateBreakTypeRequest
 	public typealias outputType = CreateBreakTypeResponse
@@ -75,7 +75,7 @@ public struct UpdateBreakType: SquareAPIEndpoint {
 		let id: String
 		/// Updates an existing `BreakType`.
 		/// - Parameters:
-		///   - id:  The UUID for the `BreakType` being updated.
+		///   - id: The UUID for the `BreakType` being updated.
 		public init(id: String) {
 			self.id = id
 		}
@@ -86,7 +86,7 @@ public struct UpdateBreakType: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes an existing `BreakType`. A `BreakType` can be deleted even if it is referenced from a `Shift`.
+/// Deletes an existing `BreakType`.  A `BreakType` can be deleted even if it is referenced from a `Shift`.
 public struct DeleteBreakType: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -94,7 +94,7 @@ public struct DeleteBreakType: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
-		/// Deletes an existing `BreakType`. A `BreakType` can be deleted even if it is referenced from a `Shift`.
+		/// Deletes an existing `BreakType`.  A `BreakType` can be deleted even if it is referenced from a `Shift`.
 		/// - Parameters:
 		///   - id: The UUID for the `BreakType` being deleted.
 		public init(id: String) {
@@ -166,7 +166,7 @@ public struct GetEmployeeWage: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new `Shift`. A `Shift` represents a complete workday for a single team member. You must provide the following values in your request to this endpoint: - `location_id` - `team_member_id` - `start_at` An attempt to create a new `Shift` can result in a `BAD_REQUEST` error when: - The `status` of the new `Shift` is `OPEN` and the team member has another shift with an `OPEN` status. - The `start_at` date is in the future. - The `start_at` or `end_at` date overlaps another shift for the same team member. - The `Break` instances are set in the request and a break `start_at` is before the `Shift.start_at`, a break `end_at` is after the `Shift.end_at`, or both.
+/// Creates a new `Shift`.  A `Shift` represents a complete workday for a single team member. You must provide the following values in your request to this endpoint:  - `location_id` - `team_member_id` - `start_at`  An attempt to create a new `Shift` can result in a `BAD_REQUEST` error when: - The `status` of the new `Shift` is `OPEN` and the team member has another shift with an `OPEN` status. - The `start_at` date is in the future. - The `start_at` or `end_at` date overlaps another shift for the same team member. - The `Break` instances are set in the request and a break `start_at` is before the `Shift.start_at`, a break `end_at` is after the `Shift.end_at`, or both.
 public struct CreateShift: SquareAPIEndpoint {
 	public typealias inputType = CreateShiftRequest
 	public typealias outputType = CreateShiftResponse
@@ -176,7 +176,7 @@ public struct CreateShift: SquareAPIEndpoint {
 	}
 }
 
-/// Returns a paginated list of `Shift` records for a business. The list to be returned can be filtered by: - Location IDs - Team member IDs - Shift status (`OPEN` or `CLOSED`) - Shift start - Shift end - Workday details The list can be sorted by: - `START_AT` - `END_AT` - `CREATED_AT` - `UPDATED_AT`
+/// Returns a paginated list of `Shift` records for a business. The list to be returned can be filtered by: - Location IDs - Team member IDs - Shift status (`OPEN` or `CLOSED`) - Shift start - Shift end - Workday details  The list can be sorted by: - `START_AT` - `END_AT` - `CREATED_AT` - `UPDATED_AT`
 public struct SearchShifts: SquareAPIEndpoint {
 	public typealias inputType = SearchShiftsRequest
 	public typealias outputType = SearchShiftsResponse
@@ -207,7 +207,7 @@ public struct GetShift: SquareAPIEndpoint {
 	}
 }
 
-/// Updates an existing `Shift`. When adding a `Break` to a `Shift`, any earlier `Break` instances in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string. When closing a `Shift`, all `Break` instances in the `Shift` must be complete with `end_at` set on each `Break`.
+/// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Break` instances in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the `Shift` must be complete with `end_at` set on each `Break`.
 public struct UpdateShift: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateShiftRequest
@@ -215,7 +215,7 @@ public struct UpdateShift: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
-		/// Updates an existing `Shift`. When adding a `Break` to a `Shift`, any earlier `Break` instances in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string. When closing a `Shift`, all `Break` instances in the `Shift` must be complete with `end_at` set on each `Break`.
+		/// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Break` instances in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the `Shift` must be complete with `end_at` set on each `Break`.
 		/// - Parameters:
 		///   - id: The ID of the object being updated.
 		public init(id: String) {

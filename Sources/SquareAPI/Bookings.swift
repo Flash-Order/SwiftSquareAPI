@@ -1,4 +1,4 @@
-/// Retrieve a collection of bookings. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+/// Retrieve a collection of bookings.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 public struct ListBookings: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -12,7 +12,7 @@ public struct ListBookings: SquareAPIEndpoint {
 		let location_id: String?
 		let start_at_min: String?
 		let start_at_max: String?
-		/// Retrieve a collection of bookings. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+		/// Retrieve a collection of bookings.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
 		///   - limit: The maximum number of results per page to return in a paged response.
 		///   - cursor: The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
@@ -50,7 +50,7 @@ public struct ListBookings: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a booking. The required input must include the following: - `Booking.location_id` - `Booking.start_at` - `Booking.AppointmentSegment.team_member_id` - `Booking.AppointmentSegment.service_variation_id` - `Booking.AppointmentSegment.service_variation_version` To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope. For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
+/// Creates a booking.  The required input must include the following: - `Booking.location_id` - `Booking.start_at` - `Booking.AppointmentSegment.team_member_id` - `Booking.AppointmentSegment.service_variation_id` - `Booking.AppointmentSegment.service_variation_version`  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 public struct CreateBooking: SquareAPIEndpoint {
 	public typealias inputType = CreateBookingRequest
 	public typealias outputType = CreateBookingResponse
@@ -60,7 +60,7 @@ public struct CreateBooking: SquareAPIEndpoint {
 	}
 }
 
-/// Searches for availabilities for booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+/// Searches for availabilities for booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 public struct SearchAvailability: SquareAPIEndpoint {
 	public typealias inputType = SearchAvailabilityRequest
 	public typealias outputType = SearchAvailabilityResponse
@@ -70,7 +70,7 @@ public struct SearchAvailability: SquareAPIEndpoint {
 	}
 }
 
-/// Bulk-Retrieves a list of bookings by booking IDs. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+/// Bulk-Retrieves a list of bookings by booking IDs.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 public struct BulkRetrieveBookings: SquareAPIEndpoint {
 	public typealias inputType = BulkRetrieveBookingsRequest
 	public typealias outputType = BulkRetrieveBookingsResponse
@@ -215,7 +215,7 @@ public struct RetrieveTeamMemberBookingProfile: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves a booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+/// Retrieves a booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 public struct RetrieveBooking: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -223,7 +223,7 @@ public struct RetrieveBooking: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let booking_id: String
-		/// Retrieves a booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+		/// Retrieves a booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_READ` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
 		/// - Parameters:
 		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) object representing the to-be-retrieved booking.
 		public init(booking_id: String) {
@@ -236,7 +236,7 @@ public struct RetrieveBooking: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope. For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
+/// Updates a booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 public struct UpdateBooking: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateBookingRequest
@@ -244,7 +244,7 @@ public struct UpdateBooking: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let booking_id: String
-		/// Updates a booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope. For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
+		/// Updates a booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
 		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) object representing the to-be-updated booking.
 		public init(booking_id: String) {
@@ -257,14 +257,14 @@ public struct UpdateBooking: SquareAPIEndpoint {
 	}
 }
 
-/// Cancels an existing booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope. For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
+/// Cancels an existing booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 public struct CancelBooking: SquareAPIEndpoint {
 	public typealias inputType = CancelBookingRequest
 	public typealias outputType = CancelBookingResponse
 	public typealias paramType = Params
 	public struct Params {
 		let booking_id: String
-		/// Cancels an existing booking. To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope. For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
+		/// Cancels an existing booking.  To call this endpoint with buyer-level permissions, set `APPOINTMENTS_WRITE` for the OAuth scope. To call this endpoint with seller-level permissions, set `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.  For calls to this endpoint with seller-level permissions to succeed, the seller must have subscribed to *Appointments Plus* or *Appointments Premium*.
 		/// - Parameters:
 		///   - booking_id: The ID of the [Booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) object representing the to-be-cancelled booking.
 		public init(booking_id: String) {

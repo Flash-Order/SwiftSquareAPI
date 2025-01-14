@@ -1,4 +1,4 @@
-/// Lists customer profiles associated with a Square account. Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
+/// Lists customer profiles associated with a Square account.  Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 public struct ListCustomers: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -10,13 +10,13 @@ public struct ListCustomers: SquareAPIEndpoint {
 		let sort_field: CustomerSortField?
 		let sort_order: SortOrder?
 		let count: Bool?
-		/// Lists customer profiles associated with a Square account. Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
+		/// Lists customer profiles associated with a Square account.  Under normal operating conditions, newly created or updated customer profiles become available for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-		///   - sort_field: Indicates how customers should be sorted. The default value is `DEFAULT`.
-		///   - sort_order: Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order. The default value is `ASC`.
-		///   - count: Indicates whether to return the total count of customers in the `count` field of the response. The default value is `false`.
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - sort_field: Indicates how customers should be sorted.  The default value is `DEFAULT`.
+		///   - sort_order: Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  The default value is `ASC`.
+		///   - count: Indicates whether to return the total count of customers in the `count` field of the response.  The default value is `false`.
 		public init(cursor: String? = nil, limit: Int? = nil, sort_field: CustomerSortField? = nil, sort_order: SortOrder? = nil, count: Bool? = nil) {
 			self.cursor = cursor
 			self.limit = limit
@@ -42,7 +42,7 @@ public struct ListCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Creates a new customer for a business. You must provide at least one of the following values in your request to this endpoint: - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
+/// Creates a new customer for a business.  You must provide at least one of the following values in your request to this endpoint:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
 public struct CreateCustomer: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerRequest
 	public typealias outputType = CreateCustomerResponse
@@ -52,7 +52,7 @@ public struct CreateCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Creates multiple [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) for a business. This endpoint takes a map of individual create requests and returns a map of responses. You must provide at least one of the following values in each create request: - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
+/// Creates multiple [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) for a business.  This endpoint takes a map of individual create requests and returns a map of responses.  You must provide at least one of the following values in each create request:  - `given_name` - `family_name` - `company_name` - `email_address` - `phone_number`
 public struct BulkCreateCustomers: SquareAPIEndpoint {
 	public typealias inputType = BulkCreateCustomersRequest
 	public typealias outputType = BulkCreateCustomersResponse
@@ -62,7 +62,7 @@ public struct BulkCreateCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes multiple customer profiles. The endpoint takes a list of customer IDs and returns a map of responses.
+/// Deletes multiple customer profiles.  The endpoint takes a list of customer IDs and returns a map of responses.
 public struct BulkDeleteCustomers: SquareAPIEndpoint {
 	public typealias inputType = BulkDeleteCustomersRequest
 	public typealias outputType = BulkDeleteCustomersResponse
@@ -72,7 +72,7 @@ public struct BulkDeleteCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Retrieves multiple customer profiles. This endpoint takes a list of customer IDs and returns a map of responses.
+/// Retrieves multiple customer profiles.  This endpoint takes a list of customer IDs and returns a map of responses.
 public struct BulkRetrieveCustomers: SquareAPIEndpoint {
 	public typealias inputType = BulkRetrieveCustomersRequest
 	public typealias outputType = BulkRetrieveCustomersResponse
@@ -82,7 +82,7 @@ public struct BulkRetrieveCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Updates multiple customer profiles. This endpoint takes a map of individual update requests and returns a map of responses. You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
+/// Updates multiple customer profiles.  This endpoint takes a map of individual update requests and returns a map of responses.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
 public struct BulkUpdateCustomers: SquareAPIEndpoint {
 	public typealias inputType = BulkUpdateCustomersRequest
 	public typealias outputType = BulkUpdateCustomersResponse
@@ -92,7 +92,7 @@ public struct BulkUpdateCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Searches the customer profiles associated with a Square account using one or more supported query filters. Calling `SearchCustomers` without any explicit query filter returns all customer profiles ordered alphabetically based on `given_name` and `family_name`. Under normal operating conditions, newly created or updated customer profiles become available for the search operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
+/// Searches the customer profiles associated with a Square account using one or more supported query filters.  Calling `SearchCustomers` without any explicit query filter returns all customer profiles ordered alphabetically based on `given_name` and `family_name`.  Under normal operating conditions, newly created or updated customer profiles become available for the search operation in well under 30 seconds. Occasionally, propagation of the new or updated profiles can take closer to one minute or longer, especially during network incidents and outages.
 public struct SearchCustomers: SquareAPIEndpoint {
 	public typealias inputType = SearchCustomersRequest
 	public typealias outputType = SearchCustomersResponse
@@ -123,7 +123,7 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`. To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile. You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
+/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
 public struct UpdateCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateCustomerRequest
@@ -131,7 +131,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`. To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile. You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
+		/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to update.
 		public init(customer_id: String) {
@@ -144,7 +144,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file. To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 public struct DeleteCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -153,10 +153,10 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let version: Int?
-		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file. To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to delete.
-		///   - version: The current version of the customer profile. As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
+		///   - version: The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
 		public init(customer_id: String, version: Int? = nil) {
 			self.customer_id = customer_id
 			self.version = version
@@ -175,7 +175,7 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Adds a card on file to an existing customer. As with charges, calls to `CreateCustomerCard` are idempotent. Multiple calls with the same card nonce return the same card record that was created with the provided nonce during the _first_ call.
+/// Adds a card on file to an existing customer.  As with charges, calls to `CreateCustomerCard` are idempotent. Multiple calls with the same card nonce return the same card record that was created with the provided nonce during the _first_ call.
 @available(*,deprecated)
 public struct CreateCustomerCard: SquareAPIEndpoint {
 	public typealias inputType = CreateCustomerCardRequest
@@ -183,7 +183,7 @@ public struct CreateCustomerCard: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Adds a card on file to an existing customer. As with charges, calls to `CreateCustomerCard` are idempotent. Multiple calls with the same card nonce return the same card record that was created with the provided nonce during the _first_ call.
+		/// Adds a card on file to an existing customer.  As with charges, calls to `CreateCustomerCard` are idempotent. Multiple calls with the same card nonce return the same card record that was created with the provided nonce during the _first_ call.
 		/// - Parameters:
 		///   - customer_id: The Square ID of the customer profile the card is linked to.
 		public init(customer_id: String) {
@@ -221,7 +221,7 @@ public struct DeleteCustomerCard: SquareAPIEndpoint {
 	}
 }
 
-/// Adds a group membership to a customer. The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
+/// Adds a group membership to a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 public struct AddGroupToCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = Empty
@@ -230,7 +230,7 @@ public struct AddGroupToCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let group_id: String
-		/// Adds a group membership to a customer. The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
+		/// Adds a group membership to a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to add to a group.
 		///   - group_id: The ID of the customer group to add the customer to.
@@ -245,7 +245,7 @@ public struct AddGroupToCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Removes a group membership from a customer. The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
+/// Removes a group membership from a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 public struct RemoveGroupFromCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -254,7 +254,7 @@ public struct RemoveGroupFromCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let group_id: String
-		/// Removes a group membership from a customer. The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
+		/// Removes a group membership from a customer.  The customer is identified by the `customer_id` value and the customer group is identified by the `group_id` value.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to remove from the group.
 		///   - group_id: The ID of the customer group to remove the customer from.

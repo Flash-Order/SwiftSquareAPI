@@ -39,10 +39,10 @@ public struct ListWebhookSubscriptions: SquareAPIEndpoint {
 		let limit: Int?
 		/// Lists all webhook subscriptions owned by your application.
 		/// - Parameters:
-		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - include_disabled: Includes disabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s. By default, all enabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s are returned.
 		///   - sort_order: Sorts the returned list by when the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) was created with the specified order. This field defaults to ASC.
-		///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. Default: 100
+		///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value.  Default: 100
 		public init(cursor: String? = nil, include_disabled: Bool? = nil, sort_order: SortOrder? = nil, limit: Int? = nil) {
 			self.cursor = cursor
 			self.include_disabled = include_disabled
