@@ -10252,6 +10252,9 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
+	case ORDER_EXPIRED
+	case ISSUER_INSTALLMENT_ERROR
+	case VERSION_MISMATCH
 }
 
 public struct Event: Codable, Equatable {
