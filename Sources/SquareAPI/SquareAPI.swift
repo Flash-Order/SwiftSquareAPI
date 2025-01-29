@@ -13,6 +13,7 @@ public typealias Duration = String
 
 public extension Duration {
 	static func fromSeconds(_ seconds: Int) -> Duration {
+		if seconds == 0 { return "PT0S" }
 		let hours = seconds / 3600
 		let minutes = (seconds - hours*3600) / 60
 		let seconds = seconds - hours*3600 - minutes*60
