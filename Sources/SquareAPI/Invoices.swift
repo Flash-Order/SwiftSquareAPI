@@ -127,14 +127,14 @@ public struct DeleteInvoice: SquareAPIEndpoint {
 	}
 }
 
-/// Uploads a file and attaches it to an invoice. This endpoint accepts HTTP multipart/form-data file uploads with a JSON `request` part and a `file` part. The `file` part must be a `readable stream` that contains a file in a supported format: GIF, JPEG, PNG, TIFF, BMP, or PDF.  Invoices can have up to 10 attachments with a total file size of 25 MB. Attachments can be added only to invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.
+/// Uploads a file and attaches it to an invoice. This endpoint accepts HTTP multipart/form-data file uploads with a JSON `request` part and a `file` part. The `file` part must be a `readable stream` that contains a file in a supported format: GIF, JPEG, PNG, TIFF, BMP, or PDF.  Invoices can have up to 10 attachments with a total file size of 25 MB. Attachments can be added only to invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.  __NOTE:__ When testing in the Sandbox environment, the total file size is limited to 1 KB.
 public struct CreateInvoiceAttachment: SquareAPIEndpoint {
 	public typealias inputType = Empty  // actual type not supported yet
 	public typealias outputType = CreateInvoiceAttachmentResponse
 	public typealias paramType = Params
 	public struct Params {
 		let invoice_id: String
-		/// Uploads a file and attaches it to an invoice. This endpoint accepts HTTP multipart/form-data file uploads with a JSON `request` part and a `file` part. The `file` part must be a `readable stream` that contains a file in a supported format: GIF, JPEG, PNG, TIFF, BMP, or PDF.  Invoices can have up to 10 attachments with a total file size of 25 MB. Attachments can be added only to invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.
+		/// Uploads a file and attaches it to an invoice. This endpoint accepts HTTP multipart/form-data file uploads with a JSON `request` part and a `file` part. The `file` part must be a `readable stream` that contains a file in a supported format: GIF, JPEG, PNG, TIFF, BMP, or PDF.  Invoices can have up to 10 attachments with a total file size of 25 MB. Attachments can be added only to invoices in the `DRAFT`, `SCHEDULED`, `UNPAID`, or `PARTIALLY_PAID` state.  __NOTE:__ When testing in the Sandbox environment, the total file size is limited to 1 KB.
 		/// - Parameters:
 		///   - invoice_id: The ID of the [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) to attach the file to.
 		public init(invoice_id: String) {

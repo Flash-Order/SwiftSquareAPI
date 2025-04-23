@@ -35,6 +35,10 @@ public struct OAuth {
 		case DEVICES_READ
 		/// __HTTP Method__: `POST`, `GET`  Grants read/write access to device credentials information. For example, to call the CreateDeviceCode endpoint.
 		case DEVICE_CREDENTIAL_MANAGEMENT
+		/// __HTTP Method__: `GET`  Grants read access to Discount Codes API. For example, to call the `RetrieveDiscountCode` and `RetrieveRedemption` endpoints.
+		case DISCOUNT_CODES_READ
+		/// __HTTP Method__: `POST`  Grants write access to Discount Codes API.
+		case DISCOUNT_CODES_WRITE
 		/// __HTTP Method__: `GET`  Grants read access to dispute information. For example, to call the RetrieveDispute endpoint.
 		case DISPUTES_READ
 		/// __HTTP Method__: `POST`, `PUT`, `DELETE`  Grants write access to dispute information. For example, to call the SubmitEvidence endpoint.
@@ -131,7 +135,7 @@ public struct RevokeToken: SquareAPIEndpoint {
 	}
 }
 
-/// Returns an OAuth access token and a refresh token unless the  `short_lived` parameter is set to `true`, in which case the endpoint  returns only an access token.  The `grant_type` parameter specifies the type of OAuth request. If  `grant_type` is `authorization_code`, you must include the authorization  code you received when a seller granted you authorization. If `grant_type`  is `refresh_token`, you must provide a valid refresh token. If you're using  an old version of the Square APIs (prior to March 13, 2019), `grant_type`  can be `migration_token` and you must provide a valid migration token.  You can use the `scopes` parameter to limit the set of permissions granted  to the access token and refresh token. You can use the `short_lived` parameter  to create an access token that expires in 24 hours.  __Note:__ OAuth tokens should be encrypted and stored on a secure server.  Application clients should never interact directly with OAuth tokens.
+/// Returns an OAuth access token and refresh token using the `authorization_code` or `refresh_token` grant type.  When `grant_type` is `authorization_code`: - With the [code flow](https://developer.squareup.com/docs/oauth-api/overview#code-flow), provide `code`, `client_id`, and `client_secret`. - With the [PKCE flow](https://developer.squareup.com/docs/oauth-api/overview#pkce-flow), provide `code`, `client_id`, and `code_verifier`.   When `grant_type` is `refresh_token`: - With the code flow, provide `refresh_token`, `client_id`, and `client_secret`. The response returns the same refresh token provided in the request. - With the PKCE flow, provide `refresh_token` and `client_id`. The response returns a new refresh token.  You can use the `scopes` parameter to limit the set of permissions authorized by the access token. You can use the `short_lived` parameter to create an access token that expires in 24 hours.  __Important:__ OAuth tokens should be encrypted and stored on a secure server. Application clients should never interact directly with OAuth tokens.
 public struct ObtainToken: SquareAPIEndpoint {
 	public typealias inputType = ObtainTokenRequest
 	public typealias outputType = ObtainTokenResponse

@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2024-12-18" }
+	public static var version: String { return "2025-04-16" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -78,7 +78,7 @@ public struct AcceptedPaymentMethods: Codable, Equatable {
 	}
 }
 
-/// Represents an [AccumulateLoyaltyPoints]($e/Loyalty/AccumulateLoyaltyPoints) request.
+/// Represents an [AccumulateLoyaltyPoints](api-endpoint:Loyalty-AccumulateLoyaltyPoints) request.
 public struct AccumulateLoyaltyPointsRequest: Codable, Equatable {
 	/// The points to add to the account.  If you are using the Orders API to manage orders, specify the order ID. Otherwise, specify the points to add.
 	public var accumulate_points: LoyaltyEventAccumulatePoints
@@ -87,7 +87,7 @@ public struct AccumulateLoyaltyPointsRequest: Codable, Equatable {
 	/// The [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the purchase was made.
 	public var location_id: String
 
-	/// Represents an [AccumulateLoyaltyPoints]($e/Loyalty/AccumulateLoyaltyPoints) request.
+	/// Represents an [AccumulateLoyaltyPoints](api-endpoint:Loyalty-AccumulateLoyaltyPoints) request.
 	/// - Parameters:
 	///   - accumulate_points: The points to add to the account.  If you are using the Orders API to manage orders, specify the order ID. Otherwise, specify the points to add.
 	///   - idempotency_key: A unique string that identifies the `AccumulateLoyaltyPoints` request.  Keys can be any valid string but must be unique for every request.
@@ -99,7 +99,7 @@ public struct AccumulateLoyaltyPointsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [AccumulateLoyaltyPoints]($e/Loyalty/AccumulateLoyaltyPoints) response.
+/// Represents an [AccumulateLoyaltyPoints](api-endpoint:Loyalty-AccumulateLoyaltyPoints) response.
 public struct AccumulateLoyaltyPointsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -108,7 +108,7 @@ public struct AccumulateLoyaltyPointsResponse: Codable, Equatable {
 	/// The resulting loyalty events. If the purchase qualifies for points, the `ACCUMULATE_POINTS` event is always included. When using the Orders API, the `ACCUMULATE_PROMOTION_POINTS` event is included if the purchase also qualifies for a loyalty promotion.
 	public var events: [LoyaltyEvent]?
 
-	/// Represents an [AccumulateLoyaltyPoints]($e/Loyalty/AccumulateLoyaltyPoints) response.
+	/// Represents an [AccumulateLoyaltyPoints](api-endpoint:Loyalty-AccumulateLoyaltyPoints) response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - event: The resulting loyalty event. Starting in Square version yyyy-mm-dd, this field is no longer returned.
@@ -250,18 +250,18 @@ public enum ActivityType: String, Codable {
 	case SQUARE_PAYROLL_TRANSFER_REVERSED
 }
 
-/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer]($e/Customers/AddGroupToCustomer) endpoint.
+/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](api-endpoint:Customers-AddGroupToCustomer) endpoint.
 public struct AddGroupToCustomerRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer]($e/Customers/AddGroupToCustomer) endpoint.
+/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](api-endpoint:Customers-AddGroupToCustomer) endpoint.
 public struct AddGroupToCustomerResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer]($e/Customers/AddGroupToCustomer) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](api-endpoint:Customers-AddGroupToCustomer) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -359,7 +359,7 @@ public struct Address: Codable, Equatable {
 	}
 }
 
-/// Represents an [AdjustLoyaltyPoints]($e/Loyalty/AdjustLoyaltyPoints) request.
+/// Represents an [AdjustLoyaltyPoints](api-endpoint:Loyalty-AdjustLoyaltyPoints) request.
 public struct AdjustLoyaltyPointsRequest: Codable, Equatable {
 	/// The points to add or subtract and the reason for the adjustment. To add points, specify a positive integer. To subtract points, specify a negative integer.
 	public var adjust_points: LoyaltyEventAdjustPoints
@@ -368,7 +368,7 @@ public struct AdjustLoyaltyPointsRequest: Codable, Equatable {
 	/// A unique string that identifies this `AdjustLoyaltyPoints` request.  Keys can be any valid string, but must be unique for every request.
 	public var idempotency_key: String
 
-	/// Represents an [AdjustLoyaltyPoints]($e/Loyalty/AdjustLoyaltyPoints) request.
+	/// Represents an [AdjustLoyaltyPoints](api-endpoint:Loyalty-AdjustLoyaltyPoints) request.
 	/// - Parameters:
 	///   - adjust_points: The points to add or subtract and the reason for the adjustment. To add points, specify a positive integer. To subtract points, specify a negative integer.
 	///   - allow_negative_balance: Indicates whether to allow a negative adjustment to result in a negative balance. If `true`, a negative balance is allowed when subtracting points. If `false`, Square returns a `BAD_REQUEST` error when subtracting the specified number of points would result in a negative balance. The default value is `false`.
@@ -380,14 +380,14 @@ public struct AdjustLoyaltyPointsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [AdjustLoyaltyPoints]($e/Loyalty/AdjustLoyaltyPoints) request.
+/// Represents an [AdjustLoyaltyPoints](api-endpoint:Loyalty-AdjustLoyaltyPoints) request.
 public struct AdjustLoyaltyPointsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The resulting event data for the adjustment.
 	public var event: LoyaltyEvent?
 
-	/// Represents an [AdjustLoyaltyPoints]($e/Loyalty/AdjustLoyaltyPoints) request.
+	/// Represents an [AdjustLoyaltyPoints](api-endpoint:Loyalty-AdjustLoyaltyPoints) request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - event: The resulting event data for the adjustment.
@@ -483,7 +483,7 @@ public struct AppointmentSegment: Codable, Equatable {
 	}
 }
 
-/// Defines the values for the `archived_state` query expression  used in [SearchCatalogItems]($e/Catalog/SearchCatalogItems)  to return the archived, not archived or either type of catalog items.
+/// Defines the values for the `archived_state` query expression  used in [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems)  to return the archived, not archived or either type of catalog items.
 public enum ArchivedState: String, Codable {
 	/// Requested items are not archived with the `is_archived` attribute set to `false`.
 	case ARCHIVED_STATE_NOT_ARCHIVED
@@ -688,9 +688,9 @@ public struct BatchChangeInventoryResponse: Codable, Equatable {
 
 public struct BatchDeleteCatalogObjectsRequest: Codable, Equatable {
 	/// The IDs of the CatalogObjects to be deleted. When an object is deleted, other objects in the graph that depend on that object will be deleted as well (for example, deleting a CatalogItem will delete its CatalogItemVariation.
-	public var object_ids: [String]?
+	public var object_ids: [String]
 
-	public init(object_ids: [String]? = nil) {
+	public init(object_ids: [String]) {
 		self.object_ids = object_ids
 	}
 }
@@ -1012,14 +1012,14 @@ public enum BookingCreatorDetailsCreatorType: String, Codable {
 	case CUSTOMER
 }
 
-/// Represents an individual delete request in a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to delete, and an optional idempotency key.
+/// Represents an individual delete request in a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to delete, and an optional idempotency key.
 public struct BookingCustomAttributeDeleteRequest: Codable, Equatable {
 	/// The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
 	public var booking_id: String
 	/// The key of the custom attribute to delete. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
 	public var key: String
 
-	/// Represents an individual delete request in a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to delete, and an optional idempotency key.
+	/// Represents an individual delete request in a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to delete, and an optional idempotency key.
 	/// - Parameters:
 	///   - booking_id: The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
 	///   - key: The key of the custom attribute to delete. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must use the qualified key.
@@ -1029,14 +1029,14 @@ public struct BookingCustomAttributeDeleteRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a response for an individual upsert request in a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) operation.
+/// Represents a response for an individual upsert request in a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) operation.
 public struct BookingCustomAttributeDeleteResponse: Codable, Equatable {
 	/// The ID of the [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) associated with the custom attribute.
 	public var booking_id: String?
 	/// Any errors that occurred while processing the individual request.
 	public var errors: [SquareError]?
 
-	/// Represents a response for an individual upsert request in a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) operation.
+	/// Represents a response for an individual upsert request in a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) operation.
 	/// - Parameters:
 	///   - booking_id: The ID of the [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) associated with the custom attribute.
 	///   - errors: Any errors that occurred while processing the individual request.
@@ -1046,7 +1046,7 @@ public struct BookingCustomAttributeDeleteResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an individual upsert request in a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to create or update, and an optional idempotency key.
+/// Represents an individual upsert request in a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to create or update, and an optional idempotency key.
 public struct BookingCustomAttributeUpsertRequest: Codable, Equatable {
 	/// The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
 	public var booking_id: String
@@ -1055,7 +1055,7 @@ public struct BookingCustomAttributeUpsertRequest: Codable, Equatable {
 	/// A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an individual upsert request in a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to create or update, and an optional idempotency key.
+	/// Represents an individual upsert request in a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to create or update, and an optional idempotency key.
 	/// - Parameters:
 	///   - booking_id: The ID of the target [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking).
 	///   - custom_attribute: The custom attribute to create or update, with following fields:  - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key.  - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Value data types](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
@@ -1067,7 +1067,7 @@ public struct BookingCustomAttributeUpsertRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a response for an individual upsert request in a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) operation.
+/// Represents a response for an individual upsert request in a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) operation.
 public struct BookingCustomAttributeUpsertResponse: Codable, Equatable {
 	/// The ID of the [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) associated with the custom attribute.
 	public var booking_id: String?
@@ -1076,7 +1076,7 @@ public struct BookingCustomAttributeUpsertResponse: Codable, Equatable {
 	/// Any errors that occurred while processing the individual request.
 	public var errors: [SquareError]?
 
-	/// Represents a response for an individual upsert request in a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) operation.
+	/// Represents a response for an individual upsert request in a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) operation.
 	/// - Parameters:
 	///   - booking_id: The ID of the [booking](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Booking) associated with the custom attribute.
 	///   - custom_attribute: The new or updated custom attribute.
@@ -1182,7 +1182,7 @@ public struct BreakType: Codable, Equatable {
 	}
 }
 
-/// Defines the customer data provided in individual create requests for a [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) operation.
+/// Defines the customer data provided in individual create requests for a [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) operation.
 public struct BulkCreateCustomerData: Codable, Equatable {
 	/// The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
 	public var address: Address?
@@ -1207,7 +1207,7 @@ public struct BulkCreateCustomerData: Codable, Equatable {
 	/// The tax ID associated with the customer profile. This field is available only for customers of sellers in EU countries or the United Kingdom. For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	public var tax_ids: CustomerTaxIds?
 
-	/// Defines the customer data provided in individual create requests for a [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) operation.
+	/// Defines the customer data provided in individual create requests for a [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) operation.
 	/// - Parameters:
 	///   - address: The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
 	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example, specify `1998-09-21` for September 21, 1998, or `09-21` for September 21. Birthdays are returned in `YYYY-MM-DD` format, where `YYYY` is the specified birth year or `0000` if a birth year is not specified.
@@ -1235,12 +1235,12 @@ public struct BulkCreateCustomerData: Codable, Equatable {
 	}
 }
 
-/// Defines the body parameters that can be included in requests to the [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.
+/// Defines the body parameters that can be included in requests to the [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) endpoint.
 public struct BulkCreateCustomersRequest: Codable, Equatable {
 	/// A map of 1 to 100 individual create requests, represented by `idempotency key: { customer data }` key-value pairs.  Each key is an [idempotency key](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) that uniquely identifies the create request. Each value contains the customer data used to create the customer profile.
 	public var customers: BulkCreateCustomerData
 
-	/// Defines the body parameters that can be included in requests to the [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.
+	/// Defines the body parameters that can be included in requests to the [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) endpoint.
 	/// - Parameters:
 	///   - customers: A map of 1 to 100 individual create requests, represented by `idempotency key: { customer data }` key-value pairs.  Each key is an [idempotency key](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) that uniquely identifies the create request. Each value contains the customer data used to create the customer profile.
 	public init(customers: BulkCreateCustomerData) {
@@ -1248,14 +1248,14 @@ public struct BulkCreateCustomersRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields included in the response body from the [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.
+/// Defines the fields included in the response body from the [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) endpoint.
 public struct BulkCreateCustomersResponse: Codable, Equatable {
 	/// Any top-level errors that prevented the bulk operation from running.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual create requests, represented by key-value pairs.  Each key is the idempotency key that was provided for a create request and each value is the corresponding response. If the request succeeds, the value is the new customer profile. If the request fails, the value contains any errors that occurred during the request.
 	public var responses: CreateCustomerResponse?
 
-	/// Defines the fields included in the response body from the [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.
+	/// Defines the fields included in the response body from the [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) endpoint.
 	/// - Parameters:
 	///   - errors: Any top-level errors that prevented the bulk operation from running.
 	///   - responses: A map of responses that correspond to individual create requests, represented by key-value pairs.  Each key is the idempotency key that was provided for a create request and each value is the corresponding response. If the request succeeds, the value is the new customer profile. If the request fails, the value contains any errors that occurred during the request.
@@ -1295,12 +1295,12 @@ public struct BulkCreateTeamMembersResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an input to a call to [BulkCreateVendors]($e/Vendors/BulkCreateVendors).
+/// Represents an input to a call to [BulkCreateVendors](api-endpoint:Vendors-BulkCreateVendors).
 public struct BulkCreateVendorsRequest: Codable, Equatable {
 	/// Specifies a set of new [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects as represented by a collection of idempotency-key/`Vendor`-object pairs.
 	public var vendors: Vendor
 
-	/// Represents an input to a call to [BulkCreateVendors]($e/Vendors/BulkCreateVendors).
+	/// Represents an input to a call to [BulkCreateVendors](api-endpoint:Vendors-BulkCreateVendors).
 	/// - Parameters:
 	///   - vendors: Specifies a set of new [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects as represented by a collection of idempotency-key/`Vendor`-object pairs.
 	public init(vendors: Vendor) {
@@ -1308,14 +1308,14 @@ public struct BulkCreateVendorsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an output from a call to [BulkCreateVendors]($e/Vendors/BulkCreateVendors).
+/// Represents an output from a call to [BulkCreateVendors](api-endpoint:Vendors-BulkCreateVendors).
 public struct BulkCreateVendorsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A set of [CreateVendorResponse](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CreateVendorResponse) objects encapsulating successfully created [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects or error responses for failed attempts. The set is represented by  a collection of idempotency-key/`Vendor`-object or idempotency-key/error-object pairs. The idempotency keys correspond to those specified in the input.
 	public var responses: CreateVendorResponse?
 
-	/// Represents an output from a call to [BulkCreateVendors]($e/Vendors/BulkCreateVendors).
+	/// Represents an output from a call to [BulkCreateVendors](api-endpoint:Vendors-BulkCreateVendors).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - responses: A set of [CreateVendorResponse](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CreateVendorResponse) objects encapsulating successfully created [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects or error responses for failed attempts. The set is represented by  a collection of idempotency-key/`Vendor`-object or idempotency-key/error-object pairs. The idempotency keys correspond to those specified in the input.
@@ -1325,12 +1325,12 @@ public struct BulkCreateVendorsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) request.
+/// Represents a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) request.
 public struct BulkDeleteBookingCustomAttributesRequest: Codable, Equatable {
 	/// A map containing 1 to 25 individual Delete requests. For each request, provide an arbitrary ID that is unique for this `BulkDeleteBookingCustomAttributes` request and the information needed to delete a custom attribute.
 	public var values: BookingCustomAttributeDeleteRequest
 
-	/// Represents a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) request.
+	/// Represents a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) request.
 	/// - Parameters:
 	///   - values: A map containing 1 to 25 individual Delete requests. For each request, provide an arbitrary ID that is unique for this `BulkDeleteBookingCustomAttributes` request and the information needed to delete a custom attribute.
 	public init(values: BookingCustomAttributeDeleteRequest) {
@@ -1338,14 +1338,14 @@ public struct BulkDeleteBookingCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
+/// Represents a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
 public struct BulkDeleteBookingCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual delete requests. Each response has the same ID as the corresponding request and contains `booking_id` and  `errors` field.
 	public var values: BookingCustomAttributeDeleteResponse?
 
-	/// Represents a [BulkDeleteBookingCustomAttributes]($e/BookingCustomAttributes/BulkDeleteBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
+	/// Represents a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual delete requests. Each response has the same ID as the corresponding request and contains `booking_id` and  `errors` field.
@@ -1355,12 +1355,12 @@ public struct BulkDeleteBookingCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the body parameters that can be included in requests to the [BulkDeleteCustomers]($e/Customers/BulkDeleteCustomers) endpoint.
+/// Defines the body parameters that can be included in requests to the [BulkDeleteCustomers](api-endpoint:Customers-BulkDeleteCustomers) endpoint.
 public struct BulkDeleteCustomersRequest: Codable, Equatable {
 	/// The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to delete.
 	public var customer_ids: [String]
 
-	/// Defines the body parameters that can be included in requests to the [BulkDeleteCustomers]($e/Customers/BulkDeleteCustomers) endpoint.
+	/// Defines the body parameters that can be included in requests to the [BulkDeleteCustomers](api-endpoint:Customers-BulkDeleteCustomers) endpoint.
 	/// - Parameters:
 	///   - customer_ids: The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to delete.
 	public init(customer_ids: [String]) {
@@ -1368,14 +1368,14 @@ public struct BulkDeleteCustomersRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields included in the response body from the [BulkDeleteCustomers]($e/Customers/BulkDeleteCustomers) endpoint.
+/// Defines the fields included in the response body from the [BulkDeleteCustomers](api-endpoint:Customers-BulkDeleteCustomers) endpoint.
 public struct BulkDeleteCustomersResponse: Codable, Equatable {
 	/// Any top-level errors that prevented the bulk operation from running.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual delete requests, represented by key-value pairs.  Each key is the customer ID that was specified for a delete request and each value is the corresponding response. If the request succeeds, the value is an empty object (`{ }`). If the request fails, the value contains any errors that occurred during the request.
 	public var responses: DeleteCustomerResponse?
 
-	/// Defines the fields included in the response body from the [BulkDeleteCustomers]($e/Customers/BulkDeleteCustomers) endpoint.
+	/// Defines the fields included in the response body from the [BulkDeleteCustomers](api-endpoint:Customers-BulkDeleteCustomers) endpoint.
 	/// - Parameters:
 	///   - errors: Any top-level errors that prevented the bulk operation from running.
 	///   - responses: A map of responses that correspond to individual delete requests, represented by key-value pairs.  Each key is the customer ID that was specified for a delete request and each value is the corresponding response. If the request succeeds, the value is an empty object (`{ }`). If the request fails, the value contains any errors that occurred during the request.
@@ -1385,12 +1385,12 @@ public struct BulkDeleteCustomersResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) request.
+/// Represents a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) request.
 public struct BulkDeleteLocationCustomAttributesRequest: Codable, Equatable {
 	/// The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
 	public var values: BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDeleteRequest
 
-	/// Represents a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) request.
+	/// Represents a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) request.
 	/// - Parameters:
 	///   - values: The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
 	public init(values: BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDeleteRequest) {
@@ -1398,12 +1398,12 @@ public struct BulkDeleteLocationCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an individual delete request in a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
+/// Represents an individual delete request in a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
 public struct BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDeleteRequest: Codable, Equatable {
 	/// The key of the associated custom attribute definition. Represented as a qualified key if the requesting app is not the definition owner.
 	public var key: String?
 
-	/// Represents an individual delete request in a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
+	/// Represents an individual delete request in a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
 	/// - Parameters:
 	///   - key: The key of the associated custom attribute definition. Represented as a qualified key if the requesting app is not the definition owner.
 	public init(key: String? = nil) {
@@ -1411,14 +1411,14 @@ public struct BulkDeleteLocationCustomAttributesRequestLocationCustomAttributeDe
 	}
 }
 
-/// Represents a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
+/// Represents a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
 public struct BulkDeleteLocationCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
 	public var values: BulkDeleteLocationCustomAttributesResponseLocationCustomAttributeDeleteResponse
 
-	/// Represents a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
+	/// Represents a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
@@ -1428,14 +1428,14 @@ public struct BulkDeleteLocationCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an individual delete response in a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) request.
+/// Represents an individual delete response in a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) request.
 public struct BulkDeleteLocationCustomAttributesResponseLocationCustomAttributeDeleteResponse: Codable, Equatable {
 	/// Errors that occurred while processing the individual LocationCustomAttributeDeleteRequest request
 	public var errors: [SquareError]?
 	/// The ID of the location associated with the custom attribute.
 	public var location_id: String?
 
-	/// Represents an individual delete response in a [BulkDeleteLocationCustomAttributes]($e/LocationCustomAttributes/BulkDeleteLocationCustomAttributes) request.
+	/// Represents an individual delete response in a [BulkDeleteLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkDeleteLocationCustomAttributes) request.
 	/// - Parameters:
 	///   - errors: Errors that occurred while processing the individual LocationCustomAttributeDeleteRequest request
 	///   - location_id: The ID of the location associated with the custom attribute.
@@ -1445,12 +1445,12 @@ public struct BulkDeleteLocationCustomAttributesResponseLocationCustomAttributeD
 	}
 }
 
-/// Represents a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) request.
+/// Represents a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) request.
 public struct BulkDeleteMerchantCustomAttributesRequest: Codable, Equatable {
 	/// The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
 	public var values: BulkDeleteMerchantCustomAttributesRequestMerchantCustomAttributeDeleteRequest
 
-	/// Represents a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) request.
+	/// Represents a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) request.
 	/// - Parameters:
 	///   - values: The data used to update the `CustomAttribute` objects. The keys must be unique and are used to map to the corresponding response.
 	public init(values: BulkDeleteMerchantCustomAttributesRequestMerchantCustomAttributeDeleteRequest) {
@@ -1458,12 +1458,12 @@ public struct BulkDeleteMerchantCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an individual delete request in a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
+/// Represents an individual delete request in a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
 public struct BulkDeleteMerchantCustomAttributesRequestMerchantCustomAttributeDeleteRequest: Codable, Equatable {
 	/// The key of the associated custom attribute definition. Represented as a qualified key if the requesting app is not the definition owner.
 	public var key: String?
 
-	/// Represents an individual delete request in a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
+	/// Represents an individual delete request in a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) request. An individual request contains an optional ID of the associated custom attribute definition and optional key of the associated custom attribute definition.
 	/// - Parameters:
 	///   - key: The key of the associated custom attribute definition. Represented as a qualified key if the requesting app is not the definition owner.
 	public init(key: String? = nil) {
@@ -1471,14 +1471,14 @@ public struct BulkDeleteMerchantCustomAttributesRequestMerchantCustomAttributeDe
 	}
 }
 
-/// Represents a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
+/// Represents a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
 public struct BulkDeleteMerchantCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
 	public var values: BulkDeleteMerchantCustomAttributesResponseMerchantCustomAttributeDeleteResponse
 
-	/// Represents a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
+	/// Represents a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual delete request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual delete requests. Each response has the same key as the corresponding request.
@@ -1488,12 +1488,12 @@ public struct BulkDeleteMerchantCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an individual delete response in a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) request.
+/// Represents an individual delete response in a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) request.
 public struct BulkDeleteMerchantCustomAttributesResponseMerchantCustomAttributeDeleteResponse: Codable, Equatable {
 	/// Errors that occurred while processing the individual MerchantCustomAttributeDeleteRequest request
 	public var errors: [SquareError]?
 
-	/// Represents an individual delete response in a [BulkDeleteMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkDeleteMerchantCustomAttributes) request.
+	/// Represents an individual delete response in a [BulkDeleteMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkDeleteMerchantCustomAttributes) request.
 	/// - Parameters:
 	///   - errors: Errors that occurred while processing the individual MerchantCustomAttributeDeleteRequest request
 	public init(errors: [SquareError]? = nil) {
@@ -1578,12 +1578,12 @@ public struct BulkRetrieveBookingsResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers]($e/Customers/BulkRetrieveCustomers) endpoint.
+/// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers](api-endpoint:Customers-BulkRetrieveCustomers) endpoint.
 public struct BulkRetrieveCustomersRequest: Codable, Equatable {
 	/// The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to retrieve.
 	public var customer_ids: [String]
 
-	/// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers]($e/Customers/BulkRetrieveCustomers) endpoint.
+	/// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers](api-endpoint:Customers-BulkRetrieveCustomers) endpoint.
 	/// - Parameters:
 	///   - customer_ids: The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to retrieve.
 	public init(customer_ids: [String]) {
@@ -1591,14 +1591,14 @@ public struct BulkRetrieveCustomersRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields included in the response body from the [BulkRetrieveCustomers]($e/Customers/BulkRetrieveCustomers) endpoint.
+/// Defines the fields included in the response body from the [BulkRetrieveCustomers](api-endpoint:Customers-BulkRetrieveCustomers) endpoint.
 public struct BulkRetrieveCustomersResponse: Codable, Equatable {
 	/// Any top-level errors that prevented the bulk operation from running.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual retrieve requests, represented by key-value pairs.  Each key is the customer ID that was specified for a retrieve request and each value is the corresponding response. If the request succeeds, the value is the requested customer profile. If the request fails, the value contains any errors that occurred during the request.
 	public var responses: RetrieveCustomerResponse?
 
-	/// Defines the fields included in the response body from the [BulkRetrieveCustomers]($e/Customers/BulkRetrieveCustomers) endpoint.
+	/// Defines the fields included in the response body from the [BulkRetrieveCustomers](api-endpoint:Customers-BulkRetrieveCustomers) endpoint.
 	/// - Parameters:
 	///   - errors: Any top-level errors that prevented the bulk operation from running.
 	///   - responses: A map of responses that correspond to individual retrieve requests, represented by key-value pairs.  Each key is the customer ID that was specified for a retrieve request and each value is the corresponding response. If the request succeeds, the value is the requested customer profile. If the request fails, the value contains any errors that occurred during the request.
@@ -1608,12 +1608,12 @@ public struct BulkRetrieveCustomersResponse: Codable, Equatable {
 	}
 }
 
-/// Request payload for the [BulkRetrieveTeamMemberBookingProfiles]($e/Bookings/BulkRetrieveTeamMemberBookingProfiles) endpoint.
+/// Request payload for the [BulkRetrieveTeamMemberBookingProfiles](api-endpoint:Bookings-BulkRetrieveTeamMemberBookingProfiles) endpoint.
 public struct BulkRetrieveTeamMemberBookingProfilesRequest: Codable, Equatable {
 	/// A non-empty list of IDs of team members whose booking profiles you want to retrieve.
 	public var team_member_ids: [String]
 
-	/// Request payload for the [BulkRetrieveTeamMemberBookingProfiles]($e/Bookings/BulkRetrieveTeamMemberBookingProfiles) endpoint.
+	/// Request payload for the [BulkRetrieveTeamMemberBookingProfiles](api-endpoint:Bookings-BulkRetrieveTeamMemberBookingProfiles) endpoint.
 	/// - Parameters:
 	///   - team_member_ids: A non-empty list of IDs of team members whose booking profiles you want to retrieve.
 	public init(team_member_ids: [String]) {
@@ -1621,14 +1621,14 @@ public struct BulkRetrieveTeamMemberBookingProfilesRequest: Codable, Equatable {
 	}
 }
 
-/// Response payload for the [BulkRetrieveTeamMemberBookingProfiles]($e/Bookings/BulkRetrieveTeamMemberBookingProfiles) endpoint.
+/// Response payload for the [BulkRetrieveTeamMemberBookingProfiles](api-endpoint:Bookings-BulkRetrieveTeamMemberBookingProfiles) endpoint.
 public struct BulkRetrieveTeamMemberBookingProfilesResponse: Codable, Equatable {
 	/// Errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The returned team members' booking profiles, as a map with `team_member_id` as the key and [TeamMemberBookingProfile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMemberBookingProfile) the value.
 	public var team_member_booking_profiles: RetrieveTeamMemberBookingProfileResponse?
 
-	/// Response payload for the [BulkRetrieveTeamMemberBookingProfiles]($e/Bookings/BulkRetrieveTeamMemberBookingProfiles) endpoint.
+	/// Response payload for the [BulkRetrieveTeamMemberBookingProfiles](api-endpoint:Bookings-BulkRetrieveTeamMemberBookingProfiles) endpoint.
 	/// - Parameters:
 	///   - errors: Errors that occurred during the request.
 	///   - team_member_booking_profiles: The returned team members' booking profiles, as a map with `team_member_id` as the key and [TeamMemberBookingProfile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMemberBookingProfile) the value.
@@ -1638,12 +1638,12 @@ public struct BulkRetrieveTeamMemberBookingProfilesResponse: Codable, Equatable 
 	}
 }
 
-/// Represents an input to a call to [BulkRetrieveVendors]($e/Vendors/BulkRetrieveVendors).
+/// Represents an input to a call to [BulkRetrieveVendors](api-endpoint:Vendors-BulkRetrieveVendors).
 public struct BulkRetrieveVendorsRequest: Codable, Equatable {
 	/// IDs of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects to retrieve.
 	public var vendor_ids: [String]?
 
-	/// Represents an input to a call to [BulkRetrieveVendors]($e/Vendors/BulkRetrieveVendors).
+	/// Represents an input to a call to [BulkRetrieveVendors](api-endpoint:Vendors-BulkRetrieveVendors).
 	/// - Parameters:
 	///   - vendor_ids: IDs of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects to retrieve.
 	public init(vendor_ids: [String]? = nil) {
@@ -1651,14 +1651,14 @@ public struct BulkRetrieveVendorsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an output from a call to [BulkRetrieveVendors]($e/Vendors/BulkRetrieveVendors).
+/// Represents an output from a call to [BulkRetrieveVendors](api-endpoint:Vendors-BulkRetrieveVendors).
 public struct BulkRetrieveVendorsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The set of [RetrieveVendorResponse](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/RetrieveVendorResponse) objects encapsulating successfully retrieved [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects or error responses for failed attempts. The set is represented by  a collection of `Vendor`-ID/`Vendor`-object or `Vendor`-ID/error-object pairs.
 	public var responses: RetrieveVendorResponse?
 
-	/// Represents an output from a call to [BulkRetrieveVendors]($e/Vendors/BulkRetrieveVendors).
+	/// Represents an output from a call to [BulkRetrieveVendors](api-endpoint:Vendors-BulkRetrieveVendors).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - responses: The set of [RetrieveVendorResponse](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/RetrieveVendorResponse) objects encapsulating successfully retrieved [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects or error responses for failed attempts. The set is represented by  a collection of `Vendor`-ID/`Vendor`-object or `Vendor`-ID/error-object pairs.
@@ -1668,7 +1668,7 @@ public struct BulkRetrieveVendorsResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a call to the [BulkSwapPlan]($e/Subscriptions/BulkSwapPlan) endpoint.
+/// Defines input parameters in a call to the [BulkSwapPlan](api-endpoint:Subscriptions-BulkSwapPlan) endpoint.
 public struct BulkSwapPlanRequest: Codable, Equatable {
 	/// The ID of the location to associate with the swapped subscriptions.
 	public var location_id: String
@@ -1677,7 +1677,7 @@ public struct BulkSwapPlanRequest: Codable, Equatable {
 	/// The ID of the plan variation whose subscriptions should be swapped. Active subscriptions using this plan variation will be subscribed to the new plan variation on their next billing day.
 	public var old_plan_variation_id: String
 
-	/// Defines input parameters in a call to the [BulkSwapPlan]($e/Subscriptions/BulkSwapPlan) endpoint.
+	/// Defines input parameters in a call to the [BulkSwapPlan](api-endpoint:Subscriptions-BulkSwapPlan) endpoint.
 	/// - Parameters:
 	///   - location_id: The ID of the location to associate with the swapped subscriptions.
 	///   - new_plan_variation_id: The ID of the new subscription plan variation.  This field is required.
@@ -1689,14 +1689,14 @@ public struct BulkSwapPlanRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response of the [BulkSwapPlan]($e/Subscriptions/BulkSwapPlan) endpoint.
+/// Defines output parameters in a response of the [BulkSwapPlan](api-endpoint:Subscriptions-BulkSwapPlan) endpoint.
 public struct BulkSwapPlanResponse: Codable, Equatable {
 	/// The number of affected subscriptions.
 	public var affected_subscriptions: Int?
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines output parameters in a response of the [BulkSwapPlan]($e/Subscriptions/BulkSwapPlan) endpoint.
+	/// Defines output parameters in a response of the [BulkSwapPlan](api-endpoint:Subscriptions-BulkSwapPlan) endpoint.
 	/// - Parameters:
 	///   - affected_subscriptions: The number of affected subscriptions.
 	///   - errors: Errors encountered during the request.
@@ -1706,7 +1706,7 @@ public struct BulkSwapPlanResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the customer data provided in individual update requests for a [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) operation.
+/// Defines the customer data provided in individual update requests for a [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) operation.
 public struct BulkUpdateCustomerData: Codable, Equatable {
 	/// The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
 	public var address: Address?
@@ -1733,7 +1733,7 @@ public struct BulkUpdateCustomerData: Codable, Equatable {
 	/// The current version of the customer profile.  As a best practice, you should include this field to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.
 	public var version: Int?
 
-	/// Defines the customer data provided in individual update requests for a [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) operation.
+	/// Defines the customer data provided in individual update requests for a [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) operation.
 	/// - Parameters:
 	///   - address: The physical address associated with the customer profile. For maximum length constraints, see [Customer addresses](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#address). The `first_name` and `last_name` fields are ignored if they are present in the request.
 	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example, specify `1998-09-21` for September 21, 1998, or `09-21` for September 21. Birthdays are returned in `YYYY-MM-DD` format, where `YYYY` is the specified birth year or `0000` if a birth year is not specified.
@@ -1763,12 +1763,12 @@ public struct BulkUpdateCustomerData: Codable, Equatable {
 	}
 }
 
-/// Defines the body parameters that can be included in requests to the [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.
+/// Defines the body parameters that can be included in requests to the [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) endpoint.
 public struct BulkUpdateCustomersRequest: Codable, Equatable {
 	/// A map of 1 to 100 individual update requests, represented by `customer ID: { customer data }` key-value pairs.  Each key is the ID of the [customer profile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to update. To update a customer profile that was created by merging existing profiles, provide the ID of the newly created profile.  Each value contains the updated customer data. Only new or changed fields are required. To add or update a field, specify the new value. To remove a field, specify `null`.
 	public var customers: BulkUpdateCustomerData
 
-	/// Defines the body parameters that can be included in requests to the [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.
+	/// Defines the body parameters that can be included in requests to the [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) endpoint.
 	/// - Parameters:
 	///   - customers: A map of 1 to 100 individual update requests, represented by `customer ID: { customer data }` key-value pairs.  Each key is the ID of the [customer profile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to update. To update a customer profile that was created by merging existing profiles, provide the ID of the newly created profile.  Each value contains the updated customer data. Only new or changed fields are required. To add or update a field, specify the new value. To remove a field, specify `null`.
 	public init(customers: BulkUpdateCustomerData) {
@@ -1776,14 +1776,14 @@ public struct BulkUpdateCustomersRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields included in the response body from the [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.
+/// Defines the fields included in the response body from the [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) endpoint.
 public struct BulkUpdateCustomersResponse: Codable, Equatable {
 	/// Any top-level errors that prevented the bulk operation from running.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual update requests, represented by key-value pairs.  Each key is the customer ID that was specified for an update request and each value is the corresponding response. If the request succeeds, the value is the updated customer profile. If the request fails, the value contains any errors that occurred during the request.
 	public var responses: UpdateCustomerResponse?
 
-	/// Defines the fields included in the response body from the [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.
+	/// Defines the fields included in the response body from the [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) endpoint.
 	/// - Parameters:
 	///   - errors: Any top-level errors that prevented the bulk operation from running.
 	///   - responses: A map of responses that correspond to individual update requests, represented by key-value pairs.  Each key is the customer ID that was specified for an update request and each value is the corresponding response. If the request succeeds, the value is the updated customer profile. If the request fails, the value contains any errors that occurred during the request.
@@ -1823,12 +1823,12 @@ public struct BulkUpdateTeamMembersResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an input to a call to [BulkUpdateVendors]($e/Vendors/BulkUpdateVendors).
+/// Represents an input to a call to [BulkUpdateVendors](api-endpoint:Vendors-BulkUpdateVendors).
 public struct BulkUpdateVendorsRequest: Codable, Equatable {
 	/// A set of [UpdateVendorRequest](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/UpdateVendorRequest) objects encapsulating to-be-updated [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects. The set is represented by  a collection of `Vendor`-ID/`UpdateVendorRequest`-object pairs.
 	public var vendors: UpdateVendorRequest
 
-	/// Represents an input to a call to [BulkUpdateVendors]($e/Vendors/BulkUpdateVendors).
+	/// Represents an input to a call to [BulkUpdateVendors](api-endpoint:Vendors-BulkUpdateVendors).
 	/// - Parameters:
 	///   - vendors: A set of [UpdateVendorRequest](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/UpdateVendorRequest) objects encapsulating to-be-updated [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects. The set is represented by  a collection of `Vendor`-ID/`UpdateVendorRequest`-object pairs.
 	public init(vendors: UpdateVendorRequest) {
@@ -1836,14 +1836,14 @@ public struct BulkUpdateVendorsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an output from a call to [BulkUpdateVendors]($e/Vendors/BulkUpdateVendors).
+/// Represents an output from a call to [BulkUpdateVendors](api-endpoint:Vendors-BulkUpdateVendors).
 public struct BulkUpdateVendorsResponse: Codable, Equatable {
 	/// Errors encountered when the request fails.
 	public var errors: [SquareError]?
 	/// A set of [UpdateVendorResponse](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/UpdateVendorResponse) objects encapsulating successfully created [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects or error responses for failed attempts. The set is represented by a collection of `Vendor`-ID/`UpdateVendorResponse`-object or  `Vendor`-ID/error-object pairs.
 	public var responses: UpdateVendorResponse?
 
-	/// Represents an output from a call to [BulkUpdateVendors]($e/Vendors/BulkUpdateVendors).
+	/// Represents an output from a call to [BulkUpdateVendors](api-endpoint:Vendors-BulkUpdateVendors).
 	/// - Parameters:
 	///   - errors: Errors encountered when the request fails.
 	///   - responses: A set of [UpdateVendorResponse](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/UpdateVendorResponse) objects encapsulating successfully created [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects or error responses for failed attempts. The set is represented by a collection of `Vendor`-ID/`UpdateVendorResponse`-object or  `Vendor`-ID/error-object pairs.
@@ -1853,12 +1853,12 @@ public struct BulkUpdateVendorsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) request.
+/// Represents a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) request.
 public struct BulkUpsertBookingCustomAttributesRequest: Codable, Equatable {
 	/// A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertBookingCustomAttributes` request and the information needed to create or update a custom attribute.
 	public var values: BookingCustomAttributeUpsertRequest
 
-	/// Represents a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) request.
+	/// Represents a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) request.
 	/// - Parameters:
 	///   - values: A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertBookingCustomAttributes` request and the information needed to create or update a custom attribute.
 	public init(values: BookingCustomAttributeUpsertRequest) {
@@ -1866,14 +1866,14 @@ public struct BulkUpsertBookingCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+/// Represents a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 public struct BulkUpsertBookingCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `booking_id` and `custom_attribute` or an `errors` field.
 	public var values: BookingCustomAttributeUpsertResponse?
 
-	/// Represents a [BulkUpsertBookingCustomAttributes]($e/BookingCustomAttributes/BulkUpsertBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+	/// Represents a [BulkUpsertBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkUpsertBookingCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `booking_id` and `custom_attribute` or an `errors` field.
@@ -1883,12 +1883,12 @@ public struct BulkUpsertBookingCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) request.
+/// Represents a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) request.
 public struct BulkUpsertCustomerCustomAttributesRequest: Codable, Equatable {
 	/// A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertCustomerCustomAttributes` request and the information needed to create or update a custom attribute.
 	public var values: BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUpsertRequest
 
-	/// Represents a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) request.
+	/// Represents a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) request.
 	/// - Parameters:
 	///   - values: A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertCustomerCustomAttributes` request and the information needed to create or update a custom attribute.
 	public init(values: BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUpsertRequest) {
@@ -1896,7 +1896,7 @@ public struct BulkUpsertCustomerCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an individual upsert request in a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) request. An individual request contains a customer ID, the custom attribute to create or update, and an optional idempotency key.
+/// Represents an individual upsert request in a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) request. An individual request contains a customer ID, the custom attribute to create or update, and an optional idempotency key.
 public struct BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUpsertRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with following fields:  - `key`. This key must match the `key` of a custom attribute definition in the Square seller  account. If the requesting application is not the definition owner, you must provide the qualified key.  - `value`. This value must conform to the `schema` specified by the definition.  For more information, see [Value data types](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
 	public var custom_attribute: CustomAttribute
@@ -1905,7 +1905,7 @@ public struct BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUp
 	/// A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an individual upsert request in a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) request. An individual request contains a customer ID, the custom attribute to create or update, and an optional idempotency key.
+	/// Represents an individual upsert request in a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) request. An individual request contains a customer ID, the custom attribute to create or update, and an optional idempotency key.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with following fields:  - `key`. This key must match the `key` of a custom attribute definition in the Square seller  account. If the requesting application is not the definition owner, you must provide the qualified key.  - `value`. This value must conform to the `schema` specified by the definition.  For more information, see [Value data types](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for update operations, include this optional field in the request and set the value to the current version of the custom attribute.
 	///   - customer_id: The ID of the target [customer profile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer).
@@ -1917,14 +1917,14 @@ public struct BulkUpsertCustomerCustomAttributesRequestCustomerCustomAttributeUp
 	}
 }
 
-/// Represents a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+/// Represents a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 public struct BulkUpsertCustomerCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `customer_id` and `custom_attribute` or an `errors` field.
 	public var values: BulkUpsertCustomerCustomAttributesResponseCustomerCustomAttributeUpsertResponse?
 
-	/// Represents a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+	/// Represents a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `customer_id` and `custom_attribute` or an `errors` field.
@@ -1934,7 +1934,7 @@ public struct BulkUpsertCustomerCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a response for an individual upsert request in a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) operation.
+/// Represents a response for an individual upsert request in a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) operation.
 public struct BulkUpsertCustomerCustomAttributesResponseCustomerCustomAttributeUpsertResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
@@ -1943,7 +1943,7 @@ public struct BulkUpsertCustomerCustomAttributesResponseCustomerCustomAttributeU
 	/// Any errors that occurred while processing the individual request.
 	public var errors: [SquareError]?
 
-	/// Represents a response for an individual upsert request in a [BulkUpsertCustomerCustomAttributes]($e/CustomerCustomAttributes/BulkUpsertCustomerCustomAttributes) operation.
+	/// Represents a response for an individual upsert request in a [BulkUpsertCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-BulkUpsertCustomerCustomAttributes) operation.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - customer_id: The ID of the customer profile associated with the custom attribute.
@@ -1955,12 +1955,12 @@ public struct BulkUpsertCustomerCustomAttributesResponseCustomerCustomAttributeU
 	}
 }
 
-/// Represents a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) request.
+/// Represents a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) request.
 public struct BulkUpsertLocationCustomAttributesRequest: Codable, Equatable {
 	/// A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertLocationCustomAttributes` request and the information needed to create or update a custom attribute.
 	public var values: BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest
 
-	/// Represents a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) request.
+	/// Represents a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) request.
 	/// - Parameters:
 	///   - values: A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertLocationCustomAttributes` request and the information needed to create or update a custom attribute.
 	public init(values: BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest) {
@@ -1968,7 +1968,7 @@ public struct BulkUpsertLocationCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
+/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
 public struct BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUpsertRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute.  If this is not important for your application, `version` can be set to -1.
 	public var custom_attribute: CustomAttribute
@@ -1977,7 +1977,7 @@ public struct BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUp
 	/// The ID of the target [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
 	public var location_id: String
 
-	/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
+	/// Represents an individual upsert request in a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) request. An individual request contains a location ID, the custom attribute to create or update, and an optional idempotency key.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types).. - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute.  If this is not important for your application, `version` can be set to -1.
 	///   - idempotency_key: A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -1989,14 +1989,14 @@ public struct BulkUpsertLocationCustomAttributesRequestLocationCustomAttributeUp
 	}
 }
 
-/// Represents a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+/// Represents a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 public struct BulkUpsertLocationCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `location_id` and `custom_attribute` or an `errors` field.
 	public var values: BulkUpsertLocationCustomAttributesResponseLocationCustomAttributeUpsertResponse?
 
-	/// Represents a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+	/// Represents a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `location_id` and `custom_attribute` or an `errors` field.
@@ -2006,7 +2006,7 @@ public struct BulkUpsertLocationCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a response for an individual upsert request in a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) operation.
+/// Represents a response for an individual upsert request in a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) operation.
 public struct BulkUpsertLocationCustomAttributesResponseLocationCustomAttributeUpsertResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
@@ -2015,7 +2015,7 @@ public struct BulkUpsertLocationCustomAttributesResponseLocationCustomAttributeU
 	/// The ID of the location associated with the custom attribute.
 	public var location_id: String?
 
-	/// Represents a response for an individual upsert request in a [BulkUpsertLocationCustomAttributes]($e/LocationCustomAttributes/BulkUpsertLocationCustomAttributes) operation.
+	/// Represents a response for an individual upsert request in a [BulkUpsertLocationCustomAttributes](api-endpoint:LocationCustomAttributes-BulkUpsertLocationCustomAttributes) operation.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred while processing the individual request.
@@ -2027,12 +2027,12 @@ public struct BulkUpsertLocationCustomAttributesResponseLocationCustomAttributeU
 	}
 }
 
-/// Represents a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) request.
+/// Represents a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) request.
 public struct BulkUpsertMerchantCustomAttributesRequest: Codable, Equatable {
 	/// A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertMerchantCustomAttributes` request and the information needed to create or update a custom attribute.
 	public var values: BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUpsertRequest
 
-	/// Represents a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) request.
+	/// Represents a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) request.
 	/// - Parameters:
 	///   - values: A map containing 1 to 25 individual upsert requests. For each request, provide an arbitrary ID that is unique for this `BulkUpsertMerchantCustomAttributes` request and the information needed to create or update a custom attribute.
 	public init(values: BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUpsertRequest) {
@@ -2040,7 +2040,7 @@ public struct BulkUpsertMerchantCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an individual upsert request in a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) request. An individual request contains a merchant ID, the custom attribute to create or update, and an optional idempotency key.
+/// Represents an individual upsert request in a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) request. An individual request contains a merchant ID, the custom attribute to create or update, and an optional idempotency key.
 public struct BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUpsertRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - The version field must match the current version of the custom attribute definition to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) If this is not important for your application, version can be set to -1. For any other values, the request fails with a BAD_REQUEST error.
 	public var custom_attribute: CustomAttribute
@@ -2049,7 +2049,7 @@ public struct BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUp
 	/// The ID of the target [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant).
 	public var merchant_id: String
 
-	/// Represents an individual upsert request in a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) request. An individual request contains a merchant ID, the custom attribute to create or update, and an optional idempotency key.
+	/// Represents an individual upsert request in a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) request. An individual request contains a merchant ID, the custom attribute to create or update, and an optional idempotency key.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with following fields: - `key`. This key must match the `key` of a custom attribute definition in the Square seller account. If the requesting application is not the definition owner, you must provide the qualified key. - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - The version field must match the current version of the custom attribute definition to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) If this is not important for your application, version can be set to -1. For any other values, the request fails with a BAD_REQUEST error.
 	///   - idempotency_key: A unique identifier for this individual upsert request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -2061,14 +2061,14 @@ public struct BulkUpsertMerchantCustomAttributesRequestMerchantCustomAttributeUp
 	}
 }
 
-/// Represents a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+/// Represents a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 public struct BulkUpsertMerchantCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `merchant_id` and `custom_attribute` or an `errors` field.
 	public var values: BulkUpsertMerchantCustomAttributesResponseMerchantCustomAttributeUpsertResponse?
 
-	/// Represents a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
+	/// Represents a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) response, which contains a map of responses that each corresponds to an individual upsert request.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - values: A map of responses that correspond to individual upsert requests. Each response has the same ID as the corresponding request and contains either a `merchant_id` and `custom_attribute` or an `errors` field.
@@ -2078,7 +2078,7 @@ public struct BulkUpsertMerchantCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a response for an individual upsert request in a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) operation.
+/// Represents a response for an individual upsert request in a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) operation.
 public struct BulkUpsertMerchantCustomAttributesResponseMerchantCustomAttributeUpsertResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
@@ -2087,7 +2087,7 @@ public struct BulkUpsertMerchantCustomAttributesResponseMerchantCustomAttributeU
 	/// The ID of the merchant associated with the custom attribute.
 	public var merchant_id: String?
 
-	/// Represents a response for an individual upsert request in a [BulkUpsertMerchantCustomAttributes]($e/MerchantCustomAttributes/BulkUpsertMerchantCustomAttributes) operation.
+	/// Represents a response for an individual upsert request in a [BulkUpsertMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-BulkUpsertMerchantCustomAttributes) operation.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred while processing the individual request.
@@ -2361,7 +2361,7 @@ public struct BuyNowPayLaterDetails: Codable, Equatable {
 	}
 }
 
-/// Represents a [CalculateLoyaltyPoints]($e/Loyalty/CalculateLoyaltyPoints) request.
+/// Represents a [CalculateLoyaltyPoints](api-endpoint:Loyalty-CalculateLoyaltyPoints) request.
 public struct CalculateLoyaltyPointsRequest: Codable, Equatable {
 	/// The ID of the target [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount). Optionally specify this field if your application uses the Orders API to process orders.  If specified, the `promotion_points` field in the response shows the number of points the buyer would earn from the purchase. In this case, Square uses the account ID to determine whether the promotion's `trigger_limit` (the maximum number of times that a buyer can trigger the promotion) has been reached. If not specified, the `promotion_points` field shows the number of points the purchase qualifies for regardless of the trigger limit.
 	public var loyalty_account_id: String?
@@ -2370,7 +2370,7 @@ public struct CalculateLoyaltyPointsRequest: Codable, Equatable {
 	/// The purchase amount for which to calculate the points.  Specify this field if your application does not use the Orders API to process orders. Otherwise, specify the `order_id`.
 	public var transaction_amount_money: Money?
 
-	/// Represents a [CalculateLoyaltyPoints]($e/Loyalty/CalculateLoyaltyPoints) request.
+	/// Represents a [CalculateLoyaltyPoints](api-endpoint:Loyalty-CalculateLoyaltyPoints) request.
 	/// - Parameters:
 	///   - loyalty_account_id: The ID of the target [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount). Optionally specify this field if your application uses the Orders API to process orders.  If specified, the `promotion_points` field in the response shows the number of points the buyer would earn from the purchase. In this case, Square uses the account ID to determine whether the promotion's `trigger_limit` (the maximum number of times that a buyer can trigger the promotion) has been reached. If not specified, the `promotion_points` field shows the number of points the purchase qualifies for regardless of the trigger limit.
 	///   - order_id: The [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) ID for which to calculate the points. Specify this field if your application uses the Orders API to process orders. Otherwise, specify the `transaction_amount_money`.
@@ -2382,7 +2382,7 @@ public struct CalculateLoyaltyPointsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [CalculateLoyaltyPoints]($e/Loyalty/CalculateLoyaltyPoints) response.
+/// Represents a [CalculateLoyaltyPoints](api-endpoint:Loyalty-CalculateLoyaltyPoints) response.
 public struct CalculateLoyaltyPointsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -2391,7 +2391,7 @@ public struct CalculateLoyaltyPointsResponse: Codable, Equatable {
 	/// The number of points that the buyer can earn from a loyalty promotion. To be eligible to earn promotion points, the purchase must first qualify for program points. When `order_id` is not provided in the request, this value is always 0.
 	public var promotion_points: Int?
 
-	/// Represents a [CalculateLoyaltyPoints]($e/Loyalty/CalculateLoyaltyPoints) response.
+	/// Represents a [CalculateLoyaltyPoints](api-endpoint:Loyalty-CalculateLoyaltyPoints) response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - points: The number of points that the buyer can earn from the base loyalty program.
@@ -2481,20 +2481,20 @@ public struct CancelInvoiceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CancelLoyaltyPromotion]($e/Loyalty/CancelLoyaltyPromotion) request.
+/// Represents a [CancelLoyaltyPromotion](api-endpoint:Loyalty-CancelLoyaltyPromotion) request.
 public struct CancelLoyaltyPromotionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [CancelLoyaltyPromotion]($e/Loyalty/CancelLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
+/// Represents a [CancelLoyaltyPromotion](api-endpoint:Loyalty-CancelLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
 public struct CancelLoyaltyPromotionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The canceled loyalty promotion.
 	public var loyalty_promotion: LoyaltyPromotion?
 
-	/// Represents a [CancelLoyaltyPromotion]($e/Loyalty/CancelLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
+	/// Represents a [CancelLoyaltyPromotion](api-endpoint:Loyalty-CancelLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - loyalty_promotion: The canceled loyalty promotion.
@@ -2504,12 +2504,12 @@ public struct CancelLoyaltyPromotionResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey]($e/Payments/CancelPaymentByIdempotencyKey).
+/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey).
 public struct CancelPaymentByIdempotencyKeyRequest: Codable, Equatable {
 	/// The `idempotency_key` identifying the payment to be canceled.
 	public var idempotency_key: String
 
-	/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey]($e/Payments/CancelPaymentByIdempotencyKey).
+	/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey).
 	/// - Parameters:
 	///   - idempotency_key: The `idempotency_key` identifying the payment to be canceled.
 	public init(idempotency_key: String) {
@@ -2517,12 +2517,12 @@ public struct CancelPaymentByIdempotencyKeyRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by  [CancelPaymentByIdempotencyKey]($e/Payments/CancelPaymentByIdempotencyKey). On success, `errors` is empty.
+/// Defines the response returned by  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey). On success, `errors` is empty.
 public struct CancelPaymentByIdempotencyKeyResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the response returned by  [CancelPaymentByIdempotencyKey]($e/Payments/CancelPaymentByIdempotencyKey). On success, `errors` is empty.
+	/// Defines the response returned by  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey). On success, `errors` is empty.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -2530,20 +2530,20 @@ public struct CancelPaymentByIdempotencyKeyResponse: Codable, Equatable {
 	}
 }
 
-/// Describes the request to cancel (void) a payment using [CancelPayment]($e/Payments/CancelPayment). You can only cancel a payment that is approved (not completed). For more information, see [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
+/// Describes the request to cancel (void) a payment using [CancelPayment](api-endpoint:Payments-CancelPayment). You can only cancel a payment that is approved (not completed). For more information, see [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
 public struct CancelPaymentRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the response returned by [CancelPayment]($e/Payments/CancelPayment).
+/// Defines the response returned by [CancelPayment](api-endpoint:Payments-CancelPayment).
 public struct CancelPaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully canceled `Payment` object.
 	public var payment: Payment?
 
-	/// Defines the response returned by [CancelPayment]($e/Payments/CancelPayment).
+	/// Defines the response returned by [CancelPayment](api-endpoint:Payments-CancelPayment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully canceled `Payment` object.
@@ -2553,13 +2553,13 @@ public struct CancelPaymentResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the  [CancelSubscription]($e/Subscriptions/CancelSubscription) endpoint.
+/// Defines input parameters in a request to the  [CancelSubscription](api-endpoint:Subscriptions-CancelSubscription) endpoint.
 public struct CancelSubscriptionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines output parameters in a response from the  [CancelSubscription]($e/Subscriptions/CancelSubscription) endpoint.
+/// Defines output parameters in a response from the  [CancelSubscription](api-endpoint:Subscriptions-CancelSubscription) endpoint.
 public struct CancelSubscriptionResponse: Codable, Equatable {
 	/// A list of a single `CANCEL` action scheduled for the subscription.
 	public var actions: [SubscriptionAction]?
@@ -2568,7 +2568,7 @@ public struct CancelSubscriptionResponse: Codable, Equatable {
 	/// The specified subscription scheduled for cancellation according to the action created by the request.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response from the  [CancelSubscription]($e/Subscriptions/CancelSubscription) endpoint.
+	/// Defines output parameters in a response from the  [CancelSubscription](api-endpoint:Subscriptions-CancelSubscription) endpoint.
 	/// - Parameters:
 	///   - actions: A list of a single `CANCEL` action scheduled for the subscription.
 	///   - errors: Errors encountered during the request.
@@ -2651,7 +2651,7 @@ public struct CaptureTransactionResponse: Codable, Equatable {
 
 /// Represents the payment details of a card to be used for payments. These details are determined by the payment token generated by Web Payments SDK.
 public struct Card: Codable, Equatable {
-	/// The billing address for this card.
+	/// The billing address for this card. `US` postal codes can be provided as a 5-digit zip code or 9-digit ZIP+4 (example: `12345-6789`). For a full list of field meanings by country, see [Working with Addresses](https://developer.squareup.com/docs/build-basics/common-data-types/working-with-addresses).
 	public var billing_address: Address?
 	/// The first six digits of the card number, known as the Bank Identification Number (BIN). Only the Payments API returns this field.
 	public var bin: String?
@@ -2663,7 +2663,7 @@ public struct Card: Codable, Equatable {
 	public var card_type: CardType?
 	/// The name of the cardholder.
 	public var cardholder_name: String?
-	/// **Required** The ID of a customer created using the Customers API to be associated with the card.
+	/// **Required** The ID of a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to be associated with the card.
 	public var customer_id: String?
 	/// Indicates whether or not a card can be used for payments.
 	public var enabled: Bool?
@@ -2673,13 +2673,19 @@ public struct Card: Codable, Equatable {
 	public var exp_year: Int?
 	/// Intended as a Square-assigned identifier, based on the card number, to identify the card across multiple locations within a single application.
 	public var fingerprint: String?
+	/// Indicates whether the card is linked to a Health Savings Account (HSA) or Flexible Spending Account (FSA), based on the card BIN.
+	public var hsa_fsa: Bool?
 	/// Unique ID for this card. Generated by Square.
 	public var id: String?
+	/// An alert from the issuing bank about the card status. Alerts can indicate whether future charges to the card are likely to fail. For more information, see [Manage Card on File Declines](https://developer.squareup.com/docs/cards-api/manage-card-on-file-declines).  This field is present only if there's an active issuer alert. See [IssuerAlert](#type-issueralert) for possible values
+	public var issuer_alert: CardIssuerAlert?
+	/// The timestamp of when the current issuer alert was received and processed, in RFC 3339 format.  This field is present only if there's an active issuer alert.
+	public var issuer_alert_at: Timestamp?
 	/// The last 4 digits of the card number.
 	public var last_4: String?
 	/// The ID of the merchant associated with the card.
 	public var merchant_id: String?
-	/// Indicates whether the Card is prepaid or not. The Card object includes this field only in response to Payments API calls. See [CardPrepaidType](#type-cardprepaidtype) for possible values
+	/// Indicates whether the card is prepaid or not. See [CardPrepaidType](#type-cardprepaidtype) for possible values
 	public var prepaid_type: CardPrepaidType?
 	/// An optional user-defined reference ID that associates this card with another entity in an external system. For example, a customer ID from an external customer management system.
 	public var reference_id: String?
@@ -2688,24 +2694,27 @@ public struct Card: Codable, Equatable {
 
 	/// Represents the payment details of a card to be used for payments. These details are determined by the payment token generated by Web Payments SDK.
 	/// - Parameters:
-	///   - billing_address: The billing address for this card.
+	///   - billing_address: The billing address for this card. `US` postal codes can be provided as a 5-digit zip code or 9-digit ZIP+4 (example: `12345-6789`). For a full list of field meanings by country, see [Working with Addresses](https://developer.squareup.com/docs/build-basics/common-data-types/working-with-addresses).
 	///   - bin: The first six digits of the card number, known as the Bank Identification Number (BIN). Only the Payments API returns this field.
 	///   - card_brand: The card's brand. See [CardBrand](#type-cardbrand) for possible values
 	///   - card_co_brand: The card's co-brand if available. For example, an Afterpay virtual card would have a co-brand of AFTERPAY. See [CardCoBrand](#type-cardcobrand) for possible values
 	///   - card_type: The type of the card. The Card object includes this field only in response to Payments API calls. See [CardType](#type-cardtype) for possible values
 	///   - cardholder_name: The name of the cardholder.
-	///   - customer_id: **Required** The ID of a customer created using the Customers API to be associated with the card.
+	///   - customer_id: **Required** The ID of a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to be associated with the card.
 	///   - enabled: Indicates whether or not a card can be used for payments.
 	///   - exp_month: The expiration month of the associated card as an integer between 1 and 12.
 	///   - exp_year: The four-digit year of the card's expiration date.
 	///   - fingerprint: Intended as a Square-assigned identifier, based on the card number, to identify the card across multiple locations within a single application.
+	///   - hsa_fsa: Indicates whether the card is linked to a Health Savings Account (HSA) or Flexible Spending Account (FSA), based on the card BIN.
 	///   - id: Unique ID for this card. Generated by Square.
+	///   - issuer_alert: An alert from the issuing bank about the card status. Alerts can indicate whether future charges to the card are likely to fail. For more information, see [Manage Card on File Declines](https://developer.squareup.com/docs/cards-api/manage-card-on-file-declines).  This field is present only if there's an active issuer alert. See [IssuerAlert](#type-issueralert) for possible values
+	///   - issuer_alert_at: The timestamp of when the current issuer alert was received and processed, in RFC 3339 format.  This field is present only if there's an active issuer alert.
 	///   - last_4: The last 4 digits of the card number.
 	///   - merchant_id: The ID of the merchant associated with the card.
-	///   - prepaid_type: Indicates whether the Card is prepaid or not. The Card object includes this field only in response to Payments API calls. See [CardPrepaidType](#type-cardprepaidtype) for possible values
+	///   - prepaid_type: Indicates whether the card is prepaid or not. See [CardPrepaidType](#type-cardprepaidtype) for possible values
 	///   - reference_id: An optional user-defined reference ID that associates this card with another entity in an external system. For example, a customer ID from an external customer management system.
 	///   - version: Current version number of the card. Increments with each card update. Requests to update an existing Card object will be rejected unless the version in the request matches the current version for the Card.
-	public init(billing_address: Address? = nil, bin: String? = nil, card_brand: CardBrand? = nil, card_co_brand: CardCoBrand? = nil, card_type: CardType? = nil, cardholder_name: String? = nil, customer_id: String? = nil, enabled: Bool? = nil, exp_month: Int? = nil, exp_year: Int? = nil, fingerprint: String? = nil, id: String? = nil, last_4: String? = nil, merchant_id: String? = nil, prepaid_type: CardPrepaidType? = nil, reference_id: String? = nil, version: Int? = nil) {
+	public init(billing_address: Address? = nil, bin: String? = nil, card_brand: CardBrand? = nil, card_co_brand: CardCoBrand? = nil, card_type: CardType? = nil, cardholder_name: String? = nil, customer_id: String? = nil, enabled: Bool? = nil, exp_month: Int? = nil, exp_year: Int? = nil, fingerprint: String? = nil, hsa_fsa: Bool? = nil, id: String? = nil, issuer_alert: CardIssuerAlert? = nil, issuer_alert_at: Timestamp? = nil, last_4: String? = nil, merchant_id: String? = nil, prepaid_type: CardPrepaidType? = nil, reference_id: String? = nil, version: Int? = nil) {
 		self.billing_address = billing_address
 		self.bin = bin
 		self.card_brand = card_brand
@@ -2717,7 +2726,10 @@ public struct Card: Codable, Equatable {
 		self.exp_month = exp_month
 		self.exp_year = exp_year
 		self.fingerprint = fingerprint
+		self.hsa_fsa = hsa_fsa
 		self.id = id
+		self.issuer_alert = issuer_alert
+		self.issuer_alert_at = issuer_alert_at
 		self.last_4 = last_4
 		self.merchant_id = merchant_id
 		self.prepaid_type = prepaid_type
@@ -2749,6 +2761,12 @@ public enum CardCoBrand: String, Codable {
 	case UNKNOWN
 	case AFTERPAY
 	case CLEARPAY
+}
+
+/// Indicates the type of issuer alert for a [card on file](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card).
+public enum CardIssuerAlert: String, Codable {
+	/// The underlying account of the card was closed, which is a strong signal that future charges to the card are likely to fail.
+	case ISSUER_ALERT_CARD_CLOSED
 }
 
 /// Reflects the current status of a card payment. Contains only non-confidential information.
@@ -3465,14 +3483,14 @@ public struct CatalogEcomSeoData: Codable, Equatable {
 	}
 }
 
-/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject]($e/Catalog/UpsertCatalogObject) or [BatchUpsertCatalogObjects]($e/Catalog/BatchUpsertCatalogObjects) to create a [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
+/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](api-endpoint:Catalog-UpsertCatalogObject) or [BatchUpsertCatalogObjects](api-endpoint:Catalog-BatchUpsertCatalogObjects) to create a [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
 public struct CatalogIdMapping: Codable, Equatable {
 	/// The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
 	public var client_object_id: String?
 	/// The permanent ID for the CatalogObject created by the server.
 	public var object_id: String?
 
-	/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject]($e/Catalog/UpsertCatalogObject) or [BatchUpsertCatalogObjects]($e/Catalog/BatchUpsertCatalogObjects) to create a [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
+	/// A mapping between a temporary client-supplied ID and a permanent server-generated ID.  When calling [UpsertCatalogObject](api-endpoint:Catalog-UpsertCatalogObject) or [BatchUpsertCatalogObjects](api-endpoint:Catalog-BatchUpsertCatalogObjects) to create a [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance, you can supply a temporary ID for the to-be-created object, especially when the object is to be referenced elsewhere in the same request body. This temporary ID can be any string unique within the call, but must be prefixed by "#".  After the request is submitted and the object created, a permanent server-generated ID is assigned to the new object. The permanent ID is unique across the Square catalog.
 	/// - Parameters:
 	///   - client_object_id: The client-supplied temporary `#`-prefixed ID for a new `CatalogObject`.
 	///   - object_id: The permanent ID for the CatalogObject created by the server.
@@ -3570,17 +3588,11 @@ public struct CatalogInfoResponseLimits: Codable, Equatable {
 public struct CatalogItem: Codable, Equatable {
 	/// The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
 	public var abbreviation: String?
-	/// If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
-	public var available_electronically: Bool?
-	/// If `true`, the item can be added to pickup orders from the merchant's online store.
-	public var available_for_pickup: Bool?
-	/// If `true`, the item can be added to shipping orders from the merchant's online store.
-	public var available_online: Bool?
 	/// The list of categories.
 	public var categories: [CatalogObjectCategory]?
 	/// The ID of the item's category, if any. Deprecated since yyyy-mm-dd. Use `CatalogItem.categories`, instead.
 	public var category_id: String?
-	/// A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available.
+	/// A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available. This field is read only and cannot be edited.
 	public var channels: [String]?
 	/// The item's description. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.  Deprecated at yyyy-mm-dd, this field is planned to retire in 6 months. You should migrate to use `description_html` to set the description of the [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) instance.  The `description` and `description_html` field values are kept in sync. If you try to set the both fields, the `description_html` text value overwrites the `description` value. Updates in one field are also reflected in the other, except for when you use an early version before Square API yyyy-mm-dd and `description_html` is set to blank, setting the `description` value to null does not nullify `description_html`.
 	public var description: String?
@@ -3588,12 +3600,18 @@ public struct CatalogItem: Codable, Equatable {
 	public var description_html: String?
 	/// A server-generated plaintext version of the `description_html` field, without formatting tags.
 	public var description_plaintext: String?
+	/// Deprecated; see go/ecomUriUseCases. A comma-separated list of encoded URIs pointing to a set of published e-commerce images for the Item.
+	public var ecom_image_uris: [String]?
 	/// The SEO data for a seller's Square Online store.
 	public var ecom_seo_data: CatalogEcomSeoData?
+	/// Deprecated; see go/ecomUriUseCases. A URI pointing to a published e-commerce product page for the Item.
+	public var ecom_uri: String?
 	/// The food and beverage-specific details for the `FOOD_AND_BEV` item.
 	public var food_and_beverage_details: CatalogItemFoodAndBeverageDetails?
 	/// The IDs of images associated with this `CatalogItem` instance. These images will be shown to customers in Square Online Store. The first image will show up as the icon for this item in POS.
 	public var image_ids: [String]?
+	/// Indicates whether this item is alcoholic (`true`) or not (`false`).
+	public var is_alcoholic: Bool?
 	/// Indicates whether this item is archived (`true`) or not (`false`).
 	public var is_archived: Bool?
 	/// Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
@@ -3622,18 +3640,18 @@ public struct CatalogItem: Codable, Equatable {
 	/// A [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the catalog.
 	/// - Parameters:
 	///   - abbreviation: The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
-	///   - available_electronically: If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
-	///   - available_for_pickup: If `true`, the item can be added to pickup orders from the merchant's online store.
-	///   - available_online: If `true`, the item can be added to shipping orders from the merchant's online store.
 	///   - categories: The list of categories.
 	///   - category_id: The ID of the item's category, if any. Deprecated since yyyy-mm-dd. Use `CatalogItem.categories`, instead.
-	///   - channels: A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available.
+	///   - channels: A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available. This field is read only and cannot be edited.
 	///   - description: The item's description. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.  Deprecated at yyyy-mm-dd, this field is planned to retire in 6 months. You should migrate to use `description_html` to set the description of the [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) instance.  The `description` and `description_html` field values are kept in sync. If you try to set the both fields, the `description_html` text value overwrites the `description` value. Updates in one field are also reflected in the other, except for when you use an early version before Square API yyyy-mm-dd and `description_html` is set to blank, setting the `description` value to null does not nullify `description_html`.
 	///   - description_html: The item's description as expressed in valid HTML elements. The length of this field value, including those of HTML tags, is of Unicode points. With application query filters, the text values of the HTML elements and attributes are searchable. Invalid or unsupported HTML elements or attributes are ignored.  Supported HTML elements include: - `a`: Link. Supports linking to website URLs, email address, and telephone numbers. - `b`, `strong`:  Bold text - `br`: Line break - `code`: Computer code - `div`: Section - `h1-h6`: Headings - `i`, `em`: Italics - `li`: List element - `ol`: Numbered list - `p`: Paragraph - `ul`: Bullet list - `u`: Underline   Supported HTML attributes include: - `align`: Alignment of the text content - `href`: Link destination - `rel`: Relationship between link's target and source - `target`: Place to open the linked document
 	///   - description_plaintext: A server-generated plaintext version of the `description_html` field, without formatting tags.
+	///   - ecom_image_uris: Deprecated; see go/ecomUriUseCases. A comma-separated list of encoded URIs pointing to a set of published e-commerce images for the Item.
 	///   - ecom_seo_data: The SEO data for a seller's Square Online store.
+	///   - ecom_uri: Deprecated; see go/ecomUriUseCases. A URI pointing to a published e-commerce product page for the Item.
 	///   - food_and_beverage_details: The food and beverage-specific details for the `FOOD_AND_BEV` item.
 	///   - image_ids: The IDs of images associated with this `CatalogItem` instance. These images will be shown to customers in Square Online Store. The first image will show up as the icon for this item in POS.
+	///   - is_alcoholic: Indicates whether this item is alcoholic (`true`) or not (`false`).
 	///   - is_archived: Indicates whether this item is archived (`true`) or not (`false`).
 	///   - is_taxable: Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
 	///   - item_options: List of item options IDs for this item. Used to manage and group item variations in a specified order.  Maximum: 6 item options.
@@ -3646,20 +3664,20 @@ public struct CatalogItem: Codable, Equatable {
 	///   - sort_name: A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent, the regular `name` field is used for sorting. Its value must not be empty.  It is currently supported for sellers of the Japanese locale only.
 	///   - tax_ids: A set of IDs indicating the taxes enabled for this item. When updating an item, any taxes listed here will be added to the item. Taxes may also be added to or deleted from an item using `UpdateItemTaxes`.
 	///   - variations: A list of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) objects for this item. An item must have at least one variation.
-	public init(abbreviation: String? = nil, available_electronically: Bool? = nil, available_for_pickup: Bool? = nil, available_online: Bool? = nil, categories: [CatalogObjectCategory]? = nil, category_id: String? = nil, channels: [String]? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, ecom_seo_data: CatalogEcomSeoData? = nil, food_and_beverage_details: CatalogItemFoodAndBeverageDetails? = nil, image_ids: [String]? = nil, is_archived: Bool? = nil, is_taxable: Bool? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: CatalogItemProductType? = nil, reporting_category: CatalogObjectCategory? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
+	public init(abbreviation: String? = nil, categories: [CatalogObjectCategory]? = nil, category_id: String? = nil, channels: [String]? = nil, description: String? = nil, description_html: String? = nil, description_plaintext: String? = nil, ecom_image_uris: [String]? = nil, ecom_seo_data: CatalogEcomSeoData? = nil, ecom_uri: String? = nil, food_and_beverage_details: CatalogItemFoodAndBeverageDetails? = nil, image_ids: [String]? = nil, is_alcoholic: Bool? = nil, is_archived: Bool? = nil, is_taxable: Bool? = nil, item_options: [CatalogItemOptionForItem]? = nil, label_color: String? = nil, modifier_list_info: [CatalogItemModifierListInfo]? = nil, name: String? = nil, product_type: CatalogItemProductType? = nil, reporting_category: CatalogObjectCategory? = nil, skip_modifier_screen: Bool? = nil, sort_name: String? = nil, tax_ids: [String]? = nil, variations: [CatalogObject]? = nil) {
 		self.abbreviation = abbreviation
-		self.available_electronically = available_electronically
-		self.available_for_pickup = available_for_pickup
-		self.available_online = available_online
 		self.categories = categories
 		self.category_id = category_id
 		self.channels = channels
 		self.description = description
 		self.description_html = description_html
 		self.description_plaintext = description_plaintext
+		self.ecom_image_uris = ecom_image_uris
 		self.ecom_seo_data = ecom_seo_data
+		self.ecom_uri = ecom_uri
 		self.food_and_beverage_details = food_and_beverage_details
 		self.image_ids = image_ids
+		self.is_alcoholic = is_alcoholic
 		self.is_archived = is_archived
 		self.is_taxable = is_taxable
 		self.item_options = item_options
@@ -4459,7 +4477,7 @@ public struct CatalogProductSet: Codable, Equatable {
 	}
 }
 
-/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects]($e/Catalog/SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryText)  All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  Searchable attribute and objects queryable by searchable attributes: - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, `CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
+/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](api-endpoint:Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryText)  All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  Searchable attribute and objects queryable by searchable attributes: - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, `CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 public struct CatalogQuery: Codable, Equatable {
 	/// An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	public var exact_query: CatalogQueryExact?
@@ -4482,7 +4500,7 @@ public struct CatalogQuery: Codable, Equatable {
 	/// A text query expression to return objects whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
 	public var text_query: CatalogQueryText?
 
-	/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects]($e/Catalog/SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryText)  All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  Searchable attribute and objects queryable by searchable attributes: - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, `CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
+	/// A query composed of one or more different types of filters to narrow the scope of targeted objects when calling the `SearchCatalogObjects` endpoint.  Although a query can have multiple filters, only certain query types can be combined per call to [SearchCatalogObjects](api-endpoint:Catalog-SearchCatalogObjects). Any combination of the following types may be used together: - [exact_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryExact) - [prefix_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryPrefix) - [range_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryRange) - [sorted_attribute_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQuerySortedAttribute) - [text_query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogQueryText)  All other query types cannot be combined with any others.  When a query filter is based on an attribute, the attribute must be searchable. Searchable attributes are listed as follows, along their parent types that can be searched for with applicable query filters.  Searchable attribute and objects queryable by searchable attributes: - `name`:  `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, `CatalogTax`, `CatalogDiscount`, `CatalogModifier`, `CatalogModifierList`, `CatalogItemOption`, `CatalogItemOptionValue` - `description`: `CatalogItem`, `CatalogItemOptionValue` - `abbreviation`: `CatalogItem` - `upc`: `CatalogItemVariation` - `sku`: `CatalogItemVariation` - `caption`: `CatalogImage` - `display_name`: `CatalogItemOption`  For example, to search for [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) objects by searchable attributes, you can use the `"name"`, `"description"`, or `"abbreviation"` attribute in an applicable query filter.
 	/// - Parameters:
 	///   - exact_query: An exact query expression to return objects with attribute name and value matching the specified attribute name and value exactly. Value matching is case insensitive.
 	///   - item_variations_for_item_option_values_query: A query expression to return item variations (of the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) type) that contain all of the specified `CatalogItemOption` IDs.
@@ -4901,14 +4919,14 @@ public struct CategoryPathToRootNode: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the [ChangeBillingAnchorDate]($e/Subscriptions/ChangeBillingAnchorDate) endpoint.
+/// Defines input parameters in a request to the [ChangeBillingAnchorDate](api-endpoint:Subscriptions-ChangeBillingAnchorDate) endpoint.
 public struct ChangeBillingAnchorDateRequest: Codable, Equatable {
 	/// The `YYYY-MM-DD`-formatted date when the scheduled `BILLING_ANCHOR_CHANGE` action takes place on the subscription.  When this date is unspecified or falls within the current billing cycle, the billing anchor date is changed immediately.
 	public var effective_date: String?
 	/// The anchor day for the billing cycle.
 	public var monthly_billing_anchor_date: Int?
 
-	/// Defines input parameters in a request to the [ChangeBillingAnchorDate]($e/Subscriptions/ChangeBillingAnchorDate) endpoint.
+	/// Defines input parameters in a request to the [ChangeBillingAnchorDate](api-endpoint:Subscriptions-ChangeBillingAnchorDate) endpoint.
 	/// - Parameters:
 	///   - effective_date: The `YYYY-MM-DD`-formatted date when the scheduled `BILLING_ANCHOR_CHANGE` action takes place on the subscription.  When this date is unspecified or falls within the current billing cycle, the billing anchor date is changed immediately.
 	///   - monthly_billing_anchor_date: The anchor day for the billing cycle.
@@ -4918,7 +4936,7 @@ public struct ChangeBillingAnchorDateRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a request to the [ChangeBillingAnchorDate]($e/Subscriptions/ChangeBillingAnchorDate) endpoint.
+/// Defines output parameters in a request to the [ChangeBillingAnchorDate](api-endpoint:Subscriptions-ChangeBillingAnchorDate) endpoint.
 public struct ChangeBillingAnchorDateResponse: Codable, Equatable {
 	/// A list of a single billing anchor date change for the subscription.
 	public var actions: [SubscriptionAction]?
@@ -4927,7 +4945,7 @@ public struct ChangeBillingAnchorDateResponse: Codable, Equatable {
 	/// The specified subscription for updating billing anchor date.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a request to the [ChangeBillingAnchorDate]($e/Subscriptions/ChangeBillingAnchorDate) endpoint.
+	/// Defines output parameters in a request to the [ChangeBillingAnchorDate](api-endpoint:Subscriptions-ChangeBillingAnchorDate) endpoint.
 	/// - Parameters:
 	///   - actions: A list of a single billing anchor date change for the subscription.
 	///   - errors: Errors encountered during the request.
@@ -5347,7 +5365,7 @@ public struct ClearpayDetails: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [CloneOrder]($e/Orders/CloneOrder) endpoint.
+/// Defines the fields that are included in requests to the [CloneOrder](api-endpoint:Orders-CloneOrder) endpoint.
 public struct CloneOrderRequest: Codable, Equatable {
 	/// A value you specify that uniquely identifies this clone request.  If you are unsure whether a particular order was cloned successfully, you can reattempt the call with the same idempotency key without worrying about creating duplicate cloned orders. The originally cloned order is returned.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
@@ -5356,7 +5374,7 @@ public struct CloneOrderRequest: Codable, Equatable {
 	/// An optional order version for concurrency protection.  If a version is provided, it must match the latest stored version of the order to clone. If a version is not provided, the API clones the latest version.
 	public var version: Int?
 
-	/// Defines the fields that are included in requests to the [CloneOrder]($e/Orders/CloneOrder) endpoint.
+	/// Defines the fields that are included in requests to the [CloneOrder](api-endpoint:Orders-CloneOrder) endpoint.
 	/// - Parameters:
 	///   - idempotency_key: A value you specify that uniquely identifies this clone request.  If you are unsure whether a particular order was cloned successfully, you can reattempt the call with the same idempotency key without worrying about creating duplicate cloned orders. The originally cloned order is returned.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	///   - order_id: The ID of the order to clone.
@@ -5368,14 +5386,14 @@ public struct CloneOrderRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CloneOrder]($e/Orders/CloneOrder) endpoint.
+/// Defines the fields that are included in the response body of a request to the [CloneOrder](api-endpoint:Orders-CloneOrder) endpoint.
 public struct CloneOrderResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The cloned order.
 	public var order: Order?
 
-	/// Defines the fields that are included in the response body of a request to the [CloneOrder]($e/Orders/CloneOrder) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [CloneOrder](api-endpoint:Orders-CloneOrder) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The cloned order.
@@ -5394,12 +5412,12 @@ public struct CollectedData: Codable, Equatable {
 	}
 }
 
-/// Describes a request to complete (capture) a payment using  [CompletePayment]($e/Payments/CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+/// Describes a request to complete (capture) a payment using  [CompletePayment](api-endpoint:Payments-CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 public struct CompletePaymentRequest: Codable, Equatable {
 	/// Used for optimistic concurrency. This opaque token identifies the current `Payment`  version that the caller expects. If the server has a different version of the Payment,  the update fails and a response with a VERSION_MISMATCH error is returned.
 	public var version_token: String?
 
-	/// Describes a request to complete (capture) a payment using  [CompletePayment]($e/Payments/CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+	/// Describes a request to complete (capture) a payment using  [CompletePayment](api-endpoint:Payments-CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 	/// - Parameters:
 	///   - version_token: Used for optimistic concurrency. This opaque token identifies the current `Payment`  version that the caller expects. If the server has a different version of the Payment,  the update fails and a response with a VERSION_MISMATCH error is returned.
 	public init(version_token: String? = nil) {
@@ -5407,14 +5425,14 @@ public struct CompletePaymentRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by[CompletePayment]($e/Payments/CompletePayment).
+/// Defines the response returned by[CompletePayment](api-endpoint:Payments-CompletePayment).
 public struct CompletePaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully completed payment.
 	public var payment: Payment?
 
-	/// Defines the response returned by[CompletePayment]($e/Payments/CompletePayment).
+	/// Defines the response returned by[CompletePayment](api-endpoint:Payments-CompletePayment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The successfully completed payment.
@@ -6018,14 +6036,14 @@ public enum Country: String, Codable {
 	case ZW
 }
 
-/// Represents a [CreateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/CreateBookingCustomAttributeDefinition) request.
+/// Represents a [CreateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-CreateBookingCustomAttributeDefinition) request.
 public struct CreateBookingCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition to create, with the following fields:  - `key`  - `name`. If provided, `name` must be unique (case-sensitive) across all visible booking-related custom attribute definitions for the seller.  - `description`  - `visibility`. Note that all custom attributes are visible in exported booking data, including those set to `VISIBILITY_HIDDEN`.  - `schema`. With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, see [Specifying the schema](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attribute-definitions#specify-schema).
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents a [CreateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/CreateBookingCustomAttributeDefinition) request.
+	/// Represents a [CreateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-CreateBookingCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition to create, with the following fields:  - `key`  - `name`. If provided, `name` must be unique (case-sensitive) across all visible booking-related custom attribute definitions for the seller.  - `description`  - `visibility`. Note that all custom attributes are visible in exported booking data, including those set to `VISIBILITY_HIDDEN`.  - `schema`. With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, see [Specifying the schema](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attribute-definitions#specify-schema).
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6035,14 +6053,14 @@ public struct CreateBookingCustomAttributeDefinitionRequest: Codable, Equatable 
 	}
 }
 
-/// Represents a [CreateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/CreateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [CreateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-CreateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct CreateBookingCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The newly created custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [CreateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/CreateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [CreateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-CreateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The newly created custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -6135,14 +6153,14 @@ public struct CreateCardRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreateCard]($e/Cards/CreateCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+/// Defines the fields that are included in the response body of a request to the [CreateCard](api-endpoint:Cards-CreateCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 public struct CreateCardResponse: Codable, Equatable {
 	/// The card created by the request.
 	public var card: Card?
 	/// Errors resulting from the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [CreateCard]($e/Cards/CreateCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [CreateCard](api-endpoint:Cards-CreateCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 	/// - Parameters:
 	///   - card: The card created by the request.
 	///   - errors: Errors resulting from the request.
@@ -6286,14 +6304,14 @@ public struct CreateCustomerCardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/CreateCustomerCustomAttributeDefinition) request.
+/// Represents a [CreateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-CreateCustomerCustomAttributeDefinition) request.
 public struct CreateCustomerCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Specifying the schema](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attribute-definitions#specify-schema). - If provided, `name` must be unique (case-sensitive) across all visible customer-related custom attribute definitions for the seller. - All custom attributes are visible in exported customer data, including those set to `VISIBILITY_HIDDEN`.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents a [CreateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/CreateCustomerCustomAttributeDefinition) request.
+	/// Represents a [CreateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-CreateCustomerCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Specifying the schema](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attribute-definitions#specify-schema). - If provided, `name` must be unique (case-sensitive) across all visible customer-related custom attribute definitions for the seller. - All custom attributes are visible in exported customer data, including those set to `VISIBILITY_HIDDEN`.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6303,14 +6321,14 @@ public struct CreateCustomerCustomAttributeDefinitionRequest: Codable, Equatable
 	}
 }
 
-/// Represents a [CreateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/CreateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [CreateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-CreateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct CreateCustomerCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The new custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [CreateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/CreateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [CreateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-CreateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The new custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -6320,14 +6338,14 @@ public struct CreateCustomerCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup]($e/CustomerGroups/CreateCustomerGroup) endpoint.
+/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup](api-endpoint:CustomerGroups-CreateCustomerGroup) endpoint.
 public struct CreateCustomerGroupRequest: Codable, Equatable {
 	/// The customer group to create.
 	public var group: CustomerGroup
 	/// The idempotency key for the request. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup]($e/CustomerGroups/CreateCustomerGroup) endpoint.
+	/// Defines the body parameters that can be included in a request to the [CreateCustomerGroup](api-endpoint:CustomerGroups-CreateCustomerGroup) endpoint.
 	/// - Parameters:
 	///   - group: The customer group to create.
 	///   - idempotency_key: The idempotency key for the request. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6337,14 +6355,14 @@ public struct CreateCustomerGroupRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup]($e/CustomerGroups/CreateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](api-endpoint:CustomerGroups-CreateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
 public struct CreateCustomerGroupResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully created customer group.
 	public var group: CustomerGroup?
 
-	/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup]($e/CustomerGroups/CreateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [CreateCustomerGroup](api-endpoint:CustomerGroups-CreateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The successfully created customer group.
@@ -6411,14 +6429,14 @@ public struct CreateCustomerRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreateCustomer]($e/Customers/CreateCustomer) or [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [CreateCustomer](api-endpoint:Customers-CreateCustomer) or [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 public struct CreateCustomerResponse: Codable, Equatable {
 	/// The created customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [CreateCustomer]($e/Customers/CreateCustomer) or [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [CreateCustomer](api-endpoint:Customers-CreateCustomer) or [BulkCreateCustomers](api-endpoint:Customers-BulkCreateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The created customer.
 	///   - errors: Any errors that occurred during the request.
@@ -6562,7 +6580,7 @@ public struct CreateGiftCardActivityResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateGiftCard]($e/GiftCards/CreateGiftCard) request.
+/// Represents a [CreateGiftCard](api-endpoint:GiftCards-CreateGiftCard) request.
 public struct CreateGiftCardRequest: Codable, Equatable {
 	/// The gift card to create. The `type` field is required for this request. The `gan_source`  and `gan` fields are included as follows:   To direct Square to generate a 16-digit GAN, omit `gan_source` and `gan`.  To provide a custom GAN, include `gan_source` and `gan`. - For `gan_source`, specify `OTHER`.  - For `gan`, provide a custom GAN containing 8 to 20 alphanumeric characters. The GAN must be  unique for the seller and cannot start with the same bank identification number (BIN) as major  credit cards. Do not use GANs that are easy to guess (such as 12345678) because they greatly  increase the risk of fraud. It is the responsibility of the developer to ensure the security  of their custom GANs. For more information, see  [Custom GANs](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#custom-gans).   To register an unused, physical gift card that the seller previously ordered from Square,  include `gan` and provide the GAN that is printed on the gift card.
 	public var gift_card: GiftCard
@@ -6571,7 +6589,7 @@ public struct CreateGiftCardRequest: Codable, Equatable {
 	/// The ID of the [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the gift card should be registered for  reporting purposes. Gift cards can be redeemed at any of the seller's locations.
 	public var location_id: String
 
-	/// Represents a [CreateGiftCard]($e/GiftCards/CreateGiftCard) request.
+	/// Represents a [CreateGiftCard](api-endpoint:GiftCards-CreateGiftCard) request.
 	/// - Parameters:
 	///   - gift_card: The gift card to create. The `type` field is required for this request. The `gan_source`  and `gan` fields are included as follows:   To direct Square to generate a 16-digit GAN, omit `gan_source` and `gan`.  To provide a custom GAN, include `gan_source` and `gan`. - For `gan_source`, specify `OTHER`.  - For `gan`, provide a custom GAN containing 8 to 20 alphanumeric characters. The GAN must be  unique for the seller and cannot start with the same bank identification number (BIN) as major  credit cards. Do not use GANs that are easy to guess (such as 12345678) because they greatly  increase the risk of fraud. It is the responsibility of the developer to ensure the security  of their custom GANs. For more information, see  [Custom GANs](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#custom-gans).   To register an unused, physical gift card that the seller previously ordered from Square,  include `gan` and provide the GAN that is printed on the gift card.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information,  see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6600,14 +6618,14 @@ public struct CreateGiftCardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateInvoiceAttachment]($e/Invoices/CreateInvoiceAttachment) request.
+/// Represents a [CreateInvoiceAttachment](api-endpoint:Invoices-CreateInvoiceAttachment) request.
 public struct CreateInvoiceAttachmentRequest: Codable, Equatable {
 	/// The description of the attachment to display on the invoice.
 	public var description: String?
 	/// A unique string that identifies the `CreateInvoiceAttachment` request. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents a [CreateInvoiceAttachment]($e/Invoices/CreateInvoiceAttachment) request.
+	/// Represents a [CreateInvoiceAttachment](api-endpoint:Invoices-CreateInvoiceAttachment) request.
 	/// - Parameters:
 	///   - description: The description of the attachment to display on the invoice.
 	///   - idempotency_key: A unique string that identifies the `CreateInvoiceAttachment` request. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6617,14 +6635,14 @@ public struct CreateInvoiceAttachmentRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateInvoiceAttachment]($e/Invoices/CreateInvoiceAttachment) response.
+/// Represents a [CreateInvoiceAttachment](api-endpoint:Invoices-CreateInvoiceAttachment) response.
 public struct CreateInvoiceAttachmentResponse: Codable, Equatable {
 	/// Metadata about the attachment that was added to the invoice.
 	public var attachment: InvoiceAttachment?
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [CreateInvoiceAttachment]($e/Invoices/CreateInvoiceAttachment) response.
+	/// Represents a [CreateInvoiceAttachment](api-endpoint:Invoices-CreateInvoiceAttachment) response.
 	/// - Parameters:
 	///   - attachment: Metadata about the attachment that was added to the invoice.
 	///   - errors: Information about errors encountered during the request.
@@ -6668,14 +6686,14 @@ public struct CreateInvoiceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateJob]($e/Team/CreateJob) request.
+/// Represents a [CreateJob](api-endpoint:Team-CreateJob) request.
 public struct CreateJobRequest: Codable, Equatable {
 	/// A unique identifier for the `CreateJob` request. Keys can be any valid string, but must be unique for each request. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String
 	/// The job to create. The `title` field is required and `is_tip_eligible` defaults to true.
 	public var job: Job
 
-	/// Represents a [CreateJob]($e/Team/CreateJob) request.
+	/// Represents a [CreateJob](api-endpoint:Team-CreateJob) request.
 	/// - Parameters:
 	///   - idempotency_key: A unique identifier for the `CreateJob` request. Keys can be any valid string, but must be unique for each request. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	///   - job: The job to create. The `title` field is required and `is_tip_eligible` defaults to true.
@@ -6685,14 +6703,14 @@ public struct CreateJobRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateJob]($e/Team/CreateJob) response. Either `job` or `errors` is present in the response.
+/// Represents a [CreateJob](api-endpoint:Team-CreateJob) response. Either `job` or `errors` is present in the response.
 public struct CreateJobResponse: Codable, Equatable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The new job.
 	public var job: Job?
 
-	/// Represents a [CreateJob]($e/Team/CreateJob) response. Either `job` or `errors` is present in the response.
+	/// Represents a [CreateJob](api-endpoint:Team-CreateJob) response. Either `job` or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - job: The new job.
@@ -6702,14 +6720,14 @@ public struct CreateJobResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/CreateLocationCustomAttributeDefinition) request.
+/// Represents a [CreateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-CreateLocationCustomAttributeDefinition) request.
 public struct CreateLocationCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `name` is required unless `visibility` is set to `VISIBILITY_HIDDEN`.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents a [CreateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/CreateLocationCustomAttributeDefinition) request.
+	/// Represents a [CreateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-CreateLocationCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `name` is required unless `visibility` is set to `VISIBILITY_HIDDEN`.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6719,14 +6737,14 @@ public struct CreateLocationCustomAttributeDefinitionRequest: Codable, Equatable
 	}
 }
 
-/// Represents a [CreateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/CreateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [CreateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-CreateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct CreateLocationCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The new custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [CreateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/CreateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [CreateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-CreateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The new custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -6736,12 +6754,12 @@ public struct CreateLocationCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// The request object for the [CreateLocation]($e/Locations/CreateLocation) endpoint.
+/// The request object for the [CreateLocation](api-endpoint:Locations-CreateLocation) endpoint.
 public struct CreateLocationRequest: Codable, Equatable {
 	/// The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional, but any information you care about for the location should be included. The remaining fields are automatically added based on the data from the [main location](https://developer.squareup.com/docs/locations-api#about-the-main-location).
 	public var location: Location?
 
-	/// The request object for the [CreateLocation]($e/Locations/CreateLocation) endpoint.
+	/// The request object for the [CreateLocation](api-endpoint:Locations-CreateLocation) endpoint.
 	/// - Parameters:
 	///   - location: The initial values of the location being created. The `name` field is required and must be unique within a seller account. All other fields are optional, but any information you care about for the location should be included. The remaining fields are automatically added based on the data from the [main location](https://developer.squareup.com/docs/locations-api#about-the-main-location).
 	public init(location: Location? = nil) {
@@ -6749,14 +6767,14 @@ public struct CreateLocationRequest: Codable, Equatable {
 	}
 }
 
-/// The response object returned by the [CreateLocation]($e/Locations/CreateLocation) endpoint.
+/// The response object returned by the [CreateLocation](api-endpoint:Locations-CreateLocation) endpoint.
 public struct CreateLocationResponse: Codable, Equatable {
 	/// Information about [errors](https://developer.squareup.com/docs/build-basics/handling-errors) encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created `Location` object.
 	public var location: Location?
 
-	/// The response object returned by the [CreateLocation]($e/Locations/CreateLocation) endpoint.
+	/// The response object returned by the [CreateLocation](api-endpoint:Locations-CreateLocation) endpoint.
 	/// - Parameters:
 	///   - errors: Information about [errors](https://developer.squareup.com/docs/build-basics/handling-errors) encountered during the request.
 	///   - location: The newly created `Location` object.
@@ -6800,14 +6818,14 @@ public struct CreateLoyaltyAccountResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateLoyaltyPromotion]($e/Loyalty/CreateLoyaltyPromotion) request.
+/// Represents a [CreateLoyaltyPromotion](api-endpoint:Loyalty-CreateLoyaltyPromotion) request.
 public struct CreateLoyaltyPromotionRequest: Codable, Equatable {
 	/// A unique identifier for this request, which is used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String
 	/// The loyalty promotion to create.
 	public var loyalty_promotion: LoyaltyPromotion
 
-	/// Represents a [CreateLoyaltyPromotion]($e/Loyalty/CreateLoyaltyPromotion) request.
+	/// Represents a [CreateLoyaltyPromotion](api-endpoint:Loyalty-CreateLoyaltyPromotion) request.
 	/// - Parameters:
 	///   - idempotency_key: A unique identifier for this request, which is used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	///   - loyalty_promotion: The loyalty promotion to create.
@@ -6817,14 +6835,14 @@ public struct CreateLoyaltyPromotionRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateLoyaltyPromotion]($e/Loyalty/CreateLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
+/// Represents a [CreateLoyaltyPromotion](api-endpoint:Loyalty-CreateLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
 public struct CreateLoyaltyPromotionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The new loyalty promotion.
 	public var loyalty_promotion: LoyaltyPromotion?
 
-	/// Represents a [CreateLoyaltyPromotion]($e/Loyalty/CreateLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
+	/// Represents a [CreateLoyaltyPromotion](api-endpoint:Loyalty-CreateLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - loyalty_promotion: The new loyalty promotion.
@@ -6868,14 +6886,14 @@ public struct CreateLoyaltyRewardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) request.
+/// Represents a [CreateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-CreateMerchantCustomAttributeDefinition) request.
 public struct CreateMerchantCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `name` is required unless `visibility` is set to `VISIBILITY_HIDDEN`.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents a [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) request.
+	/// Represents a [CreateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-CreateMerchantCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition to create. Note the following: - With the exception of the `Selection` data type, the `schema` is specified as a simple URL to the JSON schema definition hosted on the Square CDN. For more information, including supported values and constraints, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `name` is required unless `visibility` is set to `VISIBILITY_HIDDEN`.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -6885,14 +6903,14 @@ public struct CreateMerchantCustomAttributeDefinitionRequest: Codable, Equatable
 	}
 }
 
-/// Represents a [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [CreateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-CreateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct CreateMerchantCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The new custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [CreateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/CreateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [CreateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-CreateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The new custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -7041,7 +7059,7 @@ public struct CreatePaymentLinkResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to create a payment using  [CreatePayment]($e/Payments/CreatePayment).
+/// Describes a request to create a payment using  [CreatePayment](api-endpoint:Payments-CreatePayment).
 public struct CreatePaymentRequest: Codable, Equatable {
 	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	public var accept_partial_authorization: Bool?
@@ -7094,7 +7112,7 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	/// An identifying token generated by [payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
 	public var verification_token: String?
 
-	/// Describes a request to create a payment using  [CreatePayment]($e/Payments/CreatePayment).
+	/// Describes a request to create a payment using  [CreatePayment](api-endpoint:Payments-CreatePayment).
 	/// - Parameters:
 	///   - accept_partial_authorization: If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	///   - amount_money: The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
@@ -7150,14 +7168,14 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by [CreatePayment]($e/Payments/CreatePayment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
+/// Defines the response returned by [CreatePayment](api-endpoint:Payments-CreatePayment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
 public struct CreatePaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created payment.
 	public var payment: Payment?
 
-	/// Defines the response returned by [CreatePayment]($e/Payments/CreatePayment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
+	/// Defines the response returned by [CreatePayment](api-endpoint:Payments-CreatePayment).  If there are errors processing the request, the `payment` field might not be present, or it might be present with a status of `FAILED`.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The newly created payment.
@@ -7243,7 +7261,7 @@ public struct CreateShiftResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the  [CreateSubscription]($e/Subscriptions/CreateSubscription) endpoint.
+/// Defines input parameters in a request to the  [CreateSubscription](api-endpoint:Subscriptions-CreateSubscription) endpoint.
 public struct CreateSubscriptionRequest: Codable, Equatable {
 	/// The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
 	public var canceled_date: String?
@@ -7272,7 +7290,7 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 	/// The timezone that is used in date calculations for the subscription. If unset, defaults to the location timezone. If a timezone is not configured for the location, defaults to "America/New_York". Format: the IANA Timezone Database identifier for the location timezone. For a list of time zones, see [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 	public var timezone: String?
 
-	/// Defines input parameters in a request to the  [CreateSubscription]($e/Subscriptions/CreateSubscription) endpoint.
+	/// Defines input parameters in a request to the  [CreateSubscription](api-endpoint:Subscriptions-CreateSubscription) endpoint.
 	/// - Parameters:
 	///   - canceled_date: The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
 	///   - card_id: The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email with a link to pay for their subscription.
@@ -7304,14 +7322,14 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the [CreateSubscription]($e/Subscriptions/CreateSubscription) endpoint.
+/// Defines output parameters in a response from the [CreateSubscription](api-endpoint:Subscriptions-CreateSubscription) endpoint.
 public struct CreateSubscriptionResponse: Codable, Equatable {
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#subscription-object).
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response from the [CreateSubscription]($e/Subscriptions/CreateSubscription) endpoint.
+	/// Defines output parameters in a response from the [CreateSubscription](api-endpoint:Subscriptions-CreateSubscription) endpoint.
 	/// - Parameters:
 	///   - errors: Errors encountered during the request.
 	///   - subscription: The newly created subscription.  For more information, see [Subscription object](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions#subscription-object).
@@ -7427,14 +7445,14 @@ public struct CreateTerminalRefundResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an input to a call to [CreateVendor]($e/Vendors/CreateVendor).
+/// Represents an input to a call to [CreateVendor](api-endpoint:Vendors-CreateVendor).
 public struct CreateVendorRequest: Codable, Equatable {
 	/// A client-supplied, universally unique identifier (UUID) to make this [CreateVendor](api-endpoint:Vendors-CreateVendor) call idempotent.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) in the [API Development 101](https://developer.squareup.com/docs/buildbasics) section for more information.
 	public var idempotency_key: String
 	/// The requested [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to be created.
 	public var vendor: Vendor?
 
-	/// Represents an input to a call to [CreateVendor]($e/Vendors/CreateVendor).
+	/// Represents an input to a call to [CreateVendor](api-endpoint:Vendors-CreateVendor).
 	/// - Parameters:
 	///   - idempotency_key: A client-supplied, universally unique identifier (UUID) to make this [CreateVendor](api-endpoint:Vendors-CreateVendor) call idempotent.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) in the [API Development 101](https://developer.squareup.com/docs/buildbasics) section for more information.
 	///   - vendor: The requested [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to be created.
@@ -7444,14 +7462,14 @@ public struct CreateVendorRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an output from a call to [CreateVendor]($e/Vendors/CreateVendor).
+/// Represents an output from a call to [CreateVendor](api-endpoint:Vendors-CreateVendor).
 public struct CreateVendorResponse: Codable, Equatable {
 	/// Errors encountered when the request fails.
 	public var errors: [SquareError]?
 	/// The successfully created [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) object.
 	public var vendor: Vendor?
 
-	/// Represents an output from a call to [CreateVendor]($e/Vendors/CreateVendor).
+	/// Represents an output from a call to [CreateVendor](api-endpoint:Vendors-CreateVendor).
 	/// - Parameters:
 	///   - errors: Errors encountered when the request fails.
 	///   - vendor: The successfully created [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) object.
@@ -7478,14 +7496,14 @@ public struct CreateWebhookSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CreateWebhookSubscription]($e/WebhookSubscriptions/CreateWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
+/// Defines the fields that are included in the response body of a request to the [CreateWebhookSubscription](api-endpoint:WebhookSubscriptions-CreateWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
 public struct CreateWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The new [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
 	public var subscription: WebhookSubscription?
 
-	/// Defines the fields that are included in the response body of a request to the [CreateWebhookSubscription]($e/WebhookSubscriptions/CreateWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
+	/// Defines the fields that are included in the response body of a request to the [CreateWebhookSubscription](api-endpoint:WebhookSubscriptions-CreateWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - subscription: The new [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
@@ -7953,7 +7971,7 @@ public enum CustomAttributeDefinitionVisibility: String, Codable {
 	case VISIBILITY_READ_WRITE_VALUES
 }
 
-/// Supported custom attribute query expressions for calling the [SearchCatalogItems]($e/Catalog/SearchCatalogItems) endpoint to search for items or item variations.
+/// Supported custom attribute query expressions for calling the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint to search for items or item variations.
 public struct CustomAttributeFilter: Codable, Equatable {
 	/// A query expression to filter items or item variations by matching their custom attributes' `boolean_value` property values against the specified Boolean expression. Exactly one of `string_filter`, `number_filter`, `selection_uids_filter`, or `bool_filter` must be specified.
 	public var bool_filter: Bool?
@@ -7968,7 +7986,7 @@ public struct CustomAttributeFilter: Codable, Equatable {
 	/// A query expression to filter items or item variations by matching their custom attributes' `string_value`  property value against the specified text. Exactly one of `string_filter`, `number_filter`, `selection_uids_filter`, or `bool_filter` must be specified.
 	public var string_filter: String?
 
-	/// Supported custom attribute query expressions for calling the [SearchCatalogItems]($e/Catalog/SearchCatalogItems) endpoint to search for items or item variations.
+	/// Supported custom attribute query expressions for calling the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint to search for items or item variations.
 	/// - Parameters:
 	///   - bool_filter: A query expression to filter items or item variations by matching their custom attributes' `boolean_value` property values against the specified Boolean expression. Exactly one of `string_filter`, `number_filter`, `selection_uids_filter`, or `bool_filter` must be specified.
 	///   - custom_attribute_definition_id: A query expression to filter items or item variations by matching their custom attributes' `custom_attribute_definition_id` property value against the the specified id. Exactly one of `custom_attribute_definition_id` or `key` must be specified.
@@ -8005,8 +8023,6 @@ public struct Customer: Codable, Equatable {
 	public var address: Address?
 	/// The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-21` represents September 21, 1998, and `0000-09-21` represents September 21 (without a birth year).
 	public var birthday: String?
-	/// Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd and will be RETIRED at version yyyy-mm-dd. Replaced by calling [ListCards](api-endpoint:Cards-ListCards) (for credit and debit cards on file)  or [ListGiftCards](api-endpoint:GiftCards-ListGiftCards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
-	public var cards: [Card]?
 	/// A business name associated with the customer profile.
 	public var company_name: String?
 	/// The timestamp when the customer profile was created, in RFC 3339 format.
@@ -8039,14 +8055,13 @@ public struct Customer: Codable, Equatable {
 	public var tax_ids: CustomerTaxIds?
 	/// The timestamp when the customer profile was last updated, in RFC 3339 format.
 	public var updated_at: Timestamp?
-	/// The Square-assigned version number of the customer profile. The version number is incremented each time an update is committed to the customer profile, except for changes to customer segment membership and cards on file.
+	/// The Square-assigned version number of the customer profile. The version number is incremented each time an update is committed to the customer profile, except for changes to customer segment membership.
 	public var version: Int?
 
 	/// Represents a Square customer profile in the Customer Directory of a Square seller.
 	/// - Parameters:
 	///   - address: The physical address associated with the customer profile.
 	///   - birthday: The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-21` represents September 21, 1998, and `0000-09-21` represents September 21 (without a birth year).
-	///   - cards: Payment details of the credit, debit, and gift cards stored on file for the customer profile.   DEPRECATED at version yyyy-mm-dd and will be RETIRED at version yyyy-mm-dd. Replaced by calling [ListCards](api-endpoint:Cards-ListCards) (for credit and debit cards on file)  or [ListGiftCards](api-endpoint:GiftCards-ListGiftCards) (for gift cards on file) and including the `customer_id` query parameter.  For more information, see [Migration notes](https://developer.squareup.com/docs/customers-api/what-it-does#migrate-customer-cards).
 	///   - company_name: A business name associated with the customer profile.
 	///   - created_at: The timestamp when the customer profile was created, in RFC 3339 format.
 	///   - creation_source: The method used to create the customer profile. See [CustomerCreationSource](#type-customercreationsource) for possible values
@@ -8063,11 +8078,10 @@ public struct Customer: Codable, Equatable {
 	///   - segment_ids: The IDs of [customer segments](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerSegment) the customer belongs to.
 	///   - tax_ids: The tax ID associated with the customer profile. This field is present only for customers of sellers in EU countries or the United Kingdom.  For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
 	///   - updated_at: The timestamp when the customer profile was last updated, in RFC 3339 format.
-	///   - version: The Square-assigned version number of the customer profile. The version number is incremented each time an update is committed to the customer profile, except for changes to customer segment membership and cards on file.
-	public init(address: Address? = nil, birthday: String? = nil, cards: [Card]? = nil, company_name: String? = nil, created_at: Timestamp? = nil, creation_source: CustomerCreationSource? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, group_ids: [String]? = nil, id: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, preferences: CustomerPreferences? = nil, reference_id: String? = nil, segment_ids: [String]? = nil, tax_ids: CustomerTaxIds? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	///   - version: The Square-assigned version number of the customer profile. The version number is incremented each time an update is committed to the customer profile, except for changes to customer segment membership.
+	public init(address: Address? = nil, birthday: String? = nil, company_name: String? = nil, created_at: Timestamp? = nil, creation_source: CustomerCreationSource? = nil, email_address: String? = nil, family_name: String? = nil, given_name: String? = nil, group_ids: [String]? = nil, id: String? = nil, nickname: String? = nil, note: String? = nil, phone_number: String? = nil, preferences: CustomerPreferences? = nil, reference_id: String? = nil, segment_ids: [String]? = nil, tax_ids: CustomerTaxIds? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.address = address
 		self.birthday = birthday
-		self.cards = cards
 		self.company_name = company_name
 		self.created_at = created_at
 		self.creation_source = creation_source
@@ -8256,7 +8270,7 @@ public struct CustomerDetails: Codable, Equatable {
 	}
 }
 
-/// Represents the filtering criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to filter customer profiles returned in [SearchCustomers]($e/Customers/SearchCustomers) results.
+/// Represents the filtering criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to filter customer profiles returned in [SearchCustomers](api-endpoint:Customers-SearchCustomers) results.
 public struct CustomerFilter: Codable, Equatable {
 	/// A filter to select customers based on when they were created.
 	public var created_at: TimeRange?
@@ -8277,7 +8291,7 @@ public struct CustomerFilter: Codable, Equatable {
 	/// A filter to select customers based on when they were last updated.
 	public var updated_at: TimeRange?
 
-	/// Represents the filtering criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to filter customer profiles returned in [SearchCustomers]($e/Customers/SearchCustomers) results.
+	/// Represents the filtering criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to filter customer profiles returned in [SearchCustomers](api-endpoint:Customers-SearchCustomers) results.
 	/// - Parameters:
 	///   - created_at: A filter to select customers based on when they were created.
 	///   - creation_source: A filter to select customers based on their creation source.
@@ -8347,14 +8361,14 @@ public struct CustomerPreferences: Codable, Equatable {
 	}
 }
 
-/// Represents filtering and sorting criteria for a [SearchCustomers]($e/Customers/SearchCustomers) request.
+/// Represents filtering and sorting criteria for a [SearchCustomers](api-endpoint:Customers-SearchCustomers) request.
 public struct CustomerQuery: Codable, Equatable {
 	/// The filtering criteria for the search query. A query can contain multiple filters in any combination. Multiple filters are combined as `AND` statements.  __Note:__ Combining multiple filters as `OR` statements is not supported. Instead, send multiple single-filter searches and join the result sets.
 	public var filter: CustomerFilter?
 	/// Sorting criteria for query results. The default behavior is to sort  customers alphabetically by `given_name` and `family_name`.
 	public var sort: CustomerSort?
 
-	/// Represents filtering and sorting criteria for a [SearchCustomers]($e/Customers/SearchCustomers) request.
+	/// Represents filtering and sorting criteria for a [SearchCustomers](api-endpoint:Customers-SearchCustomers) request.
 	/// - Parameters:
 	///   - filter: The filtering criteria for the search query. A query can contain multiple filters in any combination. Multiple filters are combined as `AND` statements.  __Note:__ Combining multiple filters as `OR` statements is not supported. Instead, send multiple single-filter searches and join the result sets.
 	///   - sort: Sorting criteria for query results. The default behavior is to sort  customers alphabetically by `given_name` and `family_name`.
@@ -8389,14 +8403,14 @@ public struct CustomerSegment: Codable, Equatable {
 	}
 }
 
-/// Represents the sorting criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to sort customer profiles returned in [SearchCustomers]($e/Customers/SearchCustomers) results.
+/// Represents the sorting criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to sort customer profiles returned in [SearchCustomers](api-endpoint:Customers-SearchCustomers) results.
 public struct CustomerSort: Codable, Equatable {
 	/// Indicates the fields to use as the sort key, which is either the default set of fields or `created_at`.  The default value is `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
 	public var field: CustomerSortField?
 	/// Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  The default value is `ASC`. See [SortOrder](#type-sortorder) for possible values
 	public var order: SortOrder?
 
-	/// Represents the sorting criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to sort customer profiles returned in [SearchCustomers]($e/Customers/SearchCustomers) results.
+	/// Represents the sorting criteria in a [search query](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomerQuery) that defines how to sort customer profiles returned in [SearchCustomers](api-endpoint:Customers-SearchCustomers) results.
 	/// - Parameters:
 	///   - field: Indicates the fields to use as the sort key, which is either the default set of fields or `created_at`.  The default value is `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
 	///   - order: Indicates the order in which results should be sorted based on the sort field value. Strings use standard alphabetic comparison to determine order. Strings representing numbers are sorted as strings.  The default value is `ASC`. See [SortOrder](#type-sortorder) for possible values
@@ -8505,18 +8519,18 @@ public enum DayOfWeek: String, Codable {
 	case SAT
 }
 
-/// Represents a [DeleteBookingCustomAttributeDefinition]($e/BookingCustomAttributes/DeleteBookingCustomAttributeDefinition) request.
+/// Represents a [DeleteBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttributeDefinition) request.
 public struct DeleteBookingCustomAttributeDefinitionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [DeleteBookingCustomAttributeDefinition]($e/BookingCustomAttributes/DeleteBookingCustomAttributeDefinition) response containing error messages when errors occurred during the request. The successful response does not contain any payload.
+/// Represents a [DeleteBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttributeDefinition) response containing error messages when errors occurred during the request. The successful response does not contain any payload.
 public struct DeleteBookingCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [DeleteBookingCustomAttributeDefinition]($e/BookingCustomAttributes/DeleteBookingCustomAttributeDefinition) response containing error messages when errors occurred during the request. The successful response does not contain any payload.
+	/// Represents a [DeleteBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttributeDefinition) response containing error messages when errors occurred during the request. The successful response does not contain any payload.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8524,18 +8538,18 @@ public struct DeleteBookingCustomAttributeDefinitionResponse: Codable, Equatable
 	}
 }
 
-/// Represents a [DeleteBookingCustomAttribute]($e/BookingCustomAttributes/DeleteBookingCustomAttribute) request.
+/// Represents a [DeleteBookingCustomAttribute](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttribute) request.
 public struct DeleteBookingCustomAttributeRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [DeleteBookingCustomAttribute]($e/BookingCustomAttributes/DeleteBookingCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+/// Represents a [DeleteBookingCustomAttribute](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 public struct DeleteBookingCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [DeleteBookingCustomAttribute]($e/BookingCustomAttributes/DeleteBookingCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+	/// Represents a [DeleteBookingCustomAttribute](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8601,7 +8615,7 @@ public struct DeleteCustomerCardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [DeleteCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/DeleteCustomerCustomAttributeDefinition) request.
+/// Represents a [DeleteCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttributeDefinition) request.
 public struct DeleteCustomerCustomAttributeDefinitionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
@@ -8620,18 +8634,18 @@ public struct DeleteCustomerCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Represents a [DeleteCustomerCustomAttribute]($e/CustomerCustomAttributes/DeleteCustomerCustomAttribute) request.
+/// Represents a [DeleteCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttribute) request.
 public struct DeleteCustomerCustomAttributeRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [DeleteCustomerCustomAttribute]($e/CustomerCustomAttributes/DeleteCustomerCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+/// Represents a [DeleteCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 public struct DeleteCustomerCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [DeleteCustomerCustomAttribute]($e/CustomerCustomAttributes/DeleteCustomerCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+	/// Represents a [DeleteCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8639,18 +8653,18 @@ public struct DeleteCustomerCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that can be included in a request to the [DeleteCustomerGroup]($e/CustomerGroups/DeleteCustomerGroup) endpoint.
+/// Defines the fields that can be included in a request to the [DeleteCustomerGroup](api-endpoint:CustomerGroups-DeleteCustomerGroup) endpoint.
 public struct DeleteCustomerGroupRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup]($e/CustomerGroups/DeleteCustomerGroup) endpoint.
+/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](api-endpoint:CustomerGroups-DeleteCustomerGroup) endpoint.
 public struct DeleteCustomerGroupResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup]($e/CustomerGroups/DeleteCustomerGroup) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](api-endpoint:CustomerGroups-DeleteCustomerGroup) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8703,18 +8717,18 @@ public struct DeleteDisputeEvidenceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [DeleteInvoiceAttachment]($e/Invoices/DeleteInvoiceAttachment) request.
+/// Represents a [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) request.
 public struct DeleteInvoiceAttachmentRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [DeleteInvoiceAttachment]($e/Invoices/DeleteInvoiceAttachment) response.
+/// Represents a [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) response.
 public struct DeleteInvoiceAttachmentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [DeleteInvoiceAttachment]($e/Invoices/DeleteInvoiceAttachment) response.
+	/// Represents a [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8748,7 +8762,7 @@ public struct DeleteInvoiceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [DeleteLocationCustomAttributeDefinition]($e/LocationCustomAttributes/DeleteLocationCustomAttributeDefinition) request.
+/// Represents a [DeleteLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttributeDefinition) request.
 public struct DeleteLocationCustomAttributeDefinitionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
@@ -8767,18 +8781,18 @@ public struct DeleteLocationCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Represents a [DeleteLocationCustomAttribute]($e/LocationCustomAttributes/DeleteLocationCustomAttribute) request.
+/// Represents a [DeleteLocationCustomAttribute](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttribute) request.
 public struct DeleteLocationCustomAttributeRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [DeleteLocationCustomAttribute]($e/LocationCustomAttributes/DeleteLocationCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+/// Represents a [DeleteLocationCustomAttribute](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 public struct DeleteLocationCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [DeleteLocationCustomAttribute]($e/LocationCustomAttributes/DeleteLocationCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+	/// Represents a [DeleteLocationCustomAttribute](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8805,7 +8819,7 @@ public struct DeleteLoyaltyRewardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [DeleteMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/DeleteMerchantCustomAttributeDefinition) request.
+/// Represents a [DeleteMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttributeDefinition) request.
 public struct DeleteMerchantCustomAttributeDefinitionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
@@ -8824,18 +8838,18 @@ public struct DeleteMerchantCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Represents a [DeleteMerchantCustomAttribute]($e/MerchantCustomAttributes/DeleteMerchantCustomAttribute) request.
+/// Represents a [DeleteMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttribute) request.
 public struct DeleteMerchantCustomAttributeRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [DeleteMerchantCustomAttribute]($e/MerchantCustomAttributes/DeleteMerchantCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+/// Represents a [DeleteMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 public struct DeleteMerchantCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [DeleteMerchantCustomAttribute]($e/MerchantCustomAttributes/DeleteMerchantCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
+	/// Represents a [DeleteMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -8938,20 +8952,20 @@ public struct DeleteSnippetResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a call to the  [DeleteSubscriptionAction]($e/Subscriptions/DeleteSubscriptionAction) endpoint.
+/// Defines input parameters in a call to the  [DeleteSubscriptionAction](api-endpoint:Subscriptions-DeleteSubscriptionAction) endpoint.
 public struct DeleteSubscriptionActionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines output parameters in a response of the [DeleteSubscriptionAction]($e/Subscriptions/DeleteSubscriptionAction) endpoint.
+/// Defines output parameters in a response of the [DeleteSubscriptionAction](api-endpoint:Subscriptions-DeleteSubscriptionAction) endpoint.
 public struct DeleteSubscriptionActionResponse: Codable, Equatable {
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The subscription that has the specified action deleted.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response of the [DeleteSubscriptionAction]($e/Subscriptions/DeleteSubscriptionAction) endpoint.
+	/// Defines output parameters in a response of the [DeleteSubscriptionAction](api-endpoint:Subscriptions-DeleteSubscriptionAction) endpoint.
 	/// - Parameters:
 	///   - errors: Errors encountered during the request.
 	///   - subscription: The subscription that has the specified action deleted.
@@ -8967,12 +8981,12 @@ public struct DeleteWebhookSubscriptionRequest: Codable, Equatable {
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [DeleteWebhookSubscription]($e/WebhookSubscriptions/DeleteWebhookSubscription) endpoint.
+/// Defines the fields that are included in the response body of a request to the [DeleteWebhookSubscription](api-endpoint:WebhookSubscriptions-DeleteWebhookSubscription) endpoint.
 public struct DeleteWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [DeleteWebhookSubscription]($e/WebhookSubscriptions/DeleteWebhookSubscription) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [DeleteWebhookSubscription](api-endpoint:WebhookSubscriptions-DeleteWebhookSubscription) endpoint.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -9499,14 +9513,14 @@ public struct DisableCardRequest: Codable, Equatable {
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [DisableCard]($e/Cards/DisableCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+/// Defines the fields that are included in the response body of a request to the [DisableCard](api-endpoint:Cards-DisableCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 public struct DisableCardResponse: Codable, Equatable {
 	/// The retrieved card.
 	public var card: Card?
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [DisableCard]($e/Cards/DisableCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [DisableCard](api-endpoint:Cards-DisableCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 	/// - Parameters:
 	///   - card: The retrieved card.
 	///   - errors: Information on errors encountered during the request.
@@ -9522,12 +9536,12 @@ public struct DisableEventsRequest: Codable, Equatable {
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [DisableEvents]($e/Events/DisableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+/// Defines the fields that are included in the response body of a request to the [DisableEvents](api-endpoint:Events-DisableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 public struct DisableEventsResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [DisableEvents]($e/Events/DisableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [DisableEvents](api-endpoint:Events-DisableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -9892,12 +9906,12 @@ public struct EnableEventsRequest: Codable, Equatable {
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [EnableEvents]($e/Events/EnableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+/// Defines the fields that are included in the response body of a request to the [EnableEvents](api-endpoint:Events-EnableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 public struct EnableEventsResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [EnableEvents]($e/Events/EnableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [EnableEvents](api-endpoint:Events-EnableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -10112,6 +10126,8 @@ public enum ErrorCode: String, Codable {
 	case EXPIRATION_FAILURE
 	/// The card is not supported either in the geographic region or by the [merchant category code](https://developer.squareup.com/docs/locations-api#initialize-a-merchant-category-code) (MCC).
 	case CARD_NOT_SUPPORTED
+	/// The Square Card Reader declined the payment for an unknown reason.
+	case READER_DECLINED
 	/// The card issuer declined the request because the PIN is invalid.
 	case INVALID_PIN
 	/// The payment is missing a required PIN.
@@ -10156,6 +10172,8 @@ public enum ErrorCode: String, Codable {
 	case PAYMENT_NOT_REFUNDABLE
 	/// The payment is not refundable because it has been disputed.
 	case PAYMENT_NOT_REFUNDABLE_DUE_TO_DISPUTE
+	/// The payment is not refundable because the payment is approved and needs to be completed first before the refund is issued.
+	case REFUND_ERROR_PAYMENT_NEEDS_COMPLETION
 	/// Request failed - The card issuer declined the refund.
 	case REFUND_DECLINED
 	/// The Square account does not have the permissions to process this refund.
@@ -10170,6 +10188,8 @@ public enum ErrorCode: String, Codable {
 	case UNSUPPORTED_LOYALTY_REWARD_TIER
 	/// Generic error - the given location does not matching what is expected.
 	case LOCATION_MISMATCH
+	/// The order attempting to be returned is not yet paid and cannot be returned.
+	case ORDER_UNPAID_NOT_RETURNABLE
 	/// The provided idempotency key has already been used.
 	case IDEMPOTENCY_KEY_REUSED
 	/// General error - the value provided was unexpected.
@@ -10252,9 +10272,9 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
-	case ORDER_EXPIRED
-	case ISSUER_INSTALLMENT_ERROR
 	case VERSION_MISMATCH
+	case ISSUER_INSTALLMENT_ERROR
+	case ORDER_EXPIRED
 }
 
 public struct Event: Codable, Equatable {
@@ -10974,20 +10994,20 @@ public struct GetInvoiceResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to retrieve a refund using [GetPaymentRefund]($e/Refunds/GetPaymentRefund).
+/// Describes a request to retrieve a refund using [GetPaymentRefund](api-endpoint:Refunds-GetPaymentRefund).
 public struct GetPaymentRefundRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the response returned by [GetRefund]($e/Refunds/GetPaymentRefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+/// Defines the response returned by [GetRefund](api-endpoint:Refunds-GetPaymentRefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 public struct GetPaymentRefundResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `PaymentRefund`.
 	public var refund: PaymentRefund?
 
-	/// Defines the response returned by [GetRefund]($e/Refunds/GetPaymentRefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
+	/// Defines the response returned by [GetRefund](api-endpoint:Refunds-GetPaymentRefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The requested `PaymentRefund`.
@@ -10997,20 +11017,20 @@ public struct GetPaymentRefundResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to retrieve a payment using  [GetPayment]($e/Payments/GetPayment).
+/// Describes a request to retrieve a payment using  [GetPayment](api-endpoint:Payments-GetPayment).
 public struct GetPaymentRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the response returned by [GetPayment]($e/Payments/GetPayment).
+/// Defines the response returned by [GetPayment](api-endpoint:Payments-GetPayment).
 public struct GetPaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `Payment`.
 	public var payment: Payment?
 
-	/// Defines the response returned by [GetPayment]($e/Payments/GetPayment).
+	/// Defines the response returned by [GetPayment](api-endpoint:Payments-GetPayment).
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - payment: The requested `Payment`.
@@ -11661,7 +11681,7 @@ public enum GiftCardStatus: String, Codable {
 	case DEACTIVATED
 	/// Any activity that changes the gift card balance is temporarily forbidden.
 	case BLOCKED
-	/// The gift card is pending activation. This is the initial state when a gift card is created. Typically, you'll call [CreateGiftCardActivity]($e/GiftCardActivities/CreateGiftCardActivity) to create an `ACTIVATE` activity that activates the gift card with an initial balance before first use.
+	/// The gift card is pending activation. This is the initial state when a gift card is created. Typically, you'll call [CreateGiftCardActivity](api-endpoint:GiftCardActivities-CreateGiftCardActivity) to create an `ACTIVATE` activity that activates the gift card with an initial balance before first use.
 	case PENDING
 }
 
@@ -11835,7 +11855,7 @@ public struct InventoryCount: Codable, Equatable {
 	public var catalog_object_id: String?
 	/// The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
 	public var catalog_object_type: String?
-	/// Whether the inventory count is for composed variation (TRUE) or not (FALSE). If true, the inventory count will not be present in the response of any of these endpoints: [BatchChangeInventory]($e/Inventory/BatchChangeInventory), [BatchRetrieveInventoryChanges]($e/Inventory/BatchRetrieveInventoryChanges), [BatchRetrieveInventoryCounts]($e/Inventory/BatchRetrieveInventoryCounts), and [RetrieveInventoryChanges]($e/Inventory/RetrieveInventoryChanges).
+	/// Whether the inventory count is for composed variation (TRUE) or not (FALSE). If true, the inventory count will not be present in the response of any of these endpoints: [BatchChangeInventory](api-endpoint:Inventory-BatchChangeInventory), [BatchRetrieveInventoryChanges](api-endpoint:Inventory-BatchRetrieveInventoryChanges), [BatchRetrieveInventoryCounts](api-endpoint:Inventory-BatchRetrieveInventoryCounts), and [RetrieveInventoryChanges](api-endpoint:Inventory-RetrieveInventoryChanges).
 	public var is_estimated: Bool?
 	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked.
 	public var location_id: String?
@@ -11849,7 +11869,7 @@ public struct InventoryCount: Codable, Equatable {
 	///   - calculated_at: An RFC 3339-formatted timestamp that indicates when the most recent physical count or adjustment affecting the estimated count is received.
 	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
 	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
-	///   - is_estimated: Whether the inventory count is for composed variation (TRUE) or not (FALSE). If true, the inventory count will not be present in the response of any of these endpoints: [BatchChangeInventory]($e/Inventory/BatchChangeInventory), [BatchRetrieveInventoryChanges]($e/Inventory/BatchRetrieveInventoryChanges), [BatchRetrieveInventoryCounts]($e/Inventory/BatchRetrieveInventoryCounts), and [RetrieveInventoryChanges]($e/Inventory/RetrieveInventoryChanges).
+	///   - is_estimated: Whether the inventory count is for composed variation (TRUE) or not (FALSE). If true, the inventory count will not be present in the response of any of these endpoints: [BatchChangeInventory](api-endpoint:Inventory-BatchChangeInventory), [BatchRetrieveInventoryChanges](api-endpoint:Inventory-BatchRetrieveInventoryChanges), [BatchRetrieveInventoryCounts](api-endpoint:Inventory-BatchRetrieveInventoryCounts), and [RetrieveInventoryChanges](api-endpoint:Inventory-RetrieveInventoryChanges).
 	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked.
 	///   - quantity: The number of items affected by the estimated count as a decimal string. Can support up to 5 digits after the decimal point.
 	///   - state: The current [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) for the related quantity of items. See [InventoryState](#type-inventorystate) for possible values
@@ -12026,6 +12046,8 @@ public struct Invoice: Codable, Equatable {
 	public var attachments: [InvoiceAttachment]?
 	/// The timestamp when the invoice was created, in RFC 3339 format.
 	public var created_at: Timestamp?
+	/// The ID of the [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) who created the invoice. This field is present only on invoices created in the Square Dashboard or Square Invoices app by a logged-in team member.
+	public var creator_team_member_id: String?
 	/// Additional seller-defined fields that are displayed on the invoice. For more information, see [Custom fields](https://developer.squareup.com/docs/invoices-api/overview#custom-fields).  Adding custom fields to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).  Max: 2 custom fields
 	public var custom_fields: [InvoiceCustomField]?
 	/// The delivery method that Square uses to send the invoice, reminders, and receipts to the customer. After the invoice is published, Square processes the invoice based on the delivery method and payment request settings, either immediately or on the `scheduled_at` date, if specified. For example, Square might send the invoice or receipt for an automatic payment. For invoices with automatic payments, this field must be set to `EMAIL`.  One of the following is required when creating an invoice: - (Recommended) This `delivery_method` field. To configure an automatic payment, the `automatic_payment_source` field of the payment request is also required. - The deprecated `request_method` field of the payment request. Note that `invoice` objects returned in responses do not include `request_method`. See [InvoiceDeliveryMethod](#type-invoicedeliverymethod) for possible values
@@ -12048,7 +12070,7 @@ public struct Invoice: Codable, Equatable {
 	public var payment_requests: [InvoicePaymentRequest]?
 	/// The customer who receives the invoice. This customer data is displayed on the invoice and used by Square to deliver the invoice.   This field is required to publish an invoice, and it must specify the `customer_id`.
 	public var primary_recipient: InvoiceRecipient?
-	/// The URL of the Square-hosted invoice page. After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice page and returns the page URL in the response.
+	/// A temporary link to the Square-hosted payment page where the customer can pay the invoice. If the link expires, customers can provide the email address or phone number associated with the invoice and request a new link directly from the expired payment page.   This field is added after the invoice is published and reaches the scheduled date (if one is defined).
 	public var public_url: String?
 	/// The date of the sale or the date that the service is rendered, in `YYYY-MM-DD` format. This field can be used to specify a past or future date which is displayed on the invoice.
 	public var sale_or_service_date: String?
@@ -12074,6 +12096,7 @@ public struct Invoice: Codable, Equatable {
 	///   - accepted_payment_methods: The payment methods that customers can use to pay the invoice on the Square-hosted invoice page. This setting is independent of any automatic payment requests for the invoice.  This field is required when creating an invoice and must set at least one payment method to `true`.
 	///   - attachments: Metadata about the attachments on the invoice. Invoice attachments are managed using the [CreateInvoiceAttachment](api-endpoint:Invoices-CreateInvoiceAttachment) and [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) endpoints.
 	///   - created_at: The timestamp when the invoice was created, in RFC 3339 format.
+	///   - creator_team_member_id: The ID of the [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) who created the invoice. This field is present only on invoices created in the Square Dashboard or Square Invoices app by a logged-in team member.
 	///   - custom_fields: Additional seller-defined fields that are displayed on the invoice. For more information, see [Custom fields](https://developer.squareup.com/docs/invoices-api/overview#custom-fields).  Adding custom fields to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).  Max: 2 custom fields
 	///   - delivery_method: The delivery method that Square uses to send the invoice, reminders, and receipts to the customer. After the invoice is published, Square processes the invoice based on the delivery method and payment request settings, either immediately or on the `scheduled_at` date, if specified. For example, Square might send the invoice or receipt for an automatic payment. For invoices with automatic payments, this field must be set to `EMAIL`.  One of the following is required when creating an invoice: - (Recommended) This `delivery_method` field. To configure an automatic payment, the `automatic_payment_source` field of the payment request is also required. - The deprecated `request_method` field of the payment request. Note that `invoice` objects returned in responses do not include `request_method`. See [InvoiceDeliveryMethod](#type-invoicedeliverymethod) for possible values
 	///   - description: The description of the invoice, which is displayed on the invoice.
@@ -12085,7 +12108,7 @@ public struct Invoice: Codable, Equatable {
 	///   - payment_conditions: **France only.** The payment terms and conditions that are displayed on the invoice. For more information,  see [Payment conditions](https://developer.squareup.com/docs/invoices-api/overview#payment-conditions).  For countries other than France, Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code and  "Payment conditions are not supported for this location's country" detail if this field is included in `CreateInvoice` or `UpdateInvoice` requests.
 	///   - payment_requests: The payment schedule for the invoice, represented by one or more payment requests that define payment settings, such as amount due and due date. An invoice supports the following payment request combinations: - One balance - One deposit with one balance - 2–12 installments  - One deposit with 2–12 installments  This field is required when creating an invoice. It must contain at least one payment request.  All payment requests for the invoice must equal the total order amount. For more information, see  [Configuring payment requests](https://developer.squareup.com/docs/invoices-api/create-publish-invoices#payment-requests).  Adding `INSTALLMENT` payment requests to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).
 	///   - primary_recipient: The customer who receives the invoice. This customer data is displayed on the invoice and used by Square to deliver the invoice.   This field is required to publish an invoice, and it must specify the `customer_id`.
-	///   - public_url: The URL of the Square-hosted invoice page. After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice page and returns the page URL in the response.
+	///   - public_url: A temporary link to the Square-hosted payment page where the customer can pay the invoice. If the link expires, customers can provide the email address or phone number associated with the invoice and request a new link directly from the expired payment page.   This field is added after the invoice is published and reaches the scheduled date (if one is defined).
 	///   - sale_or_service_date: The date of the sale or the date that the service is rendered, in `YYYY-MM-DD` format. This field can be used to specify a past or future date which is displayed on the invoice.
 	///   - scheduled_at: The timestamp when the invoice is scheduled for processing, in RFC 3339 format. After the invoice is published, Square processes the invoice on the specified date, according to the delivery method and payment request settings.  If the field is not set, Square processes the invoice immediately after it is published.
 	///   - status: The status of the invoice. See [InvoiceStatus](#type-invoicestatus) for possible values
@@ -12095,10 +12118,11 @@ public struct Invoice: Codable, Equatable {
 	///   - title: The title of the invoice, which is displayed on the invoice.
 	///   - updated_at: The timestamp when the invoice was last updated, in RFC 3339 format.
 	///   - version: The Square-assigned version number, which is incremented each time an update is committed to the invoice.
-	public init(accepted_payment_methods: InvoiceAcceptedPaymentMethods? = nil, attachments: [InvoiceAttachment]? = nil, created_at: Timestamp? = nil, custom_fields: [InvoiceCustomField]? = nil, delivery_method: InvoiceDeliveryMethod? = nil, description: String? = nil, id: String? = nil, invoice_number: String? = nil, location_id: String? = nil, next_payment_amount_money: Money? = nil, order_id: String? = nil, payment_conditions: String? = nil, payment_requests: [InvoicePaymentRequest]? = nil, primary_recipient: InvoiceRecipient? = nil, public_url: String? = nil, sale_or_service_date: String? = nil, scheduled_at: Timestamp? = nil, status: InvoiceStatus? = nil, store_payment_method_enabled: Bool? = nil, subscription_id: String? = nil, timezone: String? = nil, title: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+	public init(accepted_payment_methods: InvoiceAcceptedPaymentMethods? = nil, attachments: [InvoiceAttachment]? = nil, created_at: Timestamp? = nil, creator_team_member_id: String? = nil, custom_fields: [InvoiceCustomField]? = nil, delivery_method: InvoiceDeliveryMethod? = nil, description: String? = nil, id: String? = nil, invoice_number: String? = nil, location_id: String? = nil, next_payment_amount_money: Money? = nil, order_id: String? = nil, payment_conditions: String? = nil, payment_requests: [InvoicePaymentRequest]? = nil, primary_recipient: InvoiceRecipient? = nil, public_url: String? = nil, sale_or_service_date: String? = nil, scheduled_at: Timestamp? = nil, status: InvoiceStatus? = nil, store_payment_method_enabled: Bool? = nil, subscription_id: String? = nil, timezone: String? = nil, title: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.accepted_payment_methods = accepted_payment_methods
 		self.attachments = attachments
 		self.created_at = created_at
+		self.creator_team_member_id = creator_team_member_id
 		self.custom_fields = custom_fields
 		self.delivery_method = delivery_method
 		self.description = description
@@ -12477,7 +12501,7 @@ public enum InvoiceSortField: String, Codable {
 	case INVOICE_SORT_DATE
 }
 
-/// Indicates the status of an invoice.
+/// Indicates the status of an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice).
 public enum InvoiceStatus: String, Codable {
 	/// The invoice is a draft. You must publish a draft invoice before Square can process it. A draft invoice has no `public_url`, so it is not available to customers.
 	case DRAFT
@@ -12493,7 +12517,7 @@ public enum InvoiceStatus: String, Codable {
 	case PARTIALLY_REFUNDED
 	/// The full amount that the customer paid for the invoice is refunded.
 	case REFUNDED
-	/// The invoice is canceled. Square no longer requests payments from the customer. The `public_url` page remains and is accessible, but it displays the invoice as canceled and does not accept payment.
+	/// The invoice is canceled. Square no longer requests payments from the customer. The Square-hosted payment page is still accessible using the temporary `public_url` link, but the invoice is shown as canceled and does not accept payment.
 	case CANCELED
 	/// Square canceled the invoice due to suspicious activity.
 	case FAILED
@@ -12690,14 +12714,14 @@ public struct ListBankAccountsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListBookingCustomAttributeDefinitions]($e/BookingCustomAttributes/ListBookingCustomAttributeDefinitions) request.
+/// Represents a [ListBookingCustomAttributeDefinitions](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributeDefinitions) request.
 public struct ListBookingCustomAttributeDefinitionsRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var limit: Int?
 
-	/// Represents a [ListBookingCustomAttributeDefinitions]($e/BookingCustomAttributes/ListBookingCustomAttributeDefinitions) request.
+	/// Represents a [ListBookingCustomAttributeDefinitions](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributeDefinitions) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -12707,7 +12731,7 @@ public struct ListBookingCustomAttributeDefinitionsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListBookingCustomAttributeDefinitions]($e/BookingCustomAttributes/ListBookingCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+/// Represents a [ListBookingCustomAttributeDefinitions](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 public struct ListBookingCustomAttributeDefinitionsResponse: Codable, Equatable {
 	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -12716,7 +12740,7 @@ public struct ListBookingCustomAttributeDefinitionsResponse: Codable, Equatable 
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListBookingCustomAttributeDefinitions]($e/BookingCustomAttributes/ListBookingCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+	/// Represents a [ListBookingCustomAttributeDefinitions](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 	/// - Parameters:
 	///   - cursor: The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attribute_definitions: The retrieved custom attribute definitions. If no custom attribute definitions are found, Square returns an empty object (`{}`).
@@ -12728,7 +12752,7 @@ public struct ListBookingCustomAttributeDefinitionsResponse: Codable, Equatable 
 	}
 }
 
-/// Represents a [ListBookingCustomAttributes]($e/BookingCustomAttributes/ListBookingCustomAttributes) request.
+/// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) request.
 public struct ListBookingCustomAttributesRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -12737,7 +12761,7 @@ public struct ListBookingCustomAttributesRequest: Codable, Equatable {
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definitions: Bool?
 
-	/// Represents a [ListBookingCustomAttributes]($e/BookingCustomAttributes/ListBookingCustomAttributes) request.
+	/// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -12749,7 +12773,7 @@ public struct ListBookingCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListBookingCustomAttributes]($e/BookingCustomAttributes/ListBookingCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+/// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListBookingCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -12758,7 +12782,7 @@ public struct ListBookingCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListBookingCustomAttributes]($e/BookingCustomAttributes/ListBookingCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+	/// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 	/// - Parameters:
 	///   - cursor: The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attributes: The retrieved custom attributes. If `with_definitions` was set to `true` in the request, the custom attribute definition is returned in the `definition` field of each custom attribute.  If no custom attributes are found, Square returns an empty object (`{}`).
@@ -12883,7 +12907,7 @@ public struct ListCardsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListCards]($e/Cards/ListCards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+/// Defines the fields that are included in the response body of a request to the [ListCards](api-endpoint:Cards-ListCards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 public struct ListCardsResponse: Codable, Equatable {
 	/// The requested list of `Card`s.
 	public var cards: [Card]?
@@ -12892,7 +12916,7 @@ public struct ListCardsResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListCards]($e/Cards/ListCards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [ListCards](api-endpoint:Cards-ListCards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 	/// - Parameters:
 	///   - cards: The requested list of `Card`s.
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
@@ -13003,14 +13027,14 @@ public struct ListCatalogResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListCustomerCustomAttributeDefinitions]($e/CustomerCustomAttributes/ListCustomerCustomAttributeDefinitions) request.
+/// Represents a [ListCustomerCustomAttributeDefinitions](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributeDefinitions) request.
 public struct ListCustomerCustomAttributeDefinitionsRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var limit: Int?
 
-	/// Represents a [ListCustomerCustomAttributeDefinitions]($e/CustomerCustomAttributes/ListCustomerCustomAttributeDefinitions) request.
+	/// Represents a [ListCustomerCustomAttributeDefinitions](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributeDefinitions) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13020,7 +13044,7 @@ public struct ListCustomerCustomAttributeDefinitionsRequest: Codable, Equatable 
 	}
 }
 
-/// Represents a [ListCustomerCustomAttributeDefinitions]($e/CustomerCustomAttributes/ListCustomerCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+/// Represents a [ListCustomerCustomAttributeDefinitions](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 public struct ListCustomerCustomAttributeDefinitionsResponse: Codable, Equatable {
 	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13029,7 +13053,7 @@ public struct ListCustomerCustomAttributeDefinitionsResponse: Codable, Equatable
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListCustomerCustomAttributeDefinitions]($e/CustomerCustomAttributes/ListCustomerCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+	/// Represents a [ListCustomerCustomAttributeDefinitions](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 	/// - Parameters:
 	///   - cursor: The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attribute_definitions: The retrieved custom attribute definitions. If no custom attribute definitions are found, Square returns an empty object (`{}`).
@@ -13041,7 +13065,7 @@ public struct ListCustomerCustomAttributeDefinitionsResponse: Codable, Equatable
 	}
 }
 
-/// Represents a [ListCustomerCustomAttributes]($e/CustomerCustomAttributes/ListCustomerCustomAttributes) request.
+/// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) request.
 public struct ListCustomerCustomAttributesRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13050,7 +13074,7 @@ public struct ListCustomerCustomAttributesRequest: Codable, Equatable {
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definitions: Bool?
 
-	/// Represents a [ListCustomerCustomAttributes]($e/CustomerCustomAttributes/ListCustomerCustomAttributes) request.
+	/// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13062,7 +13086,7 @@ public struct ListCustomerCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListCustomerCustomAttributes]($e/CustomerCustomAttributes/ListCustomerCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+/// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListCustomerCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13071,7 +13095,7 @@ public struct ListCustomerCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListCustomerCustomAttributes]($e/CustomerCustomAttributes/ListCustomerCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+	/// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 	/// - Parameters:
 	///   - cursor: The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attributes: The retrieved custom attributes. If `with_definitions` was set to `true` in the request, the custom attribute definition is returned in the `definition` field of each custom attribute.  If no custom attributes are found, Square returns an empty object (`{}`).
@@ -13083,14 +13107,14 @@ public struct ListCustomerCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the query parameters that can be included in a request to the [ListCustomerGroups]($e/CustomerGroups/ListCustomerGroups) endpoint.
+/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](api-endpoint:CustomerGroups-ListCustomerGroups) endpoint.
 public struct ListCustomerGroupsRequest: Codable, Equatable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var limit: Int?
 
-	/// Defines the query parameters that can be included in a request to the [ListCustomerGroups]($e/CustomerGroups/ListCustomerGroups) endpoint.
+	/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](api-endpoint:CustomerGroups-ListCustomerGroups) endpoint.
 	/// - Parameters:
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13100,7 +13124,7 @@ public struct ListCustomerGroupsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups]($e/CustomerGroups/ListCustomerGroups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](api-endpoint:CustomerGroups-ListCustomerGroups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
 public struct ListCustomerGroupsResponse: Codable, Equatable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13109,7 +13133,7 @@ public struct ListCustomerGroupsResponse: Codable, Equatable {
 	/// A list of customer groups belonging to the current seller.
 	public var groups: [CustomerGroup]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups]($e/CustomerGroups/ListCustomerGroups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [ListCustomerGroups](api-endpoint:CustomerGroups-ListCustomerGroups) endpoint.  Either `errors` or `groups` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Any errors that occurred during the request.
@@ -13441,7 +13465,7 @@ public struct ListEventTypesRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListEventTypes]($e/Events/ListEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
+/// Defines the fields that are included in the response body of a request to the [ListEventTypes](api-endpoint:Events-ListEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
 public struct ListEventTypesResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
@@ -13450,7 +13474,7 @@ public struct ListEventTypesResponse: Codable, Equatable {
 	/// Contains the metadata of an event type. For more information, see [EventTypeMetadata](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/EventTypeMetadata).
 	public var metadata: [EventTypeMetadata]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListEventTypes]($e/Events/ListEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [ListEventTypes](api-endpoint:Events-ListEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - event_types: The list of event types.
@@ -13616,12 +13640,12 @@ public struct ListInvoicesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListJobs]($e/Team/ListJobs) request.
+/// Represents a [ListJobs](api-endpoint:Team-ListJobs) request.
 public struct ListJobsRequest: Codable, Equatable {
 	/// The pagination cursor returned by the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 
-	/// Represents a [ListJobs]($e/Team/ListJobs) request.
+	/// Represents a [ListJobs](api-endpoint:Team-ListJobs) request.
 	/// - Parameters:
 	///   - cursor: The pagination cursor returned by the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public init(cursor: String? = nil) {
@@ -13629,7 +13653,7 @@ public struct ListJobsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListJobs]($e/Team/ListJobs) response. Either `jobs` or `errors` is present in the response. If additional results are available, the `cursor` field is also present.
+/// Represents a [ListJobs](api-endpoint:Team-ListJobs) response. Either `jobs` or `errors` is present in the response. If additional results are available, the `cursor` field is also present.
 public struct ListJobsResponse: Codable, Equatable {
 	/// An opaque cursor used to retrieve the next page of results. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13638,7 +13662,7 @@ public struct ListJobsResponse: Codable, Equatable {
 	/// The retrieved jobs. A single paged response contains up to 100 jobs.
 	public var jobs: [Job]?
 
-	/// Represents a [ListJobs]($e/Team/ListJobs) response. Either `jobs` or `errors` is present in the response. If additional results are available, the `cursor` field is also present.
+	/// Represents a [ListJobs](api-endpoint:Team-ListJobs) response. Either `jobs` or `errors` is present in the response. If additional results are available, the `cursor` field is also present.
 	/// - Parameters:
 	///   - cursor: An opaque cursor used to retrieve the next page of results. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: The errors that occurred during the request.
@@ -13677,7 +13701,7 @@ public struct ListLocationBookingProfilesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListLocationCustomAttributeDefinitions]($e/LocationCustomAttributes/ListLocationCustomAttributeDefinitions) request.
+/// Represents a [ListLocationCustomAttributeDefinitions](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributeDefinitions) request.
 public struct ListLocationCustomAttributeDefinitionsRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13686,7 +13710,7 @@ public struct ListLocationCustomAttributeDefinitionsRequest: Codable, Equatable 
 	/// Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
 	public var visibility_filter: VisibilityFilter?
 
-	/// Represents a [ListLocationCustomAttributeDefinitions]($e/LocationCustomAttributes/ListLocationCustomAttributeDefinitions) request.
+	/// Represents a [ListLocationCustomAttributeDefinitions](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributeDefinitions) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13698,7 +13722,7 @@ public struct ListLocationCustomAttributeDefinitionsRequest: Codable, Equatable 
 	}
 }
 
-/// Represents a [ListLocationCustomAttributeDefinitions]($e/LocationCustomAttributes/ListLocationCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+/// Represents a [ListLocationCustomAttributeDefinitions](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 public struct ListLocationCustomAttributeDefinitionsResponse: Codable, Equatable {
 	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13707,7 +13731,7 @@ public struct ListLocationCustomAttributeDefinitionsResponse: Codable, Equatable
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListLocationCustomAttributeDefinitions]($e/LocationCustomAttributes/ListLocationCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+	/// Represents a [ListLocationCustomAttributeDefinitions](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 	/// - Parameters:
 	///   - cursor: The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attribute_definitions: The retrieved custom attribute definitions. If no custom attribute definitions are found, Square returns an empty object (`{}`).
@@ -13719,7 +13743,7 @@ public struct ListLocationCustomAttributeDefinitionsResponse: Codable, Equatable
 	}
 }
 
-/// Represents a [ListLocationCustomAttributes]($e/LocationCustomAttributes/ListLocationCustomAttributes) request.
+/// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) request.
 public struct ListLocationCustomAttributesRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13730,7 +13754,7 @@ public struct ListLocationCustomAttributesRequest: Codable, Equatable {
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definitions: Bool?
 
-	/// Represents a [ListLocationCustomAttributes]($e/LocationCustomAttributes/ListLocationCustomAttributes) request.
+	/// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13744,7 +13768,7 @@ public struct ListLocationCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListLocationCustomAttributes]($e/LocationCustomAttributes/ListLocationCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+/// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListLocationCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13753,7 +13777,7 @@ public struct ListLocationCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListLocationCustomAttributes]($e/LocationCustomAttributes/ListLocationCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+	/// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 	/// - Parameters:
 	///   - cursor: The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attributes: The retrieved custom attributes. If `with_definitions` was set to `true` in the request, the custom attribute definition is returned in the `definition` field of each custom attribute. If no custom attributes are found, Square returns an empty object (`{}`).
@@ -13765,20 +13789,20 @@ public struct ListLocationCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [ListLocations]($e/Locations/ListLocations) endpoint.
+/// Defines the fields that are included in requests to the [ListLocations](api-endpoint:Locations-ListLocations) endpoint.
 public struct ListLocationsRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListLocations]($e/Locations/ListLocations) endpoint.  Either `errors` or `locations` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [ListLocations](api-endpoint:Locations-ListLocations) endpoint.  Either `errors` or `locations` is present in a given response (never both).
 public struct ListLocationsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The business locations.
 	public var locations: [Location]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListLocations]($e/Locations/ListLocations) endpoint.  Either `errors` or `locations` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [ListLocations](api-endpoint:Locations-ListLocations) endpoint.  Either `errors` or `locations` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - locations: The business locations.
@@ -13811,7 +13835,7 @@ public struct ListLoyaltyProgramsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListLoyaltyPromotions]($e/Loyalty/ListLoyaltyPromotions) request.
+/// Represents a [ListLoyaltyPromotions](api-endpoint:Loyalty-ListLoyaltyPromotions) request.
 public struct ListLoyaltyPromotionsRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13820,7 +13844,7 @@ public struct ListLoyaltyPromotionsRequest: Codable, Equatable {
 	/// The status to filter the results by. If a status is provided, only loyalty promotions with the specified status are returned. Otherwise, all loyalty promotions associated with the loyalty program are returned. See [LoyaltyPromotionStatus](#type-loyaltypromotionstatus) for possible values
 	public var status: LoyaltyPromotionStatus?
 
-	/// Represents a [ListLoyaltyPromotions]($e/Loyalty/ListLoyaltyPromotions) request.
+	/// Represents a [ListLoyaltyPromotions](api-endpoint:Loyalty-ListLoyaltyPromotions) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. The minimum value is 1 and the maximum value is 30. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13832,7 +13856,7 @@ public struct ListLoyaltyPromotionsRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListLoyaltyPromotions]($e/Loyalty/ListLoyaltyPromotions) response. One of `loyalty_promotions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `loyalty_promotions`.
+/// Represents a [ListLoyaltyPromotions](api-endpoint:Loyalty-ListLoyaltyPromotions) response. One of `loyalty_promotions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `loyalty_promotions`.
 public struct ListLoyaltyPromotionsResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13841,7 +13865,7 @@ public struct ListLoyaltyPromotionsResponse: Codable, Equatable {
 	/// The retrieved loyalty promotions.
 	public var loyalty_promotions: [LoyaltyPromotion]?
 
-	/// Represents a [ListLoyaltyPromotions]($e/Loyalty/ListLoyaltyPromotions) response. One of `loyalty_promotions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `loyalty_promotions`.
+	/// Represents a [ListLoyaltyPromotions](api-endpoint:Loyalty-ListLoyaltyPromotions) response. One of `loyalty_promotions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `loyalty_promotions`.
 	/// - Parameters:
 	///   - cursor: The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Any errors that occurred during the request.
@@ -13853,7 +13877,7 @@ public struct ListLoyaltyPromotionsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListMerchantCustomAttributeDefinitions]($e/MerchantCustomAttributes/ListMerchantCustomAttributeDefinitions) request.
+/// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) request.
 public struct ListMerchantCustomAttributeDefinitionsRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13862,7 +13886,7 @@ public struct ListMerchantCustomAttributeDefinitionsRequest: Codable, Equatable 
 	/// Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
 	public var visibility_filter: VisibilityFilter?
 
-	/// Represents a [ListMerchantCustomAttributeDefinitions]($e/MerchantCustomAttributes/ListMerchantCustomAttributeDefinitions) request.
+	/// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13874,7 +13898,7 @@ public struct ListMerchantCustomAttributeDefinitionsRequest: Codable, Equatable 
 	}
 }
 
-/// Represents a [ListMerchantCustomAttributeDefinitions]($e/MerchantCustomAttributes/ListMerchantCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+/// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 public struct ListMerchantCustomAttributeDefinitionsResponse: Codable, Equatable {
 	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13883,7 +13907,7 @@ public struct ListMerchantCustomAttributeDefinitionsResponse: Codable, Equatable
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListMerchantCustomAttributeDefinitions]($e/MerchantCustomAttributes/ListMerchantCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
+	/// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 	/// - Parameters:
 	///   - cursor: The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attribute_definitions: The retrieved custom attribute definitions. If no custom attribute definitions are found, Square returns an empty object (`{}`).
@@ -13895,7 +13919,7 @@ public struct ListMerchantCustomAttributeDefinitionsResponse: Codable, Equatable
 	}
 }
 
-/// Represents a [ListMerchantCustomAttributes]($e/MerchantCustomAttributes/ListMerchantCustomAttributes) request.
+/// Represents a [ListMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributes) request.
 public struct ListMerchantCustomAttributesRequest: Codable, Equatable {
 	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13906,7 +13930,7 @@ public struct ListMerchantCustomAttributesRequest: Codable, Equatable {
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definitions: Bool?
 
-	/// Represents a [ListMerchantCustomAttributes]($e/MerchantCustomAttributes/ListMerchantCustomAttributes) request.
+	/// Represents a [ListMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributes) request.
 	/// - Parameters:
 	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13920,7 +13944,7 @@ public struct ListMerchantCustomAttributesRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListMerchantCustomAttributes]($e/MerchantCustomAttributes/ListMerchantCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+/// Represents a [ListMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListMerchantCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -13929,7 +13953,7 @@ public struct ListMerchantCustomAttributesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [ListMerchantCustomAttributes]($e/MerchantCustomAttributes/ListMerchantCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
+	/// Represents a [ListMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 	/// - Parameters:
 	///   - cursor: The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - custom_attributes: The retrieved custom attributes. If `with_definitions` was set to `true` in the request, the custom attribute definition is returned in the `definition` field of each custom attribute. If no custom attributes are found, Square returns an empty object (`{}`).
@@ -13941,12 +13965,12 @@ public struct ListMerchantCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Request object for the [ListMerchant]($e/Merchants/ListMerchants) endpoint.
+/// Request object for the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
 public struct ListMerchantsRequest: Codable, Equatable {
 	/// The cursor generated by the previous response.
 	public var cursor: Int?
 
-	/// Request object for the [ListMerchant]($e/Merchants/ListMerchants) endpoint.
+	/// Request object for the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
 	/// - Parameters:
 	///   - cursor: The cursor generated by the previous response.
 	public init(cursor: Int? = nil) {
@@ -13954,7 +13978,7 @@ public struct ListMerchantsRequest: Codable, Equatable {
 	}
 }
 
-/// The response object returned by the [ListMerchant]($e/Merchants/ListMerchants) endpoint.
+/// The response object returned by the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
 public struct ListMerchantsResponse: Codable, Equatable {
 	/// If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	public var cursor: Int?
@@ -13963,7 +13987,7 @@ public struct ListMerchantsResponse: Codable, Equatable {
 	/// The requested `Merchant` entities.
 	public var merchant: [Merchant]?
 
-	/// The response object returned by the [ListMerchant]($e/Merchants/ListMerchants) endpoint.
+	/// The response object returned by the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
 	/// - Parameters:
 	///   - cursor: If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
 	///   - errors: Information on errors encountered during the request.
@@ -14090,7 +14114,7 @@ public struct ListPaymentLinksResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to list refunds using [ListPaymentRefunds]($e/Refunds/ListPaymentRefunds).  The maximum results per page is 100.
+/// Describes a request to list refunds using [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  The maximum results per page is 100.
 public struct ListPaymentRefundsRequest: Codable, Equatable {
 	/// Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.   Default: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -14102,36 +14126,54 @@ public struct ListPaymentRefundsRequest: Codable, Equatable {
 	public var limit: Int?
 	/// Limit results to the location supplied. By default, results are returned for all locations associated with the seller.
 	public var location_id: String?
+	/// The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
+	public var sort_field: ListPaymentRefundsRequestSortField?
 	/// The order in which results are listed by `PaymentRefund.created_at`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	public var sort_order: String?
 	/// If provided, only returns refunds whose payments have the indicated source type. Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, and `EXTERNAL`. For information about these payment source types, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).  Default: If omitted, refunds are returned regardless of the source type.
 	public var source_type: String?
 	/// If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
 	public var status: String?
+	/// Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: If omitted, the time range starts at `begin_time`.
+	public var updated_at_begin_time: Timestamp?
+	/// Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: The current time.
+	public var updated_at_end_time: Timestamp?
 
-	/// Describes a request to list refunds using [ListPaymentRefunds]($e/Refunds/ListPaymentRefunds).  The maximum results per page is 100.
+	/// Describes a request to list refunds using [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  The maximum results per page is 100.
 	/// - Parameters:
 	///   - begin_time: Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.   Default: The current time minus one year.
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - end_time: Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.  Default: The current time.
 	///   - limit: The maximum number of results to be returned in a single page.  It is possible to receive fewer results than the specified limit on a given page.  If the supplied value is greater than 100, no more than 100 results are returned.  Default: 100
 	///   - location_id: Limit results to the location supplied. By default, results are returned for all locations associated with the seller.
+	///   - sort_field: The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
 	///   - sort_order: The order in which results are listed by `PaymentRefund.created_at`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	///   - source_type: If provided, only returns refunds whose payments have the indicated source type. Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, and `EXTERNAL`. For information about these payment source types, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).  Default: If omitted, refunds are returned regardless of the source type.
 	///   - status: If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: String? = nil, source_type: String? = nil, status: String? = nil) {
+	///   - updated_at_begin_time: Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: If omitted, the time range starts at `begin_time`.
+	///   - updated_at_end_time: Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: The current time.
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, limit: Int? = nil, location_id: String? = nil, sort_field: ListPaymentRefundsRequestSortField? = nil, sort_order: String? = nil, source_type: String? = nil, status: String? = nil, updated_at_begin_time: Timestamp? = nil, updated_at_end_time: Timestamp? = nil) {
 		self.begin_time = begin_time
 		self.cursor = cursor
 		self.end_time = end_time
 		self.limit = limit
 		self.location_id = location_id
+		self.sort_field = sort_field
 		self.sort_order = sort_order
 		self.source_type = source_type
 		self.status = status
+		self.updated_at_begin_time = updated_at_begin_time
+		self.updated_at_end_time = updated_at_end_time
 	}
 }
 
-/// Defines the response returned by [ListPaymentRefunds]($e/Refunds/ListPaymentRefunds).  Either `errors` or `refunds` is present in a given response (never both).
+/// 
+public enum ListPaymentRefundsRequestSortField: String, Codable {
+	case CREATED_AT
+	case UPDATED_AT
+}
+
+/// Defines the response returned by [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  Either `errors` or `refunds` is present in a given response (never both).
 public struct ListPaymentRefundsResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -14140,7 +14182,7 @@ public struct ListPaymentRefundsResponse: Codable, Equatable {
 	/// The list of requested refunds.
 	public var refunds: [PaymentRefund]?
 
-	/// Defines the response returned by [ListPaymentRefunds]($e/Refunds/ListPaymentRefunds).  Either `errors` or `refunds` is present in a given response (never both).
+	/// Defines the response returned by [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  Either `errors` or `refunds` is present in a given response (never both).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -14152,7 +14194,7 @@ public struct ListPaymentRefundsResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to list payments using  [ListPayments]($e/Payments/ListPayments).   The maximum results per page is 100.
+/// Describes a request to list payments using  [ListPayments](api-endpoint:Payments-ListPayments).   The maximum results per page is 100.
 public struct ListPaymentsRequest: Codable, Equatable {
 	/// Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
 	public var begin_time: Timestamp?
@@ -14174,8 +14216,8 @@ public struct ListPaymentsRequest: Codable, Equatable {
 	public var offline_begin_time: Timestamp?
 	/// Indicates the end of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
 	public var offline_end_time: Timestamp?
-	/// The field used to sort results by. The default is `CREATED_AT`. See [PaymentSortField](#type-paymentsortfield) for possible values
-	public var sort_field: PaymentSortField?
+	/// The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
+	public var sort_field: ListPaymentsRequestSortField?
 	/// The order in which results are listed by `ListPaymentsRequest.sort_field`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	public var sort_order: String?
 	/// The exact amount in the `total_money` for a payment.
@@ -14185,7 +14227,7 @@ public struct ListPaymentsRequest: Codable, Equatable {
 	/// Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
 	public var updated_at_end_time: Timestamp?
 
-	/// Describes a request to list payments using  [ListPayments]($e/Payments/ListPayments).   The maximum results per page is 100.
+	/// Describes a request to list payments using  [ListPayments](api-endpoint:Payments-ListPayments).   The maximum results per page is 100.
 	/// - Parameters:
 	///   - begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
 	///   - card_brand: The brand of the payment card (for example, VISA).
@@ -14197,12 +14239,12 @@ public struct ListPaymentsRequest: Codable, Equatable {
 	///   - location_id: Limit results to the location supplied. By default, results are returned for the default (main) location associated with the seller.
 	///   - offline_begin_time: Indicates the start of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
 	///   - offline_end_time: Indicates the end of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
-	///   - sort_field: The field used to sort results by. The default is `CREATED_AT`. See [PaymentSortField](#type-paymentsortfield) for possible values
+	///   - sort_field: The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
 	///   - sort_order: The order in which results are listed by `ListPaymentsRequest.sort_field`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 	///   - total: The exact amount in the `total_money` for a payment.
 	///   - updated_at_begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
 	///   - updated_at_end_time: Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
-	public init(begin_time: Timestamp? = nil, card_brand: String? = nil, cursor: String? = nil, end_time: Timestamp? = nil, is_offline_payment: Bool? = nil, last_4: String? = nil, limit: Int? = nil, location_id: String? = nil, offline_begin_time: Timestamp? = nil, offline_end_time: Timestamp? = nil, sort_field: PaymentSortField? = nil, sort_order: String? = nil, total: Int? = nil, updated_at_begin_time: Timestamp? = nil, updated_at_end_time: Timestamp? = nil) {
+	public init(begin_time: Timestamp? = nil, card_brand: String? = nil, cursor: String? = nil, end_time: Timestamp? = nil, is_offline_payment: Bool? = nil, last_4: String? = nil, limit: Int? = nil, location_id: String? = nil, offline_begin_time: Timestamp? = nil, offline_end_time: Timestamp? = nil, sort_field: ListPaymentsRequestSortField? = nil, sort_order: String? = nil, total: Int? = nil, updated_at_begin_time: Timestamp? = nil, updated_at_end_time: Timestamp? = nil) {
 		self.begin_time = begin_time
 		self.card_brand = card_brand
 		self.cursor = cursor
@@ -14221,7 +14263,14 @@ public struct ListPaymentsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by [ListPayments]($e/Payments/ListPayments).
+/// 
+public enum ListPaymentsRequestSortField: String, Codable {
+	case CREATED_AT
+	case OFFLINE_CREATED_AT
+	case UPDATED_AT
+}
+
+/// Defines the response returned by [ListPayments](api-endpoint:Payments-ListPayments).
 public struct ListPaymentsResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -14230,7 +14279,7 @@ public struct ListPaymentsResponse: Codable, Equatable {
 	/// The requested list of payments.
 	public var payments: [Payment]?
 
-	/// Defines the response returned by [ListPayments]($e/Payments/ListPayments).
+	/// Defines the response returned by [ListPayments](api-endpoint:Payments-ListPayments).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Information about errors encountered during the request.
@@ -14405,14 +14454,14 @@ public struct ListSitesResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the  [ListSubscriptionEvents]($e/Subscriptions/ListSubscriptionEvents) endpoint.
+/// Defines input parameters in a request to the  [ListSubscriptionEvents](api-endpoint:Subscriptions-ListSubscriptionEvents) endpoint.
 public struct ListSubscriptionEventsRequest: Codable, Equatable {
 	/// When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
 	/// The upper limit on the number of subscription events to return in a paged response.
 	public var limit: Int?
 
-	/// Defines input parameters in a request to the  [ListSubscriptionEvents]($e/Subscriptions/ListSubscriptionEvents) endpoint.
+	/// Defines input parameters in a request to the  [ListSubscriptionEvents](api-endpoint:Subscriptions-ListSubscriptionEvents) endpoint.
 	/// - Parameters:
 	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - limit: The upper limit on the number of subscription events to return in a paged response.
@@ -14422,7 +14471,7 @@ public struct ListSubscriptionEventsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the [ListSubscriptionEvents]($e/Subscriptions/ListSubscriptionEvents).
+/// Defines output parameters in a response from the [ListSubscriptionEvents](api-endpoint:Subscriptions-ListSubscriptionEvents).
 public struct ListSubscriptionEventsResponse: Codable, Equatable {
 	/// When the total number of resulting subscription events exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of events. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -14431,7 +14480,7 @@ public struct ListSubscriptionEventsResponse: Codable, Equatable {
 	/// The retrieved subscription events.
 	public var subscription_events: [SubscriptionEvent]?
 
-	/// Defines output parameters in a response from the [ListSubscriptionEvents]($e/Subscriptions/ListSubscriptionEvents).
+	/// Defines output parameters in a response from the [ListSubscriptionEvents](api-endpoint:Subscriptions-ListSubscriptionEvents).
 	/// - Parameters:
 	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of events. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Errors encountered during the request.
@@ -14577,7 +14626,7 @@ public struct ListWebhookEventTypesRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListWebhookEventTypes]($e/WebhookSubscriptions/ListWebhookEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
+/// Defines the fields that are included in the response body of a request to the [ListWebhookEventTypes](api-endpoint:WebhookSubscriptions-ListWebhookEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
 public struct ListWebhookEventTypesResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
@@ -14586,7 +14635,7 @@ public struct ListWebhookEventTypesResponse: Codable, Equatable {
 	/// Contains the metadata of a webhook event type. For more information, see [EventTypeMetadata](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/EventTypeMetadata).
 	public var metadata: [EventTypeMetadata]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListWebhookEventTypes]($e/WebhookSubscriptions/ListWebhookEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [ListWebhookEventTypes](api-endpoint:WebhookSubscriptions-ListWebhookEventTypes) endpoint.  Note: if there are errors processing the request, the event types field will not be present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - event_types: The list of event types.
@@ -14623,7 +14672,7 @@ public struct ListWebhookSubscriptionsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [ListWebhookSubscriptions]($e/WebhookSubscriptions/ListWebhookSubscriptions) endpoint.  Note: if there are errors processing the request, the subscriptions field will not be present.
+/// Defines the fields that are included in the response body of a request to the [ListWebhookSubscriptions](api-endpoint:WebhookSubscriptions-ListWebhookSubscriptions) endpoint.  Note: if there are errors processing the request, the subscriptions field will not be present.
 public struct ListWebhookSubscriptionsResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -14632,7 +14681,7 @@ public struct ListWebhookSubscriptionsResponse: Codable, Equatable {
 	/// The requested list of [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s.
 	public var subscriptions: [WebhookSubscription]?
 
-	/// Defines the fields that are included in the response body of a request to the [ListWebhookSubscriptions]($e/WebhookSubscriptions/ListWebhookSubscriptions) endpoint.  Note: if there are errors processing the request, the subscriptions field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [ListWebhookSubscriptions](api-endpoint:WebhookSubscriptions-ListWebhookSubscriptions) endpoint.  Note: if there are errors processing the request, the subscriptions field will not be present.
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Information on errors encountered during the request.
@@ -16087,28 +16136,41 @@ public struct Money: Codable, Equatable {
 	}
 }
 
+/// Represents an [ObtainToken](api-endpoint:OAuth-ObtainToken) request.
 public struct ObtainTokenRequest: Codable, Equatable {
-	/// The Square-issued ID of your application, which is available on the **OAuth** page in the [Developer Dashboard](https://developer.squareup.com/apps).
+	/// The Square-issued ID of your application, which is available as the **Application ID** on the **OAuth** page in the [Developer Console](https://developer.squareup.com/apps).  Required for the code flow and PKCE flow for any grant type.
 	public var client_id: String
-	/// The Square-issued application secret for your application, which is available on the **OAuth** page in the [Developer Dashboard](https://developer.squareup.com/apps). This parameter is only required when  you're not using the [OAuth PKCE (Proof Key for Code Exchange) flow](https://developer.squareup.com/docs/oauth-api/overview#pkce-flow). The PKCE flow requires a `code_verifier` instead of a `client_secret` when `grant_type` is set to `authorization_code`.  If `grant_type` is set to `refresh_token` and the `refresh_token` is obtained uaing PKCE, the PKCE flow only requires `client_id`,  `grant_type`, and `refresh_token`.
+	/// The secret key for your application, which is available as the **Application secret** on the **OAuth** page in the [Developer Console](https://developer.squareup.com/apps).  Required for the code flow for any grant type. Don't confuse your client secret with your personal access token.
 	public var client_secret: String?
-	/// The authorization code to exchange. This code is required if `grant_type` is set to `authorization_code` to indicate that the application wants to exchange an authorization code for an OAuth access token.
+	/// The authorization code to exchange for an OAuth access token. This is the `code` value that Square sent to your redirect URL in the authorization response.  Required for the code flow and PKCE flow if `grant_type` is `authorization_code`.
 	public var code: String?
-	/// Must be provided when using the PKCE OAuth flow if `grant_type` is set to `authorization_code`. The `code_verifier` is used to verify against the `code_challenge` associated with the `authorization_code`.
+	/// The secret your application generated for the authorization request used to obtain the authorization code. This is the source of the `code_challenge` hash you provided in your authorization URL.  Required for the PKCE flow if `grant_type` is `authorization_code`.
 	public var code_verifier: String?
-	/// Specifies the method to request an OAuth access token. Valid values are `authorization_code`, `refresh_token`, and `migration_token`.
+	/// The method used to obtain an OAuth access token. The request must include the credential that corresponds to the specified grant type. Valid values are: - `authorization_code` - Requires the `code` field. - `refresh_token` - Requires the `refresh_token` field. - `migration_token` - LEGACY for access tokens obtained using a Square API version prior to 2019-03-13. Requires the `migration_token` field.
 	public var grant_type: String
-	/// A legacy OAuth access token obtained using a Connect API version prior to 2019-03-13. This parameter is required if `grant_type` is set to `migration_token` to indicate that the application wants to get a replacement OAuth access token. The response also returns a refresh token. For more information, see [Migrate to Using Refresh Tokens](https://developer.squareup.com/docs/oauth-api/migrate-to-refresh-tokens).
+	/// __LEGACY__ A valid access token (obtained using a Square API version prior to 2019-03-13) used to generate a new OAuth access token.  Required if `grant_type` is `migration_token`. For more information, see [Migrate to Using Refresh Tokens](https://developer.squareup.com/docs/oauth-api/migrate-to-refresh-tokens).
 	public var migration_token: String?
-	/// The redirect URL assigned on the **OAuth** page for your application in the [Developer Dashboard](https://developer.squareup.com/apps).
+	/// The redirect URL for your application, which you registered as the **Redirect URL** on the **OAuth** page in the [Developer Console](https://developer.squareup.com/apps).  Required for the code flow and PKCE flow if `grant_type` is `authorization_code` and you provided the `redirect_uri` parameter in your authorization URL.
 	public var redirect_uri: String?
-	/// A valid refresh token for generating a new OAuth access token.  A valid refresh token is required if `grant_type` is set to `refresh_token` to indicate that the application wants a replacement for an expired OAuth access token.
+	/// A valid refresh token used to generate a new OAuth access token. This is a refresh token that was returned in a previous `ObtainToken` response.  Required for the code flow and PKCE flow if `grant_type` is `refresh_token`.
 	public var refresh_token: String?
-	/// A JSON list of strings representing the permissions that the application is requesting. For example, "`["MERCHANT_PROFILE_READ","PAYMENTS_READ","BANK_ACCOUNTS_READ"]`".  The access token returned in the response is granted the permissions that comprise the intersection between the requested list of permissions and those that belong to the provided refresh token.
+	/// The list of permissions that are explicitly requested for the access token. For example, ["MERCHANT_PROFILE_READ","PAYMENTS_READ","BANK_ACCOUNTS_READ"].  The returned access token is limited to the permissions that are the intersection of these requested permissions and those authorized by the provided `refresh_token`.  Optional for the code flow and PKCE flow if `grant_type` is `refresh_token`.
 	public var scopes: [String]?
-	/// A Boolean indicating a request for a short-lived access token.  The short-lived access token returned in the response expires in 24 hours.
+	/// Indicates whether the returned access token should expire in 24 hours.  Optional for the code flow and PKCE flow for any grant type. The default value is `false`.
 	public var short_lived: Bool?
 
+	/// Represents an [ObtainToken](api-endpoint:OAuth-ObtainToken) request.
+	/// - Parameters:
+	///   - client_id: The Square-issued ID of your application, which is available as the **Application ID** on the **OAuth** page in the [Developer Console](https://developer.squareup.com/apps).  Required for the code flow and PKCE flow for any grant type.
+	///   - client_secret: The secret key for your application, which is available as the **Application secret** on the **OAuth** page in the [Developer Console](https://developer.squareup.com/apps).  Required for the code flow for any grant type. Don't confuse your client secret with your personal access token.
+	///   - code: The authorization code to exchange for an OAuth access token. This is the `code` value that Square sent to your redirect URL in the authorization response.  Required for the code flow and PKCE flow if `grant_type` is `authorization_code`.
+	///   - code_verifier: The secret your application generated for the authorization request used to obtain the authorization code. This is the source of the `code_challenge` hash you provided in your authorization URL.  Required for the PKCE flow if `grant_type` is `authorization_code`.
+	///   - grant_type: The method used to obtain an OAuth access token. The request must include the credential that corresponds to the specified grant type. Valid values are: - `authorization_code` - Requires the `code` field. - `refresh_token` - Requires the `refresh_token` field. - `migration_token` - LEGACY for access tokens obtained using a Square API version prior to 2019-03-13. Requires the `migration_token` field.
+	///   - migration_token: __LEGACY__ A valid access token (obtained using a Square API version prior to 2019-03-13) used to generate a new OAuth access token.  Required if `grant_type` is `migration_token`. For more information, see [Migrate to Using Refresh Tokens](https://developer.squareup.com/docs/oauth-api/migrate-to-refresh-tokens).
+	///   - redirect_uri: The redirect URL for your application, which you registered as the **Redirect URL** on the **OAuth** page in the [Developer Console](https://developer.squareup.com/apps).  Required for the code flow and PKCE flow if `grant_type` is `authorization_code` and you provided the `redirect_uri` parameter in your authorization URL.
+	///   - refresh_token: A valid refresh token used to generate a new OAuth access token. This is a refresh token that was returned in a previous `ObtainToken` response.  Required for the code flow and PKCE flow if `grant_type` is `refresh_token`.
+	///   - scopes: The list of permissions that are explicitly requested for the access token. For example, ["MERCHANT_PROFILE_READ","PAYMENTS_READ","BANK_ACCOUNTS_READ"].  The returned access token is limited to the permissions that are the intersection of these requested permissions and those authorized by the provided `refresh_token`.  Optional for the code flow and PKCE flow if `grant_type` is `refresh_token`.
+	///   - short_lived: Indicates whether the returned access token should expire in 24 hours.  Optional for the code flow and PKCE flow for any grant type. The default value is `false`.
 	public init(client_id: String, grant_type: String, client_secret: String? = nil, code: String? = nil, code_verifier: String? = nil, migration_token: String? = nil, redirect_uri: String? = nil, refresh_token: String? = nil, scopes: [String]? = nil, short_lived: Bool? = nil) {
 		self.client_id = client_id
 		self.grant_type = grant_type
@@ -16123,31 +16185,45 @@ public struct ObtainTokenRequest: Codable, Equatable {
 	}
 }
 
+/// Represents an [ObtainToken](api-endpoint:OAuth-ObtainToken) response.
 public struct ObtainTokenResponse: Codable, Equatable {
-	/// A valid OAuth access token.  Provide the access token in a header with every request to Connect API endpoints. For more information, see [OAuth API: Walkthrough](https://developer.squareup.com/docs/oauth-api/walkthrough).
+	/// An OAuth access token used to authorize Square API requests on behalf of the seller. Include this token as a bearer token in the `Authorization` header of your API requests.  OAuth access tokens expire in 30 days (except `short_lived` access tokens). You should call `ObtainToken` and provide the returned `refresh_token` to get a new access token well before the current one expires. For more information, see [OAuth API: Walkthrough](https://developer.squareup.com/docs/oauth-api/walkthrough).
 	public var access_token: String?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
-	/// The date when the `access_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
-	public var expires_at: String?
-	/// The OpenID token belonging to this person. This token is only present if the OPENID scope is included in the authorization request.
+	/// The timestamp of when the `access_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
+	public var expires_at: Timestamp?
+	/// The OpenID token that belongs to this person. This token is only present if the `OPENID` scope is included in the authorization request.  Deprecated at version yyyy-mm-dd. Square doesn't support OpenID or other single sign-on (SSO) protocols on top of OAuth.
 	public var id_token: String?
-	/// The ID of the authorizing merchant's business.
+	/// The ID of the authorizing [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant) (seller), which represents a business.
 	public var merchant_id: String?
-	/// __LEGACY FIELD__. The ID of the subscription plan the merchant signed up for. The ID is only present if the merchant signed up for a subscription plan during authorization.
+	/// __LEGACY__ The ID of the subscription plan the merchant signed up for. The ID is only present if the merchant signed up for a subscription plan during authorization.
 	public var plan_id: String?
-	/// A refresh token.  For more information, see [Refresh, Revoke, and Limit the Scope of OAuth Tokens](https://developer.squareup.com/docs/oauth-api/refresh-revoke-limit-scope).
+	/// A refresh token that can be used in an `ObtainToken` request to generate a new access token.  With the code flow: - For the `authorization_code` grant type, the refresh token is multi-use and never expires. - For the `refresh_token` grant type, the response returns the same refresh token.  With the PKCE flow: - For the `authorization_code` grant type, the refresh token is single-use and expires in 90 days. - For the `refresh_token` grant type, the refresh token is a new single-use refresh token that expires in 90 days.  For more information, see [Refresh, Revoke, and Limit the Scope of OAuth Tokens](https://developer.squareup.com/docs/oauth-api/refresh-revoke-limit-scope).
 	public var refresh_token: String?
-	/// The date when the `refresh_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
-	public var refresh_token_expires_at: String?
-	/// A Boolean indicating that the access token is a short-lived access token. The short-lived access token returned in the response expires in 24 hours.
+	/// The timestamp of when the `refresh_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.  This field is only returned for the PKCE flow.
+	public var refresh_token_expires_at: Timestamp?
+	/// Indicates whether the access_token is short lived. If `true`, the access token expires in 24 hours. If `false`, the access token expires in 30 days.
 	public var short_lived: Bool?
-	/// __LEGACY FIELD__. The ID of a subscription plan the merchant signed up for. The ID is only present if the merchant signed up for a subscription plan during authorization.
+	/// __LEGACY__ The ID of merchant's subscription. The ID is only present if the merchant signed up for a subscription plan during authorization.
 	public var subscription_id: String?
-	/// This value is always _bearer_.
+	/// The type of access token. This value is always `bearer`.
 	public var token_type: String?
 
-	public init(access_token: String? = nil, errors: [SquareError]? = nil, expires_at: String? = nil, id_token: String? = nil, merchant_id: String? = nil, plan_id: String? = nil, refresh_token: String? = nil, refresh_token_expires_at: String? = nil, short_lived: Bool? = nil, subscription_id: String? = nil, token_type: String? = nil) {
+	/// Represents an [ObtainToken](api-endpoint:OAuth-ObtainToken) response.
+	/// - Parameters:
+	///   - access_token: An OAuth access token used to authorize Square API requests on behalf of the seller. Include this token as a bearer token in the `Authorization` header of your API requests.  OAuth access tokens expire in 30 days (except `short_lived` access tokens). You should call `ObtainToken` and provide the returned `refresh_token` to get a new access token well before the current one expires. For more information, see [OAuth API: Walkthrough](https://developer.squareup.com/docs/oauth-api/walkthrough).
+	///   - errors: Any errors that occurred during the request.
+	///   - expires_at: The timestamp of when the `access_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
+	///   - id_token: The OpenID token that belongs to this person. This token is only present if the `OPENID` scope is included in the authorization request.  Deprecated at version yyyy-mm-dd. Square doesn't support OpenID or other single sign-on (SSO) protocols on top of OAuth.
+	///   - merchant_id: The ID of the authorizing [merchant](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Merchant) (seller), which represents a business.
+	///   - plan_id: __LEGACY__ The ID of the subscription plan the merchant signed up for. The ID is only present if the merchant signed up for a subscription plan during authorization.
+	///   - refresh_token: A refresh token that can be used in an `ObtainToken` request to generate a new access token.  With the code flow: - For the `authorization_code` grant type, the refresh token is multi-use and never expires. - For the `refresh_token` grant type, the response returns the same refresh token.  With the PKCE flow: - For the `authorization_code` grant type, the refresh token is single-use and expires in 90 days. - For the `refresh_token` grant type, the refresh token is a new single-use refresh token that expires in 90 days.  For more information, see [Refresh, Revoke, and Limit the Scope of OAuth Tokens](https://developer.squareup.com/docs/oauth-api/refresh-revoke-limit-scope).
+	///   - refresh_token_expires_at: The timestamp of when the `refresh_token` expires, in [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.  This field is only returned for the PKCE flow.
+	///   - short_lived: Indicates whether the access_token is short lived. If `true`, the access token expires in 24 hours. If `false`, the access token expires in 30 days.
+	///   - subscription_id: __LEGACY__ The ID of merchant's subscription. The ID is only present if the merchant signed up for a subscription plan during authorization.
+	///   - token_type: The type of access token. This value is always `bearer`.
+	public init(access_token: String? = nil, errors: [SquareError]? = nil, expires_at: Timestamp? = nil, id_token: String? = nil, merchant_id: String? = nil, plan_id: String? = nil, refresh_token: String? = nil, refresh_token_expires_at: Timestamp? = nil, short_lived: Bool? = nil, subscription_id: String? = nil, token_type: String? = nil) {
 		self.access_token = access_token
 		self.errors = errors
 		self.expires_at = expires_at
@@ -16341,7 +16417,7 @@ public struct OrderCreatedObject: Codable, Equatable {
 	}
 }
 
-/// A lightweight description of an [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) that is returned when `returned_entries` is `true` on a [SearchOrdersRequest]($e/Orders/SearchOrders).
+/// A lightweight description of an [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) that is returned when `returned_entries` is `true` on a [SearchOrdersRequest](api-endpoint:Orders-SearchOrders).
 public struct OrderEntry: Codable, Equatable {
 	/// The location ID the order belongs to.
 	public var location_id: String?
@@ -16350,7 +16426,7 @@ public struct OrderEntry: Codable, Equatable {
 	/// The version number, which is incremented each time an update is committed to the order. Orders that were not created through the API do not include a version number and therefore cannot be updated.  [Read more about working with versions.](https://developer.squareup.com/docs/orders-api/manage-orders/update-orders)
 	public var version: Int?
 
-	/// A lightweight description of an [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) that is returned when `returned_entries` is `true` on a [SearchOrdersRequest]($e/Orders/SearchOrders).
+	/// A lightweight description of an [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) that is returned when `returned_entries` is `true` on a [SearchOrdersRequest](api-endpoint:Orders-SearchOrders).
 	/// - Parameters:
 	///   - location_id: The location ID the order belongs to.
 	///   - order_id: The ID of the order.
@@ -17907,7 +17983,7 @@ public struct PaginationCursor: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the [PauseSubscription]($e/Subscriptions/PauseSubscription) endpoint.
+/// Defines input parameters in a request to the [PauseSubscription](api-endpoint:Subscriptions-PauseSubscription) endpoint.
 public struct PauseSubscriptionRequest: Codable, Equatable {
 	/// The number of billing cycles the subscription will be paused before it is reactivated.   When this is set, a `RESUME` action is also scheduled to take place on the subscription at  the end of the specified pause cycle duration. In this case, neither `resume_effective_date`  nor `resume_change_timing` may be specified.
 	public var pause_cycle_duration: Int?
@@ -17920,7 +17996,7 @@ public struct PauseSubscriptionRequest: Codable, Equatable {
 	/// The date when the subscription is reactivated by a scheduled `RESUME` action.  This date must be at least one billing cycle ahead of `pause_effective_date`.
 	public var resume_effective_date: String?
 
-	/// Defines input parameters in a request to the [PauseSubscription]($e/Subscriptions/PauseSubscription) endpoint.
+	/// Defines input parameters in a request to the [PauseSubscription](api-endpoint:Subscriptions-PauseSubscription) endpoint.
 	/// - Parameters:
 	///   - pause_cycle_duration: The number of billing cycles the subscription will be paused before it is reactivated.   When this is set, a `RESUME` action is also scheduled to take place on the subscription at  the end of the specified pause cycle duration. In this case, neither `resume_effective_date`  nor `resume_change_timing` may be specified.
 	///   - pause_effective_date: The `YYYY-MM-DD`-formatted date when the scheduled `PAUSE` action takes place on the subscription.  When this date is unspecified or falls within the current billing cycle, the subscription is paused on the starting date of the next billing cycle.
@@ -17936,7 +18012,7 @@ public struct PauseSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the [PauseSubscription]($e/Subscriptions/PauseSubscription) endpoint.
+/// Defines output parameters in a response from the [PauseSubscription](api-endpoint:Subscriptions-PauseSubscription) endpoint.
 public struct PauseSubscriptionResponse: Codable, Equatable {
 	/// The list of a `PAUSE` action and a possible `RESUME` action created by the request.
 	public var actions: [SubscriptionAction]?
@@ -17945,7 +18021,7 @@ public struct PauseSubscriptionResponse: Codable, Equatable {
 	/// The subscription to be paused by the scheduled `PAUSE` action.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response from the [PauseSubscription]($e/Subscriptions/PauseSubscription) endpoint.
+	/// Defines output parameters in a response from the [PauseSubscription](api-endpoint:Subscriptions-PauseSubscription) endpoint.
 	/// - Parameters:
 	///   - actions: The list of a `PAUSE` action and a possible `RESUME` action created by the request.
 	///   - errors: Errors encountered during the request.
@@ -17957,7 +18033,7 @@ public struct PauseSubscriptionResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [PayOrder]($e/Orders/PayOrder) endpoint.
+/// Defines the fields that are included in requests to the [PayOrder](api-endpoint:Orders-PayOrder) endpoint.
 public struct PayOrderRequest: Codable, Equatable {
 	/// A value you specify that uniquely identifies this request among requests you have sent. If you are unsure whether a particular payment request was completed successfully, you can reattempt it with the same idempotency key without worrying about duplicate payments.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	public var idempotency_key: String
@@ -17966,7 +18042,7 @@ public struct PayOrderRequest: Codable, Equatable {
 	/// The IDs of the [payments](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payment) to collect. The payment total must match the order total.
 	public var payment_ids: [String]?
 
-	/// Defines the fields that are included in requests to the [PayOrder]($e/Orders/PayOrder) endpoint.
+	/// Defines the fields that are included in requests to the [PayOrder](api-endpoint:Orders-PayOrder) endpoint.
 	/// - Parameters:
 	///   - idempotency_key: A value you specify that uniquely identifies this request among requests you have sent. If you are unsure whether a particular payment request was completed successfully, you can reattempt it with the same idempotency key without worrying about duplicate payments.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	///   - order_version: The version of the order being paid. If not supplied, the latest version will be paid.
@@ -17978,14 +18054,14 @@ public struct PayOrderRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [PayOrder]($e/Orders/PayOrder) endpoint.
+/// Defines the fields that are included in the response body of a request to the [PayOrder](api-endpoint:Orders-PayOrder) endpoint.
 public struct PayOrderResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The paid, updated [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order).
 	public var order: Order?
 
-	/// Defines the fields that are included in the response body of a request to the [PayOrder]($e/Orders/PayOrder) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [PayOrder](api-endpoint:Orders-PayOrder) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The paid, updated [order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order).
@@ -18491,13 +18567,13 @@ public struct PaymentLinkRelatedResources: Codable, Equatable {
 }
 
 public struct PaymentOptions: Codable, Equatable {
-	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment.  This field cannot be `true` when `autocomplete = true`. This field cannot be `true` when an `order_id` isn't specified.  For more information, see [Take Partial Payments](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/partial-payments-with-gift-cards).  Default: false
+	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment.  This parameter can only be set for a delayed capture payment (`autocomplete=false`).  For more information, see [Take Partial Payments](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/partial-payments-with-gift-cards).  Default: false
 	public var accept_partial_authorization: Bool?
-	/// Indicates whether the `Payment` objects created from this `TerminalCheckout` are automatically `COMPLETED` or left in an `APPROVED` state for later modification.
+	/// Indicates whether the `Payment` objects created from this `TerminalCheckout` are automatically `COMPLETED` or left in an `APPROVED` state for later modification.  Default: true
 	public var autocomplete: Bool?
-	/// The action to be applied to the payment when the delay_duration has elapsed. The action must be CANCEL or COMPLETE.  This parameter can only be set for a delayed capture payment (when `autocomplete` is `false`). See [DelayAction](#type-delayaction) for possible values
+	/// The action to be applied to the `Payment` when the delay_duration has elapsed. The action must be CANCEL or COMPLETE.  The action cannot be set to COMPLETE if an `order_id` is present on the TerminalCheckout.  This parameter can only be set for a delayed capture payment (`autocomplete=false`). For more information, see [Delayed Capture](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).  Default: CANCEL See [DelayAction](#type-delayaction) for possible values
 	public var delay_action: PaymentOptionsDelayAction?
-	/// The duration of time after the payment's creation when Square automatically cancels the payment. This automatic cancellation applies only to payments that do not reach a terminal state (COMPLETED or CANCELED) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`). Default: - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
+	/// The duration of time after the payment's creation when Square automatically resolves the payment. This automatic resolution applies only to payments that do not reach a terminal state (`COMPLETED` or `CANCELED`) before the `delay_duration` time period.  This parameter should be specified as a time duration, in RFC 3339 format, with a minimum value of 1 minute and a maximum value of 36 hours. This feature is only supported for card payments, and all payments will be considered card-present.  This parameter can only be set for a delayed capture payment (`autocomplete=false`). For more information, see [Delayed Capture](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).  Default: "PT36H" (36 hours) from the creation time
 	public var delay_duration: Timestamp?
 
 	public init(accept_partial_authorization: Bool? = nil, autocomplete: Bool? = nil, delay_action: PaymentOptionsDelayAction? = nil, delay_duration: Timestamp? = nil) {
@@ -18587,13 +18663,6 @@ public struct PaymentRefund: Codable, Equatable {
 		self.unlinked = unlinked
 		self.updated_at = updated_at
 	}
-}
-
-/// 
-public enum PaymentSortField: String, Codable {
-	case CREATED_AT
-	case OFFLINE_CREATED_AT
-	case UPDATED_AT
 }
 
 /// An accounting of the amount owed the seller and record of the actual transfer to their external bank account or to the Square balance.
@@ -19164,7 +19233,7 @@ public struct Refund: Codable, Equatable {
 	}
 }
 
-/// Describes a request to refund a payment using [RefundPayment]($e/Refunds/RefundPayment).
+/// Describes a request to refund a payment using [RefundPayment](api-endpoint:Refunds-RefundPayment).
 public struct RefundPaymentRequest: Codable, Equatable {
 	/// The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	public var amount_money: Money
@@ -19193,7 +19262,7 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	/// Indicates that the refund is not linked to a Square payment. If set to true, `destination_id` and `location_id` must be supplied while `payment_id` must not be provided.
 	public var unlinked: Bool?
 
-	/// Describes a request to refund a payment using [RefundPayment]($e/Refunds/RefundPayment).
+	/// Describes a request to refund a payment using [RefundPayment](api-endpoint:Refunds-RefundPayment).
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	///   - app_fee_money: The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
@@ -19225,14 +19294,14 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by [RefundPayment]($e/Refunds/RefundPayment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
+/// Defines the response returned by [RefundPayment](api-endpoint:Refunds-RefundPayment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
 public struct RefundPaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The successfully created `PaymentRefund`.
 	public var refund: PaymentRefund?
 
-	/// Defines the response returned by [RefundPayment]($e/Refunds/RefundPayment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
+	/// Defines the response returned by [RefundPayment](api-endpoint:Refunds-RefundPayment).  If there are errors processing the request, the `refund` field might not be present, or it might be present with a status of `FAILED`.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - refund: The successfully created `PaymentRefund`.
@@ -19254,12 +19323,12 @@ public enum RefundStatus: String, Codable {
 	case FAILED
 }
 
-/// Defines the parameters that can be included in the body of a request to the [RegisterDomain]($e/ApplePay/RegisterDomain) endpoint.
+/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](api-endpoint:ApplePay-RegisterDomain) endpoint.
 public struct RegisterDomainRequest: Codable, Equatable {
 	/// A domain name as described in RFC-1034 that will be registered with ApplePay.
 	public var domain_name: String
 
-	/// Defines the parameters that can be included in the body of a request to the [RegisterDomain]($e/ApplePay/RegisterDomain) endpoint.
+	/// Defines the parameters that can be included in the body of a request to the [RegisterDomain](api-endpoint:ApplePay-RegisterDomain) endpoint.
 	/// - Parameters:
 	///   - domain_name: A domain name as described in RFC-1034 that will be registered with ApplePay.
 	public init(domain_name: String) {
@@ -19267,14 +19336,14 @@ public struct RegisterDomainRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [RegisterDomain]($e/ApplePay/RegisterDomain) endpoint.  Either `errors` or `status` are present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [RegisterDomain](api-endpoint:ApplePay-RegisterDomain) endpoint.  Either `errors` or `status` are present in a given response (never both).
 public struct RegisterDomainResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The status of the domain registration.  See [RegisterDomainResponseStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/RegisterDomainResponseStatus) for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
 	public var status: RegisterDomainResponseStatus?
 
-	/// Defines the fields that are included in the response body of a request to the [RegisterDomain]($e/ApplePay/RegisterDomain) endpoint.  Either `errors` or `status` are present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [RegisterDomain](api-endpoint:ApplePay-RegisterDomain) endpoint.  Either `errors` or `status` are present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - status: The status of the domain registration.  See [RegisterDomainResponseStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/RegisterDomainResponseStatus) for possible values. See [RegisterDomainResponseStatus](#type-registerdomainresponsestatus) for possible values
@@ -19292,18 +19361,18 @@ public enum RegisterDomainResponseStatus: String, Codable {
 	case VERIFIED
 }
 
-/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer]($e/Customers/RemoveGroupFromCustomer) endpoint.
+/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](api-endpoint:Customers-RemoveGroupFromCustomer) endpoint.
 public struct RemoveGroupFromCustomerRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer]($e/Customers/RemoveGroupFromCustomer) endpoint.
+/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](api-endpoint:Customers-RemoveGroupFromCustomer) endpoint.
 public struct RemoveGroupFromCustomerResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer]($e/Customers/RemoveGroupFromCustomer) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](api-endpoint:Customers-RemoveGroupFromCustomer) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -19311,14 +19380,14 @@ public struct RemoveGroupFromCustomerResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the [ResumeSubscription]($e/Subscriptions/ResumeSubscription) endpoint.
+/// Defines input parameters in a request to the [ResumeSubscription](api-endpoint:Subscriptions-ResumeSubscription) endpoint.
 public struct ResumeSubscriptionRequest: Codable, Equatable {
 	/// The timing to resume a subscription, relative to the specified `resume_effective_date` attribute value. See [ChangeTiming](#type-changetiming) for possible values
 	public var resume_change_timing: ChangeTiming?
 	/// The `YYYY-MM-DD`-formatted date when the subscription reactivated.
 	public var resume_effective_date: String?
 
-	/// Defines input parameters in a request to the [ResumeSubscription]($e/Subscriptions/ResumeSubscription) endpoint.
+	/// Defines input parameters in a request to the [ResumeSubscription](api-endpoint:Subscriptions-ResumeSubscription) endpoint.
 	/// - Parameters:
 	///   - resume_change_timing: The timing to resume a subscription, relative to the specified `resume_effective_date` attribute value. See [ChangeTiming](#type-changetiming) for possible values
 	///   - resume_effective_date: The `YYYY-MM-DD`-formatted date when the subscription reactivated.
@@ -19328,7 +19397,7 @@ public struct ResumeSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the  [ResumeSubscription]($e/Subscriptions/ResumeSubscription) endpoint.
+/// Defines output parameters in a response from the  [ResumeSubscription](api-endpoint:Subscriptions-ResumeSubscription) endpoint.
 public struct ResumeSubscriptionResponse: Codable, Equatable {
 	/// A list of `RESUME` actions created by the request and scheduled for the subscription.
 	public var actions: [SubscriptionAction]?
@@ -19337,7 +19406,7 @@ public struct ResumeSubscriptionResponse: Codable, Equatable {
 	/// The resumed subscription.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response from the  [ResumeSubscription]($e/Subscriptions/ResumeSubscription) endpoint.
+	/// Defines output parameters in a response from the  [ResumeSubscription](api-endpoint:Subscriptions-ResumeSubscription) endpoint.
 	/// - Parameters:
 	///   - actions: A list of `RESUME` actions created by the request and scheduled for the subscription.
 	///   - errors: Errors encountered during the request.
@@ -19349,12 +19418,12 @@ public struct ResumeSubscriptionResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveBookingCustomAttributeDefinition]($e/BookingCustomAttributes/RetrieveBookingCustomAttributeDefinition) request.
+/// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) request.
 public struct RetrieveBookingCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 
-	/// Represents a [RetrieveBookingCustomAttributeDefinition]($e/BookingCustomAttributes/RetrieveBookingCustomAttributeDefinition) request.
+	/// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public init(version: Int? = nil) {
@@ -19362,14 +19431,14 @@ public struct RetrieveBookingCustomAttributeDefinitionRequest: Codable, Equatabl
 	}
 }
 
-/// Represents a [RetrieveBookingCustomAttributeDefinition]($e/BookingCustomAttributes/RetrieveBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveBookingCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The retrieved custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveBookingCustomAttributeDefinition]($e/BookingCustomAttributes/RetrieveBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The retrieved custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -19379,14 +19448,14 @@ public struct RetrieveBookingCustomAttributeDefinitionResponse: Codable, Equatab
 	}
 }
 
-/// Represents a [RetrieveBookingCustomAttribute]($e/BookingCustomAttributes/RetrieveBookingCustomAttribute) request.
+/// Represents a [RetrieveBookingCustomAttribute](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttribute) request.
 public struct RetrieveBookingCustomAttributeRequest: Codable, Equatable {
 	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definition: Bool?
 
-	/// Represents a [RetrieveBookingCustomAttribute]($e/BookingCustomAttributes/RetrieveBookingCustomAttribute) request.
+	/// Represents a [RetrieveBookingCustomAttribute](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttribute) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
@@ -19396,14 +19465,14 @@ public struct RetrieveBookingCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveBookingCustomAttribute]($e/BookingCustomAttributes/RetrieveBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveBookingCustomAttribute](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveBookingCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveBookingCustomAttribute]($e/BookingCustomAttributes/RetrieveBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveBookingCustomAttribute](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	///   - errors: Any errors that occurred during the request.
@@ -19453,14 +19522,14 @@ public struct RetrieveCardRequest: Codable, Equatable {
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [RetrieveCard]($e/Cards/RetrieveCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+/// Defines the fields that are included in the response body of a request to the [RetrieveCard](api-endpoint:Cards-RetrieveCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 public struct RetrieveCardResponse: Codable, Equatable {
 	/// The retrieved card.
 	public var card: Card?
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [RetrieveCard]($e/Cards/RetrieveCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [RetrieveCard](api-endpoint:Cards-RetrieveCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 	/// - Parameters:
 	///   - card: The retrieved card.
 	///   - errors: Information on errors encountered during the request.
@@ -19521,12 +19590,12 @@ public struct RetrieveCatalogObjectResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttributeDefinition) request.
+/// Represents a [RetrieveCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttributeDefinition) request.
 public struct RetrieveCustomerCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 
-	/// Represents a [RetrieveCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttributeDefinition) request.
+	/// Represents a [RetrieveCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public init(version: Int? = nil) {
@@ -19534,14 +19603,14 @@ public struct RetrieveCustomerCustomAttributeDefinitionRequest: Codable, Equatab
 	}
 }
 
-/// Represents a [RetrieveCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveCustomerCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The retrieved custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The retrieved custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -19551,14 +19620,14 @@ public struct RetrieveCustomerCustomAttributeDefinitionResponse: Codable, Equata
 	}
 }
 
-/// Represents a [RetrieveCustomerCustomAttribute]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttribute) request.
+/// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) request.
 public struct RetrieveCustomerCustomAttributeRequest: Codable, Equatable {
 	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definition: Bool?
 
-	/// Represents a [RetrieveCustomerCustomAttribute]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttribute) request.
+	/// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
@@ -19568,14 +19637,14 @@ public struct RetrieveCustomerCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveCustomerCustomAttribute]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveCustomerCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveCustomerCustomAttribute]($e/CustomerCustomAttributes/RetrieveCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	///   - errors: Any errors that occurred during the request.
@@ -19585,20 +19654,20 @@ public struct RetrieveCustomerCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup]($e/CustomerGroups/RetrieveCustomerGroup) endpoint.
+/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup](api-endpoint:CustomerGroups-RetrieveCustomerGroup) endpoint.
 public struct RetrieveCustomerGroupRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup]($e/CustomerGroups/RetrieveCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](api-endpoint:CustomerGroups-RetrieveCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
 public struct RetrieveCustomerGroupResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The retrieved customer group.
 	public var group: CustomerGroup?
 
-	/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup]($e/CustomerGroups/RetrieveCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](api-endpoint:CustomerGroups-RetrieveCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The retrieved customer group.
@@ -19904,20 +19973,20 @@ public struct RetrieveInventoryTransferResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveJob]($e/Team/RetrieveJob) request.
+/// Represents a [RetrieveJob](api-endpoint:Team-RetrieveJob) request.
 public struct RetrieveJobRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [RetrieveJob]($e/Team/RetrieveJob) response. Either `job` or `errors` is present in the response.
+/// Represents a [RetrieveJob](api-endpoint:Team-RetrieveJob) response. Either `job` or `errors` is present in the response.
 public struct RetrieveJobResponse: Codable, Equatable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The retrieved job.
 	public var job: Job?
 
-	/// Represents a [RetrieveJob]($e/Team/RetrieveJob) response. Either `job` or `errors` is present in the response.
+	/// Represents a [RetrieveJob](api-endpoint:Team-RetrieveJob) response. Either `job` or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - job: The retrieved job.
@@ -19944,12 +20013,12 @@ public struct RetrieveLocationBookingProfileResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveLocationCustomAttributeDefinition]($e/LocationCustomAttributes/RetrieveLocationCustomAttributeDefinition) request.
+/// Represents a [RetrieveLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttributeDefinition) request.
 public struct RetrieveLocationCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 
-	/// Represents a [RetrieveLocationCustomAttributeDefinition]($e/LocationCustomAttributes/RetrieveLocationCustomAttributeDefinition) request.
+	/// Represents a [RetrieveLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public init(version: Int? = nil) {
@@ -19957,14 +20026,14 @@ public struct RetrieveLocationCustomAttributeDefinitionRequest: Codable, Equatab
 	}
 }
 
-/// Represents a [RetrieveLocationCustomAttributeDefinition]($e/LocationCustomAttributes/RetrieveLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveLocationCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The retrieved custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveLocationCustomAttributeDefinition]($e/LocationCustomAttributes/RetrieveLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The retrieved custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -19974,14 +20043,14 @@ public struct RetrieveLocationCustomAttributeDefinitionResponse: Codable, Equata
 	}
 }
 
-/// Represents a [RetrieveLocationCustomAttribute]($e/LocationCustomAttributes/RetrieveLocationCustomAttribute) request.
+/// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) request.
 public struct RetrieveLocationCustomAttributeRequest: Codable, Equatable {
 	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definition: Bool?
 
-	/// Represents a [RetrieveLocationCustomAttribute]($e/LocationCustomAttributes/RetrieveLocationCustomAttribute) request.
+	/// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
@@ -19991,14 +20060,14 @@ public struct RetrieveLocationCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveLocationCustomAttribute]($e/LocationCustomAttributes/RetrieveLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveLocationCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveLocationCustomAttribute]($e/LocationCustomAttributes/RetrieveLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	///   - errors: Any errors that occurred during the request.
@@ -20008,20 +20077,20 @@ public struct RetrieveLocationCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the request body for the [RetrieveLocation]($e/Locations/RetrieveLocation) endpoint.
+/// Defines the fields that are included in the request body for the [RetrieveLocation](api-endpoint:Locations-RetrieveLocation) endpoint.
 public struct RetrieveLocationRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that the [RetrieveLocation]($e/Locations/RetrieveLocation) endpoint returns in a response.
+/// Defines the fields that the [RetrieveLocation](api-endpoint:Locations-RetrieveLocation) endpoint returns in a response.
 public struct RetrieveLocationResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested location.
 	public var location: Location?
 
-	/// Defines the fields that the [RetrieveLocation]($e/Locations/RetrieveLocation) endpoint returns in a response.
+	/// Defines the fields that the [RetrieveLocation](api-endpoint:Locations-RetrieveLocation) endpoint returns in a response.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - location: The requested location.
@@ -20094,20 +20163,20 @@ public struct RetrieveLoyaltyProgramResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveLoyaltyPromotionPromotions]($e/Loyalty/RetrieveLoyaltyPromotion) request.
+/// Represents a [RetrieveLoyaltyPromotionPromotions](api-endpoint:Loyalty-RetrieveLoyaltyPromotion) request.
 public struct RetrieveLoyaltyPromotionRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents a [RetrieveLoyaltyPromotionPromotions]($e/Loyalty/RetrieveLoyaltyPromotion) response.
+/// Represents a [RetrieveLoyaltyPromotionPromotions](api-endpoint:Loyalty-RetrieveLoyaltyPromotion) response.
 public struct RetrieveLoyaltyPromotionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The retrieved loyalty promotion.
 	public var loyalty_promotion: LoyaltyPromotion?
 
-	/// Represents a [RetrieveLoyaltyPromotionPromotions]($e/Loyalty/RetrieveLoyaltyPromotion) response.
+	/// Represents a [RetrieveLoyaltyPromotionPromotions](api-endpoint:Loyalty-RetrieveLoyaltyPromotion) response.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - loyalty_promotion: The retrieved loyalty promotion.
@@ -20140,12 +20209,12 @@ public struct RetrieveLoyaltyRewardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttributeDefinition) request.
+/// Represents a [RetrieveMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttributeDefinition) request.
 public struct RetrieveMerchantCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 
-	/// Represents a [RetrieveMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttributeDefinition) request.
+	/// Represents a [RetrieveMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public init(version: Int? = nil) {
@@ -20153,14 +20222,14 @@ public struct RetrieveMerchantCustomAttributeDefinitionRequest: Codable, Equatab
 	}
 }
 
-/// Represents a [RetrieveMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveMerchantCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The retrieved custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The retrieved custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -20170,14 +20239,14 @@ public struct RetrieveMerchantCustomAttributeDefinitionResponse: Codable, Equata
 	}
 }
 
-/// Represents a [RetrieveMerchantCustomAttribute]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttribute) request.
+/// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) request.
 public struct RetrieveMerchantCustomAttributeRequest: Codable, Equatable {
 	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	public var version: Int?
 	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
 	public var with_definition: Bool?
 
-	/// Represents a [RetrieveMerchantCustomAttribute]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttribute) request.
+	/// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) request.
 	/// - Parameters:
 	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
 	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
@@ -20187,14 +20256,14 @@ public struct RetrieveMerchantCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveMerchantCustomAttribute]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveMerchantCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents a [RetrieveMerchantCustomAttribute]($e/MerchantCustomAttributes/RetrieveMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
 	///   - errors: Any errors that occurred during the request.
@@ -20204,20 +20273,20 @@ public struct RetrieveMerchantCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Request object for the [RetrieveMerchant]($e/Merchants/RetrieveMerchant) endpoint.
+/// Request object for the [RetrieveMerchant](api-endpoint:Merchants-RetrieveMerchant) endpoint.
 public struct RetrieveMerchantRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// The response object returned by the [RetrieveMerchant]($e/Merchants/RetrieveMerchant) endpoint.
+/// The response object returned by the [RetrieveMerchant](api-endpoint:Merchants-RetrieveMerchant) endpoint.
 public struct RetrieveMerchantResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested `Merchant` object.
 	public var merchant: Merchant?
 
-	/// The response object returned by the [RetrieveMerchant]($e/Merchants/RetrieveMerchant) endpoint.
+	/// The response object returned by the [RetrieveMerchant](api-endpoint:Merchants-RetrieveMerchant) endpoint.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - merchant: The requested `Merchant` object.
@@ -20365,12 +20434,12 @@ public struct RetrieveSnippetResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the  [RetrieveSubscription]($e/Subscriptions/RetrieveSubscription) endpoint.
+/// Defines input parameters in a request to the  [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) endpoint.
 public struct RetrieveSubscriptionRequest: Codable, Equatable {
 	/// A query parameter to specify related information to be included in the response.   The supported query parameter values are:   - `actions`: to include scheduled actions on the targeted subscription.
 	public var include: String?
 
-	/// Defines input parameters in a request to the  [RetrieveSubscription]($e/Subscriptions/RetrieveSubscription) endpoint.
+	/// Defines input parameters in a request to the  [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) endpoint.
 	/// - Parameters:
 	///   - include: A query parameter to specify related information to be included in the response.   The supported query parameter values are:   - `actions`: to include scheduled actions on the targeted subscription.
 	public init(include: String? = nil) {
@@ -20378,14 +20447,14 @@ public struct RetrieveSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the [RetrieveSubscription]($e/Subscriptions/RetrieveSubscription) endpoint.
+/// Defines output parameters in a response from the [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) endpoint.
 public struct RetrieveSubscriptionResponse: Codable, Equatable {
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The subscription retrieved.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response from the [RetrieveSubscription]($e/Subscriptions/RetrieveSubscription) endpoint.
+	/// Defines output parameters in a response from the [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) endpoint.
 	/// - Parameters:
 	///   - errors: Errors encountered during the request.
 	///   - subscription: The subscription retrieved.
@@ -20492,20 +20561,20 @@ public struct RetrieveTransactionResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an input to a call to [RetrieveVendor]($e/Vendors/RetrieveVendor).
+/// Represents an input to a call to [RetrieveVendor](api-endpoint:Vendors-RetrieveVendor).
 public struct RetrieveVendorRequest: Codable, Equatable {
 
 	// no init-- this struct is read-only
 }
 
-/// Represents an output from a call to [RetrieveVendor]($e/Vendors/RetrieveVendor).
+/// Represents an output from a call to [RetrieveVendor](api-endpoint:Vendors-RetrieveVendor).
 public struct RetrieveVendorResponse: Codable, Equatable {
 	/// Errors encountered when the request fails.
 	public var errors: [SquareError]?
 	/// The successfully retrieved [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) object.
 	public var vendor: Vendor?
 
-	/// Represents an output from a call to [RetrieveVendor]($e/Vendors/RetrieveVendor).
+	/// Represents an output from a call to [RetrieveVendor](api-endpoint:Vendors-RetrieveVendor).
 	/// - Parameters:
 	///   - errors: Errors encountered when the request fails.
 	///   - vendor: The successfully retrieved [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) object.
@@ -20544,14 +20613,14 @@ public struct RetrieveWebhookSubscriptionRequest: Codable, Equatable {
 	// no init-- this struct is read-only
 }
 
-/// Defines the fields that are included in the response body of a request to the [RetrieveWebhookSubscription]($e/WebhookSubscriptions/RetrieveWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
+/// Defines the fields that are included in the response body of a request to the [RetrieveWebhookSubscription](api-endpoint:WebhookSubscriptions-RetrieveWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
 public struct RetrieveWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The requested [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
 	public var subscription: WebhookSubscription?
 
-	/// Defines the fields that are included in the response body of a request to the [RetrieveWebhookSubscription]($e/WebhookSubscriptions/RetrieveWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
+	/// Defines the fields that are included in the response body of a request to the [RetrieveWebhookSubscription](api-endpoint:WebhookSubscriptions-RetrieveWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - subscription: The requested [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
@@ -20700,7 +20769,7 @@ public struct SearchAvailabilityResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the request body for the [SearchCatalogItems]($e/Catalog/SearchCatalogItems) endpoint.
+/// Defines the request body for the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint.
 public struct SearchCatalogItemsRequest: Codable, Equatable {
 	/// The query filter to return not archived (`ARCHIVED_STATE_NOT_ARCHIVED`), archived (`ARCHIVED_STATE_ARCHIVED`), or either type (`ARCHIVED_STATE_ALL`) of items.
 	public var archived_state: ArchivedState?
@@ -20723,7 +20792,7 @@ public struct SearchCatalogItemsRequest: Codable, Equatable {
 	/// The text filter expression to return items or item variations containing specified text in the `name`, `description`, or `abbreviation` attribute value of an item, or in the `name`, `sku`, or `upc` attribute value of an item variation.
 	public var text_filter: String?
 
-	/// Defines the request body for the [SearchCatalogItems]($e/Catalog/SearchCatalogItems) endpoint.
+	/// Defines the request body for the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint.
 	/// - Parameters:
 	///   - archived_state: The query filter to return not archived (`ARCHIVED_STATE_NOT_ARCHIVED`), archived (`ARCHIVED_STATE_ARCHIVED`), or either type (`ARCHIVED_STATE_ALL`) of items.
 	///   - category_ids: The category id query expression to return items containing the specified category IDs.
@@ -20757,7 +20826,7 @@ public enum SearchCatalogItemsRequestStockLevel: String, Codable {
 	case LOW
 }
 
-/// Defines the response body returned from the [SearchCatalogItems]($e/Catalog/SearchCatalogItems) endpoint.
+/// Defines the response body returned from the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint.
 public struct SearchCatalogItemsResponse: Codable, Equatable {
 	/// Pagination token used in the next request to return more of the search result.
 	public var cursor: String?
@@ -20768,7 +20837,7 @@ public struct SearchCatalogItemsResponse: Codable, Equatable {
 	/// Ids of returned item variations matching the specified query expression.
 	public var matched_variation_ids: [String]?
 
-	/// Defines the response body returned from the [SearchCatalogItems]($e/Catalog/SearchCatalogItems) endpoint.
+	/// Defines the response body returned from the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint.
 	/// - Parameters:
 	///   - cursor: Pagination token used in the next request to return more of the search result.
 	///   - errors: Any errors that occurred during the request.
@@ -20787,9 +20856,9 @@ public struct SearchCatalogObjectsRequest: Codable, Equatable {
 	public var begin_time: Timestamp?
 	/// The pagination cursor returned in the previous response. Leave unset for an initial request. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
 	public var cursor: String?
-	/// Specifies whether or not to include the `path_to_root` list for each returned category instance. The `path_to_root` list consists of `CategoryPathToRootNode` objects and specifies the path that starts with the immediate parent category of the returned category and ends with its root category. If the returned category is a top-level category, the `path_to_root` list is empty and is not returned in the response payload.
+	/// Specifies whether or not to include the `path_to_root` list for each returned category instance. The `path_to_root` list consists of `CategoryPathToRootNode` objects and specifies the path that starts with the immediate parent category of the returned category and ends with its root category. If the returned category is a top-level category, the `path_to_root` list is empty and is not returned in the response payload. If `include_category_path_to_root` is `true`, then the `include_deleted_objects` request parameter must be `false`. Both properties cannot be `true` at the same time.
 	public var include_category_path_to_root: Bool?
-	/// If `true`, deleted objects will be included in the results. Deleted objects will have their `is_deleted` field set to `true`.
+	/// If `true`, deleted objects will be included in the results. Defaults to `false`. Deleted objects will have their `is_deleted` field set to `true`. If `include_deleted_objects` is `true`, then the `include_category_path_to_root` request parameter must be `false`. Both properties cannot be `true` at the same time.
 	public var include_deleted_objects: Bool?
 	/// If `true`, the response will include additional objects that are related to the requested objects. Related objects are objects that are referenced by object ID by the objects in the response. This is helpful if the objects are being fetched for immediate display to a user. This process only goes one level deep. Objects referenced by the related objects will not be included. For example:  If the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.  Default value: `false`
 	public var include_related_objects: Bool?
@@ -20946,7 +21015,7 @@ public struct SearchEventsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [SearchEvents]($e/Events/SearchEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+/// Defines the fields that are included in the response body of a request to the [SearchEvents](api-endpoint:Events-SearchEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 public struct SearchEventsResponse: Codable, Equatable {
 	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of events. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -20957,7 +21026,7 @@ public struct SearchEventsResponse: Codable, Equatable {
 	/// Contains the metadata of an event. For more information, see [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event).
 	public var metadata: [EventMetadata]?
 
-	/// Defines the fields that are included in the response body of a request to the [SearchEvents]($e/Events/SearchEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
+	/// Defines the fields that are included in the response body of a request to the [SearchEvents](api-endpoint:Events-SearchEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 	/// - Parameters:
 	///   - cursor: When a response is truncated, it includes a cursor that you can use in a subsequent request to fetch the next set of events. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Information on errors encountered during the request.
@@ -21314,7 +21383,7 @@ public struct SearchOrdersRequest: Codable, Equatable {
 	}
 }
 
-/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest]($e/Orders/SearchOrders).
+/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](api-endpoint:Orders-SearchOrders).
 public struct SearchOrdersResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -21325,7 +21394,7 @@ public struct SearchOrdersResponse: Codable, Equatable {
 	/// A list of [Order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) objects that match the query conditions. The list is populated only if `return_entries` is set to `false` in the request.
 	public var orders: [Order]?
 
-	/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest]($e/Orders/SearchOrders).
+	/// Either the `order_entries` or `orders` field is set, depending on whether `return_entries` is set on the [SearchOrdersRequest](api-endpoint:Orders-SearchOrders).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: [Errors](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Error) encountered during the search.
@@ -21434,7 +21503,7 @@ public struct SearchShiftsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a set of query expressions (filters) to narrow the scope of targeted subscriptions returned by  the [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) endpoint.
+/// Represents a set of query expressions (filters) to narrow the scope of targeted subscriptions returned by  the [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) endpoint.
 public struct SearchSubscriptionsFilter: Codable, Equatable {
 	/// A filter to select subscriptions based on the subscribing customer IDs.
 	public var customer_ids: [String]?
@@ -21443,7 +21512,7 @@ public struct SearchSubscriptionsFilter: Codable, Equatable {
 	/// A filter to select subscriptions based on the source application.
 	public var source_names: [String]?
 
-	/// Represents a set of query expressions (filters) to narrow the scope of targeted subscriptions returned by  the [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) endpoint.
+	/// Represents a set of query expressions (filters) to narrow the scope of targeted subscriptions returned by  the [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) endpoint.
 	/// - Parameters:
 	///   - customer_ids: A filter to select subscriptions based on the subscribing customer IDs.
 	///   - location_ids: A filter to select subscriptions based on the location.
@@ -21468,7 +21537,7 @@ public struct SearchSubscriptionsQuery: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the  [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) endpoint.
+/// Defines input parameters in a request to the  [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) endpoint.
 public struct SearchSubscriptionsRequest: Codable, Equatable {
 	/// When the total number of resulting subscriptions exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -21479,7 +21548,7 @@ public struct SearchSubscriptionsRequest: Codable, Equatable {
 	/// A subscription query consisting of specified filtering conditions.  If this `query` field is unspecified, the `SearchSubscriptions` call will return all subscriptions.
 	public var query: SearchSubscriptionsQuery?
 
-	/// Defines input parameters in a request to the  [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) endpoint.
+	/// Defines input parameters in a request to the  [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) endpoint.
 	/// - Parameters:
 	///   - cursor: When the total number of resulting subscriptions exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - include: An option to include related information in the response.   The supported values are:   - `actions`: to include scheduled actions on the targeted subscriptions.
@@ -21493,7 +21562,7 @@ public struct SearchSubscriptionsRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) endpoint.
+/// Defines output parameters in a response from the [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) endpoint.
 public struct SearchSubscriptionsResponse: Codable, Equatable {
 	/// When the total number of resulting subscription exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -21502,7 +21571,7 @@ public struct SearchSubscriptionsResponse: Codable, Equatable {
 	/// The subscriptions matching the specified query expressions.
 	public var subscriptions: [Subscription]?
 
-	/// Defines output parameters in a response from the [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) endpoint.
+	/// Defines output parameters in a response from the [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) endpoint.
 	/// - Parameters:
 	///   - cursor: When the total number of resulting subscription exceeds the limit of a paged response,  the response includes a cursor for you to use in a subsequent request to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	///   - errors: Errors encountered during the request.
@@ -21680,7 +21749,7 @@ public struct SearchTerminalRefundsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an input into a call to [SearchVendors]($e/Vendors/SearchVendors).
+/// Represents an input into a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
 public struct SearchVendorsRequest: Codable, Equatable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
@@ -21689,7 +21758,7 @@ public struct SearchVendorsRequest: Codable, Equatable {
 	/// Specifies a sorter used to sort the returned vendors.
 	public var sort: SearchVendorsRequestSort?
 
-	/// Represents an input into a call to [SearchVendors]($e/Vendors/SearchVendors).
+	/// Represents an input into a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
 	/// - Parameters:
 	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	///   - filter: Specifies a filter used to search for vendors.
@@ -21718,14 +21787,14 @@ public struct SearchVendorsRequestFilter: Codable, Equatable {
 	}
 }
 
-/// Defines a sorter used to sort results from [SearchVendors]($e/Vendors/SearchVendors).
+/// Defines a sorter used to sort results from [SearchVendors](api-endpoint:Vendors-SearchVendors).
 public struct SearchVendorsRequestSort: Codable, Equatable {
 	/// Specifies the sort key to sort the returned vendors. See [Field](#type-field) for possible values
 	public var field: SearchVendorsRequestSortField?
 	/// Specifies the sort order for the returned vendors. See [SortOrder](#type-sortorder) for possible values
 	public var order: SortOrder?
 
-	/// Defines a sorter used to sort results from [SearchVendors]($e/Vendors/SearchVendors).
+	/// Defines a sorter used to sort results from [SearchVendors](api-endpoint:Vendors-SearchVendors).
 	/// - Parameters:
 	///   - field: Specifies the sort key to sort the returned vendors. See [Field](#type-field) for possible values
 	///   - order: Specifies the sort order for the returned vendors. See [SortOrder](#type-sortorder) for possible values
@@ -21743,7 +21812,7 @@ public enum SearchVendorsRequestSortField: String, Codable {
 	case CREATED_AT
 }
 
-/// Represents an output from a call to [SearchVendors]($e/Vendors/SearchVendors).
+/// Represents an output from a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
 public struct SearchVendorsResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	public var cursor: String?
@@ -21752,7 +21821,7 @@ public struct SearchVendorsResponse: Codable, Equatable {
 	/// The [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects matching the specified search filter.
 	public var vendors: [Vendor]?
 
-	/// Represents an output from a call to [SearchVendors]($e/Vendors/SearchVendors).
+	/// Represents an output from a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
 	/// - Parameters:
 	///   - cursor: The pagination cursor to be used in a subsequent request. If unset, this is the final response.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
 	///   - errors: Errors encountered when the request fails.
@@ -22253,7 +22322,7 @@ public struct SubmitEvidenceResponse: Codable, Equatable {
 
 /// Represents a subscription purchased by a customer.  For more information, see [Manage Subscriptions](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions).
 public struct Subscription: Codable, Equatable {
-	/// The list of scheduled actions on this subscription. It is set only in the response from   [RetrieveSubscription]($e/Subscriptions/RetrieveSubscription) with the query parameter of `include=actions` or from  [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) with the input parameter  of `include:["actions"]`.
+	/// The list of scheduled actions on this subscription. It is set only in the response from   [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) with the query parameter of `include=actions` or from  [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) with the input parameter  of `include:["actions"]`.
 	public var actions: [SubscriptionAction]?
 	/// The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,  when the subscription status changes to `CANCELED` and the subscription billing stops.  If this field is not set, the subscription ends according its subscription plan.  This field cannot be updated, other than being cleared.
 	public var canceled_date: String?
@@ -22294,7 +22363,7 @@ public struct Subscription: Codable, Equatable {
 
 	/// Represents a subscription purchased by a customer.  For more information, see [Manage Subscriptions](https://developer.squareup.com/docs/subscriptions-api/manage-subscriptions).
 	/// - Parameters:
-	///   - actions: The list of scheduled actions on this subscription. It is set only in the response from   [RetrieveSubscription]($e/Subscriptions/RetrieveSubscription) with the query parameter of `include=actions` or from  [SearchSubscriptions]($e/Subscriptions/SearchSubscriptions) with the input parameter  of `include:["actions"]`.
+	///   - actions: The list of scheduled actions on this subscription. It is set only in the response from   [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) with the query parameter of `include=actions` or from  [SearchSubscriptions](api-endpoint:Subscriptions-SearchSubscriptions) with the input parameter  of `include:["actions"]`.
 	///   - canceled_date: The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,  when the subscription status changes to `CANCELED` and the subscription billing stops.  If this field is not set, the subscription ends according its subscription plan.  This field cannot be updated, other than being cleared.
 	///   - card_id: The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) used to charge for the subscription.
 	///   - charged_through_date: The `YYYY-MM-DD`-formatted date up to when the subscriber is invoiced for the subscription.  After the invoice is sent for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a subscriber gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
@@ -22619,14 +22688,14 @@ public struct SubscriptionTestResult: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a call to the [SwapPlan]($e/Subscriptions/SwapPlan) endpoint.
+/// Defines input parameters in a call to the [SwapPlan](api-endpoint:Subscriptions-SwapPlan) endpoint.
 public struct SwapPlanRequest: Codable, Equatable {
 	/// The ID of the new subscription plan variation.  This field is required.
 	public var new_plan_variation_id: String?
 	/// A list of PhaseInputs, to pass phase-specific information used in the swap.
 	public var phases: [PhaseInput]?
 
-	/// Defines input parameters in a call to the [SwapPlan]($e/Subscriptions/SwapPlan) endpoint.
+	/// Defines input parameters in a call to the [SwapPlan](api-endpoint:Subscriptions-SwapPlan) endpoint.
 	/// - Parameters:
 	///   - new_plan_variation_id: The ID of the new subscription plan variation.  This field is required.
 	///   - phases: A list of PhaseInputs, to pass phase-specific information used in the swap.
@@ -22636,7 +22705,7 @@ public struct SwapPlanRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response of the  [SwapPlan]($e/Subscriptions/SwapPlan) endpoint.
+/// Defines output parameters in a response of the  [SwapPlan](api-endpoint:Subscriptions-SwapPlan) endpoint.
 public struct SwapPlanResponse: Codable, Equatable {
 	/// A list of a `SWAP_PLAN` action created by the request.
 	public var actions: [SubscriptionAction]?
@@ -22645,7 +22714,7 @@ public struct SwapPlanResponse: Codable, Equatable {
 	/// The subscription with the updated subscription plan.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response of the  [SwapPlan]($e/Subscriptions/SwapPlan) endpoint.
+	/// Defines output parameters in a response of the  [SwapPlan](api-endpoint:Subscriptions-SwapPlan) endpoint.
 	/// - Parameters:
 	///   - actions: A list of a `SWAP_PLAN` action created by the request.
 	///   - errors: Errors encountered during the request.
@@ -23264,7 +23333,7 @@ public struct TerminalActionQuerySort: Codable, Equatable {
 public struct TerminalCheckout: Codable, Equatable {
 	/// The amount of money (including the tax amount) that the Square Terminal device should try to collect.
 	public var amount_money: Money
-	/// The amount the developer is taking as a fee for facilitating the payment on behalf of the seller.  The amount cannot be more than 90% of the total amount of the payment.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The fee currency code must match the currency associated with the seller that is accepting the payment. The application must be from a developer account in the same country and using the same currency code as the seller.  For more information about the application fee scenario, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).  Supported only in the US.
+	/// The amount the developer is taking as a fee for facilitating the payment on behalf of the seller.  The amount cannot be more than 90% of the total amount of the payment.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The fee currency code must match the currency associated with the seller that is accepting the payment. The application must be from a developer account in the same country and using the same currency code as the seller.  For more information about the application fee scenario, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	public var app_fee_money: Money?
 	/// The ID of the application that created the checkout.
 	public var app_id: String?
@@ -23284,23 +23353,23 @@ public struct TerminalCheckout: Codable, Equatable {
 	public var location_id: String?
 	/// An optional note to associate with the checkout, as well as with any payments used to complete the checkout. Note: maximum 500 characters
 	public var note: String?
-	/// The reference to the Square order ID for the checkout request. Supported only in the US.
+	/// The reference to the Square order ID for the checkout request.
 	public var order_id: String?
 	/// A list of IDs for payments created by this `TerminalCheckout`.
 	public var payment_ids: [String]?
-	/// Payment-specific options for the checkout request. Supported only in the US.
+	/// Payment-specific options for the checkout request.
 	public var payment_options: PaymentOptions?
 	/// The type of payment the terminal should attempt to capture from. Defaults to `CARD_PRESENT`. See [CheckoutOptionsPaymentType](#type-checkoutoptionspaymenttype) for possible values
 	public var payment_type: CheckoutOptionsPaymentType?
 	/// An optional user-defined reference ID that can be used to associate this `TerminalCheckout` to another entity in an external system. For example, an order ID generated by a third-party shopping cart. The ID is also associated with any payments used to complete the checkout.
 	public var reference_id: String?
-	/// Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase. Supported only in the US.
+	/// Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.
 	public var statement_description_identifier: String?
 	/// The status of the `TerminalCheckout`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	public var status: String?
 	/// An optional ID of the team member associated with creating the checkout.
 	public var team_member_id: String?
-	/// The amount designated as a tip, in addition to `amount_money`. This may only be set for a checkout that has tipping disabled (`tip_settings.allow_tipping` is `false`). Supported only in the US.
+	/// The amount designated as a tip, in addition to `amount_money`. This may only be set for a checkout that has tipping disabled (`tip_settings.allow_tipping` is `false`).
 	public var tip_money: Money?
 	/// The time when the `TerminalCheckout` was last updated, as an RFC 3339 timestamp.
 	public var updated_at: Timestamp?
@@ -23308,7 +23377,7 @@ public struct TerminalCheckout: Codable, Equatable {
 	/// Represents a checkout processed by the Square Terminal.
 	/// - Parameters:
 	///   - amount_money: The amount of money (including the tax amount) that the Square Terminal device should try to collect.
-	///   - app_fee_money: The amount the developer is taking as a fee for facilitating the payment on behalf of the seller.  The amount cannot be more than 90% of the total amount of the payment.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The fee currency code must match the currency associated with the seller that is accepting the payment. The application must be from a developer account in the same country and using the same currency code as the seller.  For more information about the application fee scenario, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).  Supported only in the US.
+	///   - app_fee_money: The amount the developer is taking as a fee for facilitating the payment on behalf of the seller.  The amount cannot be more than 90% of the total amount of the payment.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The fee currency code must match the currency associated with the seller that is accepting the payment. The application must be from a developer account in the same country and using the same currency code as the seller.  For more information about the application fee scenario, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	///   - app_id: The ID of the application that created the checkout.
 	///   - cancel_reason: The reason why `TerminalCheckout` is canceled. Present if the status is `CANCELED`. See [ActionCancelReason](#type-actioncancelreason) for possible values
 	///   - created_at: The time when the `TerminalCheckout` was created, as an RFC 3339 timestamp.
@@ -23318,15 +23387,15 @@ public struct TerminalCheckout: Codable, Equatable {
 	///   - id: A unique ID for this `TerminalCheckout`.
 	///   - location_id: The location of the device where the `TerminalCheckout` was directed.
 	///   - note: An optional note to associate with the checkout, as well as with any payments used to complete the checkout. Note: maximum 500 characters
-	///   - order_id: The reference to the Square order ID for the checkout request. Supported only in the US.
+	///   - order_id: The reference to the Square order ID for the checkout request.
 	///   - payment_ids: A list of IDs for payments created by this `TerminalCheckout`.
-	///   - payment_options: Payment-specific options for the checkout request. Supported only in the US.
+	///   - payment_options: Payment-specific options for the checkout request.
 	///   - payment_type: The type of payment the terminal should attempt to capture from. Defaults to `CARD_PRESENT`. See [CheckoutOptionsPaymentType](#type-checkoutoptionspaymenttype) for possible values
 	///   - reference_id: An optional user-defined reference ID that can be used to associate this `TerminalCheckout` to another entity in an external system. For example, an order ID generated by a third-party shopping cart. The ID is also associated with any payments used to complete the checkout.
-	///   - statement_description_identifier: Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase. Supported only in the US.
+	///   - statement_description_identifier: Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.
 	///   - status: The status of the `TerminalCheckout`. Options: `PENDING`, `IN_PROGRESS`, `CANCEL_REQUESTED`, `CANCELED`, `COMPLETED`
 	///   - team_member_id: An optional ID of the team member associated with creating the checkout.
-	///   - tip_money: The amount designated as a tip, in addition to `amount_money`. This may only be set for a checkout that has tipping disabled (`tip_settings.allow_tipping` is `false`). Supported only in the US.
+	///   - tip_money: The amount designated as a tip, in addition to `amount_money`. This may only be set for a checkout that has tipping disabled (`tip_settings.allow_tipping` is `false`).
 	///   - updated_at: The time when the `TerminalCheckout` was last updated, as an RFC 3339 timestamp.
 	public init(amount_money: Money, device_options: DeviceCheckoutOptions, app_fee_money: Money? = nil, app_id: String? = nil, cancel_reason: ActionCancelReason? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, deadline_duration: Timestamp? = nil, id: String? = nil, location_id: String? = nil, note: String? = nil, order_id: String? = nil, payment_ids: [String]? = nil, payment_options: PaymentOptions? = nil, payment_type: CheckoutOptionsPaymentType? = nil, reference_id: String? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, updated_at: Timestamp? = nil) {
 		self.amount_money = amount_money
@@ -23503,14 +23572,14 @@ public struct TestWebhookSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [TestWebhookSubscription]($e/WebhookSubscriptions/TestWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [SubscriptionTestResult](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionTestResult) field is not present.
+/// Defines the fields that are included in the response body of a request to the [TestWebhookSubscription](api-endpoint:WebhookSubscriptions-TestWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [SubscriptionTestResult](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionTestResult) field is not present.
 public struct TestWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The [SubscriptionTestResult](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionTestResult).
 	public var subscription_test_result: SubscriptionTestResult?
 
-	/// Defines the fields that are included in the response body of a request to the [TestWebhookSubscription]($e/WebhookSubscriptions/TestWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [SubscriptionTestResult](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionTestResult) field is not present.
+	/// Defines the fields that are included in the response body of a request to the [TestWebhookSubscription](api-endpoint:WebhookSubscriptions-TestWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [SubscriptionTestResult](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionTestResult) field is not present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - subscription_test_result: The [SubscriptionTestResult](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/SubscriptionTestResult).
@@ -23663,14 +23732,14 @@ public struct UnlinkCustomerFromGiftCardResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpdateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/UpdateBookingCustomAttributeDefinition) request.
+/// Represents an [UpdateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-UpdateBookingCustomAttributeDefinition) request.
 public struct UpdateBookingCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition that contains the fields to update. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Updatable definition fields](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attribute-definitions#updatable-definition-fields).  To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include the optional `version` field and specify the current version of the custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpdateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/UpdateBookingCustomAttributeDefinition) request.
+	/// Represents an [UpdateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-UpdateBookingCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Updatable definition fields](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attribute-definitions#updatable-definition-fields).  To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include the optional `version` field and specify the current version of the custom attribute definition.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -23680,14 +23749,14 @@ public struct UpdateBookingCustomAttributeDefinitionRequest: Codable, Equatable 
 	}
 }
 
-/// Represents an [UpdateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/UpdateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpdateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-UpdateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpdateBookingCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The updated custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpdateBookingCustomAttributeDefinition]($e/BookingCustomAttributes/UpdateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpdateBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-UpdateBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The updated custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -23772,14 +23841,14 @@ public struct UpdateCatalogImageResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpdateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/UpdateCustomerCustomAttributeDefinition) request.
+/// Represents an [UpdateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-UpdateCustomerCustomAttributeDefinition) request.
 public struct UpdateCustomerCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated:  - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Updatable definition fields](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attribute-definitions#updatable-definition-fields).  To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency)  control, include the optional `version` field and specify the current version of the custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpdateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/UpdateCustomerCustomAttributeDefinition) request.
+	/// Represents an [UpdateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-UpdateCustomerCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated:  - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Updatable definition fields](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attribute-definitions#updatable-definition-fields).  To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency)  control, include the optional `version` field and specify the current version of the custom attribute definition.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -23789,14 +23858,14 @@ public struct UpdateCustomerCustomAttributeDefinitionRequest: Codable, Equatable
 	}
 }
 
-/// Represents an [UpdateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/UpdateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpdateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-UpdateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpdateCustomerCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The updated custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpdateCustomerCustomAttributeDefinition]($e/CustomerCustomAttributes/UpdateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpdateCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-UpdateCustomerCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The updated custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -23806,12 +23875,12 @@ public struct UpdateCustomerCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup]($e/CustomerGroups/UpdateCustomerGroup) endpoint.
+/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup](api-endpoint:CustomerGroups-UpdateCustomerGroup) endpoint.
 public struct UpdateCustomerGroupRequest: Codable, Equatable {
 	/// The `CustomerGroup` object including all the updates you want to make.
 	public var group: CustomerGroup
 
-	/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup]($e/CustomerGroups/UpdateCustomerGroup) endpoint.
+	/// Defines the body parameters that can be included in a request to the [UpdateCustomerGroup](api-endpoint:CustomerGroups-UpdateCustomerGroup) endpoint.
 	/// - Parameters:
 	///   - group: The `CustomerGroup` object including all the updates you want to make.
 	public init(group: CustomerGroup) {
@@ -23819,14 +23888,14 @@ public struct UpdateCustomerGroupRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup]($e/CustomerGroups/UpdateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](api-endpoint:CustomerGroups-UpdateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
 public struct UpdateCustomerGroupResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The successfully updated customer group.
 	public var group: CustomerGroup?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup]($e/CustomerGroups/UpdateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [UpdateCustomerGroup](api-endpoint:CustomerGroups-UpdateCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - group: The successfully updated customer group.
@@ -23893,14 +23962,14 @@ public struct UpdateCustomerRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateCustomer]($e/Customers/UpdateCustomer) or [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
+/// Defines the fields that are included in the response body of a request to the [UpdateCustomer](api-endpoint:Customers-UpdateCustomer) or [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 public struct UpdateCustomerResponse: Codable, Equatable {
 	/// The updated customer.
 	public var customer: Customer?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateCustomer]($e/Customers/UpdateCustomer) or [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
+	/// Defines the fields that are included in the response body of a request to the [UpdateCustomer](api-endpoint:Customers-UpdateCustomer) or [BulkUpdateCustomers](api-endpoint:Customers-BulkUpdateCustomers) endpoint.  Either `errors` or `customer` is present in a given response (never both).
 	/// - Parameters:
 	///   - customer: The updated customer.
 	///   - errors: Any errors that occurred during the request.
@@ -24002,12 +24071,12 @@ public struct UpdateItemTaxesResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpdateJob]($e/Team/UpdateJob) request.
+/// Represents an [UpdateJob](api-endpoint:Team-UpdateJob) request.
 public struct UpdateJobRequest: Codable, Equatable {
 	/// The job with the updated fields, either `title`, `is_tip_eligible`, or both. Only changed fields need to be included in the request. Optionally include `version` to enable optimistic concurrency control.
 	public var job: Job
 
-	/// Represents an [UpdateJob]($e/Team/UpdateJob) request.
+	/// Represents an [UpdateJob](api-endpoint:Team-UpdateJob) request.
 	/// - Parameters:
 	///   - job: The job with the updated fields, either `title`, `is_tip_eligible`, or both. Only changed fields need to be included in the request. Optionally include `version` to enable optimistic concurrency control.
 	public init(job: Job) {
@@ -24015,14 +24084,14 @@ public struct UpdateJobRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpdateJob]($e/Team/UpdateJob) response. Either `job` or `errors` is present in the response.
+/// Represents an [UpdateJob](api-endpoint:Team-UpdateJob) response. Either `job` or `errors` is present in the response.
 public struct UpdateJobResponse: Codable, Equatable {
 	/// The errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The updated job.
 	public var job: Job?
 
-	/// Represents an [UpdateJob]($e/Team/UpdateJob) response. Either `job` or `errors` is present in the response.
+	/// Represents an [UpdateJob](api-endpoint:Team-UpdateJob) response. Either `job` or `errors` is present in the response.
 	/// - Parameters:
 	///   - errors: The errors that occurred during the request.
 	///   - job: The updated job.
@@ -24032,14 +24101,14 @@ public struct UpdateJobResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpdateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/UpdateLocationCustomAttributeDefinition) request.
+/// Represents an [UpdateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-UpdateLocationCustomAttributeDefinition) request.
 public struct UpdateLocationCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute definition.  If this is not important for your application, `version` can be set to -1.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpdateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/UpdateLocationCustomAttributeDefinition) request.
+	/// Represents an [UpdateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-UpdateLocationCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported.  For more information, see [Update a location custom attribute definition](https://developer.squareup.com/docs/location-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, specify the current version of the custom attribute definition.  If this is not important for your application, `version` can be set to -1.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24049,14 +24118,14 @@ public struct UpdateLocationCustomAttributeDefinitionRequest: Codable, Equatable
 	}
 }
 
-/// Represents an [UpdateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/UpdateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpdateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-UpdateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpdateLocationCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The updated custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpdateLocationCustomAttributeDefinition]($e/LocationCustomAttributes/UpdateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpdateLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-UpdateLocationCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The updated custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -24066,12 +24135,12 @@ public struct UpdateLocationCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// The request object for the [UpdateLocation]($e/Locations/UpdateLocation) endpoint.
+/// The request object for the [UpdateLocation](api-endpoint:Locations-UpdateLocation) endpoint.
 public struct UpdateLocationRequest: Codable, Equatable {
 	/// The `Location` object with only the fields to update.
 	public var location: Location?
 
-	/// The request object for the [UpdateLocation]($e/Locations/UpdateLocation) endpoint.
+	/// The request object for the [UpdateLocation](api-endpoint:Locations-UpdateLocation) endpoint.
 	/// - Parameters:
 	///   - location: The `Location` object with only the fields to update.
 	public init(location: Location? = nil) {
@@ -24079,14 +24148,14 @@ public struct UpdateLocationRequest: Codable, Equatable {
 	}
 }
 
-/// The response object returned by the [UpdateLocation]($e/Locations/UpdateLocation) endpoint.
+/// The response object returned by the [UpdateLocation](api-endpoint:Locations-UpdateLocation) endpoint.
 public struct UpdateLocationResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The updated `Location` object.
 	public var location: Location?
 
-	/// The response object returned by the [UpdateLocation]($e/Locations/UpdateLocation) endpoint.
+	/// The response object returned by the [UpdateLocation](api-endpoint:Locations-UpdateLocation) endpoint.
 	/// - Parameters:
 	///   - errors: Information about errors encountered during the request.
 	///   - location: The updated `Location` object.
@@ -24117,14 +24186,14 @@ public struct UpdateLocationSettingsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpdateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/UpdateMerchantCustomAttributeDefinition) request.
+/// Represents an [UpdateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-UpdateMerchantCustomAttributeDefinition) request.
 public struct UpdateMerchantCustomAttributeDefinitionRequest: Codable, Equatable {
 	/// The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported. For more information, see [Update a merchant custom attribute definition](https://developer.squareup.com/docs/merchant-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). The version field must match the current version of the custom attribute definition to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) If this is not important for your application, version can be set to -1. For any other values, the request fails with a BAD_REQUEST error.
 	public var custom_attribute_definition: CustomAttributeDefinition
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpdateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/UpdateMerchantCustomAttributeDefinition) request.
+	/// Represents an [UpdateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-UpdateMerchantCustomAttributeDefinition) request.
 	/// - Parameters:
 	///   - custom_attribute_definition: The custom attribute definition that contains the fields to update. This endpoint supports sparse updates, so only new or changed fields need to be included in the request. Only the following fields can be updated: - `name` - `description` - `visibility` - `schema` for a `Selection` data type. Only changes to the named options or the maximum number of allowed selections are supported. For more information, see [Update a merchant custom attribute definition](https://developer.squareup.com/docs/merchant-custom-attributes-api/custom-attribute-definitions#update-custom-attribute-definition). The version field must match the current version of the custom attribute definition to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) If this is not important for your application, version can be set to -1. For any other values, the request fails with a BAD_REQUEST error.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24134,14 +24203,14 @@ public struct UpdateMerchantCustomAttributeDefinitionRequest: Codable, Equatable
 	}
 }
 
-/// Represents an [UpdateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/UpdateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpdateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-UpdateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpdateMerchantCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The updated custom attribute definition.
 	public var custom_attribute_definition: CustomAttributeDefinition?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpdateMerchantCustomAttributeDefinition]($e/MerchantCustomAttributes/UpdateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpdateMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-UpdateMerchantCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute_definition: The updated custom attribute definition.
 	///   - errors: Any errors that occurred during the request.
@@ -24206,7 +24275,7 @@ public struct UpdateOrderCustomAttributeDefinitionResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [UpdateOrder]($e/Orders/UpdateOrder) endpoint.
+/// Defines the fields that are included in requests to the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint.
 public struct UpdateOrderRequest: Codable, Equatable {
 	/// The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders/update-orders#identifying-fields-to-delete) fields to clear. For example, `line_items[uid].note`. For more information, see [Deleting fields](https://developer.squareup.com/docs/orders-api/manage-orders/update-orders#deleting-fields).
 	public var fields_to_clear: [String]?
@@ -24215,7 +24284,7 @@ public struct UpdateOrderRequest: Codable, Equatable {
 	/// The [sparse order](https://developer.squareup.com/docs/orders-api/manage-orders/update-orders#sparse-order-objects) containing only the fields to update and the version to which the update is being applied.
 	public var order: Order?
 
-	/// Defines the fields that are included in requests to the [UpdateOrder]($e/Orders/UpdateOrder) endpoint.
+	/// Defines the fields that are included in requests to the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint.
 	/// - Parameters:
 	///   - fields_to_clear: The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders/update-orders#identifying-fields-to-delete) fields to clear. For example, `line_items[uid].note`. For more information, see [Deleting fields](https://developer.squareup.com/docs/orders-api/manage-orders/update-orders#deleting-fields).
 	///   - idempotency_key: A value you specify that uniquely identifies this update request.  If you are unsure whether a particular update was applied to an order successfully, you can reattempt it with the same idempotency key without worrying about creating duplicate updates to the order. The latest order version is returned.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24227,14 +24296,14 @@ public struct UpdateOrderRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateOrder]($e/Orders/UpdateOrder) endpoint.
+/// Defines the fields that are included in the response body of a request to the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint.
 public struct UpdateOrderResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The updated order.
 	public var order: Order?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateOrder]($e/Orders/UpdateOrder) endpoint.
+	/// Defines the fields that are included in the response body of a request to the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - order: The updated order.
@@ -24265,14 +24334,14 @@ public struct UpdatePaymentLinkResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to update a payment using [UpdatePayment]($e/Payments/UpdatePayment).
+/// Describes a request to update a payment using [UpdatePayment](api-endpoint:Payments-UpdatePayment).
 public struct UpdatePaymentRequest: Codable, Equatable {
 	/// A unique string that identifies this `UpdatePayment` request. Keys can be any valid string but must be unique for every `UpdatePayment` request.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String
 	/// The updated `Payment` object.
 	public var payment: Payment?
 
-	/// Describes a request to update a payment using [UpdatePayment]($e/Payments/UpdatePayment).
+	/// Describes a request to update a payment using [UpdatePayment](api-endpoint:Payments-UpdatePayment).
 	/// - Parameters:
 	///   - idempotency_key: A unique string that identifies this `UpdatePayment` request. Keys can be any valid string but must be unique for every `UpdatePayment` request.  For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	///   - payment: The updated `Payment` object.
@@ -24282,14 +24351,14 @@ public struct UpdatePaymentRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by [UpdatePayment]($e/Payments/UpdatePayment).
+/// Defines the response returned by [UpdatePayment](api-endpoint:Payments-UpdatePayment).
 public struct UpdatePaymentResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 	/// The updated payment.
 	public var payment: Payment?
 
-	/// Defines the response returned by [UpdatePayment]($e/Payments/UpdatePayment).
+	/// Defines the response returned by [UpdatePayment](api-endpoint:Payments-UpdatePayment).
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	///   - payment: The updated payment.
@@ -24329,12 +24398,12 @@ public struct UpdateShiftResponse: Codable, Equatable {
 	}
 }
 
-/// Defines input parameters in a request to the  [UpdateSubscription]($e/Subscriptions/UpdateSubscription) endpoint.
+/// Defines input parameters in a request to the  [UpdateSubscription](api-endpoint:Subscriptions-UpdateSubscription) endpoint.
 public struct UpdateSubscriptionRequest: Codable, Equatable {
 	/// The subscription object containing the current version, and fields to update. Unset fields will be left at their current server values, and JSON `null` values will be treated as a request to clear the relevant data.
 	public var subscription: Subscription?
 
-	/// Defines input parameters in a request to the  [UpdateSubscription]($e/Subscriptions/UpdateSubscription) endpoint.
+	/// Defines input parameters in a request to the  [UpdateSubscription](api-endpoint:Subscriptions-UpdateSubscription) endpoint.
 	/// - Parameters:
 	///   - subscription: The subscription object containing the current version, and fields to update. Unset fields will be left at their current server values, and JSON `null` values will be treated as a request to clear the relevant data.
 	public init(subscription: Subscription? = nil) {
@@ -24342,14 +24411,14 @@ public struct UpdateSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines output parameters in a response from the [UpdateSubscription]($e/Subscriptions/UpdateSubscription) endpoint.
+/// Defines output parameters in a response from the [UpdateSubscription](api-endpoint:Subscriptions-UpdateSubscription) endpoint.
 public struct UpdateSubscriptionResponse: Codable, Equatable {
 	/// Errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The updated subscription.
 	public var subscription: Subscription?
 
-	/// Defines output parameters in a response from the [UpdateSubscription]($e/Subscriptions/UpdateSubscription) endpoint.
+	/// Defines output parameters in a response from the [UpdateSubscription](api-endpoint:Subscriptions-UpdateSubscription) endpoint.
 	/// - Parameters:
 	///   - errors: Errors encountered during the request.
 	///   - subscription: The updated subscription.
@@ -24389,14 +24458,14 @@ public struct UpdateTeamMemberResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an input to a call to [UpdateVendor]($e/Vendors/UpdateVendor).
+/// Represents an input to a call to [UpdateVendor](api-endpoint:Vendors-UpdateVendor).
 public struct UpdateVendorRequest: Codable, Equatable {
 	/// A client-supplied, universally unique identifier (UUID) for the request.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) in the [API Development 101](https://developer.squareup.com/docs/buildbasics) section for more information.
 	public var idempotency_key: String?
 	/// The specified [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to be updated.
 	public var vendor: Vendor
 
-	/// Represents an input to a call to [UpdateVendor]($e/Vendors/UpdateVendor).
+	/// Represents an input to a call to [UpdateVendor](api-endpoint:Vendors-UpdateVendor).
 	/// - Parameters:
 	///   - idempotency_key: A client-supplied, universally unique identifier (UUID) for the request.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) in the [API Development 101](https://developer.squareup.com/docs/buildbasics) section for more information.
 	///   - vendor: The specified [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) to be updated.
@@ -24406,14 +24475,14 @@ public struct UpdateVendorRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an output from a call to [UpdateVendor]($e/Vendors/UpdateVendor).
+/// Represents an output from a call to [UpdateVendor](api-endpoint:Vendors-UpdateVendor).
 public struct UpdateVendorResponse: Codable, Equatable {
 	/// Errors occurred when the request fails.
 	public var errors: [SquareError]?
 	/// The [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) that has been updated.
 	public var vendor: Vendor?
 
-	/// Represents an output from a call to [UpdateVendor]($e/Vendors/UpdateVendor).
+	/// Represents an output from a call to [UpdateVendor](api-endpoint:Vendors-UpdateVendor).
 	/// - Parameters:
 	///   - errors: Errors occurred when the request fails.
 	///   - vendor: The [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) that has been updated.
@@ -24466,14 +24535,14 @@ public struct UpdateWebhookSubscriptionRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscription]($e/WebhookSubscriptions/UpdateWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
+/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscription](api-endpoint:WebhookSubscriptions-UpdateWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
 public struct UpdateWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The updated [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
 	public var subscription: WebhookSubscription?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscription]($e/WebhookSubscriptions/UpdateWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
+	/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscription](api-endpoint:WebhookSubscriptions-UpdateWebhookSubscription) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - subscription: The updated [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
@@ -24496,14 +24565,14 @@ public struct UpdateWebhookSubscriptionSignatureKeyRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscriptionSignatureKey]($e/WebhookSubscriptions/UpdateWebhookSubscriptionSignatureKey) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
+/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscriptionSignatureKey](api-endpoint:WebhookSubscriptions-UpdateWebhookSubscriptionSignatureKey) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
 public struct UpdateWebhookSubscriptionSignatureKeyResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
 	public var errors: [SquareError]?
 	/// The new Square-generated signature key used to validate the origin of the webhook event.
 	public var signature_key: String?
 
-	/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscriptionSignatureKey]($e/WebhookSubscriptions/UpdateWebhookSubscriptionSignatureKey) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
+	/// Defines the fields that are included in the response body of a request to the [UpdateWebhookSubscriptionSignatureKey](api-endpoint:WebhookSubscriptions-UpdateWebhookSubscriptionSignatureKey) endpoint.  Note: If there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) is not present.
 	/// - Parameters:
 	///   - errors: Information on errors encountered during the request.
 	///   - signature_key: The new Square-generated signature key used to validate the origin of the webhook event.
@@ -24543,14 +24612,14 @@ public struct UpdateWorkweekConfigResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertBookingCustomAttribute]($e/BookingCustomAttributes/UpsertBookingCustomAttribute) request.
+/// Represents an [UpsertBookingCustomAttribute](api-endpoint:BookingCustomAttributes-UpsertBookingCustomAttribute) request.
 public struct UpsertBookingCustomAttributeRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with the following fields:  - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Value data types](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
 	public var custom_attribute: CustomAttribute
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpsertBookingCustomAttribute]($e/BookingCustomAttributes/UpsertBookingCustomAttribute) request.
+	/// Represents an [UpsertBookingCustomAttribute](api-endpoint:BookingCustomAttributes-UpsertBookingCustomAttribute) request.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with the following fields:  - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Value data types](https://developer.squareup.com/docs/booking-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24560,14 +24629,14 @@ public struct UpsertBookingCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertBookingCustomAttribute]($e/BookingCustomAttributes/UpsertBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpsertBookingCustomAttribute](api-endpoint:BookingCustomAttributes-UpsertBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpsertBookingCustomAttributeResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpsertBookingCustomAttribute]($e/BookingCustomAttributes/UpsertBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpsertBookingCustomAttribute](api-endpoint:BookingCustomAttributes-UpsertBookingCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred during the request.
@@ -24604,14 +24673,14 @@ public struct UpsertCatalogObjectResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertCustomerCustomAttribute]($e/CustomerCustomAttributes/UpsertCustomerCustomAttribute) request.
+/// Represents an [UpsertCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-UpsertCustomerCustomAttribute) request.
 public struct UpsertCustomerCustomAttributeRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with the following fields:  - `value`. This value must conform to the `schema` specified by the definition.  For more information, see [Value data types](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
 	public var custom_attribute: CustomAttribute
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpsertCustomerCustomAttribute]($e/CustomerCustomAttributes/UpsertCustomerCustomAttribute) request.
+	/// Represents an [UpsertCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-UpsertCustomerCustomAttribute) request.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with the following fields:  - `value`. This value must conform to the `schema` specified by the definition.  For more information, see [Value data types](https://developer.squareup.com/docs/customer-custom-attributes-api/custom-attributes#value-data-types).  - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include this optional field and specify the current version of the custom attribute.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24621,14 +24690,14 @@ public struct UpsertCustomerCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertCustomerCustomAttribute]($e/CustomerCustomAttributes/UpsertCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpsertCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-UpsertCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpsertCustomerCustomAttributeResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpsertCustomerCustomAttribute]($e/CustomerCustomAttributes/UpsertCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpsertCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-UpsertCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred during the request.
@@ -24638,14 +24707,14 @@ public struct UpsertCustomerCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertLocationCustomAttribute]($e/LocationCustomAttributes/UpsertLocationCustomAttribute) request.
+/// Represents an [UpsertLocationCustomAttribute](api-endpoint:LocationCustomAttributes-UpsertLocationCustomAttribute) request.
 public struct UpsertLocationCustomAttributeRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include the current version of the custom attribute. If this is not important for your application, version can be set to -1.
 	public var custom_attribute: CustomAttribute
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpsertLocationCustomAttribute]($e/LocationCustomAttributes/UpsertLocationCustomAttribute) request.
+	/// Represents an [UpsertLocationCustomAttribute](api-endpoint:LocationCustomAttributes-UpsertLocationCustomAttribute) request.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - `version`. To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for an update operation, include the current version of the custom attribute. If this is not important for your application, version can be set to -1.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24655,14 +24724,14 @@ public struct UpsertLocationCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertLocationCustomAttribute]($e/LocationCustomAttributes/UpsertLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpsertLocationCustomAttribute](api-endpoint:LocationCustomAttributes-UpsertLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpsertLocationCustomAttributeResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpsertLocationCustomAttribute]($e/LocationCustomAttributes/UpsertLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpsertLocationCustomAttribute](api-endpoint:LocationCustomAttributes-UpsertLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred during the request.
@@ -24672,14 +24741,14 @@ public struct UpsertLocationCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertMerchantCustomAttribute]($e/MerchantCustomAttributes/UpsertMerchantCustomAttribute) request.
+/// Represents an [UpsertMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-UpsertMerchantCustomAttribute) request.
 public struct UpsertMerchantCustomAttributeRequest: Codable, Equatable {
 	/// The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - The version field must match the current version of the custom attribute definition to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) If this is not important for your application, version can be set to -1. For any other values, the request fails with a BAD_REQUEST error.
 	public var custom_attribute: CustomAttribute
 	/// A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
 	public var idempotency_key: String?
 
-	/// Represents an [UpsertMerchantCustomAttribute]($e/MerchantCustomAttributes/UpsertMerchantCustomAttribute) request.
+	/// Represents an [UpsertMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-UpsertMerchantCustomAttribute) request.
 	/// - Parameters:
 	///   - custom_attribute: The custom attribute to create or update, with the following fields: - `value`. This value must conform to the `schema` specified by the definition. For more information, see [Supported data types](https://developer.squareup.com/docs/devtools/customattributes/overview#supported-data-types). - The version field must match the current version of the custom attribute definition to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) If this is not important for your application, version can be set to -1. For any other values, the request fails with a BAD_REQUEST error.
 	///   - idempotency_key: A unique identifier for this request, used to ensure idempotency. For more information, see [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -24689,14 +24758,14 @@ public struct UpsertMerchantCustomAttributeRequest: Codable, Equatable {
 	}
 }
 
-/// Represents an [UpsertMerchantCustomAttribute]($e/MerchantCustomAttributes/UpsertMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+/// Represents an [UpsertMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-UpsertMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct UpsertMerchantCustomAttributeResponse: Codable, Equatable {
 	/// The new or updated custom attribute.
 	public var custom_attribute: CustomAttribute?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Represents an [UpsertMerchantCustomAttribute]($e/MerchantCustomAttributes/UpsertMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
+	/// Represents an [UpsertMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-UpsertMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 	/// - Parameters:
 	///   - custom_attribute: The new or updated custom attribute.
 	///   - errors: Any errors that occurred during the request.

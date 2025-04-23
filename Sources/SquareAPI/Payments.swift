@@ -19,7 +19,7 @@ public struct ListPayments: SquareAPIEndpoint {
 		let offline_end_time: String?
 		let updated_at_begin_time: String?
 		let updated_at_end_time: String?
-		let sort_field: PaymentSortField?
+		let sort_field: ListPaymentsRequestSortField?
 		/// Retrieves a list of payments taken by the account making the request.  Results are eventually consistent, and new payments or changes to payments might take several seconds to appear.  The maximum results per page is 100.
 		/// - Parameters:
 		///   - begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
@@ -37,7 +37,7 @@ public struct ListPayments: SquareAPIEndpoint {
 		///   - updated_at_begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
 		///   - updated_at_end_time: Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
 		///   - sort_field: The field used to sort results by. The default is `CREATED_AT`.
-		public init(begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, location_id: String? = nil, total: Int? = nil, last_4: String? = nil, card_brand: String? = nil, limit: Int? = nil, is_offline_payment: Bool? = nil, offline_begin_time: String? = nil, offline_end_time: String? = nil, updated_at_begin_time: String? = nil, updated_at_end_time: String? = nil, sort_field: PaymentSortField? = nil) {
+		public init(begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, location_id: String? = nil, total: Int? = nil, last_4: String? = nil, card_brand: String? = nil, limit: Int? = nil, is_offline_payment: Bool? = nil, offline_begin_time: String? = nil, offline_end_time: String? = nil, updated_at_begin_time: String? = nil, updated_at_end_time: String? = nil, sort_field: ListPaymentsRequestSortField? = nil) {
 			self.begin_time = begin_time
 			self.end_time = end_time
 			self.sort_order = sort_order

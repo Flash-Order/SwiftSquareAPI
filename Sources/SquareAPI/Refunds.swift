@@ -13,6 +13,9 @@ public struct ListPaymentRefunds: SquareAPIEndpoint {
 		let status: String?
 		let source_type: String?
 		let limit: Int?
+		let updated_at_begin_time: String?
+		let updated_at_end_time: String?
+		let sort_field: ListPaymentRefundsRequestSortField?
 		/// Retrieves a list of refunds for the account making the request.  Results are eventually consistent, and new refunds or changes to refunds might take several seconds to appear.  The maximum results per page is 100.
 		/// - Parameters:
 		///   - begin_time: Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.   Default: The current time minus one year.
@@ -23,7 +26,10 @@ public struct ListPaymentRefunds: SquareAPIEndpoint {
 		///   - status: If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
 		///   - source_type: If provided, only returns refunds whose payments have the indicated source type. Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, and `EXTERNAL`. For information about these payment source types, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).  Default: If omitted, refunds are returned regardless of the source type.
 		///   - limit: The maximum number of results to be returned in a single page.  It is possible to receive fewer results than the specified limit on a given page.  If the supplied value is greater than 100, no more than 100 results are returned.  Default: 100
-		public init(begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, location_id: String? = nil, status: String? = nil, source_type: String? = nil, limit: Int? = nil) {
+		///   - updated_at_begin_time: Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: If omitted, the time range starts at `begin_time`.
+		///   - updated_at_end_time: Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: The current time.
+		///   - sort_field: The field used to sort results by. The default is `CREATED_AT`.
+		public init(begin_time: String? = nil, end_time: String? = nil, sort_order: String? = nil, cursor: String? = nil, location_id: String? = nil, status: String? = nil, source_type: String? = nil, limit: Int? = nil, updated_at_begin_time: String? = nil, updated_at_end_time: String? = nil, sort_field: ListPaymentRefundsRequestSortField? = nil) {
 			self.begin_time = begin_time
 			self.end_time = end_time
 			self.sort_order = sort_order
@@ -32,6 +38,9 @@ public struct ListPaymentRefunds: SquareAPIEndpoint {
 			self.status = status
 			self.source_type = source_type
 			self.limit = limit
+			self.updated_at_begin_time = updated_at_begin_time
+			self.updated_at_end_time = updated_at_end_time
+			self.sort_field = sort_field
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
@@ -45,6 +54,9 @@ public struct ListPaymentRefunds: SquareAPIEndpoint {
 		if let v = inputs.status { queries.append("status=\(v)") }
 		if let v = inputs.source_type { queries.append("source_type=\(v)") }
 		if let v = inputs.limit { queries.append("limit=\(v)") }
+		if let v = inputs.updated_at_begin_time { queries.append("updated_at_begin_time=\(v)") }
+		if let v = inputs.updated_at_end_time { queries.append("updated_at_end_time=\(v)") }
+		if let v = inputs.sort_field { queries.append("sort_field=\(v)") }
 		if queries.count > 0 {
 			let query = queries.joined(separator: "&")
 			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

@@ -82,7 +82,7 @@ public struct BulkRetrieveCustomers: SquareAPIEndpoint {
 	}
 }
 
-/// Updates multiple customer profiles.  This endpoint takes a map of individual update requests and returns a map of responses.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
+/// Updates multiple customer profiles.  This endpoint takes a map of individual update requests and returns a map of responses.
 public struct BulkUpdateCustomers: SquareAPIEndpoint {
 	public typealias inputType = BulkUpdateCustomersRequest
 	public typealias outputType = BulkUpdateCustomersResponse
@@ -123,7 +123,7 @@ public struct RetrieveCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
+/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 public struct UpdateCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateCustomerRequest
@@ -131,7 +131,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer_id: String
-		/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.  You cannot use this endpoint to change cards on file. To make changes, use the [Cards API]($e/Cards) or [Gift Cards API]($e/GiftCards).
+		/// Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are required in the request. To add or update a field, specify the new value. To remove a field, specify `null`.  To update a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to update.
 		public init(customer_id: String) {
@@ -144,7 +144,7 @@ public struct UpdateCustomer: SquareAPIEndpoint {
 	}
 }
 
-/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+/// Deletes a customer profile from a business.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 public struct DeleteCustomer: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -153,7 +153,7 @@ public struct DeleteCustomer: SquareAPIEndpoint {
 	public struct Params {
 		let customer_id: String
 		let version: Int?
-		/// Deletes a customer profile from a business. This operation also unlinks any associated cards on file.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
+		/// Deletes a customer profile from a business.  To delete a customer profile that was created by merging existing profiles, you must use the ID of the newly created profile.
 		/// - Parameters:
 		///   - customer_id: The ID of the customer to delete.
 		///   - version: The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
