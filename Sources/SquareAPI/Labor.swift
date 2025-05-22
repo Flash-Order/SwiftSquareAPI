@@ -166,7 +166,100 @@ public struct GetEmployeeWage: SquareAPIEndpoint {
 	}
 }
 
+/// Creates a scheduled shift by providing draft shift details such as job ID, team member assignment, and start and end times.  The following `draft_shift_details` fields are required: - `location_id` - `job_id` - `start_at` - `end_at`
+public struct CreateScheduledShift: SquareAPIEndpoint {
+	public typealias inputType = CreateScheduledShiftRequest
+	public typealias outputType = CreateScheduledShiftResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/scheduled-shifts"
+	}
+}
+
+/// Publishes 1 - 100 scheduled shifts. This endpoint takes a map of individual publish requests and returns a map of responses. When a scheduled shift is published, Square keeps the `draft_shift_details` field as is and copies it to the `published_shift_details` field.  The minimum `start_at` and maximum `end_at` timestamps of all shifts in a `BulkPublishScheduledShifts` request must fall within a two-week period.
+public struct BulkPublishScheduledShifts: SquareAPIEndpoint {
+	public typealias inputType = BulkPublishScheduledShiftsRequest
+	public typealias outputType = BulkPublishScheduledShiftsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/scheduled-shifts/bulk-publish"
+	}
+}
+
+/// Returns a paginated list of scheduled shifts, with optional filter and sort settings. By default, results are sorted by `start_at` in ascending order.
+public struct SearchScheduledShifts: SquareAPIEndpoint {
+	public typealias inputType = SearchScheduledShiftsRequest
+	public typealias outputType = SearchScheduledShiftsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/scheduled-shifts/search"
+	}
+}
+
+/// Retrieves a scheduled shift by ID.
+public struct RetrieveScheduledShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = RetrieveScheduledShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Retrieves a scheduled shift by ID.
+		/// - Parameters:
+		///   - id: The ID of the scheduled shift to retrieve.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/scheduled-shifts/\(inputs.id)"
+		return url
+	}
+}
+
+/// Updates the draft shift details for a scheduled shift. This endpoint supports sparse updates, so only new, changed, or removed fields are required in the request. You must publish the shift to make updates public.  You can make the following updates to `draft_shift_details`: - Change the `location_id`, `job_id`, `start_at`, and `end_at` fields. - Add, change, or clear the `team_member_id` and `notes` fields. To clear these fields, set the value to null. - Change the `is_deleted` field. To delete a scheduled shift, set `is_deleted` to true and then publish the shift.
+public struct UpdateScheduledShift: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateScheduledShiftRequest
+	public typealias outputType = UpdateScheduledShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates the draft shift details for a scheduled shift. This endpoint supports sparse updates, so only new, changed, or removed fields are required in the request. You must publish the shift to make updates public.  You can make the following updates to `draft_shift_details`: - Change the `location_id`, `job_id`, `start_at`, and `end_at` fields. - Add, change, or clear the `team_member_id` and `notes` fields. To clear these fields, set the value to null. - Change the `is_deleted` field. To delete a scheduled shift, set `is_deleted` to true and then publish the shift.
+		/// - Parameters:
+		///   - id: The ID of the scheduled shift to update.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/scheduled-shifts/\(inputs.id)"
+		return url
+	}
+}
+
+/// Publishes a scheduled shift. When a scheduled shift is published, Square keeps the `draft_shift_details` field as is and copies it to the `published_shift_details` field.
+public struct PublishScheduledShift: SquareAPIEndpoint {
+	public typealias inputType = PublishScheduledShiftRequest
+	public typealias outputType = PublishScheduledShiftResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Publishes a scheduled shift. When a scheduled shift is published, Square keeps the `draft_shift_details` field as is and copies it to the `published_shift_details` field.
+		/// - Parameters:
+		///   - id: The ID of the scheduled shift to publish.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/scheduled-shifts/\(inputs.id)/publish"
+		return url
+	}
+}
+
 /// Creates a new `Shift`.  A `Shift` represents a complete workday for a single team member. You must provide the following values in your request to this endpoint:  - `location_id` - `team_member_id` - `start_at`  An attempt to create a new `Shift` can result in a `BAD_REQUEST` error when: - The `status` of the new `Shift` is `OPEN` and the team member has another shift with an `OPEN` status. - The `start_at` date is in the future. - The `start_at` or `end_at` date overlaps another shift for the same team member. - The `Break` instances are set in the request and a break `start_at` is before the `Shift.start_at`, a break `end_at` is after the `Shift.end_at`, or both.
+@available(*,deprecated)
 public struct CreateShift: SquareAPIEndpoint {
 	public typealias inputType = CreateShiftRequest
 	public typealias outputType = CreateShiftResponse
@@ -177,6 +270,7 @@ public struct CreateShift: SquareAPIEndpoint {
 }
 
 /// Returns a paginated list of `Shift` records for a business. The list to be returned can be filtered by: - Location IDs - Team member IDs - Shift status (`OPEN` or `CLOSED`) - Shift start - Shift end - Workday details  The list can be sorted by: - `START_AT` - `END_AT` - `CREATED_AT` - `UPDATED_AT`
+@available(*,deprecated)
 public struct SearchShifts: SquareAPIEndpoint {
 	public typealias inputType = SearchShiftsRequest
 	public typealias outputType = SearchShiftsResponse
@@ -187,6 +281,7 @@ public struct SearchShifts: SquareAPIEndpoint {
 }
 
 /// Returns a single `Shift` specified by `id`.
+@available(*,deprecated)
 public struct GetShift: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .GET }
 	public typealias inputType = Empty
@@ -208,6 +303,7 @@ public struct GetShift: SquareAPIEndpoint {
 }
 
 /// Updates an existing `Shift`.  When adding a `Break` to a `Shift`, any earlier `Break` instances in the `Shift` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Shift`, all `Break` instances in the `Shift` must be complete with `end_at` set on each `Break`.
+@available(*,deprecated)
 public struct UpdateShift: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .PUT }
 	public typealias inputType = UpdateShiftRequest
@@ -229,6 +325,7 @@ public struct UpdateShift: SquareAPIEndpoint {
 }
 
 /// Deletes a `Shift`.
+@available(*,deprecated)
 public struct DeleteShift: SquareAPIEndpoint {
 	public static var method: HTTPMethod { return .DELETE }
 	public typealias inputType = Empty
@@ -302,6 +399,89 @@ public struct GetTeamMemberWage: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/labor/team-member-wages/\(inputs.id)"
+		return url
+	}
+}
+
+/// Creates a new `Timecard`.  A `Timecard` represents a complete workday for a single team member. You must provide the following values in your request to this endpoint:  - `location_id` - `team_member_id` - `start_at`  An attempt to create a new `Timecard` can result in a `BAD_REQUEST` error when: - The `status` of the new `Timecard` is `OPEN` and the team member has another timecard with an `OPEN` status. - The `start_at` date is in the future. - The `start_at` or `end_at` date overlaps another timecard for the same team member. - The `Break` instances are set in the request and a break `start_at` is before the `Timecard.start_at`, a break `end_at` is after the `Timecard.end_at`, or both.
+public struct CreateTimecard: SquareAPIEndpoint {
+	public typealias inputType = CreateTimecardRequest
+	public typealias outputType = CreateTimecardResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/timecards"
+	}
+}
+
+/// Returns a paginated list of `Timecard` records for a business. The list to be returned can be filtered by: - Location IDs - Team member IDs - Timecard status (`OPEN` or `CLOSED`) - Timecard start - Timecard end - Workday details  The list can be sorted by: - `START_AT` - `END_AT` - `CREATED_AT` - `UPDATED_AT`
+public struct SearchTimecards: SquareAPIEndpoint {
+	public typealias inputType = SearchTimecardsRequest
+	public typealias outputType = SearchTimecardsResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/labor/timecards/search"
+	}
+}
+
+/// Returns a single `Timecard` specified by `id`.
+public struct RetrieveTimecard: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = RetrieveTimecardResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Returns a single `Timecard` specified by `id`.
+		/// - Parameters:
+		///   - id: The UUID for the `Timecard` being retrieved.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/timecards/\(inputs.id)"
+		return url
+	}
+}
+
+/// Updates an existing `Timecard`.  When adding a `Break` to a `Timecard`, any earlier `Break` instances in the `Timecard` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Timecard`, all `Break` instances in the `Timecard` must be complete with `end_at` set on each `Break`.
+public struct UpdateTimecard: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateTimecardRequest
+	public typealias outputType = UpdateTimecardResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Updates an existing `Timecard`.  When adding a `Break` to a `Timecard`, any earlier `Break` instances in the `Timecard` have the `end_at` property set to a valid RFC-3339 datetime string.  When closing a `Timecard`, all `Break` instances in the `Timecard` must be complete with `end_at` set on each `Break`.
+		/// - Parameters:
+		///   - id: The ID of the object being updated.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/timecards/\(inputs.id)"
+		return url
+	}
+}
+
+/// Deletes a `Timecard`.
+public struct DeleteTimecard: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .DELETE }
+	public typealias inputType = Empty
+	public typealias outputType = DeleteTimecardResponse
+	public typealias paramType = Params
+	public struct Params {
+		let id: String
+		/// Deletes a `Timecard`.
+		/// - Parameters:
+		///   - id: The UUID for the `Timecard` being deleted.
+		public init(id: String) {
+			self.id = id
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/labor/timecards/\(inputs.id)"
 		return url
 	}
 }

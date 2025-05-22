@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2025-04-16" }
+	public static var version: String { return "2025-05-21" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -1104,13 +1104,13 @@ public enum BookingStatus: String, Codable {
 	case NO_SHOW
 }
 
-/// A record of an employee's break during a shift.
+/// A record of a team member's break on a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
 public struct Break: Codable, Equatable {
-	/// The `BreakType` that this `Break` was templated on.
+	/// The [BreakType](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BreakType) that this break was templated on.
 	public var break_type_id: String
-	/// RFC 3339; follows the same timezone information as `Shift`. Precision up to the minute is respected; seconds are truncated.
+	/// RFC 3339; follows the same timezone information as the [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard). Precision up to the minute is respected; seconds are truncated.
 	public var end_at: Timestamp?
-	/// Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of the break.
+	/// Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of the break.  Example for break expected duration of 15 minutes: PT15M
 	public var expected_duration: Timestamp
 	/// The UUID for this object.
 	public var id: String?
@@ -1118,18 +1118,18 @@ public struct Break: Codable, Equatable {
 	public var is_paid: Bool
 	/// A human-readable name.
 	public var name: String
-	/// RFC 3339; follows the same timezone information as `Shift`. Precision up to the minute is respected; seconds are truncated.
+	/// RFC 3339; follows the same timezone information as the [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard). Precision up to the minute is respected; seconds are truncated.
 	public var start_at: Timestamp
 
-	/// A record of an employee's break during a shift.
+	/// A record of a team member's break on a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
 	/// - Parameters:
-	///   - break_type_id: The `BreakType` that this `Break` was templated on.
-	///   - end_at: RFC 3339; follows the same timezone information as `Shift`. Precision up to the minute is respected; seconds are truncated.
-	///   - expected_duration: Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of the break.
+	///   - break_type_id: The [BreakType](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BreakType) that this break was templated on.
+	///   - end_at: RFC 3339; follows the same timezone information as the [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard). Precision up to the minute is respected; seconds are truncated.
+	///   - expected_duration: Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of the break.  Example for break expected duration of 15 minutes: PT15M
 	///   - id: The UUID for this object.
 	///   - is_paid: Whether this break counts towards time worked for compensation purposes.
 	///   - name: A human-readable name.
-	///   - start_at: RFC 3339; follows the same timezone information as `Shift`. Precision up to the minute is respected; seconds are truncated.
+	///   - start_at: RFC 3339; follows the same timezone information as the [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard). Precision up to the minute is respected; seconds are truncated.
 	public init(break_type_id: String, expected_duration: Timestamp, is_paid: Bool, name: String, start_at: Timestamp, end_at: Timestamp? = nil, id: String? = nil) {
 		self.break_type_id = break_type_id
 		self.expected_duration = expected_duration
@@ -1141,13 +1141,13 @@ public struct Break: Codable, Equatable {
 	}
 }
 
-/// A defined break template that sets an expectation for possible `Break` instances on a `Shift`.
+/// A template for a type of [break](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Break) that can be added to a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard), including the expected duration and paid status.
 public struct BreakType: Codable, Equatable {
-	/// A human-readable name for this type of break. The name is displayed to employees in Square products.
+	/// A human-readable name for this type of break. The name is displayed to team members in Square products.
 	public var break_name: String
 	/// A read-only timestamp in RFC 3339 format.
 	public var created_at: Timestamp?
-	/// Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.  Example for break expected duration of 15 minutes: T15M
+	/// Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.  Example for break expected duration of 15 minutes: PT15M
 	public var expected_duration: Timestamp
 	/// The UUID for this object.
 	public var id: String?
@@ -1160,11 +1160,11 @@ public struct BreakType: Codable, Equatable {
 	/// Used for resolving concurrency issues. The request fails if the version provided does not match the server version at the time of the request. If a value is not provided, Square's servers execute a "blind" write; potentially overwriting another writer's data.
 	public var version: Int?
 
-	/// A defined break template that sets an expectation for possible `Break` instances on a `Shift`.
+	/// A template for a type of [break](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Break) that can be added to a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard), including the expected duration and paid status.
 	/// - Parameters:
-	///   - break_name: A human-readable name for this type of break. The name is displayed to employees in Square products.
+	///   - break_name: A human-readable name for this type of break. The name is displayed to team members in Square products.
 	///   - created_at: A read-only timestamp in RFC 3339 format.
-	///   - expected_duration: Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.  Example for break expected duration of 15 minutes: T15M
+	///   - expected_duration: Format: RFC-3339 P[n]Y[n]M[n]DT[n]H[n]M[n]S. The expected length of this break. Precision less than minutes is truncated.  Example for break expected duration of 15 minutes: PT15M
 	///   - id: The UUID for this object.
 	///   - is_paid: Whether this break counts towards time worked for compensation purposes.
 	///   - location_id: The ID of the business location this type of break applies to.
@@ -1545,6 +1545,53 @@ public struct BulkDeleteOrderCustomAttributesResponse: Codable, Equatable {
 	public init(values: DeleteOrderCustomAttributeResponse, errors: [SquareError]? = nil) {
 		self.values = values
 		self.errors = errors
+	}
+}
+
+/// Represents options for an individual publish request in a [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts) operation, provided as the value in a key-value pair.
+public struct BulkPublishScheduledShiftsData: Codable, Equatable {
+	/// The current version of the scheduled shift, used to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If the provided version doesn't match the server version, the request fails. If omitted, Square executes a blind write, potentially overwriting data from another publish request.
+	public var version: Int?
+
+	/// Represents options for an individual publish request in a [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts) operation, provided as the value in a key-value pair.
+	/// - Parameters:
+	///   - version: The current version of the scheduled shift, used to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If the provided version doesn't match the server version, the request fails. If omitted, Square executes a blind write, potentially overwriting data from another publish request.
+	public init(version: Int? = nil) {
+		self.version = version
+	}
+}
+
+/// Represents a [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts) request.
+public struct BulkPublishScheduledShiftsRequest: Codable, Equatable {
+	/// Indicates whether Square should send email notifications to team members and which team members should receive the notifications. This setting applies to all shifts specified in the bulk operation. The default value is `AFFECTED`. See [ScheduledShiftNotificationAudience](#type-scheduledshiftnotificationaudience) for possible values
+	public var scheduled_shift_notification_audience: ScheduledShiftNotificationAudience?
+	/// A map of 1 to 100 key-value pairs that represent individual publish requests.  - Each key is the ID of a scheduled shift you want to publish. - Each value is a `BulkPublishScheduledShiftsData` object that contains the `version` field or is an empty object.
+	public var scheduled_shifts: BulkPublishScheduledShiftsData
+
+	/// Represents a [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts) request.
+	/// - Parameters:
+	///   - scheduled_shift_notification_audience: Indicates whether Square should send email notifications to team members and which team members should receive the notifications. This setting applies to all shifts specified in the bulk operation. The default value is `AFFECTED`. See [ScheduledShiftNotificationAudience](#type-scheduledshiftnotificationaudience) for possible values
+	///   - scheduled_shifts: A map of 1 to 100 key-value pairs that represent individual publish requests.  - Each key is the ID of a scheduled shift you want to publish. - Each value is a `BulkPublishScheduledShiftsData` object that contains the `version` field or is an empty object.
+	public init(scheduled_shifts: BulkPublishScheduledShiftsData, scheduled_shift_notification_audience: ScheduledShiftNotificationAudience? = nil) {
+		self.scheduled_shifts = scheduled_shifts
+		self.scheduled_shift_notification_audience = scheduled_shift_notification_audience
+	}
+}
+
+/// Represents a [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts) response. Either `scheduled_shifts` or `errors` is present in the response.
+public struct BulkPublishScheduledShiftsResponse: Codable, Equatable {
+	/// Any top-level errors that prevented the bulk operation from succeeding.
+	public var errors: [SquareError]?
+	/// A map of key-value pairs that represent responses for individual publish requests. The order of responses might differ from the order in which the requests were provided.  - Each key is the scheduled shift ID that was specified for a publish request. - Each value is the corresponding response. If the request succeeds, the value is the published scheduled shift. If the request fails, the value is an `errors` array containing any errors that occurred while processing the request.
+	public var responses: PublishScheduledShiftResponse?
+
+	/// Represents a [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts) response. Either `scheduled_shifts` or `errors` is present in the response.
+	/// - Parameters:
+	///   - errors: Any top-level errors that prevented the bulk operation from succeeding.
+	///   - responses: A map of key-value pairs that represent responses for individual publish requests. The order of responses might differ from the order in which the requests were provided.  - Each key is the scheduled shift ID that was specified for a publish request. - Each value is the corresponding response. If the request succeeds, the value is the published scheduled shift. If the request fails, the value is an `errors` array containing any errors that occurred while processing the request.
+	public init(errors: [SquareError]? = nil, responses: PublishScheduledShiftResponse? = nil) {
+		self.errors = errors
+		self.responses = responses
 	}
 }
 
@@ -3600,11 +3647,11 @@ public struct CatalogItem: Codable, Equatable {
 	public var description_html: String?
 	/// A server-generated plaintext version of the `description_html` field, without formatting tags.
 	public var description_plaintext: String?
-	/// Deprecated; see go/ecomUriUseCases. A comma-separated list of encoded URIs pointing to a set of published e-commerce images for the Item.
+	/// Deprecated. A comma-separated list of encoded URIs pointing to a set of published e-commerce images for the Item.
 	public var ecom_image_uris: [String]?
 	/// The SEO data for a seller's Square Online store.
 	public var ecom_seo_data: CatalogEcomSeoData?
-	/// Deprecated; see go/ecomUriUseCases. A URI pointing to a published e-commerce product page for the Item.
+	/// Deprecated. A URI pointing to a published e-commerce product page for the Item.
 	public var ecom_uri: String?
 	/// The food and beverage-specific details for the `FOOD_AND_BEV` item.
 	public var food_and_beverage_details: CatalogItemFoodAndBeverageDetails?
@@ -3646,9 +3693,9 @@ public struct CatalogItem: Codable, Equatable {
 	///   - description: The item's description. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.  Deprecated at yyyy-mm-dd, this field is planned to retire in 6 months. You should migrate to use `description_html` to set the description of the [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) instance.  The `description` and `description_html` field values are kept in sync. If you try to set the both fields, the `description_html` text value overwrites the `description` value. Updates in one field are also reflected in the other, except for when you use an early version before Square API yyyy-mm-dd and `description_html` is set to blank, setting the `description` value to null does not nullify `description_html`.
 	///   - description_html: The item's description as expressed in valid HTML elements. The length of this field value, including those of HTML tags, is of Unicode points. With application query filters, the text values of the HTML elements and attributes are searchable. Invalid or unsupported HTML elements or attributes are ignored.  Supported HTML elements include: - `a`: Link. Supports linking to website URLs, email address, and telephone numbers. - `b`, `strong`:  Bold text - `br`: Line break - `code`: Computer code - `div`: Section - `h1-h6`: Headings - `i`, `em`: Italics - `li`: List element - `ol`: Numbered list - `p`: Paragraph - `ul`: Bullet list - `u`: Underline   Supported HTML attributes include: - `align`: Alignment of the text content - `href`: Link destination - `rel`: Relationship between link's target and source - `target`: Place to open the linked document
 	///   - description_plaintext: A server-generated plaintext version of the `description_html` field, without formatting tags.
-	///   - ecom_image_uris: Deprecated; see go/ecomUriUseCases. A comma-separated list of encoded URIs pointing to a set of published e-commerce images for the Item.
+	///   - ecom_image_uris: Deprecated. A comma-separated list of encoded URIs pointing to a set of published e-commerce images for the Item.
 	///   - ecom_seo_data: The SEO data for a seller's Square Online store.
-	///   - ecom_uri: Deprecated; see go/ecomUriUseCases. A URI pointing to a published e-commerce product page for the Item.
+	///   - ecom_uri: Deprecated. A URI pointing to a published e-commerce product page for the Item.
 	///   - food_and_beverage_details: The food and beverage-specific details for the `FOOD_AND_BEV` item.
 	///   - image_ids: The IDs of images associated with this `CatalogItem` instance. These images will be shown to customers in Square Online Store. The first image will show up as the icon for this item in POS.
 	///   - is_alcoholic: Indicates whether this item is alcoholic (`true`) or not (`false`).
@@ -3793,32 +3840,44 @@ public enum CatalogItemFoodAndBeverageDetailsIngredientStandardIngredient: Strin
 	case TREE_NUTS
 }
 
-/// References a text-based modifier or a list of non text-based modifiers applied to a `CatalogItem` instance and specifies supported behaviors of the application.
+/// Controls how a modifier list is applied to a specific item. This object allows for item-specific customization of modifier list behavior and provides the ability to override global modifier list settings.
 public struct CatalogItemModifierListInfo: Codable, Equatable {
+	/// Controls whether multiple quantities of the same modifier can be selected for this item. - `YES` means that every modifier in the `CatalogModifierList` can have multiple quantities selected for this item. - `NO` means that each modifier in the `CatalogModifierList` can be selected only once for this item. - `NOT_SET` means that the `allow_quantities` setting on the `CatalogModifierList` is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	public var allow_quantities: CatalogModifierToggleOverrideType?
 	/// If `true`, enable this `CatalogModifierList`. The default value is `true`.
 	public var enabled: Bool?
-	/// If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
+	/// Controls whether all modifiers for this item are hidden from customer receipts. - `YES` means that all modifiers in the `CatalogModifierList` are hidden from customer receipts for this item. - `NO` means that all modifiers in the `CatalogModifierList` are visible on customer receipts for this item. - `NOT_SET` means that the `hidden_from_customer` setting on the `CatalogModifierList` is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	public var hidden_from_customer_override: CatalogModifierToggleOverrideType?
+	/// Controls whether conversational mode is enabled for modifiers on this item.  - `YES` means conversational mode is enabled for every modifier in the `CatalogModifierList`. - `NO` means that conversational mode is not enabled for any modifier in the `CatalogModifierList`. - `NOT_SET` means that conversational mode is not enabled for any modifier in the `CatalogModifierList`. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	public var is_conversational: CatalogModifierToggleOverrideType?
+	/// The maximum number of modifiers that can be selected. Values:  - 0: No maximum limit. - -1: Default value, the attribute was not set by the client. When `min_selected_modifiers` is also -1, use the minimum and maximum selection values set on the `CatalogItemModifierList`. - &gt;0: The maximum total modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no maximum limit.
 	public var max_selected_modifiers: Int?
-	/// If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
+	/// The minimum number of modifiers that must be selected from this modifier list. Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. When `max_selected_modifiers` is also -1, use the minimum and maximum selection values set on the `CatalogItemModifierList`. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
 	public var min_selected_modifiers: Int?
 	/// The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	public var modifier_list_id: String
-	/// A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
+	/// A set of `CatalogModifierOverride` objects that override default modifier settings for this item.
 	public var modifier_overrides: [CatalogModifierOverride]?
 	/// The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
 	public var ordinal: Int?
 
-	/// References a text-based modifier or a list of non text-based modifiers applied to a `CatalogItem` instance and specifies supported behaviors of the application.
+	/// Controls how a modifier list is applied to a specific item. This object allows for item-specific customization of modifier list behavior and provides the ability to override global modifier list settings.
 	/// - Parameters:
+	///   - allow_quantities: Controls whether multiple quantities of the same modifier can be selected for this item. - `YES` means that every modifier in the `CatalogModifierList` can have multiple quantities selected for this item. - `NO` means that each modifier in the `CatalogModifierList` can be selected only once for this item. - `NOT_SET` means that the `allow_quantities` setting on the `CatalogModifierList` is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
 	///   - enabled: If `true`, enable this `CatalogModifierList`. The default value is `true`.
-	///   - max_selected_modifiers: If 0 or larger, the largest number of `CatalogModifier`s that can be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
-	///   - min_selected_modifiers: If 0 or larger, the smallest number of `CatalogModifier`s that must be selected from this `CatalogModifierList`. The default value is `-1`.  When  `CatalogModifierList.selection_type` is `MULTIPLE`, `CatalogModifierListInfo.min_selected_modifiers=-1`  and `CatalogModifierListInfo.max_selected_modifier=-1` means that from zero to the maximum number of modifiers of the `CatalogModifierList` can be selected from the `CatalogModifierList`.   When the `CatalogModifierList.selection_type` is `SINGLE`, `CatalogModifierListInfo.min_selected_modifiers=-1` and `CatalogModifierListInfo.max_selected_modifier=-1` means that exactly one modifier must be present in  and can be selected from the `CatalogModifierList`
+	///   - hidden_from_customer_override: Controls whether all modifiers for this item are hidden from customer receipts. - `YES` means that all modifiers in the `CatalogModifierList` are hidden from customer receipts for this item. - `NO` means that all modifiers in the `CatalogModifierList` are visible on customer receipts for this item. - `NOT_SET` means that the `hidden_from_customer` setting on the `CatalogModifierList` is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	///   - is_conversational: Controls whether conversational mode is enabled for modifiers on this item.  - `YES` means conversational mode is enabled for every modifier in the `CatalogModifierList`. - `NO` means that conversational mode is not enabled for any modifier in the `CatalogModifierList`. - `NOT_SET` means that conversational mode is not enabled for any modifier in the `CatalogModifierList`. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	///   - max_selected_modifiers: The maximum number of modifiers that can be selected. Values:  - 0: No maximum limit. - -1: Default value, the attribute was not set by the client. When `min_selected_modifiers` is also -1, use the minimum and maximum selection values set on the `CatalogItemModifierList`. - &gt;0: The maximum total modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no maximum limit.
+	///   - min_selected_modifiers: The minimum number of modifiers that must be selected from this modifier list. Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. When `max_selected_modifiers` is also -1, use the minimum and maximum selection values set on the `CatalogItemModifierList`. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
 	///   - modifier_list_id: The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
-	///   - modifier_overrides: A set of `CatalogModifierOverride` objects that override whether a given `CatalogModifier` is enabled by default.
+	///   - modifier_overrides: A set of `CatalogModifierOverride` objects that override default modifier settings for this item.
 	///   - ordinal: The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
-	public init(modifier_list_id: String, enabled: Bool? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil, ordinal: Int? = nil) {
+	public init(modifier_list_id: String, allow_quantities: CatalogModifierToggleOverrideType? = nil, enabled: Bool? = nil, hidden_from_customer_override: CatalogModifierToggleOverrideType? = nil, is_conversational: CatalogModifierToggleOverrideType? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil, ordinal: Int? = nil) {
 		self.modifier_list_id = modifier_list_id
+		self.allow_quantities = allow_quantities
 		self.enabled = enabled
+		self.hidden_from_customer_override = hidden_from_customer_override
+		self.is_conversational = is_conversational
 		self.max_selected_modifiers = max_selected_modifiers
 		self.min_selected_modifiers = min_selected_modifiers
 		self.modifier_overrides = modifier_overrides
@@ -4046,8 +4105,10 @@ public struct CatalogMeasurementUnit: Codable, Equatable {
 	}
 }
 
-/// A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a Burger item.
+/// A modifier that can be applied to items at the time of sale. For example, a cheese modifier for a burger, or a flavor modifier for a serving of ice cream.
 public struct CatalogModifier: Codable, Equatable {
+	/// When `true`, this modifier is hidden from online ordering channels. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
+	public var hidden_online: Bool?
 	/// The ID of the image associated with this `CatalogModifier` instance. Currently this image is not displayed by Square, but is free to be displayed in 3rd party applications.
 	public var image_id: String?
 	/// Location-specific price overrides.
@@ -4056,37 +4117,53 @@ public struct CatalogModifier: Codable, Equatable {
 	public var modifier_list_id: String?
 	/// The modifier name.  This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	public var name: String?
+	/// When `true`, this modifier is selected by default when displaying the modifier list. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
+	public var on_by_default: Bool?
 	/// Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
 	public var ordinal: Int?
 	/// The modifier price.
 	public var price_money: Money?
 
-	/// A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a Burger item.
+	/// A modifier that can be applied to items at the time of sale. For example, a cheese modifier for a burger, or a flavor modifier for a serving of ice cream.
 	/// - Parameters:
+	///   - hidden_online: When `true`, this modifier is hidden from online ordering channels. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
 	///   - image_id: The ID of the image associated with this `CatalogModifier` instance. Currently this image is not displayed by Square, but is free to be displayed in 3rd party applications.
 	///   - location_overrides: Location-specific price overrides.
 	///   - modifier_list_id: The ID of the `CatalogModifierList` associated with this modifier.
 	///   - name: The modifier name.  This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
+	///   - on_by_default: When `true`, this modifier is selected by default when displaying the modifier list. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
 	///   - ordinal: Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
 	///   - price_money: The modifier price.
-	public init(image_id: String? = nil, location_overrides: [ModifierLocationOverrides]? = nil, modifier_list_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
+	public init(hidden_online: Bool? = nil, image_id: String? = nil, location_overrides: [ModifierLocationOverrides]? = nil, modifier_list_id: String? = nil, name: String? = nil, on_by_default: Bool? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
+		self.hidden_online = hidden_online
 		self.image_id = image_id
 		self.location_overrides = location_overrides
 		self.modifier_list_id = modifier_list_id
 		self.name = name
+		self.on_by_default = on_by_default
 		self.ordinal = ordinal
 		self.price_money = price_money
 	}
 }
 
-/// For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.  For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the buyer-supplied  text string to be selected for the T-shirt at the time of sale.  For non text-based modifiers, this encapsulates a non-empty list of modifiers applicable to items  at the time of sale. Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.    For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers.   A non text-based modifier can be applied to the modified item once or multiple times, if the `selection_type` field  is set to `SINGLE` or `MULTIPLE`, respectively. On the other hand, a text-based modifier can be applied to the item  only once and the `selection_type` field is always set to `SINGLE`.
+/// A container for a list of modifiers, or a text-based modifier. For text-based modifiers, this represents text configuration for an item. (For example, custom text to print on a t-shirt). For non text-based modifiers, this represents a list of modifiers that can be applied to items at the time of sale. (For example, a list of condiments for a hot dog, or a list of ice cream flavors). Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.
 public struct CatalogModifierList: Codable, Equatable {
+	/// When `true`, allows multiple quantities of the same modifier to be selected.
+	public var allow_quantities: Bool?
+	/// If `true`, modifiers from this list are hidden from customer receipts. The default value is `false`. This setting can be overridden with `CatalogItemModifierListInfo.hidden_from_customer_override`.
+	public var hidden_from_customer: Bool?
 	/// The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
 	public var image_ids: [String]?
 	/// A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
 	public var internal_name: String?
+	/// True if modifiers belonging to this list can be used conversationally.
+	public var is_conversational: Bool?
 	/// The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
 	public var max_length: Int?
+	/// The maximum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No maximum limit. - -1: Default value, the attribute was not set by the client. Treated as no maximum limit. - &gt;0: The maximum total modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no maximum limit.
+	public var max_selected_modifiers: Int?
+	/// The minimum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. Treated as no selection required. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
+	public var min_selected_modifiers: Int?
 	/// The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects. See [CatalogModifierListModifierType](#type-catalogmodifierlistmodifiertype) for possible values
 	public var modifier_type: CatalogModifierListModifierType?
 	/// A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
@@ -4095,26 +4172,36 @@ public struct CatalogModifierList: Codable, Equatable {
 	public var name: String?
 	/// The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
 	public var ordinal: Int?
-	/// Indicates whether a single (`SINGLE`) or multiple (`MULTIPLE`) modifiers from the list can be applied to a single `CatalogItem`.  For text-based modifiers, the `selection_type` attribute is always `SINGLE`. The other value is ignored. See [CatalogModifierListSelectionType](#type-catalogmodifierlistselectiontype) for possible values
+	/// __Deprecated__: Indicates whether a single (`SINGLE`) modifier or multiple (`MULTIPLE`) modifiers can be selected. Use `min_selected_modifiers` and `max_selected_modifiers` instead. See [CatalogModifierListSelectionType](#type-catalogmodifierlistselectiontype) for possible values
 	public var selection_type: CatalogModifierListSelectionType?
 	/// Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
 	public var text_required: Bool?
 
-	/// For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.  For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the buyer-supplied  text string to be selected for the T-shirt at the time of sale.  For non text-based modifiers, this encapsulates a non-empty list of modifiers applicable to items  at the time of sale. Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.    For example, a "Condiments" modifier list applicable to a "Hot Dog" item may contain "Ketchup", "Mustard", and "Relish" modifiers.   A non text-based modifier can be applied to the modified item once or multiple times, if the `selection_type` field  is set to `SINGLE` or `MULTIPLE`, respectively. On the other hand, a text-based modifier can be applied to the item  only once and the `selection_type` field is always set to `SINGLE`.
+	/// A container for a list of modifiers, or a text-based modifier. For text-based modifiers, this represents text configuration for an item. (For example, custom text to print on a t-shirt). For non text-based modifiers, this represents a list of modifiers that can be applied to items at the time of sale. (For example, a list of condiments for a hot dog, or a list of ice cream flavors). Each element of the modifier list is a `CatalogObject` instance of the `MODIFIER` type.
 	/// - Parameters:
+	///   - allow_quantities: When `true`, allows multiple quantities of the same modifier to be selected.
+	///   - hidden_from_customer: If `true`, modifiers from this list are hidden from customer receipts. The default value is `false`. This setting can be overridden with `CatalogItemModifierListInfo.hidden_from_customer_override`.
 	///   - image_ids: The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
 	///   - internal_name: A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	///   - is_conversational: True if modifiers belonging to this list can be used conversationally.
 	///   - max_length: The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	///   - max_selected_modifiers: The maximum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No maximum limit. - -1: Default value, the attribute was not set by the client. Treated as no maximum limit. - &gt;0: The maximum total modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no maximum limit.
+	///   - min_selected_modifiers: The minimum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. Treated as no selection required. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
 	///   - modifier_type: The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects. See [CatalogModifierListModifierType](#type-catalogmodifierlistmodifiertype) for possible values
 	///   - modifiers: A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
 	///   - name: The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
 	///   - ordinal: The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
-	///   - selection_type: Indicates whether a single (`SINGLE`) or multiple (`MULTIPLE`) modifiers from the list can be applied to a single `CatalogItem`.  For text-based modifiers, the `selection_type` attribute is always `SINGLE`. The other value is ignored. See [CatalogModifierListSelectionType](#type-catalogmodifierlistselectiontype) for possible values
+	///   - selection_type: __Deprecated__: Indicates whether a single (`SINGLE`) modifier or multiple (`MULTIPLE`) modifiers can be selected. Use `min_selected_modifiers` and `max_selected_modifiers` instead. See [CatalogModifierListSelectionType](#type-catalogmodifierlistselectiontype) for possible values
 	///   - text_required: Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
-	public init(image_ids: [String]? = nil, internal_name: String? = nil, max_length: Int? = nil, modifier_type: CatalogModifierListModifierType? = nil, modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: CatalogModifierListSelectionType? = nil, text_required: Bool? = nil) {
+	public init(allow_quantities: Bool? = nil, hidden_from_customer: Bool? = nil, image_ids: [String]? = nil, internal_name: String? = nil, is_conversational: Bool? = nil, max_length: Int? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_type: CatalogModifierListModifierType? = nil, modifiers: [CatalogObject]? = nil, name: String? = nil, ordinal: Int? = nil, selection_type: CatalogModifierListSelectionType? = nil, text_required: Bool? = nil) {
+		self.allow_quantities = allow_quantities
+		self.hidden_from_customer = hidden_from_customer
 		self.image_ids = image_ids
 		self.internal_name = internal_name
+		self.is_conversational = is_conversational
 		self.max_length = max_length
+		self.max_selected_modifiers = max_selected_modifiers
+		self.min_selected_modifiers = min_selected_modifiers
 		self.modifier_type = modifier_type
 		self.modifiers = modifiers
 		self.name = name
@@ -4142,18 +4229,26 @@ public enum CatalogModifierListSelectionType: String, Codable {
 
 /// Options to control how to override the default behavior of the specified modifier.
 public struct CatalogModifierOverride: Codable, Equatable {
+	/// If `YES`, this setting overrides the `hidden_online` setting on the `CatalogModifier` object, and the modifier is always hidden from online sales channels. If `NO`, the modifier is not hidden. It is always visible in online sales channels for this catalog item. `NOT_SET` means the `hidden_online` setting on the `CatalogModifier` object is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	public var hidden_online_override: CatalogModifierToggleOverrideType?
 	/// The ID of the `CatalogModifier` whose default behavior is being overridden.
 	public var modifier_id: String
-	/// If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
+	/// __Deprecated__: Use `on_by_default_override` instead.
 	public var on_by_default: Bool?
+	/// If `YES`, this setting overrides the `on_by_default` setting on the `CatalogModifier` object, and the modifier is always selected by default for the catalog item.  If `NO`, the modifier is not selected by default for this catalog item. `NOT_SET` means the `on_by_default` setting on the `CatalogModifier` object is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	public var on_by_default_override: CatalogModifierToggleOverrideType?
 
 	/// Options to control how to override the default behavior of the specified modifier.
 	/// - Parameters:
+	///   - hidden_online_override: If `YES`, this setting overrides the `hidden_online` setting on the `CatalogModifier` object, and the modifier is always hidden from online sales channels. If `NO`, the modifier is not hidden. It is always visible in online sales channels for this catalog item. `NOT_SET` means the `hidden_online` setting on the `CatalogModifier` object is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
 	///   - modifier_id: The ID of the `CatalogModifier` whose default behavior is being overridden.
-	///   - on_by_default: If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
-	public init(modifier_id: String, on_by_default: Bool? = nil) {
+	///   - on_by_default: __Deprecated__: Use `on_by_default_override` instead.
+	///   - on_by_default_override: If `YES`, this setting overrides the `on_by_default` setting on the `CatalogModifier` object, and the modifier is always selected by default for the catalog item.  If `NO`, the modifier is not selected by default for this catalog item. `NOT_SET` means the `on_by_default` setting on the `CatalogModifier` object is obeyed. See [CatalogModifierToggleOverrideType](#type-catalogmodifiertoggleoverridetype) for possible values
+	public init(modifier_id: String, hidden_online_override: CatalogModifierToggleOverrideType? = nil, on_by_default: Bool? = nil, on_by_default_override: CatalogModifierToggleOverrideType? = nil) {
 		self.modifier_id = modifier_id
+		self.hidden_online_override = hidden_online_override
 		self.on_by_default = on_by_default
+		self.on_by_default_override = on_by_default_override
 	}
 }
 
@@ -7227,6 +7322,40 @@ public struct CreateRefundResponse: Codable, Equatable {
 	}
 }
 
+/// Represents a [CreateScheduledShift](api-endpoint:Labor-CreateScheduledShift) request.
+public struct CreateScheduledShiftRequest: Codable, Equatable {
+	/// A unique identifier for the `CreateScheduledShift` request, used to ensure the [idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) of the operation.
+	public var idempotency_key: String?
+	/// The scheduled shift with `draft_shift_details`. If needed, call [ListLocations](api-endpoint:Locations-ListLocations) to get location IDs, [ListJobs](api-endpoint:Team-ListJobs) to get job IDs, and [SearchTeamMembers](api-endpoint:Team-SearchTeamMembers) to get team member IDs and current job assignments.  The `start_at` and `end_at` timestamps must be provided in the time zone + offset of the shift location specified in `location_id`. Example for Pacific Standard Time: yyyy-mm-ddT12:30:00-08:00
+	public var scheduled_shift: ScheduledShift
+
+	/// Represents a [CreateScheduledShift](api-endpoint:Labor-CreateScheduledShift) request.
+	/// - Parameters:
+	///   - idempotency_key: A unique identifier for the `CreateScheduledShift` request, used to ensure the [idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) of the operation.
+	///   - scheduled_shift: The scheduled shift with `draft_shift_details`. If needed, call [ListLocations](api-endpoint:Locations-ListLocations) to get location IDs, [ListJobs](api-endpoint:Team-ListJobs) to get job IDs, and [SearchTeamMembers](api-endpoint:Team-SearchTeamMembers) to get team member IDs and current job assignments.  The `start_at` and `end_at` timestamps must be provided in the time zone + offset of the shift location specified in `location_id`. Example for Pacific Standard Time: yyyy-mm-ddT12:30:00-08:00
+	public init(scheduled_shift: ScheduledShift, idempotency_key: String? = nil) {
+		self.scheduled_shift = scheduled_shift
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// Represents a [CreateScheduledShift](api-endpoint:Labor-CreateScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+public struct CreateScheduledShiftResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The new scheduled shift. To make the shift public, call  [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) or [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts).
+	public var scheduled_shift: ScheduledShift?
+
+	/// Represents a [CreateScheduledShift](api-endpoint:Labor-CreateScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - scheduled_shift: The new scheduled shift. To make the shift public, call  [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) or [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts).
+	public init(errors: [SquareError]? = nil, scheduled_shift: ScheduledShift? = nil) {
+		self.errors = errors
+		self.scheduled_shift = scheduled_shift
+	}
+}
+
 /// Represents a request to create a `Shift`.
 public struct CreateShiftRequest: Codable, Equatable {
 	/// A unique string value to ensure the idempotency of the operation.
@@ -7442,6 +7571,40 @@ public struct CreateTerminalRefundResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
+	}
+}
+
+/// Represents a request to create a `Timecard`.
+public struct CreateTimecardRequest: Codable, Equatable {
+	/// A unique string value to ensure the idempotency of the operation.
+	public var idempotency_key: String?
+	/// The `Timecard` to be created.
+	public var timecard: Timecard
+
+	/// Represents a request to create a `Timecard`.
+	/// - Parameters:
+	///   - idempotency_key: A unique string value to ensure the idempotency of the operation.
+	///   - timecard: The `Timecard` to be created.
+	public init(timecard: Timecard, idempotency_key: String? = nil) {
+		self.timecard = timecard
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// The response to a request to create a `Timecard`. The response contains the created `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
+public struct CreateTimecardResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The `Timecard` that was created on the request.
+	public var timecard: Timecard?
+
+	/// The response to a request to create a `Timecard`. The response contains the created `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - timecard: The `Timecard` that was created on the request.
+	public init(errors: [SquareError]? = nil, timecard: Timecard? = nil) {
+		self.errors = errors
+		self.timecard = timecard
 	}
 }
 
@@ -8975,6 +9138,25 @@ public struct DeleteSubscriptionActionResponse: Codable, Equatable {
 	}
 }
 
+/// A request to delete a `Timecard`.
+public struct DeleteTimecardRequest: Codable, Equatable {
+
+	// no init-- this struct is read-only
+}
+
+/// The response to a request to delete a `Timecard`. The response might contain a set of  `Error` objects if the request resulted in errors.
+public struct DeleteTimecardResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	/// The response to a request to delete a `Timecard`. The response might contain a set of  `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
 /// Deletes a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
 public struct DeleteWebhookSubscriptionRequest: Codable, Equatable {
 
@@ -10272,9 +10454,9 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
-	case VERSION_MISMATCH
 	case ISSUER_INSTALLMENT_ERROR
 	case ORDER_EXPIRED
+	case VERSION_MISMATCH
 }
 
 public struct Event: Codable, Equatable {
@@ -19053,6 +19235,44 @@ public struct PublishInvoiceResponse: Codable, Equatable {
 	}
 }
 
+/// Represents a [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) request.
+public struct PublishScheduledShiftRequest: Codable, Equatable {
+	/// A unique identifier for the `PublishScheduledShift` request, used to ensure the [idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) of the operation.
+	public var idempotency_key: String
+	/// Indicates whether Square should send an email notification to team members and which team members should receive the notification. The default value is `AFFECTED`. See [ScheduledShiftNotificationAudience](#type-scheduledshiftnotificationaudience) for possible values
+	public var scheduled_shift_notification_audience: ScheduledShiftNotificationAudience?
+	/// The current version of the scheduled shift, used to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If the provided version doesn't match the server version, the request fails. If omitted, Square executes a blind write, potentially overwriting data from another publish request.
+	public var version: Int?
+
+	/// Represents a [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) request.
+	/// - Parameters:
+	///   - idempotency_key: A unique identifier for the `PublishScheduledShift` request, used to ensure the [idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) of the operation.
+	///   - scheduled_shift_notification_audience: Indicates whether Square should send an email notification to team members and which team members should receive the notification. The default value is `AFFECTED`. See [ScheduledShiftNotificationAudience](#type-scheduledshiftnotificationaudience) for possible values
+	///   - version: The current version of the scheduled shift, used to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control. If the provided version doesn't match the server version, the request fails. If omitted, Square executes a blind write, potentially overwriting data from another publish request.
+	public init(idempotency_key: String, scheduled_shift_notification_audience: ScheduledShiftNotificationAudience? = nil, version: Int? = nil) {
+		self.idempotency_key = idempotency_key
+		self.scheduled_shift_notification_audience = scheduled_shift_notification_audience
+		self.version = version
+	}
+}
+
+/// Represents a [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+public struct PublishScheduledShiftResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The published scheduled shift.
+	public var scheduled_shift: ScheduledShift?
+
+	/// Represents a [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - scheduled_shift: The published scheduled shift.
+	public init(errors: [SquareError]? = nil, scheduled_shift: ScheduledShift? = nil) {
+		self.errors = errors
+		self.scheduled_shift = scheduled_shift
+	}
+}
+
 /// Fields to describe the action that displays QR-Codes.
 public struct QrCodeOptions: Codable, Equatable {
 	/// The text representation of the data to show in the QR code as UTF8-encoded data.
@@ -20411,6 +20631,29 @@ public struct RetrievePaymentLinkResponse: Codable, Equatable {
 	}
 }
 
+/// Represents a [RetrieveScheduledShift](api-endpoint:Labor-RetrieveScheduledShift) request.
+public struct RetrieveScheduledShiftRequest: Codable, Equatable {
+
+	// no init-- this struct is read-only
+}
+
+/// Represents a [RetrieveScheduledShift](api-endpoint:Labor-RetrieveScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+public struct RetrieveScheduledShiftResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The requested scheduled shift.
+	public var scheduled_shift: ScheduledShift?
+
+	/// Represents a [RetrieveScheduledShift](api-endpoint:Labor-RetrieveScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - scheduled_shift: The requested scheduled shift.
+	public init(errors: [SquareError]? = nil, scheduled_shift: ScheduledShift? = nil) {
+		self.errors = errors
+		self.scheduled_shift = scheduled_shift
+	}
+}
+
 /// Represents a `RetrieveSnippet` request.
 public struct RetrieveSnippetRequest: Codable, Equatable {
 
@@ -20501,6 +20744,29 @@ public struct RetrieveTeamMemberResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, team_member: TeamMember? = nil) {
 		self.errors = errors
 		self.team_member = team_member
+	}
+}
+
+/// A request to get a `Timecard` by ID.
+public struct RetrieveTimecardRequest: Codable, Equatable {
+
+	// no init-- this struct is read-only
+}
+
+/// A response to a request to get a `Timecard`. The response contains the requested `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
+public struct RetrieveTimecardResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The requested `Timecard`.
+	public var timecard: Timecard?
+
+	/// A response to a request to get a `Timecard`. The response contains the requested `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - timecard: The requested `Timecard`.
+	public init(errors: [SquareError]? = nil, timecard: Timecard? = nil) {
+		self.errors = errors
+		self.timecard = timecard
 	}
 }
 
@@ -20708,6 +20974,220 @@ public struct SaveCardOptions: Codable, Equatable {
 		self.card_id = card_id
 		self.reference_id = reference_id
 	}
+}
+
+/// Represents a specific time slot in a work schedule. This object is used to manage the lifecycle of a scheduled shift from the draft to published state. A scheduled shift contains the latest draft shift details and current published shift details.
+public struct ScheduledShift: Codable, Equatable {
+	/// The timestamp of when the scheduled shift was created, in RFC 3339 format presented as UTC.
+	public var created_at: Timestamp?
+	/// The latest draft shift details for the scheduled shift. Draft shift details are used to stage and manage shifts before publishing. This field is always present.
+	public var draft_shift_details: ScheduledShiftDetails?
+	/// **Read only** The Square-issued ID of the scheduled shift.
+	public var id: String?
+	/// The current published (public) shift details for the scheduled shift. This field is present only if the shift was published.
+	public var published_shift_details: ScheduledShiftDetails?
+	/// The timestamp of when the scheduled shift was last updated, in RFC 3339 format presented as UTC.
+	public var updated_at: Timestamp?
+	/// **Read only** The current version of the scheduled shift, which is incremented with each update. This field is used for [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control to ensure that requests don't overwrite data from another request.
+	public var version: Int?
+
+	/// Represents a specific time slot in a work schedule. This object is used to manage the lifecycle of a scheduled shift from the draft to published state. A scheduled shift contains the latest draft shift details and current published shift details.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the scheduled shift was created, in RFC 3339 format presented as UTC.
+	///   - draft_shift_details: The latest draft shift details for the scheduled shift. Draft shift details are used to stage and manage shifts before publishing. This field is always present.
+	///   - id: **Read only** The Square-issued ID of the scheduled shift.
+	///   - published_shift_details: The current published (public) shift details for the scheduled shift. This field is present only if the shift was published.
+	///   - updated_at: The timestamp of when the scheduled shift was last updated, in RFC 3339 format presented as UTC.
+	///   - version: **Read only** The current version of the scheduled shift, which is incremented with each update. This field is used for [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control to ensure that requests don't overwrite data from another request.
+	public init(created_at: Timestamp? = nil, draft_shift_details: ScheduledShiftDetails? = nil, id: String? = nil, published_shift_details: ScheduledShiftDetails? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.draft_shift_details = draft_shift_details
+		self.id = id
+		self.published_shift_details = published_shift_details
+		self.updated_at = updated_at
+		self.version = version
+	}
+}
+
+/// Represents shift details for draft and published versions of a [scheduled shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift), such as job ID, team member assignment, and start and end times.
+public struct ScheduledShiftDetails: Codable, Equatable {
+	/// The end time for the shift, in RFC 3339 format in the time zone &plus; offset of the shift location specified in `location_id`. Precision up to the minute is respected; seconds are truncated.
+	public var end_at: Timestamp?
+	/// Indicates whether the draft shift version is deleted. If set to `true` when the shift is published, the entire scheduled shift (including the published shift) is deleted and cannot be accessed using any endpoint.
+	public var is_deleted: Bool?
+	/// The ID of the [job](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Job) the shift is scheduled for.
+	public var job_id: String?
+	/// The ID of the [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) the shift is scheduled for.
+	public var location_id: String?
+	/// Optional notes for the shift.
+	public var notes: String?
+	/// The start time of the shift, in RFC 3339 format in the time zone &plus; offset of the shift location specified in `location_id`. Precision up to the minute is respected; seconds are truncated.
+	public var start_at: Timestamp?
+	/// The ID of the [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) scheduled for the shift.
+	public var team_member_id: String?
+	/// The time zone of the shift location, calculated based on the `location_id`. This field is provided for convenience.
+	public var timezone: String?
+
+	/// Represents shift details for draft and published versions of a [scheduled shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift), such as job ID, team member assignment, and start and end times.
+	/// - Parameters:
+	///   - end_at: The end time for the shift, in RFC 3339 format in the time zone &plus; offset of the shift location specified in `location_id`. Precision up to the minute is respected; seconds are truncated.
+	///   - is_deleted: Indicates whether the draft shift version is deleted. If set to `true` when the shift is published, the entire scheduled shift (including the published shift) is deleted and cannot be accessed using any endpoint.
+	///   - job_id: The ID of the [job](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Job) the shift is scheduled for.
+	///   - location_id: The ID of the [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) the shift is scheduled for.
+	///   - notes: Optional notes for the shift.
+	///   - start_at: The start time of the shift, in RFC 3339 format in the time zone &plus; offset of the shift location specified in `location_id`. Precision up to the minute is respected; seconds are truncated.
+	///   - team_member_id: The ID of the [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) scheduled for the shift.
+	///   - timezone: The time zone of the shift location, calculated based on the `location_id`. This field is provided for convenience.
+	public init(end_at: Timestamp? = nil, is_deleted: Bool? = nil, job_id: String? = nil, location_id: String? = nil, notes: String? = nil, start_at: Timestamp? = nil, team_member_id: String? = nil, timezone: String? = nil) {
+		self.end_at = end_at
+		self.is_deleted = is_deleted
+		self.job_id = job_id
+		self.location_id = location_id
+		self.notes = notes
+		self.start_at = start_at
+		self.team_member_id = team_member_id
+		self.timezone = timezone
+	}
+}
+
+/// Defines filter criteria for a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request. Multiple filters in a query are combined as an `AND` operation.
+public struct ScheduledShiftFilter: Codable, Equatable {
+	/// Return shifts based on whether a team member is assigned. A shift is assigned if the `team_member_id` field is populated in the `draft_shift_details` or `published_shift details` field of the shift.  To return only draft or published shifts, include the `scheduled_shift_statuses` filter in the query. See [ScheduledShiftFilterAssignmentStatus](#type-scheduledshiftfilterassignmentstatus) for possible values
+	public var assignment_status: ScheduledShiftFilterAssignmentStatus?
+	/// Return shifts whose `end_at` time is within the specified time range (inclusive).
+	public var end: TimeRange?
+	/// Return shifts for the specified locations. When omitted, shifts for all locations are returned. If needed, call [ListLocations](api-endpoint:Locations-ListLocations) to get location IDs.
+	public var location_ids: [String]?
+	/// Return shifts based on the draft or published status of the shift. A shift is published if the `published_shift_details` field is present.  Note that shifts with `draft_shift_details.is_deleted` set to `true` are ignored with the `DRAFT` filter. See [ScheduledShiftFilterScheduledShiftStatus](#type-scheduledshiftfilterscheduledshiftstatus) for possible values
+	public var scheduled_shift_statuses: [ScheduledShiftFilterScheduledShiftStatus]?
+	/// Return shifts whose `start_at` time is within the specified time range (inclusive).
+	public var start: TimeRange?
+	/// Return shifts assigned to specified team members. If needed, call [SearchTeamMembers](api-endpoint:Team-SearchTeamMembers) to get team member IDs.  To return only the shifts assigned to the specified team members, include the `assignment_status` filter in the query. Otherwise, all unassigned shifts are returned along with shifts assigned to the specified team members.
+	public var team_member_ids: [String]?
+	/// Return shifts based on a workday date range.
+	public var workday: ScheduledShiftWorkday?
+
+	/// Defines filter criteria for a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request. Multiple filters in a query are combined as an `AND` operation.
+	/// - Parameters:
+	///   - assignment_status: Return shifts based on whether a team member is assigned. A shift is assigned if the `team_member_id` field is populated in the `draft_shift_details` or `published_shift details` field of the shift.  To return only draft or published shifts, include the `scheduled_shift_statuses` filter in the query. See [ScheduledShiftFilterAssignmentStatus](#type-scheduledshiftfilterassignmentstatus) for possible values
+	///   - end: Return shifts whose `end_at` time is within the specified time range (inclusive).
+	///   - location_ids: Return shifts for the specified locations. When omitted, shifts for all locations are returned. If needed, call [ListLocations](api-endpoint:Locations-ListLocations) to get location IDs.
+	///   - scheduled_shift_statuses: Return shifts based on the draft or published status of the shift. A shift is published if the `published_shift_details` field is present.  Note that shifts with `draft_shift_details.is_deleted` set to `true` are ignored with the `DRAFT` filter. See [ScheduledShiftFilterScheduledShiftStatus](#type-scheduledshiftfilterscheduledshiftstatus) for possible values
+	///   - start: Return shifts whose `start_at` time is within the specified time range (inclusive).
+	///   - team_member_ids: Return shifts assigned to specified team members. If needed, call [SearchTeamMembers](api-endpoint:Team-SearchTeamMembers) to get team member IDs.  To return only the shifts assigned to the specified team members, include the `assignment_status` filter in the query. Otherwise, all unassigned shifts are returned along with shifts assigned to the specified team members.
+	///   - workday: Return shifts based on a workday date range.
+	public init(assignment_status: ScheduledShiftFilterAssignmentStatus? = nil, end: TimeRange? = nil, location_ids: [String]? = nil, scheduled_shift_statuses: [ScheduledShiftFilterScheduledShiftStatus]? = nil, start: TimeRange? = nil, team_member_ids: [String]? = nil, workday: ScheduledShiftWorkday? = nil) {
+		self.assignment_status = assignment_status
+		self.end = end
+		self.location_ids = location_ids
+		self.scheduled_shift_statuses = scheduled_shift_statuses
+		self.start = start
+		self.team_member_ids = team_member_ids
+		self.workday = workday
+	}
+}
+
+/// Defines valid values for the `assignment_status` filter in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request. Assignment status is based on the `draft_shift_details.team_member_id` and `published_shift_details.team_member_id` fields of the scheduled shift.
+public enum ScheduledShiftFilterAssignmentStatus: String, Codable {
+	/// The shift is assigned to a team member.
+	case ASSIGNED
+	/// The shift isn't assigned to a team member.
+	case UNASSIGNED
+}
+
+/// Defines valid values for the `scheduled_shift_statuses` filter in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
+public enum ScheduledShiftFilterScheduledShiftStatus: String, Codable {
+	/// The scheduled shift has never been published or its draft details were updated after it was published. This means that the shift has no `published_shift_details` field or that `draft_shift_details` has different settings than `published_shift_details`.
+	case DRAFT
+	/// The scheduled shift was published. This means that the shift has a `published_shift_details` field.
+	case PUBLISHED
+}
+
+/// Indicates whether Square sends an email notification to team members when a scheduled shift is published and which team members receive the notification.
+public enum ScheduledShiftNotificationAudience: String, Codable {
+	/// Notify all active team members. Note that republishing an unchanged shift with this setting resends the notification.
+	case ALL
+	/// Notify the team member assigned to the shift. If the shift assignment changes, notify both the newly assigned and previously assigned team members.
+	case AFFECTED
+	/// Do not send a notification.
+	case NONE
+}
+
+/// Represents filter and sort criteria for the `query` field in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
+public struct ScheduledShiftQuery: Codable, Equatable {
+	/// Filtering options for the query.
+	public var filter: ScheduledShiftFilter?
+	/// Sorting options for the query.
+	public var sort: ScheduledShiftSort?
+
+	/// Represents filter and sort criteria for the `query` field in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
+	/// - Parameters:
+	///   - filter: Filtering options for the query.
+	///   - sort: Sorting options for the query.
+	public init(filter: ScheduledShiftFilter? = nil, sort: ScheduledShiftSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
+}
+
+/// Defines sort criteria for a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
+public struct ScheduledShiftSort: Codable, Equatable {
+	/// The field to sort on. The default value is `START_AT`. See [ScheduledShiftSortField](#type-scheduledshiftsortfield) for possible values
+	public var field: ScheduledShiftSortField?
+	/// The order in which results are returned. The default value is `ASC`. See [SortOrder](#type-sortorder) for possible values
+	public var order: SortOrder?
+
+	/// Defines sort criteria for a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
+	/// - Parameters:
+	///   - field: The field to sort on. The default value is `START_AT`. See [ScheduledShiftSortField](#type-scheduledshiftsortfield) for possible values
+	///   - order: The order in which results are returned. The default value is `ASC`. See [SortOrder](#type-sortorder) for possible values
+	public init(field: ScheduledShiftSortField? = nil, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
+}
+
+/// Defines valid values for the `field` sort setting in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
+public enum ScheduledShiftSortField: String, Codable {
+	/// Sort by the start time of the shift.
+	case START_AT
+	/// Sort by the end time of the shift.
+	case END_AT
+	/// Sort by the creation date of the shift.
+	case CREATED_AT
+	/// Sort by the last updated date of the shift.
+	case UPDATED_AT
+}
+
+/// A `ScheduledShift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
+public struct ScheduledShiftWorkday: Codable, Equatable {
+	/// Dates for fetching the scheduled shifts.
+	public var date_range: DateRange?
+	/// Location-specific timezones convert workdays to datetime filters. Every location included in the query must have a timezone or this field must be provided as a fallback. Format: the IANA timezone database identifier for the relevant timezone.
+	public var default_timezone: String?
+	/// The strategy on which the dates are applied. See [ScheduledShiftWorkdayMatcher](#type-scheduledshiftworkdaymatcher) for possible values
+	public var match_scheduled_shifts_by: ScheduledShiftWorkdayMatcher?
+
+	/// A `ScheduledShift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
+	/// - Parameters:
+	///   - date_range: Dates for fetching the scheduled shifts.
+	///   - default_timezone: Location-specific timezones convert workdays to datetime filters. Every location included in the query must have a timezone or this field must be provided as a fallback. Format: the IANA timezone database identifier for the relevant timezone.
+	///   - match_scheduled_shifts_by: The strategy on which the dates are applied. See [ScheduledShiftWorkdayMatcher](#type-scheduledshiftworkdaymatcher) for possible values
+	public init(date_range: DateRange? = nil, default_timezone: String? = nil, match_scheduled_shifts_by: ScheduledShiftWorkdayMatcher? = nil) {
+		self.date_range = date_range
+		self.default_timezone = default_timezone
+		self.match_scheduled_shifts_by = match_scheduled_shifts_by
+	}
+}
+
+/// Defines the logic used to apply a workday filter.
+public enum ScheduledShiftWorkdayMatcher: String, Codable {
+	/// All shifts that start on or after the specified workday
+	case START_AT
+	/// All shifts that end on or before the specified workday
+	case END_AT
+	/// All shifts that start between the start and end workdays (inclusive)
+	case INTERSECTION
 }
 
 /// A query filter to search for buyer-accessible availabilities by.
@@ -21461,6 +21941,48 @@ public struct SearchOrdersStateFilter: Codable, Equatable {
 	}
 }
 
+/// Represents a [SearchScheduledShift](api-endpoint:Labor-SearchScheduledShift) request.
+public struct SearchScheduledShiftsRequest: Codable, Equatable {
+	/// The pagination cursor returned by the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	public var cursor: String?
+	/// The maximum number of results to return in a single response page. The default value is 50.
+	public var limit: Int?
+	/// Query conditions used to filter and sort the results.
+	public var query: ScheduledShiftQuery?
+
+	/// Represents a [SearchScheduledShift](api-endpoint:Labor-SearchScheduledShift) request.
+	/// - Parameters:
+	///   - cursor: The pagination cursor returned by the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
+	///   - limit: The maximum number of results to return in a single response page. The default value is 50.
+	///   - query: Query conditions used to filter and sort the results.
+	public init(cursor: String? = nil, limit: Int? = nil, query: ScheduledShiftQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
+}
+
+/// Represents a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) response. Either `scheduled_shifts` or `errors` is present in the response.
+public struct SearchScheduledShiftsResponse: Codable, Equatable {
+	/// The pagination cursor used to retrieve the next page of results. This field is present only if additional results are available.
+	public var cursor: String?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// A paginated list of scheduled shifts that match the query conditions.
+	public var scheduled_shifts: [ScheduledShift]?
+
+	/// Represents a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) response. Either `scheduled_shifts` or `errors` is present in the response.
+	/// - Parameters:
+	///   - cursor: The pagination cursor used to retrieve the next page of results. This field is present only if additional results are available.
+	///   - errors: Any errors that occurred during the request.
+	///   - scheduled_shifts: A paginated list of scheduled shifts that match the query conditions.
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, scheduled_shifts: [ScheduledShift]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.scheduled_shifts = scheduled_shifts
+	}
+}
+
 /// A request for a filtered and sorted set of `Shift` objects.
 public struct SearchShiftsRequest: Codable, Equatable {
 	/// An opaque cursor for fetching the next page.
@@ -21749,6 +22271,48 @@ public struct SearchTerminalRefundsResponse: Codable, Equatable {
 	}
 }
 
+/// A request for a filtered and sorted set of `Timecard` objects.
+public struct SearchTimecardsRequest: Codable, Equatable {
+	/// An opaque cursor for fetching the next page.
+	public var cursor: String?
+	/// The number of resources in a page (200 by default).
+	public var limit: Int?
+	/// Query filters.
+	public var query: TimecardQuery?
+
+	/// A request for a filtered and sorted set of `Timecard` objects.
+	/// - Parameters:
+	///   - cursor: An opaque cursor for fetching the next page.
+	///   - limit: The number of resources in a page (200 by default).
+	///   - query: Query filters.
+	public init(cursor: String? = nil, limit: Int? = nil, query: TimecardQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
+}
+
+/// The response to a request for `Timecard` objects. The response contains the requested `Timecard` objects and might contain a set of `Error` objects if the request resulted in errors.
+public struct SearchTimecardsResponse: Codable, Equatable {
+	/// An opaque cursor for fetching the next page.
+	public var cursor: String?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// Timecards.
+	public var timecards: [Timecard]?
+
+	/// The response to a request for `Timecard` objects. The response contains the requested `Timecard` objects and might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - cursor: An opaque cursor for fetching the next page.
+	///   - errors: Any errors that occurred during the request.
+	///   - timecards: Timecards.
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, timecards: [Timecard]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.timecards = timecards
+	}
+}
+
 /// Represents an input into a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
 public struct SearchVendorsRequest: Codable, Equatable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -21880,7 +22444,7 @@ public struct SelectOptions: Codable, Equatable {
 	}
 }
 
-/// A record of the hourly rate, start, and end times for a single work shift for an employee. This might include a record of the start and end times for breaks taken during the shift.
+/// A record of the hourly rate, start, and end times for a single work shift for an employee. This might include a record of the start and end times for breaks taken during the shift.  Deprecated at Square API version yyyy-mm-dd. Replaced by [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard). See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public struct Shift: Codable, Equatable {
 	/// A list of all the paid or unpaid breaks that were taken during this shift.
 	public var breaks: [Break]?
@@ -21911,7 +22475,7 @@ public struct Shift: Codable, Equatable {
 	/// Job and pay related information. If the wage is not set on create, it defaults to a wage of zero. If the title is not set on create, it defaults to the name of the role the employee is assigned to, if any.
 	public var wage: ShiftWage?
 
-	/// A record of the hourly rate, start, and end times for a single work shift for an employee. This might include a record of the start and end times for breaks taken during the shift.
+	/// A record of the hourly rate, start, and end times for a single work shift for an employee. This might include a record of the start and end times for breaks taken during the shift.  Deprecated at Square API version yyyy-mm-dd. Replaced by [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard). See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 	/// - Parameters:
 	///   - breaks: A list of all the paid or unpaid breaks that were taken during this shift.
 	///   - created_at: A read-only timestamp in RFC 3339 format; presented in UTC.
@@ -21945,7 +22509,7 @@ public struct Shift: Codable, Equatable {
 	}
 }
 
-/// Defines a filter used in a search for `Shift` records. `AND` logic is used by Square's servers to apply each filter property specified.
+/// Defines a filter used in a search for `Shift` records. `AND` logic is used by Square's servers to apply each filter property specified.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public struct ShiftFilter: Codable, Equatable {
 	/// Fetch shifts for the specified employees. DEPRECATED at version yyyy-mm-dd. Use `team_member_ids` instead.
 	public var employee_ids: [String]?
@@ -21962,7 +22526,7 @@ public struct ShiftFilter: Codable, Equatable {
 	/// Fetch the `Shift` instances based on the workday date range.
 	public var workday: ShiftWorkday?
 
-	/// Defines a filter used in a search for `Shift` records. `AND` logic is used by Square's servers to apply each filter property specified.
+	/// Defines a filter used in a search for `Shift` records. `AND` logic is used by Square's servers to apply each filter property specified.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 	/// - Parameters:
 	///   - employee_ids: Fetch shifts for the specified employees. DEPRECATED at version yyyy-mm-dd. Use `team_member_ids` instead.
 	///   - end: Fetch the `Shift` instances that end in the time range - Inclusive.
@@ -21982,7 +22546,7 @@ public struct ShiftFilter: Codable, Equatable {
 	}
 }
 
-/// Specifies the `status` of `Shift` records to be returned.
+/// Specifies the `status` of `Shift` records to be returned.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public enum ShiftFilterStatus: String, Codable {
 	/// Shifts that have been started and not ended.
 	case OPEN
@@ -21990,14 +22554,14 @@ public enum ShiftFilterStatus: String, Codable {
 	case CLOSED
 }
 
-/// The parameters of a `Shift` search query, which includes filter and sort options.
+/// The parameters of a `Shift` search query, which includes filter and sort options.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public struct ShiftQuery: Codable, Equatable {
 	/// Query filter options.
 	public var filter: ShiftFilter?
 	/// Sort order details.
 	public var sort: ShiftSort?
 
-	/// The parameters of a `Shift` search query, which includes filter and sort options.
+	/// The parameters of a `Shift` search query, which includes filter and sort options.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 	/// - Parameters:
 	///   - filter: Query filter options.
 	///   - sort: Sort order details.
@@ -22007,14 +22571,14 @@ public struct ShiftQuery: Codable, Equatable {
 	}
 }
 
-/// Sets the sort order of search results.
+/// Sets the sort order of search results.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public struct ShiftSort: Codable, Equatable {
 	/// The field to sort on. See [ShiftSortField](#type-shiftsortfield) for possible values
 	public var field: ShiftSortField?
 	/// The order in which results are returned. Defaults to DESC. See [SortOrder](#type-sortorder) for possible values
 	public var order: SortOrder?
 
-	/// Sets the sort order of search results.
+	/// Sets the sort order of search results.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 	/// - Parameters:
 	///   - field: The field to sort on. See [ShiftSortField](#type-shiftsortfield) for possible values
 	///   - order: The order in which results are returned. Defaults to DESC. See [SortOrder](#type-sortorder) for possible values
@@ -22024,7 +22588,7 @@ public struct ShiftSort: Codable, Equatable {
 	}
 }
 
-/// Enumerates the `Shift` fields to sort on.
+/// Enumerates the `Shift` fields to sort on.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public enum ShiftSortField: String, Codable {
 	/// The start date/time of a `Shift`
 	case START_AT
@@ -22036,7 +22600,7 @@ public enum ShiftSortField: String, Codable {
 	case UPDATED_AT
 }
 
-/// Enumerates the possible status of a `Shift`.
+/// Enumerates the possible status of a `Shift`.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public enum ShiftStatus: String, Codable {
 	/// Employee started a work shift and the shift is not complete
 	case OPEN
@@ -22044,21 +22608,21 @@ public enum ShiftStatus: String, Codable {
 	case CLOSED
 }
 
-/// The hourly wage rate used to compensate an employee for this shift.
+/// The hourly wage rate used to compensate an employee for this shift.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public struct ShiftWage: Codable, Equatable {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
 	public var hourly_rate: Money?
-	/// The id of the job performed during this shift. Square labor-reporting UIs might group shifts together by id. This cannot be used to retrieve the job.
+	/// The id of the job performed during this shift. Square labor-reporting UIs might group shifts together by id.
 	public var job_id: String?
 	/// Whether team members are eligible for tips when working this job.
 	public var tip_eligible: Bool?
 	/// The name of the job performed during this shift.
 	public var title: String?
 
-	/// The hourly wage rate used to compensate an employee for this shift.
+	/// The hourly wage rate used to compensate an employee for this shift.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 	/// - Parameters:
 	///   - hourly_rate: Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
-	///   - job_id: The id of the job performed during this shift. Square labor-reporting UIs might group shifts together by id. This cannot be used to retrieve the job.
+	///   - job_id: The id of the job performed during this shift. Square labor-reporting UIs might group shifts together by id.
 	///   - tip_eligible: Whether team members are eligible for tips when working this job.
 	///   - title: The name of the job performed during this shift.
 	public init(hourly_rate: Money? = nil, job_id: String? = nil, tip_eligible: Bool? = nil, title: String? = nil) {
@@ -22069,7 +22633,7 @@ public struct ShiftWage: Codable, Equatable {
 	}
 }
 
-/// A `Shift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
+/// A `Shift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 public struct ShiftWorkday: Codable, Equatable {
 	/// Dates for fetching the shifts.
 	public var date_range: DateRange?
@@ -22078,7 +22642,7 @@ public struct ShiftWorkday: Codable, Equatable {
 	/// The strategy on which the dates are applied. See [ShiftWorkdayMatcher](#type-shiftworkdaymatcher) for possible values
 	public var match_shifts_by: ShiftWorkdayMatcher?
 
-	/// A `Shift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
+	/// A `Shift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
 	/// - Parameters:
 	///   - date_range: Dates for fetching the shifts.
 	///   - default_timezone: Location-specific timezones convert workdays to datetime filters. Every location included in the query must have a timezone or this field must be provided as a fallback. Format: the IANA timezone database identifier for the relevant timezone.
@@ -22900,13 +23464,13 @@ public enum TeamMemberStatus: String, Codable {
 	case INACTIVE
 }
 
-/// The hourly wage rate that a team member earns on a `Shift` for doing the job specified by the `title` property of this object.
+/// Job and wage information for a [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember). This convenience object provides details needed to specify the `wage` field for a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
 public struct TeamMemberWage: Codable, Equatable {
 	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
 	public var hourly_rate: Money?
 	/// The UUID for this object.
 	public var id: String?
-	/// An identifier for the job that this wage relates to. This cannot be used to retrieve the job.
+	/// An identifier for the [job](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Job) that this wage relates to.
 	public var job_id: String?
 	/// The `TeamMember` that this wage is assigned to.
 	public var team_member_id: String?
@@ -22915,11 +23479,11 @@ public struct TeamMemberWage: Codable, Equatable {
 	/// The job title that this wage relates to.
 	public var title: String?
 
-	/// The hourly wage rate that a team member earns on a `Shift` for doing the job specified by the `title` property of this object.
+	/// Job and wage information for a [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember). This convenience object provides details needed to specify the `wage` field for a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
 	/// - Parameters:
 	///   - hourly_rate: Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
 	///   - id: The UUID for this object.
-	///   - job_id: An identifier for the job that this wage relates to. This cannot be used to retrieve the job.
+	///   - job_id: An identifier for the [job](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Job) that this wage relates to.
 	///   - team_member_id: The `TeamMember` that this wage is assigned to.
 	///   - tip_eligible: Whether team members are eligible for tips when working this job.
 	///   - title: The job title that this wage relates to.
@@ -23604,6 +24168,218 @@ public struct TimeRange: Codable, Equatable {
 		self.end_at = end_at
 		self.start_at = start_at
 	}
+}
+
+/// A record of the hourly rate, start time, and end time of a single timecard (shift) for a team member. This might include a record of the start and end times of breaks taken during the shift.
+public struct Timecard: Codable, Equatable {
+	/// A list of all the paid or unpaid breaks that were taken during this timecard.
+	public var breaks: [Break]?
+	/// The timestamp of when the timecard was created, in RFC 3339 format presented as UTC.
+	public var created_at: Timestamp?
+	/// The cash tips declared by the team member for this timecard.
+	public var declared_cash_tip_money: Money?
+	/// The end time of the timecard, in RFC 3339 format and shifted to the location timezone + offset. Precision up to the minute is respected; seconds are truncated.
+	public var end_at: Timestamp?
+	/// **Read only** The Square-issued UUID for this object.
+	public var id: String?
+	/// The ID of the [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) for this timecard. The location should be based on where the team member clocked in.
+	public var location_id: String
+	/// The start time of the timecard, in RFC 3339 format and shifted to the location timezone + offset. Precision up to the minute is respected; seconds are truncated.
+	public var start_at: Timestamp
+	/// Describes the working state of the timecard. See [TimecardStatus](#type-timecardstatus) for possible values
+	public var status: TimecardStatus?
+	/// The ID of the [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) this timecard belongs to.
+	public var team_member_id: String
+	/// **Read only** The time zone calculated from the location based on the `location_id`, provided as a convenience value. Format: the IANA time zone database identifier for the location time zone.
+	public var timezone: String?
+	/// The timestamp of when the timecard was last updated, in RFC 3339 format presented as UTC.
+	public var updated_at: Timestamp?
+	/// **Read only** The current version of the timecard, which is incremented with each update. This field is used for [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control to ensure that requests don't overwrite data from another request.
+	public var version: Int?
+	/// Job and pay related information. If the wage is not set on create, it defaults to a wage of zero. If the title is not set on create, it defaults to the name of the role the team member is assigned to, if any.
+	public var wage: TimecardWage?
+
+	/// A record of the hourly rate, start time, and end time of a single timecard (shift) for a team member. This might include a record of the start and end times of breaks taken during the shift.
+	/// - Parameters:
+	///   - breaks: A list of all the paid or unpaid breaks that were taken during this timecard.
+	///   - created_at: The timestamp of when the timecard was created, in RFC 3339 format presented as UTC.
+	///   - declared_cash_tip_money: The cash tips declared by the team member for this timecard.
+	///   - end_at: The end time of the timecard, in RFC 3339 format and shifted to the location timezone + offset. Precision up to the minute is respected; seconds are truncated.
+	///   - id: **Read only** The Square-issued UUID for this object.
+	///   - location_id: The ID of the [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) for this timecard. The location should be based on where the team member clocked in.
+	///   - start_at: The start time of the timecard, in RFC 3339 format and shifted to the location timezone + offset. Precision up to the minute is respected; seconds are truncated.
+	///   - status: Describes the working state of the timecard. See [TimecardStatus](#type-timecardstatus) for possible values
+	///   - team_member_id: The ID of the [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) this timecard belongs to.
+	///   - timezone: **Read only** The time zone calculated from the location based on the `location_id`, provided as a convenience value. Format: the IANA time zone database identifier for the location time zone.
+	///   - updated_at: The timestamp of when the timecard was last updated, in RFC 3339 format presented as UTC.
+	///   - version: **Read only** The current version of the timecard, which is incremented with each update. This field is used for [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control to ensure that requests don't overwrite data from another request.
+	///   - wage: Job and pay related information. If the wage is not set on create, it defaults to a wage of zero. If the title is not set on create, it defaults to the name of the role the team member is assigned to, if any.
+	public init(location_id: String, start_at: Timestamp, team_member_id: String, breaks: [Break]? = nil, created_at: Timestamp? = nil, declared_cash_tip_money: Money? = nil, end_at: Timestamp? = nil, id: String? = nil, status: TimecardStatus? = nil, timezone: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil, wage: TimecardWage? = nil) {
+		self.location_id = location_id
+		self.start_at = start_at
+		self.team_member_id = team_member_id
+		self.breaks = breaks
+		self.created_at = created_at
+		self.declared_cash_tip_money = declared_cash_tip_money
+		self.end_at = end_at
+		self.id = id
+		self.status = status
+		self.timezone = timezone
+		self.updated_at = updated_at
+		self.version = version
+		self.wage = wage
+	}
+}
+
+/// Defines a filter used in a search for `Timecard` records. `AND` logic is used by Square's servers to apply each filter property specified.
+public struct TimecardFilter: Codable, Equatable {
+	/// Fetch the `Timecard` instances that end in the time range - Inclusive.
+	public var end: TimeRange?
+	/// Fetch timecards for the specified location.
+	public var location_ids: [String]?
+	/// Fetch `Timecard` instances that start in the time range - Inclusive.
+	public var start: TimeRange?
+	/// Fetch a `Timecard` instance by `Timecard.status`. See [TimecardFilterStatus](#type-timecardfilterstatus) for possible values
+	public var status: TimecardFilterStatus?
+	/// Fetch timecards for the specified team members.
+	public var team_member_ids: [String]?
+	/// Fetch the `Timecard` instances based on the workday date range.
+	public var workday: TimecardWorkday?
+
+	/// Defines a filter used in a search for `Timecard` records. `AND` logic is used by Square's servers to apply each filter property specified.
+	/// - Parameters:
+	///   - end: Fetch the `Timecard` instances that end in the time range - Inclusive.
+	///   - location_ids: Fetch timecards for the specified location.
+	///   - start: Fetch `Timecard` instances that start in the time range - Inclusive.
+	///   - status: Fetch a `Timecard` instance by `Timecard.status`. See [TimecardFilterStatus](#type-timecardfilterstatus) for possible values
+	///   - team_member_ids: Fetch timecards for the specified team members.
+	///   - workday: Fetch the `Timecard` instances based on the workday date range.
+	public init(end: TimeRange? = nil, location_ids: [String]? = nil, start: TimeRange? = nil, status: TimecardFilterStatus? = nil, team_member_ids: [String]? = nil, workday: TimecardWorkday? = nil) {
+		self.end = end
+		self.location_ids = location_ids
+		self.start = start
+		self.status = status
+		self.team_member_ids = team_member_ids
+		self.workday = workday
+	}
+}
+
+/// Specifies the `status` of `Timecard` records to be returned.
+public enum TimecardFilterStatus: String, Codable {
+	/// Timecards that have been started and not ended.
+	case OPEN
+	/// Timecards that have been started and ended.
+	case CLOSED
+}
+
+/// The parameters of a `Timecard` search query, which includes filter and sort options.
+public struct TimecardQuery: Codable, Equatable {
+	/// Query filter options.
+	public var filter: TimecardFilter?
+	/// Sort order details.
+	public var sort: TimecardSort?
+
+	/// The parameters of a `Timecard` search query, which includes filter and sort options.
+	/// - Parameters:
+	///   - filter: Query filter options.
+	///   - sort: Sort order details.
+	public init(filter: TimecardFilter? = nil, sort: TimecardSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
+}
+
+/// Sets the sort order of search results.
+public struct TimecardSort: Codable, Equatable {
+	/// The field to sort on. See [TimecardSortField](#type-timecardsortfield) for possible values
+	public var field: TimecardSortField?
+	/// The order in which results are returned. Defaults to DESC. See [SortOrder](#type-sortorder) for possible values
+	public var order: SortOrder?
+
+	/// Sets the sort order of search results.
+	/// - Parameters:
+	///   - field: The field to sort on. See [TimecardSortField](#type-timecardsortfield) for possible values
+	///   - order: The order in which results are returned. Defaults to DESC. See [SortOrder](#type-sortorder) for possible values
+	public init(field: TimecardSortField? = nil, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
+}
+
+/// Enumerates the `Timecard` fields to sort on.
+public enum TimecardSortField: String, Codable {
+	/// The start date/time of a `Timecard`
+	case START_AT
+	/// The end date/time of a `Timecard`
+	case END_AT
+	/// The date/time that a `Timecard` is created
+	case CREATED_AT
+	/// The most recent date/time that a `Timecard` is updated
+	case UPDATED_AT
+}
+
+/// **Read only** Enumerates the possible status of a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
+public enum TimecardStatus: String, Codable {
+	/// The timecard has a `start_at` time but no `end_at` time, indicating an ongoing shift.
+	case OPEN
+	/// The timecard has both `start_at` and `end_at` times, indicating a completed shift.
+	case CLOSED
+}
+
+/// The hourly wage rate used to compensate a team member for a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
+public struct TimecardWage: Codable, Equatable {
+	/// Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
+	public var hourly_rate: Money?
+	/// The ID of the [job](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Job) performed for this timecard. Square labor-reporting UIs might group timecards together by ID.
+	public var job_id: String?
+	/// Whether team members are eligible for tips when working this job.
+	public var tip_eligible: Bool?
+	/// The name of the job performed during this timecard.
+	public var title: String?
+
+	/// The hourly wage rate used to compensate a team member for a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
+	/// - Parameters:
+	///   - hourly_rate: Can be a custom-set hourly wage or the calculated effective hourly wage based on the annual wage and hours worked per week.
+	///   - job_id: The ID of the [job](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Job) performed for this timecard. Square labor-reporting UIs might group timecards together by ID.
+	///   - tip_eligible: Whether team members are eligible for tips when working this job.
+	///   - title: The name of the job performed during this timecard.
+	public init(hourly_rate: Money? = nil, job_id: String? = nil, tip_eligible: Bool? = nil, title: String? = nil) {
+		self.hourly_rate = hourly_rate
+		self.job_id = job_id
+		self.tip_eligible = tip_eligible
+		self.title = title
+	}
+}
+
+/// A `Timecard` search query filter parameter that sets a range of days that a `Timecard` must start or end in before passing the filter condition.
+public struct TimecardWorkday: Codable, Equatable {
+	/// Dates for fetching the timecards.
+	public var date_range: DateRange?
+	/// Location-specific timezones convert workdays to datetime filters. Every location included in the query must have a timezone or this field must be provided as a fallback. Format: the IANA timezone database identifier for the relevant timezone.
+	public var default_timezone: String?
+	/// The strategy on which the dates are applied. See [TimecardWorkdayMatcher](#type-timecardworkdaymatcher) for possible values
+	public var match_timecards_by: TimecardWorkdayMatcher?
+
+	/// A `Timecard` search query filter parameter that sets a range of days that a `Timecard` must start or end in before passing the filter condition.
+	/// - Parameters:
+	///   - date_range: Dates for fetching the timecards.
+	///   - default_timezone: Location-specific timezones convert workdays to datetime filters. Every location included in the query must have a timezone or this field must be provided as a fallback. Format: the IANA timezone database identifier for the relevant timezone.
+	///   - match_timecards_by: The strategy on which the dates are applied. See [TimecardWorkdayMatcher](#type-timecardworkdaymatcher) for possible values
+	public init(date_range: DateRange? = nil, default_timezone: String? = nil, match_timecards_by: TimecardWorkdayMatcher? = nil) {
+		self.date_range = date_range
+		self.default_timezone = default_timezone
+		self.match_timecards_by = match_timecards_by
+	}
+}
+
+/// Defines the logic used to apply a workday filter.
+public enum TimecardWorkdayMatcher: String, Codable {
+	/// All timecards that start on or after the specified workday
+	case START_AT
+	/// All timecards that end on or before the specified workday
+	case END_AT
+	/// All timecards that start between the start and end workdays (inclusive)
+	case INTERSECTION
 }
 
 public struct TipSettings: Codable, Equatable {
@@ -24368,6 +25144,32 @@ public struct UpdatePaymentResponse: Codable, Equatable {
 	}
 }
 
+public struct UpdateScheduledShiftRequest: Codable, Equatable {
+	/// The scheduled shift with any updates in the `draft_shift_details` field. If needed, call [ListLocations](api-endpoint:Locations-ListLocations) to get location IDs, [ListJobs](api-endpoint:Team-ListJobs) to get job IDs, and [SearchTeamMembers](api-endpoint:Team-SearchTeamMembers) to get team member IDs and current job assignments. Updates made to `published_shift_details` are ignored.  If provided, the `start_at` and `end_at` timestamps must be in the time zone + offset of the shift location specified in `location_id`. Example for Pacific Standard Time: yyyy-mm-ddT12:30:00-08:00  To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control for the request, provide the current version of the shift in the `version` field. If the provided version doesn't match the server version, the request fails. If `version` is omitted, Square executes a blind write, potentially overwriting data from another publish request.
+	public var scheduled_shift: ScheduledShift
+
+	public init(scheduled_shift: ScheduledShift) {
+		self.scheduled_shift = scheduled_shift
+	}
+}
+
+/// Represents an [UpdateScheduledShift](api-endpoint:Labor-UpdateScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+public struct UpdateScheduledShiftResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The updated scheduled shift. To make the changes public, call  [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) or [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts).
+	public var scheduled_shift: ScheduledShift?
+
+	/// Represents an [UpdateScheduledShift](api-endpoint:Labor-UpdateScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - scheduled_shift: The updated scheduled shift. To make the changes public, call  [PublishScheduledShift](api-endpoint:Labor-PublishScheduledShift) or [BulkPublishScheduledShifts](api-endpoint:Labor-BulkPublishScheduledShifts).
+	public init(errors: [SquareError]? = nil, scheduled_shift: ScheduledShift? = nil) {
+		self.errors = errors
+		self.scheduled_shift = scheduled_shift
+	}
+}
+
 /// A request to update a `Shift` object.
 public struct UpdateShiftRequest: Codable, Equatable {
 	/// The updated `Shift` object.
@@ -24455,6 +25257,36 @@ public struct UpdateTeamMemberResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, team_member: TeamMember? = nil) {
 		self.errors = errors
 		self.team_member = team_member
+	}
+}
+
+/// A request to update a `Timecard` object.
+public struct UpdateTimecardRequest: Codable, Equatable {
+	/// The updated `Timecard` object.
+	public var timecard: Timecard
+
+	/// A request to update a `Timecard` object.
+	/// - Parameters:
+	///   - timecard: The updated `Timecard` object.
+	public init(timecard: Timecard) {
+		self.timecard = timecard
+	}
+}
+
+/// The response to a request to update a `Timecard`. The response contains the updated `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
+public struct UpdateTimecardResponse: Codable, Equatable {
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+	/// The updated `Timecard`.
+	public var timecard: Timecard?
+
+	/// The response to a request to update a `Timecard`. The response contains the updated `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request.
+	///   - timecard: The updated `Timecard`.
+	public init(errors: [SquareError]? = nil, timecard: Timecard? = nil) {
+		self.errors = errors
+		self.timecard = timecard
 	}
 }
 
