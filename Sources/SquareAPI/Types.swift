@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2025-05-21" }
+	public static var version: String { return "2025-06-18" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -35,12 +35,6 @@ public struct ACHDetails: Codable, Equatable {
 		self.account_type = account_type
 		self.routing_number = routing_number
 	}
-}
-
-/// Defines the request parameters for the `AcceptDispute` endpoint.
-public struct AcceptDisputeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields in an `AcceptDispute` response.
@@ -248,12 +242,6 @@ public enum ActivityType: String, Codable {
 	case SQUARE_PAYROLL_TRANSFER
 	/// A payroll payment to a team member’s bank account that was deposited back to the seller’s account by Square.
 	case SQUARE_PAYROLL_TRANSFER_REVERSED
-}
-
-/// Defines the fields that are included in the request body of a request to the [AddGroupToCustomer](api-endpoint:Customers-AddGroupToCustomer) endpoint.
-public struct AddGroupToCustomerRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](api-endpoint:Customers-AddGroupToCustomer) endpoint.
@@ -591,6 +579,120 @@ public struct BankAccount: Codable, Equatable {
 	}
 }
 
+/// Published when you link an external bank account to a Square account in the Seller Dashboard. Square sets the initial status to `VERIFICATION_IN_PROGRESS` and publishes the event.
+public struct BankAccountCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: BankAccountCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"bank_account.created"`.
+	public var type: String?
+
+	/// Published when you link an external bank account to a Square account in the Seller Dashboard. Square sets the initial status to `VERIFICATION_IN_PROGRESS` and publishes the event.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"bank_account.created"`.
+	public init(created_at: Timestamp? = nil, data: BankAccountCreatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct BankAccountCreatedEventData: Codable, Equatable {
+	/// ID of the affected bank account.
+	public var id: String?
+	/// An object containing the created bank account.
+	public var object: BankAccountCreatedEventObject?
+	/// Name of the affected object’s type, `"bank_account"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: BankAccountCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct BankAccountCreatedEventObject: Codable, Equatable {
+	/// The created bank account.
+	public var bank_account: BankAccount?
+
+	public init(bank_account: BankAccount? = nil) {
+		self.bank_account = bank_account
+	}
+}
+
+/// Published when Square sets the status of a [BankAccount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BankAccount) to `DISABLED`.
+public struct BankAccountDisabledEvent: Codable, Equatable {
+	/// Timestamp of when the event was disabled, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: BankAccountDisabledEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"bank_account.disabled"`.
+	public var type: String?
+
+	/// Published when Square sets the status of a [BankAccount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BankAccount) to `DISABLED`.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was disabled, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"bank_account.disabled"`.
+	public init(created_at: Timestamp? = nil, data: BankAccountDisabledEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct BankAccountDisabledEventData: Codable, Equatable {
+	/// ID of the affected bank account.
+	public var id: String?
+	/// An object containing the disabled bank account.
+	public var object: BankAccountDisabledEventObject?
+	/// Name of the affected object’s type, `"bank_account"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: BankAccountDisabledEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct BankAccountDisabledEventObject: Codable, Equatable {
+	/// The disabled bank account.
+	public var bank_account: BankAccount?
+
+	public init(bank_account: BankAccount? = nil) {
+		self.bank_account = bank_account
+	}
+}
+
 /// Additional details about BANK_ACCOUNT type payments.
 public struct BankAccountPaymentDetails: Codable, Equatable {
 	/// The ownership type of the bank account performing the transfer. The type can be `INDIVIDUAL`, `COMPANY`, or `ACCOUNT_TYPE_UNKNOWN`.
@@ -654,6 +756,63 @@ public enum BankAccountType: String, Codable {
 	case OTHER
 	/// An account at a financial institution against which checks can be drawn specifically for business purposes (non-personal use).
 	case BUSINESS_CHECKING
+}
+
+/// Published when Square sets the status of a [BankAccount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BankAccount) to `VERIFIED`.
+public struct BankAccountVerifiedEvent: Codable, Equatable {
+	/// Timestamp of when the event was verified, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: BankAccountVerifiedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"bank_account.verified"`.
+	public var type: String?
+
+	/// Published when Square sets the status of a [BankAccount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BankAccount) to `VERIFIED`.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was verified, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"bank_account.verified"`.
+	public init(created_at: Timestamp? = nil, data: BankAccountVerifiedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct BankAccountVerifiedEventData: Codable, Equatable {
+	/// ID of the affected bank account.
+	public var id: String?
+	/// An object containing the verified bank account.
+	public var object: BankAccountVerifiedEventObject?
+	/// Name of the affected object’s type, `"bank_account"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: BankAccountVerifiedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct BankAccountVerifiedEventObject: Codable, Equatable {
+	/// The verified bank account.
+	public var bank_account: BankAccount?
+
+	public init(bank_account: BankAccount? = nil) {
+		self.bank_account = bank_account
+	}
 }
 
 public struct BatchChangeInventoryRequest: Codable, Equatable {
@@ -983,6 +1142,59 @@ public enum BookingBookingSource: String, Codable {
 	case API
 }
 
+/// Published when a booking is created.  To receive this event with buyer-level permissions, you must have `APPOINTMENTS_READ` set for the OAuth scope.   To receive this event with seller-level permissions, you must have `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` set for the OAuth scope.
+public struct BookingCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: BookingCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.created"`.
+	public var type: String?
+
+	/// Published when a booking is created.  To receive this event with buyer-level permissions, you must have `APPOINTMENTS_READ` set for the OAuth scope.   To receive this event with seller-level permissions, you must have `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` set for the OAuth scope.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"booking.created"`.
+	public init(created_at: Timestamp? = nil, data: BookingCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct BookingCreatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the created booking.
+	public var object: BookingCreatedEventObject?
+	/// The type of the event data object. The value is `"booking"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: BookingCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct BookingCreatedEventObject: Codable, Equatable {
+	/// The created booking.
+	public var booking: Booking?
+
+	public init(booking: Booking? = nil) {
+		self.booking = booking
+	}
+}
+
 /// Information about a booking creator.
 public struct BookingCreatorDetails: Codable, Equatable {
 	/// The seller-accessible type of the creator of the booking. See [BookingCreatorDetailsCreatorType](#type-bookingcreatordetailscreatortype) for possible values
@@ -1010,6 +1222,180 @@ public enum BookingCreatorDetailsCreatorType: String, Codable {
 	case TEAM_MEMBER
 	/// The creator is of the buyer type.
 	case CUSTOMER
+}
+
+/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application. Subscribe to this event to be notified  when your application creates a booking custom attribute definition.
+public struct BookingCustomAttributeDefinitionOwnedCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute_definition.owned.created"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application. Subscribe to this event to be notified  when your application creates a booking custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute_definition.owned.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is deleted by the subscribing application. Subscribe to this event to be notified  when your application deletes a booking custom attribute definition.
+public struct BookingCustomAttributeDefinitionOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute_definition.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is deleted by the subscribing application. Subscribe to this event to be notified  when your application deletes a booking custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute_definition.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is updated by the subscribing application. Subscribe to this event to be notified  when your application updates a booking custom attribute definition.
+public struct BookingCustomAttributeDefinitionOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute_definition.owned.updated"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is updated by the subscribing application. Subscribe to this event to be notified  when your application updates a booking custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute_definition.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is created. An application that subscribes to this event is notified when a booking custom attribute definition is created  by any application for which the subscribing application has read access to the booking custom attribute definition.
+public struct BookingCustomAttributeDefinitionVisibleCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute_definition.visible.created"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is created. An application that subscribes to this event is notified when a booking custom attribute definition is created  by any application for which the subscribing application has read access to the booking custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute_definition.visible.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is deleted. An application that subscribes to this event is notified when a booking custom attribute definition is deleted  by any application for which the subscribing application has read access to the booking custom attribute definition.
+public struct BookingCustomAttributeDefinitionVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute_definition.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is deleted. An application that subscribes to this event is notified when a booking custom attribute definition is deleted  by any application for which the subscribing application has read access to the booking custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute_definition.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is updated. An application that subscribes to this event is notified when a booking custom attribute definition is updated  by any application for which the subscribing application has read access to the booking custom attribute definition.
+public struct BookingCustomAttributeDefinitionVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute_definition.visible.updated"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is updated. An application that subscribes to this event is notified when a booking custom attribute definition is updated  by any application for which the subscribing application has read access to the booking custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute_definition.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
 }
 
 /// Represents an individual delete request in a [BulkDeleteBookingCustomAttributes](api-endpoint:BookingCustomAttributes-BulkDeleteBookingCustomAttributes) request. An individual request contains a booking ID, the custom attribute to delete, and an optional idempotency key.
@@ -1043,6 +1429,64 @@ public struct BookingCustomAttributeDeleteResponse: Codable, Equatable {
 	public init(booking_id: String? = nil, errors: [SquareError]? = nil) {
 		self.booking_id = booking_id
 		self.errors = errors
+	}
+}
+
+/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing application is deleted. Subscribe to this event to be notified  when your application deletes a booking custom attribute.
+public struct BookingCustomAttributeOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing application is deleted. Subscribe to this event to be notified  when your application deletes a booking custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  is updated by the subscribing application. Subscribe to this event to be notified  when your application updates a booking custom attribute.
+public struct BookingCustomAttributeOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute.owned.updated"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  is updated by the subscribing application. Subscribe to this event to be notified  when your application updates a booking custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
 	}
 }
 
@@ -1088,6 +1532,64 @@ public struct BookingCustomAttributeUpsertResponse: Codable, Equatable {
 	}
 }
 
+/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is deleted. An application that subscribes to this event is notified when a booking custom attribute is deleted  by any application for which the subscribing application has read access to the booking custom attribute.
+public struct BookingCustomAttributeVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is deleted. An application that subscribes to this event is notified when a booking custom attribute is deleted  by any application for which the subscribing application has read access to the booking custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is updated. An application that subscribes to this event is notified when a booking custom attribute is updated  by any application for which the subscribing application has read access to the booking custom attribute.
+public struct BookingCustomAttributeVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.custom_attribute.visible.updated"`.
+	public var type: String?
+
+	/// Published when a booking [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is updated. An application that subscribes to this event is notified when a booking custom attribute is updated  by any application for which the subscribing application has read access to the booking custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"booking.custom_attribute.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
 /// Supported booking statuses.
 public enum BookingStatus: String, Codable {
 	/// An unaccepted booking. It is visible to both sellers and customers.
@@ -1102,6 +1604,59 @@ public enum BookingStatus: String, Codable {
 	case ACCEPTED
 	/// A no-show booking. The booking was accepted at one time, but have now been marked as a no-show by the seller because the client either missed the booking or cancelled it without enough notice.
 	case NO_SHOW
+}
+
+/// Published when a booking is updated or cancelled.  To receive this event with buyer-level permissions, you must have `APPOINTMENTS_READ` set for the OAuth scope.   To receive this event with seller-level permissions, you must have `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` set for the OAuth scope.
+public struct BookingUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: BookingUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"booking.updated"`.
+	public var type: String?
+
+	/// Published when a booking is updated or cancelled.  To receive this event with buyer-level permissions, you must have `APPOINTMENTS_READ` set for the OAuth scope.   To receive this event with seller-level permissions, you must have `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` set for the OAuth scope.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"booking.updated"`.
+	public init(created_at: Timestamp? = nil, data: BookingUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct BookingUpdatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the updated booking.
+	public var object: BookingUpdatedEventObject?
+	/// The type of the event data object. The value is `"booking"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: BookingUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct BookingUpdatedEventObject: Codable, Equatable {
+	/// The updated booking.
+	public var booking: Booking?
+
+	public init(booking: Booking? = nil) {
+		self.booking = booking
+	}
 }
 
 /// A record of a team member's break on a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
@@ -2528,12 +3083,6 @@ public struct CancelInvoiceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [CancelLoyaltyPromotion](api-endpoint:Loyalty-CancelLoyaltyPromotion) request.
-public struct CancelLoyaltyPromotionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a [CancelLoyaltyPromotion](api-endpoint:Loyalty-CancelLoyaltyPromotion) response. Either `loyalty_promotion` or `errors` is present in the response.
 public struct CancelLoyaltyPromotionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -2577,12 +3126,6 @@ public struct CancelPaymentByIdempotencyKeyResponse: Codable, Equatable {
 	}
 }
 
-/// Describes the request to cancel (void) a payment using [CancelPayment](api-endpoint:Payments-CancelPayment). You can only cancel a payment that is approved (not completed). For more information, see [Delayed capture of a payment](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).
-public struct CancelPaymentRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the response returned by [CancelPayment](api-endpoint:Payments-CancelPayment).
 public struct CancelPaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
@@ -2598,12 +3141,6 @@ public struct CancelPaymentResponse: Codable, Equatable {
 		self.errors = errors
 		self.payment = payment
 	}
-}
-
-/// Defines input parameters in a request to the  [CancelSubscription](api-endpoint:Subscriptions-CancelSubscription) endpoint.
-public struct CancelSubscriptionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines output parameters in a response from the  [CancelSubscription](api-endpoint:Subscriptions-CancelSubscription) endpoint.
@@ -2627,11 +3164,6 @@ public struct CancelSubscriptionResponse: Codable, Equatable {
 	}
 }
 
-public struct CancelTerminalActionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct CancelTerminalActionResponse: Codable, Equatable {
 	/// The canceled `TerminalAction`
 	public var action: TerminalAction?
@@ -2642,11 +3174,6 @@ public struct CancelTerminalActionResponse: Codable, Equatable {
 		self.action = action
 		self.errors = errors
 	}
-}
-
-public struct CancelTerminalCheckoutRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct CancelTerminalCheckoutResponse: Codable, Equatable {
@@ -2661,11 +3188,6 @@ public struct CancelTerminalCheckoutResponse: Codable, Equatable {
 	}
 }
 
-public struct CancelTerminalRefundRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct CancelTerminalRefundResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
@@ -2676,11 +3198,6 @@ public struct CancelTerminalRefundResponse: Codable, Equatable {
 		self.errors = errors
 		self.refund = refund
 	}
-}
-
-public struct CaptureTransactionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [CaptureTransaction](api-endpoint:Transactions-CaptureTransaction) endpoint.
@@ -2785,6 +3302,59 @@ public struct Card: Codable, Equatable {
 	}
 }
 
+/// Published when Square automatically updates the expiration date or primary account number (PAN) of a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) or adds or removes an issuer alert.
+public struct CardAutomaticallyUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CardAutomaticallyUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"card.automatically_updated"`.
+	public var type: String?
+
+	/// Published when Square automatically updates the expiration date or primary account number (PAN) of a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) or adds or removes an issuer alert.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"card.automatically_updated"`.
+	public init(created_at: Timestamp? = nil, data: CardAutomaticallyUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct CardAutomaticallyUpdatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the automatically updated card.
+	public var object: CardAutomaticallyUpdatedEventObject?
+	/// The type of the event data object. The value is `"card"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: CardAutomaticallyUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CardAutomaticallyUpdatedEventObject: Codable, Equatable {
+	/// The automatically updated card.
+	public var card: Card?
+
+	public init(card: Card? = nil) {
+		self.card = card
+	}
+}
+
 /// Indicates a card's brand, such as `VISA` or `MASTERCARD`.
 public enum CardBrand: String, Codable {
 	case OTHER_BRAND
@@ -2808,6 +3378,189 @@ public enum CardCoBrand: String, Codable {
 	case UNKNOWN
 	case AFTERPAY
 	case CLEARPAY
+}
+
+/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is created or imported.
+public struct CardCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CardCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"card.created"`.
+	public var type: String?
+
+	/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is created or imported.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"card.created"`.
+	public init(created_at: Timestamp? = nil, data: CardCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct CardCreatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the created card.
+	public var object: CardCreatedEventObject?
+	/// The type of the event data object. The value is `"card"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: CardCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CardCreatedEventObject: Codable, Equatable {
+	/// The created card.
+	public var card: Card?
+
+	public init(card: Card? = nil) {
+		self.card = card
+	}
+}
+
+/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is disabled.
+public struct CardDisabledEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CardDisabledEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"card.disabled"`.
+	public var type: String?
+
+	/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is disabled.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"card.disabled"`.
+	public init(created_at: Timestamp? = nil, data: CardDisabledEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct CardDisabledEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the disabled card.
+	public var object: CardDisabledEventObject?
+	/// The type of the event data object. The value is `"card"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: CardDisabledEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CardDisabledEventObject: Codable, Equatable {
+	/// The disabled card.
+	public var card: Card?
+
+	public init(card: Card? = nil) {
+		self.card = card
+	}
+}
+
+/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is GDPR forgotten or vaulted.
+public struct CardForgottenEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CardForgottenEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"card.forgotten"`.
+	public var type: String?
+
+	/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is GDPR forgotten or vaulted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"card.forgotten"`.
+	public init(created_at: Timestamp? = nil, data: CardForgottenEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct CardForgottenEventCard: Codable, Equatable {
+	/// The ID of a customer created using the Customers API associated with the card.
+	public var customer_id: String?
+	/// Indicates whether or not a card can be used for payments.
+	public var enabled: Bool?
+	/// Unique ID for this card. Generated by Square.
+	public var id: String?
+	/// The ID of the merchant associated with the card.
+	public var merchant_id: String?
+	/// An optional user-defined reference ID that associates this card with another entity in an external system. For example, a customer ID from an external customer management system.
+	public var reference_id: String?
+	/// Current version number of the card. Increments with each card update. Requests to update an existing Card object will be rejected unless the version in the request matches the current version for the Card.
+	public var version: Int?
+
+	public init(customer_id: String? = nil, enabled: Bool? = nil, id: String? = nil, merchant_id: String? = nil, reference_id: String? = nil, version: Int? = nil) {
+		self.customer_id = customer_id
+		self.enabled = enabled
+		self.id = id
+		self.merchant_id = merchant_id
+		self.reference_id = reference_id
+		self.version = version
+	}
+}
+
+public struct CardForgottenEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the forgotten card.
+	public var object: CardForgottenEventObject?
+	/// The type of the event data object. The value is `"card"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: CardForgottenEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CardForgottenEventObject: Codable, Equatable {
+	/// The forgotten card.
+	public var card: CardForgottenEventCard?
+
+	public init(card: CardForgottenEventCard? = nil) {
+		self.card = card
+	}
 }
 
 /// Indicates the type of issuer alert for a [card on file](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card).
@@ -2922,6 +3675,59 @@ public enum CardType: String, Codable {
 	case UNKNOWN_CARD_TYPE
 	case CREDIT
 	case DEBIT
+}
+
+/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is updated by the seller in the Square Dashboard.
+public struct CardUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CardUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"card.updated"`.
+	public var type: String?
+
+	/// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is updated by the seller in the Square Dashboard.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"card.updated"`.
+	public init(created_at: Timestamp? = nil, data: CardUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct CardUpdatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the updated card.
+	public var object: CardUpdatedEventObject?
+	/// The type of the event data object. The value is `"card"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: CardUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CardUpdatedEventObject: Codable, Equatable {
+	/// The updated card.
+	public var card: Card?
+
+	public init(card: Card? = nil) {
+		self.card = card
+	}
 }
 
 /// Additional details about `WALLET` type payments with the `brand` of `CASH_APP`.
@@ -3570,11 +4376,6 @@ public struct CatalogImage: Codable, Equatable {
 		self.photo_studio_order_id = photo_studio_order_id
 		self.url = url
 	}
-}
-
-public struct CatalogInfoRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct CatalogInfoResponse: Codable, Equatable {
@@ -4997,6 +5798,65 @@ public struct CatalogV1Id: Codable, Equatable {
 	}
 }
 
+/// Published when the catalog is updated.
+public struct CatalogVersionUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: CatalogVersionUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when the catalog is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: CatalogVersionUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct CatalogVersionUpdatedEventCatalogVersion: Codable, Equatable {
+	/// Last modification timestamp in RFC 3339 format.
+	public var updated_at: Timestamp?
+
+	public init(updated_at: Timestamp? = nil) {
+		self.updated_at = updated_at
+	}
+}
+
+public struct CatalogVersionUpdatedEventData: Codable, Equatable {
+	/// An object containing fields and values relevant to the event. Is absent if affected object was deleted.
+	public var object: CatalogVersionUpdatedEventObject?
+	/// Name of the affected object’s type.
+	public var type: String?
+
+	public init(object: CatalogVersionUpdatedEventObject? = nil, type: String? = nil) {
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CatalogVersionUpdatedEventObject: Codable, Equatable {
+	/// The version of the object.
+	public var catalog_version: CatalogVersionUpdatedEventCatalogVersion?
+
+	public init(catalog_version: CatalogVersionUpdatedEventCatalogVersion? = nil) {
+		self.catalog_version = catalog_version
+	}
+}
+
 /// A node in the path from a retrieved category to its root node.
 public struct CategoryPathToRootNode: Codable, Equatable {
 	/// The category's ID.
@@ -5060,71 +5920,6 @@ public enum ChangeTiming: String, Codable {
 	case END_OF_BILLING_CYCLE
 }
 
-/// Defines the parameters that can be included in the body of a request to the [Charge](api-endpoint:Transactions-Charge) endpoint.  Deprecated - recommend using [CreatePayment](api-endpoint:Payments-CreatePayment)
-public struct ChargeRequest: Codable, Equatable {
-	/// The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `amount_money` value in the charge request. The `location_id` must be the valid location of the app owner merchant.  This field requires the `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
-	public var additional_recipients: [ChargeRequestAdditionalRecipient]?
-	/// The amount of money to charge.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  The value of `currency` must match the currency associated with the business that is charging the card.
-	public var amount_money: Money
-	/// The buyer's billing address. This value is optional, but this transaction is ineligible for chargeback protection if neither this parameter nor `shipping_address` is provided.
-	public var billing_address: Address?
-	/// The buyer's email address, if available. This value is optional, but this transaction is ineligible for chargeback protection if it is not provided.
-	public var buyer_email_address: String?
-	/// A payment token generated from the [Card.tokenize()](https://developer.squareup.com/reference/sdks/web/payments/objects/Card#Card.tokenize) that represents the card to charge.  The application that provides a payment token to this endpoint must be the _same application_ that generated the payment token with the Web Payments SDK. Otherwise, the nonce is invalid.  Do not provide a value for this field if you provide a value for `customer_card_id`.
-	public var card_nonce: String?
-	/// The ID of the customer card on file to charge. Do not provide a value for this field if you provide a value for `card_nonce`.  If you provide this value, you _must_ also provide a value for `customer_id`.
-	public var customer_card_id: String?
-	/// The ID of the customer to associate this transaction with. This field is required if you provide a value for `customer_card_id`, and optional otherwise.
-	public var customer_id: String?
-	/// If `true`, the request will only perform an Auth on the provided card. You can then later perform either a Capture (with the [CaptureTransaction](api-endpoint:Transactions-CaptureTransaction) endpoint) or a Void (with the [VoidTransaction](api-endpoint:Transactions-VoidTransaction) endpoint).  Default value: `false`
-	public var delay_capture: Bool?
-	/// A value you specify that uniquely identifies this transaction among transactions you've created.  If you're unsure whether a particular transaction succeeded, you can reattempt it with the same idempotency key without worrying about double-charging the buyer.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
-	public var idempotency_key: String
-	/// An optional note to associate with the transaction.  This value cannot exceed 60 characters.
-	public var note: String?
-	/// The ID of the order to associate with this transaction.  If you provide this value, the `amount_money` value of your request must __exactly match__ the value of the order's `total_money` field.
-	public var order_id: String?
-	/// An optional ID you can associate with the transaction for your own purposes (such as to associate the transaction with an entity ID in your own database).  This value cannot exceed 40 characters.
-	public var reference_id: String?
-	/// The buyer's shipping address, if available. This value is optional, but this transaction is ineligible for chargeback protection if neither this parameter nor `billing_address` is provided.
-	public var shipping_address: Address?
-	/// A token generated by SqPaymentForm's verifyBuyer() that represents customer's device info and 3ds challenge result.
-	public var verification_token: String?
-
-	/// Defines the parameters that can be included in the body of a request to the [Charge](api-endpoint:Transactions-Charge) endpoint.  Deprecated - recommend using [CreatePayment](api-endpoint:Payments-CreatePayment)
-	/// - Parameters:
-	///   - additional_recipients: The basic primitive of multi-party transaction. The value is optional. The transaction facilitated by you can be split from here.  If you provide this value, the `amount_money` value in your additional_recipients must not be more than 90% of the `amount_money` value in the charge request. The `location_id` must be the valid location of the app owner merchant.  This field requires the `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission.  This field is currently not supported in sandbox.
-	///   - amount_money: The amount of money to charge.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  The value of `currency` must match the currency associated with the business that is charging the card.
-	///   - billing_address: The buyer's billing address. This value is optional, but this transaction is ineligible for chargeback protection if neither this parameter nor `shipping_address` is provided.
-	///   - buyer_email_address: The buyer's email address, if available. This value is optional, but this transaction is ineligible for chargeback protection if it is not provided.
-	///   - card_nonce: A payment token generated from the [Card.tokenize()](https://developer.squareup.com/reference/sdks/web/payments/objects/Card#Card.tokenize) that represents the card to charge.  The application that provides a payment token to this endpoint must be the _same application_ that generated the payment token with the Web Payments SDK. Otherwise, the nonce is invalid.  Do not provide a value for this field if you provide a value for `customer_card_id`.
-	///   - customer_card_id: The ID of the customer card on file to charge. Do not provide a value for this field if you provide a value for `card_nonce`.  If you provide this value, you _must_ also provide a value for `customer_id`.
-	///   - customer_id: The ID of the customer to associate this transaction with. This field is required if you provide a value for `customer_card_id`, and optional otherwise.
-	///   - delay_capture: If `true`, the request will only perform an Auth on the provided card. You can then later perform either a Capture (with the [CaptureTransaction](api-endpoint:Transactions-CaptureTransaction) endpoint) or a Void (with the [VoidTransaction](api-endpoint:Transactions-VoidTransaction) endpoint).  Default value: `false`
-	///   - idempotency_key: A value you specify that uniquely identifies this transaction among transactions you've created.  If you're unsure whether a particular transaction succeeded, you can reattempt it with the same idempotency key without worrying about double-charging the buyer.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
-	///   - note: An optional note to associate with the transaction.  This value cannot exceed 60 characters.
-	///   - order_id: The ID of the order to associate with this transaction.  If you provide this value, the `amount_money` value of your request must __exactly match__ the value of the order's `total_money` field.
-	///   - reference_id: An optional ID you can associate with the transaction for your own purposes (such as to associate the transaction with an entity ID in your own database).  This value cannot exceed 40 characters.
-	///   - shipping_address: The buyer's shipping address, if available. This value is optional, but this transaction is ineligible for chargeback protection if neither this parameter nor `billing_address` is provided.
-	///   - verification_token: A token generated by SqPaymentForm's verifyBuyer() that represents customer's device info and 3ds challenge result.
-	public init(amount_money: Money, idempotency_key: String, additional_recipients: [ChargeRequestAdditionalRecipient]? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, card_nonce: String? = nil, customer_card_id: String? = nil, customer_id: String? = nil, delay_capture: Bool? = nil, note: String? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, verification_token: String? = nil) {
-		self.amount_money = amount_money
-		self.idempotency_key = idempotency_key
-		self.additional_recipients = additional_recipients
-		self.billing_address = billing_address
-		self.buyer_email_address = buyer_email_address
-		self.card_nonce = card_nonce
-		self.customer_card_id = customer_card_id
-		self.customer_id = customer_id
-		self.delay_capture = delay_capture
-		self.note = note
-		self.order_id = order_id
-		self.reference_id = reference_id
-		self.shipping_address = shipping_address
-		self.verification_token = verification_token
-	}
-}
-
 /// Represents an additional recipient (other than the merchant) entitled to a portion of the tender. Support is currently limited to USD, CAD and GBP currencies
 public struct ChargeRequestAdditionalRecipient: Codable, Equatable {
 	/// The amount of money distributed to the recipient.
@@ -5143,23 +5938,6 @@ public struct ChargeRequestAdditionalRecipient: Codable, Equatable {
 		self.amount_money = amount_money
 		self.description = description
 		self.location_id = location_id
-	}
-}
-
-/// Defines the fields that are included in the response body of a request to the [Charge](api-endpoint:Transactions-Charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
-public struct ChargeResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The created transaction.
-	public var transaction: Transaction?
-
-	/// Defines the fields that are included in the response body of a request to the [Charge](api-endpoint:Transactions-Charge) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
-	/// - Parameters:
-	///   - errors: Any errors that occurred during the request.
-	///   - transaction: The created transaction.
-	public init(errors: [SquareError]? = nil, transaction: Transaction? = nil) {
-		self.errors = errors
-		self.transaction = transaction
 	}
 }
 
@@ -7280,48 +8058,6 @@ public struct CreatePaymentResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the body parameters that can be included in a request to the [CreateRefund](api-endpoint:Transactions-CreateRefund) endpoint.  Deprecated - recommend using [RefundPayment](api-endpoint:Refunds-RefundPayment)
-public struct CreateRefundRequest: Codable, Equatable {
-	/// The amount of money to refund.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  This amount cannot exceed the amount that was originally charged to the tender that corresponds to `tender_id`.
-	public var amount_money: Money
-	/// A value you specify that uniquely identifies this refund among refunds you've created for the tender.  If you're unsure whether a particular refund succeeded, you can reattempt it with the same idempotency key without worrying about duplicating the refund.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
-	public var idempotency_key: String
-	/// A description of the reason for the refund.  Default value: `Refund via API`
-	public var reason: String?
-	/// The ID of the tender to refund.  A [`Transaction`](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Transaction) has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
-	public var tender_id: String
-
-	/// Defines the body parameters that can be included in a request to the [CreateRefund](api-endpoint:Transactions-CreateRefund) endpoint.  Deprecated - recommend using [RefundPayment](api-endpoint:Refunds-RefundPayment)
-	/// - Parameters:
-	///   - amount_money: The amount of money to refund.  Note that you specify the amount in the __smallest denomination of the applicable currency__. For example, US dollar amounts are specified in cents. See [Working with monetary amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts) for details.  This amount cannot exceed the amount that was originally charged to the tender that corresponds to `tender_id`.
-	///   - idempotency_key: A value you specify that uniquely identifies this refund among refunds you've created for the tender.  If you're unsure whether a particular refund succeeded, you can reattempt it with the same idempotency key without worrying about duplicating the refund.  See [Idempotency keys](https://developer.squareup.com/docs/working-with-apis/idempotency) for more information.
-	///   - reason: A description of the reason for the refund.  Default value: `Refund via API`
-	///   - tender_id: The ID of the tender to refund.  A [`Transaction`](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Transaction) has one or more `tenders` (i.e., methods of payment) associated with it, and you refund each tender separately with the Connect API.
-	public init(amount_money: Money, idempotency_key: String, tender_id: String, reason: String? = nil) {
-		self.amount_money = amount_money
-		self.idempotency_key = idempotency_key
-		self.tender_id = tender_id
-		self.reason = reason
-	}
-}
-
-/// Defines the fields that are included in the response body of a request to the [CreateRefund](api-endpoint:Transactions-CreateRefund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
-public struct CreateRefundResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The created refund.
-	public var refund: Refund?
-
-	/// Defines the fields that are included in the response body of a request to the [CreateRefund](api-endpoint:Transactions-CreateRefund) endpoint.  One of `errors` or `refund` is present in a given response (never both).
-	/// - Parameters:
-	///   - errors: Any errors that occurred during the request.
-	///   - refund: The created refund.
-	public init(errors: [SquareError]? = nil, refund: Refund? = nil) {
-		self.errors = errors
-		self.refund = refund
-	}
-}
-
 /// Represents a [CreateScheduledShift](api-endpoint:Labor-CreateScheduledShift) request.
 public struct CreateScheduledShiftRequest: Codable, Equatable {
 	/// A unique identifier for the `CreateScheduledShift` request, used to ensure the [idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) of the operation.
@@ -8124,6 +8860,36 @@ public struct CustomAttributeDefinition: Codable, Equatable {
 	}
 }
 
+/// Represents an object in the CustomAttributeDefinition event notification payload that contains the affected custom attribute definition.
+public struct CustomAttributeDefinitionEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the custom attribute definition.
+	public var object: CustomAttributeDefinitionEventDataObject?
+	/// The type of the event data object. The value is `"custom_attribute_definition"`.
+	public var type: String?
+
+	/// Represents an object in the CustomAttributeDefinition event notification payload that contains the affected custom attribute definition.
+	/// - Parameters:
+	///   - id: The ID of the event data object.
+	///   - object: An object containing the custom attribute definition.
+	///   - type: The type of the event data object. The value is `"custom_attribute_definition"`.
+	public init(id: String? = nil, object: CustomAttributeDefinitionEventDataObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CustomAttributeDefinitionEventDataObject: Codable, Equatable {
+	/// The custom attribute definition.
+	public var custom_attribute_definition: CustomAttributeDefinition?
+
+	public init(custom_attribute_definition: CustomAttributeDefinition? = nil) {
+		self.custom_attribute_definition = custom_attribute_definition
+	}
+}
+
 /// The level of permission that a seller or other applications requires to view this custom attribute definition. The `Visibility` field controls who can read and write the custom attribute values and custom attribute definition.
 public enum CustomAttributeDefinitionVisibility: String, Codable {
 	/// The custom attribute definition and values are hidden from the seller (except on export of all seller data) and other developers.
@@ -8132,6 +8898,30 @@ public enum CustomAttributeDefinitionVisibility: String, Codable {
 	case VISIBILITY_READ_ONLY
 	/// The seller and other developers can read the custom attribute definition, and can read and write values on resources. A custom attribute definition can only be edited or deleted by the application that created it.
 	case VISIBILITY_READ_WRITE_VALUES
+}
+
+public struct CustomAttributeEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the custom attribute.
+	public var object: CustomAttributeEventDataObject?
+	/// The type of the event data object. The value is `"custom_attribute"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: CustomAttributeEventDataObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct CustomAttributeEventDataObject: Codable, Equatable {
+	/// The custom attribute.
+	public var custom_attribute: CustomAttribute?
+
+	public init(custom_attribute: CustomAttribute? = nil) {
+		self.custom_attribute = custom_attribute
+	}
 }
 
 /// Supported custom attribute query expressions for calling the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint to search for items or item variations.
@@ -8282,6 +9072,103 @@ public struct CustomerAddressFilter: Codable, Equatable {
 	}
 }
 
+/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is created. Subscribe to this event to track customer profiles affected by a merge operation. For more information, see [Use Customer Webhooks](https://developer.squareup.com/docs/customers-api/use-the-api/customer-webhooks).  The `customer` object in the event notification does not include the `segment_ids` field.
+public struct CustomerCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomerCreatedEventData?
+	/// The unique ID of the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this object, the value is `customer.created`.
+	public var type: String?
+
+	/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is created. Subscribe to this event to track customer profiles affected by a merge operation. For more information, see [Use Customer Webhooks](https://developer.squareup.com/docs/customers-api/use-the-api/customer-webhooks).  The `customer` object in the event notification does not include the `segment_ids` field.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the seller associated with the event.
+	///   - type: The type of event. For this object, the value is `customer.created`.
+	public init(created_at: Timestamp? = nil, data: CustomerCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with the event.
+public struct CustomerCreatedEventData: Codable, Equatable {
+	/// The ID of the new customer.
+	public var id: String?
+	/// An object that contains the new customer.
+	public var object: CustomerCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `customer`.
+	public var type: String?
+
+	/// The data associated with the event.
+	/// - Parameters:
+	///   - id: The ID of the new customer.
+	///   - object: An object that contains the new customer.
+	///   - type: The type of object affected by the event. For this event, the value is `customer`.
+	public init(id: String? = nil, object: CustomerCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// Information about the change that triggered the event.
+public struct CustomerCreatedEventEventContext: Codable, Equatable {
+	/// Information about the merge operation associated with the event.
+	public var merge: CustomerCreatedEventEventContextMerge?
+
+	/// Information about the change that triggered the event.
+	/// - Parameters:
+	///   - merge: Information about the merge operation associated with the event.
+	public init(merge: CustomerCreatedEventEventContextMerge? = nil) {
+		self.merge = merge
+	}
+}
+
+/// Information about a merge operation, which creates a new customer using aggregated properties from two or more existing customers.
+public struct CustomerCreatedEventEventContextMerge: Codable, Equatable {
+	/// The IDs of the existing customers that were merged and then deleted.
+	public var from_customer_ids: [String]?
+	/// The ID of the new customer created by the merge.
+	public var to_customer_id: String?
+
+	/// Information about a merge operation, which creates a new customer using aggregated properties from two or more existing customers.
+	/// - Parameters:
+	///   - from_customer_ids: The IDs of the existing customers that were merged and then deleted.
+	///   - to_customer_id: The ID of the new customer created by the merge.
+	public init(from_customer_ids: [String]? = nil, to_customer_id: String? = nil) {
+		self.from_customer_ids = from_customer_ids
+		self.to_customer_id = to_customer_id
+	}
+}
+
+/// An object that contains the customer associated with the event.
+public struct CustomerCreatedEventObject: Codable, Equatable {
+	/// The new customer.
+	public var customer: Customer?
+	/// Information about the change that triggered the event. This field is returned only if the customer is created by a merge operation.
+	public var event_context: CustomerCreatedEventEventContext?
+
+	/// An object that contains the customer associated with the event.
+	/// - Parameters:
+	///   - customer: The new customer.
+	///   - event_context: Information about the change that triggered the event. This field is returned only if the customer is created by a merge operation.
+	public init(customer: Customer? = nil, event_context: CustomerCreatedEventEventContext? = nil) {
+		self.customer = customer
+		self.event_context = event_context
+	}
+}
+
 /// Indicates the method used to create the customer profile.
 public enum CustomerCreationSource: String, Codable {
 	/// The default creation source. This source is typically used for backward/future compatibility when the original source of a customer profile is unrecognized. For example, when older clients do not support newer source types.
@@ -8338,6 +9225,412 @@ public struct CustomerCreationSourceFilter: Codable, Equatable {
 	public init(rule: CustomerInclusionExclusion? = nil, values: [CustomerCreationSource]? = nil) {
 		self.rule = rule
 		self.values = values
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application.  This event is replaced by  [customer.custom_attribute_definition.owned.created](webhook:customer.custom_attribute_definition.owned.created).
+public struct CustomerCustomAttributeDefinitionCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.created"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application.  This event is replaced by  [customer.custom_attribute_definition.owned.created](webhook:customer.custom_attribute_definition.owned.created).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to all applications is created. A notification is sent when any application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute_definition.visible.created](webhook:customer.custom_attribute_definition.visible.created), which applies to custom attribute definitions that are visible to the subscribing application.
+public struct CustomerCustomAttributeDefinitionCreatedPublicEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.public.created"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to all applications is created. A notification is sent when any application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute_definition.visible.created](webhook:customer.custom_attribute_definition.visible.created), which applies to custom attribute definitions that are visible to the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.public.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is deleted. A custom attribute definition can only be deleted by the application that created it.  This event is replaced by  [customer.custom_attribute_definition.owned.deleted](webhook:customer.custom_attribute_definition.owned.deleted).
+public struct CustomerCustomAttributeDefinitionDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is deleted. A custom attribute definition can only be deleted by the application that created it.  This event is replaced by  [customer.custom_attribute_definition.owned.deleted](webhook:customer.custom_attribute_definition.owned.deleted).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to all applications is deleted. A notification is sent when any application deletes a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute_definition.visible.deleted](webhook:customer.custom_attribute_definition.visible.deleted), which applies to custom attribute definitions that are visible to the subscribing application.
+public struct CustomerCustomAttributeDefinitionDeletedPublicEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.public.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to all applications is deleted. A notification is sent when any application deletes a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute_definition.visible.deleted](webhook:customer.custom_attribute_definition.visible.deleted), which applies to custom attribute definitions that are visible to the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.public.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application.
+public struct CustomerCustomAttributeDefinitionOwnedCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.owned.created"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.owned.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is deleted. A custom attribute definition can only be deleted by the application that created it.
+public struct CustomerCustomAttributeDefinitionOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is deleted. A custom attribute definition can only be deleted by the application that created it.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is updated. A custom attribute definition can only be updated by the application that created it.
+public struct CustomerCustomAttributeDefinitionOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.owned.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is updated. A custom attribute definition can only be updated by the application that created it.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is updated. A custom attribute definition can only be updated by the application that created it.  This event is replaced by  [customer.custom_attribute_definition.owned.updated](webhook:customer.custom_attribute_definition.owned.updated).
+public struct CustomerCustomAttributeDefinitionUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) created by the subscribing application is updated. A custom attribute definition can only be updated by the application that created it.  This event is replaced by  [customer.custom_attribute_definition.owned.updated](webhook:customer.custom_attribute_definition.owned.updated).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to all applications is updated. A notification is sent when any application updates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute_definition.visible.updated](webhook:customer.custom_attribute_definition.visible.updated), which applies to custom attribute definitions that are visible to the subscribing application.
+public struct CustomerCustomAttributeDefinitionUpdatedPublicEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.public.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to all applications is updated. A notification is sent when any application updates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute_definition.visible.updated](webhook:customer.custom_attribute_definition.visible.updated), which applies to custom attribute definitions that are visible to the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.public.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is created. A notification is sent when your application creates a custom attribute definition or another application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct CustomerCustomAttributeDefinitionVisibleCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.visible.created"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is created. A notification is sent when your application creates a custom attribute definition or another application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.visible.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is deleted. A custom attribute definition can only be deleted by the application that created it. A notification is sent when your application deletes a custom attribute definition or when another application deletes a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct CustomerCustomAttributeDefinitionVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is deleted. A custom attribute definition can only be deleted by the application that created it. A notification is sent when your application deletes a custom attribute definition or when another application deletes a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is updated. A custom attribute definition can only be updated by the application that created it. A notification is sent when your application updates a custom attribute definition or when another application updates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct CustomerCustomAttributeDefinitionVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute_definition.visible.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is updated. A custom attribute definition can only be updated by the application that created it. A notification is sent when your application updates a custom attribute definition or when another application updates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute_definition.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is deleted. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application.  This event is replaced by  [customer.custom_attribute.owned.deleted](webhook:customer.custom_attribute.owned.deleted).
+public struct CustomerCustomAttributeDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is deleted. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application.  This event is replaced by  [customer.custom_attribute.owned.deleted](webhook:customer.custom_attribute.owned.deleted).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to all applications is deleted. A notification is sent when any application deletes a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute.visible.deleted](webhook:customer.custom_attribute.visible.deleted), which applies to custom attributes that are visible to the subscribing application.
+public struct CustomerCustomAttributeDeletedPublicEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.public.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to all applications is deleted. A notification is sent when any application deletes a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute.visible.deleted](webhook:customer.custom_attribute.visible.deleted), which applies to custom attributes that are visible to the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.public.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
 	}
 }
 
@@ -8413,6 +9706,277 @@ public struct CustomerCustomAttributeFilters: Codable, Equatable {
 	///   - filters: The custom attribute filters. Each filter must specify `key` and include the `filter` field with a type-specific filter, the `updated_at` field, or both. The provided keys must be unique within the list of custom attribute filters.
 	public init(filters: [CustomerCustomAttributeFilter]? = nil) {
 		self.filters = filters
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is deleted. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application.
+public struct CustomerCustomAttributeOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is deleted. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is created or updated. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application.
+public struct CustomerCustomAttributeOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.owned.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is created or updated. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is created or updated. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application.  This event is replaced by  [customer.custom_attribute.owned.updated](webhook:customer.custom_attribute.owned.updated).
+public struct CustomerCustomAttributeUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is created or updated. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application.  This event is replaced by  [customer.custom_attribute.owned.updated](webhook:customer.custom_attribute.owned.updated).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to all applications is created or updated. A notification is sent when any application creates or updates a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute.visible.updated](webhook:customer.custom_attribute.visible.updated), which applies to custom attributes that are visible to the subscribing application.
+public struct CustomerCustomAttributeUpdatedPublicEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.public.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to all applications is created or updated. A notification is sent when any application creates or updates a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  This event is replaced by  [customer.custom_attribute.visible.updated](webhook:customer.custom_attribute.visible.updated), which applies to custom attributes that are visible to the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.public.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is deleted. A notification is sent when: - Your application deletes a custom attribute owned by your application, regardless of the `visibility` setting. - Any application deletes a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be deleted by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+public struct CustomerCustomAttributeVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is deleted. A notification is sent when: - Your application deletes a custom attribute owned by your application, regardless of the `visibility` setting. - Any application deletes a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be deleted by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is created or updated. A notification is sent when: - Your application creates or updates a custom attribute owned by your application, regardless of the `visibility` setting. - Any application creates or updates a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be created or updated by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+public struct CustomerCustomAttributeVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"customer.custom_attribute.visible.updated"`.
+	public var type: String?
+
+	/// Published when a customer [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is created or updated. A notification is sent when: - Your application creates or updates a custom attribute owned by your application, regardless of the `visibility` setting. - Any application creates or updates a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be created or updated by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"customer.custom_attribute.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is deleted.  For more information, see [Use Customer Webhooks](https://developer.squareup.com/docs/customers-api/use-the-api/customer-webhooks).  The `customer` object in the event notification does not include the following fields: `group_ids` and `segment_ids`.
+public struct CustomerDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomerDeletedEventData?
+	/// The unique ID of the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this object, the value is `customer.deleted`.
+	public var type: String?
+
+	/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is deleted.  For more information, see [Use Customer Webhooks](https://developer.squareup.com/docs/customers-api/use-the-api/customer-webhooks).  The `customer` object in the event notification does not include the following fields: `group_ids` and `segment_ids`.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the seller associated with the event.
+	///   - type: The type of event. For this object, the value is `customer.deleted`.
+	public init(created_at: Timestamp? = nil, data: CustomerDeletedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with the event.
+public struct CustomerDeletedEventData: Codable, Equatable {
+	/// The ID of the deleted customer.
+	public var id: String?
+	/// An object that contains the deleted customer.
+	public var object: CustomerDeletedEventObject?
+	/// The type of object affected by the event. For this event, the value is `customer`.
+	public var type: String?
+
+	/// The data associated with the event.
+	/// - Parameters:
+	///   - id: The ID of the deleted customer.
+	///   - object: An object that contains the deleted customer.
+	///   - type: The type of object affected by the event. For this event, the value is `customer`.
+	public init(id: String? = nil, object: CustomerDeletedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// Information about the change that triggered the event.
+public struct CustomerDeletedEventEventContext: Codable, Equatable {
+	/// Information about the merge operation associated with the event.
+	public var merge: CustomerDeletedEventEventContextMerge?
+
+	/// Information about the change that triggered the event.
+	/// - Parameters:
+	///   - merge: Information about the merge operation associated with the event.
+	public init(merge: CustomerDeletedEventEventContextMerge? = nil) {
+		self.merge = merge
+	}
+}
+
+/// Information about a merge operation, which creates a new customer using aggregated properties from two or more existing customers.
+public struct CustomerDeletedEventEventContextMerge: Codable, Equatable {
+	/// The IDs of the existing customers that were merged and then deleted.
+	public var from_customer_ids: [String]?
+	/// The ID of the new customer created by the merge.
+	public var to_customer_id: String?
+
+	/// Information about a merge operation, which creates a new customer using aggregated properties from two or more existing customers.
+	/// - Parameters:
+	///   - from_customer_ids: The IDs of the existing customers that were merged and then deleted.
+	///   - to_customer_id: The ID of the new customer created by the merge.
+	public init(from_customer_ids: [String]? = nil, to_customer_id: String? = nil) {
+		self.from_customer_ids = from_customer_ids
+		self.to_customer_id = to_customer_id
+	}
+}
+
+/// An object that contains the customer associated with the event.
+public struct CustomerDeletedEventObject: Codable, Equatable {
+	/// The deleted customer.
+	public var customer: Customer?
+	/// Information about the change that triggered the event. This field is returned only if the customer is deleted by a merge operation.
+	public var event_context: CustomerDeletedEventEventContext?
+
+	/// An object that contains the customer associated with the event.
+	/// - Parameters:
+	///   - customer: The deleted customer.
+	///   - event_context: Information about the change that triggered the event. This field is returned only if the customer is deleted by a merge operation.
+	public init(customer: Customer? = nil, event_context: CustomerDeletedEventEventContext? = nil) {
+		self.customer = customer
+		self.event_context = event_context
 	}
 }
 
@@ -8621,6 +10185,69 @@ public struct CustomerTextFilter: Codable, Equatable {
 	}
 }
 
+/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is updated. For more information, see [Use Customer Webhooks](https://developer.squareup.com/docs/customers-api/use-the-api/customer-webhooks).  Updates to the 'segment_ids' customer field does not invoke a `customer.updated` event. In addition, the `customer` object in the event notification does not include this field.
+public struct CustomerUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomerUpdatedEventData?
+	/// The unique ID of the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this object, the value is `customer.updated`.
+	public var type: String?
+
+	/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is updated. For more information, see [Use Customer Webhooks](https://developer.squareup.com/docs/customers-api/use-the-api/customer-webhooks).  Updates to the 'segment_ids' customer field does not invoke a `customer.updated` event. In addition, the `customer` object in the event notification does not include this field.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the seller associated with the event.
+	///   - type: The type of event. For this object, the value is `customer.updated`.
+	public init(created_at: Timestamp? = nil, data: CustomerUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with the event.
+public struct CustomerUpdatedEventData: Codable, Equatable {
+	/// The ID of the updated customer.
+	public var id: String?
+	/// An object that contains the updated customer.
+	public var object: CustomerUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `customer`.
+	public var type: String?
+
+	/// The data associated with the event.
+	/// - Parameters:
+	///   - id: The ID of the updated customer.
+	///   - object: An object that contains the updated customer.
+	///   - type: The type of object affected by the event. For this event, the value is `customer`.
+	public init(id: String? = nil, object: CustomerUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the customer associated with the event.
+public struct CustomerUpdatedEventObject: Codable, Equatable {
+	/// The updated customer.
+	public var customer: Customer?
+
+	/// An object that contains the customer associated with the event.
+	/// - Parameters:
+	///   - customer: The updated customer.
+	public init(customer: Customer? = nil) {
+		self.customer = customer
+	}
+}
+
 public struct DataCollectionOptions: Codable, Equatable {
 	/// The body text to display under the title in the data collection screen flow on the Terminal.
 	public var body: String
@@ -8682,12 +10309,6 @@ public enum DayOfWeek: String, Codable {
 	case SAT
 }
 
-/// Represents a [DeleteBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttributeDefinition) request.
-public struct DeleteBookingCustomAttributeDefinitionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a [DeleteBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttributeDefinition) response containing error messages when errors occurred during the request. The successful response does not contain any payload.
 public struct DeleteBookingCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8699,12 +10320,6 @@ public struct DeleteBookingCustomAttributeDefinitionResponse: Codable, Equatable
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-/// Represents a [DeleteBookingCustomAttribute](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttribute) request.
-public struct DeleteBookingCustomAttributeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a [DeleteBookingCustomAttribute](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
@@ -8720,12 +10335,6 @@ public struct DeleteBookingCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// A request to delete a `BreakType`.
-public struct DeleteBreakTypeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// The response to a request to delete a `BreakType`. The response might contain a set  of `Error` objects if the request resulted in errors.
 public struct DeleteBreakTypeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8737,11 +10346,6 @@ public struct DeleteBreakTypeResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-public struct DeleteCatalogObjectRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct DeleteCatalogObjectResponse: Codable, Equatable {
@@ -8759,12 +10363,6 @@ public struct DeleteCatalogObjectResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the `DeleteCustomerCard` endpoint.
-public struct DeleteCustomerCardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the `DeleteCustomerCard` endpoint.
 public struct DeleteCustomerCardResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8776,12 +10374,6 @@ public struct DeleteCustomerCardResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-/// Represents a [DeleteCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttributeDefinition) request.
-public struct DeleteCustomerCustomAttributeDefinitionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a response from a delete request containing error messages if there are any.
@@ -8797,12 +10389,6 @@ public struct DeleteCustomerCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Represents a [DeleteCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttribute) request.
-public struct DeleteCustomerCustomAttributeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a [DeleteCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-DeleteCustomerCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 public struct DeleteCustomerCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8816,12 +10402,6 @@ public struct DeleteCustomerCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that can be included in a request to the [DeleteCustomerGroup](api-endpoint:CustomerGroups-DeleteCustomerGroup) endpoint.
-public struct DeleteCustomerGroupRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the [DeleteCustomerGroup](api-endpoint:CustomerGroups-DeleteCustomerGroup) endpoint.
 public struct DeleteCustomerGroupResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8832,19 +10412,6 @@ public struct DeleteCustomerGroupResponse: Codable, Equatable {
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
-	}
-}
-
-/// Defines the fields that are included in a request to the `DeleteCustomer` endpoint.
-public struct DeleteCustomerRequest: Codable, Equatable {
-	/// The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
-	public var version: Int?
-
-	/// Defines the fields that are included in a request to the `DeleteCustomer` endpoint.
-	/// - Parameters:
-	///   - version: The current version of the customer profile.  As a best practice, you should include this parameter to enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control.  For more information, see [Delete a customer profile](https://developer.squareup.com/docs/customers-api/use-the-api/keep-records#delete-customer-profile).
-	public init(version: Int? = nil) {
-		self.version = version
 	}
 }
 
@@ -8861,12 +10428,6 @@ public struct DeleteCustomerResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the parameters for a `DeleteDisputeEvidence` request.
-public struct DeleteDisputeEvidenceRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields in a `DeleteDisputeEvidence` response.
 public struct DeleteDisputeEvidenceResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
@@ -8880,12 +10441,6 @@ public struct DeleteDisputeEvidenceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) request.
-public struct DeleteInvoiceAttachmentRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) response.
 public struct DeleteInvoiceAttachmentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
@@ -8896,19 +10451,6 @@ public struct DeleteInvoiceAttachmentResponse: Codable, Equatable {
 	///   - errors: Information about errors encountered during the request.
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
-	}
-}
-
-/// Describes a `DeleteInvoice` request.
-public struct DeleteInvoiceRequest: Codable, Equatable {
-	/// The version of the [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](api-endpoint:Invoices-GetInvoice) or  [ListInvoices](api-endpoint:Invoices-ListInvoices).
-	public var version: Int?
-
-	/// Describes a `DeleteInvoice` request.
-	/// - Parameters:
-	///   - version: The version of the [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) to delete. If you do not know the version, you can call [GetInvoice](api-endpoint:Invoices-GetInvoice) or  [ListInvoices](api-endpoint:Invoices-ListInvoices).
-	public init(version: Int? = nil) {
-		self.version = version
 	}
 }
 
@@ -8925,12 +10467,6 @@ public struct DeleteInvoiceResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [DeleteLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttributeDefinition) request.
-public struct DeleteLocationCustomAttributeDefinitionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a response from a delete request containing error messages if there are any.
 public struct DeleteLocationCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8942,12 +10478,6 @@ public struct DeleteLocationCustomAttributeDefinitionResponse: Codable, Equatabl
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-/// Represents a [DeleteLocationCustomAttribute](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttribute) request.
-public struct DeleteLocationCustomAttributeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a [DeleteLocationCustomAttribute](api-endpoint:LocationCustomAttributes-DeleteLocationCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
@@ -8963,12 +10493,6 @@ public struct DeleteLocationCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-/// A request to delete a loyalty reward.
-public struct DeleteLoyaltyRewardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response returned by the API call.
 public struct DeleteLoyaltyRewardResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -8980,12 +10504,6 @@ public struct DeleteLoyaltyRewardResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-/// Represents a [DeleteMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttributeDefinition) request.
-public struct DeleteMerchantCustomAttributeDefinitionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a response from a delete request containing error messages if there are any.
@@ -9001,12 +10519,6 @@ public struct DeleteMerchantCustomAttributeDefinitionResponse: Codable, Equatabl
 	}
 }
 
-/// Represents a [DeleteMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttribute) request.
-public struct DeleteMerchantCustomAttributeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a [DeleteMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-DeleteMerchantCustomAttribute) response. Either an empty object `{}` (for a successful deletion) or `errors` is present in the response.
 public struct DeleteMerchantCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -9018,12 +10530,6 @@ public struct DeleteMerchantCustomAttributeResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-/// Represents a delete request for an order custom attribute definition.
-public struct DeleteOrderCustomAttributeDefinitionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a response from deleting an order custom attribute definition.
@@ -9039,12 +10545,6 @@ public struct DeleteOrderCustomAttributeDefinitionResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a delete request for an order custom attribute.
-public struct DeleteOrderCustomAttributeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a response from deleting an order custom attribute.
 public struct DeleteOrderCustomAttributeResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -9056,11 +10556,6 @@ public struct DeleteOrderCustomAttributeResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-public struct DeletePaymentLinkRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct DeletePaymentLinkResponse: Codable, Equatable {
@@ -9077,12 +10572,6 @@ public struct DeletePaymentLinkResponse: Codable, Equatable {
 	}
 }
 
-/// A request to delete a `Shift`.
-public struct DeleteShiftRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// The response to a request to delete a `Shift`. The response might contain a set of  `Error` objects if the request resulted in errors.
 public struct DeleteShiftResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -9096,12 +10585,6 @@ public struct DeleteShiftResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a `DeleteSnippet` request.
-public struct DeleteSnippetRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a `DeleteSnippet` response.
 public struct DeleteSnippetResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -9113,12 +10596,6 @@ public struct DeleteSnippetResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-/// Defines input parameters in a call to the  [DeleteSubscriptionAction](api-endpoint:Subscriptions-DeleteSubscriptionAction) endpoint.
-public struct DeleteSubscriptionActionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines output parameters in a response of the [DeleteSubscriptionAction](api-endpoint:Subscriptions-DeleteSubscriptionAction) endpoint.
@@ -9138,12 +10615,6 @@ public struct DeleteSubscriptionActionResponse: Codable, Equatable {
 	}
 }
 
-/// A request to delete a `Timecard`.
-public struct DeleteTimecardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// The response to a request to delete a `Timecard`. The response might contain a set of  `Error` objects if the request resulted in errors.
 public struct DeleteTimecardResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -9157,12 +10628,6 @@ public struct DeleteTimecardResponse: Codable, Equatable {
 	}
 }
 
-/// Deletes a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription).
-public struct DeleteWebhookSubscriptionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the [DeleteWebhookSubscription](api-endpoint:WebhookSubscriptions-DeleteWebhookSubscription) endpoint.
 public struct DeleteWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
@@ -9173,82 +10638,6 @@ public struct DeleteWebhookSubscriptionResponse: Codable, Equatable {
 	///   - errors: Information on errors encountered during the request.
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
-	}
-}
-
-/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceFile` request.
-public struct DeprecatedCreateDisputeEvidenceFileRequest: Codable, Equatable {
-	/// The MIME type of the uploaded file. The type can be image/heic, image/heif, image/jpeg, application/pdf, image/png, or image/tiff.
-	public var content_type: String?
-	/// The type of evidence you are uploading. See [DisputeEvidenceType](#type-disputeevidencetype) for possible values
-	public var evidence_type: DisputeEvidenceType?
-	/// The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	public var idempotency_key: String
-
-	/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceFile` request.
-	/// - Parameters:
-	///   - content_type: The MIME type of the uploaded file. The type can be image/heic, image/heif, image/jpeg, application/pdf, image/png, or image/tiff.
-	///   - evidence_type: The type of evidence you are uploading. See [DisputeEvidenceType](#type-disputeevidencetype) for possible values
-	///   - idempotency_key: The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	public init(idempotency_key: String, content_type: String? = nil, evidence_type: DisputeEvidenceType? = nil) {
-		self.idempotency_key = idempotency_key
-		self.content_type = content_type
-		self.evidence_type = evidence_type
-	}
-}
-
-/// Defines the fields in a `DeprecatedCreateDisputeEvidenceFile` response.
-public struct DeprecatedCreateDisputeEvidenceFileResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The metadata of the newly uploaded dispute evidence.
-	public var evidence: DisputeEvidence?
-
-	/// Defines the fields in a `DeprecatedCreateDisputeEvidenceFile` response.
-	/// - Parameters:
-	///   - errors: Any errors that occurred during the request.
-	///   - evidence: The metadata of the newly uploaded dispute evidence.
-	public init(errors: [SquareError]? = nil, evidence: DisputeEvidence? = nil) {
-		self.errors = errors
-		self.evidence = evidence
-	}
-}
-
-/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceText` request.
-public struct DeprecatedCreateDisputeEvidenceTextRequest: Codable, Equatable {
-	/// The evidence string.
-	public var evidence_text: String
-	/// The type of evidence you are uploading. See [DisputeEvidenceType](#type-disputeevidencetype) for possible values
-	public var evidence_type: DisputeEvidenceType?
-	/// The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	public var idempotency_key: String
-
-	/// Defines the parameters for a `DeprecatedCreateDisputeEvidenceText` request.
-	/// - Parameters:
-	///   - evidence_text: The evidence string.
-	///   - evidence_type: The type of evidence you are uploading. See [DisputeEvidenceType](#type-disputeevidencetype) for possible values
-	///   - idempotency_key: The Unique ID. For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
-	public init(evidence_text: String, idempotency_key: String, evidence_type: DisputeEvidenceType? = nil) {
-		self.evidence_text = evidence_text
-		self.idempotency_key = idempotency_key
-		self.evidence_type = evidence_type
-	}
-}
-
-/// Defines the fields in a `DeprecatedCreateDisputeEvidenceText` response.
-public struct DeprecatedCreateDisputeEvidenceTextResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The newly uploaded dispute evidence metadata.
-	public var evidence: DisputeEvidence?
-
-	/// Defines the fields in a `DeprecatedCreateDisputeEvidenceText` response.
-	/// - Parameters:
-	///   - errors: Any errors that occurred during the request.
-	///   - evidence: The newly uploaded dispute evidence metadata.
-	public init(errors: [SquareError]? = nil, evidence: DisputeEvidence? = nil) {
-		self.errors = errors
-		self.evidence = evidence
 	}
 }
 
@@ -9467,6 +10856,63 @@ public struct DeviceCode: Codable, Equatable {
 	}
 }
 
+/// Published when a Square Terminal has been paired with a Terminal API client and the device_id of the paired Square Terminal is available.
+public struct DeviceCodePairedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DeviceCodePairedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"device.code.paired"`.
+	public var type: String?
+
+	/// Published when a Square Terminal has been paired with a Terminal API client and the device_id of the paired Square Terminal is available.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"device.code.paired"`.
+	public init(created_at: Timestamp? = nil, data: DeviceCodePairedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DeviceCodePairedEventData: Codable, Equatable {
+	/// ID of the paired device code.
+	public var id: String?
+	/// An object containing the paired device code.
+	public var object: DeviceCodePairedEventObject?
+	/// Name of the paired object’s type, `"device_code"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: DeviceCodePairedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DeviceCodePairedEventObject: Codable, Equatable {
+	/// The created terminal checkout
+	public var device_code: DeviceCode?
+
+	public init(device_code: DeviceCode? = nil) {
+		self.device_code = device_code
+	}
+}
+
 /// DeviceCode.Status enum.
 public enum DeviceCodeStatus: String, Codable {
 	/// The status cannot be determined or does not exist.
@@ -9477,11 +10923,6 @@ public enum DeviceCodeStatus: String, Codable {
 	case PAIRED
 	/// The device code was unpaired and expired before it was paired.
 	case EXPIRED
-}
-
-public struct DeviceComponentDetails: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct DeviceComponentDetailsApplicationDetails: Codable, Equatable {
@@ -9559,15 +11000,6 @@ public struct DeviceComponentDetailsMeasurement: Codable, Equatable {
 	}
 }
 
-public struct DeviceComponentDetailsNetworkInterfaceDetails: Codable, Equatable {
-	/// The string representation of the device’s IPv4 address.
-	public var ip_address_v4: String?
-
-	public init(ip_address_v4: String? = nil) {
-		self.ip_address_v4 = ip_address_v4
-	}
-}
-
 public struct DeviceComponentDetailsWiFiDetails: Codable, Equatable {
 	/// A boolean to represent whether the WiFI interface is currently active.
 	public var active: Bool?
@@ -9586,6 +11018,59 @@ public struct DeviceComponentDetailsWiFiDetails: Codable, Equatable {
 		self.secure_connection = secure_connection
 		self.signal_strength = signal_strength
 		self.ssid = ssid
+	}
+}
+
+/// Published when a Device is created.
+public struct DeviceCreatedEvent: Codable, Equatable {
+	/// The time when the device creation event was first created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The metadata associated with the device creation event.
+	public var data: DeviceCreatedEventData?
+	/// A UUID that uniquely identifies this device creation event.
+	public var event_id: String?
+	/// The merchant the newly created device belongs to.
+	public var merchant_id: String?
+	/// The type of event this represents. The value is `"device.created"`.
+	public var type: String?
+
+	/// Published when a Device is created.
+	/// - Parameters:
+	///   - created_at: The time when the device creation event was first created, in RFC 3339 format.
+	///   - data: The metadata associated with the device creation event.
+	///   - event_id: A UUID that uniquely identifies this device creation event.
+	///   - merchant_id: The merchant the newly created device belongs to.
+	///   - type: The type of event this represents. The value is `"device.created"`.
+	public init(created_at: Timestamp? = nil, data: DeviceCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DeviceCreatedEventData: Codable, Equatable {
+	/// The ID of the device.
+	public var id: String?
+	/// An object containing the created device.
+	public var object: DeviceCreatedEventObject?
+	/// The type of the event data object. The value is `"device"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: DeviceCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DeviceCreatedEventObject: Codable, Equatable {
+	/// The created device.
+	public var device: Device?
+
+	public init(device: Device? = nil) {
+		self.device = device
 	}
 }
 
@@ -9689,12 +11174,6 @@ public struct DigitalWalletDetails: Codable, Equatable {
 	}
 }
 
-/// Disables the card, preventing any further updates or charges. Disabling an already disabled card is allowed but has no effect. Accessible via HTTP requests at POST https://connect.squareup.com/v2/cards/{card_id}/disable
-public struct DisableCardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the [DisableCard](api-endpoint:Cards-DisableCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 public struct DisableCardResponse: Codable, Equatable {
 	/// The retrieved card.
@@ -9712,12 +11191,6 @@ public struct DisableCardResponse: Codable, Equatable {
 	}
 }
 
-/// Disables [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
-public struct DisableEventsRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the [DisableEvents](api-endpoint:Events-DisableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
 public struct DisableEventsResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
@@ -9729,11 +11202,6 @@ public struct DisableEventsResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil) {
 		self.errors = errors
 	}
-}
-
-public struct DismissTerminalActionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct DismissTerminalActionResponse: Codable, Equatable {
@@ -9748,11 +11216,6 @@ public struct DismissTerminalActionResponse: Codable, Equatable {
 	}
 }
 
-public struct DismissTerminalCheckoutRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct DismissTerminalCheckoutResponse: Codable, Equatable {
 	/// Current state of the checkout to be dismissed.
 	public var checkout: TerminalCheckout?
@@ -9763,11 +11226,6 @@ public struct DismissTerminalCheckoutResponse: Codable, Equatable {
 		self.checkout = checkout
 		self.errors = errors
 	}
-}
-
-public struct DismissTerminalRefundRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct DismissTerminalRefundResponse: Codable, Equatable {
@@ -9855,6 +11313,63 @@ public struct Dispute: Codable, Equatable {
 	}
 }
 
+/// Published when a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) is created.
+public struct DisputeCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeCreatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeCreatedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeCreatedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeCreatedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
+	}
+}
+
 public struct DisputeEvidence: Codable, Equatable {
 	/// The ID of the dispute the evidence is associated with.
 	public var dispute_id: String?
@@ -9882,6 +11397,177 @@ public struct DisputeEvidence: Codable, Equatable {
 	}
 }
 
+/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](api-endpoint:Disputes-CreateDisputeEvidenceFile) or [CreateDisputeEvidenceText](api-endpoint:Disputes-CreateDisputeEvidenceText).
+public struct DisputeEvidenceAddedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeEvidenceAddedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](api-endpoint:Disputes-CreateDisputeEvidenceFile) or [CreateDisputeEvidenceText](api-endpoint:Disputes-CreateDisputeEvidenceText).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeEvidenceAddedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceAddedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeEvidenceAddedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeEvidenceAddedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceAddedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
+	}
+}
+
+/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](api-endpoint:Disputes-CreateDisputeEvidenceFile) or [CreateDisputeEvidenceText](api-endpoint:Disputes-CreateDisputeEvidenceText).
+public struct DisputeEvidenceCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeEvidenceCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when evidence is added to a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling either [CreateDisputeEvidenceFile](api-endpoint:Disputes-CreateDisputeEvidenceFile) or [CreateDisputeEvidenceText](api-endpoint:Disputes-CreateDisputeEvidenceText).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeEvidenceCreatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceCreatedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeEvidenceCreatedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeEvidenceCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceCreatedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
+	}
+}
+
+/// Published when evidence is removed from a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling [DeleteDisputeEvidence](api-endpoint:Disputes-DeleteDisputeEvidence).
+public struct DisputeEvidenceDeletedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeEvidenceDeletedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when evidence is removed from a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling [DeleteDisputeEvidence](api-endpoint:Disputes-DeleteDisputeEvidence).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeEvidenceDeletedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceDeletedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeEvidenceDeletedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeEvidenceDeletedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceDeletedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
+	}
+}
+
 /// A file to be uploaded as dispute evidence.
 public struct DisputeEvidenceFile: Codable, Equatable {
 	/// The file name including the file extension. For example: "receipt.tiff".
@@ -9896,6 +11582,63 @@ public struct DisputeEvidenceFile: Codable, Equatable {
 	public init(filename: String? = nil, filetype: String? = nil) {
 		self.filename = filename
 		self.filetype = filetype
+	}
+}
+
+/// Published when evidence is removed from a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling [DeleteDisputeEvidence](api-endpoint:Disputes-DeleteDisputeEvidence).
+public struct DisputeEvidenceRemovedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeEvidenceRemovedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when evidence is removed from a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) from the Disputes Dashboard in the Seller Dashboard, the Square Point of Sale app, or by calling [DeleteDisputeEvidence](api-endpoint:Disputes-DeleteDisputeEvidence).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeEvidenceRemovedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceRemovedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeEvidenceRemovedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeEvidenceRemovedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeEvidenceRemovedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
 	}
 }
 
@@ -9973,6 +11716,120 @@ public enum DisputeState: String, Codable {
 	case LOST
 	/// The seller has accepted the dispute
 	case ACCEPTED
+}
+
+/// Published when the state of a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) changes. This includes the dispute resolution (WON, LOST) reported by the bank. The event data includes details of what changed.
+public struct DisputeStateChangedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeStateChangedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when the state of a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) changes. This includes the dispute resolution (WON, LOST) reported by the bank. The event data includes details of what changed.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeStateChangedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeStateChangedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeStateChangedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeStateChangedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeStateChangedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
+	}
+}
+
+/// Published when the state of a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) changes. This includes the dispute resolution (WON, LOST) reported by the bank. The event data includes details of what changed.
+public struct DisputeStateUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: DisputeStateUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when the state of a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) changes. This includes the dispute resolution (WON, LOST) reported by the bank. The event data includes details of what changed.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: DisputeStateUpdatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct DisputeStateUpdatedEventData: Codable, Equatable {
+	/// ID of the affected dispute.
+	public var id: String?
+	/// An object containing fields and values relevant to the event.
+	public var object: DisputeStateUpdatedEventObject?
+	/// Name of the affected dispute's type.
+	public var type: String?
+
+	public init(id: String? = nil, object: DisputeStateUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct DisputeStateUpdatedEventObject: Codable, Equatable {
+	/// The dispute object.
+	public var object: Dispute?
+
+	public init(object: Dispute? = nil) {
+		self.object = object
+	}
 }
 
 /// The payment the cardholder disputed.
@@ -10080,12 +11937,6 @@ public struct EmployeeWage: Codable, Equatable {
 		self.id = id
 		self.title = title
 	}
-}
-
-/// Enables [Event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Event)s for your application.
-public struct EnableEventsRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [EnableEvents](api-endpoint:Events-EnableEvents) endpoint.  Note: if there are errors processing the request, the events field will not be present.
@@ -10455,8 +12306,8 @@ public enum ErrorCode: String, Codable {
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
 	case ISSUER_INSTALLMENT_ERROR
-	case ORDER_EXPIRED
 	case VERSION_MISMATCH
+	case ORDER_EXPIRED
 }
 
 public struct Event: Codable, Equatable {
@@ -11027,12 +12878,6 @@ public enum FulfillmentType: String, Codable {
 	case DELIVERY
 }
 
-/// Request object for fetching a specific `BankAccount` by the object ID.
-public struct GetBankAccountByV1IdRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Response object returned by GetBankAccountByV1Id.
 public struct GetBankAccountByV1IdResponse: Codable, Equatable {
 	/// The requested `BankAccount` object.
@@ -11048,12 +12893,6 @@ public struct GetBankAccountByV1IdResponse: Codable, Equatable {
 		self.bank_account = bank_account
 		self.errors = errors
 	}
-}
-
-/// Request object to fetch a specific `BankAccount` by the object ID.
-public struct GetBankAccountRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Response object returned by `GetBankAccount`.
@@ -11073,12 +12912,6 @@ public struct GetBankAccountResponse: Codable, Equatable {
 	}
 }
 
-/// A request to get a `BreakType` by ID.
-public struct GetBreakTypeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// The response to a request to get a `BreakType`. The response contains the requested `BreakType` objects and might contain a set of `Error` objects if the request resulted in errors.
 public struct GetBreakTypeResponse: Codable, Equatable {
 	/// The response object.
@@ -11096,11 +12929,6 @@ public struct GetBreakTypeResponse: Codable, Equatable {
 	}
 }
 
-public struct GetDeviceCodeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct GetDeviceCodeResponse: Codable, Equatable {
 	/// The queried DeviceCode.
 	public var device_code: DeviceCode?
@@ -11113,11 +12941,6 @@ public struct GetDeviceCodeResponse: Codable, Equatable {
 	}
 }
 
-public struct GetDeviceRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct GetDeviceResponse: Codable, Equatable {
 	/// The requested `Device`.
 	public var device: Device?
@@ -11128,12 +12951,6 @@ public struct GetDeviceResponse: Codable, Equatable {
 		self.device = device
 		self.errors = errors
 	}
-}
-
-/// A request to get an `EmployeeWage`.
-public struct GetEmployeeWageRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// A response to a request to get an `EmployeeWage`. The response contains the requested `EmployeeWage` objects and might contain a set of `Error` objects if the request resulted in errors.
@@ -11153,12 +12970,6 @@ public struct GetEmployeeWageResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a `GetInvoice` request.
-public struct GetInvoiceRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Describes a `GetInvoice` response.
 public struct GetInvoiceResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
@@ -11174,12 +12985,6 @@ public struct GetInvoiceResponse: Codable, Equatable {
 		self.errors = errors
 		self.invoice = invoice
 	}
-}
-
-/// Describes a request to retrieve a refund using [GetPaymentRefund](api-endpoint:Refunds-GetPaymentRefund).
-public struct GetPaymentRefundRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the response returned by [GetRefund](api-endpoint:Refunds-GetPaymentRefund).  Note: If there are errors processing the request, the refund field might not be present or it might be present in a FAILED state.
@@ -11199,12 +13004,6 @@ public struct GetPaymentRefundResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to retrieve a payment using  [GetPayment](api-endpoint:Payments-GetPayment).
-public struct GetPaymentRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the response returned by [GetPayment](api-endpoint:Payments-GetPayment).
 public struct GetPaymentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
@@ -11222,11 +13021,6 @@ public struct GetPaymentResponse: Codable, Equatable {
 	}
 }
 
-public struct GetPayoutRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct GetPayoutResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
 	public var errors: [SquareError]?
@@ -11237,12 +13031,6 @@ public struct GetPayoutResponse: Codable, Equatable {
 		self.errors = errors
 		self.payout = payout
 	}
-}
-
-/// A request to get a `Shift` by ID.
-public struct GetShiftRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// A response to a request to get a `Shift`. The response contains the requested `Shift` object and might contain a set of `Error` objects if the request resulted in errors.
@@ -11262,12 +13050,6 @@ public struct GetShiftResponse: Codable, Equatable {
 	}
 }
 
-/// A request to get a `TeamMemberWage`.
-public struct GetTeamMemberWageRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response to a request to get a `TeamMemberWage`. The response contains the requested `TeamMemberWage` objects and might contain a set of `Error` objects if the request resulted in errors.
 public struct GetTeamMemberWageResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -11285,11 +13067,6 @@ public struct GetTeamMemberWageResponse: Codable, Equatable {
 	}
 }
 
-public struct GetTerminalActionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct GetTerminalActionResponse: Codable, Equatable {
 	/// The requested `TerminalAction`
 	public var action: TerminalAction?
@@ -11302,11 +13079,6 @@ public struct GetTerminalActionResponse: Codable, Equatable {
 	}
 }
 
-public struct GetTerminalCheckoutRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct GetTerminalCheckoutResponse: Codable, Equatable {
 	/// The requested `TerminalCheckout`.
 	public var checkout: TerminalCheckout?
@@ -11317,11 +13089,6 @@ public struct GetTerminalCheckoutResponse: Codable, Equatable {
 		self.checkout = checkout
 		self.errors = errors
 	}
-}
-
-public struct GetTerminalRefundRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct GetTerminalRefundResponse: Codable, Equatable {
@@ -11601,6 +13368,69 @@ public enum GiftCardActivityClearBalanceReason: String, Codable {
 	case UNKNOWN_REASON
 }
 
+/// Published when a [gift card activity](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivity) is created.
+public struct GiftCardActivityCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: GiftCardActivityCreatedEventData?
+	/// The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `gift_card.activity.created`.
+	public var type: String?
+
+	/// Published when a [gift card activity](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivity) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `gift_card.activity.created`.
+	public init(created_at: Timestamp? = nil, data: GiftCardActivityCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Represents the data associated with a `gift_card.activity.created` event.
+public struct GiftCardActivityCreatedEventData: Codable, Equatable {
+	/// The ID of the new gift card activity.
+	public var id: String?
+	/// An object that contains the new gift card activity.
+	public var object: GiftCardActivityCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `gift_card_activity`.
+	public var type: String?
+
+	/// Represents the data associated with a `gift_card.activity.created` event.
+	/// - Parameters:
+	///   - id: The ID of the new gift card activity.
+	///   - object: An object that contains the new gift card activity.
+	///   - type: The type of object affected by the event. For this event, the value is `gift_card_activity`.
+	public init(id: String? = nil, object: GiftCardActivityCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the gift card activity associated with a  `gift_card.activity.created` event.
+public struct GiftCardActivityCreatedEventObject: Codable, Equatable {
+	/// The new gift card activity.
+	public var gift_card_activity: GiftCardActivity?
+
+	/// An object that contains the gift card activity associated with a  `gift_card.activity.created` event.
+	/// - Parameters:
+	///   - gift_card_activity: The new gift card activity.
+	public init(gift_card_activity: GiftCardActivity? = nil) {
+		self.gift_card_activity = gift_card_activity
+	}
+}
+
 /// Represents details about a `DEACTIVATE` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
 public struct GiftCardActivityDeactivate: Codable, Equatable {
 	/// The reason the gift card was deactivated. See [Reason](#type-reason) for possible values
@@ -11847,6 +13677,266 @@ public struct GiftCardActivityUnlinkedActivityRefund: Codable, Equatable {
 	}
 }
 
+/// Published when a [gift card activity](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivity) is updated.  Subscribe to this event to be notified about the following changes: - An update to the `REDEEM` activity for a gift card redemption made from a Square product (such as Square Point of Sale).  These redemptions are initially assigned a `PENDING` state, but then change to a `COMPLETED` or `CANCELED` state. - An update to the `IMPORT` activity for an imported gift card when the balance is later adjusted by Square.
+public struct GiftCardActivityUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: GiftCardActivityUpdatedEventData?
+	/// The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `gift_card.activity.updated`.
+	public var type: String?
+
+	/// Published when a [gift card activity](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivity) is updated.  Subscribe to this event to be notified about the following changes: - An update to the `REDEEM` activity for a gift card redemption made from a Square product (such as Square Point of Sale).  These redemptions are initially assigned a `PENDING` state, but then change to a `COMPLETED` or `CANCELED` state. - An update to the `IMPORT` activity for an imported gift card when the balance is later adjusted by Square.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `gift_card.activity.updated`.
+	public init(created_at: Timestamp? = nil, data: GiftCardActivityUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `gift_card.activity.updated` event.
+public struct GiftCardActivityUpdatedEventData: Codable, Equatable {
+	/// The ID of the updated gift card activity.
+	public var id: String?
+	/// An object that contains the updated gift card activity.
+	public var object: GiftCardActivityUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `gift_card_activity`.
+	public var type: String?
+
+	/// The data associated with a `gift_card.activity.updated` event.
+	/// - Parameters:
+	///   - id: The ID of the updated gift card activity.
+	///   - object: An object that contains the updated gift card activity.
+	///   - type: The type of object affected by the event. For this event, the value is `gift_card_activity`.
+	public init(id: String? = nil, object: GiftCardActivityUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the gift card activity associated with a  `gift_card.activity.updated` event.
+public struct GiftCardActivityUpdatedEventObject: Codable, Equatable {
+	/// The updated gift card activity.
+	public var gift_card_activity: GiftCardActivity?
+
+	/// An object that contains the gift card activity associated with a  `gift_card.activity.updated` event.
+	/// - Parameters:
+	///   - gift_card_activity: The updated gift card activity.
+	public init(gift_card_activity: GiftCardActivity? = nil) {
+		self.gift_card_activity = gift_card_activity
+	}
+}
+
+/// Published when a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard) is created.
+public struct GiftCardCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: GiftCardCreatedEventData?
+	/// The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `gift_card.created`.
+	public var type: String?
+
+	/// Published when a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `gift_card.created`.
+	public init(created_at: Timestamp? = nil, data: GiftCardCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `gift_card.created` event.
+public struct GiftCardCreatedEventData: Codable, Equatable {
+	/// The ID of the new gift card.
+	public var id: String?
+	/// An object that contains the new gift card.
+	public var object: GiftCardCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `gift_card`.
+	public var type: String?
+
+	/// The data associated with a `gift_card.created` event.
+	/// - Parameters:
+	///   - id: The ID of the new gift card.
+	///   - object: An object that contains the new gift card.
+	///   - type: The type of object affected by the event. For this event, the value is `gift_card`.
+	public init(id: String? = nil, object: GiftCardCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the gift card associated with a `gift_card.created` event.
+public struct GiftCardCreatedEventObject: Codable, Equatable {
+	/// The new gift card.
+	public var gift_card: GiftCard?
+
+	/// An object that contains the gift card associated with a `gift_card.created` event.
+	/// - Parameters:
+	///   - gift_card: The new gift card.
+	public init(gift_card: GiftCard? = nil) {
+		self.gift_card = gift_card
+	}
+}
+
+/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is linked to a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard).
+public struct GiftCardCustomerLinkedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: GiftCardCustomerLinkedEventData?
+	/// The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `gift_card.customer_linked`.
+	public var type: String?
+
+	/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is linked to a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard).
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `gift_card.customer_linked`.
+	public init(created_at: Timestamp? = nil, data: GiftCardCustomerLinkedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `gift_card.customer_linked` event.
+public struct GiftCardCustomerLinkedEventData: Codable, Equatable {
+	/// The ID of the updated gift card.
+	public var id: String?
+	/// An object that contains the updated gift card and the ID of the linked customer.
+	public var object: GiftCardCustomerLinkedEventObject?
+	/// The type of object affected by the event. For this event, the value is `gift_card`.
+	public var type: String?
+
+	/// The data associated with a `gift_card.customer_linked` event.
+	/// - Parameters:
+	///   - id: The ID of the updated gift card.
+	///   - object: An object that contains the updated gift card and the ID of the linked customer.
+	///   - type: The type of object affected by the event. For this event, the value is `gift_card`.
+	public init(id: String? = nil, object: GiftCardCustomerLinkedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the gift card and customer ID associated with a  `gift_card.customer_linked` event.
+public struct GiftCardCustomerLinkedEventObject: Codable, Equatable {
+	/// The gift card with the updated `customer_ids` field.
+	public var gift_card: GiftCard?
+	/// The ID of the linked [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer).
+	public var linked_customer_id: String?
+
+	/// An object that contains the gift card and customer ID associated with a  `gift_card.customer_linked` event.
+	/// - Parameters:
+	///   - gift_card: The gift card with the updated `customer_ids` field.
+	///   - linked_customer_id: The ID of the linked [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer).
+	public init(gift_card: GiftCard? = nil, linked_customer_id: String? = nil) {
+		self.gift_card = gift_card
+		self.linked_customer_id = linked_customer_id
+	}
+}
+
+/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is unlinked from a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard).
+public struct GiftCardCustomerUnlinkedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: GiftCardCustomerUnlinkedEventData?
+	/// The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `gift_card.customer_unlinked`.
+	public var type: String?
+
+	/// Published when a [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) is unlinked from a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard).
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `gift_card.customer_unlinked`.
+	public init(created_at: Timestamp? = nil, data: GiftCardCustomerUnlinkedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `gift_card.customer_unlinked` event.
+public struct GiftCardCustomerUnlinkedEventData: Codable, Equatable {
+	/// The ID of the updated gift card.
+	public var id: String?
+	/// An object that contains the updated gift card and the ID of the unlinked customer.
+	public var object: GiftCardCustomerUnlinkedEventObject?
+	/// The type of object affected by the event. For this event, the value is `gift_card`.
+	public var type: String?
+
+	/// The data associated with a `gift_card.customer_unlinked` event.
+	/// - Parameters:
+	///   - id: The ID of the updated gift card.
+	///   - object: An object that contains the updated gift card and the ID of the unlinked customer.
+	///   - type: The type of object affected by the event. For this event, the value is `gift_card`.
+	public init(id: String? = nil, object: GiftCardCustomerUnlinkedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the gift card and the customer ID associated with a  `gift_card.customer_linked` event.
+public struct GiftCardCustomerUnlinkedEventObject: Codable, Equatable {
+	/// The gift card with the updated `customer_ids` field.  The field is removed if the gift card is not linked to any customers.
+	public var gift_card: GiftCard?
+	/// The ID of the unlinked [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer).
+	public var unlinked_customer_id: String?
+
+	/// An object that contains the gift card and the customer ID associated with a  `gift_card.customer_linked` event.
+	/// - Parameters:
+	///   - gift_card: The gift card with the updated `customer_ids` field.  The field is removed if the gift card is not linked to any customers.
+	///   - unlinked_customer_id: The ID of the unlinked [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer).
+	public init(gift_card: GiftCard? = nil, unlinked_customer_id: String? = nil) {
+		self.gift_card = gift_card
+		self.unlinked_customer_id = unlinked_customer_id
+	}
+}
+
 /// Indicates the source that generated the gift card  account number (GAN).
 public enum GiftCardGANSource: String, Codable {
 	/// The GAN is generated by Square.
@@ -11873,6 +13963,69 @@ public enum GiftCardType: String, Codable {
 	case PHYSICAL
 	/// A digital gift card.
 	case DIGITAL
+}
+
+/// Published when a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard) is updated. This includes changes to the state, balance, and customer association.
+public struct GiftCardUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: GiftCardUpdatedEventData?
+	/// The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. For this event, the value is `gift_card.updated`.
+	public var type: String?
+
+	/// Published when a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard) is updated. This includes changes to the state, balance, and customer association.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID of the event, which is used for  [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of this event. For this event, the value is `gift_card.updated`.
+	public init(created_at: Timestamp? = nil, data: GiftCardUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `gift_card.updated` event.
+public struct GiftCardUpdatedEventData: Codable, Equatable {
+	/// The ID of the updated gift card.
+	public var id: String?
+	/// An object that contains the updated gift card.
+	public var object: GiftCardUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `gift_card`.
+	public var type: String?
+
+	/// The data associated with a `gift_card.updated` event.
+	/// - Parameters:
+	///   - id: The ID of the updated gift card.
+	///   - object: An object that contains the updated gift card.
+	///   - type: The type of object affected by the event. For this event, the value is `gift_card`.
+	public init(id: String? = nil, object: GiftCardUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the gift card associated with a `gift_card.updated` event.
+public struct GiftCardUpdatedEventObject: Codable, Equatable {
+	/// The gift card with the updated `balance_money`, `state`, or `customer_ids` field.  Some events can affect both `balance_money` and `state`.
+	public var gift_card: GiftCard?
+
+	/// An object that contains the gift card associated with a `gift_card.updated` event.
+	/// - Parameters:
+	///   - gift_card: The gift card with the updated `balance_money`, `state`, or `customer_ids` field.  Some events can affect both `balance_money` and `state`.
+	public init(gift_card: GiftCard? = nil) {
+		self.gift_card = gift_card
+	}
 }
 
 /// Represents a change in state or quantity of product inventory at a particular time and location.
@@ -12063,6 +14216,59 @@ public struct InventoryCount: Codable, Equatable {
 		self.location_id = location_id
 		self.quantity = quantity
 		self.state = state
+	}
+}
+
+/// Published when the quantity is updated for a [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation).
+public struct InventoryCountUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InventoryCountUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents.
+	public var type: String?
+
+	/// Published when the quantity is updated for a [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents.
+	public init(created_at: Timestamp? = nil, data: InventoryCountUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InventoryCountUpdatedEventData: Codable, Equatable {
+	/// ID of the affected object.
+	public var id: String?
+	/// An object containing fields and values relevant to the event. Is absent if affected object was deleted.
+	public var object: InventoryCountUpdatedEventObject?
+	/// Name of the affected object’s type. For this event, the value is `inventory_counts`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InventoryCountUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InventoryCountUpdatedEventObject: Codable, Equatable {
+	/// The inventory counts.
+	public var inventory_counts: [InventoryCount]?
+
+	public init(inventory_counts: [InventoryCount]? = nil) {
+		self.inventory_counts = inventory_counts
 	}
 }
 
@@ -12405,6 +14611,112 @@ public enum InvoiceAutomaticPaymentSource: String, Codable {
 	case BANK_ON_FILE
 }
 
+/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is canceled.
+public struct InvoiceCanceledEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoiceCanceledEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.canceled"`.
+	public var type: String?
+
+	/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is canceled.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.canceled"`.
+	public init(created_at: Timestamp? = nil, data: InvoiceCanceledEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoiceCanceledEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the canceled invoice.
+	public var object: InvoiceCanceledEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoiceCanceledEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoiceCanceledEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
+	}
+}
+
+/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is created.
+public struct InvoiceCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoiceCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.created"`.
+	public var type: String?
+
+	/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.created"`.
+	public init(created_at: Timestamp? = nil, data: InvoiceCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoiceCreatedEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the created invoice.
+	public var object: InvoiceCreatedEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoiceCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoiceCreatedEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
+	}
+}
+
 /// An additional seller-defined and customer-facing field to include on the invoice. For more information,  see [Custom fields](https://developer.squareup.com/docs/invoices-api/overview#custom-fields).  Adding custom fields to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).
 public struct InvoiceCustomField: Codable, Equatable {
 	/// The label or title of the custom field. This field is required for a custom field.
@@ -12434,6 +14746,50 @@ public enum InvoiceCustomFieldPlacement: String, Codable {
 	case BELOW_LINE_ITEMS
 }
 
+/// Published when a draft [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is deleted.
+public struct InvoiceDeletedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoiceDeletedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.deleted"`.
+	public var type: String?
+
+	/// Published when a draft [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is deleted.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.deleted"`.
+	public init(created_at: Timestamp? = nil, data: InvoiceDeletedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoiceDeletedEventData: Codable, Equatable {
+	/// Indicates that the invoice was deleted.
+	public var deleted: Bool?
+	/// ID of the affected invoice.
+	public var id: String?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(deleted: Bool? = nil, id: String? = nil, type: String? = nil) {
+		self.deleted = deleted
+		self.id = id
+		self.type = type
+	}
+}
+
 /// Indicates how Square delivers the [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) to the customer.
 public enum InvoiceDeliveryMethod: String, Codable {
 	/// Directs Square to send invoices, reminders, and receipts to the customer using email.
@@ -12458,6 +14814,59 @@ public struct InvoiceFilter: Codable, Equatable {
 	public init(location_ids: [String], customer_ids: [String]? = nil) {
 		self.location_ids = location_ids
 		self.customer_ids = customer_ids
+	}
+}
+
+/// Published when a payment that is associated with an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is completed. For more information about invoice payments, see [Pay an invoice](https://developer.squareup.com/docs/invoices-api/pay-refund-invoices#pay-invoice).
+public struct InvoicePaymentMadeEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoicePaymentMadeEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.payment_made"`.
+	public var type: String?
+
+	/// Published when a payment that is associated with an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is completed. For more information about invoice payments, see [Pay an invoice](https://developer.squareup.com/docs/invoices-api/pay-refund-invoices#pay-invoice).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.payment_made"`.
+	public init(created_at: Timestamp? = nil, data: InvoicePaymentMadeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoicePaymentMadeEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the invoice that was paid.
+	public var object: InvoicePaymentMadeEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoicePaymentMadeEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoicePaymentMadeEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
 	}
 }
 
@@ -12561,6 +14970,59 @@ public struct InvoicePaymentRequest: Codable, Equatable {
 	}
 }
 
+/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) transitions from a draft to a non-draft status.
+public struct InvoicePublishedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoicePublishedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.published"`.
+	public var type: String?
+
+	/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) transitions from a draft to a non-draft status.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.published"`.
+	public init(created_at: Timestamp? = nil, data: InvoicePublishedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoicePublishedEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the published invoice.
+	public var object: InvoicePublishedEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoicePublishedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoicePublishedEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
+	}
+}
+
 /// Describes query criteria for searching invoices.
 public struct InvoiceQuery: Codable, Equatable {
 	/// Query filters to apply in searching invoices.  For more information, see [Search for invoices](https://developer.squareup.com/docs/invoices-api/retrieve-list-search-invoices#search-invoices).
@@ -12632,6 +15094,59 @@ public struct InvoiceRecipientTaxIds: Codable, Equatable {
 	}
 }
 
+/// Published when a refund is applied toward a payment of an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice).  For more information about invoice refunds, see [Refund an invoice](https://developer.squareup.com/docs/invoices-api/pay-refund-invoices#refund-invoice).
+public struct InvoiceRefundedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoiceRefundedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.refunded"`.
+	public var type: String?
+
+	/// Published when a refund is applied toward a payment of an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice).  For more information about invoice refunds, see [Refund an invoice](https://developer.squareup.com/docs/invoices-api/pay-refund-invoices#refund-invoice).
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.refunded"`.
+	public init(created_at: Timestamp? = nil, data: InvoiceRefundedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoiceRefundedEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the refunded invoice.
+	public var object: InvoiceRefundedEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoiceRefundedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoiceRefundedEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
+	}
+}
+
 /// Specifies the action for Square to take for processing the invoice. For example,  email the invoice, charge a customer's card on file, or do nothing. DEPRECATED at version yyyy-mm-dd. The corresponding `request_method` field is replaced by the `Invoice.delivery_method` and `InvoicePaymentRequest.automatic_payment_source` fields.
 public enum InvoiceRequestMethod: String, Codable {
 	/// Directs Square to send invoices, reminders, and receipts to the customer using email. Square sends the invoice after it is published (either immediately or at the `scheduled_at` time, if specified in the [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice)).
@@ -12658,6 +15173,59 @@ public enum InvoiceRequestType: String, Codable {
 	case DEPOSIT
 	/// A request for an installment payment. Installments allow buyers to pay the invoice over time. Installments can optionally be combined with a deposit.   Adding `INSTALLMENT` payment requests to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).
 	case INSTALLMENT
+}
+
+/// Published when an automatic scheduled payment for an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) has failed.
+public struct InvoiceScheduledChargeFailedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoiceScheduledChargeFailedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.scheduled_charge_failed"`.
+	public var type: String?
+
+	/// Published when an automatic scheduled payment for an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) has failed.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.scheduled_charge_failed"`.
+	public init(created_at: Timestamp? = nil, data: InvoiceScheduledChargeFailedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoiceScheduledChargeFailedEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the invoice that experienced the failed scheduled charge.
+	public var object: InvoiceScheduledChargeFailedEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoiceScheduledChargeFailedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoiceScheduledChargeFailedEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
+	}
 }
 
 /// Identifies the sort field and sort order.
@@ -12705,6 +15273,59 @@ public enum InvoiceStatus: String, Codable {
 	case FAILED
 	/// A payment on the invoice was initiated but has not yet been processed.  When in this state, invoices cannot be updated and other payments cannot be initiated.
 	case PAYMENT_PENDING
+}
+
+/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is updated.
+public struct InvoiceUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: InvoiceUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"invoice.updated"`.
+	public var type: String?
+
+	/// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"invoice.updated"`.
+	public init(created_at: Timestamp? = nil, data: InvoiceUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct InvoiceUpdatedEventData: Codable, Equatable {
+	/// ID of the affected invoice.
+	public var id: String?
+	/// An object containing the updated invoice.
+	public var object: InvoiceUpdatedEventObject?
+	/// Name of the affected object’s type, `"invoice"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: InvoiceUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct InvoiceUpdatedEventObject: Codable, Equatable {
+	/// The related invoice.
+	public var invoice: Invoice?
+
+	public init(invoice: Invoice? = nil) {
+		self.invoice = invoice
+	}
 }
 
 /// Price and inventory alerting overrides for a `CatalogItemVariation` at a specific `Location`.
@@ -12824,6 +15445,631 @@ public enum JobAssignmentPayType: String, Codable {
 	case SALARY
 }
 
+/// Published when a Job is created.
+public struct JobCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: JobCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"job.created"`.
+	public var type: String?
+
+	/// Published when a Job is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"job.created"`.
+	public init(created_at: Timestamp? = nil, data: JobCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct JobCreatedEventData: Codable, Equatable {
+	/// ID of the created job.
+	public var id: String?
+	/// An object containing the created job.
+	public var object: JobCreatedEventObject?
+	/// Name of the affected object’s type, `"job"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: JobCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct JobCreatedEventObject: Codable, Equatable {
+	/// The created job.
+	public var job: Job?
+
+	public init(job: Job? = nil) {
+		self.job = job
+	}
+}
+
+/// Published when a Job is updated.
+public struct JobUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: JobUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"job.updated"`.
+	public var type: String?
+
+	/// Published when a Job is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"job.updated"`.
+	public init(created_at: Timestamp? = nil, data: JobUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct JobUpdatedEventData: Codable, Equatable {
+	/// ID of the updated job.
+	public var id: String?
+	/// An object containing the updated job.
+	public var object: JobUpdatedEventObject?
+	/// Name of the affected object’s type, `"job"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: JobUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct JobUpdatedEventObject: Codable, Equatable {
+	/// The updated job.
+	public var job: Job?
+
+	public init(job: Job? = nil) {
+		self.job = job
+	}
+}
+
+/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is created.
+public struct LaborScheduledShiftCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborScheduledShiftCreatedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the location associated with the event.
+	public var location_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.scheduled_shift.created`.
+	public var type: String?
+
+	/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - location_id: The ID of the location associated with the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.scheduled_shift.created`.
+	public init(created_at: Timestamp? = nil, data: LaborScheduledShiftCreatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftCreatedEventData: Codable, Equatable {
+	/// The ID of the affected `ScheduledShift`.
+	public var id: String?
+	/// An object containing the affected `ScheduledShift`.
+	public var object: LaborScheduledShiftCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `scheduled_shift`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborScheduledShiftCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftCreatedEventObject: Codable, Equatable {
+	/// The new `ScheduledShift`.
+	public var ScheduledShift: ScheduledShift?
+
+	public init(ScheduledShift: ScheduledShift? = nil) {
+		self.ScheduledShift = ScheduledShift
+	}
+}
+
+/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is deleted.
+public struct LaborScheduledShiftDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborScheduledShiftDeletedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the location associated with the event.
+	public var location_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.scheduled_shift.deleted`.
+	public var type: String?
+
+	/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - location_id: The ID of the location associated with the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.scheduled_shift.deleted`.
+	public init(created_at: Timestamp? = nil, data: LaborScheduledShiftDeletedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftDeletedEventData: Codable, Equatable {
+	/// Is true if the affected object was deleted. Otherwise absent.
+	public var deleted: Bool?
+	/// The ID of the affected `ScheduledShift`.
+	public var id: String?
+	/// The type of object affected by the event. For this event, the value is `scheduled_shift`.
+	public var type: String?
+
+	public init(deleted: Bool? = nil, id: String? = nil, type: String? = nil) {
+		self.deleted = deleted
+		self.id = id
+		self.type = type
+	}
+}
+
+/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is published.
+public struct LaborScheduledShiftPublishedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborScheduledShiftPublishedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the location associated with the event.
+	public var location_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.scheduled_shift.published`.
+	public var type: String?
+
+	/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is published.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the location associated with the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.scheduled_shift.published`.
+	public init(created_at: Timestamp? = nil, data: LaborScheduledShiftPublishedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftPublishedEventData: Codable, Equatable {
+	/// The ID of the affected `ScheduledShift`.
+	public var id: String?
+	/// An object containing the affected `ScheduledShift`.
+	public var object: LaborScheduledShiftPublishedEventObject?
+	/// The type of object affected by the event. For this event, the value is `scheduled_shift`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborScheduledShiftPublishedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftPublishedEventObject: Codable, Equatable {
+	/// The published `ScheduledShift`.
+	public var ScheduledShift: ScheduledShift?
+
+	public init(ScheduledShift: ScheduledShift? = nil) {
+		self.ScheduledShift = ScheduledShift
+	}
+}
+
+/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is updated.
+public struct LaborScheduledShiftUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborScheduledShiftUpdatedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the location associated with the event.
+	public var location_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.scheduled_shift.updated`.
+	public var type: String?
+
+	/// Published when a [ScheduledShift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/ScheduledShift) is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - location_id: The ID of the location associated with the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.scheduled_shift.updated`.
+	public init(created_at: Timestamp? = nil, data: LaborScheduledShiftUpdatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftUpdatedEventData: Codable, Equatable {
+	/// The ID of the affected `ScheduledShift`.
+	public var id: String?
+	/// An object containing the affected `ScheduledShift`.
+	public var object: LaborScheduledShiftUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `scheduled_shift`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborScheduledShiftUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborScheduledShiftUpdatedEventObject: Codable, Equatable {
+	/// The updated `ScheduledShift`.
+	public var ScheduledShift: ScheduledShift?
+
+	public init(ScheduledShift: ScheduledShift? = nil) {
+		self.ScheduledShift = ScheduledShift
+	}
+}
+
+/// Published when a worker starts a [Shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Shift).  Deprecated at Square API version yyyy-mm-dd. Replaced by `labor.timecard.created`.
+public struct LaborShiftCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborShiftCreatedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.shift.created`.
+	public var type: String?
+
+	/// Published when a worker starts a [Shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Shift).  Deprecated at Square API version yyyy-mm-dd. Replaced by `labor.timecard.created`.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.shift.created`.
+	public init(created_at: Timestamp? = nil, data: LaborShiftCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborShiftCreatedEventData: Codable, Equatable {
+	/// The ID of the affected `Shift`.
+	public var id: String?
+	/// An object containing the affected `Shift`.
+	public var object: LaborShiftCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `shift`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborShiftCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborShiftCreatedEventObject: Codable, Equatable {
+	/// The new `Shift`.
+	public var shift: Shift?
+
+	public init(shift: Shift? = nil) {
+		self.shift = shift
+	}
+}
+
+/// Published when a [Shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Shift) is deleted.  Deprecated at Square API version yyyy-mm-dd. Replaced by `labor.timecard.deleted`.
+public struct LaborShiftDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborShiftDeletedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.shift.deleted`.
+	public var type: String?
+
+	/// Published when a [Shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Shift) is deleted.  Deprecated at Square API version yyyy-mm-dd. Replaced by `labor.timecard.deleted`.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.shift.deleted`.
+	public init(created_at: Timestamp? = nil, data: LaborShiftDeletedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborShiftDeletedEventData: Codable, Equatable {
+	/// Is true if the affected object was deleted. Otherwise absent.
+	public var deleted: Bool?
+	/// The ID of the affected `Shift`.
+	public var id: String?
+	/// The type of object affected by the event. For this event, the value is `shift`.
+	public var type: String?
+
+	public init(deleted: Bool? = nil, id: String? = nil, type: String? = nil) {
+		self.deleted = deleted
+		self.id = id
+		self.type = type
+	}
+}
+
+/// Published when a [Shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Shift) is updated.  Deprecated at Square API version yyyy-mm-dd. Replaced by `labor.timecard.updated`.
+public struct LaborShiftUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborShiftUpdatedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.shift.updated`.
+	public var type: String?
+
+	/// Published when a [Shift](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Shift) is updated.  Deprecated at Square API version yyyy-mm-dd. Replaced by `labor.timecard.updated`.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.shift.updated`.
+	public init(created_at: Timestamp? = nil, data: LaborShiftUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborShiftUpdatedEventData: Codable, Equatable {
+	/// ID of the affected `Shift`.
+	public var id: String?
+	/// An object containing the affected `Shift`.
+	public var object: LaborShiftUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `shift`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborShiftUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborShiftUpdatedEventObject: Codable, Equatable {
+	/// The updated `Shift`.
+	public var shift: Shift?
+
+	public init(shift: Shift? = nil) {
+		self.shift = shift
+	}
+}
+
+/// Published when a worker starts a [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
+public struct LaborTimecardCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborTimecardCreatedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.timecard.created`.
+	public var type: String?
+
+	/// Published when a worker starts a [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.timecard.created`.
+	public init(created_at: Timestamp? = nil, data: LaborTimecardCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborTimecardCreatedEventData: Codable, Equatable {
+	/// The ID of the affected `Timecard`.
+	public var id: String?
+	/// An object containing the affected `Timecard`.
+	public var object: LaborTimecardCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `timecard`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborTimecardCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborTimecardCreatedEventObject: Codable, Equatable {
+	/// The new `Timecard`.
+	public var timecard: Timecard?
+
+	public init(timecard: Timecard? = nil) {
+		self.timecard = timecard
+	}
+}
+
+/// Published when a [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard) is deleted.
+public struct LaborTimecardDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborTimecardDeletedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.timecard.deleted`.
+	public var type: String?
+
+	/// Published when a [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard) is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.timecard.deleted`.
+	public init(created_at: Timestamp? = nil, data: LaborTimecardDeletedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborTimecardDeletedEventData: Codable, Equatable {
+	/// Is true if the affected object was deleted. Otherwise absent.
+	public var deleted: Bool?
+	/// The ID of the affected `Timecard`.
+	public var id: String?
+	/// The type of object affected by the event. For this event, the value is `timecard`.
+	public var type: String?
+
+	public init(deleted: Bool? = nil, id: String? = nil, type: String? = nil) {
+		self.deleted = deleted
+		self.id = id
+		self.type = type
+	}
+}
+
+/// Published when a [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard) is updated.
+public struct LaborTimecardUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LaborTimecardUpdatedEventData?
+	/// The unique ID for the event.
+	public var event_id: String?
+	/// The ID of the merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `labor.timecard.updated`.
+	public var type: String?
+
+	/// Published when a [Timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard) is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event.
+	///   - merchant_id: The ID of the merchant associated with the event.
+	///   - type: The type of event. For this event, the value is `labor.timecard.updated`.
+	public init(created_at: Timestamp? = nil, data: LaborTimecardUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LaborTimecardUpdatedEventData: Codable, Equatable {
+	/// The ID of the affected `Timecard`.
+	public var id: String?
+	/// An object containing the affected `Timecard`.
+	public var object: LaborTimecardUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `timecard`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LaborTimecardUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LaborTimecardUpdatedEventObject: Codable, Equatable {
+	/// The updated `Timecard`.
+	public var timecard: Timecard?
+
+	public init(timecard: Timecard? = nil) {
+		self.timecard = timecard
+	}
+}
+
 /// A request to link a customer to a gift card.
 public struct LinkCustomerToGiftCardRequest: Codable, Equatable {
 	/// The ID of the customer to link to the gift card.
@@ -12854,27 +16100,6 @@ public struct LinkCustomerToGiftCardResponse: Codable, Equatable {
 	}
 }
 
-/// Request object for fetching all `BankAccount` objects linked to a account.
-public struct ListBankAccountsRequest: Codable, Equatable {
-	/// The pagination cursor returned by a previous call to this endpoint. Use it in the next `ListBankAccounts` request to retrieve the next set  of results.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
-	public var cursor: String?
-	/// Upper limit on the number of bank accounts to return in the response.  Currently, 1000 is the largest supported limit. You can specify a limit  of up to 1000 bank accounts. This is also the default limit.
-	public var limit: Int?
-	/// Location ID. You can specify this optional filter  to retrieve only the linked bank accounts belonging to a specific location.
-	public var location_id: String?
-
-	/// Request object for fetching all `BankAccount` objects linked to a account.
-	/// - Parameters:
-	///   - cursor: The pagination cursor returned by a previous call to this endpoint. Use it in the next `ListBankAccounts` request to retrieve the next set  of results.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
-	///   - limit: Upper limit on the number of bank accounts to return in the response.  Currently, 1000 is the largest supported limit. You can specify a limit  of up to 1000 bank accounts. This is also the default limit.
-	///   - location_id: Location ID. You can specify this optional filter  to retrieve only the linked bank accounts belonging to a specific location.
-	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.location_id = location_id
-	}
-}
-
 /// Response object returned by ListBankAccounts.
 public struct ListBankAccountsResponse: Codable, Equatable {
 	/// List of BankAccounts associated with this account.
@@ -12893,23 +16118,6 @@ public struct ListBankAccountsResponse: Codable, Equatable {
 		self.bank_accounts = bank_accounts
 		self.cursor = cursor
 		self.errors = errors
-	}
-}
-
-/// Represents a [ListBookingCustomAttributeDefinitions](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributeDefinitions) request.
-public struct ListBookingCustomAttributeDefinitionsRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-
-	/// Represents a [ListBookingCustomAttributeDefinitions](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributeDefinitions) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
 	}
 }
 
@@ -12934,27 +16142,6 @@ public struct ListBookingCustomAttributeDefinitionsResponse: Codable, Equatable 
 	}
 }
 
-/// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) request.
-public struct ListBookingCustomAttributesRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definitions: Bool?
-
-	/// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(cursor: String? = nil, limit: Int? = nil, with_definitions: Bool? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.with_definitions = with_definitions
-	}
-}
-
 /// Represents a [ListBookingCustomAttributes](api-endpoint:BookingCustomAttributes-ListBookingCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListBookingCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -12976,33 +16163,6 @@ public struct ListBookingCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-public struct ListBookingsRequest: Codable, Equatable {
-	/// The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
-	public var cursor: String?
-	/// The [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) for whom to retrieve bookings. If this is not set, bookings for all customers are retrieved.
-	public var customer_id: String?
-	/// The maximum number of results per page to return in a paged response.
-	public var limit: Int?
-	/// The location for which to retrieve bookings. If this is not set, all locations' bookings are retrieved.
-	public var location_id: String?
-	/// The RFC 3339 timestamp specifying the latest of the start time. If this is not set, the time of 31 days after `start_at_min` is used.
-	public var start_at_max: Timestamp?
-	/// The RFC 3339 timestamp specifying the earliest of the start time. If this is not set, the current time is used.
-	public var start_at_min: Timestamp?
-	/// The team member for whom to retrieve bookings. If this is not set, bookings of all members are retrieved.
-	public var team_member_id: String?
-
-	public init(cursor: String? = nil, customer_id: String? = nil, limit: Int? = nil, location_id: String? = nil, start_at_max: Timestamp? = nil, start_at_min: Timestamp? = nil, team_member_id: String? = nil) {
-		self.cursor = cursor
-		self.customer_id = customer_id
-		self.limit = limit
-		self.location_id = location_id
-		self.start_at_max = start_at_max
-		self.start_at_min = start_at_min
-		self.team_member_id = team_member_id
-	}
-}
-
 public struct ListBookingsResponse: Codable, Equatable {
 	/// The list of targeted bookings.
 	public var bookings: [Booking]?
@@ -13015,27 +16175,6 @@ public struct ListBookingsResponse: Codable, Equatable {
 		self.bookings = bookings
 		self.cursor = cursor
 		self.errors = errors
-	}
-}
-
-/// A request for a filtered set of `BreakType` objects.
-public struct ListBreakTypesRequest: Codable, Equatable {
-	/// A pointer to the next page of `BreakType` results to fetch.
-	public var cursor: String?
-	/// The maximum number of `BreakType` results to return per page. The number can range between 1 and 200. The default is 200.
-	public var limit: Int?
-	/// Filter the returned `BreakType` results to only those that are associated with the specified location.
-	public var location_id: String?
-
-	/// A request for a filtered set of `BreakType` objects.
-	/// - Parameters:
-	///   - cursor: A pointer to the next page of `BreakType` results to fetch.
-	///   - limit: The maximum number of `BreakType` results to return per page. The number can range between 1 and 200. The default is 200.
-	///   - location_id: Filter the returned `BreakType` results to only those that are associated with the specified location.
-	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.location_id = location_id
 	}
 }
 
@@ -13060,35 +16199,6 @@ public struct ListBreakTypesResponse: Codable, Equatable {
 	}
 }
 
-/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards
-public struct ListCardsRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
-	public var cursor: String?
-	/// Limit results to cards associated with the customer supplied. By default, all cards owned by the merchant are returned.
-	public var customer_id: String?
-	/// Includes disabled cards. By default, all enabled cards owned by the merchant are returned.
-	public var include_disabled: Bool?
-	/// Limit results to cards associated with the reference_id supplied.
-	public var reference_id: String?
-	/// Sorts the returned list by when the card was created with the specified order. This field defaults to ASC. See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
-	///   - customer_id: Limit results to cards associated with the customer supplied. By default, all cards owned by the merchant are returned.
-	///   - include_disabled: Includes disabled cards. By default, all enabled cards owned by the merchant are returned.
-	///   - reference_id: Limit results to cards associated with the reference_id supplied.
-	///   - sort_order: Sorts the returned list by when the card was created with the specified order. This field defaults to ASC. See [SortOrder](#type-sortorder) for possible values
-	public init(cursor: String? = nil, customer_id: String? = nil, include_disabled: Bool? = nil, reference_id: String? = nil, sort_order: SortOrder? = nil) {
-		self.cursor = cursor
-		self.customer_id = customer_id
-		self.include_disabled = include_disabled
-		self.reference_id = reference_id
-		self.sort_order = sort_order
-	}
-}
-
 /// Defines the fields that are included in the response body of a request to the [ListCards](api-endpoint:Cards-ListCards) endpoint.  Note: if there are errors processing the request, the card field will not be present.
 public struct ListCardsResponse: Codable, Equatable {
 	/// The requested list of `Card`s.
@@ -13110,21 +16220,6 @@ public struct ListCardsResponse: Codable, Equatable {
 	}
 }
 
-public struct ListCashDrawerShiftEventsRequest: Codable, Equatable {
-	/// Opaque cursor for fetching the next page of results.
-	public var cursor: String?
-	/// Number of resources to be returned in a page of results (200 by default, 1000 max).
-	public var limit: Int?
-	/// The ID of the location to list cash drawer shifts for.
-	public var location_id: String
-
-	public init(location_id: String, cursor: String? = nil, limit: Int? = nil) {
-		self.location_id = location_id
-		self.cursor = cursor
-		self.limit = limit
-	}
-}
-
 public struct ListCashDrawerShiftEventsResponse: Codable, Equatable {
 	/// All of the events (payments, refunds, etc.) for a cash drawer during the shift.
 	public var cash_drawer_shift_events: [CashDrawerShiftEvent]?
@@ -13137,30 +16232,6 @@ public struct ListCashDrawerShiftEventsResponse: Codable, Equatable {
 		self.cash_drawer_shift_events = cash_drawer_shift_events
 		self.cursor = cursor
 		self.errors = errors
-	}
-}
-
-public struct ListCashDrawerShiftsRequest: Codable, Equatable {
-	/// The inclusive start time of the query on opened_at, in ISO 8601 format.
-	public var begin_time: String?
-	/// Opaque cursor for fetching the next page of results.
-	public var cursor: String?
-	/// The exclusive end date of the query on opened_at, in ISO 8601 format.
-	public var end_time: String?
-	/// Number of cash drawer shift events in a page of results (200 by default, 1000 max).
-	public var limit: Int?
-	/// The ID of the location to query for a list of cash drawer shifts.
-	public var location_id: String
-	/// The order in which cash drawer shifts are listed in the response, based on their opened_at field. Default value: ASC See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	public init(location_id: String, begin_time: String? = nil, cursor: String? = nil, end_time: String? = nil, limit: Int? = nil, sort_order: SortOrder? = nil) {
-		self.location_id = location_id
-		self.begin_time = begin_time
-		self.cursor = cursor
-		self.end_time = end_time
-		self.limit = limit
-		self.sort_order = sort_order
 	}
 }
 
@@ -13179,21 +16250,6 @@ public struct ListCashDrawerShiftsResponse: Codable, Equatable {
 	}
 }
 
-public struct ListCatalogRequest: Codable, Equatable {
-	/// The specific version of the catalog objects to be included in the response. This allows you to retrieve historical versions of objects. The specified version value is matched against the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s' `version` attribute.  If not included, results will be from the current version of the catalog.
-	public var catalog_version: Int?
-	/// The pagination cursor returned in the previous response. Leave unset for an initial request. The page size is currently set to be 100. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
-	public var cursor: String?
-	/// An optional case-insensitive, comma-separated list of object types to retrieve.  The valid values are defined in the [CatalogObjectType](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) enum, for example, `ITEM`, `ITEM_VARIATION`, `CATEGORY`, `DISCOUNT`, `TAX`, `MODIFIER`, `MODIFIER_LIST`, `IMAGE`, etc.  If this is unspecified, the operation returns objects of all the top level types at the version of the Square API used to make the request. Object types that are nested onto other object types are not included in the defaults.  At the current API version the default object types are: ITEM, CATEGORY, TAX, DISCOUNT, MODIFIER_LIST,  PRICING_RULE, PRODUCT_SET, TIME_PERIOD, MEASUREMENT_UNIT, SUBSCRIPTION_PLAN, ITEM_OPTION, CUSTOM_ATTRIBUTE_DEFINITION, QUICK_AMOUNT_SETTINGS.
-	public var types: String?
-
-	public init(catalog_version: Int? = nil, cursor: String? = nil, types: String? = nil) {
-		self.catalog_version = catalog_version
-		self.cursor = cursor
-		self.types = types
-	}
-}
-
 public struct ListCatalogResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
 	public var cursor: String?
@@ -13206,23 +16262,6 @@ public struct ListCatalogResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.objects = objects
-	}
-}
-
-/// Represents a [ListCustomerCustomAttributeDefinitions](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributeDefinitions) request.
-public struct ListCustomerCustomAttributeDefinitionsRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-
-	/// Represents a [ListCustomerCustomAttributeDefinitions](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributeDefinitions) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
 	}
 }
 
@@ -13247,27 +16286,6 @@ public struct ListCustomerCustomAttributeDefinitionsResponse: Codable, Equatable
 	}
 }
 
-/// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) request.
-public struct ListCustomerCustomAttributesRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definitions: Bool?
-
-	/// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(cursor: String? = nil, limit: Int? = nil, with_definitions: Bool? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.with_definitions = with_definitions
-	}
-}
-
 /// Represents a [ListCustomerCustomAttributes](api-endpoint:CustomerCustomAttributes-ListCustomerCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListCustomerCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13286,23 +16304,6 @@ public struct ListCustomerCustomAttributesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.custom_attributes = custom_attributes
 		self.errors = errors
-	}
-}
-
-/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](api-endpoint:CustomerGroups-ListCustomerGroups) endpoint.
-public struct ListCustomerGroupsRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-
-	/// Defines the query parameters that can be included in a request to the [ListCustomerGroups](api-endpoint:CustomerGroups-ListCustomerGroups) endpoint.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
 	}
 }
 
@@ -13327,23 +16328,6 @@ public struct ListCustomerGroupsResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the valid parameters for requests to the `ListCustomerSegments` endpoint.
-public struct ListCustomerSegmentsRequest: Codable, Equatable {
-	/// A pagination cursor returned by previous calls to `ListCustomerSegments`. This cursor is used to retrieve the next set of query results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-
-	/// Defines the valid parameters for requests to the `ListCustomerSegments` endpoint.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by previous calls to `ListCustomerSegments`. This cursor is used to retrieve the next set of query results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 50, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 50.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-	}
-}
-
 /// Defines the fields that are included in the response body for requests to the `ListCustomerSegments` endpoint.  Either `errors` or `segments` is present in a given response (never both).
 public struct ListCustomerSegmentsResponse: Codable, Equatable {
 	/// A pagination cursor to be used in subsequent calls to `ListCustomerSegments` to retrieve the next set of query results. The cursor is only present if the request succeeded and additional results are available.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13362,35 +16346,6 @@ public struct ListCustomerSegmentsResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.segments = segments
-	}
-}
-
-/// Defines the query parameters that can be included in a request to the `ListCustomers` endpoint.
-public struct ListCustomersRequest: Codable, Equatable {
-	/// Indicates whether to return the total count of customers in the `count` field of the response.  The default value is `false`.
-	public var count: Bool?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Indicates how customers should be sorted.  The default value is `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
-	public var sort_field: CustomerSortField?
-	/// Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  The default value is `ASC`. See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	/// Defines the query parameters that can be included in a request to the `ListCustomers` endpoint.
-	/// - Parameters:
-	///   - count: Indicates whether to return the total count of customers in the `count` field of the response.  The default value is `false`.
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single page. This limit is advisory. The response might contain more or fewer results. If the specified limit is less than 1 or greater than 100, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - sort_field: Indicates how customers should be sorted.  The default value is `DEFAULT`. See [CustomerSortField](#type-customersortfield) for possible values
-	///   - sort_order: Indicates whether customers should be sorted in ascending (`ASC`) or descending (`DESC`) order.  The default value is `ASC`. See [SortOrder](#type-sortorder) for possible values
-	public init(count: Bool? = nil, cursor: String? = nil, limit: Int? = nil, sort_field: CustomerSortField? = nil, sort_order: SortOrder? = nil) {
-		self.count = count
-		self.cursor = cursor
-		self.limit = limit
-		self.sort_field = sort_field
-		self.sort_order = sort_order
 	}
 }
 
@@ -13419,24 +16374,6 @@ public struct ListCustomersResponse: Codable, Equatable {
 	}
 }
 
-public struct ListDeviceCodesRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	public var cursor: String?
-	/// If specified, only returns DeviceCodes of the specified location. Returns DeviceCodes of all locations if empty.
-	public var location_id: String?
-	/// If specified, only returns DeviceCodes targeting the specified product type. Returns DeviceCodes of all product types if empty.
-	public var product_type: ProductType?
-	/// If specified, returns DeviceCodes with the specified statuses. Returns DeviceCodes of status `PAIRED` and `UNPAIRED` if empty. See [DeviceCodeStatus](#type-devicecodestatus) for possible values
-	public var status: [DeviceCodeStatus]?
-
-	public init(cursor: String? = nil, location_id: String? = nil, product_type: ProductType? = nil, status: [DeviceCodeStatus]? = nil) {
-		self.cursor = cursor
-		self.location_id = location_id
-		self.product_type = product_type
-		self.status = status
-	}
-}
-
 public struct ListDeviceCodesResponse: Codable, Equatable {
 	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint. This value is present only if the request succeeded and additional results are available.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
 	public var cursor: String?
@@ -13452,24 +16389,6 @@ public struct ListDeviceCodesResponse: Codable, Equatable {
 	}
 }
 
-public struct ListDevicesRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
-	public var cursor: String?
-	/// The number of results to return in a single page.
-	public var limit: Int?
-	/// If present, only returns devices at the target location.
-	public var location_id: String?
-	/// The order in which results are listed. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default). See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: SortOrder? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.location_id = location_id
-		self.sort_order = sort_order
-	}
-}
-
 public struct ListDevicesResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response. See [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination) for more information.
 	public var cursor: String?
@@ -13482,19 +16401,6 @@ public struct ListDevicesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.devices = devices
 		self.errors = errors
-	}
-}
-
-/// Defines the parameters for a `ListDisputeEvidence` request.
-public struct ListDisputeEvidenceRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-
-	/// Defines the parameters for a `ListDisputeEvidence` request.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public init(cursor: String? = nil) {
-		self.cursor = cursor
 	}
 }
 
@@ -13519,27 +16425,6 @@ public struct ListDisputeEvidenceResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the request parameters for the `ListDisputes` endpoint.
-public struct ListDisputesRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The ID of the location for which to return a list of disputes. If not specified, the endpoint returns disputes associated with all locations.
-	public var location_id: String?
-	/// The dispute states used to filter the result. If not specified, the endpoint returns all disputes. See [DisputeState](#type-disputestate) for possible values
-	public var states: [DisputeState]?
-
-	/// Defines the request parameters for the `ListDisputes` endpoint.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - location_id: The ID of the location for which to return a list of disputes. If not specified, the endpoint returns disputes associated with all locations.
-	///   - states: The dispute states used to filter the result. If not specified, the endpoint returns all disputes. See [DisputeState](#type-disputestate) for possible values
-	public init(cursor: String? = nil, location_id: String? = nil, states: [DisputeState]? = nil) {
-		self.cursor = cursor
-		self.location_id = location_id
-		self.states = states
-	}
-}
-
 /// Defines fields in a `ListDisputes` response.
 public struct ListDisputesResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If unset, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13558,27 +16443,6 @@ public struct ListDisputesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.disputes = disputes
 		self.errors = errors
-	}
-}
-
-/// A request for a set of `EmployeeWage` objects.
-public struct ListEmployeeWagesRequest: Codable, Equatable {
-	/// A pointer to the next page of `EmployeeWage` results to fetch.
-	public var cursor: String?
-	/// Filter the returned wages to only those that are associated with the specified employee.
-	public var employee_id: String?
-	/// The maximum number of `EmployeeWage` results to return per page. The number can range between 1 and 200. The default is 200.
-	public var limit: Int?
-
-	/// A request for a set of `EmployeeWage` objects.
-	/// - Parameters:
-	///   - cursor: A pointer to the next page of `EmployeeWage` results to fetch.
-	///   - employee_id: Filter the returned wages to only those that are associated with the specified employee.
-	///   - limit: The maximum number of `EmployeeWage` results to return per page. The number can range between 1 and 200. The default is 200.
-	public init(cursor: String? = nil, employee_id: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.employee_id = employee_id
-		self.limit = limit
 	}
 }
 
@@ -13603,23 +16467,6 @@ public struct ListEmployeeWagesResponse: Codable, Equatable {
 	}
 }
 
-public struct ListEmployeesRequest: Codable, Equatable {
-	/// The token required to retrieve the specified page of results.
-	public var cursor: String?
-	/// The number of employees to be returned on each page.
-	public var limit: Int?
-	public var location_id: String?
-	/// Specifies the EmployeeStatus to filter the employee by. See [EmployeeStatus](#type-employeestatus) for possible values
-	public var status: EmployeeStatus?
-
-	public init(cursor: String? = nil, limit: Int? = nil, location_id: String? = nil, status: EmployeeStatus? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.location_id = location_id
-		self.status = status
-	}
-}
-
 public struct ListEmployeesResponse: Codable, Equatable {
 	/// The token to be used to retrieve the next page of results.
 	public var cursor: String?
@@ -13631,19 +16478,6 @@ public struct ListEmployeesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.employees = employees
 		self.errors = errors
-	}
-}
-
-/// Lists all event types that can be subscribed to.
-public struct ListEventTypesRequest: Codable, Equatable {
-	/// The API version for which to list event types. Setting this field overrides the default version used by the application.
-	public var api_version: String?
-
-	/// Lists all event types that can be subscribed to.
-	/// - Parameters:
-	///   - api_version: The API version for which to list event types. Setting this field overrides the default version used by the application.
-	public init(api_version: String? = nil) {
-		self.api_version = api_version
 	}
 }
 
@@ -13668,47 +16502,6 @@ public struct ListEventTypesResponse: Codable, Equatable {
 	}
 }
 
-/// Returns a list of gift card activities. You can optionally specify a filter to retrieve a subset of activites.
-public struct ListGiftCardActivitiesRequest: Codable, Equatable {
-	/// The timestamp for the beginning of the reporting period, in RFC 3339 format. This start time is inclusive. The default value is the current time minus one year.
-	public var begin_time: Timestamp?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var cursor: String?
-	/// The timestamp for the end of the reporting period, in RFC 3339 format. This end time is inclusive. The default value is the current time.
-	public var end_time: Timestamp?
-	/// If a gift card ID is provided, the endpoint returns activities related  to the specified gift card. Otherwise, the endpoint returns all gift card activities for  the seller.
-	public var gift_card_id: String?
-	/// If a limit is provided, the endpoint returns the specified number  of results (or fewer) per page. The maximum value is 100. The default value is 50. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var limit: Int?
-	/// If a location ID is provided, the endpoint returns gift card activities for the specified location.  Otherwise, the endpoint returns gift card activities for all locations.
-	public var location_id: String?
-	/// The order in which the endpoint returns the activities, based on `created_at`. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	public var sort_order: String?
-	/// If a [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType) is provided, the endpoint returns gift card activities of the specified type.  Otherwise, the endpoint returns all types of gift card activities.
-	public var type: String?
-
-	/// Returns a list of gift card activities. You can optionally specify a filter to retrieve a subset of activites.
-	/// - Parameters:
-	///   - begin_time: The timestamp for the beginning of the reporting period, in RFC 3339 format. This start time is inclusive. The default value is the current time minus one year.
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - end_time: The timestamp for the end of the reporting period, in RFC 3339 format. This end time is inclusive. The default value is the current time.
-	///   - gift_card_id: If a gift card ID is provided, the endpoint returns activities related  to the specified gift card. Otherwise, the endpoint returns all gift card activities for  the seller.
-	///   - limit: If a limit is provided, the endpoint returns the specified number  of results (or fewer) per page. The maximum value is 100. The default value is 50. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - location_id: If a location ID is provided, the endpoint returns gift card activities for the specified location.  Otherwise, the endpoint returns gift card activities for all locations.
-	///   - sort_order: The order in which the endpoint returns the activities, based on `created_at`. - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	///   - type: If a [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType) is provided, the endpoint returns gift card activities of the specified type.  Otherwise, the endpoint returns all types of gift card activities.
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, gift_card_id: String? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: String? = nil, type: String? = nil) {
-		self.begin_time = begin_time
-		self.cursor = cursor
-		self.end_time = end_time
-		self.gift_card_id = gift_card_id
-		self.limit = limit
-		self.location_id = location_id
-		self.sort_order = sort_order
-		self.type = type
-	}
-}
-
 /// A response that contains a list of `GiftCardActivity` objects. If the request resulted in errors,  the response contains a set of `Error` objects.
 public struct ListGiftCardActivitiesResponse: Codable, Equatable {
 	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to retrieve the next set of activities. If a cursor is not present, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
@@ -13727,35 +16520,6 @@ public struct ListGiftCardActivitiesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.gift_card_activities = gift_card_activities
-	}
-}
-
-/// A request to list gift cards. You can optionally specify a filter to retrieve a subset of  gift cards.
-public struct ListGiftCardsRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var cursor: String?
-	/// If a customer ID is provided, the endpoint returns only the gift cards linked to the specified customer.
-	public var customer_id: String?
-	/// If a limit is provided, the endpoint returns only the specified number of results per page. The maximum value is 200. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var limit: Int?
-	/// If a [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardStatus) is provided, the endpoint returns the gift cards in the specified state. Otherwise, the endpoint returns the gift cards of all states.
-	public var state: String?
-	/// If a [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardType) is provided, the endpoint returns gift cards of the specified type. Otherwise, the endpoint returns gift cards of all types.
-	public var type: String?
-
-	/// A request to list gift cards. You can optionally specify a filter to retrieve a subset of  gift cards.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - customer_id: If a customer ID is provided, the endpoint returns only the gift cards linked to the specified customer.
-	///   - limit: If a limit is provided, the endpoint returns only the specified number of results per page. The maximum value is 200. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - state: If a [state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardStatus) is provided, the endpoint returns the gift cards in the specified state. Otherwise, the endpoint returns the gift cards of all states.
-	///   - type: If a [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardType) is provided, the endpoint returns gift cards of the specified type. Otherwise, the endpoint returns gift cards of all types.
-	public init(cursor: String? = nil, customer_id: String? = nil, limit: Int? = nil, state: String? = nil, type: String? = nil) {
-		self.cursor = cursor
-		self.customer_id = customer_id
-		self.limit = limit
-		self.state = state
-		self.type = type
 	}
 }
 
@@ -13780,27 +16544,6 @@ public struct ListGiftCardsResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a `ListInvoice` request.
-public struct ListInvoicesRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of invoices to return (200 is the maximum `limit`).  If not provided, the server uses a default limit of 100 invoices.
-	public var limit: Int?
-	/// The ID of the location for which to list invoices.
-	public var location_id: String
-
-	/// Describes a `ListInvoice` request.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint.  Provide this cursor to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of invoices to return (200 is the maximum `limit`).  If not provided, the server uses a default limit of 100 invoices.
-	///   - location_id: The ID of the location for which to list invoices.
-	public init(location_id: String, cursor: String? = nil, limit: Int? = nil) {
-		self.location_id = location_id
-		self.cursor = cursor
-		self.limit = limit
-	}
-}
-
 /// Describes a `ListInvoice` response.
 public struct ListInvoicesResponse: Codable, Equatable {
 	/// When a response is truncated, it includes a cursor that you can use in a  subsequent request to retrieve the next set of invoices. If empty, this is the final  response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13819,19 +16562,6 @@ public struct ListInvoicesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.invoices = invoices
-	}
-}
-
-/// Represents a [ListJobs](api-endpoint:Team-ListJobs) request.
-public struct ListJobsRequest: Codable, Equatable {
-	/// The pagination cursor returned by the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-
-	/// Represents a [ListJobs](api-endpoint:Team-ListJobs) request.
-	/// - Parameters:
-	///   - cursor: The pagination cursor returned by the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public init(cursor: String? = nil) {
-		self.cursor = cursor
 	}
 }
 
@@ -13856,18 +16586,6 @@ public struct ListJobsResponse: Codable, Equatable {
 	}
 }
 
-public struct ListLocationBookingProfilesRequest: Codable, Equatable {
-	/// The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
-	public var cursor: String?
-	/// The maximum number of results to return in a paged response.
-	public var limit: Int?
-
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-	}
-}
-
 public struct ListLocationBookingProfilesResponse: Codable, Equatable {
 	/// The pagination cursor to be used in the subsequent request to get the next page of the results. Stop retrieving the next page of the results when the cursor is not set.
 	public var cursor: String?
@@ -13880,27 +16598,6 @@ public struct ListLocationBookingProfilesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.location_booking_profiles = location_booking_profiles
-	}
-}
-
-/// Represents a [ListLocationCustomAttributeDefinitions](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributeDefinitions) request.
-public struct ListLocationCustomAttributeDefinitionsRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public var visibility_filter: VisibilityFilter?
-
-	/// Represents a [ListLocationCustomAttributeDefinitions](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributeDefinitions) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: VisibilityFilter? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.visibility_filter = visibility_filter
 	}
 }
 
@@ -13925,31 +16622,6 @@ public struct ListLocationCustomAttributeDefinitionsResponse: Codable, Equatable
 	}
 }
 
-/// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) request.
-public struct ListLocationCustomAttributesRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public var visibility_filter: VisibilityFilter?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definitions: Bool?
-
-	/// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: VisibilityFilter? = nil, with_definitions: Bool? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.visibility_filter = visibility_filter
-		self.with_definitions = with_definitions
-	}
-}
-
 /// Represents a [ListLocationCustomAttributes](api-endpoint:LocationCustomAttributes-ListLocationCustomAttributes) response. Either `custom_attributes`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attributes`.
 public struct ListLocationCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to use in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -13971,12 +16643,6 @@ public struct ListLocationCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the [ListLocations](api-endpoint:Locations-ListLocations) endpoint.
-public struct ListLocationsRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the [ListLocations](api-endpoint:Locations-ListLocations) endpoint.  Either `errors` or `locations` is present in a given response (never both).
 public struct ListLocationsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -13994,12 +16660,6 @@ public struct ListLocationsResponse: Codable, Equatable {
 	}
 }
 
-/// A request to list `LoyaltyProgram`.
-public struct ListLoyaltyProgramsRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response that contains all loyalty programs.
 public struct ListLoyaltyProgramsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -14014,27 +16674,6 @@ public struct ListLoyaltyProgramsResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, programs: [LoyaltyProgram]? = nil) {
 		self.errors = errors
 		self.programs = programs
-	}
-}
-
-/// Represents a [ListLoyaltyPromotions](api-endpoint:Loyalty-ListLoyaltyPromotions) request.
-public struct ListLoyaltyPromotionsRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. The minimum value is 1 and the maximum value is 30. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// The status to filter the results by. If a status is provided, only loyalty promotions with the specified status are returned. Otherwise, all loyalty promotions associated with the loyalty program are returned. See [LoyaltyPromotionStatus](#type-loyaltypromotionstatus) for possible values
-	public var status: LoyaltyPromotionStatus?
-
-	/// Represents a [ListLoyaltyPromotions](api-endpoint:Loyalty-ListLoyaltyPromotions) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. The minimum value is 1 and the maximum value is 30. The default value is 30. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - status: The status to filter the results by. If a status is provided, only loyalty promotions with the specified status are returned. Otherwise, all loyalty promotions associated with the loyalty program are returned. See [LoyaltyPromotionStatus](#type-loyaltypromotionstatus) for possible values
-	public init(cursor: String? = nil, limit: Int? = nil, status: LoyaltyPromotionStatus? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.status = status
 	}
 }
 
@@ -14059,27 +16698,6 @@ public struct ListLoyaltyPromotionsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) request.
-public struct ListMerchantCustomAttributeDefinitionsRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public var visibility_filter: VisibilityFilter?
-
-	/// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: VisibilityFilter? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.visibility_filter = visibility_filter
-	}
-}
-
 /// Represents a [ListMerchantCustomAttributeDefinitions](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributeDefinitions) response. Either `custom_attribute_definitions`, an empty object, or `errors` is present in the response. If additional results are available, the `cursor` field is also present along with `custom_attribute_definitions`.
 public struct ListMerchantCustomAttributeDefinitionsResponse: Codable, Equatable {
 	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request. This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -14098,31 +16716,6 @@ public struct ListMerchantCustomAttributeDefinitionsResponse: Codable, Equatable
 		self.cursor = cursor
 		self.custom_attribute_definitions = custom_attribute_definitions
 		self.errors = errors
-	}
-}
-
-/// Represents a [ListMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributes) request.
-public struct ListMerchantCustomAttributesRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var limit: Int?
-	/// Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public var visibility_filter: VisibilityFilter?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definitions: Bool?
-
-	/// Represents a [ListMerchantCustomAttributes](api-endpoint:MerchantCustomAttributes-ListMerchantCustomAttributes) request.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint. Provide this cursor to retrieve the next page of results for your original request. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory. The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100. The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - visibility_filter: Filters the `CustomAttributeDefinition` results by their `visibility` values. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: VisibilityFilter? = nil, with_definitions: Bool? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.visibility_filter = visibility_filter
-		self.with_definitions = with_definitions
 	}
 }
 
@@ -14147,19 +16740,6 @@ public struct ListMerchantCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-/// Request object for the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
-public struct ListMerchantsRequest: Codable, Equatable {
-	/// The cursor generated by the previous response.
-	public var cursor: Int?
-
-	/// Request object for the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
-	/// - Parameters:
-	///   - cursor: The cursor generated by the previous response.
-	public init(cursor: Int? = nil) {
-		self.cursor = cursor
-	}
-}
-
 /// The response object returned by the [ListMerchant](api-endpoint:Merchants-ListMerchants) endpoint.
 public struct ListMerchantsResponse: Codable, Equatable {
 	/// If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
@@ -14178,27 +16758,6 @@ public struct ListMerchantsResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.merchant = merchant
-	}
-}
-
-/// Represents a list request for order custom attribute definitions.
-public struct ListOrderCustomAttributeDefinitionsRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint.  Provide this cursor to retrieve the next page of results for your original request.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory.  The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.  The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var limit: Int?
-	/// Requests that all of the custom attributes be returned, or only those that are read-only or read-write. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public var visibility_filter: VisibilityFilter?
-
-	/// Represents a list request for order custom attribute definitions.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint.  Provide this cursor to retrieve the next page of results for your original request.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory.  The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.  The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - visibility_filter: Requests that all of the custom attributes be returned, or only those that are read-only or read-write. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: VisibilityFilter? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.visibility_filter = visibility_filter
 	}
 }
 
@@ -14223,31 +16782,6 @@ public struct ListOrderCustomAttributeDefinitionsResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a list request for order custom attributes.
-public struct ListOrderCustomAttributesRequest: Codable, Equatable {
-	/// The cursor returned in the paged response from the previous call to this endpoint.  Provide this cursor to retrieve the next page of results for your original request.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var cursor: String?
-	/// The maximum number of results to return in a single paged response. This limit is advisory.  The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.  The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	public var limit: Int?
-	/// Requests that all of the custom attributes be returned, or only those that are read-only or read-write. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	public var visibility_filter: VisibilityFilter?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
-	public var with_definitions: Bool?
-
-	/// Represents a list request for order custom attributes.
-	/// - Parameters:
-	///   - cursor: The cursor returned in the paged response from the previous call to this endpoint.  Provide this cursor to retrieve the next page of results for your original request.  For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - limit: The maximum number of results to return in a single paged response. This limit is advisory.  The response might contain more or fewer results. The minimum value is 1 and the maximum value is 100.  The default value is 20. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
-	///   - visibility_filter: Requests that all of the custom attributes be returned, or only those that are read-only or read-write. See [VisibilityFilter](#type-visibilityfilter) for possible values
-	///   - with_definitions: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
-	public init(cursor: String? = nil, limit: Int? = nil, visibility_filter: VisibilityFilter? = nil, with_definitions: Bool? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.visibility_filter = visibility_filter
-		self.with_definitions = with_definitions
-	}
-}
-
 /// Represents a response from listing order custom attributes.
 public struct ListOrderCustomAttributesResponse: Codable, Equatable {
 	/// The cursor to provide in your next call to this endpoint to retrieve the next page of results for your original request.  This field is present only if the request succeeded and additional results are available. For more information, see [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination).
@@ -14269,18 +16803,6 @@ public struct ListOrderCustomAttributesResponse: Codable, Equatable {
 	}
 }
 
-public struct ListPaymentLinksRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. If a cursor is not provided, the endpoint returns the first page of the results. For more  information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// A limit on the number of results to return per page. The limit is advisory and the implementation might return more or less results. If the supplied limit is negative, zero, or greater than the maximum limit of 1000, it is ignored.  Default value: `100`
-	public var limit: Int?
-
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-	}
-}
-
 public struct ListPaymentLinksResponse: Codable, Equatable {
 	/// When a response is truncated, it includes a cursor that you can use in a subsequent request to retrieve the next set of gift cards. If a cursor is not present, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 	public var cursor: String?
@@ -14293,59 +16815,6 @@ public struct ListPaymentLinksResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.payment_links = payment_links
-	}
-}
-
-/// Describes a request to list refunds using [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  The maximum results per page is 100.
-public struct ListPaymentRefundsRequest: Codable, Equatable {
-	/// Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.   Default: The current time minus one year.
-	public var begin_time: Timestamp?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.  Default: The current time.
-	public var end_time: Timestamp?
-	/// The maximum number of results to be returned in a single page.  It is possible to receive fewer results than the specified limit on a given page.  If the supplied value is greater than 100, no more than 100 results are returned.  Default: 100
-	public var limit: Int?
-	/// Limit results to the location supplied. By default, results are returned for all locations associated with the seller.
-	public var location_id: String?
-	/// The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
-	public var sort_field: ListPaymentRefundsRequestSortField?
-	/// The order in which results are listed by `PaymentRefund.created_at`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	public var sort_order: String?
-	/// If provided, only returns refunds whose payments have the indicated source type. Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, and `EXTERNAL`. For information about these payment source types, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).  Default: If omitted, refunds are returned regardless of the source type.
-	public var source_type: String?
-	/// If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
-	public var status: String?
-	/// Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: If omitted, the time range starts at `begin_time`.
-	public var updated_at_begin_time: Timestamp?
-	/// Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: The current time.
-	public var updated_at_end_time: Timestamp?
-
-	/// Describes a request to list refunds using [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  The maximum results per page is 100.
-	/// - Parameters:
-	///   - begin_time: Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.   Default: The current time minus one year.
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - end_time: Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339  format.  The range is determined using the `created_at` field for each `PaymentRefund`.  Default: The current time.
-	///   - limit: The maximum number of results to be returned in a single page.  It is possible to receive fewer results than the specified limit on a given page.  If the supplied value is greater than 100, no more than 100 results are returned.  Default: 100
-	///   - location_id: Limit results to the location supplied. By default, results are returned for all locations associated with the seller.
-	///   - sort_field: The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
-	///   - sort_order: The order in which results are listed by `PaymentRefund.created_at`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	///   - source_type: If provided, only returns refunds whose payments have the indicated source type. Current values include `CARD`, `BANK_ACCOUNT`, `WALLET`, `CASH`, and `EXTERNAL`. For information about these payment source types, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).  Default: If omitted, refunds are returned regardless of the source type.
-	///   - status: If provided, only refunds with the given status are returned. For a list of refund status values, see [PaymentRefund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund).  Default: If omitted, refunds are returned regardless of their status.
-	///   - updated_at_begin_time: Indicates the start of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: If omitted, the time range starts at `begin_time`.
-	///   - updated_at_end_time: Indicates the end of the time range to retrieve each `PaymentRefund` for, in RFC 3339 format.  The range is determined using the `updated_at` field for each `PaymentRefund`.  Default: The current time.
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, limit: Int? = nil, location_id: String? = nil, sort_field: ListPaymentRefundsRequestSortField? = nil, sort_order: String? = nil, source_type: String? = nil, status: String? = nil, updated_at_begin_time: Timestamp? = nil, updated_at_end_time: Timestamp? = nil) {
-		self.begin_time = begin_time
-		self.cursor = cursor
-		self.end_time = end_time
-		self.limit = limit
-		self.location_id = location_id
-		self.sort_field = sort_field
-		self.sort_order = sort_order
-		self.source_type = source_type
-		self.status = status
-		self.updated_at_begin_time = updated_at_begin_time
-		self.updated_at_end_time = updated_at_end_time
 	}
 }
 
@@ -14373,75 +16842,6 @@ public struct ListPaymentRefundsResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.refunds = refunds
-	}
-}
-
-/// Describes a request to list payments using  [ListPayments](api-endpoint:Payments-ListPayments).   The maximum results per page is 100.
-public struct ListPaymentsRequest: Codable, Equatable {
-	/// Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
-	public var begin_time: Timestamp?
-	/// The brand of the payment card (for example, VISA).
-	public var card_brand: String?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The  range is determined using the `created_at` field for each Payment.  Default: The current time.
-	public var end_time: Timestamp?
-	/// Whether the payment was taken offline or not.
-	public var is_offline_payment: Bool?
-	/// The last four digits of a payment card.
-	public var last_4: String?
-	/// The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page.  The default value of 100 is also the maximum allowed value. If the provided value is  greater than 100, it is ignored and the default value is used instead.  Default: `100`
-	public var limit: Int?
-	/// Limit results to the location supplied. By default, results are returned for the default (main) location associated with the seller.
-	public var location_id: String?
-	/// Indicates the start of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
-	public var offline_begin_time: Timestamp?
-	/// Indicates the end of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
-	public var offline_end_time: Timestamp?
-	/// The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
-	public var sort_field: ListPaymentsRequestSortField?
-	/// The order in which results are listed by `ListPaymentsRequest.sort_field`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	public var sort_order: String?
-	/// The exact amount in the `total_money` for a payment.
-	public var total: Int?
-	/// Indicates the start of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
-	public var updated_at_begin_time: Timestamp?
-	/// Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
-	public var updated_at_end_time: Timestamp?
-
-	/// Describes a request to list payments using  [ListPayments](api-endpoint:Payments-ListPayments).   The maximum results per page is 100.
-	/// - Parameters:
-	///   - begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
-	///   - card_brand: The brand of the payment card (for example, VISA).
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - end_time: Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The  range is determined using the `created_at` field for each Payment.  Default: The current time.
-	///   - is_offline_payment: Whether the payment was taken offline or not.
-	///   - last_4: The last four digits of a payment card.
-	///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page.  The default value of 100 is also the maximum allowed value. If the provided value is  greater than 100, it is ignored and the default value is used instead.  Default: `100`
-	///   - location_id: Limit results to the location supplied. By default, results are returned for the default (main) location associated with the seller.
-	///   - offline_begin_time: Indicates the start of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
-	///   - offline_end_time: Indicates the end of the time range for which to retrieve offline payments, in RFC 3339 format for timestamps. The range is determined using the `offline_payment_details.client_created_at` field for each Payment. If set, payments without a value set in `offline_payment_details.client_created_at` will not be returned.  Default: The current time.
-	///   - sort_field: The field used to sort results by. The default is `CREATED_AT`. See [SortField](#type-sortfield) for possible values
-	///   - sort_order: The order in which results are listed by `ListPaymentsRequest.sort_field`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
-	///   - total: The exact amount in the `total_money` for a payment.
-	///   - updated_at_begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
-	///   - updated_at_end_time: Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `updated_at` field for each Payment.
-	public init(begin_time: Timestamp? = nil, card_brand: String? = nil, cursor: String? = nil, end_time: Timestamp? = nil, is_offline_payment: Bool? = nil, last_4: String? = nil, limit: Int? = nil, location_id: String? = nil, offline_begin_time: Timestamp? = nil, offline_end_time: Timestamp? = nil, sort_field: ListPaymentsRequestSortField? = nil, sort_order: String? = nil, total: Int? = nil, updated_at_begin_time: Timestamp? = nil, updated_at_end_time: Timestamp? = nil) {
-		self.begin_time = begin_time
-		self.card_brand = card_brand
-		self.cursor = cursor
-		self.end_time = end_time
-		self.is_offline_payment = is_offline_payment
-		self.last_4 = last_4
-		self.limit = limit
-		self.location_id = location_id
-		self.offline_begin_time = offline_begin_time
-		self.offline_end_time = offline_end_time
-		self.sort_field = sort_field
-		self.sort_order = sort_order
-		self.total = total
-		self.updated_at_begin_time = updated_at_begin_time
-		self.updated_at_end_time = updated_at_end_time
 	}
 }
 
@@ -14473,21 +16873,6 @@ public struct ListPaymentsResponse: Codable, Equatable {
 	}
 }
 
-public struct ListPayoutEntriesRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). If request parameters change between requests, subsequent results may contain duplicates or missing records.
-	public var cursor: String?
-	/// The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. If the provided value is greater than 100, it is ignored and the default value is used instead. Default: `100`
-	public var limit: Int?
-	/// The order in which payout entries are listed. See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	public init(cursor: String? = nil, limit: Int? = nil, sort_order: SortOrder? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.sort_order = sort_order
-	}
-}
-
 /// The response to retrieve payout records entries.
 public struct ListPayoutEntriesResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -14506,43 +16891,6 @@ public struct ListPayoutEntriesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.payout_entries = payout_entries
-	}
-}
-
-/// A request to retrieve payout records.
-public struct ListPayoutsRequest: Codable, Equatable {
-	/// The timestamp for the beginning of the payout creation time, in RFC 3339 format. Inclusive. Default: The current time minus one year.
-	public var begin_time: Timestamp?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). If request parameters change between requests, subsequent results may contain duplicates or missing records.
-	public var cursor: String?
-	/// The timestamp for the end of the payout creation time, in RFC 3339 format. Default: The current time.
-	public var end_time: Timestamp?
-	/// The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. If the provided value is greater than 100, it is ignored and the default value is used instead. Default: `100`
-	public var limit: Int?
-	/// The ID of the location for which to list the payouts. By default, payouts are returned for the default (main) location associated with the seller.
-	public var location_id: String?
-	/// The order in which payouts are listed. See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-	/// If provided, only payouts with the given status are returned.
-	public var status: PayoutStatus?
-
-	/// A request to retrieve payout records.
-	/// - Parameters:
-	///   - begin_time: The timestamp for the beginning of the payout creation time, in RFC 3339 format. Inclusive. Default: The current time minus one year.
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query. For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination). If request parameters change between requests, subsequent results may contain duplicates or missing records.
-	///   - end_time: The timestamp for the end of the payout creation time, in RFC 3339 format. Default: The current time.
-	///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value. If the provided value is greater than 100, it is ignored and the default value is used instead. Default: `100`
-	///   - location_id: The ID of the location for which to list the payouts. By default, payouts are returned for the default (main) location associated with the seller.
-	///   - sort_order: The order in which payouts are listed. See [SortOrder](#type-sortorder) for possible values
-	///   - status: If provided, only payouts with the given status are returned.
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, limit: Int? = nil, location_id: String? = nil, sort_order: SortOrder? = nil, status: PayoutStatus? = nil) {
-		self.begin_time = begin_time
-		self.cursor = cursor
-		self.end_time = end_time
-		self.limit = limit
-		self.location_id = location_id
-		self.sort_order = sort_order
-		self.status = status
 	}
 }
 
@@ -14567,58 +16915,6 @@ public struct ListPayoutsResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the query parameters that can be included in a request to the [ListRefunds](api-endpoint:Transactions-ListRefunds) endpoint.  Deprecated - recommend using [SearchOrders](api-endpoint:Orders-SearchOrders)
-public struct ListRefundsRequest: Codable, Equatable {
-	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
-	public var begin_time: Timestamp?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	public var cursor: String?
-	/// The end of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time.
-	public var end_time: Timestamp?
-	/// The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC` See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	/// Defines the query parameters that can be included in a request to the [ListRefunds](api-endpoint:Transactions-ListRefunds) endpoint.  Deprecated - recommend using [SearchOrders](api-endpoint:Orders-SearchOrders)
-	/// - Parameters:
-	///   - begin_time: The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	///   - end_time: The end of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time.
-	///   - sort_order: The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC` See [SortOrder](#type-sortorder) for possible values
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, sort_order: SortOrder? = nil) {
-		self.begin_time = begin_time
-		self.cursor = cursor
-		self.end_time = end_time
-		self.sort_order = sort_order
-	}
-}
-
-/// Defines the fields that are included in the response body of a request to the [ListRefunds](api-endpoint:Transactions-ListRefunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
-public struct ListRefundsResponse: Codable, Equatable {
-	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	public var cursor: String?
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// An array of refunds that match your query.
-	public var refunds: [Refund]?
-
-	/// Defines the fields that are included in the response body of a request to the [ListRefunds](api-endpoint:Transactions-ListRefunds) endpoint.  One of `errors` or `refunds` is present in a given response (never both).
-	/// - Parameters:
-	///   - cursor: A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	///   - errors: Any errors that occurred during the request.
-	///   - refunds: An array of refunds that match your query.
-	public init(cursor: String? = nil, errors: [SquareError]? = nil, refunds: [Refund]? = nil) {
-		self.cursor = cursor
-		self.errors = errors
-		self.refunds = refunds
-	}
-}
-
-/// Represents a `ListSites` request.
-public struct ListSitesRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a `ListSites` response. The response can include either `sites` or `errors`.
 public struct ListSitesResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -14633,23 +16929,6 @@ public struct ListSitesResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, sites: [Site]? = nil) {
 		self.errors = errors
 		self.sites = sites
-	}
-}
-
-/// Defines input parameters in a request to the  [ListSubscriptionEvents](api-endpoint:Subscriptions-ListSubscriptionEvents) endpoint.
-public struct ListSubscriptionEventsRequest: Codable, Equatable {
-	/// When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// The upper limit on the number of subscription events to return in a paged response.
-	public var limit: Int?
-
-	/// Defines input parameters in a request to the  [ListSubscriptionEvents](api-endpoint:Subscriptions-ListSubscriptionEvents) endpoint.
-	/// - Parameters:
-	///   - cursor: When the total number of resulting subscription events exceeds the limit of a paged response,  specify the cursor returned from a preceding response here to fetch the next set of results. If the cursor is unset, the response contains the last page of the results.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - limit: The upper limit on the number of subscription events to return in a paged response.
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
 	}
 }
 
@@ -14674,24 +16953,6 @@ public struct ListSubscriptionEventsResponse: Codable, Equatable {
 	}
 }
 
-public struct ListTeamMemberBookingProfilesRequest: Codable, Equatable {
-	/// Indicates whether to include only bookable team members in the returned result (`true`) or not (`false`).
-	public var bookable_only: Bool?
-	/// The pagination cursor from the preceding response to return the next page of the results. Do not set this when retrieving the first page of the results.
-	public var cursor: String?
-	/// The maximum number of results to return in a paged response.
-	public var limit: Int?
-	/// Indicates whether to include only team members enabled at the given location in the returned result.
-	public var location_id: String?
-
-	public init(bookable_only: Bool? = nil, cursor: String? = nil, limit: Int? = nil, location_id: String? = nil) {
-		self.bookable_only = bookable_only
-		self.cursor = cursor
-		self.limit = limit
-		self.location_id = location_id
-	}
-}
-
 public struct ListTeamMemberBookingProfilesResponse: Codable, Equatable {
 	/// The pagination cursor to be used in the subsequent request to get the next page of the results. Stop retrieving the next page of the results when the cursor is not set.
 	public var cursor: String?
@@ -14704,27 +16965,6 @@ public struct ListTeamMemberBookingProfilesResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.team_member_booking_profiles = team_member_booking_profiles
-	}
-}
-
-/// A request for a set of `TeamMemberWage` objects.
-public struct ListTeamMemberWagesRequest: Codable, Equatable {
-	/// A pointer to the next page of `EmployeeWage` results to fetch.
-	public var cursor: String?
-	/// The maximum number of `TeamMemberWage` results to return per page. The number can range between 1 and 200. The default is 200.
-	public var limit: Int?
-	/// Filter the returned wages to only those that are associated with the specified team member.
-	public var team_member_id: String?
-
-	/// A request for a set of `TeamMemberWage` objects.
-	/// - Parameters:
-	///   - cursor: A pointer to the next page of `EmployeeWage` results to fetch.
-	///   - limit: The maximum number of `TeamMemberWage` results to return per page. The number can range between 1 and 200. The default is 200.
-	///   - team_member_id: Filter the returned wages to only those that are associated with the specified team member.
-	public init(cursor: String? = nil, limit: Int? = nil, team_member_id: String? = nil) {
-		self.cursor = cursor
-		self.limit = limit
-		self.team_member_id = team_member_id
 	}
 }
 
@@ -14749,31 +16989,6 @@ public struct ListTeamMemberWagesResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the query parameters that can be included in a request to the [ListTransactions](api-endpoint:Transactions-ListTransactions) endpoint.  Deprecated - recommend using [SearchOrders](api-endpoint:Orders-SearchOrders)
-public struct ListTransactionsRequest: Codable, Equatable {
-	/// The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
-	public var begin_time: Timestamp?
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	public var cursor: String?
-	/// The end of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time.
-	public var end_time: Timestamp?
-	/// The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC` See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	/// Defines the query parameters that can be included in a request to the [ListTransactions](api-endpoint:Transactions-ListTransactions) endpoint.  Deprecated - recommend using [SearchOrders](api-endpoint:Orders-SearchOrders)
-	/// - Parameters:
-	///   - begin_time: The beginning of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time minus one year.
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
-	///   - end_time: The end of the requested reporting period, in RFC 3339 format.  See [Date ranges](https://developer.squareup.com/docs/build-basics/working-with-dates) for details on date inclusivity/exclusivity.  Default value: The current time.
-	///   - sort_order: The order in which results are listed in the response (`ASC` for oldest first, `DESC` for newest first).  Default value: `DESC` See [SortOrder](#type-sortorder) for possible values
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, end_time: Timestamp? = nil, sort_order: SortOrder? = nil) {
-		self.begin_time = begin_time
-		self.cursor = cursor
-		self.end_time = end_time
-		self.sort_order = sort_order
-	}
-}
-
 /// Defines the fields that are included in the response body of a request to the [ListTransactions](api-endpoint:Transactions-ListTransactions) endpoint.  One of `errors` or `transactions` is present in a given response (never both).
 public struct ListTransactionsResponse: Codable, Equatable {
 	/// A pagination cursor for retrieving the next set of results, if any remain. Provide this value as the `cursor` parameter in a subsequent request to this endpoint.  See [Paginating results](https://developer.squareup.com/docs/working-with-apis/pagination) for more information.
@@ -14792,19 +17007,6 @@ public struct ListTransactionsResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.transactions = transactions
-	}
-}
-
-/// Lists all webhook event types that can be subscribed to.
-public struct ListWebhookEventTypesRequest: Codable, Equatable {
-	/// The API version for which to list event types. Setting this field overrides the default version used by the application.
-	public var api_version: String?
-
-	/// Lists all webhook event types that can be subscribed to.
-	/// - Parameters:
-	///   - api_version: The API version for which to list event types. Setting this field overrides the default version used by the application.
-	public init(api_version: String? = nil) {
-		self.api_version = api_version
 	}
 }
 
@@ -14829,31 +17031,6 @@ public struct ListWebhookEventTypesResponse: Codable, Equatable {
 	}
 }
 
-/// Lists all [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s owned by your application.
-public struct ListWebhookSubscriptionsRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	public var cursor: String?
-	/// Includes disabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s. By default, all enabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s are returned.
-	public var include_disabled: Bool?
-	/// The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value.  Default: 100
-	public var limit: Int?
-	/// Sorts the returned list by when the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) was created with the specified order. This field defaults to ASC. See [SortOrder](#type-sortorder) for possible values
-	public var sort_order: SortOrder?
-
-	/// Lists all [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s owned by your application.
-	/// - Parameters:
-	///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for your original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
-	///   - include_disabled: Includes disabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s. By default, all enabled [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription)s are returned.
-	///   - limit: The maximum number of results to be returned in a single page. It is possible to receive fewer results than the specified limit on a given page. The default value of 100 is also the maximum allowed value.  Default: 100
-	///   - sort_order: Sorts the returned list by when the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) was created with the specified order. This field defaults to ASC. See [SortOrder](#type-sortorder) for possible values
-	public init(cursor: String? = nil, include_disabled: Bool? = nil, limit: Int? = nil, sort_order: SortOrder? = nil) {
-		self.cursor = cursor
-		self.include_disabled = include_disabled
-		self.limit = limit
-		self.sort_order = sort_order
-	}
-}
-
 /// Defines the fields that are included in the response body of a request to the [ListWebhookSubscriptions](api-endpoint:WebhookSubscriptions-ListWebhookSubscriptions) endpoint.  Note: if there are errors processing the request, the subscriptions field will not be present.
 public struct ListWebhookSubscriptionsResponse: Codable, Equatable {
 	/// The pagination cursor to be used in a subsequent request. If empty, this is the final response.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
@@ -14872,23 +17049,6 @@ public struct ListWebhookSubscriptionsResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.subscriptions = subscriptions
-	}
-}
-
-/// A request for a set of `WorkweekConfig` objects.
-public struct ListWorkweekConfigsRequest: Codable, Equatable {
-	/// A pointer to the next page of `WorkweekConfig` results to fetch.
-	public var cursor: String?
-	/// The maximum number of `WorkweekConfigs` results to return per page.
-	public var limit: Int?
-
-	/// A request for a set of `WorkweekConfig` objects.
-	/// - Parameters:
-	///   - cursor: A pointer to the next page of `WorkweekConfig` results to fetch.
-	///   - limit: The maximum number of `WorkweekConfigs` results to return per page.
-	public init(cursor: String? = nil, limit: Int? = nil) {
-		self.cursor = cursor
-		self.limit = limit
 	}
 }
 
@@ -15061,6 +17221,394 @@ public enum LocationCapability: String, Codable {
 	case UNLINKED_REFUNDS
 }
 
+/// Published when a [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) is created.
+public struct LocationCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: LocationCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"location.created"`.
+	public var type: String?
+
+	/// Published when a [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"location.created"`.
+	public init(created_at: Timestamp? = nil, data: LocationCreatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LocationCreatedEventData: Codable, Equatable {
+	/// ID of the updated [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
+	public var id: String?
+	/// Name of the affected object’s type, `"location"`.
+	public var type: String?
+
+	public init(id: String? = nil, type: String? = nil) {
+		self.id = id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is created by the subscribing application.
+public struct LocationCustomAttributeDefinitionOwnedCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute_definition.owned.created"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is created by the subscribing application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute_definition.owned.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  created by the subscribing application is deleted. A custom attribute definition can only be deleted by  the application that created it.
+public struct LocationCustomAttributeDefinitionOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute_definition.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  created by the subscribing application is deleted. A custom attribute definition can only be deleted by  the application that created it.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute_definition.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  created by the subscribing application is updated. A custom attribute definition can only be updated  by the application that created it.
+public struct LocationCustomAttributeDefinitionOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute_definition.owned.updated"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  created by the subscribing application is updated. A custom attribute definition can only be updated  by the application that created it.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute_definition.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is created. A notification is sent when your application  creates a custom attribute definition or another application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct LocationCustomAttributeDefinitionVisibleCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute_definition.visible.created"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is created. A notification is sent when your application  creates a custom attribute definition or another application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute_definition.visible.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  that is visible to the subscribing application is deleted. A custom attribute definition can only  be deleted by the application that created it. A notification is sent when your application deletes  a custom attribute definition or when another application deletes a custom attribute definition whose  `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct LocationCustomAttributeDefinitionVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute_definition.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  that is visible to the subscribing application is deleted. A custom attribute definition can only  be deleted by the application that created it. A notification is sent when your application deletes  a custom attribute definition or when another application deletes a custom attribute definition whose  `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute_definition.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  that is visible to the subscribing application is updated. A custom attribute definition can only be updated by the application that created it. A notification is sent when your application updates a custom attribute  definition or when another application updates a custom attribute definition whose `visibility` is  `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct LocationCustomAttributeDefinitionVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute_definition.visible.updated"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  that is visible to the subscribing application is updated. A custom attribute definition can only be updated by the application that created it. A notification is sent when your application updates a custom attribute  definition or when another application updates a custom attribute definition whose `visibility` is  `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute_definition.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  owned by the subscribing application is deleted. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application.
+public struct LocationCustomAttributeOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute)  owned by the subscribing application is deleted. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is created or updated. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application.
+public struct LocationCustomAttributeOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute.owned.updated"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) owned by the subscribing application is created or updated. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition). Custom attributes whose `visibility` is `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is deleted. A notification is sent when: - Your application deletes a custom attribute owned by your application, regardless of the `visibility` setting. - Any application deletes a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be deleted by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+public struct LocationCustomAttributeVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is deleted. A notification is sent when: - Your application deletes a custom attribute owned by your application, regardless of the `visibility` setting. - Any application deletes a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be deleted by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be deleted by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is created or updated. A notification is sent when: - Your application creates or updates a custom attribute owned by your application, regardless of the `visibility` setting. - Any application creates or updates a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be created or updated by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+public struct LocationCustomAttributeVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"location.custom_attribute.visible.updated"`.
+	public var type: String?
+
+	/// Published when a location [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing application is created or updated. A notification is sent when: - Your application creates or updates a custom attribute owned by your application, regardless of the `visibility` setting. - Any application creates or updates a custom attribute whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.  Custom attributes set to `VISIBILITY_READ_WRITE_VALUES` can be created or updated by any application, but those set to `VISIBILITY_READ_ONLY` or `VISIBILITY_HIDDEN` can only be created or updated by the owner. Custom attributes are owned by the application that created the corresponding [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition).
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"location.custom_attribute.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when online checkout location settings are updated
+public struct LocationSettingsUpdatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: LocationSettingsUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"online_checkout.location_settings.updated"`.
+	public var type: String?
+
+	/// Published when online checkout location settings are updated
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"online_checkout.location_settings.updated"`.
+	public init(created_at: Timestamp? = nil, data: LocationSettingsUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LocationSettingsUpdatedEventData: Codable, Equatable {
+	/// ID of the updated location settings.
+	public var id: String?
+	/// An object containing the updated location settings.
+	public var object: LocationSettingsUpdatedEventObject?
+	/// Name of the updated object’s type, `"online_checkout.location_settings"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: LocationSettingsUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LocationSettingsUpdatedEventObject: Codable, Equatable {
+	/// The updated location settings.
+	public var location_settings: CheckoutLocationSettings?
+
+	public init(location_settings: CheckoutLocationSettings? = nil) {
+		self.location_settings = location_settings
+	}
+}
+
 /// A location's status.
 public enum LocationStatus: String, Codable {
 	/// A location that is active for business.
@@ -15075,6 +17623,51 @@ public enum LocationType: String, Codable {
 	case PHYSICAL
 	/// A place of business that is mobile, such as a food truck or online store.
 	case MOBILE
+}
+
+/// Published when a [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) is updated.
+public struct LocationUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: LocationUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"location.updated"`.
+	public var type: String?
+
+	/// Published when a [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"location.updated"`.
+	public init(created_at: Timestamp? = nil, data: LocationUpdatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct LocationUpdatedEventData: Codable, Equatable {
+	/// ID of the updated [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
+	public var id: String?
+	/// Name of the affected object’s type, `"location"`.
+	public var type: String?
+
+	public init(id: String? = nil, type: String? = nil) {
+		self.id = id
+		self.type = type
+	}
 }
 
 /// Describes a loyalty account in a [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram). For more information, see [Create and Retrieve Loyalty Accounts](https://developer.squareup.com/docs/loyalty-api/loyalty-accounts).
@@ -15126,6 +17719,124 @@ public struct LoyaltyAccount: Codable, Equatable {
 	}
 }
 
+/// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is created.
+public struct LoyaltyAccountCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyAccountCreatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.account.created`.
+	public var type: String?
+
+	/// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.account.created`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyAccountCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.account.created` event.
+public struct LoyaltyAccountCreatedEventData: Codable, Equatable {
+	/// The ID of the affected loyalty account.
+	public var id: String?
+	/// An object that contains the new loyalty account.
+	public var object: LoyaltyAccountCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_account`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.account.created` event.
+	/// - Parameters:
+	///   - id: The ID of the affected loyalty account.
+	///   - object: An object that contains the new loyalty account.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_account`.
+	public init(id: String? = nil, object: LoyaltyAccountCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LoyaltyAccountCreatedEventObject: Codable, Equatable {
+	/// The loyalty account that was created.
+	public var loyalty_account: LoyaltyAccount?
+
+	public init(loyalty_account: LoyaltyAccount? = nil) {
+		self.loyalty_account = loyalty_account
+	}
+}
+
+/// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is deleted.
+public struct LoyaltyAccountDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyAccountDeletedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.account.deleted`.
+	public var type: String?
+
+	/// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.account.deleted`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyAccountDeletedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.account.deleted` event.
+public struct LoyaltyAccountDeletedEventData: Codable, Equatable {
+	/// The ID of the affected loyalty account.
+	public var id: String?
+	/// An object that contains the loyalty account that was deleted.
+	public var object: LoyaltyAccountDeletedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_account`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.account.deleted` event.
+	/// - Parameters:
+	///   - id: The ID of the affected loyalty account.
+	///   - object: An object that contains the loyalty account that was deleted.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_account`.
+	public init(id: String? = nil, object: LoyaltyAccountDeletedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LoyaltyAccountDeletedEventObject: Codable, Equatable {
+	/// The loyalty account that was deleted.
+	public var loyalty_account: LoyaltyAccount?
+
+	public init(loyalty_account: LoyaltyAccount? = nil) {
+		self.loyalty_account = loyalty_account
+	}
+}
+
 /// Represents a set of points for a loyalty account that are scheduled to expire on a specific date.
 public struct LoyaltyAccountExpiringPointDeadline: Codable, Equatable {
 	/// The timestamp of when the points are scheduled to expire, in RFC 3339 format.
@@ -15168,6 +17879,65 @@ public struct LoyaltyAccountMapping: Codable, Equatable {
 public enum LoyaltyAccountMappingType: String, Codable {
 	/// The loyalty account is mapped by phone.
 	case PHONE
+}
+
+/// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is updated.
+public struct LoyaltyAccountUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyAccountUpdatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.account.updated`.
+	public var type: String?
+
+	/// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.account.updated`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyAccountUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.account.updated` event.
+public struct LoyaltyAccountUpdatedEventData: Codable, Equatable {
+	/// The ID of the affected loyalty account.
+	public var id: String?
+	/// An object that contains the loyalty account that was updated.
+	public var object: LoyaltyAccountUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_account`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.account.updated` event.
+	/// - Parameters:
+	///   - id: The ID of the affected loyalty account.
+	///   - object: An object that contains the loyalty account that was updated.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_account`.
+	public init(id: String? = nil, object: LoyaltyAccountUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LoyaltyAccountUpdatedEventObject: Codable, Equatable {
+	/// The loyalty account that was updated.
+	public var loyalty_account: LoyaltyAccount?
+
+	public init(loyalty_account: LoyaltyAccount? = nil) {
+		self.loyalty_account = loyalty_account
+	}
 }
 
 /// Provides information about a loyalty event.  For more information, see [Search for Balance-Changing Loyalty Events](https://developer.squareup.com/docs/loyalty-api/loyalty-events).
@@ -15320,6 +18090,65 @@ public struct LoyaltyEventCreateReward: Codable, Equatable {
 		self.loyalty_program_id = loyalty_program_id
 		self.points = points
 		self.reward_id = reward_id
+	}
+}
+
+/// Published when a [loyalty event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyEvent) is created.
+public struct LoyaltyEventCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyEventCreatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.event.created`.
+	public var type: String?
+
+	/// Published when a [loyalty event](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyEvent) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.event.created`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyEventCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.event.created` event.
+public struct LoyaltyEventCreatedEventData: Codable, Equatable {
+	/// ID of the affected loyalty event.
+	public var id: String?
+	/// An object that contains the new loyalty event.
+	public var object: LoyaltyEventCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_event`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.event.created` event.
+	/// - Parameters:
+	///   - id: ID of the affected loyalty event.
+	///   - object: An object that contains the new loyalty event.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_event`.
+	public init(id: String? = nil, object: LoyaltyEventCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct LoyaltyEventCreatedEventObject: Codable, Equatable {
+	/// The loyalty event that was created.
+	public var loyalty_event: LoyaltyEvent?
+
+	public init(loyalty_event: LoyaltyEvent? = nil) {
+		self.loyalty_event = loyalty_event
 	}
 }
 
@@ -15700,6 +18529,69 @@ public struct LoyaltyProgramAccrualRuleVisitData: Codable, Equatable {
 	}
 }
 
+/// Published when a [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram) is created.
+public struct LoyaltyProgramCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyProgramCreatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.program.created`.
+	public var type: String?
+
+	/// Published when a [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.program.created`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyProgramCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.program.created` event.
+public struct LoyaltyProgramCreatedEventData: Codable, Equatable {
+	/// The ID of the created loyalty program.
+	public var id: String?
+	/// An object that contains the loyalty program that was created.
+	public var object: LoyaltyProgramCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_program`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.program.created` event.
+	/// - Parameters:
+	///   - id: The ID of the created loyalty program.
+	///   - object: An object that contains the loyalty program that was created.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_program`.
+	public init(id: String? = nil, object: LoyaltyProgramCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the loyalty program associated with a `loyalty.program.created` event.
+public struct LoyaltyProgramCreatedEventObject: Codable, Equatable {
+	/// The loyalty program that was created.
+	public var loyalty_program: LoyaltyProgram?
+
+	/// An object that contains the loyalty program associated with a `loyalty.program.created` event.
+	/// - Parameters:
+	///   - loyalty_program: The loyalty program that was created.
+	public init(loyalty_program: LoyaltyProgram? = nil) {
+		self.loyalty_program = loyalty_program
+	}
+}
+
 /// Describes when the loyalty program expires.
 public struct LoyaltyProgramExpirationPolicy: Codable, Equatable {
 	/// The number of months before points expire, in `P[n]M` RFC 3339 duration format. For example, a value of `P12M` represents a duration of 12 months.  Points are valid through the last day of the month in which they are scheduled to expire. For example, with a  `P12M` duration, points earned on July 6, 2020 expire on August 1, 2021.
@@ -15713,63 +18605,10 @@ public struct LoyaltyProgramExpirationPolicy: Codable, Equatable {
 	}
 }
 
-/// Provides details about the reward tier discount. DEPRECATED at version yyyy-mm-dd. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-public struct LoyaltyProgramRewardDefinition: Codable, Equatable {
-	/// The list of catalog objects to which this reward can be applied. They are either all item-variation ids or category ids, depending on the `type` field. DEPRECATED at version yyyy-mm-dd. You can find this information in the `product_set_data.product_ids_any` field of the `PRODUCT_SET` catalog object referenced by the pricing rule.
-	public var catalog_object_ids: [String]?
-	/// The type of discount the reward tier offers. DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.discount_type` field of the `DISCOUNT` catalog object referenced by the pricing rule. See [LoyaltyProgramRewardDefinitionType](#type-loyaltyprogramrewarddefinitiontype) for possible values
-	public var discount_type: LoyaltyProgramRewardDefinitionType
-	/// The amount of the discount. Present if `discount_type` is `FIXED_AMOUNT`. For example, $5 off. DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.amount_money` field of the  `DISCOUNT` catalog object referenced by the pricing rule.
-	public var fixed_discount_money: Money?
-	/// When `discount_type` is `FIXED_PERCENTAGE`, the maximum discount amount that can be applied. DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.maximum_amount_money` field of the `DISCOUNT` catalog object referenced by the the pricing rule.
-	public var max_discount_money: Money?
-	/// The fixed percentage of the discount. Present if `discount_type` is `FIXED_PERCENTAGE`. For example, a 7.25% off discount will be represented as "7.25". DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.percentage` field of the `DISCOUNT` catalog object referenced by the pricing rule.
-	public var percentage_discount: String?
-	/// Indicates the scope of the reward tier. DEPRECATED at version yyyy-mm-dd. You can find this information in the `product_set_data` field of the `PRODUCT_SET` catalog object referenced by the pricing rule. For `ORDER` scopes, `all_products` is true. For `ITEM_VARIATION` or `CATEGORY` scopes, `product_ids_any` is a list of catalog object IDs of the given type. See [LoyaltyProgramRewardDefinitionScope](#type-loyaltyprogramrewarddefinitionscope) for possible values
-	public var scope: LoyaltyProgramRewardDefinitionScope
-
-	/// Provides details about the reward tier discount. DEPRECATED at version yyyy-mm-dd. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-	/// - Parameters:
-	///   - catalog_object_ids: The list of catalog objects to which this reward can be applied. They are either all item-variation ids or category ids, depending on the `type` field. DEPRECATED at version yyyy-mm-dd. You can find this information in the `product_set_data.product_ids_any` field of the `PRODUCT_SET` catalog object referenced by the pricing rule.
-	///   - discount_type: The type of discount the reward tier offers. DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.discount_type` field of the `DISCOUNT` catalog object referenced by the pricing rule. See [LoyaltyProgramRewardDefinitionType](#type-loyaltyprogramrewarddefinitiontype) for possible values
-	///   - fixed_discount_money: The amount of the discount. Present if `discount_type` is `FIXED_AMOUNT`. For example, $5 off. DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.amount_money` field of the  `DISCOUNT` catalog object referenced by the pricing rule.
-	///   - max_discount_money: When `discount_type` is `FIXED_PERCENTAGE`, the maximum discount amount that can be applied. DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.maximum_amount_money` field of the `DISCOUNT` catalog object referenced by the the pricing rule.
-	///   - percentage_discount: The fixed percentage of the discount. Present if `discount_type` is `FIXED_PERCENTAGE`. For example, a 7.25% off discount will be represented as "7.25". DEPRECATED at version yyyy-mm-dd. You can find this information in the `discount_data.percentage` field of the `DISCOUNT` catalog object referenced by the pricing rule.
-	///   - scope: Indicates the scope of the reward tier. DEPRECATED at version yyyy-mm-dd. You can find this information in the `product_set_data` field of the `PRODUCT_SET` catalog object referenced by the pricing rule. For `ORDER` scopes, `all_products` is true. For `ITEM_VARIATION` or `CATEGORY` scopes, `product_ids_any` is a list of catalog object IDs of the given type. See [LoyaltyProgramRewardDefinitionScope](#type-loyaltyprogramrewarddefinitionscope) for possible values
-	public init(discount_type: LoyaltyProgramRewardDefinitionType, scope: LoyaltyProgramRewardDefinitionScope, catalog_object_ids: [String]? = nil, fixed_discount_money: Money? = nil, max_discount_money: Money? = nil, percentage_discount: String? = nil) {
-		self.discount_type = discount_type
-		self.scope = scope
-		self.catalog_object_ids = catalog_object_ids
-		self.fixed_discount_money = fixed_discount_money
-		self.max_discount_money = max_discount_money
-		self.percentage_discount = percentage_discount
-	}
-}
-
-/// Indicates the scope of the reward tier. DEPRECATED at version yyyy-mm-dd. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-public enum LoyaltyProgramRewardDefinitionScope: String, Codable {
-	/// The discount applies to the entire order.
-	case ORDER
-	/// The discount applies only to specific item variations.
-	case ITEM_VARIATION
-	/// The discount applies only to items in the given categories.
-	case CATEGORY
-}
-
-/// The type of discount the reward tier offers. DEPRECATED at version yyyy-mm-dd. Discount details are now defined using a catalog pricing rule and other catalog objects. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-public enum LoyaltyProgramRewardDefinitionType: String, Codable {
-	/// The fixed amount discounted.
-	case FIXED_AMOUNT
-	/// The fixed percentage discounted.
-	case FIXED_PERCENTAGE
-}
-
 /// Represents a reward tier in a loyalty program. A reward tier defines how buyers can redeem points for a reward, such as the number of points required and the value and scope of the discount. A loyalty program can offer multiple reward tiers.
 public struct LoyaltyProgramRewardTier: Codable, Equatable {
 	/// The timestamp when the reward tier was created, in RFC 3339 format.
 	public var created_at: Timestamp?
-	/// Provides details about the reward tier definition. DEPRECATED at version yyyy-mm-dd. Replaced by the `pricing_rule_reference` field.
-	public var definition: LoyaltyProgramRewardDefinition?
 	/// The Square-assigned ID of the reward tier.
 	public var id: String?
 	/// The name of the reward tier.
@@ -15782,16 +18621,14 @@ public struct LoyaltyProgramRewardTier: Codable, Equatable {
 	/// Represents a reward tier in a loyalty program. A reward tier defines how buyers can redeem points for a reward, such as the number of points required and the value and scope of the discount. A loyalty program can offer multiple reward tiers.
 	/// - Parameters:
 	///   - created_at: The timestamp when the reward tier was created, in RFC 3339 format.
-	///   - definition: Provides details about the reward tier definition. DEPRECATED at version yyyy-mm-dd. Replaced by the `pricing_rule_reference` field.
 	///   - id: The Square-assigned ID of the reward tier.
 	///   - name: The name of the reward tier.
 	///   - points: The points exchanged for the reward tier.
 	///   - pricing_rule_reference: A reference to the specific version of a `PRICING_RULE` catalog object that contains information about the reward tier discount.  Use `object_id` and `catalog_version` with the [RetrieveCatalogObject](api-endpoint:Catalog-RetrieveCatalogObject) endpoint to get discount details. Make sure to set `include_related_objects` to true in the request to retrieve all catalog objects that define the discount. For more information, see [Getting discount details for a reward tier](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards#get-discount-details).
-	public init(points: Int, pricing_rule_reference: CatalogObjectReference, created_at: Timestamp? = nil, definition: LoyaltyProgramRewardDefinition? = nil, id: String? = nil, name: String? = nil) {
+	public init(points: Int, pricing_rule_reference: CatalogObjectReference, created_at: Timestamp? = nil, id: String? = nil, name: String? = nil) {
 		self.points = points
 		self.pricing_rule_reference = pricing_rule_reference
 		self.created_at = created_at
-		self.definition = definition
 		self.id = id
 		self.name = name
 	}
@@ -15819,6 +18656,69 @@ public struct LoyaltyProgramTerminology: Codable, Equatable {
 	public init(one: String, other: String) {
 		self.one = one
 		self.other = other
+	}
+}
+
+/// Published when a [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram) is updated.
+public struct LoyaltyProgramUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyProgramUpdatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.program.updated`.
+	public var type: String?
+
+	/// Published when a [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram) is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.program.updated`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyProgramUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.program.updated` event.
+public struct LoyaltyProgramUpdatedEventData: Codable, Equatable {
+	/// The ID of the affected loyalty program.
+	public var id: String?
+	/// An object that contains the loyalty program that was updated.
+	public var object: LoyaltyProgramUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_program`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.program.updated` event.
+	/// - Parameters:
+	///   - id: The ID of the affected loyalty program.
+	///   - object: An object that contains the loyalty program that was updated.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_program`.
+	public init(id: String? = nil, object: LoyaltyProgramUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the loyalty program associated with a `loyalty.program.updated` event.
+public struct LoyaltyProgramUpdatedEventObject: Codable, Equatable {
+	/// The loyalty program that was updated.
+	public var loyalty_program: LoyaltyProgram?
+
+	/// An object that contains the loyalty program associated with a `loyalty.program.updated` event.
+	/// - Parameters:
+	///   - loyalty_program: The loyalty program that was updated.
+	public init(loyalty_program: LoyaltyProgram? = nil) {
+		self.loyalty_program = loyalty_program
 	}
 }
 
@@ -15901,6 +18801,69 @@ public struct LoyaltyPromotionAvailableTimeData: Codable, Equatable {
 		self.time_periods = time_periods
 		self.end_date = end_date
 		self.start_date = start_date
+	}
+}
+
+/// Published when a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion) is created.
+public struct LoyaltyPromotionCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyPromotionCreatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.promotion.created`.
+	public var type: String?
+
+	/// Published when a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion) is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.promotion.created`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyPromotionCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.promotion.created` event.
+public struct LoyaltyPromotionCreatedEventData: Codable, Equatable {
+	/// The ID of the affected loyalty promotion.
+	public var id: String?
+	/// An object that contains the loyalty promotion that was created.
+	public var object: LoyaltyPromotionCreatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_promotion`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.promotion.created` event.
+	/// - Parameters:
+	///   - id: The ID of the affected loyalty promotion.
+	///   - object: An object that contains the loyalty promotion that was created.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_promotion`.
+	public init(id: String? = nil, object: LoyaltyPromotionCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the loyalty promotion associated with a `loyalty.promotion.created` event.
+public struct LoyaltyPromotionCreatedEventObject: Codable, Equatable {
+	/// The loyalty promotion that was created.
+	public var loyalty_promotion: LoyaltyPromotion?
+
+	/// An object that contains the loyalty promotion associated with a `loyalty.promotion.created` event.
+	/// - Parameters:
+	///   - loyalty_promotion: The loyalty promotion that was created.
+	public init(loyalty_promotion: LoyaltyPromotion? = nil) {
+		self.loyalty_promotion = loyalty_promotion
 	}
 }
 
@@ -15998,6 +18961,69 @@ public enum LoyaltyPromotionTriggerLimitInterval: String, Codable {
 	case ALL_TIME
 	/// The limit applies per day, according to the `available_time` schedule specified for the promotion. For example, if the `times` field of the trigger limit is set to 1, a buyer can trigger the promotion a maximum of once per day.
 	case DAY
+}
+
+/// Published when a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion) is updated. This event is invoked only when a loyalty promotion is canceled.
+public struct LoyaltyPromotionUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: LoyaltyPromotionUpdatedEventData?
+	/// The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	public var event_id: String?
+	/// The ID of the Square seller associated with the event.
+	public var merchant_id: String?
+	/// The type of event. For this event, the value is `loyalty.promotion.updated`.
+	public var type: String?
+
+	/// Published when a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion) is updated. This event is invoked only when a loyalty promotion is canceled.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: The unique ID for the event, which is used for [idempotency support](https://developer.squareup.com/docs/webhooks/step4manage#webhooks-best-practices).
+	///   - merchant_id: The ID of the Square seller associated with the event.
+	///   - type: The type of event. For this event, the value is `loyalty.promotion.updated`.
+	public init(created_at: Timestamp? = nil, data: LoyaltyPromotionUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// The data associated with a `loyalty.promotion.updated` event.
+public struct LoyaltyPromotionUpdatedEventData: Codable, Equatable {
+	/// The ID of the affected loyalty promotion.
+	public var id: String?
+	/// An object that contains the loyalty promotion that was updated.
+	public var object: LoyaltyPromotionUpdatedEventObject?
+	/// The type of object affected by the event. For this event, the value is `loyalty_promotion`.
+	public var type: String?
+
+	/// The data associated with a `loyalty.promotion.updated` event.
+	/// - Parameters:
+	///   - id: The ID of the affected loyalty promotion.
+	///   - object: An object that contains the loyalty promotion that was updated.
+	///   - type: The type of object affected by the event. For this event, the value is `loyalty_promotion`.
+	public init(id: String? = nil, object: LoyaltyPromotionUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+/// An object that contains the loyalty promotion associated with a `loyalty.promotion.updated` event.
+public struct LoyaltyPromotionUpdatedEventObject: Codable, Equatable {
+	/// The loyalty promotion that was updated.
+	public var loyalty_promotion: LoyaltyPromotion?
+
+	/// An object that contains the loyalty promotion associated with a `loyalty.promotion.updated` event.
+	/// - Parameters:
+	///   - loyalty_promotion: The loyalty promotion that was updated.
+	public init(loyalty_promotion: LoyaltyPromotion? = nil) {
+		self.loyalty_promotion = loyalty_promotion
+	}
 }
 
 /// Represents a contract to redeem loyalty points for a [reward tier](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgramRewardTier) discount. Loyalty rewards can be in an ISSUED, REDEEMED, or DELETED state.  For more information, see [Manage loyalty rewards](https://developer.squareup.com/docs/loyalty-api/loyalty-rewards).
@@ -16272,6 +19298,349 @@ public struct Merchant: Codable, Equatable {
 	}
 }
 
+/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is created by the subscribing application. Subscribe to this event to be notified when your application creates a merchant custom attribute definition.
+public struct MerchantCustomAttributeDefinitionOwnedCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute_definition.owned.created"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is created by the subscribing application. Subscribe to this event to be notified when your application creates a merchant custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute_definition.owned.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is deleted by the subscribing application. Subscribe to this event to be notified when your application deletes a merchant custom attribute definition.
+public struct MerchantCustomAttributeDefinitionOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute_definition.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is deleted by the subscribing application. Subscribe to this event to be notified when your application deletes a merchant custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute_definition.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is updated by the subscribing application. Subscribe to this event to be notified when your application updates a merchant custom attribute definition.
+public struct MerchantCustomAttributeDefinitionOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute_definition.owned.updated"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) is updated by the subscribing application. Subscribe to this event to be notified when your application updates a merchant custom attribute definition.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute_definition.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is created. A notification is sent when your application creates a custom attribute definition or another application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct MerchantCustomAttributeDefinitionVisibleCreatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute_definition.visible.created"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is created. A notification is sent when your application creates a custom attribute definition or another application creates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute_definition.visible.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is deleted. A notification is sent when your application deletes a custom attribute definition or another application deletes a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct MerchantCustomAttributeDefinitionVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute_definition.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is deleted. A notification is sent when your application deletes a custom attribute definition or another application deletes a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute_definition.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is updated. A notification is sent when your application updates a custom attribute definition or another application updates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+public struct MerchantCustomAttributeDefinitionVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute_definition.visible.updated"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing application is updated. A notification is sent when your application updates a custom attribute definition or another application updates a custom attribute definition whose `visibility` is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute_definition.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing application is deleted. Subscribe to this event to be notified when your application deletes a merchant custom attribute.
+public struct MerchantCustomAttributeOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute.owned.deleted"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing application is deleted. Subscribe to this event to be notified when your application deletes a merchant custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing application is updated. Subscribe to this event to be notified when your application updates a merchant custom attribute.
+public struct MerchantCustomAttributeOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute.owned.updated"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing application is updated. Subscribe to this event to be notified when your application updates a merchant custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is deleted. An application that subscribes to this event is notified when a merchant custom attribute is deleted by any application for which the subscribing application has read access to the merchant custom attribute.
+public struct MerchantCustomAttributeVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute.visible.deleted"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is deleted. An application that subscribes to this event is notified when a merchant custom attribute is deleted by any application for which the subscribing application has read access to the merchant custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is updated. An application that subscribes to this event is notified when a merchant custom attribute is updated by any application for which the subscribing application has read access to the merchant custom attribute.
+public struct MerchantCustomAttributeVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event that triggered the event notification.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event notification.
+	public var event_id: String?
+	/// The ID of the seller associated with the event that triggered the event notification.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"merchant.custom_attribute.visible.updated"`.
+	public var type: String?
+
+	/// Published when a merchant [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) with the `visibility` field set to `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES` is updated. An application that subscribes to this event is notified when a merchant custom attribute is updated by any application for which the subscribing application has read access to the merchant custom attribute.
+	/// - Parameters:
+	///   - created_at: The timestamp that indicates when the event notification was created, in RFC 3339 format.
+	///   - data: The data associated with the event that triggered the event notification.
+	///   - event_id: A unique ID for the event notification.
+	///   - merchant_id: The ID of the seller associated with the event that triggered the event notification.
+	///   - type: The type of this event. The value is `"merchant.custom_attribute.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when online checkout merchant settings are updated
+public struct MerchantSettingsUpdatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: MerchantSettingsUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"online_checkout.merchant_settings.updated"`.
+	public var type: String?
+
+	/// Published when online checkout merchant settings are updated
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"online_checkout.merchant_settings.updated"`.
+	public init(created_at: Timestamp? = nil, data: MerchantSettingsUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct MerchantSettingsUpdatedEventData: Codable, Equatable {
+	/// ID of the updated merchant settings.
+	public var id: String?
+	/// An object containing the updated merchant settings.
+	public var object: MerchantSettingsUpdatedEventObject?
+	/// Name of the updated object’s type, `"online_checkout.merchant_settings"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: MerchantSettingsUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct MerchantSettingsUpdatedEventObject: Codable, Equatable {
+	/// The updated merchant settings.
+	public var merchant_settings: CheckoutMerchantSettings?
+
+	public init(merchant_settings: CheckoutMerchantSettings? = nil) {
+		self.merchant_settings = merchant_settings
+	}
+}
+
 /// 
 public enum MerchantStatus: String, Codable {
 	/// A fully operational merchant account. The merchant can interact with Square products and APIs.
@@ -16316,6 +19685,81 @@ public struct Money: Codable, Equatable {
 		self.amount = amount
 		self.currency = currency
 	}
+}
+
+/// Published when a merchant/application revokes all access tokens and refresh tokens granted to an application.
+public struct OauthAuthorizationRevokedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: OauthAuthorizationRevokedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"oauth.authorization.revoked"`.
+	public var type: String?
+
+	/// Published when a merchant/application revokes all access tokens and refresh tokens granted to an application.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"oauth.authorization.revoked"`.
+	public init(created_at: Timestamp? = nil, data: OauthAuthorizationRevokedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct OauthAuthorizationRevokedEventData: Codable, Equatable {
+	/// Not applicable, revocation is not an object
+	public var id: String?
+	/// An object containing information about revocation event.
+	public var object: OauthAuthorizationRevokedEventObject?
+	/// Name of the affected object’s type, `"revocation"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: OauthAuthorizationRevokedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct OauthAuthorizationRevokedEventObject: Codable, Equatable {
+	/// The revocation event.
+	public var revocation: OauthAuthorizationRevokedEventRevocationObject?
+
+	public init(revocation: OauthAuthorizationRevokedEventRevocationObject? = nil) {
+		self.revocation = revocation
+	}
+}
+
+public struct OauthAuthorizationRevokedEventRevocationObject: Codable, Equatable {
+	/// Timestamp of when the revocation event occurred, in RFC 3339 format.
+	public var revoked_at: Timestamp?
+	/// Type of client that performed the revocation, either APPLICATION, MERCHANT, or SQUARE. See [OauthAuthorizationRevokedEventRevokerType](#type-oauthauthorizationrevokedeventrevokertype) for possible values
+	public var revoker_type: OauthAuthorizationRevokedEventRevokerType?
+
+	public init(revoked_at: Timestamp? = nil, revoker_type: OauthAuthorizationRevokedEventRevokerType? = nil) {
+		self.revoked_at = revoked_at
+		self.revoker_type = revoker_type
+	}
+}
+
+/// Defines the possible types for the revoking client.
+public enum OauthAuthorizationRevokedEventRevokerType: String, Codable {
+	/// The application that requested access to a merchant's data.
+	case APPLICATION
+	/// The admin for the merchant.
+	case MERCHANT
+	/// An internal Square employee.
+	case SQUARE
 }
 
 /// Represents an [ObtainToken](api-endpoint:OAuth-ObtainToken) request.
@@ -16590,12 +20034,346 @@ public struct OrderCreated: Codable, Equatable {
 	}
 }
 
+/// Published when an [Order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) is created. This event is triggered only by the [CreateOrder](api-endpoint:Orders-CreateOrder) endpoint call.  Creating an order in the Point of Sale app will **not** publish this event.
+public struct OrderCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: OrderCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"order.created"`.
+	public var type: String?
+
+	/// Published when an [Order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) is created. This event is triggered only by the [CreateOrder](api-endpoint:Orders-CreateOrder) endpoint call.  Creating an order in the Point of Sale app will **not** publish this event.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"order.created"`.
+	public init(created_at: Timestamp? = nil, data: OrderCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct OrderCreatedEventData: Codable, Equatable {
+	/// ID of the affected order.
+	public var id: String?
+	/// An object containing information about the created Order.
+	public var object: OrderCreatedObject?
+	/// Name of the affected object’s type, `"order_created"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: OrderCreatedObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
 public struct OrderCreatedObject: Codable, Equatable {
 	/// Information about the created order.
 	public var order_created: OrderCreated?
 
 	public init(order_created: OrderCreated? = nil) {
 		self.order_created = order_created
+	}
+}
+
+/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is created.
+public struct OrderCustomAttributeDefinitionOwnedCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute_definition.owned.created"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute_definition.owned.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is deleted.
+public struct OrderCustomAttributeDefinitionOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute_definition.owned.deleted"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute_definition.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is updated.
+public struct OrderCustomAttributeDefinitionOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute_definition.owned.updated"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute_definition.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing app is created.
+public struct OrderCustomAttributeDefinitionVisibleCreatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute_definition.visible.created"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing app is created.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute_definition.visible.created"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing app is deleted.
+public struct OrderCustomAttributeDefinitionVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute_definition.visible.deleted"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing app is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute_definition.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing app is updated.
+public struct OrderCustomAttributeDefinitionVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeDefinitionEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute_definition.visible.updated"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is visible to the subscribing app is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute_definition.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeDefinitionEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is deleted.
+public struct OrderCustomAttributeOwnedDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute.owned.deleted"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute.owned.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is updated.
+public struct OrderCustomAttributeOwnedUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute.owned.updated"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) associated with a [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) that is owned by the subscribing app is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute.owned.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing app is deleted.
+public struct OrderCustomAttributeVisibleDeletedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute.visible.deleted"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing app is deleted.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute.visible.deleted"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing app is updated.
+public struct OrderCustomAttributeVisibleUpdatedEvent: Codable, Equatable {
+	/// The timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// The data associated with the event.
+	public var data: CustomAttributeEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target seller associated with the event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"order.custom_attribute.visible.updated"`.
+	public var type: String?
+
+	/// Published when an order [custom attribute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttribute) that is visible to the subscribing app is updated.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was created, in RFC 3339 format.
+	///   - data: The data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target seller associated with the event.
+	///   - type: The type of this event. The value is `"order.custom_attribute.visible.updated"`.
+	public init(created_at: Timestamp? = nil, data: CustomAttributeEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
 	}
 }
 
@@ -16620,183 +20398,12 @@ public struct OrderEntry: Codable, Equatable {
 	}
 }
 
-/// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
-public struct OrderFulfillment: Codable, Equatable {
-	/// Describes delivery details of an order fulfillment.
-	public var delivery_details: OrderFulfillmentDeliveryDetails?
-	/// A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill. Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself. An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
-	public var entries: [OrderFulfillmentFulfillmentEntry]?
-	/// Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries. See [OrderFulfillmentFulfillmentLineItemApplication](#type-orderfulfillmentfulfillmentlineitemapplication) for possible values
-	public var line_item_application: OrderFulfillmentFulfillmentLineItemApplication?
-	/// Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details). Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character. Values have a maximum length of 255 characters. An application can have up to 10 entries per metadata field. Entries written by applications are private and can only be read or modified by the same application. For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
-	public var metadata: String?
-	/// Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
-	public var pickup_details: OrderFulfillmentPickupDetails?
-	/// Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`. A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment in progress. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
-	public var shipment_details: OrderFulfillmentShipmentDetails?
-	/// The state of the fulfillment. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
-	public var state: OrderFulfillmentState?
-	/// The type of the fulfillment. See [OrderFulfillmentType](#type-orderfulfillmenttype) for possible values
-	public var type: OrderFulfillmentType?
-	/// A unique ID that identifies the fulfillment only within this order.
-	public var uid: String?
-
-	/// Contains details about how to fulfill this order. Orders can only be created with at most one fulfillment using the API. However, orders returned by the Orders API might contain multiple fulfillments because sellers can create multiple fulfillments using Square products such as Square Online.
-	/// - Parameters:
-	///   - delivery_details: Describes delivery details of an order fulfillment.
-	///   - entries: A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill. Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself. An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
-	///   - line_item_application: Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries. See [OrderFulfillmentFulfillmentLineItemApplication](#type-orderfulfillmentfulfillmentlineitemapplication) for possible values
-	///   - metadata: Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details). Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character. Values have a maximum length of 255 characters. An application can have up to 10 entries per metadata field. Entries written by applications are private and can only be read or modified by the same application. For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
-	///   - pickup_details: Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
-	///   - shipment_details: Contains details for a shipment fulfillment. These details are required when the fulfillment type is `SHIPMENT`. A shipment fulfillment's relationship to fulfillment `state`: `PROPOSED`: A shipment is requested. `RESERVED`: Fulfillment in progress. Shipment processing. `PREPARED`: Shipment packaged. Shipping label created. `COMPLETED`: Package has been shipped. `CANCELED`: Shipment has been canceled. `FAILED`: Shipment has failed.
-	///   - state: The state of the fulfillment. See [OrderFulfillmentState](#type-orderfulfillmentstate) for possible values
-	///   - type: The type of the fulfillment. See [OrderFulfillmentType](#type-orderfulfillmenttype) for possible values
-	///   - uid: A unique ID that identifies the fulfillment only within this order.
-	public init(delivery_details: OrderFulfillmentDeliveryDetails? = nil, entries: [OrderFulfillmentFulfillmentEntry]? = nil, line_item_application: OrderFulfillmentFulfillmentLineItemApplication? = nil, metadata: String? = nil, pickup_details: OrderFulfillmentPickupDetails? = nil, shipment_details: OrderFulfillmentShipmentDetails? = nil, state: OrderFulfillmentState? = nil, type: OrderFulfillmentType? = nil, uid: String? = nil) {
-		self.delivery_details = delivery_details
-		self.entries = entries
-		self.line_item_application = line_item_application
-		self.metadata = metadata
-		self.pickup_details = pickup_details
-		self.shipment_details = shipment_details
-		self.state = state
-		self.type = type
-		self.uid = uid
-	}
-}
-
-/// Describes delivery details of an order fulfillment.
-public struct OrderFulfillmentDeliveryDetails: Codable, Equatable {
-	/// The delivery cancellation reason. Max length: 100 characters.
-	public var cancel_reason: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`.  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var canceled_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller completed the fulfillment. This field is automatically set when  fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var completed_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var courier_pickup_at: Timestamp?
-	/// The time period after `courier_pickup_at` in which the courier should pick up the order. The duration must be in RFC 3339 format (for example, "P1W3D").
-	public var courier_pickup_window_duration: Timestamp?
-	/// The name of the courier provider.
-	public var courier_provider_name: String?
-	/// The support phone number of the courier.
-	public var courier_support_phone_number: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the delivery period. When the fulfillment `schedule_type` is `ASAP`, the field is automatically set to the current time plus the `prep_time_duration`. Otherwise, the application can set this field while the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var deliver_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var delivered_at: Timestamp?
-	/// The time period after `deliver_at` in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`). The duration must be in RFC 3339 format (for example, "P1W3D").
-	public var delivery_window_duration: Timestamp?
-	/// A note to provide additional instructions about how to deliver the order.
-	public var dropoff_notes: String?
-	/// The identifier for the delivery created by the third-party courier service.
-	public var external_delivery_id: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var in_progress_at: Timestamp?
-	/// Whether the delivery is preferred to be no contact.
-	public var is_no_contact_delivery: Bool?
-	/// The flag to indicate the delivery is managed by a third party (ie DoorDash), which means we may not receive all recipient information for PII purposes.
-	public var managed_delivery: Bool?
-	/// Provides additional instructions about the delivery fulfillment. It is displayed in the Square Point of Sale application and set by the API.
-	public var note: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
-	public var placed_at: Timestamp?
-	/// The duration of time it takes to prepare and deliver this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
-	public var prep_time_duration: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var ready_at: Timestamp?
-	/// The contact information for the person to receive the fulfillment.
-	public var recipient: OrderFulfillmentRecipient?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. This field is automatically set when the fulfillment `state` changes to `FAILED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var rejected_at: Timestamp?
-	/// Indicates the fulfillment delivery schedule type. If `SCHEDULED`, then `deliver_at` is required. If `ASAP`, then `prep_time_duration` is required. The default is `SCHEDULED`. See [OrderFulfillmentDeliveryDetailsScheduleType](#type-orderfulfillmentdeliverydetailsscheduletype) for possible values
-	public var schedule_type: OrderFulfillmentDeliveryDetailsScheduleType?
-	/// The identifier for the delivery created by Square.
-	public var square_delivery_id: String?
-
-	/// Describes delivery details of an order fulfillment.
-	/// - Parameters:
-	///   - cancel_reason: The delivery cancellation reason. Max length: 100 characters.
-	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`.  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - completed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller completed the fulfillment. This field is automatically set when  fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - courier_pickup_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when an order can be picked up by the courier for delivery. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - courier_pickup_window_duration: The time period after `courier_pickup_at` in which the courier should pick up the order. The duration must be in RFC 3339 format (for example, "P1W3D").
-	///   - courier_provider_name: The name of the courier provider.
-	///   - courier_support_phone_number: The support phone number of the courier.
-	///   - deliver_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the delivery period. When the fulfillment `schedule_type` is `ASAP`, the field is automatically set to the current time plus the `prep_time_duration`. Otherwise, the application can set this field while the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`).  The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - delivered_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was delivered to the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - delivery_window_duration: The time period after `deliver_at` in which to deliver the order. Applications can set this field when the fulfillment `state` is `PROPOSED`, `RESERVED`, or `PREPARED` (any time before the terminal state such as `COMPLETED`, `CANCELED`, and `FAILED`). The duration must be in RFC 3339 format (for example, "P1W3D").
-	///   - dropoff_notes: A note to provide additional instructions about how to deliver the order.
-	///   - external_delivery_id: The identifier for the delivery created by the third-party courier service.
-	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - is_no_contact_delivery: Whether the delivery is preferred to be no contact.
-	///   - managed_delivery: The flag to indicate the delivery is managed by a third party (ie DoorDash), which means we may not receive all recipient information for PII purposes.
-	///   - note: Provides additional instructions about the delivery fulfillment. It is displayed in the Square Point of Sale application and set by the API.
-	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z".
-	///   - prep_time_duration: The duration of time it takes to prepare and deliver this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
-	///   - ready_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the seller marked the fulfillment as ready for courier pickup. This field is automatically set when the fulfillment `state` changes to PREPARED. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - recipient: The contact information for the person to receive the fulfillment.
-	///   - rejected_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. This field is automatically set when the fulfillment `state` changes to `FAILED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - schedule_type: Indicates the fulfillment delivery schedule type. If `SCHEDULED`, then `deliver_at` is required. If `ASAP`, then `prep_time_duration` is required. The default is `SCHEDULED`. See [OrderFulfillmentDeliveryDetailsScheduleType](#type-orderfulfillmentdeliverydetailsscheduletype) for possible values
-	///   - square_delivery_id: The identifier for the delivery created by Square.
-	public init(cancel_reason: String? = nil, canceled_at: Timestamp? = nil, completed_at: Timestamp? = nil, courier_pickup_at: Timestamp? = nil, courier_pickup_window_duration: Timestamp? = nil, courier_provider_name: String? = nil, courier_support_phone_number: String? = nil, deliver_at: Timestamp? = nil, delivered_at: Timestamp? = nil, delivery_window_duration: Timestamp? = nil, dropoff_notes: String? = nil, external_delivery_id: String? = nil, in_progress_at: Timestamp? = nil, is_no_contact_delivery: Bool? = nil, managed_delivery: Bool? = nil, note: String? = nil, placed_at: Timestamp? = nil, prep_time_duration: Timestamp? = nil, ready_at: Timestamp? = nil, recipient: OrderFulfillmentRecipient? = nil, rejected_at: Timestamp? = nil, schedule_type: OrderFulfillmentDeliveryDetailsScheduleType? = nil, square_delivery_id: String? = nil) {
-		self.cancel_reason = cancel_reason
-		self.canceled_at = canceled_at
-		self.completed_at = completed_at
-		self.courier_pickup_at = courier_pickup_at
-		self.courier_pickup_window_duration = courier_pickup_window_duration
-		self.courier_provider_name = courier_provider_name
-		self.courier_support_phone_number = courier_support_phone_number
-		self.deliver_at = deliver_at
-		self.delivered_at = delivered_at
-		self.delivery_window_duration = delivery_window_duration
-		self.dropoff_notes = dropoff_notes
-		self.external_delivery_id = external_delivery_id
-		self.in_progress_at = in_progress_at
-		self.is_no_contact_delivery = is_no_contact_delivery
-		self.managed_delivery = managed_delivery
-		self.note = note
-		self.placed_at = placed_at
-		self.prep_time_duration = prep_time_duration
-		self.ready_at = ready_at
-		self.recipient = recipient
-		self.rejected_at = rejected_at
-		self.schedule_type = schedule_type
-		self.square_delivery_id = square_delivery_id
-	}
-}
-
 /// The schedule type of the delivery fulfillment.
 public enum OrderFulfillmentDeliveryDetailsScheduleType: String, Codable {
 	/// Indicates the fulfillment to deliver at a scheduled deliver time.
 	case SCHEDULED
 	/// Indicates that the fulfillment to deliver as soon as possible and should be prepared immediately.
 	case ASAP
-}
-
-/// Links an order line item to a fulfillment. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.
-public struct OrderFulfillmentFulfillmentEntry: Codable, Equatable {
-	/// The `uid` from the order line item.
-	public var line_item_uid: String
-	/// Application-defined data attached to this fulfillment entry. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details). Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character. Values have a maximum length of 255 characters. An application can have up to 10 entries per metadata field. Entries written by applications are private and can only be read or modified by the same application. For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
-	public var metadata: String?
-	/// The quantity of the line item being fulfilled, formatted as a decimal number. For example, `"3"`. Fulfillments for line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
-	public var quantity: String
-	/// A unique ID that identifies the fulfillment entry only within this order.
-	public var uid: String?
-
-	/// Links an order line item to a fulfillment. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.
-	/// - Parameters:
-	///   - line_item_uid: The `uid` from the order line item.
-	///   - metadata: Application-defined data attached to this fulfillment entry. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details). Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character. Values have a maximum length of 255 characters. An application can have up to 10 entries per metadata field. Entries written by applications are private and can only be read or modified by the same application. For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
-	///   - quantity: The quantity of the line item being fulfilled, formatted as a decimal number. For example, `"3"`. Fulfillments for line items with a `quantity_unit` can have non-integer quantities. For example, `"1.70000"`.
-	///   - uid: A unique ID that identifies the fulfillment entry only within this order.
-	public init(line_item_uid: String, quantity: String, metadata: String? = nil, uid: String? = nil) {
-		self.line_item_uid = line_item_uid
-		self.quantity = quantity
-		self.metadata = metadata
-		self.uid = uid
-	}
 }
 
 /// The `line_item_application` describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
@@ -16807,208 +20414,12 @@ public enum OrderFulfillmentFulfillmentLineItemApplication: String, Codable {
 	case ENTRY_LIST
 }
 
-/// Contains details necessary to fulfill a pickup order.
-public struct OrderFulfillmentPickupDetails: Codable, Equatable {
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var accepted_at: Timestamp?
-	/// The duration of time after which an in progress pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains in progress until it is canceled or completed.
-	public var auto_complete_duration: Timestamp?
-	/// A description of why the pickup was canceled. The maximum length: 100 characters.
-	public var cancel_reason: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var canceled_at: Timestamp?
-	/// Specific details for curbside pickup. These details can only be populated if `is_curbside_pickup` is set to `true`.
-	public var curbside_pickup_details: OrderFulfillmentPickupDetailsCurbsidePickupDetails?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var expired_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, any new payments attached to the order are automatically completed.
-	public var expires_at: Timestamp?
-	/// If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
-	public var is_curbside_pickup: Bool?
-	/// A note to provide additional instructions about the pickup fulfillment displayed in the Square Point of Sale application and set by the API.
-	public var note: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was picked up by the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var picked_up_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the pickup window. Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z". For fulfillments with the schedule type `ASAP`, this is automatically set to the current time plus the expected duration to prepare the fulfillment.
-	public var pickup_at: Timestamp?
-	/// The window of time in which the order should be picked up after the `pickup_at` timestamp. Must be in RFC 3339 duration format, e.g., "P1W3D". Can be used as an informational guideline for merchants.
-	public var pickup_window_duration: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var placed_at: Timestamp?
-	/// The duration of time it takes to prepare this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
-	public var prep_time_duration: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment is marked as ready for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var ready_at: Timestamp?
-	/// Information about the person to pick up this fulfillment from a physical location.
-	public var recipient: OrderFulfillmentRecipient?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var rejected_at: Timestamp?
-	/// The schedule type of the pickup fulfillment. Defaults to `SCHEDULED`. See [OrderFulfillmentPickupDetailsScheduleType](#type-orderfulfillmentpickupdetailsscheduletype) for possible values
-	public var schedule_type: OrderFulfillmentPickupDetailsScheduleType?
-
-	/// Contains details necessary to fulfill a pickup order.
-	/// - Parameters:
-	///   - accepted_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - auto_complete_duration: The duration of time after which an in progress pickup fulfillment is automatically moved to the `COMPLETED` state. The duration must be in RFC 3339 format (for example, "P1W3D").  If not set, this pickup fulfillment remains in progress until it is canceled or completed.
-	///   - cancel_reason: A description of why the pickup was canceled. The maximum length: 100 characters.
-	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - curbside_pickup_details: Specific details for curbside pickup. These details can only be populated if `is_curbside_pickup` is set to `true`.
-	///   - expired_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment expired. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - expires_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment expires if it is not marked in progress. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). The expiration time can only be set up to 7 days in the future. If `expires_at` is not set, any new payments attached to the order are automatically completed.
-	///   - is_curbside_pickup: If set to `true`, indicates that this pickup order is for curbside pickup, not in-store pickup.
-	///   - note: A note to provide additional instructions about the pickup fulfillment displayed in the Square Point of Sale application and set by the API.
-	///   - picked_up_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was picked up by the recipient. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - pickup_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) that represents the start of the pickup window. Must be in RFC 3339 timestamp format, e.g., "2016-09-04T23:59:33.123Z". For fulfillments with the schedule type `ASAP`, this is automatically set to the current time plus the expected duration to prepare the fulfillment.
-	///   - pickup_window_duration: The window of time in which the order should be picked up after the `pickup_at` timestamp. Must be in RFC 3339 duration format, e.g., "P1W3D". Can be used as an informational guideline for merchants.
-	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - prep_time_duration: The duration of time it takes to prepare this fulfillment. The duration must be in RFC 3339 format (for example, "P1W3D").
-	///   - ready_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment is marked as ready for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - recipient: Information about the person to pick up this fulfillment from a physical location.
-	///   - rejected_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was rejected. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - schedule_type: The schedule type of the pickup fulfillment. Defaults to `SCHEDULED`. See [OrderFulfillmentPickupDetailsScheduleType](#type-orderfulfillmentpickupdetailsscheduletype) for possible values
-	public init(accepted_at: Timestamp? = nil, auto_complete_duration: Timestamp? = nil, cancel_reason: String? = nil, canceled_at: Timestamp? = nil, curbside_pickup_details: OrderFulfillmentPickupDetailsCurbsidePickupDetails? = nil, expired_at: Timestamp? = nil, expires_at: Timestamp? = nil, is_curbside_pickup: Bool? = nil, note: String? = nil, picked_up_at: Timestamp? = nil, pickup_at: Timestamp? = nil, pickup_window_duration: Timestamp? = nil, placed_at: Timestamp? = nil, prep_time_duration: Timestamp? = nil, ready_at: Timestamp? = nil, recipient: OrderFulfillmentRecipient? = nil, rejected_at: Timestamp? = nil, schedule_type: OrderFulfillmentPickupDetailsScheduleType? = nil) {
-		self.accepted_at = accepted_at
-		self.auto_complete_duration = auto_complete_duration
-		self.cancel_reason = cancel_reason
-		self.canceled_at = canceled_at
-		self.curbside_pickup_details = curbside_pickup_details
-		self.expired_at = expired_at
-		self.expires_at = expires_at
-		self.is_curbside_pickup = is_curbside_pickup
-		self.note = note
-		self.picked_up_at = picked_up_at
-		self.pickup_at = pickup_at
-		self.pickup_window_duration = pickup_window_duration
-		self.placed_at = placed_at
-		self.prep_time_duration = prep_time_duration
-		self.ready_at = ready_at
-		self.recipient = recipient
-		self.rejected_at = rejected_at
-		self.schedule_type = schedule_type
-	}
-}
-
-/// Specific details for curbside pickup.
-public struct OrderFulfillmentPickupDetailsCurbsidePickupDetails: Codable, Equatable {
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the buyer arrived and is waiting for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var buyer_arrived_at: Timestamp?
-	/// Specific details for curbside pickup, such as parking number and vehicle model.
-	public var curbside_details: String?
-
-	/// Specific details for curbside pickup.
-	/// - Parameters:
-	///   - buyer_arrived_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the buyer arrived and is waiting for pickup. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - curbside_details: Specific details for curbside pickup, such as parking number and vehicle model.
-	public init(buyer_arrived_at: Timestamp? = nil, curbside_details: String? = nil) {
-		self.buyer_arrived_at = buyer_arrived_at
-		self.curbside_details = curbside_details
-	}
-}
-
 /// The schedule type of the pickup fulfillment.
 public enum OrderFulfillmentPickupDetailsScheduleType: String, Codable {
 	/// Indicates that the fulfillment will be picked up at a scheduled pickup time.
 	case SCHEDULED
 	/// Indicates that the fulfillment will be picked up as soon as possible and should be prepared immediately.
 	case ASAP
-}
-
-/// Information about the fulfillment recipient.
-public struct OrderFulfillmentRecipient: Codable, Equatable {
-	/// The address of the fulfillment recipient. This field is required. If provided, the address overrides the corresponding customer profile value indicated by `customer_id`.
-	public var address: Address?
-	/// The ID of the customer associated with the fulfillment. If `customer_id` is provided, the fulfillment recipient's `display_name`, `email_address`, and `phone_number` are automatically populated from the targeted customer profile. If these fields are set in the request, the request values override the information from the customer profile. If the targeted customer profile does not contain the necessary information and these fields are left unset, the request results in an error.
-	public var customer_id: String?
-	/// The display name of the fulfillment recipient. This field is required. If provided, the display name overrides the corresponding customer profile value indicated by `customer_id`.
-	public var display_name: String?
-	/// The email address of the fulfillment recipient. If provided, the email address overrides the corresponding customer profile value indicated by `customer_id`.
-	public var email_address: String?
-	/// The phone number of the fulfillment recipient. This field is required. If provided, the phone number overrides the corresponding customer profile value indicated by `customer_id`.
-	public var phone_number: String?
-
-	/// Information about the fulfillment recipient.
-	/// - Parameters:
-	///   - address: The address of the fulfillment recipient. This field is required. If provided, the address overrides the corresponding customer profile value indicated by `customer_id`.
-	///   - customer_id: The ID of the customer associated with the fulfillment. If `customer_id` is provided, the fulfillment recipient's `display_name`, `email_address`, and `phone_number` are automatically populated from the targeted customer profile. If these fields are set in the request, the request values override the information from the customer profile. If the targeted customer profile does not contain the necessary information and these fields are left unset, the request results in an error.
-	///   - display_name: The display name of the fulfillment recipient. This field is required. If provided, the display name overrides the corresponding customer profile value indicated by `customer_id`.
-	///   - email_address: The email address of the fulfillment recipient. If provided, the email address overrides the corresponding customer profile value indicated by `customer_id`.
-	///   - phone_number: The phone number of the fulfillment recipient. This field is required. If provided, the phone number overrides the corresponding customer profile value indicated by `customer_id`.
-	public init(address: Address? = nil, customer_id: String? = nil, display_name: String? = nil, email_address: String? = nil, phone_number: String? = nil) {
-		self.address = address
-		self.customer_id = customer_id
-		self.display_name = display_name
-		self.email_address = email_address
-		self.phone_number = phone_number
-	}
-}
-
-/// Contains the details necessary to fulfill a shipment order.
-public struct OrderFulfillmentShipmentDetails: Codable, Equatable {
-	/// A description of why the shipment was canceled.
-	public var cancel_reason: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating the shipment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var canceled_at: Timestamp?
-	/// The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
-	public var carrier: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment is expected to be delivered to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var expected_shipped_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment failed to be completed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var failed_at: Timestamp?
-	/// A description of why the shipment failed to be completed.
-	public var failure_reason: String?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `RESERVED` state, which  indicates that preparation of this shipment has begun. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var in_progress_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `PREPARED` state, which indicates that the fulfillment is packaged. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var packaged_at: Timestamp?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment was requested. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var placed_at: Timestamp?
-	/// Information about the person to receive this shipment fulfillment.
-	public var recipient: OrderFulfillmentRecipient?
-	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `COMPLETED` state, which indicates that the fulfillment has been given to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	public var shipped_at: Timestamp?
-	/// A note with additional information for the shipping carrier.
-	public var shipping_note: String?
-	/// A description of the type of shipping product purchased from the carrier (such as First Class, Priority, or Express).
-	public var shipping_type: String?
-	/// The reference number provided by the carrier to track the shipment's progress.
-	public var tracking_number: String?
-	/// A link to the tracking webpage on the carrier's website.
-	public var tracking_url: String?
-
-	/// Contains the details necessary to fulfill a shipment order.
-	/// - Parameters:
-	///   - cancel_reason: A description of why the shipment was canceled.
-	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating the shipment was canceled. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - carrier: The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
-	///   - expected_shipped_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment is expected to be delivered to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - failed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment failed to be completed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - failure_reason: A description of why the shipment failed to be completed.
-	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `RESERVED` state, which  indicates that preparation of this shipment has begun. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - packaged_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `PREPARED` state, which indicates that the fulfillment is packaged. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the shipment was requested. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - recipient: Information about the person to receive this shipment fulfillment.
-	///   - shipped_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when this fulfillment was moved to the `COMPLETED` state, which indicates that the fulfillment has been given to the shipping carrier. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
-	///   - shipping_note: A note with additional information for the shipping carrier.
-	///   - shipping_type: A description of the type of shipping product purchased from the carrier (such as First Class, Priority, or Express).
-	///   - tracking_number: The reference number provided by the carrier to track the shipment's progress.
-	///   - tracking_url: A link to the tracking webpage on the carrier's website.
-	public init(cancel_reason: String? = nil, canceled_at: Timestamp? = nil, carrier: String? = nil, expected_shipped_at: Timestamp? = nil, failed_at: Timestamp? = nil, failure_reason: String? = nil, in_progress_at: Timestamp? = nil, packaged_at: Timestamp? = nil, placed_at: Timestamp? = nil, recipient: OrderFulfillmentRecipient? = nil, shipped_at: Timestamp? = nil, shipping_note: String? = nil, shipping_type: String? = nil, tracking_number: String? = nil, tracking_url: String? = nil) {
-		self.cancel_reason = cancel_reason
-		self.canceled_at = canceled_at
-		self.carrier = carrier
-		self.expected_shipped_at = expected_shipped_at
-		self.failed_at = failed_at
-		self.failure_reason = failure_reason
-		self.in_progress_at = in_progress_at
-		self.packaged_at = packaged_at
-		self.placed_at = placed_at
-		self.recipient = recipient
-		self.shipped_at = shipped_at
-		self.shipping_note = shipping_note
-		self.shipping_type = shipping_type
-		self.tracking_number = tracking_number
-		self.tracking_url = tracking_url
-	}
 }
 
 /// The current state of this fulfillment.
@@ -17061,6 +20472,50 @@ public struct OrderFulfillmentUpdated: Codable, Equatable {
 		self.state = state
 		self.updated_at = updated_at
 		self.version = version
+	}
+}
+
+/// Published when an [OrderFulfillment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderFulfillment) is created or updated. This event is triggered only by the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint call.
+public struct OrderFulfillmentUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: OrderFulfillmentUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"order.fulfillment.updated"`.
+	public var type: String?
+
+	/// Published when an [OrderFulfillment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderFulfillment) is created or updated. This event is triggered only by the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint call.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"order.fulfillment.updated"`.
+	public init(created_at: Timestamp? = nil, data: OrderFulfillmentUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct OrderFulfillmentUpdatedEventData: Codable, Equatable {
+	/// ID of the affected order.
+	public var id: String?
+	/// An object containing information about the updated Order.
+	public var object: OrderFulfillmentUpdatedObject?
+	/// Name of the affected object’s type, `"order_fulfillment_updated"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: OrderFulfillmentUpdatedObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
 	}
 }
 
@@ -18143,25 +21598,56 @@ public struct OrderUpdated: Codable, Equatable {
 	}
 }
 
+/// Published when an [Order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) is updated. This event is triggered by the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint call, Order Manager, or the Square Dashboard.
+public struct OrderUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: OrderUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"order.updated"`.
+	public var type: String?
+
+	/// Published when an [Order](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Order) is updated. This event is triggered by the [UpdateOrder](api-endpoint:Orders-UpdateOrder) endpoint call, Order Manager, or the Square Dashboard.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"order.updated"`.
+	public init(created_at: Timestamp? = nil, data: OrderUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct OrderUpdatedEventData: Codable, Equatable {
+	/// ID of the affected order.
+	public var id: String?
+	/// An object containing information about the updated Order.
+	public var object: OrderUpdatedObject?
+	/// Name of the affected object’s type, `"order_updated"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: OrderUpdatedObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
 public struct OrderUpdatedObject: Codable, Equatable {
 	/// Information about the updated order.
 	public var order_updated: OrderUpdated?
 
 	public init(order_updated: OrderUpdated? = nil) {
 		self.order_updated = order_updated
-	}
-}
-
-/// Used *internally* to encapsulate pagination details. The resulting proto will be base62 encoded in order to produce a cursor that can be used externally.
-public struct PaginationCursor: Codable, Equatable {
-	/// The ID of the last resource in the current page. The page can be in an ascending or descending order
-	public var order_value: String?
-
-	/// Used *internally* to encapsulate pagination details. The resulting proto will be base62 encoded in order to produce a cursor that can be used externally.
-	/// - Parameters:
-	///   - order_value: The ID of the last resource in the current page. The page can be in an ascending or descending order
-	public init(order_value: String? = nil) {
-		self.order_value = order_value
 	}
 }
 
@@ -18697,6 +22183,59 @@ public struct PaymentBalanceActivityThirdPartyFeeRefundDetail: Codable, Equatabl
 	}
 }
 
+/// Published when a [Payment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payment) is created.
+public struct PaymentCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: PaymentCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"payment.created"`.
+	public var type: String?
+
+	/// Published when a [Payment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payment) is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"payment.created"`.
+	public init(created_at: Timestamp? = nil, data: PaymentCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct PaymentCreatedEventData: Codable, Equatable {
+	/// ID of the affected payment.
+	public var id: String?
+	/// An object containing the created payment.
+	public var object: PaymentCreatedEventObject?
+	/// Name of the affected object’s type, `"payment"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: PaymentCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct PaymentCreatedEventObject: Codable, Equatable {
+	/// The created payment.
+	public var payment: Payment?
+
+	public init(payment: Payment? = nil) {
+		self.payment = payment
+	}
+}
+
 public struct PaymentLink: Codable, Equatable {
 	/// The checkout options configured for the payment link. For more information, see [Optional Checkout Configurations](https://developer.squareup.com/docs/checkout-api/optional-checkout-configurations).
 	public var checkout_options: CheckoutOptions?
@@ -18844,6 +22383,59 @@ public struct PaymentRefund: Codable, Equatable {
 		self.terminal_refund_id = terminal_refund_id
 		self.unlinked = unlinked
 		self.updated_at = updated_at
+	}
+}
+
+/// Published when a [Payment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payment) is updated. Typically the `payment.status`, or `card_details.status` fields are updated as a payment is canceled, authorized, or completed.
+public struct PaymentUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: PaymentUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"payment.updated"`.
+	public var type: String?
+
+	/// Published when a [Payment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payment) is updated. Typically the `payment.status`, or `card_details.status` fields are updated as a payment is canceled, authorized, or completed.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"payment.updated"`.
+	public init(created_at: Timestamp? = nil, data: PaymentUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct PaymentUpdatedEventData: Codable, Equatable {
+	/// ID of the affected payment.
+	public var id: String?
+	/// An object containing the updated payment.
+	public var object: PaymentUpdatedEventObject?
+	/// Name of the affected object’s type, `"payment"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: PaymentUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct PaymentUpdatedEventObject: Codable, Equatable {
+	/// The updated payment.
+	public var payment: Payment?
+
+	public init(payment: Payment? = nil) {
+		self.payment = payment
 	}
 }
 
@@ -19041,6 +22633,63 @@ public struct PayoutEntry: Codable, Equatable {
 	}
 }
 
+/// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) has failed.
+public struct PayoutFailedEvent: Codable, Equatable {
+	/// The timestamp of when the event was verified, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: PayoutFailedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event that this represents, `payout.failed`.
+	public var type: String?
+
+	/// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) has failed.
+	/// - Parameters:
+	///   - created_at: The timestamp of when the event was verified, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event that this represents, `payout.failed`.
+	public init(created_at: Timestamp? = nil, data: PayoutFailedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct PayoutFailedEventData: Codable, Equatable {
+	/// The ID of the failed payout.
+	public var id: String?
+	/// An object containing the failed payout.
+	public var object: PayoutFailedEventObject?
+	/// The name of the affected object's type, `payout`.
+	public var type: String?
+
+	public init(id: String? = nil, object: PayoutFailedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct PayoutFailedEventObject: Codable, Equatable {
+	/// The payout that failed.
+	public var payout: Payout?
+
+	public init(payout: Payout? = nil) {
+		self.payout = payout
+	}
+}
+
 /// Represents a payout fee that can incur as part of a payout.
 public struct PayoutFee: Codable, Equatable {
 	/// The money amount of the payout fee.
@@ -19068,6 +22717,120 @@ public enum PayoutFeeType: String, Codable {
 	case TRANSFER_FEE
 	/// Taxes associated with the transfer fee.
 	case TAX_ON_TRANSFER_FEE
+}
+
+/// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) is complete.
+public struct PayoutPaidEvent: Codable, Equatable {
+	/// Timestamp of when the event was verified, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: PayoutPaidEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"payout.paid"`.
+	public var type: String?
+
+	/// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) is complete.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was verified, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"payout.paid"`.
+	public init(created_at: Timestamp? = nil, data: PayoutPaidEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct PayoutPaidEventData: Codable, Equatable {
+	/// ID of the completed payout.
+	public var id: String?
+	/// An object containing the completed payout.
+	public var object: PayoutPaidEventObject?
+	/// Name of the affected object’s type, `"payout"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: PayoutPaidEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct PayoutPaidEventObject: Codable, Equatable {
+	/// The payout that has completed.
+	public var payout: Payout?
+
+	public init(payout: Payout? = nil) {
+		self.payout = payout
+	}
+}
+
+/// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) is sent.
+public struct PayoutSentEvent: Codable, Equatable {
+	/// Timestamp of when the event was verified, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: PayoutSentEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target location associated with the event.
+	public var location_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"payout.sent"`.
+	public var type: String?
+
+	/// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) is sent.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was verified, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - location_id: The ID of the target location associated with the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"payout.sent"`.
+	public init(created_at: Timestamp? = nil, data: PayoutSentEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct PayoutSentEventData: Codable, Equatable {
+	/// ID of the sent payout.
+	public var id: String?
+	/// An object containing the sent payout.
+	public var object: PayoutSentEventObject?
+	/// Name of the affected object’s type, `"payout"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: PayoutSentEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct PayoutSentEventObject: Codable, Equatable {
+	/// The payout that was sent.
+	public var payout: Payout?
+
+	public init(payout: Payout? = nil) {
+		self.payout = payout
+	}
 }
 
 /// Payout status types
@@ -19294,23 +23057,6 @@ public struct QrCodeOptions: Codable, Equatable {
 	}
 }
 
-/// A whole number or unreduced fractional ratio.
-public struct QuantityRatio: Codable, Equatable {
-	/// The whole or fractional quantity as the numerator.
-	public var quantity: Int?
-	/// The whole or fractional quantity as the denominator. With fractional quantity this field is the denominator and quantity is the numerator. The default value is `1`. For example, when `quantity=3` and `quantity_denominator` is unspecified, the quantity ratio is `3` or `3/1`.
-	public var quantity_denominator: Int?
-
-	/// A whole number or unreduced fractional ratio.
-	/// - Parameters:
-	///   - quantity: The whole or fractional quantity as the numerator.
-	///   - quantity_denominator: The whole or fractional quantity as the denominator. With fractional quantity this field is the denominator and quantity is the numerator. The default value is `1`. For example, when `quantity=3` and `quantity_denominator` is unspecified, the quantity ratio is `3` or `3/1`.
-	public init(quantity: Int? = nil, quantity_denominator: Int? = nil) {
-		self.quantity = quantity
-		self.quantity_denominator = quantity_denominator
-	}
-}
-
 /// Describes an ad hoc item and price to generate a quick pay checkout link. For more information, see [Quick Pay Checkout](https://developer.squareup.com/docs/checkout-api/quick-pay-checkout).
 public struct QuickPay: Codable, Equatable {
 	/// The ID of the business location the checkout is associated with.
@@ -19423,7 +23169,7 @@ public struct Refund: Codable, Equatable {
 	/// The current status of the refund (`PENDING`, `APPROVED`, `REJECTED`, or `FAILED`). See [RefundStatus](#type-refundstatus) for possible values
 	public var status: RefundStatus
 	/// The ID of the refunded tender.
-	public var tender_id: String
+	public var tender_id: String?
 	/// The ID of the transaction that the refunded tender is part of.
 	public var transaction_id: String?
 
@@ -19439,17 +23185,70 @@ public struct Refund: Codable, Equatable {
 	///   - status: The current status of the refund (`PENDING`, `APPROVED`, `REJECTED`, or `FAILED`). See [RefundStatus](#type-refundstatus) for possible values
 	///   - tender_id: The ID of the refunded tender.
 	///   - transaction_id: The ID of the transaction that the refunded tender is part of.
-	public init(amount_money: Money, id: String, location_id: String, reason: String, status: RefundStatus, tender_id: String, additional_recipients: [AdditionalRecipient]? = nil, created_at: Timestamp? = nil, processing_fee_money: Money? = nil, transaction_id: String? = nil) {
+	public init(amount_money: Money, id: String, location_id: String, reason: String, status: RefundStatus, additional_recipients: [AdditionalRecipient]? = nil, created_at: Timestamp? = nil, processing_fee_money: Money? = nil, tender_id: String? = nil, transaction_id: String? = nil) {
 		self.amount_money = amount_money
 		self.id = id
 		self.location_id = location_id
 		self.reason = reason
 		self.status = status
-		self.tender_id = tender_id
 		self.additional_recipients = additional_recipients
 		self.created_at = created_at
 		self.processing_fee_money = processing_fee_money
+		self.tender_id = tender_id
 		self.transaction_id = transaction_id
+	}
+}
+
+/// Published when a [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund) is created.
+public struct RefundCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: RefundCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"refund.created"`.
+	public var type: String?
+
+	/// Published when a [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund) is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"refund.created"`.
+	public init(created_at: Timestamp? = nil, data: RefundCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct RefundCreatedEventData: Codable, Equatable {
+	/// ID of the affected refund.
+	public var id: String?
+	/// An object containing the created refund.
+	public var object: RefundCreatedEventObject?
+	/// Name of the affected object’s type, `"refund"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: RefundCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct RefundCreatedEventObject: Codable, Equatable {
+	/// The created refund.
+	public var refund: PaymentRefund?
+
+	public init(refund: PaymentRefund? = nil) {
+		self.refund = refund
 	}
 }
 
@@ -19543,6 +23342,59 @@ public enum RefundStatus: String, Codable {
 	case FAILED
 }
 
+/// Published when a [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund) is updated. Typically the `refund.status` changes when a refund is completed.
+public struct RefundUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: RefundUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"refund.updated"`.
+	public var type: String?
+
+	/// Published when a [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund) is updated. Typically the `refund.status` changes when a refund is completed.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"refund.updated"`.
+	public init(created_at: Timestamp? = nil, data: RefundUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct RefundUpdatedEventData: Codable, Equatable {
+	/// ID of the affected refund.
+	public var id: String?
+	/// An object containing the updated refund.
+	public var object: RefundUpdatedEventObject?
+	/// Name of the affected object’s type, `"refund"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: RefundUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct RefundUpdatedEventObject: Codable, Equatable {
+	/// The updated refund.
+	public var refund: PaymentRefund?
+
+	public init(refund: PaymentRefund? = nil) {
+		self.refund = refund
+	}
+}
+
 /// Defines the parameters that can be included in the body of a request to the [RegisterDomain](api-endpoint:ApplePay-RegisterDomain) endpoint.
 public struct RegisterDomainRequest: Codable, Equatable {
 	/// A domain name as described in RFC-1034 that will be registered with ApplePay.
@@ -19579,12 +23431,6 @@ public enum RegisterDomainResponseStatus: String, Codable {
 	case PENDING
 	/// The domain is added and verified. It can be used to accept Apple Pay transactions.
 	case VERIFIED
-}
-
-/// Defines the fields that are included in the request body of a request to the [RemoveGroupFromCustomer](api-endpoint:Customers-RemoveGroupFromCustomer) endpoint.
-public struct RemoveGroupFromCustomerRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](api-endpoint:Customers-RemoveGroupFromCustomer) endpoint.
@@ -19638,19 +23484,6 @@ public struct ResumeSubscriptionResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) request.
-public struct RetrieveBookingCustomAttributeDefinitionRequest: Codable, Equatable {
-	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-
-	/// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public init(version: Int? = nil) {
-		self.version = version
-	}
-}
-
 /// Represents a [RetrieveBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttributeDefinition) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveBookingCustomAttributeDefinitionResponse: Codable, Equatable {
 	/// The retrieved custom attribute definition.
@@ -19665,23 +23498,6 @@ public struct RetrieveBookingCustomAttributeDefinitionResponse: Codable, Equatab
 	public init(custom_attribute_definition: CustomAttributeDefinition? = nil, errors: [SquareError]? = nil) {
 		self.custom_attribute_definition = custom_attribute_definition
 		self.errors = errors
-	}
-}
-
-/// Represents a [RetrieveBookingCustomAttribute](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttribute) request.
-public struct RetrieveBookingCustomAttributeRequest: Codable, Equatable {
-	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definition: Bool?
-
-	/// Represents a [RetrieveBookingCustomAttribute](api-endpoint:BookingCustomAttributes-RetrieveBookingCustomAttribute) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(version: Int? = nil, with_definition: Bool? = nil) {
-		self.version = version
-		self.with_definition = with_definition
 	}
 }
 
@@ -19702,11 +23518,6 @@ public struct RetrieveBookingCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveBookingRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveBookingResponse: Codable, Equatable {
 	/// The booking that was requested.
 	public var booking: Booking?
@@ -19719,11 +23530,6 @@ public struct RetrieveBookingResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveBusinessBookingProfileRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveBusinessBookingProfileResponse: Codable, Equatable {
 	/// The seller's booking profile.
 	public var business_booking_profile: BusinessBookingProfile?
@@ -19734,12 +23540,6 @@ public struct RetrieveBusinessBookingProfileResponse: Codable, Equatable {
 		self.business_booking_profile = business_booking_profile
 		self.errors = errors
 	}
-}
-
-/// Retrieves details for a specific Card. Accessible via HTTP requests at GET https://connect.squareup.com/v2/cards/{card_id}
-public struct RetrieveCardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [RetrieveCard](api-endpoint:Cards-RetrieveCard) endpoint.  Note: if there are errors processing the request, the card field will not be present.
@@ -19759,15 +23559,6 @@ public struct RetrieveCardResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveCashDrawerShiftRequest: Codable, Equatable {
-	/// The ID of the location to retrieve cash drawer shifts from.
-	public var location_id: String
-
-	public init(location_id: String) {
-		self.location_id = location_id
-	}
-}
-
 public struct RetrieveCashDrawerShiftResponse: Codable, Equatable {
 	/// The cash drawer shift queried for.
 	public var cash_drawer_shift: CashDrawerShift?
@@ -19777,21 +23568,6 @@ public struct RetrieveCashDrawerShiftResponse: Codable, Equatable {
 	public init(cash_drawer_shift: CashDrawerShift? = nil, errors: [SquareError]? = nil) {
 		self.cash_drawer_shift = cash_drawer_shift
 		self.errors = errors
-	}
-}
-
-public struct RetrieveCatalogObjectRequest: Codable, Equatable {
-	/// Requests objects as of a specific version of the catalog. This allows you to retrieve historical versions of objects. The value to retrieve a specific version of an object can be found in the version field of [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s. If not included, results will be from the current version of the catalog.
-	public var catalog_version: Int?
-	/// Specifies whether or not to include the `path_to_root` list for each returned category instance. The `path_to_root` list consists of `CategoryPathToRootNode` objects and specifies the path that starts with the immediate parent category of the returned category and ends with its root category. If the returned category is a top-level category, the `path_to_root` list is empty and is not returned in the response payload.
-	public var include_category_path_to_root: Bool?
-	/// If `true`, the response will include additional objects that are related to the requested objects. Related objects are defined as any objects referenced by ID by the results in the `objects` field of the response. These objects are put in the `related_objects` field. Setting this to `true` is helpful when the objects are needed for immediate display to a user. This process only goes one level deep. Objects referenced by the related objects will not be included. For example,  if the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.  Default value: `false`
-	public var include_related_objects: Bool?
-
-	public init(catalog_version: Int? = nil, include_category_path_to_root: Bool? = nil, include_related_objects: Bool? = nil) {
-		self.catalog_version = catalog_version
-		self.include_category_path_to_root = include_category_path_to_root
-		self.include_related_objects = include_related_objects
 	}
 }
 
@@ -19807,19 +23583,6 @@ public struct RetrieveCatalogObjectResponse: Codable, Equatable {
 		self.errors = errors
 		self.object = object
 		self.related_objects = related_objects
-	}
-}
-
-/// Represents a [RetrieveCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttributeDefinition) request.
-public struct RetrieveCustomerCustomAttributeDefinitionRequest: Codable, Equatable {
-	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-
-	/// Represents a [RetrieveCustomerCustomAttributeDefinition](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttributeDefinition) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public init(version: Int? = nil) {
-		self.version = version
 	}
 }
 
@@ -19840,23 +23603,6 @@ public struct RetrieveCustomerCustomAttributeDefinitionResponse: Codable, Equata
 	}
 }
 
-/// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) request.
-public struct RetrieveCustomerCustomAttributeRequest: Codable, Equatable {
-	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definition: Bool?
-
-	/// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(version: Int? = nil, with_definition: Bool? = nil) {
-		self.version = version
-		self.with_definition = with_definition
-	}
-}
-
 /// Represents a [RetrieveCustomerCustomAttribute](api-endpoint:CustomerCustomAttributes-RetrieveCustomerCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveCustomerCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
@@ -19872,12 +23618,6 @@ public struct RetrieveCustomerCustomAttributeResponse: Codable, Equatable {
 		self.custom_attribute = custom_attribute
 		self.errors = errors
 	}
-}
-
-/// Defines the fields that can be included in a request to the [RetrieveCustomerGroup](api-endpoint:CustomerGroups-RetrieveCustomerGroup) endpoint.
-public struct RetrieveCustomerGroupRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [RetrieveCustomerGroup](api-endpoint:CustomerGroups-RetrieveCustomerGroup) endpoint.  Either `errors` or `group` is present in a given response (never both).
@@ -19897,12 +23637,6 @@ public struct RetrieveCustomerGroupResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in requests to the `RetrieveCustomer` endpoint.
-public struct RetrieveCustomerRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the `RetrieveCustomer` endpoint.  Either `errors` or `customer` is present in a given response (never both).
 public struct RetrieveCustomerResponse: Codable, Equatable {
 	/// The requested customer.
@@ -19918,12 +23652,6 @@ public struct RetrieveCustomerResponse: Codable, Equatable {
 		self.customer = customer
 		self.errors = errors
 	}
-}
-
-/// Defines the valid parameters for requests to the `RetrieveCustomerSegmentRequest` endpoint.
-public struct RetrieveCustomerSegmentRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body for requests to the `RetrieveCustomerSegment` endpoint.  Either `errors` or `segment` is present in a given response (never both).
@@ -19943,12 +23671,6 @@ public struct RetrieveCustomerSegmentResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the parameters for a `RetrieveDisputeEvidence` request.
-public struct RetrieveDisputeEvidenceRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields in a `RetrieveDisputeEvidence` response.
 public struct RetrieveDisputeEvidenceResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -19966,12 +23688,6 @@ public struct RetrieveDisputeEvidenceResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the request parameters for the `RetrieveDispute` endpoint.
-public struct RetrieveDisputeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines fields in a `RetrieveDispute` response.
 public struct RetrieveDisputeResponse: Codable, Equatable {
 	/// Details about the requested `Dispute`.
@@ -19987,11 +23703,6 @@ public struct RetrieveDisputeResponse: Codable, Equatable {
 		self.dispute = dispute
 		self.errors = errors
 	}
-}
-
-public struct RetrieveEmployeeRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 public struct RetrieveEmployeeResponse: Codable, Equatable {
@@ -20065,12 +23776,6 @@ public struct RetrieveGiftCardFromNonceResponse: Codable, Equatable {
 	}
 }
 
-/// A request to retrieve digital gift cards.
-public struct RetrieveGiftCardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response that contains a `GiftCard`. The response might contain a set of `Error` objects if the request resulted in errors.
 public struct RetrieveGiftCardResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -20088,11 +23793,6 @@ public struct RetrieveGiftCardResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveInventoryAdjustmentRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveInventoryAdjustmentResponse: Codable, Equatable {
 	/// The requested [InventoryAdjustment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryAdjustment).
 	public var adjustment: InventoryAdjustment?
@@ -20102,18 +23802,6 @@ public struct RetrieveInventoryAdjustmentResponse: Codable, Equatable {
 	public init(adjustment: InventoryAdjustment? = nil, errors: [SquareError]? = nil) {
 		self.adjustment = adjustment
 		self.errors = errors
-	}
-}
-
-public struct RetrieveInventoryChangesRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
-	public var cursor: String?
-	/// The [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
-	public var location_ids: String?
-
-	public init(cursor: String? = nil, location_ids: String? = nil) {
-		self.cursor = cursor
-		self.location_ids = location_ids
 	}
 }
 
@@ -20132,18 +23820,6 @@ public struct RetrieveInventoryChangesResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveInventoryCountRequest: Codable, Equatable {
-	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
-	public var cursor: String?
-	/// The [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) IDs to look up as a comma-separated list. An empty list queries all locations.
-	public var location_ids: String?
-
-	public init(cursor: String? = nil, location_ids: String? = nil) {
-		self.cursor = cursor
-		self.location_ids = location_ids
-	}
-}
-
 public struct RetrieveInventoryCountResponse: Codable, Equatable {
 	/// The current calculated inventory counts for the requested object and locations.
 	public var counts: [InventoryCount]?
@@ -20159,11 +23835,6 @@ public struct RetrieveInventoryCountResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveInventoryPhysicalCountRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveInventoryPhysicalCountResponse: Codable, Equatable {
 	/// The requested [InventoryPhysicalCount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryPhysicalCount).
 	public var count: InventoryPhysicalCount?
@@ -20176,11 +23847,6 @@ public struct RetrieveInventoryPhysicalCountResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveInventoryTransferRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveInventoryTransferResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20191,12 +23857,6 @@ public struct RetrieveInventoryTransferResponse: Codable, Equatable {
 		self.errors = errors
 		self.transfer = transfer
 	}
-}
-
-/// Represents a [RetrieveJob](api-endpoint:Team-RetrieveJob) request.
-public struct RetrieveJobRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a [RetrieveJob](api-endpoint:Team-RetrieveJob) response. Either `job` or `errors` is present in the response.
@@ -20216,11 +23876,6 @@ public struct RetrieveJobResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveLocationBookingProfileRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveLocationBookingProfileResponse: Codable, Equatable {
 	/// Errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20230,19 +23885,6 @@ public struct RetrieveLocationBookingProfileResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, location_booking_profile: LocationBookingProfile? = nil) {
 		self.errors = errors
 		self.location_booking_profile = location_booking_profile
-	}
-}
-
-/// Represents a [RetrieveLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttributeDefinition) request.
-public struct RetrieveLocationCustomAttributeDefinitionRequest: Codable, Equatable {
-	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-
-	/// Represents a [RetrieveLocationCustomAttributeDefinition](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttributeDefinition) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public init(version: Int? = nil) {
-		self.version = version
 	}
 }
 
@@ -20263,23 +23905,6 @@ public struct RetrieveLocationCustomAttributeDefinitionResponse: Codable, Equata
 	}
 }
 
-/// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) request.
-public struct RetrieveLocationCustomAttributeRequest: Codable, Equatable {
-	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definition: Bool?
-
-	/// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(version: Int? = nil, with_definition: Bool? = nil) {
-		self.version = version
-		self.with_definition = with_definition
-	}
-}
-
 /// Represents a [RetrieveLocationCustomAttribute](api-endpoint:LocationCustomAttributes-RetrieveLocationCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveLocationCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
@@ -20295,12 +23920,6 @@ public struct RetrieveLocationCustomAttributeResponse: Codable, Equatable {
 		self.custom_attribute = custom_attribute
 		self.errors = errors
 	}
-}
-
-/// Defines the fields that are included in the request body for the [RetrieveLocation](api-endpoint:Locations-RetrieveLocation) endpoint.
-public struct RetrieveLocationRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that the [RetrieveLocation](api-endpoint:Locations-RetrieveLocation) endpoint returns in a response.
@@ -20320,11 +23939,6 @@ public struct RetrieveLocationResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveLocationSettingsRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveLocationSettingsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20335,12 +23949,6 @@ public struct RetrieveLocationSettingsResponse: Codable, Equatable {
 		self.errors = errors
 		self.location_settings = location_settings
 	}
-}
-
-/// A request to retrieve a loyalty account.
-public struct RetrieveLoyaltyAccountRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// A response that includes the loyalty account.
@@ -20360,12 +23968,6 @@ public struct RetrieveLoyaltyAccountResponse: Codable, Equatable {
 	}
 }
 
-/// A request to retrieve the [loyalty program](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyProgram) that belongs to a seller. A seller can have only one loyalty program.
-public struct RetrieveLoyaltyProgramRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response that contains the loyalty program.
 public struct RetrieveLoyaltyProgramResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -20381,12 +23983,6 @@ public struct RetrieveLoyaltyProgramResponse: Codable, Equatable {
 		self.errors = errors
 		self.program = program
 	}
-}
-
-/// Represents a [RetrieveLoyaltyPromotionPromotions](api-endpoint:Loyalty-RetrieveLoyaltyPromotion) request.
-public struct RetrieveLoyaltyPromotionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a [RetrieveLoyaltyPromotionPromotions](api-endpoint:Loyalty-RetrieveLoyaltyPromotion) response.
@@ -20406,12 +24002,6 @@ public struct RetrieveLoyaltyPromotionResponse: Codable, Equatable {
 	}
 }
 
-/// A request to retrieve a loyalty reward.
-public struct RetrieveLoyaltyRewardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response that includes the loyalty reward.
 public struct RetrieveLoyaltyRewardResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -20426,19 +24016,6 @@ public struct RetrieveLoyaltyRewardResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, reward: LoyaltyReward? = nil) {
 		self.errors = errors
 		self.reward = reward
-	}
-}
-
-/// Represents a [RetrieveMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttributeDefinition) request.
-public struct RetrieveMerchantCustomAttributeDefinitionRequest: Codable, Equatable {
-	/// The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-
-	/// Represents a [RetrieveMerchantCustomAttributeDefinition](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttributeDefinition) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute definition, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public init(version: Int? = nil) {
-		self.version = version
 	}
 }
 
@@ -20459,23 +24036,6 @@ public struct RetrieveMerchantCustomAttributeDefinitionResponse: Codable, Equata
 	}
 }
 
-/// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) request.
-public struct RetrieveMerchantCustomAttributeRequest: Codable, Equatable {
-	/// The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	public var version: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public var with_definition: Bool?
-
-	/// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) request.
-	/// - Parameters:
-	///   - version: The current version of the custom attribute, which is used for strongly consistent reads to guarantee that you receive the most up-to-date data. When included in the request, Square returns the specified version or a higher version if one exists. If the specified version is higher than the current version, Square returns a `BAD_REQUEST` error.
-	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of the custom attribute. Set this parameter to `true` to get the name and description of the custom attribute, information about the data type, or other definition details. The default value is `false`.
-	public init(version: Int? = nil, with_definition: Bool? = nil) {
-		self.version = version
-		self.with_definition = with_definition
-	}
-}
-
 /// Represents a [RetrieveMerchantCustomAttribute](api-endpoint:MerchantCustomAttributes-RetrieveMerchantCustomAttribute) response. Either `custom_attribute_definition` or `errors` is present in the response.
 public struct RetrieveMerchantCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition` field.
@@ -20491,12 +24051,6 @@ public struct RetrieveMerchantCustomAttributeResponse: Codable, Equatable {
 		self.custom_attribute = custom_attribute
 		self.errors = errors
 	}
-}
-
-/// Request object for the [RetrieveMerchant](api-endpoint:Merchants-RetrieveMerchant) endpoint.
-public struct RetrieveMerchantRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// The response object returned by the [RetrieveMerchant](api-endpoint:Merchants-RetrieveMerchant) endpoint.
@@ -20516,11 +24070,6 @@ public struct RetrieveMerchantResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveMerchantSettingsRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveMerchantSettingsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20530,19 +24079,6 @@ public struct RetrieveMerchantSettingsResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, merchant_settings: CheckoutMerchantSettings? = nil) {
 		self.errors = errors
 		self.merchant_settings = merchant_settings
-	}
-}
-
-/// Represents a get request for an order custom attribute definition.
-public struct RetrieveOrderCustomAttributeDefinitionRequest: Codable, Equatable {
-	/// To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include this optional field and specify the current version of the custom attribute.
-	public var version: Int?
-
-	/// Represents a get request for an order custom attribute definition.
-	/// - Parameters:
-	///   - version: To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include this optional field and specify the current version of the custom attribute.
-	public init(version: Int? = nil) {
-		self.version = version
 	}
 }
 
@@ -20563,23 +24099,6 @@ public struct RetrieveOrderCustomAttributeDefinitionResponse: Codable, Equatable
 	}
 }
 
-/// Represents a get request for an order custom attribute.
-public struct RetrieveOrderCustomAttributeRequest: Codable, Equatable {
-	/// To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include this optional field and specify the current version of the custom attribute.
-	public var version: Int?
-	/// Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each  custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
-	public var with_definition: Bool?
-
-	/// Represents a get request for an order custom attribute.
-	/// - Parameters:
-	///   - version: To enable [optimistic concurrency](https://developer.squareup.com/docs/build-basics/common-api-patterns/optimistic-concurrency) control, include this optional field and specify the current version of the custom attribute.
-	///   - with_definition: Indicates whether to return the [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition) in the `definition` field of each  custom attribute. Set this parameter to `true` to get the name and description of each custom attribute,  information about the data type, or other definition details. The default value is `false`.
-	public init(version: Int? = nil, with_definition: Bool? = nil) {
-		self.version = version
-		self.with_definition = with_definition
-	}
-}
-
 /// Represents a response from getting an order custom attribute.
 public struct RetrieveOrderCustomAttributeResponse: Codable, Equatable {
 	/// The retrieved custom attribute. If `with_definition` was set to `true` in the request, the custom attribute definition is returned in the `definition field.
@@ -20597,11 +24116,6 @@ public struct RetrieveOrderCustomAttributeResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveOrderRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveOrderResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20614,11 +24128,6 @@ public struct RetrieveOrderResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrievePaymentLinkRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrievePaymentLinkResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20629,12 +24138,6 @@ public struct RetrievePaymentLinkResponse: Codable, Equatable {
 		self.errors = errors
 		self.payment_link = payment_link
 	}
-}
-
-/// Represents a [RetrieveScheduledShift](api-endpoint:Labor-RetrieveScheduledShift) request.
-public struct RetrieveScheduledShiftRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a [RetrieveScheduledShift](api-endpoint:Labor-RetrieveScheduledShift) response. Either `scheduled_shift` or `errors` is present in the response.
@@ -20654,12 +24157,6 @@ public struct RetrieveScheduledShiftResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a `RetrieveSnippet` request.
-public struct RetrieveSnippetRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a `RetrieveSnippet` response. The response can include either `snippet` or `errors`.
 public struct RetrieveSnippetResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -20674,19 +24171,6 @@ public struct RetrieveSnippetResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, snippet: Snippet? = nil) {
 		self.errors = errors
 		self.snippet = snippet
-	}
-}
-
-/// Defines input parameters in a request to the  [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) endpoint.
-public struct RetrieveSubscriptionRequest: Codable, Equatable {
-	/// A query parameter to specify related information to be included in the response.   The supported query parameter values are:   - `actions`: to include scheduled actions on the targeted subscription.
-	public var include: String?
-
-	/// Defines input parameters in a request to the  [RetrieveSubscription](api-endpoint:Subscriptions-RetrieveSubscription) endpoint.
-	/// - Parameters:
-	///   - include: A query parameter to specify related information to be included in the response.   The supported query parameter values are:   - `actions`: to include scheduled actions on the targeted subscription.
-	public init(include: String? = nil) {
-		self.include = include
 	}
 }
 
@@ -20707,11 +24191,6 @@ public struct RetrieveSubscriptionResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveTeamMemberBookingProfileRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 public struct RetrieveTeamMemberBookingProfileResponse: Codable, Equatable {
 	/// Errors that occurred during the request.
 	public var errors: [SquareError]?
@@ -20722,12 +24201,6 @@ public struct RetrieveTeamMemberBookingProfileResponse: Codable, Equatable {
 		self.errors = errors
 		self.team_member_booking_profile = team_member_booking_profile
 	}
-}
-
-/// Represents a retrieve request for a `TeamMember` object.
-public struct RetrieveTeamMemberRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents a response from a retrieve request containing a `TeamMember` object or error messages.
@@ -20747,12 +24220,6 @@ public struct RetrieveTeamMemberResponse: Codable, Equatable {
 	}
 }
 
-/// A request to get a `Timecard` by ID.
-public struct RetrieveTimecardRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// A response to a request to get a `Timecard`. The response contains the requested `Timecard` object and might contain a set of `Error` objects if the request resulted in errors.
 public struct RetrieveTimecardResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -20768,12 +24235,6 @@ public struct RetrieveTimecardResponse: Codable, Equatable {
 		self.errors = errors
 		self.timecard = timecard
 	}
-}
-
-/// Request object for [RetrieveTokenStatus] endpoint.
-public struct RetrieveTokenStatusRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the `RetrieveTokenStatus` endpoint.
@@ -20805,11 +24266,6 @@ public struct RetrieveTokenStatusResponse: Codable, Equatable {
 	}
 }
 
-public struct RetrieveTransactionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Defines the fields that are included in the response body of a request to the [RetrieveTransaction](api-endpoint:Transactions-RetrieveTransaction) endpoint.  One of `errors` or `transaction` is present in a given response (never both).
 public struct RetrieveTransactionResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
@@ -20825,12 +24281,6 @@ public struct RetrieveTransactionResponse: Codable, Equatable {
 		self.errors = errors
 		self.transaction = transaction
 	}
-}
-
-/// Represents an input to a call to [RetrieveVendor](api-endpoint:Vendors-RetrieveVendor).
-public struct RetrieveVendorRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Represents an output from a call to [RetrieveVendor](api-endpoint:Vendors-RetrieveVendor).
@@ -20850,12 +24300,6 @@ public struct RetrieveVendorResponse: Codable, Equatable {
 	}
 }
 
-/// Represents a retrieve request for the wage setting of a team member.
-public struct RetrieveWageSettingRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
-}
-
 /// Represents a response from a retrieve request containing the specified `WageSetting` object or error messages.
 public struct RetrieveWageSettingResponse: Codable, Equatable {
 	/// The errors that occurred during the request.
@@ -20871,12 +24315,6 @@ public struct RetrieveWageSettingResponse: Codable, Equatable {
 		self.errors = errors
 		self.wage_setting = wage_setting
 	}
-}
-
-/// Retrieves a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) using its id.
-public struct RetrieveWebhookSubscriptionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [RetrieveWebhookSubscription](api-endpoint:WebhookSubscriptions-RetrieveWebhookSubscription) endpoint.  Note: if there are errors processing the request, the [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/WebhookSubscription) will not be present.
@@ -22765,18 +26203,6 @@ public struct Snippet: Codable, Equatable {
 	}
 }
 
-public struct SnippetResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The snippet.
-	public var snippet: Snippet?
-
-	public init(errors: [SquareError]? = nil, snippet: Snippet? = nil) {
-		self.errors = errors
-		self.snippet = snippet
-	}
-}
-
 /// The order (e.g., chronological or alphabetical) in which results from a request are returned.
 public enum SortOrder: String, Codable {
 	/// The results are returned in descending (e.g., newest-first or Z-A) order.
@@ -22859,12 +26285,6 @@ public struct StandardUnitDescriptionGroup: Codable, Equatable {
 		self.language_code = language_code
 		self.standard_unit_descriptions = standard_unit_descriptions
 	}
-}
-
-/// Defines the parameters for a `SubmitEvidence` request.
-public struct SubmitEvidenceRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields in a `SubmitEvidence` response.
@@ -23044,6 +26464,59 @@ public enum SubscriptionCadence: String, Codable {
 	case ANNUAL
 	/// Once every two years
 	case EVERY_TWO_YEARS
+}
+
+/// Published when a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription) is created.
+public struct SubscriptionCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: SubscriptionCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"subscription.created"`.
+	public var type: String?
+
+	/// Published when a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription) is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"subscription.created"`.
+	public init(created_at: Timestamp? = nil, data: SubscriptionCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct SubscriptionCreatedEventData: Codable, Equatable {
+	/// ID of the affected subscription.
+	public var id: String?
+	/// An object containing the created subscription.
+	public var object: SubscriptionCreatedEventObject?
+	/// Name of the affected object’s type, `"subscription"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: SubscriptionCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct SubscriptionCreatedEventObject: Codable, Equatable {
+	/// The created subscription.
+	public var subscription: Subscription?
+
+	public init(subscription: Subscription? = nil) {
+		self.subscription = subscription
+	}
 }
 
 /// Describes changes to a subscription and the subscription status.
@@ -23252,6 +26725,59 @@ public struct SubscriptionTestResult: Codable, Equatable {
 	}
 }
 
+/// Published when a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription) is updated. Typically the `subscription.status` is updated as subscriptions become active or cancelled.
+public struct SubscriptionUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: SubscriptionUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"subscription.updated"`.
+	public var type: String?
+
+	/// Published when a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription) is updated. Typically the `subscription.status` is updated as subscriptions become active or cancelled.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"subscription.updated"`.
+	public init(created_at: Timestamp? = nil, data: SubscriptionUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct SubscriptionUpdatedEventData: Codable, Equatable {
+	/// ID of the affected subscription.
+	public var id: String?
+	/// An object containing the updated subscription.
+	public var object: SubscriptionUpdatedEventObject?
+	/// Name of the affected object’s type, `"subscription"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: SubscriptionUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct SubscriptionUpdatedEventObject: Codable, Equatable {
+	/// The updated subscription.
+	public var subscription: Subscription?
+
+	public init(subscription: Subscription? = nil) {
+		self.subscription = subscription
+	}
+}
+
 /// Defines input parameters in a call to the [SwapPlan](api-endpoint:Subscriptions-SwapPlan) endpoint.
 public struct SwapPlanRequest: Codable, Equatable {
 	/// The ID of the new subscription plan variation.  This field is required.
@@ -23446,6 +26972,59 @@ public struct TeamMemberBookingProfile: Codable, Equatable {
 	}
 }
 
+/// Published when a Team Member is created.
+public struct TeamMemberCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TeamMemberCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"team_member.created"`.
+	public var type: String?
+
+	/// Published when a Team Member is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"team_member.created"`.
+	public init(created_at: Timestamp? = nil, data: TeamMemberCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TeamMemberCreatedEventData: Codable, Equatable {
+	/// ID of the created team member.
+	public var id: String?
+	/// An object containing the created team member.
+	public var object: TeamMemberCreatedEventObject?
+	/// Name of the affected object’s type, `"team_member"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TeamMemberCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TeamMemberCreatedEventObject: Codable, Equatable {
+	/// The created team member.
+	public var team_member: TeamMember?
+
+	public init(team_member: TeamMember? = nil) {
+		self.team_member = team_member
+	}
+}
+
 /// Enumerates the possible invitation statuses the team member can have within a business.
 public enum TeamMemberInvitationStatus: String, Codable {
 	/// The team member has not received an invitation.
@@ -23462,6 +27041,59 @@ public enum TeamMemberStatus: String, Codable {
 	case ACTIVE
 	/// The team member can no longer sign in to Point of Sale or the Seller Dashboard, but the team member's sales reports remain available.
 	case INACTIVE
+}
+
+/// Published when a Team Member is updated.
+public struct TeamMemberUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TeamMemberUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"team_member.updated"`.
+	public var type: String?
+
+	/// Published when a Team Member is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"team_member.updated"`.
+	public init(created_at: Timestamp? = nil, data: TeamMemberUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TeamMemberUpdatedEventData: Codable, Equatable {
+	/// ID of the affected team member.
+	public var id: String?
+	/// An object containing the updated team member.
+	public var object: TeamMemberUpdatedEventObject?
+	/// Name of the affected object’s type, `"team_member"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TeamMemberUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TeamMemberUpdatedEventObject: Codable, Equatable {
+	/// The updated team member.
+	public var team_member: TeamMember?
+
+	public init(team_member: TeamMember? = nil) {
+		self.team_member = team_member
+	}
 }
 
 /// Job and wage information for a [team member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember). This convenience object provides details needed to specify the `wage` field for a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
@@ -23494,6 +27126,59 @@ public struct TeamMemberWage: Codable, Equatable {
 		self.team_member_id = team_member_id
 		self.tip_eligible = tip_eligible
 		self.title = title
+	}
+}
+
+/// Published when a Wage Setting is updated.
+public struct TeamMemberWageSettingUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TeamMemberWageSettingUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"team_member.wage_setting.updated"`.
+	public var type: String?
+
+	/// Published when a Wage Setting is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"team_member.wage_setting.updated"`.
+	public init(created_at: Timestamp? = nil, data: TeamMemberWageSettingUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TeamMemberWageSettingUpdatedEventData: Codable, Equatable {
+	/// ID of the updated team member wage setting.
+	public var id: String?
+	/// An object containing the updated team member wage setting.
+	public var object: TeamMemberWageSettingUpdatedEventObject?
+	/// Name of the affected object’s type, `"wage_setting"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TeamMemberWageSettingUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TeamMemberWageSettingUpdatedEventObject: Codable, Equatable {
+	/// The updated team member wage setting.
+	public var wage_setting: WageSetting?
+
+	public init(wage_setting: WageSetting? = nil) {
+		self.wage_setting = wage_setting
 	}
 }
 
@@ -23854,6 +27539,59 @@ public enum TerminalActionActionType: String, Codable {
 	case SELECT
 }
 
+/// Published when a TerminalAction is created.
+public struct TerminalActionCreatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TerminalActionCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"terminal.action.created"`.
+	public var type: String?
+
+	/// Published when a TerminalAction is created.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"terminal.action.created"`.
+	public init(created_at: Timestamp? = nil, data: TerminalActionCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TerminalActionCreatedEventData: Codable, Equatable {
+	/// ID of the created terminal action.
+	public var id: String?
+	/// An object containing the created terminal action.
+	public var object: TerminalActionCreatedEventObject?
+	/// Name of the created object’s type, `"action"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TerminalActionCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TerminalActionCreatedEventObject: Codable, Equatable {
+	/// The created terminal action.
+	public var action: TerminalAction?
+
+	public init(action: TerminalAction? = nil) {
+		self.action = action
+	}
+}
+
 public struct TerminalActionQuery: Codable, Equatable {
 	/// Options for filtering returned `TerminalAction`s
 	public var filter: TerminalActionQueryFilter?
@@ -23890,6 +27628,59 @@ public struct TerminalActionQuerySort: Codable, Equatable {
 
 	public init(sort_order: SortOrder? = nil) {
 		self.sort_order = sort_order
+	}
+}
+
+/// Published when a TerminalAction is updated.
+public struct TerminalActionUpdatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TerminalActionUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"terminal.action.updated"`.
+	public var type: String?
+
+	/// Published when a TerminalAction is updated.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"terminal.action.updated"`.
+	public init(created_at: Timestamp? = nil, data: TerminalActionUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TerminalActionUpdatedEventData: Codable, Equatable {
+	/// ID of the updated terminal action.
+	public var id: String?
+	/// An object containing the updated terminal action.
+	public var object: TerminalActionUpdatedEventObject?
+	/// Name of the updated object’s type, `"action"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TerminalActionUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TerminalActionUpdatedEventObject: Codable, Equatable {
+	/// The updated terminal action.
+	public var action: TerminalAction?
+
+	public init(action: TerminalAction? = nil) {
+		self.action = action
 	}
 }
 
@@ -23986,6 +27777,59 @@ public struct TerminalCheckout: Codable, Equatable {
 	}
 }
 
+/// Published when a [TerminalCheckout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TerminalCheckout) is created.
+public struct TerminalCheckoutCreatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TerminalCheckoutCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"terminal.checkout.created"`.
+	public var type: String?
+
+	/// Published when a [TerminalCheckout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TerminalCheckout) is created.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"terminal.checkout.created"`.
+	public init(created_at: Timestamp? = nil, data: TerminalCheckoutCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TerminalCheckoutCreatedEventData: Codable, Equatable {
+	/// ID of the created terminal checkout.
+	public var id: String?
+	/// An object containing the created terminal checkout
+	public var object: TerminalCheckoutCreatedEventObject?
+	/// Name of the created object’s type, `"checkout"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TerminalCheckoutCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TerminalCheckoutCreatedEventObject: Codable, Equatable {
+	/// The created terminal checkout
+	public var checkout: TerminalCheckout?
+
+	public init(checkout: TerminalCheckout? = nil) {
+		self.checkout = checkout
+	}
+}
+
 public struct TerminalCheckoutQuery: Codable, Equatable {
 	/// Options for filtering returned `TerminalCheckout` objects.
 	public var filter: TerminalCheckoutQueryFilter?
@@ -24019,6 +27863,59 @@ public struct TerminalCheckoutQuerySort: Codable, Equatable {
 
 	public init(sort_order: SortOrder? = nil) {
 		self.sort_order = sort_order
+	}
+}
+
+/// Published when a [TerminalCheckout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TerminalCheckout) is updated.
+public struct TerminalCheckoutUpdatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TerminalCheckoutUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"terminal.checkout.updated"`.
+	public var type: String?
+
+	/// Published when a [TerminalCheckout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TerminalCheckout) is updated.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"terminal.checkout.updated"`.
+	public init(created_at: Timestamp? = nil, data: TerminalCheckoutUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TerminalCheckoutUpdatedEventData: Codable, Equatable {
+	/// ID of the updated terminal checkout.
+	public var id: String?
+	/// An object containing the updated terminal checkout
+	public var object: TerminalCheckoutUpdatedEventObject?
+	/// Name of the updated object’s type, `"checkout"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TerminalCheckoutUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TerminalCheckoutUpdatedEventObject: Codable, Equatable {
+	/// The updated terminal checkout
+	public var checkout: TerminalCheckout?
+
+	public init(checkout: TerminalCheckout? = nil) {
+		self.checkout = checkout
 	}
 }
 
@@ -24087,6 +27984,59 @@ public struct TerminalRefund: Codable, Equatable {
 	}
 }
 
+/// Published when a Terminal API refund is created.
+public struct TerminalRefundCreatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TerminalRefundCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"terminal.refund.created"`.
+	public var type: String?
+
+	/// Published when a Terminal API refund is created.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"terminal.refund.created"`.
+	public init(created_at: Timestamp? = nil, data: TerminalRefundCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TerminalRefundCreatedEventData: Codable, Equatable {
+	/// ID of the created terminal refund.
+	public var id: String?
+	/// An object containing the created terminal refund.
+	public var object: TerminalRefundCreatedEventObject?
+	/// Name of the created object’s type, `"refund"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TerminalRefundCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TerminalRefundCreatedEventObject: Codable, Equatable {
+	/// The created terminal refund.
+	public var refund: TerminalRefund?
+
+	public init(refund: TerminalRefund? = nil) {
+		self.refund = refund
+	}
+}
+
 public struct TerminalRefundQuery: Codable, Equatable {
 	/// The filter for the Terminal refund query.
 	public var filter: TerminalRefundQueryFilter?
@@ -24120,6 +28070,59 @@ public struct TerminalRefundQuerySort: Codable, Equatable {
 
 	public init(sort_order: String? = nil) {
 		self.sort_order = sort_order
+	}
+}
+
+/// Published when a Terminal API refund is updated.
+public struct TerminalRefundUpdatedEvent: Codable, Equatable {
+	/// RFC 3339 timestamp of when the event was created.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TerminalRefundUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"terminal.refund.updated"`.
+	public var type: String?
+
+	/// Published when a Terminal API refund is updated.
+	/// - Parameters:
+	///   - created_at: RFC 3339 timestamp of when the event was created.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"terminal.refund.updated"`.
+	public init(created_at: Timestamp? = nil, data: TerminalRefundUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TerminalRefundUpdatedEventData: Codable, Equatable {
+	/// ID of the updated terminal refund.
+	public var id: String?
+	/// An object containing the updated terminal refund.
+	public var object: TerminalRefundUpdatedEventObject?
+	/// Name of the updated object’s type, `"refund"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TerminalRefundUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TerminalRefundUpdatedEventObject: Codable, Equatable {
+	/// The updated terminal refund.
+	public var refund: TerminalRefund?
+
+	public init(refund: TerminalRefund? = nil) {
+		self.refund = refund
 	}
 }
 
@@ -25671,41 +29674,6 @@ public struct UpsertSnippetResponse: Codable, Equatable {
 	}
 }
 
-public struct V1Device: Codable, Equatable {
-	/// The device's Square-issued ID.
-	public var id: String?
-	/// The device's merchant-specified name.
-	public var name: String?
-
-	public init(id: String? = nil, name: String? = nil) {
-		self.id = id
-		self.name = name
-	}
-}
-
-public struct V1ListOrdersRequest: Codable, Equatable {
-	/// A pagination cursor to retrieve the next set of results for your original query to the endpoint.
-	public var batch_token: String?
-	/// The maximum number of payments to return in a single response. This value cannot exceed 200.
-	public var limit: Int?
-	/// The order in which payments are listed in the response. See [SortOrder](#type-sortorder) for possible values
-	public var order: SortOrder?
-
-	public init(batch_token: String? = nil, limit: Int? = nil, order: SortOrder? = nil) {
-		self.batch_token = batch_token
-		self.limit = limit
-		self.order = order
-	}
-}
-
-public struct V1ListOrdersResponse: Codable, Equatable {
-	public var items: [V1Order]?
-
-	public init(items: [V1Order]? = nil) {
-		self.items = items
-	}
-}
-
 public struct V1Money: Codable, Equatable {
 	/// Amount in the lowest denominated value of this Currency. E.g. in USD these are cents, in JPY they are Yen (which do not have a 'cent' concept).
 	public var amount: Int?
@@ -25863,28 +29831,6 @@ public enum V1OrderState: String, Codable {
 	case CANCELED
 	case REFUNDED
 	case REJECTED
-}
-
-/// Represents a phone number.
-public struct V1PhoneNumber: Codable, Equatable {
-	/// The phone number's international calling code. For US phone numbers, this value is +1.
-	public var calling_code: String
-	/// The phone number.
-	public var number: String
-
-	/// Represents a phone number.
-	/// - Parameters:
-	///   - calling_code: The phone number's international calling code. For US phone numbers, this value is +1.
-	///   - number: The phone number.
-	public init(calling_code: String, number: String) {
-		self.calling_code = calling_code
-		self.number = number
-	}
-}
-
-public struct V1RetrieveOrderRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
@@ -26114,12 +30060,154 @@ public struct VendorContact: Codable, Equatable {
 	}
 }
 
+/// Published when a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is created.
+public struct VendorCreatedEvent: Codable, Equatable {
+	/// The RFC 3339-formatted time when the underlying event data object is created.
+	public var created_at: Timestamp?
+	/// The data associated with this event.
+	public var data: VendorCreatedEventData?
+	/// A unique ID for this event.
+	public var event_id: String?
+	/// The ID of a location associated with the event, if the event is associated with the location of the seller.
+	public var location_id: String?
+	/// The ID of a seller associated with this event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"vendor.created".`
+	public var type: String?
+
+	/// Published when a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is created.
+	/// - Parameters:
+	///   - created_at: The RFC 3339-formatted time when the underlying event data object is created.
+	///   - data: The data associated with this event.
+	///   - event_id: A unique ID for this event.
+	///   - location_id: The ID of a location associated with the event, if the event is associated with the location of the seller.
+	///   - merchant_id: The ID of a seller associated with this event.
+	///   - type: The type of this event. The value is `"vendor.created".`
+	public init(created_at: Timestamp? = nil, data: VendorCreatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Defines the `vendor.created` event data structure.
+public struct VendorCreatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing the created vendor.
+	public var object: VendorCreatedEventObject?
+	/// The type of the event data object. The value is `vendor`
+	public var type: String?
+
+	/// Defines the `vendor.created` event data structure.
+	/// - Parameters:
+	///   - id: The ID of the event data object.
+	///   - object: An object containing the created vendor.
+	///   - type: The type of the event data object. The value is `vendor`
+	public init(id: String? = nil, object: VendorCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct VendorCreatedEventObject: Codable, Equatable {
+	/// The operation on the vendor that caused the event to be published. The value is `CREATED`. See [Operation](#type-operation) for possible values
+	public var operation: VendorCreatedEventObjectOperation?
+	/// The created vendor as the result of the specified operation.
+	public var vendor: Vendor?
+
+	public init(operation: VendorCreatedEventObjectOperation? = nil, vendor: Vendor? = nil) {
+		self.operation = operation
+		self.vendor = vendor
+	}
+}
+
+/// The operation that can be performed against a vendor to cause the event to be published.
+public enum VendorCreatedEventObjectOperation: String, Codable {
+	case CREATED
+}
+
 /// The status of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor), whether a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is active or inactive.
 public enum VendorStatus: String, Codable {
 	/// Vendor is active and can receive purchase orders.
 	case ACTIVE
 	/// Vendor is inactive and cannot receive purchase orders.
 	case INACTIVE
+}
+
+/// Published when a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is updated.
+public struct VendorUpdatedEvent: Codable, Equatable {
+	/// The RFC 3339-formatted time when the underlying event data object is created.
+	public var created_at: Timestamp?
+	/// The data associated with this event.
+	public var data: VendorUpdatedEventData?
+	/// A unique ID for this webhoook event.
+	public var event_id: String?
+	/// The ID of a seller location associated with this event, if the event is associated with the location.
+	public var location_id: String?
+	/// The ID of a seller associated with this event.
+	public var merchant_id: String?
+	/// The type of this event. The value is `"vendor.updated".`
+	public var type: String?
+
+	/// Published when a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is updated.
+	/// - Parameters:
+	///   - created_at: The RFC 3339-formatted time when the underlying event data object is created.
+	///   - data: The data associated with this event.
+	///   - event_id: A unique ID for this webhoook event.
+	///   - location_id: The ID of a seller location associated with this event, if the event is associated with the location.
+	///   - merchant_id: The ID of a seller associated with this event.
+	///   - type: The type of this event. The value is `"vendor.updated".`
+	public init(created_at: Timestamp? = nil, data: VendorUpdatedEventData? = nil, event_id: String? = nil, location_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.location_id = location_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+/// Defines the `vendor.updated` event data structure.
+public struct VendorUpdatedEventData: Codable, Equatable {
+	/// The ID of the event data object.
+	public var id: String?
+	/// An object containing updated vendor.
+	public var object: VendorUpdatedEventObject?
+	/// The type of the event data object. The value is `vendor`.
+	public var type: String?
+
+	/// Defines the `vendor.updated` event data structure.
+	/// - Parameters:
+	///   - id: The ID of the event data object.
+	///   - object: An object containing updated vendor.
+	///   - type: The type of the event data object. The value is `vendor`.
+	public init(id: String? = nil, object: VendorUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct VendorUpdatedEventObject: Codable, Equatable {
+	/// The operation on the vendor that caused the event to be published. The value is `UPDATED`. See [Operation](#type-operation) for possible values
+	public var operation: VendorUpdatedEventObjectOperation?
+	/// The updated vendor as the result of the specified operation.
+	public var vendor: Vendor?
+
+	public init(operation: VendorUpdatedEventObjectOperation? = nil, vendor: Vendor? = nil) {
+		self.operation = operation
+		self.vendor = vendor
+	}
+}
+
+/// The operation that can be performed against a vendor to cause the event to be published.
+public enum VendorUpdatedEventObjectOperation: String, Codable {
+	case UPDATED
 }
 
 /// Enumeration of visibility-filter values used to set the ability to view custom attributes or custom attribute definitions.
@@ -26130,11 +30218,6 @@ public enum VisibilityFilter: String, Codable {
 	case READ
 	/// All custom attributes or custom attribute definitions with the `visibility` field set to `VISIBILITY_READ_WRITE_VALUES`.
 	case READ_WRITE
-}
-
-public struct VoidTransactionRequest: Codable, Equatable {
-
-	// no init-- this struct is read-only
 }
 
 /// Defines the fields that are included in the response body of a request to the [VoidTransaction](api-endpoint:Transactions-VoidTransaction) endpoint.
