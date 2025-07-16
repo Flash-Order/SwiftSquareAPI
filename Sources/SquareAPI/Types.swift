@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2025-06-18" }
+	public static var version: String { return "2025-07-16" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -12305,9 +12305,9 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
-	case ISSUER_INSTALLMENT_ERROR
-	case VERSION_MISMATCH
 	case ORDER_EXPIRED
+	case VERSION_MISMATCH
+	case ISSUER_INSTALLMENT_ERROR
 }
 
 public struct Event: Codable, Equatable {
