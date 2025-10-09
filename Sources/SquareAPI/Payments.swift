@@ -22,8 +22,8 @@ public struct ListPayments: SquareAPIEndpoint {
 		let sort_field: ListPaymentsRequestSortField?
 		/// Retrieves a list of payments taken by the account making the request.  Results are eventually consistent, and new payments or changes to payments might take several seconds to appear.  The maximum results per page is 100.
 		/// - Parameters:
-		///   - begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format.   The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
-		///   - end_time: Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The  range is determined using the `created_at` field for each Payment.  Default: The current time.
+		///   - begin_time: Indicates the start of the time range to retrieve payments for, in RFC 3339 format. The range is determined using the `created_at` field for each Payment. Inclusive. Default: The current time minus one year.
+		///   - end_time: Indicates the end of the time range to retrieve payments for, in RFC 3339 format.  The range is determined using the `created_at` field for each Payment.  Default: The current time.
 		///   - sort_order: The order in which results are listed by `ListPaymentsRequest.sort_field`: - `ASC` - Oldest to newest. - `DESC` - Newest to oldest (default).
 		///   - cursor: A pagination cursor returned by a previous call to this endpoint. Provide this cursor to retrieve the next set of results for the original query.  For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-patterns/pagination).
 		///   - location_id: Limit results to the location supplied. By default, results are returned for the default (main) location associated with the seller.

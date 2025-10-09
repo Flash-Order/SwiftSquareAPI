@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2025-08-20" }
+	public static var version: String { return "2025-09-24" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -3100,12 +3100,12 @@ public struct CancelLoyaltyPromotionResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey).
+/// Describes a request to cancel a payment using [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey).
 public struct CancelPaymentByIdempotencyKeyRequest: Codable, Equatable {
 	/// The `idempotency_key` identifying the payment to be canceled.
 	public var idempotency_key: String
 
-	/// Describes a request to cancel a payment using  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey).
+	/// Describes a request to cancel a payment using [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey).
 	/// - Parameters:
 	///   - idempotency_key: The `idempotency_key` identifying the payment to be canceled.
 	public init(idempotency_key: String) {
@@ -3113,12 +3113,12 @@ public struct CancelPaymentByIdempotencyKeyRequest: Codable, Equatable {
 	}
 }
 
-/// Defines the response returned by  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey). On success, `errors` is empty.
+/// Defines the response returned by [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey). On success, `errors` is empty.
 public struct CancelPaymentByIdempotencyKeyResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
 
-	/// Defines the response returned by  [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey). On success, `errors` is empty.
+	/// Defines the response returned by [CancelPaymentByIdempotencyKey](api-endpoint:Payments-CancelPaymentByIdempotencyKey). On success, `errors` is empty.
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
@@ -6285,14 +6285,14 @@ public struct CollectedData: Codable, Equatable {
 	}
 }
 
-/// Describes a request to complete (capture) a payment using  [CompletePayment](api-endpoint:Payments-CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+/// Describes a request to complete (capture) a payment using [CompletePayment](api-endpoint:Payments-CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 public struct CompletePaymentRequest: Codable, Equatable {
-	/// Used for optimistic concurrency. This opaque token identifies the current `Payment`  version that the caller expects. If the server has a different version of the Payment,  the update fails and a response with a VERSION_MISMATCH error is returned.
+	/// Used for optimistic concurrency. This opaque token identifies the current `Payment` version that the caller expects. If the server has a different version of the Payment, the update fails and a response with a VERSION_MISMATCH error is returned.
 	public var version_token: String?
 
-	/// Describes a request to complete (capture) a payment using  [CompletePayment](api-endpoint:Payments-CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
+	/// Describes a request to complete (capture) a payment using [CompletePayment](api-endpoint:Payments-CompletePayment).  By default, payments are set to `autocomplete` immediately after they are created. To complete payments manually, set `autocomplete` to `false`.
 	/// - Parameters:
-	///   - version_token: Used for optimistic concurrency. This opaque token identifies the current `Payment`  version that the caller expects. If the server has a different version of the Payment,  the update fails and a response with a VERSION_MISMATCH error is returned.
+	///   - version_token: Used for optimistic concurrency. This opaque token identifies the current `Payment` version that the caller expects. If the server has a different version of the Payment, the update fails and a response with a VERSION_MISMATCH error is returned.
 	public init(version_token: String? = nil) {
 		self.version_token = version_token
 	}
@@ -7932,7 +7932,7 @@ public struct CreatePaymentLinkResponse: Codable, Equatable {
 	}
 }
 
-/// Describes a request to create a payment using  [CreatePayment](api-endpoint:Payments-CreatePayment).
+/// Describes a request to create a payment using [CreatePayment](api-endpoint:Payments-CreatePayment).
 public struct CreatePaymentRequest: Codable, Equatable {
 	/// If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	public var accept_partial_authorization: Bool?
@@ -7954,9 +7954,9 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	public var customer_details: CustomerDetails?
 	/// The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Cards API.
 	public var customer_id: String?
-	/// The action to be applied to the payment when the `delay_duration` has elapsed. The action must be CANCEL or COMPLETE. For more information, see  [Time Threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   Default: CANCEL
+	/// The action to be applied to the payment when the `delay_duration` has elapsed. The action must be CANCEL or COMPLETE. For more information, see [Time Threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).  Default: CANCEL
 	public var delay_action: String?
-	/// The duration of time after the payment's creation when Square automatically  either completes or cancels the payment depending on the `delay_action` field value.  For more information, see  [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   This parameter should be specified as a time duration, in RFC 3339 format.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
+	/// The duration of time after the payment's creation when Square automatically either completes or cancels the payment depending on the `delay_action` field value. For more information, see [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).  This parameter should be specified as a time duration, in RFC 3339 format.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	public var delay_duration: Timestamp?
 	/// Additional details required when recording an external payment (`source_id` is EXTERNAL).
 	public var external_details: ExternalPaymentDetails?
@@ -7970,22 +7970,22 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	public var offline_payment_details: OfflinePaymentDetails?
 	/// Associates a previously created order with this payment.
 	public var order_id: String?
-	/// A user-defined ID to associate with the payment.  You can use this field to associate the payment to an entity in an external system  (for example, you might specify an order ID that is generated by a third-party shopping cart).
+	/// A user-defined ID to associate with the payment.  You can use this field to associate the payment to an entity in an external system (for example, you might specify an order ID that is generated by a third-party shopping cart).
 	public var reference_id: String?
 	/// The buyer's shipping address.
 	public var shipping_address: Address?
-	/// The ID for the source of funds for this payment. This could be a payment token generated by the Web Payments SDK for any of its [supported methods](https://developer.squareup.com/docs/web-payments/overview#explore-payment-methods), including cards, bank transfers, Afterpay or Cash App Pay. If recording a payment that the seller received outside of Square, specify either "CASH" or "EXTERNAL". For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
+	/// The ID for the source of funds for this payment. This could be a payment token generated by the Web Payments SDK for any of its [supported methods](https://developer.squareup.com/docs/web-payments/overview#explore-payment-methods), including cards, bank transfers, Afterpay or Cash App Pay. If recording a payment that the seller received outside of Square, specify either "CASH" or "EXTERNAL". For more information, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
 	public var source_id: String
 	/// Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and name of the seller taking the payment.
 	public var statement_description_identifier: String?
-	/// An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with  this payment.
+	/// An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with this payment.
 	public var team_member_id: String?
 	/// The amount designated as a tip, in addition to `amount_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
 	public var tip_money: Money?
 	/// An identifying token generated by [payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
 	public var verification_token: String?
 
-	/// Describes a request to create a payment using  [CreatePayment](api-endpoint:Payments-CreatePayment).
+	/// Describes a request to create a payment using [CreatePayment](api-endpoint:Payments-CreatePayment).
 	/// - Parameters:
 	///   - accept_partial_authorization: If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	///   - amount_money: The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
@@ -7997,19 +7997,19 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	///   - cash_details: Additional details required when recording a cash payment (`source_id` is CASH).
 	///   - customer_details: Details about the customer making the payment.
 	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the payment.  This is required if the `source_id` refers to a card on file created using the Cards API.
-	///   - delay_action: The action to be applied to the payment when the `delay_duration` has elapsed. The action must be CANCEL or COMPLETE. For more information, see  [Time Threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   Default: CANCEL
-	///   - delay_duration: The duration of time after the payment's creation when Square automatically  either completes or cancels the payment depending on the `delay_action` field value.  For more information, see  [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).   This parameter should be specified as a time duration, in RFC 3339 format.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
+	///   - delay_action: The action to be applied to the payment when the `delay_duration` has elapsed. The action must be CANCEL or COMPLETE. For more information, see [Time Threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).  Default: CANCEL
+	///   - delay_duration: The duration of time after the payment's creation when Square automatically either completes or cancels the payment depending on the `delay_action` field value. For more information, see [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-payments/delayed-capture#time-threshold).  This parameter should be specified as a time duration, in RFC 3339 format.  Note: This feature is only supported for card payments. This parameter can only be set for a delayed capture payment (`autocomplete=false`).  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	///   - external_details: Additional details required when recording an external payment (`source_id` is EXTERNAL).
 	///   - idempotency_key: A unique string that identifies this `CreatePayment` request. Keys can be any valid string but must be unique for every `CreatePayment` request.  Note: The number of allowed characters might be less than the stated maximum, if multi-byte characters are used.  For more information, see [Idempotency](https://developer.squareup.com/docs/working-with-apis/idempotency).
 	///   - location_id: The location ID to associate with the payment. If not specified, the [main location](https://developer.squareup.com/docs/locations-api#about-the-main-location) is used.
 	///   - note: An optional note to be entered by the developer when creating a payment.
 	///   - offline_payment_details: An optional field for specifying the offline payment details. This is intended for internal 1st-party callers only.
 	///   - order_id: Associates a previously created order with this payment.
-	///   - reference_id: A user-defined ID to associate with the payment.  You can use this field to associate the payment to an entity in an external system  (for example, you might specify an order ID that is generated by a third-party shopping cart).
+	///   - reference_id: A user-defined ID to associate with the payment.  You can use this field to associate the payment to an entity in an external system (for example, you might specify an order ID that is generated by a third-party shopping cart).
 	///   - shipping_address: The buyer's shipping address.
-	///   - source_id: The ID for the source of funds for this payment. This could be a payment token generated by the Web Payments SDK for any of its [supported methods](https://developer.squareup.com/docs/web-payments/overview#explore-payment-methods), including cards, bank transfers, Afterpay or Cash App Pay. If recording a payment that the seller received outside of Square, specify either "CASH" or "EXTERNAL". For more information, see  [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
+	///   - source_id: The ID for the source of funds for this payment. This could be a payment token generated by the Web Payments SDK for any of its [supported methods](https://developer.squareup.com/docs/web-payments/overview#explore-payment-methods), including cards, bank transfers, Afterpay or Cash App Pay. If recording a payment that the seller received outside of Square, specify either "CASH" or "EXTERNAL". For more information, see [Take Payments](https://developer.squareup.com/docs/payments-api/take-payments).
 	///   - statement_description_identifier: Optional additional payment information to include on the customer's card statement as part of the statement description. This can be, for example, an invoice number, ticket number, or short description that uniquely identifies the purchase.  Note that the `statement_description_identifier` might get truncated on the statement description to fit the required information including the Square identifier (SQ *) and name of the seller taking the payment.
-	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with  this payment.
+	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with this payment.
 	///   - tip_money: The amount designated as a tip, in addition to `amount_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
 	///   - verification_token: An identifying token generated by [payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
 	public init(idempotency_key: String, source_id: String, accept_partial_authorization: Bool? = nil, amount_money: Money? = nil, app_fee_money: Money? = nil, autocomplete: Bool? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, buyer_phone_number: String? = nil, cash_details: CashPaymentDetails? = nil, customer_details: CustomerDetails? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, external_details: ExternalPaymentDetails? = nil, location_id: String? = nil, note: String? = nil, offline_payment_details: OfflinePaymentDetails? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, statement_description_identifier: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, verification_token: String? = nil) {
@@ -8128,7 +8128,7 @@ public struct CreateShiftResponse: Codable, Equatable {
 
 /// Defines input parameters in a request to the  [CreateSubscription](api-endpoint:Subscriptions-CreateSubscription) endpoint.
 public struct CreateSubscriptionRequest: Codable, Equatable {
-	/// The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
+	/// The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan completes, the specified `canceled_date` sets the date when the subscription stops through the end of the last cycle.
 	public var canceled_date: String?
 	/// The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email with a link to pay for their subscription.
 	public var card_id: String?
@@ -8157,7 +8157,7 @@ public struct CreateSubscriptionRequest: Codable, Equatable {
 
 	/// Defines input parameters in a request to the  [CreateSubscription](api-endpoint:Subscriptions-CreateSubscription) endpoint.
 	/// - Parameters:
-	///   - canceled_date: The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan expires, the specified `canceled_date` sets the date when the subscription  stops through the end of the last cycle.
+	///   - canceled_date: The `YYYY-MM-DD`-formatted date when the newly created subscription is scheduled for cancellation.   This date overrides the cancellation date set in the plan variation configuration. If the cancellation date is earlier than the end date of a subscription cycle, the subscription stops at the canceled date and the subscriber is sent a prorated invoice at the beginning of the canceled cycle.   When the subscription plan of the newly created subscription has a fixed number of cycles and the `canceled_date` occurs before the subscription plan completes, the specified `canceled_date` sets the date when the subscription stops through the end of the last cycle.
 	///   - card_id: The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) to charge. If it is not specified, the subscriber receives an invoice via email with a link to pay for their subscription.
 	///   - customer_id: The ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) subscribing to the subscription plan variation.
 	///   - idempotency_key: A unique string that identifies this `CreateSubscription` request. If you do not provide a unique string (or provide an empty string as the value), the endpoint treats each request as independent.  For more information, see [Idempotency keys](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency).
@@ -10794,6 +10794,7 @@ public struct DeviceAttributes: Codable, Equatable {
 /// An enum identifier of the device type.
 public enum DeviceAttributesDeviceType: String, Codable {
 	case TERMINAL
+	case HANDHELD
 }
 
 public struct DeviceCheckoutOptions: Codable, Equatable {
@@ -10969,10 +10970,13 @@ public struct DeviceComponentDetailsEthernetDetails: Codable, Equatable {
 	public var active: Bool?
 	/// The string representation of the device’s IPv4 address.
 	public var ip_address_v4: String?
+	/// The mac address of the device in this network.
+	public var mac_address: String?
 
-	public init(active: Bool? = nil, ip_address_v4: String? = nil) {
+	public init(active: Bool? = nil, ip_address_v4: String? = nil, mac_address: String? = nil) {
 		self.active = active
 		self.ip_address_v4 = ip_address_v4
+		self.mac_address = mac_address
 	}
 }
 
@@ -10990,11 +10994,12 @@ public enum DeviceComponentDetailsExternalPower: String, Codable {
 
 /// A value qualified by unit of measure.
 public struct DeviceComponentDetailsMeasurement: Codable, Equatable {
+	/// Value of measure.
 	public var value: Int?
 
 	/// A value qualified by unit of measure.
 	/// - Parameters:
-	///   - value: 
+	///   - value: Value of measure.
 	public init(value: Int? = nil) {
 		self.value = value
 	}
@@ -11005,6 +11010,8 @@ public struct DeviceComponentDetailsWiFiDetails: Codable, Equatable {
 	public var active: Bool?
 	/// The string representation of the device’s IPv4 address.
 	public var ip_address_v4: String?
+	/// The mac address of the device in this network.
+	public var mac_address: String?
 	/// The security protocol for a secure connection (e.g. WPA2). None provided if the connection is unsecured.
 	public var secure_connection: String?
 	/// A representation of signal strength of the WIFI network connection.
@@ -11012,9 +11019,10 @@ public struct DeviceComponentDetailsWiFiDetails: Codable, Equatable {
 	/// The name of the connected WIFI network.
 	public var ssid: String?
 
-	public init(active: Bool? = nil, ip_address_v4: String? = nil, secure_connection: String? = nil, signal_strength: DeviceComponentDetailsMeasurement? = nil, ssid: String? = nil) {
+	public init(active: Bool? = nil, ip_address_v4: String? = nil, mac_address: String? = nil, secure_connection: String? = nil, signal_strength: DeviceComponentDetailsMeasurement? = nil, ssid: String? = nil) {
 		self.active = active
 		self.ip_address_v4 = ip_address_v4
+		self.mac_address = mac_address
 		self.secure_connection = secure_connection
 		self.signal_strength = signal_strength
 		self.ssid = ssid
@@ -11138,7 +11146,7 @@ public struct DeviceMetadata: Codable, Equatable {
 }
 
 public struct DeviceStatus: Codable, Equatable {
-	/// See [Category](#type-category) for possible values
+	/// Category of the device status. See [Category](#type-category) for possible values
 	public var category: DeviceStatusCategory?
 
 	public init(category: DeviceStatusCategory? = nil) {
@@ -12305,8 +12313,8 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
-	case ORDER_EXPIRED
 	case VERSION_MISMATCH
+	case ORDER_EXPIRED
 	case ISSUER_INSTALLMENT_ERROR
 }
 
@@ -17678,7 +17686,7 @@ public struct LoyaltyAccount: Codable, Equatable {
 	public var created_at: Timestamp?
 	/// The Square-assigned ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) that is associated with the account.
 	public var customer_id: String?
-	/// The timestamp when the buyer joined the loyalty program, in RFC 3339 format. This field is used to display the **Enrolled On** or **Member Since** date in first-party Square products.  If this field is not set in a `CreateLoyaltyAccount` request, Square populates it after the buyer's first action on their account  (when `AccumulateLoyaltyPoints` or `CreateLoyaltyReward` is called). In first-party flows, Square populates the field when the buyer agrees to the terms of service in Square Point of Sale.   This field is typically specified in a `CreateLoyaltyAccount` request when creating a loyalty account for a buyer who already interacted with their account.  For example, you would set this field when migrating accounts from an external system. The timestamp in the request can represent a current or previous date and time, but it cannot be set for the future.
+	/// The timestamp when the buyer joined the loyalty program, in RFC 3339 format. This field is used to display the **Enrolled On** or **Member Since** date in first-party Square products.  If this field is not set in a `CreateLoyaltyAccount` request, Square populates it after the buyer's first action on their account  (when `AccumulateLoyaltyPoints` or `CreateLoyaltyReward` is called). In first-party flows, Square populates the field when the buyer agrees to the terms of service on Square Point of Sale.   If this field is set in a `CreateLoyaltyAccount` request, it is meant to be used when there is a loyalty migration from another system and into Square. In that case, the timestamp can reflect when the buyer originally enrolled in the previous system. It may represent a current or past date, but cannot be set in the future. Note: Setting this field in this scenario does not, by itself, impact the first-party enrollment flow on Square Point of Sale.
 	public var enrolled_at: Timestamp?
 	/// The schedule for when points expire in the loyalty account balance. This field is present only if the account has points that are scheduled to expire.   The total number of points in this field equals the number of points in the `balance` field.
 	public var expiring_point_deadlines: [LoyaltyAccountExpiringPointDeadline]?
@@ -17698,7 +17706,7 @@ public struct LoyaltyAccount: Codable, Equatable {
 	///   - balance: The available point balance in the loyalty account. If points are scheduled to expire, they are listed in the `expiring_point_deadlines` field.  Your application should be able to handle loyalty accounts that have a negative point balance (`balance` is less than 0). This might occur if a seller makes a manual adjustment or as a result of a refund or exchange.
 	///   - created_at: The timestamp when the loyalty account was created, in RFC 3339 format.
 	///   - customer_id: The Square-assigned ID of the [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) that is associated with the account.
-	///   - enrolled_at: The timestamp when the buyer joined the loyalty program, in RFC 3339 format. This field is used to display the **Enrolled On** or **Member Since** date in first-party Square products.  If this field is not set in a `CreateLoyaltyAccount` request, Square populates it after the buyer's first action on their account  (when `AccumulateLoyaltyPoints` or `CreateLoyaltyReward` is called). In first-party flows, Square populates the field when the buyer agrees to the terms of service in Square Point of Sale.   This field is typically specified in a `CreateLoyaltyAccount` request when creating a loyalty account for a buyer who already interacted with their account.  For example, you would set this field when migrating accounts from an external system. The timestamp in the request can represent a current or previous date and time, but it cannot be set for the future.
+	///   - enrolled_at: The timestamp when the buyer joined the loyalty program, in RFC 3339 format. This field is used to display the **Enrolled On** or **Member Since** date in first-party Square products.  If this field is not set in a `CreateLoyaltyAccount` request, Square populates it after the buyer's first action on their account  (when `AccumulateLoyaltyPoints` or `CreateLoyaltyReward` is called). In first-party flows, Square populates the field when the buyer agrees to the terms of service on Square Point of Sale.   If this field is set in a `CreateLoyaltyAccount` request, it is meant to be used when there is a loyalty migration from another system and into Square. In that case, the timestamp can reflect when the buyer originally enrolled in the previous system. It may represent a current or past date, but cannot be set in the future. Note: Setting this field in this scenario does not, by itself, impact the first-party enrollment flow on Square Point of Sale.
 	///   - expiring_point_deadlines: The schedule for when points expire in the loyalty account balance. This field is present only if the account has points that are scheduled to expire.   The total number of points in this field equals the number of points in the `balance` field.
 	///   - id: The Square-assigned ID of the loyalty account.
 	///   - lifetime_points: The total points accrued during the lifetime of the account.
@@ -21819,7 +21827,7 @@ public struct Payment: Codable, Equatable {
 	public var team_member_id: String?
 	/// An optional ID for a Terminal checkout that is associated with the payment.
 	public var terminal_checkout_id: String?
-	/// The amount designated as a tip.   This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
+	/// The amount designated as a tip for the seller's staff.    Tips for external vendors such as a 3rd party delivery courier must be recorded using Order.service_charges.  This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	public var tip_money: Money?
 	/// The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	public var total_money: Money?
@@ -21873,7 +21881,7 @@ public struct Payment: Codable, Equatable {
 	///   - status: Indicates whether the payment is APPROVED, PENDING, COMPLETED, CANCELED, or FAILED.
 	///   - team_member_id: An optional ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) associated with taking the payment.
 	///   - terminal_checkout_id: An optional ID for a Terminal checkout that is associated with the payment.
-	///   - tip_money: The amount designated as a tip.   This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
+	///   - tip_money: The amount designated as a tip for the seller's staff.    Tips for external vendors such as a 3rd party delivery courier must be recorded using Order.service_charges.  This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - total_money: The total amount for the payment, including `amount_money` and `tip_money`. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - updated_at: The timestamp of when the payment was last updated, in RFC 3339 format.
 	///   - version: Version number
@@ -26314,6 +26322,8 @@ public struct Subscription: Codable, Equatable {
 	public var card_id: String?
 	/// The `YYYY-MM-DD`-formatted date up to when the subscriber is invoiced for the subscription.  After the invoice is sent for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a subscriber gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
 	public var charged_through_date: String?
+	/// The `YYYY-MM-DD`-formatted date when the subscription enters a terminal state.
+	public var completed_date: String?
 	/// The timestamp when the subscription was created, in RFC 3339 format.
 	public var created_at: Timestamp?
 	/// The ID of the subscribing [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) profile.
@@ -26351,6 +26361,7 @@ public struct Subscription: Codable, Equatable {
 	///   - canceled_date: The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,  when the subscription status changes to `CANCELED` and the subscription billing stops.  If this field is not set, the subscription ends according its subscription plan.  This field cannot be updated, other than being cleared.
 	///   - card_id: The ID of the [subscriber's](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) used to charge for the subscription.
 	///   - charged_through_date: The `YYYY-MM-DD`-formatted date up to when the subscriber is invoiced for the subscription.  After the invoice is sent for a given billing period, this date will be the last day of the billing period. For example, suppose for the month of May a subscriber gets an invoice (or charged the card) on May 1. For the monthly billing scenario, this date is then set to May 31.
+	///   - completed_date: The `YYYY-MM-DD`-formatted date when the subscription enters a terminal state.
 	///   - created_at: The timestamp when the subscription was created, in RFC 3339 format.
 	///   - customer_id: The ID of the subscribing [customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) profile.
 	///   - id: The Square-assigned ID of the subscription.
@@ -26366,11 +26377,12 @@ public struct Subscription: Codable, Equatable {
 	///   - tax_percentage: The tax amount applied when billing the subscription. The percentage is expressed in decimal form, using a `'.'` as the decimal separator and without a `'%'` sign. For example, a value of `7.5` corresponds to 7.5%.
 	///   - timezone: Timezone that will be used in date calculations for the subscription. Defaults to the timezone of the location based on `location_id`. Format: the IANA Timezone Database identifier for the location timezone (for example, `America/Los_Angeles`).
 	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
-	public init(actions: [SubscriptionAction]? = nil, canceled_date: String? = nil, card_id: String? = nil, charged_through_date: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, monthly_billing_anchor_date: Int? = nil, phases: [Phase]? = nil, plan_variation_id: String? = nil, price_override_money: Money? = nil, source: SubscriptionSource? = nil, start_date: String? = nil, status: SubscriptionStatus? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
+	public init(actions: [SubscriptionAction]? = nil, canceled_date: String? = nil, card_id: String? = nil, charged_through_date: String? = nil, completed_date: String? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, id: String? = nil, invoice_ids: [String]? = nil, location_id: String? = nil, monthly_billing_anchor_date: Int? = nil, phases: [Phase]? = nil, plan_variation_id: String? = nil, price_override_money: Money? = nil, source: SubscriptionSource? = nil, start_date: String? = nil, status: SubscriptionStatus? = nil, tax_percentage: String? = nil, timezone: String? = nil, version: Int? = nil) {
 		self.actions = actions
 		self.canceled_date = canceled_date
 		self.card_id = card_id
 		self.charged_through_date = charged_through_date
+		self.completed_date = completed_date
 		self.created_at = created_at
 		self.customer_id = customer_id
 		self.id = id
@@ -26434,6 +26446,8 @@ public enum SubscriptionActionType: String, Codable {
 	case SWAP_PLAN
 	/// A billing anchor date change action.
 	case CHANGE_BILLING_ANCHOR_DATE
+	/// The action marking when a subscription completes a fixed number of phases.
+	case COMPLETE
 }
 
 /// Determines the billing cadence of a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription)
@@ -26694,6 +26708,8 @@ public enum SubscriptionStatus: String, Codable {
 	case DEACTIVATED
 	/// The subscription is paused.
 	case PAUSED
+	/// The subscription has completed all of its phases.
+	case COMPLETED
 }
 
 /// Represents the details of a webhook subscription, including notification URL, event types, and signature key.
