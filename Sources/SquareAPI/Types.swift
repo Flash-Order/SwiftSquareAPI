@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2025-09-24" }
+	public static var version: String { return "2025-10-16" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -2180,6 +2180,40 @@ public struct BulkRetrieveBookingsResponse: Codable, Equatable {
 	}
 }
 
+/// Defines the fields that are included in the request body for the [BulkRetrieveChannels](api-endpoint:Channels-BulkRetrieveChannels) endpoint.
+public struct BulkRetrieveChannelsRequest: Codable, Equatable {
+	public var channel_ids: [String]
+
+	/// Defines the fields that are included in the request body for the [BulkRetrieveChannels](api-endpoint:Channels-BulkRetrieveChannels) endpoint.
+	/// - Parameters:
+	///   - channel_ids: 
+	public init(channel_ids: [String]) {
+		self.channel_ids = channel_ids
+	}
+}
+
+/// 
+public enum BulkRetrieveChannelsRequestConstants: String, Codable {
+	case MAX_BATCH_SIZE
+}
+
+/// Defines the fields that are included in the request body for the [BulkRetrieveChannels](api-endpoint:Channels-BulkRetrieveChannels) endpoint.
+public struct BulkRetrieveChannelsResponse: Codable, Equatable {
+	/// Information about errors encountered during the request.
+	public var errors: [SquareError]?
+	/// A map of channel IDs to channel responses which tell whether retrieval for a specific channel is success or not. Channel response of a success retrieval would contain channel info whereas channel response of a failed retrieval would have error info.
+	public var responses: RetrieveChannelResponse?
+
+	/// Defines the fields that are included in the request body for the [BulkRetrieveChannels](api-endpoint:Channels-BulkRetrieveChannels) endpoint.
+	/// - Parameters:
+	///   - errors: Information about errors encountered during the request.
+	///   - responses: A map of channel IDs to channel responses which tell whether retrieval for a specific channel is success or not. Channel response of a success retrieval would contain channel info whereas channel response of a failed retrieval would have error info.
+	public init(errors: [SquareError]? = nil, responses: RetrieveChannelResponse? = nil) {
+		self.errors = errors
+		self.responses = responses
+	}
+}
+
 /// Defines the body parameters that can be included in requests to the [BulkRetrieveCustomers](api-endpoint:Customers-BulkRetrieveCustomers) endpoint.
 public struct BulkRetrieveCustomersRequest: Codable, Equatable {
 	/// The IDs of the [customer profiles](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) to retrieve.
@@ -3197,6 +3231,40 @@ public struct CancelTerminalRefundResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, refund: TerminalRefund? = nil) {
 		self.errors = errors
 		self.refund = refund
+	}
+}
+
+/// Request to cancel a transfer order, marking any unreceived quantities as canceled
+public struct CancelTransferOrderRequest: Codable, Equatable {
+	/// A unique string that identifies this UpdateTransferOrder request. Keys can be any valid string but must be unique for every UpdateTransferOrder request.
+	public var idempotency_key: String
+	/// Version for optimistic concurrency
+	public var version: Int?
+
+	/// Request to cancel a transfer order, marking any unreceived quantities as canceled
+	/// - Parameters:
+	///   - idempotency_key: A unique string that identifies this UpdateTransferOrder request. Keys can be any valid string but must be unique for every UpdateTransferOrder request.
+	///   - version: Version for optimistic concurrency
+	public init(idempotency_key: String, version: Int? = nil) {
+		self.idempotency_key = idempotency_key
+		self.version = version
+	}
+}
+
+/// Response for canceling a transfer order
+public struct CancelTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// The updated transfer order with status changed to CANCELED
+	public var transfer_order: TransferOrder?
+
+	/// Response for canceling a transfer order
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_order: The updated transfer order with status changed to CANCELED
+	public init(errors: [SquareError]? = nil, transfer_order: TransferOrder? = nil) {
+		self.errors = errors
+		self.transfer_order = transfer_order
 	}
 }
 
@@ -5920,6 +5988,42 @@ public enum ChangeTiming: String, Codable {
 	case END_OF_BILLING_CYCLE
 }
 
+public struct Channel: Codable, Equatable {
+	/// The timestamp for when the channel was created, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). For more information, see [Working with Dates](https://developer.squareup.com/docs/build-basics/working-with-dates).
+	public var created_at: Timestamp?
+	/// The channel's unique ID.
+	public var id: String?
+	/// The unique ID of the merchant this channel belongs to.
+	public var merchant_id: String?
+	/// The name of the channel.
+	public var name: String?
+	/// Represents an entity the channel is associated with.
+	public var reference: Reference?
+	/// Status of the channel. See [Status](#type-status) for possible values
+	public var status: ChannelStatus?
+	/// The timestamp for when the channel was last updated, in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z"). For more information, see [Working with Dates](https://developer.squareup.com/docs/build-basics/working-with-dates).
+	public var updated_at: Timestamp?
+	/// The version number which is incremented each time an update is made to the channel.
+	public var version: Int?
+
+	public init(created_at: Timestamp? = nil, id: String? = nil, merchant_id: String? = nil, name: String? = nil, reference: Reference? = nil, status: ChannelStatus? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.created_at = created_at
+		self.id = id
+		self.merchant_id = merchant_id
+		self.name = name
+		self.reference = reference
+		self.status = status
+		self.updated_at = updated_at
+		self.version = version
+	}
+}
+
+/// 
+public enum ChannelStatus: String, Codable {
+	case ACTIVE
+	case INACTIVE
+}
+
 /// Represents an additional recipient (other than the merchant) entitled to a portion of the tender. Support is currently limited to USD, CAD and GBP currencies
 public struct ChargeRequestAdditionalRecipient: Codable, Equatable {
 	/// The amount of money distributed to the recipient.
@@ -8344,6 +8448,94 @@ public struct CreateTimecardResponse: Codable, Equatable {
 	}
 }
 
+/// Data for creating a new transfer order to move [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. Used with the [CreateTransferOrder](api-endpoint:TransferOrders-CreateTransferOrder) endpoint.
+public struct CreateTransferOrderData: Codable, Equatable {
+	/// ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) creating this transfer order. Used for tracking and auditing purposes.
+	public var created_by_team_member_id: String?
+	/// The destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will receive the items. Must be an active location in your Square account
+	public var destination_location_id: String
+	/// Expected transfer date in RFC 3339 format (e.g. "yyyy-mm-ddT12:00:00Z").
+	public var expected_at: Timestamp?
+	/// List of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s to transfer, including quantities
+	public var line_items: [CreateTransferOrderLineData]?
+	/// Optional notes about the transfer
+	public var notes: String?
+	/// The source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will send the items. Must be an active location in your Square account with sufficient inventory of the requested items.
+	public var source_location_id: String
+	/// Optional shipment tracking number
+	public var tracking_number: String?
+
+	/// Data for creating a new transfer order to move [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. Used with the [CreateTransferOrder](api-endpoint:TransferOrders-CreateTransferOrder) endpoint.
+	/// - Parameters:
+	///   - created_by_team_member_id: ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) creating this transfer order. Used for tracking and auditing purposes.
+	///   - destination_location_id: The destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will receive the items. Must be an active location in your Square account
+	///   - expected_at: Expected transfer date in RFC 3339 format (e.g. "yyyy-mm-ddT12:00:00Z").
+	///   - line_items: List of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s to transfer, including quantities
+	///   - notes: Optional notes about the transfer
+	///   - source_location_id: The source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will send the items. Must be an active location in your Square account with sufficient inventory of the requested items.
+	///   - tracking_number: Optional shipment tracking number
+	public init(destination_location_id: String, source_location_id: String, created_by_team_member_id: String? = nil, expected_at: Timestamp? = nil, line_items: [CreateTransferOrderLineData]? = nil, notes: String? = nil, tracking_number: String? = nil) {
+		self.destination_location_id = destination_location_id
+		self.source_location_id = source_location_id
+		self.created_by_team_member_id = created_by_team_member_id
+		self.expected_at = expected_at
+		self.line_items = line_items
+		self.notes = notes
+		self.tracking_number = tracking_number
+	}
+}
+
+/// Data for creating a new transfer order line item. Each line item specifies a  [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) and quantity to transfer.
+public struct CreateTransferOrderLineData: Codable, Equatable {
+	/// ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) to transfer. Must reference a valid item variation in the [Catalog](api:Catalog). The item variation must be: - Active and available for sale - Enabled for inventory tracking - Available at the source location
+	public var item_variation_id: String
+	/// Total quantity ordered
+	public var quantity_ordered: String
+
+	/// Data for creating a new transfer order line item. Each line item specifies a  [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) and quantity to transfer.
+	/// - Parameters:
+	///   - item_variation_id: ID of the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) to transfer. Must reference a valid item variation in the [Catalog](api:Catalog). The item variation must be: - Active and available for sale - Enabled for inventory tracking - Available at the source location
+	///   - quantity_ordered: Total quantity ordered
+	public init(item_variation_id: String, quantity_ordered: String) {
+		self.item_variation_id = item_variation_id
+		self.quantity_ordered = quantity_ordered
+	}
+}
+
+/// Request to create a new transfer order.
+public struct CreateTransferOrderRequest: Codable, Equatable {
+	/// A unique string that identifies this CreateTransferOrder request. Keys can be any valid string but must be unique for every CreateTransferOrder request.
+	public var idempotency_key: String
+	/// The transfer order to create
+	public var transfer_order: CreateTransferOrderData
+
+	/// Request to create a new transfer order.
+	/// - Parameters:
+	///   - idempotency_key: A unique string that identifies this CreateTransferOrder request. Keys can be any valid string but must be unique for every CreateTransferOrder request.
+	///   - transfer_order: The transfer order to create
+	public init(idempotency_key: String, transfer_order: CreateTransferOrderData) {
+		self.idempotency_key = idempotency_key
+		self.transfer_order = transfer_order
+	}
+}
+
+/// Response for creating a transfer order.
+public struct CreateTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// The created transfer order
+	public var transfer_order: TransferOrder?
+
+	/// Response for creating a transfer order.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_order: The created transfer order
+	public init(errors: [SquareError]? = nil, transfer_order: TransferOrder? = nil) {
+		self.errors = errors
+		self.transfer_order = transfer_order
+	}
+}
+
 /// Represents an input to a call to [CreateVendor](api-endpoint:Vendors-CreateVendor).
 public struct CreateVendorRequest: Codable, Equatable {
 	/// A client-supplied, universally unique identifier (UUID) to make this [CreateVendor](api-endpoint:Vendors-CreateVendor) call idempotent.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) in the [API Development 101](https://developer.squareup.com/docs/buildbasics) section for more information.
@@ -10628,6 +10820,19 @@ public struct DeleteTimecardResponse: Codable, Equatable {
 	}
 }
 
+/// Response for deleting a transfer order
+public struct DeleteTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+
+	/// Response for deleting a transfer order
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
 /// Defines the fields that are included in the response body of a request to the [DeleteWebhookSubscription](api-endpoint:WebhookSubscriptions-DeleteWebhookSubscription) endpoint.
 public struct DeleteWebhookSubscriptionResponse: Codable, Equatable {
 	/// Information on errors encountered during the request.
@@ -12313,8 +12518,8 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
-	case VERSION_MISMATCH
 	case ORDER_EXPIRED
+	case VERSION_MISMATCH
 	case ISSUER_INSTALLMENT_ERROR
 }
 
@@ -16270,6 +16475,26 @@ public struct ListCatalogResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.objects = objects
+	}
+}
+
+/// 
+public enum ListChannelsRequestConstants: String, Codable {
+	case MAX_PAGE_SIZE
+}
+
+public struct ListChannelsResponse: Codable, Equatable {
+	/// List of requested Channel.
+	public var channels: [Channel]?
+	/// The token required to retrieve the next page of results.
+	public var cursor: String?
+	/// Information about errors encountered during the request.
+	public var errors: [SquareError]?
+
+	public init(channels: [Channel]? = nil, cursor: String? = nil, errors: [SquareError]? = nil) {
+		self.channels = channels
+		self.cursor = cursor
+		self.errors = errors
 	}
 }
 
@@ -23124,6 +23349,44 @@ public struct ReceiptOptions: Codable, Equatable {
 	}
 }
 
+/// Request to record receipt of items for a transfer order
+public struct ReceiveTransferOrderRequest: Codable, Equatable {
+	/// A unique key to make this request idempotent
+	public var idempotency_key: String
+	/// The receipt details
+	public var receipt: TransferOrderGoodsReceipt
+	/// Version for optimistic concurrency
+	public var version: Int?
+
+	/// Request to record receipt of items for a transfer order
+	/// - Parameters:
+	///   - idempotency_key: A unique key to make this request idempotent
+	///   - receipt: The receipt details
+	///   - version: Version for optimistic concurrency
+	public init(idempotency_key: String, receipt: TransferOrderGoodsReceipt, version: Int? = nil) {
+		self.idempotency_key = idempotency_key
+		self.receipt = receipt
+		self.version = version
+	}
+}
+
+/// Response for receiving items for a transfer order
+public struct ReceiveTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// The updated transfer order
+	public var transfer_order: TransferOrder?
+
+	/// Response for receiving items for a transfer order
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_order: The updated transfer order
+	public init(errors: [SquareError]? = nil, transfer_order: TransferOrder? = nil) {
+		self.errors = errors
+		self.transfer_order = transfer_order
+	}
+}
+
 /// A request to redeem a loyalty reward.
 public struct RedeemLoyaltyRewardRequest: Codable, Equatable {
 	/// A unique string that identifies this `RedeemLoyaltyReward` request.  Keys can be any valid string, but must be unique for every request.
@@ -23156,6 +23419,37 @@ public struct RedeemLoyaltyRewardResponse: Codable, Equatable {
 		self.errors = errors
 		self.event = event
 	}
+}
+
+public struct Reference: Codable, Equatable {
+	/// The id of the entity a channel is associated with.
+	public var id: String?
+	/// The type of entity a channel is associated with. See [Type](#type-type) for possible values
+	public var type: ReferenceType?
+
+	public init(id: String? = nil, type: ReferenceType? = nil) {
+		self.id = id
+		self.type = type
+	}
+}
+
+/// The type of platform concept a channel can represent.
+public enum ReferenceType: String, Codable {
+	case UNKNOWN_TYPE
+	case LOCATION
+	case FIRST_PARTY_INTEGRATION
+	case OAUTH_APPLICATION
+	case ONLINE_SITE
+	case ONLINE_CHECKOUT
+	case INVOICE
+	case GIFT_CARD
+	case GIFT_CARD_MARKETPLACE
+	case RECURRING_SUBSCRIPTION
+	case ONLINE_BOOKING_FLOW
+	case SQUARE_ASSISTANT
+	case CASH_LOCAL
+	case POINT_OF_SALE
+	case KIOSK
 }
 
 /// Represents a refund processed for a Square transaction.
@@ -23591,6 +23885,18 @@ public struct RetrieveCatalogObjectResponse: Codable, Equatable {
 		self.errors = errors
 		self.object = object
 		self.related_objects = related_objects
+	}
+}
+
+public struct RetrieveChannelResponse: Codable, Equatable {
+	/// The requested Channel.
+	public var channel: Channel?
+	/// Information about errors encountered during the request.
+	public var errors: [SquareError]?
+
+	public init(channel: Channel? = nil, errors: [SquareError]? = nil) {
+		self.channel = channel
+		self.errors = errors
 	}
 }
 
@@ -24288,6 +24594,23 @@ public struct RetrieveTransactionResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, transaction: Transaction? = nil) {
 		self.errors = errors
 		self.transaction = transaction
+	}
+}
+
+/// Response containing the requested transfer order
+public struct RetrieveTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// The requested transfer order
+	public var transfer_order: TransferOrder?
+
+	/// Response containing the requested transfer order
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_order: The requested transfer order
+	public init(errors: [SquareError]? = nil, transfer_order: TransferOrder? = nil) {
+		self.errors = errors
+		self.transfer_order = transfer_order
 	}
 }
 
@@ -25759,6 +26082,48 @@ public struct SearchTimecardsResponse: Codable, Equatable {
 	}
 }
 
+/// Request to search transfer orders
+public struct SearchTransferOrdersRequest: Codable, Equatable {
+	/// Pagination cursor from a previous search response
+	public var cursor: String?
+	/// Maximum number of results to return (1-100)
+	public var limit: Int?
+	/// The search query
+	public var query: TransferOrderQuery?
+
+	/// Request to search transfer orders
+	/// - Parameters:
+	///   - cursor: Pagination cursor from a previous search response
+	///   - limit: Maximum number of results to return (1-100)
+	///   - query: The search query
+	public init(cursor: String? = nil, limit: Int? = nil, query: TransferOrderQuery? = nil) {
+		self.cursor = cursor
+		self.limit = limit
+		self.query = query
+	}
+}
+
+/// Response for searching transfer orders
+public struct SearchTransferOrdersResponse: Codable, Equatable {
+	/// Pagination cursor for fetching the next page of results
+	public var cursor: String?
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// List of transfer orders matching the search criteria
+	public var transfer_orders: [TransferOrder]?
+
+	/// Response for searching transfer orders
+	/// - Parameters:
+	///   - cursor: Pagination cursor for fetching the next page of results
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_orders: List of transfer orders matching the search criteria
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, transfer_orders: [TransferOrder]? = nil) {
+		self.cursor = cursor
+		self.errors = errors
+		self.transfer_orders = transfer_orders
+	}
+}
+
 /// Represents an input into a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
 public struct SearchVendorsRequest: Codable, Equatable {
 	/// A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See the [Pagination](https://developer.squareup.com/docs/working-with-apis/pagination) guide for more information.
@@ -26292,6 +26657,40 @@ public struct StandardUnitDescriptionGroup: Codable, Equatable {
 	public init(language_code: String? = nil, standard_unit_descriptions: [StandardUnitDescription]? = nil) {
 		self.language_code = language_code
 		self.standard_unit_descriptions = standard_unit_descriptions
+	}
+}
+
+/// Request to start a transfer order, changing its status from DRAFT to STARTED.
+public struct StartTransferOrderRequest: Codable, Equatable {
+	/// A unique string that identifies this UpdateTransferOrder request. Keys can be any valid string but must be unique for every UpdateTransferOrder request.
+	public var idempotency_key: String
+	/// Version for optimistic concurrency
+	public var version: Int?
+
+	/// Request to start a transfer order, changing its status from DRAFT to STARTED.
+	/// - Parameters:
+	///   - idempotency_key: A unique string that identifies this UpdateTransferOrder request. Keys can be any valid string but must be unique for every UpdateTransferOrder request.
+	///   - version: Version for optimistic concurrency
+	public init(idempotency_key: String, version: Int? = nil) {
+		self.idempotency_key = idempotency_key
+		self.version = version
+	}
+}
+
+/// Response for starting a transfer order.
+public struct StartTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// The updated transfer order with status changed to STARTED
+	public var transfer_order: TransferOrder?
+
+	/// Response for starting a transfer order.
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_order: The updated transfer order with status changed to STARTED
+	public init(errors: [SquareError]? = nil, transfer_order: TransferOrder? = nil) {
+		self.errors = errors
+		self.transfer_order = transfer_order
 	}
 }
 
@@ -28497,6 +28896,369 @@ public enum TransactionType: String, Codable {
 	case CREDIT
 }
 
+/// Represents a transfer order for moving [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s  between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. Transfer orders track the entire lifecycle of an inventory  transfer, including: - What items and quantities are being moved - Source and destination locations - Current [TransferOrderStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) - Shipping information and tracking - Which [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) initiated the transfer  This object is commonly used to: - Track [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) movements between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s - Reconcile expected vs received quantities - Monitor transfer progress and shipping status - Audit inventory movement history
+public struct TransferOrder: Codable, Equatable {
+	/// Timestamp when the transfer order was completed or canceled, in RFC 3339 format (e.g. "yyyy-mm-ddT12:00:00Z").
+	public var completed_at: Timestamp?
+	/// Timestamp when the transfer order was created, in RFC 3339 format. Used for: - Auditing transfer history - Tracking order age - Reporting and analytics
+	public var created_at: Timestamp?
+	/// ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) who created this transfer order. This field is not writeable by the Connect V2 API.
+	public var created_by_team_member_id: String?
+	/// The destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) receiving the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s. This location must: - Be active in your Square organization - Not be the same as the source location  This field is not updatable.
+	public var destination_location_id: String?
+	/// Expected transfer completion date, in RFC 3339 format. Used for: - Planning inventory availability - Scheduling receiving staff - Monitoring transfer timeliness
+	public var expected_at: Timestamp?
+	/// Unique system-generated identifier for this transfer order. Use this ID for: - Retrieving transfer order details - Tracking status changes via webhooks - Linking transfers in external systems
+	public var id: String?
+	/// List of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s being transferred.
+	public var line_items: [TransferOrderLine]?
+	/// Optional notes about the transfer.
+	public var notes: String?
+	/// The source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) sending the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s. This location must: - Be active in your Square organization - Have sufficient inventory for the items being transferred - Not be the same as the destination location  This field is not updatable.
+	public var source_location_id: String?
+	/// Current [TransferOrderStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) indicating where the order is in its lifecycle. Status transitions follow this progression: 1. [DRAFT](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) -> [STARTED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) via [StartTransferOrder](api-endpoint:TransferOrders-StartTransferOrder) 2. [STARTED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) -> [PARTIALLY_RECEIVED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) via [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder) 3. [PARTIALLY_RECEIVED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) -> [COMPLETED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) after all items received  Orders can be [CANCELED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) from [STARTED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) or  [PARTIALLY_RECEIVED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) status.  This field is read-only and reflects the current state of the transfer order, and cannot be updated directly. Use the appropriate endpoints (e.g. [StartPurchaseOrder](api-endpoint:TransferOrders-StartTransferOrder), to change the status. See [TransferOrderStatus](#type-transferorderstatus) for possible values
+	public var status: TransferOrderStatus?
+	/// Shipment tracking number for monitoring transfer progress.
+	public var tracking_number: String?
+	/// Timestamp when the transfer order was last updated, in RFC 3339 format. Updated when: - Order status changes - Items are received - Notes or metadata are modified
+	public var updated_at: Timestamp?
+	/// Version for optimistic concurrency control. This is a monotonically increasing integer that changes whenever the transfer order is modified. Use this when calling  [UpdateTransferOrder](api-endpoint:TransferOrders-UpdateTransferOrder) and other endpoints to ensure you're not overwriting concurrent changes.
+	public var version: Int?
+
+	/// Represents a transfer order for moving [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s  between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. Transfer orders track the entire lifecycle of an inventory  transfer, including: - What items and quantities are being moved - Source and destination locations - Current [TransferOrderStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) - Shipping information and tracking - Which [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) initiated the transfer  This object is commonly used to: - Track [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) movements between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s - Reconcile expected vs received quantities - Monitor transfer progress and shipping status - Audit inventory movement history
+	/// - Parameters:
+	///   - completed_at: Timestamp when the transfer order was completed or canceled, in RFC 3339 format (e.g. "yyyy-mm-ddT12:00:00Z").
+	///   - created_at: Timestamp when the transfer order was created, in RFC 3339 format. Used for: - Auditing transfer history - Tracking order age - Reporting and analytics
+	///   - created_by_team_member_id: ID of the [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) who created this transfer order. This field is not writeable by the Connect V2 API.
+	///   - destination_location_id: The destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) receiving the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s. This location must: - Be active in your Square organization - Not be the same as the source location  This field is not updatable.
+	///   - expected_at: Expected transfer completion date, in RFC 3339 format. Used for: - Planning inventory availability - Scheduling receiving staff - Monitoring transfer timeliness
+	///   - id: Unique system-generated identifier for this transfer order. Use this ID for: - Retrieving transfer order details - Tracking status changes via webhooks - Linking transfers in external systems
+	///   - line_items: List of [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s being transferred.
+	///   - notes: Optional notes about the transfer.
+	///   - source_location_id: The source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) sending the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s. This location must: - Be active in your Square organization - Have sufficient inventory for the items being transferred - Not be the same as the destination location  This field is not updatable.
+	///   - status: Current [TransferOrderStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) indicating where the order is in its lifecycle. Status transitions follow this progression: 1. [DRAFT](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) -> [STARTED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) via [StartTransferOrder](api-endpoint:TransferOrders-StartTransferOrder) 2. [STARTED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) -> [PARTIALLY_RECEIVED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) via [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder) 3. [PARTIALLY_RECEIVED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) -> [COMPLETED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) after all items received  Orders can be [CANCELED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) from [STARTED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) or  [PARTIALLY_RECEIVED](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) status.  This field is read-only and reflects the current state of the transfer order, and cannot be updated directly. Use the appropriate endpoints (e.g. [StartPurchaseOrder](api-endpoint:TransferOrders-StartTransferOrder), to change the status. See [TransferOrderStatus](#type-transferorderstatus) for possible values
+	///   - tracking_number: Shipment tracking number for monitoring transfer progress.
+	///   - updated_at: Timestamp when the transfer order was last updated, in RFC 3339 format. Updated when: - Order status changes - Items are received - Notes or metadata are modified
+	///   - version: Version for optimistic concurrency control. This is a monotonically increasing integer that changes whenever the transfer order is modified. Use this when calling  [UpdateTransferOrder](api-endpoint:TransferOrders-UpdateTransferOrder) and other endpoints to ensure you're not overwriting concurrent changes.
+	public init(completed_at: Timestamp? = nil, created_at: Timestamp? = nil, created_by_team_member_id: String? = nil, destination_location_id: String? = nil, expected_at: Timestamp? = nil, id: String? = nil, line_items: [TransferOrderLine]? = nil, notes: String? = nil, source_location_id: String? = nil, status: TransferOrderStatus? = nil, tracking_number: String? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
+		self.completed_at = completed_at
+		self.created_at = created_at
+		self.created_by_team_member_id = created_by_team_member_id
+		self.destination_location_id = destination_location_id
+		self.expected_at = expected_at
+		self.id = id
+		self.line_items = line_items
+		self.notes = notes
+		self.source_location_id = source_location_id
+		self.status = status
+		self.tracking_number = tracking_number
+		self.updated_at = updated_at
+		self.version = version
+	}
+}
+
+/// Published when a transfer_order is created.
+public struct TransferOrderCreatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TransferOrderCreatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"transfer_order.created"`.
+	public var type: String?
+
+	/// Published when a transfer_order is created.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"transfer_order.created"`.
+	public init(created_at: Timestamp? = nil, data: TransferOrderCreatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TransferOrderCreatedEventData: Codable, Equatable {
+	/// ID of the affected transfer_order.
+	public var id: String?
+	/// An object containing the created transfer_order.
+	public var object: TransferOrderCreatedEventObject?
+	/// Name of the affected object’s type, `"transfer_order"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TransferOrderCreatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TransferOrderCreatedEventObject: Codable, Equatable {
+	/// The created transfer_order.
+	public var transfer_order: TransferOrder?
+
+	public init(transfer_order: TransferOrder? = nil) {
+		self.transfer_order = transfer_order
+	}
+}
+
+/// Published when a transfer_order is deleted.
+public struct TransferOrderDeletedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TransferOrderDeletedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"transfer_order.deleted"`.
+	public var type: String?
+
+	/// Published when a transfer_order is deleted.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"transfer_order.deleted"`.
+	public init(created_at: Timestamp? = nil, data: TransferOrderDeletedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TransferOrderDeletedEventData: Codable, Equatable {
+	/// Is true if the affected object was deleted. Otherwise absent.
+	public var deleted: Bool?
+	/// ID of the affected transfer_order.
+	public var id: String?
+	/// Name of the affected object’s type, `"transfer_order"`.
+	public var type: String?
+
+	public init(deleted: Bool? = nil, id: String? = nil, type: String? = nil) {
+		self.deleted = deleted
+		self.id = id
+		self.type = type
+	}
+}
+
+/// Filter criteria for searching transfer orders
+public struct TransferOrderFilter: Codable, Equatable {
+	/// Filter by destination location IDs
+	public var destination_location_ids: [String]?
+	/// Filter by source location IDs
+	public var source_location_ids: [String]?
+	/// Filter by order statuses See [TransferOrderStatus](#type-transferorderstatus) for possible values
+	public var statuses: [TransferOrderStatus]?
+
+	/// Filter criteria for searching transfer orders
+	/// - Parameters:
+	///   - destination_location_ids: Filter by destination location IDs
+	///   - source_location_ids: Filter by source location IDs
+	///   - statuses: Filter by order statuses See [TransferOrderStatus](#type-transferorderstatus) for possible values
+	public init(destination_location_ids: [String]? = nil, source_location_ids: [String]? = nil, statuses: [TransferOrderStatus]? = nil) {
+		self.destination_location_ids = destination_location_ids
+		self.source_location_ids = source_location_ids
+		self.statuses = statuses
+	}
+}
+
+/// The goods receipt details for a transfer order. This object represents a single receipt of goods against a transfer order, tracking:  - Which [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s were received - Quantities received in good condition - Quantities damaged during transit/handling - Quantities canceled during receipt  Multiple goods receipts can be created for a single transfer order to handle: - Partial deliveries - Multiple shipments - Split receipts across different dates - Cancellations of specific quantities  Each receipt automatically: - Updates the transfer order status - Adjusts received quantities - Updates inventory levels at both source and destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s
+public struct TransferOrderGoodsReceipt: Codable, Equatable {
+	/// Line items being received. Each line item specifies: - The item being received - Quantity received in good condition - Quantity received damaged - Quantity canceled  Constraints: - Must include at least one line item - Maximum of 1000 line items per receipt - Each line item must reference a valid item from the transfer order - Total of received, damaged, and canceled quantities cannot exceed ordered quantity
+	public var line_items: [TransferOrderGoodsReceiptLineItem]?
+
+	/// The goods receipt details for a transfer order. This object represents a single receipt of goods against a transfer order, tracking:  - Which [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s were received - Quantities received in good condition - Quantities damaged during transit/handling - Quantities canceled during receipt  Multiple goods receipts can be created for a single transfer order to handle: - Partial deliveries - Multiple shipments - Split receipts across different dates - Cancellations of specific quantities  Each receipt automatically: - Updates the transfer order status - Adjusts received quantities - Updates inventory levels at both source and destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s
+	/// - Parameters:
+	///   - line_items: Line items being received. Each line item specifies: - The item being received - Quantity received in good condition - Quantity received damaged - Quantity canceled  Constraints: - Must include at least one line item - Maximum of 1000 line items per receipt - Each line item must reference a valid item from the transfer order - Total of received, damaged, and canceled quantities cannot exceed ordered quantity
+	public init(line_items: [TransferOrderGoodsReceiptLineItem]? = nil) {
+		self.line_items = line_items
+	}
+}
+
+/// A simplified line item for goods receipts in transfer orders
+public struct TransferOrderGoodsReceiptLineItem: Codable, Equatable {
+	/// The quantity that was canceled during shipping/handling as a decimal string (e.g. "1.5"). These will be immediately added to inventory in the source location.
+	public var quantity_canceled: String?
+	/// The quantity that was damaged during shipping/handling as a decimal string (e.g. "1.5"). These items will be added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of WASTE.
+	public var quantity_damaged: String?
+	/// The quantity received for this line item as a decimal string (e.g. "10.5"). These items will be added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of IN_STOCK.
+	public var quantity_received: String?
+	/// The unique identifier of the Transfer Order line being received
+	public var transfer_order_line_uid: String
+
+	/// A simplified line item for goods receipts in transfer orders
+	/// - Parameters:
+	///   - quantity_canceled: The quantity that was canceled during shipping/handling as a decimal string (e.g. "1.5"). These will be immediately added to inventory in the source location.
+	///   - quantity_damaged: The quantity that was damaged during shipping/handling as a decimal string (e.g. "1.5"). These items will be added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of WASTE.
+	///   - quantity_received: The quantity received for this line item as a decimal string (e.g. "10.5"). These items will be added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of IN_STOCK.
+	///   - transfer_order_line_uid: The unique identifier of the Transfer Order line being received
+	public init(transfer_order_line_uid: String, quantity_canceled: String? = nil, quantity_damaged: String? = nil, quantity_received: String? = nil) {
+		self.transfer_order_line_uid = transfer_order_line_uid
+		self.quantity_canceled = quantity_canceled
+		self.quantity_damaged = quantity_damaged
+		self.quantity_received = quantity_received
+	}
+}
+
+/// Represents a line item in a transfer order. Each line item tracks a specific  [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) being transferred, including ordered quantities and receipt status.
+public struct TransferOrderLine: Codable, Equatable {
+	/// The required identifier of the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) being transferred. Must reference a valid catalog item variation that exists in the [Catalog](api:Catalog).
+	public var item_variation_id: String
+	/// Quantity that was canceled. These items will be immediately added to inventory in the source location.  This field cannot be updated directly in Create/Update operations, instead use [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder) or [CancelTransferOrder](api-endpoint:TransferOrders-CancelTransferOrder).
+	public var quantity_canceled: String?
+	/// Quantity received in damaged condition. These items are added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of WASTE.  This field cannot be updated directly in Create/Update operations, instead use [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder).
+	public var quantity_damaged: String?
+	/// Total quantity ordered, formatted as a decimal string (e.g. "10 or 10.0000"). Required to be a positive number.  To remove a line item, set `remove` to `true` in [UpdateTransferOrder](api-endpoint:TransferOrders-UpdateTransferOrder).
+	public var quantity_ordered: String
+	/// Calculated quantity of this line item's yet to be received stock. This is the difference between the total quantity ordered and the sum of quantities received, canceled, and damaged.
+	public var quantity_pending: String?
+	/// Quantity received at destination. These items are added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of IN_STOCK.  This field cannot be updated directly in Create/Update operations, instead use [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder).
+	public var quantity_received: String?
+	/// Unique system-generated identifier for the line item. Provide when updating/removing a line via [UpdateTransferOrder](api-endpoint:TransferOrders-UpdateTransferOrder).
+	public var uid: String?
+
+	/// Represents a line item in a transfer order. Each line item tracks a specific  [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) being transferred, including ordered quantities and receipt status.
+	/// - Parameters:
+	///   - item_variation_id: The required identifier of the [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) being transferred. Must reference a valid catalog item variation that exists in the [Catalog](api:Catalog).
+	///   - quantity_canceled: Quantity that was canceled. These items will be immediately added to inventory in the source location.  This field cannot be updated directly in Create/Update operations, instead use [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder) or [CancelTransferOrder](api-endpoint:TransferOrders-CancelTransferOrder).
+	///   - quantity_damaged: Quantity received in damaged condition. These items are added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of WASTE.  This field cannot be updated directly in Create/Update operations, instead use [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder).
+	///   - quantity_ordered: Total quantity ordered, formatted as a decimal string (e.g. "10 or 10.0000"). Required to be a positive number.  To remove a line item, set `remove` to `true` in [UpdateTransferOrder](api-endpoint:TransferOrders-UpdateTransferOrder).
+	///   - quantity_pending: Calculated quantity of this line item's yet to be received stock. This is the difference between the total quantity ordered and the sum of quantities received, canceled, and damaged.
+	///   - quantity_received: Quantity received at destination. These items are added to the destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)'s inventory with [InventoryState](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of IN_STOCK.  This field cannot be updated directly in Create/Update operations, instead use [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder).
+	///   - uid: Unique system-generated identifier for the line item. Provide when updating/removing a line via [UpdateTransferOrder](api-endpoint:TransferOrders-UpdateTransferOrder).
+	public init(item_variation_id: String, quantity_ordered: String, quantity_canceled: String? = nil, quantity_damaged: String? = nil, quantity_pending: String? = nil, quantity_received: String? = nil, uid: String? = nil) {
+		self.item_variation_id = item_variation_id
+		self.quantity_ordered = quantity_ordered
+		self.quantity_canceled = quantity_canceled
+		self.quantity_damaged = quantity_damaged
+		self.quantity_pending = quantity_pending
+		self.quantity_received = quantity_received
+		self.uid = uid
+	}
+}
+
+/// Query parameters for searching transfer orders
+public struct TransferOrderQuery: Codable, Equatable {
+	/// Filter criteria
+	public var filter: TransferOrderFilter?
+	/// Sort configuration
+	public var sort: TransferOrderSort?
+
+	/// Query parameters for searching transfer orders
+	/// - Parameters:
+	///   - filter: Filter criteria
+	///   - sort: Sort configuration
+	public init(filter: TransferOrderFilter? = nil, sort: TransferOrderSort? = nil) {
+		self.filter = filter
+		self.sort = sort
+	}
+}
+
+/// Sort configuration for search results
+public struct TransferOrderSort: Codable, Equatable {
+	/// Field to sort by See [TransferOrderSortField](#type-transferordersortfield) for possible values
+	public var field: TransferOrderSortField?
+	/// Sort order direction See [SortOrder](#type-sortorder) for possible values
+	public var order: SortOrder?
+
+	/// Sort configuration for search results
+	/// - Parameters:
+	///   - field: Field to sort by See [TransferOrderSortField](#type-transferordersortfield) for possible values
+	///   - order: Sort order direction See [SortOrder](#type-sortorder) for possible values
+	public init(field: TransferOrderSortField? = nil, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
+}
+
+/// Fields that can be used for sorting [TransferOrder](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrder)s in search results. Used with [SearchTransferOrders](api-endpoint:TransferOrders-SearchTransferOrders) to control the order of returned results.
+public enum TransferOrderSortField: String, Codable {
+	/// Sort by creation date (created_at field). Useful for: - Finding newest transfers - Chronological order processing - Historical analysis - Auditing transfer patterns
+	case CREATED_AT
+	/// Sort by last update date (updated_at field). Useful for: - Finding recently modified transfers - Tracking status changes - Monitoring receiving progress - Synchronizing with external systems
+	case UPDATED_AT
+}
+
+/// Status values for transfer orders. Represents the current state of a  [TransferOrder](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrder) in its lifecycle from creation to completion. Each status determines what actions are available and how inventory is affected.
+public enum TransferOrderStatus: String, Codable {
+	/// Initial status when transfer order is created via [CreateTransferOrder](api-endpoint:TransferOrders-CreateTransferOrder). Order can be modified or deleted. No inventory impact at this stage.
+	case DRAFT
+	/// Transfer order has been started via [StartTransferOrder](api-endpoint:TransferOrders-StartTransferOrder). Order can no longer be deleted. [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s are decremented  from source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) and marked as in-transit to destination.
+	case STARTED
+	/// Some items have been received via [ReceiveTransferOrder](api-endpoint:TransferOrders-ReceiveTransferOrder) but there are still pending quantities. Additional receipts are allowed. [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s are incrementally added to destination  [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) inventory as they are received.
+	case PARTIALLY_RECEIVED
+	/// All items have been received or canceled, no pending quantities remain.  Only metadata modifications are allowed. Final inventory adjustments are complete at both source and destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s.
+	case COMPLETED
+	/// Transfer order was canceled via [CancelTransferOrder](api-endpoint:TransferOrders-CancelTransferOrder). Any pending quantities are no longer receivable and are returned to source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).  Only metadata modifications are allowed.
+	case CANCELED
+}
+
+/// Published when a transfer_order is updated.
+public struct TransferOrderUpdatedEvent: Codable, Equatable {
+	/// Timestamp of when the event was created, in RFC 3339 format.
+	public var created_at: Timestamp?
+	/// Data associated with the event.
+	public var data: TransferOrderUpdatedEventData?
+	/// A unique ID for the event.
+	public var event_id: String?
+	/// The ID of the target merchant associated with the event.
+	public var merchant_id: String?
+	/// The type of event this represents, `"transfer_order.updated"`.
+	public var type: String?
+
+	/// Published when a transfer_order is updated.
+	/// - Parameters:
+	///   - created_at: Timestamp of when the event was created, in RFC 3339 format.
+	///   - data: Data associated with the event.
+	///   - event_id: A unique ID for the event.
+	///   - merchant_id: The ID of the target merchant associated with the event.
+	///   - type: The type of event this represents, `"transfer_order.updated"`.
+	public init(created_at: Timestamp? = nil, data: TransferOrderUpdatedEventData? = nil, event_id: String? = nil, merchant_id: String? = nil, type: String? = nil) {
+		self.created_at = created_at
+		self.data = data
+		self.event_id = event_id
+		self.merchant_id = merchant_id
+		self.type = type
+	}
+}
+
+public struct TransferOrderUpdatedEventData: Codable, Equatable {
+	/// ID of the affected transfer_order.
+	public var id: String?
+	/// An object containing the updated transfer_order.
+	public var object: TransferOrderUpdatedEventObject?
+	/// Name of the affected object’s type, `"transfer_order"`.
+	public var type: String?
+
+	public init(id: String? = nil, object: TransferOrderUpdatedEventObject? = nil, type: String? = nil) {
+		self.id = id
+		self.object = object
+		self.type = type
+	}
+}
+
+public struct TransferOrderUpdatedEventObject: Codable, Equatable {
+	/// The updated transfer_order.
+	public var transfer_order: TransferOrder?
+
+	public init(transfer_order: TransferOrder? = nil) {
+		self.transfer_order = transfer_order
+	}
+}
+
 /// A request to unlink a customer from a gift card.
 public struct UnlinkCustomerFromGiftCardRequest: Codable, Equatable {
 	/// The ID of the customer to unlink from the gift card.
@@ -29306,6 +30068,102 @@ public struct UpdateTimecardResponse: Codable, Equatable {
 	public init(errors: [SquareError]? = nil, timecard: Timecard? = nil) {
 		self.errors = errors
 		self.timecard = timecard
+	}
+}
+
+/// Data model for updating a transfer order. All fields are optional.
+public struct UpdateTransferOrderData: Codable, Equatable {
+	/// The destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will receive the items. Must be an active location in your Square account.
+	public var destination_location_id: String?
+	/// Expected transfer date in RFC 3339 format (e.g. "yyyy-mm-ddT12:00:00Z").
+	public var expected_at: Timestamp?
+	/// List of items being transferred
+	public var line_items: [UpdateTransferOrderLineData]?
+	/// Optional notes about the transfer
+	public var notes: String?
+	/// The source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will send the items. Must be an active location in your Square account with sufficient inventory of the requested items.
+	public var source_location_id: String?
+	/// Shipment tracking number
+	public var tracking_number: String?
+
+	/// Data model for updating a transfer order. All fields are optional.
+	/// - Parameters:
+	///   - destination_location_id: The destination [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will receive the items. Must be an active location in your Square account.
+	///   - expected_at: Expected transfer date in RFC 3339 format (e.g. "yyyy-mm-ddT12:00:00Z").
+	///   - line_items: List of items being transferred
+	///   - notes: Optional notes about the transfer
+	///   - source_location_id: The source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) that will send the items. Must be an active location in your Square account with sufficient inventory of the requested items.
+	///   - tracking_number: Shipment tracking number
+	public init(destination_location_id: String? = nil, expected_at: Timestamp? = nil, line_items: [UpdateTransferOrderLineData]? = nil, notes: String? = nil, source_location_id: String? = nil, tracking_number: String? = nil) {
+		self.destination_location_id = destination_location_id
+		self.expected_at = expected_at
+		self.line_items = line_items
+		self.notes = notes
+		self.source_location_id = source_location_id
+		self.tracking_number = tracking_number
+	}
+}
+
+/// Represents a line item update in a transfer order
+public struct UpdateTransferOrderLineData: Codable, Equatable {
+	/// Catalog item variation being transferred  Required for new line items, but otherwise is not updatable.
+	public var item_variation_id: String?
+	/// Total quantity ordered
+	public var quantity_ordered: String?
+	/// Flag to remove the line item during update. Must include `uid` in removal request
+	public var remove: Bool?
+	/// Line item id being updated. Required for updating/removing existing line items, but should not be set for new line items.
+	public var uid: String?
+
+	/// Represents a line item update in a transfer order
+	/// - Parameters:
+	///   - item_variation_id: Catalog item variation being transferred  Required for new line items, but otherwise is not updatable.
+	///   - quantity_ordered: Total quantity ordered
+	///   - remove: Flag to remove the line item during update. Must include `uid` in removal request
+	///   - uid: Line item id being updated. Required for updating/removing existing line items, but should not be set for new line items.
+	public init(item_variation_id: String? = nil, quantity_ordered: String? = nil, remove: Bool? = nil, uid: String? = nil) {
+		self.item_variation_id = item_variation_id
+		self.quantity_ordered = quantity_ordered
+		self.remove = remove
+		self.uid = uid
+	}
+}
+
+/// Request to update a transfer order
+public struct UpdateTransferOrderRequest: Codable, Equatable {
+	/// A unique string that identifies this UpdateTransferOrder request. Keys must contain only alphanumeric characters, dashes and underscores
+	public var idempotency_key: String
+	/// The transfer order updates to apply
+	public var transfer_order: UpdateTransferOrderData
+	/// Version for optimistic concurrency
+	public var version: Int?
+
+	/// Request to update a transfer order
+	/// - Parameters:
+	///   - idempotency_key: A unique string that identifies this UpdateTransferOrder request. Keys must contain only alphanumeric characters, dashes and underscores
+	///   - transfer_order: The transfer order updates to apply
+	///   - version: Version for optimistic concurrency
+	public init(idempotency_key: String, transfer_order: UpdateTransferOrderData, version: Int? = nil) {
+		self.idempotency_key = idempotency_key
+		self.transfer_order = transfer_order
+		self.version = version
+	}
+}
+
+/// Response for updating a transfer order
+public struct UpdateTransferOrderResponse: Codable, Equatable {
+	/// Any errors that occurred during the request
+	public var errors: [SquareError]?
+	/// The updated transfer order
+	public var transfer_order: TransferOrder?
+
+	/// Response for updating a transfer order
+	/// - Parameters:
+	///   - errors: Any errors that occurred during the request
+	///   - transfer_order: The updated transfer order
+	public init(errors: [SquareError]? = nil, transfer_order: TransferOrder? = nil) {
+		self.errors = errors
+		self.transfer_order = transfer_order
 	}
 }
 
