@@ -13083,6 +13083,8 @@ public enum FulfillmentState: String, Codable {
 
 /// The type of fulfillment.
 public enum FulfillmentType: String, Codable {
+	/// Undocumented new type
+	case SIMPLE
 	/// A recipient to pick up the fulfillment from a physical [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
 	case PICKUP
 	/// A shipping carrier to ship the fulfillment.
