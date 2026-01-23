@@ -44,11 +44,3 @@ extension Order {
 //extension Optional where Wrapped == Money {
 //	
 //}
-
-
-// THIS TYPE WAS JUST MISSING SO I'M CREATING IT MYSELF
-public enum CatalogModifierToggleOverrideType: String, Codable {
-	case YES
-	case NO
-	case NOT_SET
-}
