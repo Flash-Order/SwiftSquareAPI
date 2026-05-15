@@ -21912,7 +21912,7 @@ public enum OrderServiceChargeCalculationPhase: String, Codable {
 	/// The service charge is calculated as a compounding adjustment after any discounts, but before amount based apportioned service charges and any tax considerations.
 	case APPORTIONED_PERCENTAGE_PHASE
 	/// New undocumented phase square added without notifying.
-	case CARD​_​SURCHARGE​_​PHASE
+	case CARD_SURCHARGE_PHASE
 	/// The service charge is calculated as a compounding adjustment after any discounts and percentage based apportioned service charges, but before any tax considerations.
 	case APPORTIONED_AMOUNT_PHASE
 }
