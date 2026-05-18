@@ -21936,6 +21936,7 @@ public enum OrderServiceChargeTreatmentType: String, Codable {
 /// 
 public enum OrderServiceChargeType: String, Codable {
 	case AUTO_GRATUITY
+	case CARD_SURCHARGE
 	case CUSTOM
 }
 
