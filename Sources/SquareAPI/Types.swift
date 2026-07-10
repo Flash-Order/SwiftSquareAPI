@@ -122,6 +122,13 @@ public enum ActionCancelReason: String, Codable {
 	case SELLER_CANCELED
 	/// The `TerminalCheckout` timed out (see `deadline_duration` on the `TerminalCheckout`).
 	case TIMED_OUT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ActionCancelReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -242,6 +249,13 @@ public enum ActivityType: String, Codable {
 	case SQUARE_PAYROLL_TRANSFER
 	/// A payroll payment to a team member’s bank account that was deposited back to the seller’s account by Square.
 	case SQUARE_PAYROLL_TRANSFER_REVERSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ActivityType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [AddGroupToCustomer](api-endpoint:Customers-AddGroupToCustomer) endpoint.
@@ -427,11 +441,25 @@ public enum ApplicationDetailsExternalSquareProduct: String, Codable {
 	case SQUARE_POS
 	case TERMINAL_API
 	case VIRTUAL_TERMINAL
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ApplicationDetailsExternalSquareProduct(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
 public enum ApplicationType: String, Codable {
 	case TERMINAL_API
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ApplicationType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines an appointment segment of a booking.
@@ -479,6 +507,13 @@ public enum ArchivedState: String, Codable {
 	case ARCHIVED_STATE_ARCHIVED
 	/// Requested items can be archived or not archived.
 	case ARCHIVED_STATE_ALL
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ArchivedState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines an appointment slot that encapsulates the appointment segments, location and starting time available for booking.
@@ -746,6 +781,13 @@ public enum BankAccountStatus: String, Codable {
 	case VERIFIED
 	/// Indicates that the bank account is disabled and is permanently unusable for funds transfer. A bank account can be disabled because of a failed verification attempt or a failed deposit attempt.
 	case DISABLED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BankAccountStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the financial purpose of the bank account.
@@ -760,6 +802,13 @@ public enum BankAccountType: String, Codable {
 	case OTHER
 	/// An account at a financial institution against which checks can be drawn specifically for business purposes (non-personal use).
 	case BUSINESS_CHECKING
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BankAccountType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when Square sets the status of a [BankAccount](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/BankAccount) to `VERIFIED`.
@@ -1144,6 +1193,13 @@ public enum BookingBookingSource: String, Codable {
 	case THIRD_PARTY_BUYER
 	/// The booking was created by a seller or a buyer from the Square Bookings API.
 	case API
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BookingBookingSource(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a booking is created.  To receive this event with buyer-level permissions, you must have `APPOINTMENTS_READ` set for the OAuth scope.   To receive this event with seller-level permissions, you must have `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` set for the OAuth scope.
@@ -1226,6 +1282,13 @@ public enum BookingCreatorDetailsCreatorType: String, Codable {
 	case TEAM_MEMBER
 	/// The creator is of the buyer type.
 	case CUSTOMER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BookingCreatorDetailsCreatorType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a booking [custom attribute definition](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CustomAttributeDefinition)  is created by the subscribing application. Subscribe to this event to be notified  when your application creates a booking custom attribute definition.
@@ -1608,6 +1671,13 @@ public enum BookingStatus: String, Codable {
 	case ACCEPTED
 	/// A no-show booking. The booking was accepted at one time, but have now been marked as a no-show by the seller because the client either missed the booking or cancelled it without enough notice.
 	case NO_SHOW
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BookingStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a booking is updated or cancelled.  To receive this event with buyer-level permissions, you must have `APPOINTMENTS_READ` set for the OAuth scope.   To receive this event with seller-level permissions, you must have `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` set for the OAuth scope.
@@ -2199,6 +2269,13 @@ public struct BulkRetrieveChannelsRequest: Codable, Equatable {
 /// 
 public enum BulkRetrieveChannelsRequestConstants: String, Codable {
 	case MAX_BATCH_SIZE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BulkRetrieveChannelsRequestConstants(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the fields that are included in the request body for the [BulkRetrieveChannels](api-endpoint:Channels-BulkRetrieveChannels) endpoint.
@@ -2861,6 +2938,13 @@ public enum BusinessAppointmentSettingsAlignmentTime: String, Codable {
 	case HALF_HOURLY
 	/// The service duration unit is a 60-minute interval. Bookings can be scheduled every hour.
 	case HOURLY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BusinessAppointmentSettingsAlignmentTime(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Supported types of location where service is provided.
@@ -2871,6 +2955,13 @@ public enum BusinessAppointmentSettingsBookingLocationType: String, Codable {
 	case CUSTOMER_LOCATION
 	/// The service is provided over the phone.
 	case PHONE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BusinessAppointmentSettingsBookingLocationType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The category of the seller’s cancellation policy.
@@ -2879,6 +2970,13 @@ public enum BusinessAppointmentSettingsCancellationPolicy: String, Codable {
 	case CANCELLATION_TREATED_AS_NO_SHOW
 	/// Cancellations follow the seller-specified policy that is described in free-form text and not enforced automatically by Square.
 	case CUSTOM_POLICY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BusinessAppointmentSettingsCancellationPolicy(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Types of daily appointment limits.
@@ -2887,6 +2985,13 @@ public enum BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType: String, C
 	case PER_TEAM_MEMBER
 	/// The maximum number of daily appointments is set on a per location basis.
 	case PER_LOCATION
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BusinessAppointmentSettingsMaxAppointmentsPerDayLimitType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A seller's business booking profile, including booking policy, appointment settings, etc.
@@ -2936,6 +3041,13 @@ public enum BusinessBookingProfileBookingPolicy: String, Codable {
 	case ACCEPT_ALL
 	/// The seller must accept requests to complete bookings.
 	case REQUIRES_ACCEPTANCE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BusinessBookingProfileBookingPolicy(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Choices of customer-facing time zone used for bookings.
@@ -2944,6 +3056,13 @@ public enum BusinessBookingProfileCustomerTimezoneChoice: String, Codable {
 	case BUSINESS_LOCATION_TIMEZONE
 	/// Use the customer-chosen time zone for bookings.
 	case CUSTOMER_CHOICE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BusinessBookingProfileCustomerTimezoneChoice(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The hours of operation for a location.
@@ -3455,6 +3574,13 @@ public enum CardBrand: String, Codable {
 	case EFTPOS
 	case FELICA
 	case EBT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CardBrand(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the brand for a co-branded card.
@@ -3462,6 +3588,13 @@ public enum CardCoBrand: String, Codable {
 	case UNKNOWN
 	case AFTERPAY
 	case CLEARPAY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CardCoBrand(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is created or imported.
@@ -3651,6 +3784,13 @@ public struct CardForgottenEventObject: Codable, Equatable {
 public enum CardIssuerAlert: String, Codable {
 	/// The underlying account of the card was closed, which is a strong signal that future charges to the card are likely to fail.
 	case ISSUER_ALERT_CARD_CLOSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CardIssuerAlert(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Reflects the current status of a card payment. Contains only non-confidential information.
@@ -3752,6 +3892,13 @@ public enum CardPrepaidType: String, Codable {
 	case UNKNOWN_PREPAID_TYPE
 	case NOT_PREPAID
 	case PREPAID
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CardPrepaidType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates a card's type, such as `CREDIT` or `DEBIT`.
@@ -3759,6 +3906,13 @@ public enum CardType: String, Codable {
 	case UNKNOWN_CARD_TYPE
 	case CREDIT
 	case DEBIT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CardType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Card) is updated by the seller in the Square Dashboard.
@@ -3867,6 +4021,13 @@ public enum CashDrawerEventType: String, Codable {
 	case PAID_IN
 	/// Triggered when money is removed from the drawer for other reasons than making change. For example, an employee pays a delivery person with cash from the cash drawer. A CashDrawerEvent of this type must not have a negative amount.
 	case PAID_OUT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CashDrawerEventType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// This model gives the details of a cash drawer shift. The cash_payment_money, cash_refund_money, cash_paid_in_money, and cash_paid_out_money fields are all computed by summing their respective event types.
@@ -3994,6 +4155,13 @@ public enum CashDrawerShiftState: String, Codable {
 	case ENDED
 	/// An ended cash drawer shift that is closed with a completed employee content audit and recorded result.
 	case CLOSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CashDrawerShiftState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The summary of a closed cash drawer shift. This model contains only the money counted to start a cash drawer shift, counted at the end of the shift, and the amount that should be in the drawer at shift end based on summing all cash drawer shift events.
@@ -4152,6 +4320,13 @@ public enum CatalogCategoryType: String, Codable {
 	case MENU_CATEGORY
 	/// Kitchen categories are used by KDS (Kitchen Display System) to route items to specific clients
 	case KITCHEN_CATEGORY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogCategoryType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Contains information defining a custom attribute. Custom attributes are intended to store additional information about a catalog object or to associate a catalog object with an entity in another system. Do not use custom attributes to store any sensitive information (personally identifiable information, card details, etc.). [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes)
@@ -4219,6 +4394,13 @@ public enum CatalogCustomAttributeDefinitionAppVisibility: String, Codable {
 	case APP_VISIBILITY_READ_ONLY
 	/// Other applications can read and write custom attribute values on objects. They can read but cannot edit the custom attribute definition.
 	case APP_VISIBILITY_READ_WRITE_VALUES
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogCustomAttributeDefinitionAppVisibility(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct CatalogCustomAttributeDefinitionNumberConfig: Codable, Equatable {
@@ -4270,6 +4452,13 @@ public enum CatalogCustomAttributeDefinitionSellerVisibility: String, Codable {
 	case SELLER_VISIBILITY_HIDDEN
 	/// Sellers can read and write this custom attribute value in catalog objects, but cannot edit the custom attribute definition.
 	case SELLER_VISIBILITY_READ_WRITE_VALUES
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogCustomAttributeDefinitionSellerVisibility(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Configuration associated with Custom Attribute Definitions of type `STRING`.
@@ -4295,6 +4484,13 @@ public enum CatalogCustomAttributeDefinitionType: String, Codable {
 	case NUMBER
 	/// One or more choices from `allowed_selections`.
 	case SELECTION
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogCustomAttributeDefinitionType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// An instance of a custom attribute. Custom attributes can be defined and added to `ITEM` and `ITEM_VARIATION` type catalog objects. [Read more about custom attributes](https://developer.squareup.com/docs/catalog-api/add-custom-attributes).
@@ -4385,6 +4581,13 @@ public enum CatalogDiscountModifyTaxBasis: String, Codable {
 	case MODIFY_TAX_BASIS
 	/// Application of the discount will not modify the tax basis.
 	case DO_NOT_MODIFY_TAX_BASIS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogDiscountModifyTaxBasis(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// How to apply a CatalogDiscount to a CatalogItem.
@@ -4397,6 +4600,13 @@ public enum CatalogDiscountType: String, Codable {
 	case VARIABLE_PERCENTAGE
 	/// Apply the discount as a variable amount off the item price. The amount will be specified at the time of sale.
 	case VARIABLE_AMOUNT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogDiscountType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// SEO data for for a seller's Square Online store.
@@ -4684,6 +4894,13 @@ public enum CatalogItemFoodAndBeverageDetailsDietaryPreferenceStandardDietaryPre
 	case NUT_FREE
 	case VEGAN
 	case VEGETARIAN
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogItemFoodAndBeverageDetailsDietaryPreferenceStandardDietaryPreference(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The type of dietary preference for the `FOOD_AND_BEV` type of items and integredients.
@@ -4692,6 +4909,13 @@ public enum CatalogItemFoodAndBeverageDetailsDietaryPreferenceType: String, Coda
 	case STANDARD
 	/// A user-defined custom value.
 	case CUSTOM
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogItemFoodAndBeverageDetailsDietaryPreferenceType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes the ingredient used in a `FOOD_AND_BEV` item.
@@ -4731,6 +4955,13 @@ public enum CatalogItemFoodAndBeverageDetailsIngredientStandardIngredient: Strin
 	case SOY
 	case SULPHITES
 	case TREE_NUTS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogItemFoodAndBeverageDetailsIngredientStandardIngredient(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Controls how a modifier list is applied to a specific item. This object allows for item-specific customization of modifier list behavior and provides the ability to override global modifier list settings.
@@ -4886,6 +5117,13 @@ public enum CatalogItemProductType: String, Codable {
 	case LEGACY_SQUARE_ONLINE_SERVICE
 	/// A legacy Square Online membership that is manually fulfilled. This corresponds to the `Membership` item type displayed in the Square Seller Dashboard and Square POS apps.
 	case LEGACY_SQUARE_ONLINE_MEMBERSHIP
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogItemProductType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one item variation and can have at most 250 item variations.  An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
@@ -5118,6 +5356,13 @@ public enum CatalogModifierListModifierType: String, Codable {
 	case LIST
 	/// The `CatalogModifierList` instance is a single text-based modifier.
 	case TEXT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogModifierListModifierType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates whether a CatalogModifierList supports multiple selections.
@@ -5126,6 +5371,13 @@ public enum CatalogModifierListSelectionType: String, Codable {
 	case SINGLE
 	/// Indicates that a CatalogModifierList allows multiple CatalogModifier to be selected.
 	case MULTIPLE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogModifierListSelectionType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Options to control how to override the default behavior of the specified modifier.
@@ -5161,6 +5413,13 @@ public enum CatalogModifierToggleOverrideType: String, Codable {
 	case YES
 	/// No override
 	case NOT_SET
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogModifierToggleOverrideType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The wrapper object for the catalog entries of a given object type.  Depending on the `type` attribute value, a `CatalogObject` instance assumes a type-specific data to yield the corresponding type of catalog object.  For example, if `type=ITEM`, the `CatalogObject` instance must have the ITEM-specific data set on the `item_data` attribute. The resulting `CatalogObject` instance is also a `CatalogItem` instance.  In general, if `type=<OBJECT_TYPE>`, the `CatalogObject` instance must have the `<OBJECT_TYPE>`-specific data set on the `<object_type>_data` attribute. The resulting `CatalogObject` instance is also a `Catalog<ObjectType>` instance.  For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](https://developer.squareup.com/docs/catalog-api/design-a-catalog) guide.
@@ -5375,6 +5634,13 @@ public enum CatalogObjectType: String, Codable {
 	case SUBSCRIPTION_PLAN
 	/// The `CatalogObject` instance is of the [CatalogAvailabilityPeriod](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogAvailabilityPeriod) type and represents an availability period. The availability period specific data must be stored on the `availability_period_data` field.
 	case AVAILABILITY_PERIOD
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogObjectType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines how discounts are automatically applied to a set of items that match the pricing rule during the active time period.
@@ -5444,6 +5710,13 @@ public enum CatalogPricingType: String, Codable {
 	case FIXED_PRICING
 	/// The catalog item variation's price is entered at the time of sale.
 	case VARIABLE_PRICING
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogPricingType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a collection of catalog objects for the purpose of applying a `PricingRule`. Including a catalog object will include all of its subtypes. For example, including a category in a product set will include all of its items and associated item variations in the product set. Including an item in a product set will also include its item variations.
@@ -5721,6 +5994,13 @@ public enum CatalogQuickAmountType: String, Codable {
 	case QUICK_AMOUNT_TYPE_MANUAL
 	/// Quick Amount is generated automatically by machine learning algorithms.
 	case QUICK_AMOUNT_TYPE_AUTO
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogQuickAmountType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A parent Catalog Object model represents a set of Quick Amounts and the settings control the amounts.
@@ -5752,6 +6032,13 @@ public enum CatalogQuickAmountsSettingsOption: String, Codable {
 	case MANUAL
 	/// Option for seller to choose automatically created Quick Amounts.
 	case AUTO
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CatalogQuickAmountsSettingsOption(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the rule of conversion between a stockable [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) and a non-stockable sell-by or receive-by `CatalogItemVariation` that share the same underlying stock.
@@ -6028,6 +6315,13 @@ public enum ChangeTiming: String, Codable {
 	case IMMEDIATE
 	/// The action occurs at the end of the billing cycle.
 	case END_OF_BILLING_CYCLE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ChangeTiming(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct Channel: Codable, Equatable {
@@ -6064,6 +6358,13 @@ public struct Channel: Codable, Equatable {
 public enum ChannelStatus: String, Codable {
 	case ACTIVE
 	case INACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ChannelStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents an additional recipient (other than the merchant) entitled to a portion of the tender. Support is currently limited to USD, CAD and GBP currencies
@@ -6183,6 +6484,13 @@ public enum CheckoutLocationSettingsBrandingButtonShape: String, Codable {
 	case SQUARED
 	case ROUNDED
 	case PILL
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CheckoutLocationSettingsBrandingButtonShape(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -6190,6 +6498,13 @@ public enum CheckoutLocationSettingsBrandingHeaderType: String, Codable {
 	case BUSINESS_NAME
 	case FRAMED_LOGO
 	case FULL_WIDTH_LOGO
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CheckoutLocationSettingsBrandingHeaderType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct CheckoutLocationSettingsCoupons: Codable, Equatable {
@@ -6369,6 +6684,13 @@ public enum CheckoutOptionsPaymentType: String, Codable {
 	case PAYPAY
 	/// Launches Square's QR Code checkout screen for the buyer to complete. Displays a single code that supports all digital wallets connected to the target Seller location (e.g. PayPay)
 	case QR_CODE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CheckoutOptionsPaymentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Additional details about Clearpay payments.
@@ -6502,6 +6824,13 @@ public enum ComponentComponentType: String, Codable {
 	case WIFI
 	case ETHERNET
 	case PRINTER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ComponentComponentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct ConfirmationDecision: Codable, Equatable {
@@ -7053,6 +7382,13 @@ public enum Country: String, Codable {
 	case ZM
 	/// Zimbabwe
 	case ZW
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = Country(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Request object for linking a bank account to a Square account
@@ -9052,6 +9388,13 @@ public enum Currency: String, Codable {
 	case BTC
 	/// USD Coin
 	case XUS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = Currency(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A custom attribute value. Each custom attribute value has a corresponding `CustomAttributeDefinition` object.
@@ -9170,6 +9513,13 @@ public enum CustomAttributeDefinitionVisibility: String, Codable {
 	case VISIBILITY_READ_ONLY
 	/// The seller and other developers can read the custom attribute definition, and can read and write values on resources. A custom attribute definition can only be edited or deleted by the application that created it.
 	case VISIBILITY_READ_WRITE_VALUES
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CustomAttributeDefinitionVisibility(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct CustomAttributeEventData: Codable, Equatable {
@@ -9481,6 +9831,13 @@ public enum CustomerCreationSource: String, Codable {
 	case THIRD_PARTY_IMPORT
 	/// The customer profile was restored through Square's unmerge recovery process.
 	case UNMERGE_RECOVERY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CustomerCreationSource(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The creation source filter.  If one or more creation sources are set, customer profiles are included in, or excluded from, the result if they match at least one of the filter criteria.
@@ -10345,6 +10702,13 @@ public enum CustomerInclusionExclusion: String, Codable {
 	case INCLUDE
 	/// Customers should be excluded from the result set when they match the filtering criteria.
 	case EXCLUDE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CustomerInclusionExclusion(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents communication preferences for the customer profile.
@@ -10425,6 +10789,13 @@ public enum CustomerSortField: String, Codable {
 	case DEFAULT
 	/// Use the creation date attribute (`created_at`) of customer profiles as the sort key.
 	case CREATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = CustomerSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the tax ID associated with a [customer profile](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer). The corresponding `tax_ids` field is available only for customers of sellers in EU countries or the United Kingdom.  For more information, see [Customer tax IDs](https://developer.squareup.com/docs/customers-api/what-it-does#customer-tax-ids).
@@ -10544,6 +10915,13 @@ public enum DataCollectionOptionsInputType: String, Codable {
 	case EMAIL
 	/// This value is used to represent an input text that contains a phone number validation on the client.
 	case PHONE_NUMBER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DataCollectionOptionsInputType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A range defined by two dates. Used for filtering a query for Connect v2 objects that have date properties.
@@ -10579,6 +10957,13 @@ public enum DayOfWeek: String, Codable {
 	case FRI
 	/// Saturday
 	case SAT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DayOfWeek(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a [DeleteBookingCustomAttributeDefinition](api-endpoint:BookingCustomAttributes-DeleteBookingCustomAttributeDefinition) response containing error messages when errors occurred during the request. The successful response does not contain any payload.
@@ -11026,6 +11411,13 @@ public enum DestinationType: String, Codable {
 	case SQUARE_BALANCE
 	/// Square Checking or Savings account (US), Square Card (CA)
 	case SQUARE_STORED_BALANCE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DestinationType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct Device: Codable, Equatable {
@@ -11080,6 +11472,13 @@ public struct DeviceAttributes: Codable, Equatable {
 public enum DeviceAttributesDeviceType: String, Codable {
 	case TERMINAL
 	case HANDHELD
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DeviceAttributesDeviceType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct DeviceCheckoutOptions: Codable, Equatable {
@@ -11212,6 +11611,13 @@ public enum DeviceCodeStatus: String, Codable {
 	case PAIRED
 	/// The device code was unpaired and expired before it was paired.
 	case EXPIRED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DeviceCodeStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct DeviceComponentDetailsApplicationDetails: Codable, Equatable {
@@ -11278,6 +11684,13 @@ public enum DeviceComponentDetailsExternalPower: String, Codable {
 	case UNAVAILABLE
 	/// Not providing enough power for the device.
 	case AVAILABLE_INSUFFICIENT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DeviceComponentDetailsExternalPower(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A value qualified by unit of measure.
@@ -11447,6 +11860,13 @@ public enum DeviceStatusCategory: String, Codable {
 	case AVAILABLE
 	case NEEDS_ATTENTION
 	case OFFLINE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DeviceStatusCategory(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Additional details about `WALLET` type payments. Contains only non-confidential information.
@@ -11991,6 +12411,13 @@ public enum DisputeEvidenceType: String, Codable {
 	case REBUTTAL_EXPLANATION
 	/// The tracking number for the order provided by the shipping carrier. If you have multiple numbers, they need to be submitted individually as separate pieces of evidence.  Use when uploading evidence as a string.
 	case TRACKING_NUMBER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DisputeEvidenceType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The list of possible reasons why a cardholder might initiate a dispute with their bank.
@@ -12013,6 +12440,13 @@ public enum DisputeReason: String, Codable {
 	case CUSTOMER_REQUESTS_CREDIT
 	/// A chip-enabled card was not processed through a compliant chip-card reader (for example, it was swiped instead of dipped into a chip-card reader). You cannot challenge this dispute because the payment did not comply with EMV security requirements. For more information, see [What Is EMV?](https://squareup.com/emv)
 	case EMV_LIABILITY_SHIFT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DisputeReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The list of possible dispute states.
@@ -12033,6 +12467,13 @@ public enum DisputeState: String, Codable {
 	case LOST
 	/// The seller has accepted the dispute
 	case ACCEPTED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = DisputeState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when the state of a [Dispute](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Dispute) changes. This includes the dispute resolution (WON, LOST) reported by the bank. The event data includes details of what changed.
@@ -12172,6 +12613,13 @@ public enum EcomVisibility: String, Codable {
 	case HIDDEN
 	/// Item is synced but available within Ecom (Weebly) and Online Checkout but is hidden from Ecom Store.
 	case VISIBLE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = EcomVisibility(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// An employee object that is used by the external API.  DEPRECATED at version yyyy-mm-dd. Replaced by [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember).
@@ -12229,6 +12677,13 @@ public enum EmployeeStatus: String, Codable {
 	case ACTIVE
 	/// Specifies that the employee is in the Inactive state.
 	case INACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = EmployeeStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The hourly wage rate that an employee earns on a `Shift` for doing the job specified by the `title` property of this object. Deprecated at version yyyy-mm-dd. Use [TeamMemberWage](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMemberWage).
@@ -12292,6 +12747,23 @@ public struct SquareError: Codable, Equatable {
 		self.detail = detail
 		self.field = field
 	}
+
+	/// The verbatim code string from Square — meaningful when `code == .UNRECOGNIZED`
+	public var codeRaw: String?
+
+	private enum CodingKeys: String, CodingKey {
+		case category, code, detail, field
+	}
+
+	public init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		category = try container.decode(ErrorCategory.self, forKey: .category)
+		let raw = try container.decode(String.self, forKey: .code)
+		codeRaw = raw
+		code = ErrorCode(rawValue: raw) ?? .UNRECOGNIZED
+		detail = try container.decodeIfPresent(String.self, forKey: .detail)
+		field = try container.decodeIfPresent(String.self, forKey: .field)
+	}
 }
 
 /// Indicates which high-level category of error has occurred during a request to the Connect API.
@@ -12312,6 +12784,13 @@ public enum ErrorCategory: String, Codable {
 	case MERCHANT_SUBSCRIPTION_ERROR
 	/// An error that is returned from an external vendor's API
 	case EXTERNAL_VENDOR_ERROR
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ErrorCategory(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the specific error that occurred during a request to a Square API.
@@ -12626,9 +13105,18 @@ public enum ErrorCode: String, Codable {
 	case TEMPORARY_ERROR
 	/// Gateway Timeout - a general error occurred.
 	case GATEWAY_TIMEOUT
-	case ORDER_EXPIRED
-	case VERSION_MISMATCH
+	/// undocumented: PayOrder rejects when the listed payments do not sum to the order total
+	case ORDER_TOTAL_MISMATCH
 	case ISSUER_INSTALLMENT_ERROR
+	case VERSION_MISMATCH
+	case ORDER_EXPIRED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ErrorCode(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct Event: Codable, Equatable {
@@ -12717,6 +13205,13 @@ public enum ExcludeStrategy: String, Codable {
 	case LEAST_EXPENSIVE
 	/// The most expensive matched product is excluded from the pricing rule. If multiple products have the same price and all qualify as least expensive, one will be excluded at random.  This guarantees that the most expensive product is purchased at full price.
 	case MOST_EXPENSIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ExcludeStrategy(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Stores details about an external payment. Contains only non-confidential information. For more information, see  [Take External Payments](https://developer.squareup.com/docs/payments-api/take-payments/external-payments).
@@ -12934,6 +13429,13 @@ public enum FulfillmentDeliveryDetailsOrderFulfillmentDeliveryDetailsScheduleTyp
 	case SCHEDULED
 	/// Indicates that the fulfillment to deliver as soon as possible and should be prepared immediately.
 	case ASAP
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = FulfillmentDeliveryDetailsOrderFulfillmentDeliveryDetailsScheduleType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Links an order line item to a fulfillment. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.
@@ -12967,6 +13469,13 @@ public enum FulfillmentFulfillmentLineItemApplication: String, Codable {
 	case ALL
 	/// If `ENTRY_LIST`, supply a list of `entries`.
 	case ENTRY_LIST
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = FulfillmentFulfillmentLineItemApplication(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Contains details necessary to fulfill a pickup order.
@@ -13073,6 +13582,13 @@ public enum FulfillmentPickupDetailsScheduleType: String, Codable {
 	case SCHEDULED
 	/// Indicates that the fulfillment will be picked up as soon as possible and should be prepared immediately.
 	case ASAP
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = FulfillmentPickupDetailsScheduleType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Information about the fulfillment recipient.
@@ -13187,6 +13703,13 @@ public enum FulfillmentState: String, Codable {
 	case CANCELED
 	/// Indicates that the fulfillment failed to be completed, but was not explicitly canceled.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = FulfillmentState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The type of fulfillment.
@@ -13201,6 +13724,15 @@ public enum FulfillmentType: String, Codable {
 	case SHIPMENT
 	/// A courier to deliver the fulfillment.
 	case DELIVERY
+	/// A digital fulfillment (gift cards, digital goods) — undocumented in the spec but returned by the live API
+	case DIGITAL
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = FulfillmentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Response object returned by GetBankAccountByV1Id.
@@ -13622,6 +14154,13 @@ public enum GiftCardActivityAdjustDecrementReason: String, Codable {
 	case SUPPORT_ISSUE
 	/// The balance was decreased because the order used to purchase or reload the gift card was refunded.
 	case PURCHASE_WAS_REFUNDED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityAdjustDecrementReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about an `ADJUST_INCREMENT` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -13649,6 +14188,13 @@ public enum GiftCardActivityAdjustIncrementReason: String, Codable {
 	case SUPPORT_ISSUE
 	/// The transaction is voided.
 	case TRANSACTION_VOIDED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityAdjustIncrementReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about a `BLOCK` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -13668,6 +14214,13 @@ public struct GiftCardActivityBlock: Codable, Equatable {
 public enum GiftCardActivityBlockReason: String, Codable {
 	/// The gift card is blocked because the buyer initiated a chargeback on the gift card purchase.
 	case CHARGEBACK_BLOCK
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityBlockReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about a `CLEAR_BALANCE` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -13691,6 +14244,13 @@ public enum GiftCardActivityClearBalanceReason: String, Codable {
 	case REUSE_GIFTCARD
 	/// The gift card balance was cleared for an unknown reason.  This reason is read-only and cannot be used to create a `CLEAR_BALANCE` activity using the Gift Card Activities API.
 	case UNKNOWN_REASON
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityClearBalanceReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [gift card activity](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivity) is created.
@@ -13777,6 +14337,13 @@ public enum GiftCardActivityDeactivateReason: String, Codable {
 	case UNKNOWN_REASON
 	/// A chargeback on the gift card purchase (or the gift card load) was ruled in favor of the buyer.  This reason is read-only and cannot be used to create a `DEACTIVATE` activity using the Gift Card Activities API.
 	case CHARGEBACK_DEACTIVATE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityDeactivateReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about an `IMPORT` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType). This activity type is used when Square imports a third-party gift card, in which case the  `gan_source` of the gift card is set to `OTHER`.
@@ -13867,6 +14434,13 @@ public enum GiftCardActivityRedeemStatus: String, Codable {
 	case COMPLETED
 	/// The gift card redemption is canceled. A redemption is canceled if the authorization  on the gift card is voided.
 	case CANCELED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityRedeemStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about a `REFUND` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -13960,6 +14534,13 @@ public enum GiftCardActivityType: String, Codable {
 	case TRANSFER_BALANCE_FROM
 	/// Added money to a gift card as the result of a transfer from the balance of another gift card. `TRANSFER_BALANCE_TO` activities are managed by Square and cannot be created using the Gift Card Activities API.
 	case TRANSFER_BALANCE_TO
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about an `UNBLOCK` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -13979,6 +14560,13 @@ public struct GiftCardActivityUnblock: Codable, Equatable {
 public enum GiftCardActivityUnblockReason: String, Codable {
 	/// The gift card is unblocked because a chargeback was ruled in favor of the seller.
 	case CHARGEBACK_UNBLOCK
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardActivityUnblockReason(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents details about an `UNLINKED_ACTIVITY_REFUND` [gift card activity type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCardActivityType).
@@ -14268,6 +14856,13 @@ public enum GiftCardGANSource: String, Codable {
 	case SQUARE
 	/// The GAN is provided by a non-Square system. For more information, see  [Custom GANs](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#custom-gans) or  [Third-party gift cards](https://developer.squareup.com/docs/gift-cards/using-gift-cards-api#third-party-gift-cards).
 	case OTHER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardGANSource(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the gift card state.
@@ -14280,6 +14875,13 @@ public enum GiftCardStatus: String, Codable {
 	case BLOCKED
 	/// The gift card is pending activation. This is the initial state when a gift card is created. Typically, you'll call [CreateGiftCardActivity](api-endpoint:GiftCardActivities-CreateGiftCardActivity) to create an `ACTIVATE` activity that activates the gift card with an initial balance before first use.
 	case PENDING
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the gift card type.
@@ -14288,6 +14890,13 @@ public enum GiftCardType: String, Codable {
 	case PHYSICAL
 	/// A digital gift card.
 	case DIGITAL
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = GiftCardType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [gift card](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/GiftCard) is updated. This includes changes to the state, balance, and customer association.
@@ -14462,6 +15071,13 @@ public enum InventoryAlertType: String, Codable {
 	case NONE
 	/// The variation generates an alert when its quantity is low.
 	case LOW_QUANTITY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InventoryAlertType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a single physical count, inventory, adjustment, or transfer that is part of the history of inventory changes for a particular [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) instance.
@@ -14505,6 +15121,13 @@ public enum InventoryChangeType: String, Codable {
 	case ADJUSTMENT
 	/// The change occurred as part of an inventory transfer.
 	case TRANSFER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InventoryChangeType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents Square-estimated quantity of items in a particular state at a particular seller location based on the known history of physical counts and inventory adjustments.
@@ -14688,6 +15311,13 @@ public enum InventoryState: String, Codable {
 	case SUPPORTED_BY_NEWER_VERSION
 	/// The related quantity of items are in transit between locations. **READ-ONLY:** the Inventory API cannot currently be used to move quantities to or from this inventory state.
 	case IN_TRANSIT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InventoryState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
@@ -14934,6 +15564,13 @@ public enum InvoiceAutomaticPaymentSource: String, Codable {
 	case CARD_ON_FILE
 	/// Use a bank account on file as the automatic payment method. On the due date, Square charges the bank account for the amount of the payment request if the buyer has approved the payment. The buyer receives a request to approve the payment when the invoice is sent or the invoice is updated.  This payment method applies only to invoices that sellers create in the Seller Dashboard or other Square product. The bank account is provided by the customer during the payment flow.   You cannot set `BANK_ON_FILE` as a payment method using the Invoices API, but you can change a `BANK_ON_FILE` payment method to `NONE` or `CARD_ON_FILE`. For `BANK_ON_FILE` payments, the invoice delivery method must be `EMAIL`.
 	case BANK_ON_FILE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceAutomaticPaymentSource(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is canceled.
@@ -15069,6 +15706,13 @@ public enum InvoiceCustomFieldPlacement: String, Codable {
 	case ABOVE_LINE_ITEMS
 	/// Render the custom field below the invoice line items.
 	case BELOW_LINE_ITEMS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceCustomFieldPlacement(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a draft [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is deleted.
@@ -15123,6 +15767,13 @@ public enum InvoiceDeliveryMethod: String, Codable {
 	case SHARE_MANUALLY
 	/// Directs Square to send invoices and receipts to the customer using SMS (text message).  You cannot set `SMS` as a delivery method using the Invoices API, but you can change an `SMS` delivery method to `EMAIL` or `SHARE_MANUALLY`.
 	case SMS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceDeliveryMethod(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes query filters to apply.
@@ -15232,6 +15883,13 @@ public enum InvoicePaymentReminderStatus: String, Codable {
 	case NOT_APPLICABLE
 	/// The reminder is sent.
 	case SENT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoicePaymentReminderStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a payment request for an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice). Invoices can specify a maximum of 13 payment requests, with up to 12 `INSTALLMENT` request types. For more information,  see [Configuring payment requests](https://developer.squareup.com/docs/invoices-api/create-publish-invoices#payment-requests).  Adding `INSTALLMENT` payment requests to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).
@@ -15488,6 +16146,13 @@ public enum InvoiceRequestMethod: String, Codable {
 	case SMS_CHARGE_CARD_ON_FILE
 	/// Directs Square to charge the customer's bank account on file and to use SMS (text message) to send invoices and receipts. The customer must approve the payment.  The bank on file payment method applies only to invoices that sellers create in the Seller Dashboard or other Square product. The bank account is provided by the customer during the payment flow.  You cannot set `SMS_CHARGE_BANK_ON_FILE` as a request method using the Invoices API.
 	case SMS_CHARGE_BANK_ON_FILE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceRequestMethod(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the type of the payment request. For more information, see  [Configuring payment requests](https://developer.squareup.com/docs/invoices-api/create-publish-invoices#payment-requests).
@@ -15498,6 +16163,13 @@ public enum InvoiceRequestType: String, Codable {
 	case DEPOSIT
 	/// A request for an installment payment. Installments allow buyers to pay the invoice over time. Installments can optionally be combined with a deposit.   Adding `INSTALLMENT` payment requests to an invoice requires an  [Invoices Plus subscription](https://developer.squareup.com/docs/invoices-api/overview#invoices-plus-subscription).
 	case INSTALLMENT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceRequestType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when an automatic scheduled payment for an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) has failed.
@@ -15574,6 +16246,13 @@ public struct InvoiceSort: Codable, Equatable {
 public enum InvoiceSortField: String, Codable {
 	/// The field works as follows:  - If the invoice is a draft, it uses the invoice `created_at` date. - If the invoice is scheduled for publication, it uses the `scheduled_at` date. - If the invoice is published, it uses the invoice publication date.
 	case INVOICE_SORT_DATE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the status of an [invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice).
@@ -15598,6 +16277,13 @@ public enum InvoiceStatus: String, Codable {
 	case FAILED
 	/// A payment on the invoice was initiated but has not yet been processed.  When in this state, invoices cannot be updated and other payments cannot be initiated.
 	case PAYMENT_PENDING
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InvoiceStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when an [Invoice](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Invoice) is updated.
@@ -15768,6 +16454,13 @@ public enum JobAssignmentPayType: String, Codable {
 	case HOURLY
 	/// The job pays an annual salary.
 	case SALARY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = JobAssignmentPayType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a Job is created.
@@ -16593,6 +17286,13 @@ public struct ListCatalogResponse: Codable, Equatable {
 /// 
 public enum ListChannelsRequestConstants: String, Codable {
 	case MAX_PAGE_SIZE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ListChannelsRequestConstants(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct ListChannelsResponse: Codable, Equatable {
@@ -17167,6 +17867,13 @@ public struct ListPaymentLinksResponse: Codable, Equatable {
 public enum ListPaymentRefundsRequestSortField: String, Codable {
 	case CREATED_AT
 	case UPDATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ListPaymentRefundsRequestSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the response returned by [ListPaymentRefunds](api-endpoint:Refunds-ListPaymentRefunds).  Either `errors` or `refunds` is present in a given response (never both).
@@ -17195,6 +17902,13 @@ public enum ListPaymentsRequestSortField: String, Codable {
 	case CREATED_AT
 	case OFFLINE_CREATED_AT
 	case UPDATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ListPaymentsRequestSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the response returned by [ListPayments](api-endpoint:Payments-ListPayments).
@@ -17564,6 +18278,13 @@ public enum LocationCapability: String, Codable {
 	case AUTOMATIC_TRANSFERS
 	/// The capability to process unlinked refunds with Square.
 	case UNLINKED_REFUNDS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LocationCapability(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) is created.
@@ -17960,6 +18681,13 @@ public enum LocationStatus: String, Codable {
 	case ACTIVE
 	/// A location that is not active for business. Inactive locations provide historical information. Hide inactive locations unless the user has requested to see them.
 	case INACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LocationStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A location's type.
@@ -17968,6 +18696,13 @@ public enum LocationType: String, Codable {
 	case PHYSICAL
 	/// A place of business that is mobile, such as a food truck or online store.
 	case MOBILE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LocationType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) is updated.
@@ -18224,6 +18959,13 @@ public struct LoyaltyAccountMapping: Codable, Equatable {
 public enum LoyaltyAccountMappingType: String, Codable {
 	/// The loyalty account is mapped by phone.
 	case PHONE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyAccountMappingType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [loyalty account](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyAccount) is updated.
@@ -18673,6 +19415,13 @@ public enum LoyaltyEventSource: String, Codable {
 	case SQUARE
 	/// The event is generated by something other than the Square Point of Sale that used the Loyalty API.
 	case LOYALTY_API
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyEventSource(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The type of the loyalty event.
@@ -18693,6 +19442,13 @@ public enum LoyaltyEventType: String, Codable {
 	case OTHER
 	/// Points are added to a loyalty account for a purchase that qualified for a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion).
 	case ACCUMULATE_PROMOTION_POINTS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyEventType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Filter events by event type.
@@ -18843,6 +19599,13 @@ public enum LoyaltyProgramAccrualRuleTaxMode: String, Codable {
 	case BEFORE_TAX
 	/// Include taxes in the purchase amount used for loyalty points accrual.
 	case AFTER_TAX
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyProgramAccrualRuleTaxMode(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The type of the accrual rule that defines how buyers can earn points.
@@ -18855,6 +19618,13 @@ public enum LoyaltyProgramAccrualRuleType: String, Codable {
 	case ITEM_VARIATION
 	/// An accrual rule based on an item category. For example, accrue points  for purchasing any item in the "hot drink" category: coffee, tea, or hot cocoa.
 	case CATEGORY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyProgramAccrualRuleType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents additional data for rules with the `VISIT` accrual type.
@@ -18985,6 +19755,13 @@ public enum LoyaltyProgramStatus: String, Codable {
 	case INACTIVE
 	/// The program is fully functional. The program has an active subscription.
 	case ACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyProgramStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the naming used for loyalty points.
@@ -19269,6 +20046,13 @@ public enum LoyaltyPromotionIncentiveType: String, Codable {
 	case POINTS_MULTIPLIER
 	/// Add a specified number of points to those earned from the base loyalty program. For example, "Earn 10 additional points."
 	case POINTS_ADDITION
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyPromotionIncentiveType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the status of a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion).
@@ -19281,6 +20065,13 @@ public enum LoyaltyPromotionStatus: String, Codable {
 	case CANCELED
 	/// The loyalty promotion is scheduled to start in the future. Square changes the promotion status to `ACTIVE` when the `start_date` is reached.
 	case SCHEDULED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyPromotionStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the number of times a buyer can earn points during a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion). If this field is not set, buyers can trigger the promotion an unlimited number of times to earn points during the time that the promotion is available.  A purchase that is disqualified from earning points because of this limit might qualify for another active promotion.
@@ -19306,6 +20097,13 @@ public enum LoyaltyPromotionTriggerLimitInterval: String, Codable {
 	case ALL_TIME
 	/// The limit applies per day, according to the `available_time` schedule specified for the promotion. For example, if the `times` field of the trigger limit is set to 1, a buyer can trigger the promotion a maximum of once per day.
 	case DAY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyPromotionTriggerLimitInterval(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [loyalty promotion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/LoyaltyPromotion) is updated. This event is invoked only when a loyalty promotion is canceled.
@@ -19424,6 +20222,13 @@ public enum LoyaltyRewardStatus: String, Codable {
 	case REDEEMED
 	/// The reward is deleted.
 	case DELETED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = LoyaltyRewardStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a unit of measurement to use with a quantity, such as ounces or inches. Exactly one of the following fields are required: `custom_unit`, `area_unit`, `length_unit`, `volume_unit`, and `weight_unit`.
@@ -19485,6 +20290,13 @@ public enum MeasurementUnitArea: String, Codable {
 	case METRIC_SQUARE_METER
 	/// The area is measured in square kilometers.
 	case METRIC_SQUARE_KILOMETER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitArea(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The information needed to define a custom unit, provided by the seller.
@@ -19508,6 +20320,13 @@ public struct MeasurementUnitCustom: Codable, Equatable {
 public enum MeasurementUnitGeneric: String, Codable {
 	/// The generic unit.
 	case UNIT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitGeneric(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The unit of length used to measure a quantity.
@@ -19528,6 +20347,13 @@ public enum MeasurementUnitLength: String, Codable {
 	case METRIC_METER
 	/// The length is measured in kilometers.
 	case METRIC_KILOMETER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitLength(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Unit of time used to measure a quantity (a duration).
@@ -19542,6 +20368,13 @@ public enum MeasurementUnitTime: String, Codable {
 	case GENERIC_HOUR
 	/// The time is measured in days.
 	case GENERIC_DAY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitTime(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes the type of this unit and indicates which field contains the unit information. This is an ‘open’ enum.
@@ -19558,6 +20391,15 @@ public enum MeasurementUnitUnitType: String, Codable {
 	case TYPE_WEIGHT
 	/// The unit details are contained in the generic_unit field.
 	case TYPE_GENERIC
+	/// The unit details are contained in the time_unit field — missing from the spec but returned by the live API
+	case TYPE_TIME
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitUnitType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The unit of volume used to measure a quantity.
@@ -19584,6 +20426,13 @@ public enum MeasurementUnitVolume: String, Codable {
 	case METRIC_MILLILITER
 	/// The volume is measured in metric liters.
 	case METRIC_LITER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitVolume(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Unit of weight used to measure a quantity.
@@ -19600,6 +20449,13 @@ public enum MeasurementUnitWeight: String, Codable {
 	case METRIC_GRAM
 	/// The weight is measured in kilograms.
 	case METRIC_KILOGRAM
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MeasurementUnitWeight(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a business that sells with Square.
@@ -19992,6 +20848,13 @@ public enum MerchantStatus: String, Codable {
 	case ACTIVE
 	/// A functionally limited merchant account. The merchant can only have limited interaction via Square APIs. The merchant cannot log in or access the seller dashboard.
 	case INACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = MerchantStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Location-specific overrides for specified properties of a `CatalogModifier` object.
@@ -20105,6 +20968,13 @@ public enum OauthAuthorizationRevokedEventRevokerType: String, Codable {
 	case MERCHANT
 	/// An internal Square employee.
 	case SQUARE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OauthAuthorizationRevokedEventRevokerType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents an [ObtainToken](api-endpoint:OAuth-ObtainToken) request.
@@ -20366,6 +21236,13 @@ public struct Order: Codable, Equatable {
 public enum OrderCardSurchargeTreatmentType: String, Codable {
 	case LINE_ITEM_TREATMENT
 	case APPORTIONED_TREATMENT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderCardSurchargeTreatmentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct OrderCreated: Codable, Equatable {
@@ -20759,6 +21636,13 @@ public enum OrderFulfillmentDeliveryDetailsScheduleType: String, Codable {
 	case SCHEDULED
 	/// Indicates that the fulfillment to deliver as soon as possible and should be prepared immediately.
 	case ASAP
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderFulfillmentDeliveryDetailsScheduleType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The `line_item_application` describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries.
@@ -20767,6 +21651,13 @@ public enum OrderFulfillmentFulfillmentLineItemApplication: String, Codable {
 	case ALL
 	/// If `ENTRY_LIST`, supply a list of `entries`.
 	case ENTRY_LIST
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderFulfillmentFulfillmentLineItemApplication(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The schedule type of the pickup fulfillment.
@@ -20775,6 +21666,13 @@ public enum OrderFulfillmentPickupDetailsScheduleType: String, Codable {
 	case SCHEDULED
 	/// Indicates that the fulfillment will be picked up as soon as possible and should be prepared immediately.
 	case ASAP
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderFulfillmentPickupDetailsScheduleType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The current state of this fulfillment.
@@ -20791,6 +21689,13 @@ public enum OrderFulfillmentState: String, Codable {
 	case CANCELED
 	/// Indicates that the fulfillment failed to be completed, but was not explicitly canceled.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderFulfillmentState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The type of fulfillment.
@@ -20801,6 +21706,15 @@ public enum OrderFulfillmentType: String, Codable {
 	case SHIPMENT
 	/// A courier to deliver the fulfillment.
 	case DELIVERY
+	/// A digital fulfillment (gift cards, digital goods) — undocumented in the spec but returned by the live API
+	case DIGITAL
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderFulfillmentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct OrderFulfillmentUpdated: Codable, Equatable {
@@ -21130,6 +22044,13 @@ public enum OrderLineItemDiscountScope: String, Codable {
 	case LINE_ITEM
 	/// The discount should be applied to the entire order.
 	case ORDER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderLineItemDiscountScope(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates how the discount is applied to the associated line item or order.
@@ -21144,6 +22065,13 @@ public enum OrderLineItemDiscountType: String, Codable {
 	case VARIABLE_PERCENTAGE
 	/// Apply the discount as a variable amount based on the item price.  The specific discount amount of a `VARIABLE_AMOUNT` discount is assigned at the time of the purchase.
 	case VARIABLE_AMOUNT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderLineItemDiscountType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the line item type.
@@ -21154,6 +22082,13 @@ public enum OrderLineItemItemType: String, Codable {
 	case CUSTOM_AMOUNT
 	/// Indicates that the line item is a gift card sale. Gift cards sold through the Orders API are sold in an unactivated state and can be activated through the Gift Cards API using the line item `uid`.
 	case GIFT_CARD
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderLineItemItemType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A [CatalogModifier](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogModifier).
@@ -21338,6 +22273,13 @@ public enum OrderLineItemTaxScope: String, Codable {
 	case LINE_ITEM
 	/// The tax should be applied to the entire order.
 	case ORDER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderLineItemTaxScope(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates how the tax is applied to the associated line item or order.
@@ -21348,6 +22290,13 @@ public enum OrderLineItemTaxType: String, Codable {
 	case ADDITIVE
 	/// The tax is an inclusive tax. Inclusive taxes are already included in the line item price or order total. For example, an item with a cost of 1.00 USD and a 10% inclusive tax has a pretax cost of 0.91 USD (91 cents) and a 0.09 (9 cents) tax for a total cost of 1.00 USD to the buyer.
 	case INCLUSIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderLineItemTaxType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A collection of various money amounts.
@@ -21915,6 +22864,13 @@ public enum OrderServiceChargeCalculationPhase: String, Codable {
 	case CARD_SURCHARGE_PHASE
 	/// The service charge is calculated as a compounding adjustment after any discounts and percentage based apportioned service charges, but before any tax considerations.
 	case APPORTIONED_AMOUNT_PHASE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderServiceChargeCalculationPhase(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates whether this is a line-item or order-level apportioned service charge.
@@ -21925,12 +22881,26 @@ public enum OrderServiceChargeScope: String, Codable {
 	case LINE_ITEM
 	/// The service charge should be applied to the entire order.
 	case ORDER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderServiceChargeScope(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates whether the service charge will be treated as a value-holding line item or apportioned toward a line item.
 public enum OrderServiceChargeTreatmentType: String, Codable {
 	case LINE_ITEM_TREATMENT
 	case APPORTIONED_TREATMENT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderServiceChargeTreatmentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -21938,6 +22908,13 @@ public enum OrderServiceChargeType: String, Codable {
 	case AUTO_GRATUITY
 	case CARD_SURCHARGE
 	case CUSTOM
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderServiceChargeType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the origination details of an order.
@@ -21963,6 +22940,13 @@ public enum OrderState: String, Codable {
 	case CANCELED
 	/// Indicates that the order is in a draft state. Draft orders can be updated, but cannot be paid or fulfilled. For more information, see [Create Orders](https://developer.squareup.com/docs/orders-api/create-orders).
 	case DRAFT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = OrderState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct OrderUpdated: Codable, Equatable {
@@ -22702,6 +23686,13 @@ public enum PaymentOptionsDelayAction: String, Codable {
 	case CANCEL
 	/// Indicates that the payment should be automatically completed when the delay duration elapses.
 	case COMPLETE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = PaymentOptionsDelayAction(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a refund of a payment made using Square. Contains information about the original payment and the amount of money refunded.
@@ -23108,6 +24099,13 @@ public enum PayoutFeeType: String, Codable {
 	case TRANSFER_FEE
 	/// Taxes associated with the transfer fee.
 	case TAX_ON_TRANSFER_FEE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = PayoutFeeType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [Payout](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Payout) is complete.
@@ -23232,6 +24230,13 @@ public enum PayoutStatus: String, Codable {
 	case FAILED
 	/// Indicates that the payout has successfully completed.
 	case PAID
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = PayoutStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The type of payout: “BATCH” or “SIMPLE”. BATCH payouts include a list of payout entries that can be considered settled. SIMPLE payouts do not have any payout entries associated with them and will show up as one of the payout entries in a future BATCH payout.
@@ -23240,6 +24245,13 @@ public enum PayoutType: String, Codable {
 	case BATCH
 	/// Payouts that do not have any payout entries associated with them and will show up as one of the payout entries in a future BATCH payout.
 	case SIMPLE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = PayoutType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a phase, which can override subscription phases as defined by plan_id
@@ -23348,11 +24360,25 @@ public enum Product: String, Codable {
 	case ITEM_LIBRARY_IMPORT
 	/// A Square product that does not match any other value.
 	case OTHER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = Product(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
 public enum ProductType: String, Codable {
 	case TERMINAL_API
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ProductType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes a `PublishInvoice` request.
@@ -23608,6 +24634,13 @@ public enum ReferenceType: String, Codable {
 	case CASH_LOCAL
 	case POINT_OF_SALE
 	case KIOSK
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ReferenceType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a refund processed for a Square transaction.
@@ -23800,6 +24833,13 @@ public enum RefundStatus: String, Codable {
 	case REJECTED
 	/// The refund failed.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = RefundStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/PaymentRefund) is updated. Typically the `refund.status` changes when a refund is completed.
@@ -23891,6 +24931,13 @@ public enum RegisterDomainResponseStatus: String, Codable {
 	case PENDING
 	/// The domain is added and verified. It can be used to accept Apple Pay transactions.
 	case VERIFIED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = RegisterDomainResponseStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [RemoveGroupFromCustomer](api-endpoint:Customers-RemoveGroupFromCustomer) endpoint.
@@ -24880,6 +25927,13 @@ public enum RiskEvaluationRiskLevel: String, Codable {
 	case MODERATE
 	/// Indicates significantly elevated risk level with the payment.
 	case HIGH
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = RiskEvaluationRiskLevel(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes save-card action fields.
@@ -25020,6 +26074,13 @@ public enum ScheduledShiftFilterAssignmentStatus: String, Codable {
 	case ASSIGNED
 	/// The shift isn't assigned to a team member.
 	case UNASSIGNED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ScheduledShiftFilterAssignmentStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines valid values for the `scheduled_shift_statuses` filter in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
@@ -25028,6 +26089,13 @@ public enum ScheduledShiftFilterScheduledShiftStatus: String, Codable {
 	case DRAFT
 	/// The scheduled shift was published. This means that the shift has a `published_shift_details` field.
 	case PUBLISHED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ScheduledShiftFilterScheduledShiftStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates whether Square sends an email notification to team members when a scheduled shift is published and which team members receive the notification.
@@ -25038,6 +26106,13 @@ public enum ScheduledShiftNotificationAudience: String, Codable {
 	case AFFECTED
 	/// Do not send a notification.
 	case NONE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ScheduledShiftNotificationAudience(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents filter and sort criteria for the `query` field in a [SearchScheduledShifts](api-endpoint:Labor-SearchScheduledShifts) request.
@@ -25084,6 +26159,13 @@ public enum ScheduledShiftSortField: String, Codable {
 	case CREATED_AT
 	/// Sort by the last updated date of the shift.
 	case UPDATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ScheduledShiftSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A `ScheduledShift` search query filter parameter that sets a range of days that a `Shift` must start or end in before passing the filter condition.
@@ -25115,6 +26197,13 @@ public enum ScheduledShiftWorkdayMatcher: String, Codable {
 	case END_AT
 	/// All shifts that start between the start and end workdays (inclusive)
 	case INTERSECTION
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ScheduledShiftWorkdayMatcher(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A query filter to search for buyer-accessible availabilities by.
@@ -25231,6 +26320,13 @@ public enum SearchCatalogItemsRequestStockLevel: String, Codable {
 	case OUT
 	/// The item inventory is low.
 	case LOW
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SearchCatalogItemsRequestStockLevel(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the response body returned from the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint.
@@ -25468,6 +26564,13 @@ public struct SearchEventsSort: Codable, Equatable {
 public enum SearchEventsSortField: String, Codable {
 	/// Use the default sort key. The default behavior is to sort events by when they were created (`created_at`).
 	case DEFAULT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SearchEventsSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes a `SearchInvoices` request.
@@ -25840,6 +26943,13 @@ public enum SearchOrdersSortField: String, Codable {
 	case UPDATED_AT
 	/// The time when the order was closed, in RFC-3339 format. If you use this value, you must also set a `StateFilter` with closed states. If you are also filtering for a time range in this query, you must set the `CLOSED_AT` field in your `DateTimeFilter`.
 	case CLOSED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SearchOrdersSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A filter based on order `source` information.
@@ -26351,6 +27461,13 @@ public enum SearchVendorsRequestSortField: String, Codable {
 	case NAME
 	/// To sort the result by the creation time of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) objects.
 	case CREATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SearchVendorsRequestSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents an output from a call to [SearchVendors](api-endpoint:Vendors-SearchVendors).
@@ -26529,6 +27646,13 @@ public enum ShiftFilterStatus: String, Codable {
 	case OPEN
 	/// Shifts that have been started and ended.
 	case CLOSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ShiftFilterStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The parameters of a `Shift` search query, which includes filter and sort options.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
@@ -26575,6 +27699,13 @@ public enum ShiftSortField: String, Codable {
 	case CREATED_AT
 	/// The most recent date/time that a `Shift` is updated
 	case UPDATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ShiftSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Enumerates the possible status of a `Shift`.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
@@ -26583,6 +27714,13 @@ public enum ShiftStatus: String, Codable {
 	case OPEN
 	/// Employee started and ended a work shift.
 	case CLOSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ShiftStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The hourly wage rate used to compensate an employee for this shift.  Deprecated at Square API version yyyy-mm-dd. See the [migration notes](https://developer.squareup.com/docs/labor-api/what-it-does#migration-notes).
@@ -26639,6 +27777,13 @@ public enum ShiftWorkdayMatcher: String, Codable {
 	case END_AT
 	/// All shifts that start between the start and end workdays (inclusive)
 	case INTERSECTION
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = ShiftWorkdayMatcher(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct ShippingFee: Codable, Equatable {
@@ -26748,6 +27893,13 @@ public enum SortOrder: String, Codable {
 	case DESC
 	/// The results are returned in ascending (e.g., oldest-first or A-Z) order.
 	case ASC
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SortOrder(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents information about the application used to generate a change.
@@ -27013,6 +28165,13 @@ public enum SubscriptionActionType: String, Codable {
 	case CHANGE_BILLING_ANCHOR_DATE
 	/// The action marking when a subscription completes a fixed number of phases.
 	case COMPLETE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SubscriptionActionType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Determines the billing cadence of a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription)
@@ -27043,6 +28202,13 @@ public enum SubscriptionCadence: String, Codable {
 	case ANNUAL
 	/// Once every two years
 	case EVERY_TWO_YEARS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SubscriptionCadence(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [Subscription](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Subscription) is created.
@@ -27166,6 +28332,13 @@ public enum SubscriptionEventInfoCode: String, Codable {
 	case CUSTOMER_NO_NAME
 	/// User-provided detail.
 	case USER_PROVIDED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SubscriptionEventInfoCode(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Supported types of an event occurred to a subscription.
@@ -27184,6 +28357,13 @@ public enum SubscriptionEventSubscriptionEventType: String, Codable {
 	case PAUSE_SUBSCRIPTION
 	/// The billing anchor date was changed.
 	case BILLING_ANCHOR_DATE_CHANGED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SubscriptionEventSubscriptionEventType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Describes a phase in a subscription plan variation. For more information, see [Subscription Plans and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
@@ -27246,6 +28426,13 @@ public enum SubscriptionPricingType: String, Codable {
 	case STATIC
 	/// Relative pricing
 	case RELATIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SubscriptionPricingType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The origination details of the subscription.
@@ -27275,6 +28462,13 @@ public enum SubscriptionStatus: String, Codable {
 	case PAUSED
 	/// The subscription has completed all of its phases.
 	case COMPLETED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = SubscriptionStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the details of a webhook subscription, including notification URL, event types, and signature key.
@@ -27403,6 +28597,13 @@ public enum TaxCalculationPhase: String, Codable {
 	case TAX_SUBTOTAL_PHASE
 	/// The fee is calculated based on the payment's total.
 	case TAX_TOTAL_PHASE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TaxCalculationPhase(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Identifiers for the location used by various governments for tax purposes.
@@ -27440,6 +28641,13 @@ public enum TaxInclusionType: String, Codable {
 	case ADDITIVE
 	/// The tax is an inclusive tax. The tax amount is included in the CatalogItemVariation price. For example, a $1.00 item with a 10% inclusive tax would have a total cost to the buyer of $1.00, with $0.91 (91 cents) of that total being the cost of the item and $0.09 (9 cents) being tax.
 	case INCLUSIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TaxInclusionType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A record representing an individual team member for a business.
@@ -27522,6 +28730,13 @@ public enum TeamMemberAssignedLocationsAssignmentType: String, Codable {
 	case ALL_CURRENT_AND_FUTURE_LOCATIONS
 	/// The team member is assigned to an explicit subset of locations. The `location_ids` field is the list of locations that the team member is assigned to.
 	case EXPLICIT_LOCATIONS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TeamMemberAssignedLocationsAssignmentType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The booking profile of a seller's team member, including the team member's ID, display name, description and whether the team member can be booked as a service provider.
@@ -27614,6 +28829,13 @@ public enum TeamMemberInvitationStatus: String, Codable {
 	case PENDING
 	/// The team member has both received and accepted an invitation.
 	case ACCEPTED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TeamMemberInvitationStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Enumerates the possible statuses the team member can have within a business.
@@ -27622,6 +28844,13 @@ public enum TeamMemberStatus: String, Codable {
 	case ACTIVE
 	/// The team member can no longer sign in to Point of Sale or the Seller Dashboard, but the team member's sales reports remain available.
 	case INACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TeamMemberStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a Team Member is updated.
@@ -27861,6 +29090,13 @@ public enum TenderBankAccountDetailsStatus: String, Codable {
 	case COMPLETED
 	/// The bank account payment failed.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderBankAccountDetailsStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the details of a tender with `type` `BUY_NOW_PAY_LATER`.
@@ -27884,6 +29120,13 @@ public struct TenderBuyNowPayLaterDetails: Codable, Equatable {
 public enum TenderBuyNowPayLaterDetailsBrand: String, Codable {
 	case OTHER_BRAND
 	case AFTERPAY
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderBuyNowPayLaterDetailsBrand(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -27896,6 +29139,13 @@ public enum TenderBuyNowPayLaterDetailsStatus: String, Codable {
 	case VOIDED
 	/// The buy now pay later payment failed.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderBuyNowPayLaterDetailsStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
@@ -27931,6 +29181,13 @@ public enum TenderCardDetailsEntryMethod: String, Codable {
 	case ON_FILE
 	/// The card was processed via a contactless (i.e., NFC) transaction with a Square reader.
 	case CONTACTLESS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderCardDetailsEntryMethod(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates the card transaction's current status.
@@ -27943,6 +29200,13 @@ public enum TenderCardDetailsStatus: String, Codable {
 	case VOIDED
 	/// The card transaction failed.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderCardDetailsStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents the details of a tender with `type` `CASH`.
@@ -27985,6 +29249,13 @@ public enum TenderSquareAccountDetailsStatus: String, Codable {
 	case VOIDED
 	/// The Square Account payment failed.
 	case FAILED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderSquareAccountDetailsStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Indicates a tender's type.
@@ -28009,6 +29280,13 @@ public enum TenderType: String, Codable {
 	case SQUARE_ACCOUNT
 	/// A form of tender that does not match any other value.
 	case OTHER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TenderType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents an action processed by the Square Terminal.
@@ -28118,6 +29396,13 @@ public enum TerminalActionActionType: String, Codable {
 	case DATA_COLLECTION
 	/// The action represents a request to allow the buyer to select from provided options. Details are contained in the `select_options` object.
 	case SELECT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TerminalActionActionType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a TerminalAction is created.
@@ -28854,6 +30139,13 @@ public enum TimecardFilterStatus: String, Codable {
 	case OPEN
 	/// Timecards that have been started and ended.
 	case CLOSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TimecardFilterStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The parameters of a `Timecard` search query, which includes filter and sort options.
@@ -28900,6 +30192,13 @@ public enum TimecardSortField: String, Codable {
 	case CREATED_AT
 	/// The most recent date/time that a `Timecard` is updated
 	case UPDATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TimecardSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// **Read only** Enumerates the possible status of a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
@@ -28908,6 +30207,13 @@ public enum TimecardStatus: String, Codable {
 	case OPEN
 	/// The timecard has both `start_at` and `end_at` times, indicating a completed shift.
 	case CLOSED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TimecardStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The hourly wage rate used to compensate a team member for a [timecard](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Timecard).
@@ -28964,6 +30270,13 @@ public enum TimecardWorkdayMatcher: String, Codable {
 	case END_AT
 	/// All timecards that start between the start and end workdays (inclusive)
 	case INTERSECTION
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TimecardWorkdayMatcher(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 public struct TipSettings: Codable, Equatable {
@@ -29054,12 +30367,26 @@ public enum TransactionProduct: String, Codable {
 	case PAYROLL
 	/// A Square product that does not match any other value.
 	case OTHER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TransactionProduct(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The transaction type used in the disputed payment.
 public enum TransactionType: String, Codable {
 	case DEBIT
 	case CREDIT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TransactionType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a transfer order for moving [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation)s  between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s. Transfer orders track the entire lifecycle of an inventory  transfer, including: - What items and quantities are being moved - Source and destination locations - Current [TransferOrderStatus](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrderStatus) - Shipping information and tracking - Which [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) initiated the transfer  This object is commonly used to: - Track [CatalogItemVariation](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItemVariation) movements between [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location)s - Reconcile expected vs received quantities - Monitor transfer progress and shipping status - Audit inventory movement history
@@ -29356,6 +30683,13 @@ public enum TransferOrderSortField: String, Codable {
 	case CREATED_AT
 	/// Sort by last update date (updated_at field). Useful for: - Finding recently modified transfers - Tracking status changes - Monitoring receiving progress - Synchronizing with external systems
 	case UPDATED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TransferOrderSortField(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Status values for transfer orders. Represents the current state of a  [TransferOrder](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TransferOrder) in its lifecycle from creation to completion. Each status determines what actions are available and how inventory is affected.
@@ -29370,6 +30704,13 @@ public enum TransferOrderStatus: String, Codable {
 	case COMPLETED
 	/// Transfer order was canceled via [CancelTransferOrder](api-endpoint:TransferOrders-CancelTransferOrder). Any pending quantities are no longer receivable and are returned to source [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).  Only metadata modifications are allowed.
 	case CANCELED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = TransferOrderStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a transfer_order is updated.
@@ -30861,6 +32202,13 @@ public enum V1OrderHistoryEntryAction: String, Codable {
 	case COMPLETED
 	case REFUNDED
 	case EXPIRED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = V1OrderHistoryEntryAction(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -30871,6 +32219,13 @@ public enum V1OrderState: String, Codable {
 	case CANCELED
 	case REFUNDED
 	case REJECTED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = V1OrderState(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// A tender represents a discrete monetary exchange. Square represents this exchange as a money object with a specific currency and amount, where the amount is given in the smallest denomination of the given currency.  Square POS can accept more than one form of tender for a single payment (such as by splitting a bill between a credit card and a gift card). The `tender` field of the Payment object lists all forms of tender used for the payment.  Split tender payments behave slightly differently from single tender payments:  The receipt_url for a split tender corresponds only to the first tender listed in the tender field. To get the receipt URLs for the remaining tenders, use the receipt_url fields of the corresponding Tender objects.  *A note on gift cards**: when a customer purchases a Square gift card from a merchant, the merchant receives the full amount of the gift card in the associated payment.  When that gift card is used as a tender, the balance of the gift card is reduced and the merchant receives no funds. A `Tender` object with a type of `SQUARE_GIFT_CARD` indicates a gift card was used for some or all of the associated payment.
@@ -30957,6 +32312,13 @@ public enum V1TenderCardBrand: String, Codable {
 	case JCB
 	case CHINA_UNIONPAY
 	case SQUARE_GIFT_CARD
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = V1TenderCardBrand(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -30968,6 +32330,13 @@ public enum V1TenderEntryMethod: String, Codable {
 	case SWIPED
 	case WEB_FORM
 	case OTHER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = V1TenderEntryMethod(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// 
@@ -30980,6 +32349,13 @@ public enum V1TenderType: String, Codable {
 	case SQUARE_GIFT_CARD
 	case UNKNOWN
 	case OTHER
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = V1TenderType(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// V1UpdateOrderRequest
@@ -31016,6 +32392,13 @@ public enum V1UpdateOrderRequestAction: String, Codable {
 	case COMPLETE
 	case CANCEL
 	case REFUND
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = V1UpdateOrderRequestAction(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Represents a supplier to a seller.
@@ -31169,6 +32552,13 @@ public struct VendorCreatedEventObject: Codable, Equatable {
 /// The operation that can be performed against a vendor to cause the event to be published.
 public enum VendorCreatedEventObjectOperation: String, Codable {
 	case CREATED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = VendorCreatedEventObjectOperation(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// The status of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor), whether a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is active or inactive.
@@ -31177,6 +32567,13 @@ public enum VendorStatus: String, Codable {
 	case ACTIVE
 	/// Vendor is inactive and cannot receive purchase orders.
 	case INACTIVE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = VendorStatus(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Published when a [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) is updated.
@@ -31248,6 +32645,13 @@ public struct VendorUpdatedEventObject: Codable, Equatable {
 /// The operation that can be performed against a vendor to cause the event to be published.
 public enum VendorUpdatedEventObjectOperation: String, Codable {
 	case UPDATED
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = VendorUpdatedEventObjectOperation(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Enumeration of visibility-filter values used to set the ability to view custom attributes or custom attribute definitions.
@@ -31258,6 +32662,13 @@ public enum VisibilityFilter: String, Codable {
 	case READ
 	/// All custom attributes or custom attribute definitions with the `visibility` field set to `VISIBILITY_READ_WRITE_VALUES`.
 	case READ_WRITE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = VisibilityFilter(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Defines the fields that are included in the response body of a request to the [VoidTransaction](api-endpoint:Transactions-VoidTransaction) endpoint.
@@ -31367,6 +32778,13 @@ public enum Weekday: String, Codable {
 	case SAT
 	/// Sunday
 	case SUN
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = Weekday(rawValue: raw) ?? .UNRECOGNIZED
+	}
 }
 
 /// Sets the day of the week and hour of the day that a business starts a workweek. This is used to calculate overtime pay.
