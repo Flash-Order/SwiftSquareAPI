@@ -1,3 +1,86 @@
+/// Returns the standard and custom inventory adjustment reasons available to the seller.
+public struct ListInventoryAdjustmentReasons: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .GET }
+	public typealias inputType = Empty
+	public typealias outputType = ListInventoryAdjustmentReasonsResponse
+	public typealias paramType = Params
+	public struct Params {
+		let include_deleted: Bool?
+		let include_system_codes: Bool?
+		/// Returns the standard and custom inventory adjustment reasons available to the seller.
+		/// - Parameters:
+		///   - include_deleted: Indicates whether the response should include deleted custom inventory adjustment reasons. The default value is `false`.
+		///   - include_system_codes: Indicates whether the response should include Square-generated system inventory adjustment reason codes that cannot be used to write adjustments from the Connect API, such as `SALE`, `RECOUNT`, `TRANSFER`, `IN_TRANSIT`, and `CANCELED_SALE`. The default value is `false`.
+		public init(include_deleted: Bool? = nil, include_system_codes: Bool? = nil) {
+			self.include_deleted = include_deleted
+			self.include_system_codes = include_system_codes
+		}
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		let url = "/v2/inventory/adjustment-reasons"
+		var queries = [String]()
+		if let v = inputs.include_deleted { queries.append("include_deleted=\(v)") }
+		if let v = inputs.include_system_codes { queries.append("include_system_codes=\(v)") }
+		if queries.count > 0 {
+			let query = queries.joined(separator: "&")
+			let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+			return url + "?" + (encoded ?? query)
+		}
+		return url
+	}
+}
+
+/// Creates a custom inventory adjustment reason.
+public struct CreateInventoryAdjustmentReason: SquareAPIEndpoint {
+	public typealias inputType = CreateInventoryAdjustmentReasonRequest
+	public typealias outputType = CreateInventoryAdjustmentReasonResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/inventory/adjustment-reasons/create"
+	}
+}
+
+/// Soft deletes a custom inventory adjustment reason.
+public struct DeleteInventoryAdjustmentReason: SquareAPIEndpoint {
+	public typealias inputType = DeleteInventoryAdjustmentReasonRequest
+	public typealias outputType = DeleteInventoryAdjustmentReasonResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/inventory/adjustment-reasons/delete"
+	}
+}
+
+/// Restores a soft-deleted custom inventory adjustment reason.
+public struct RestoreInventoryAdjustmentReason: SquareAPIEndpoint {
+	public typealias inputType = RestoreInventoryAdjustmentReasonRequest
+	public typealias outputType = RestoreInventoryAdjustmentReasonResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/inventory/adjustment-reasons/restore"
+	}
+}
+
+/// Returns the inventory adjustment reason identified by the provided `reason_id`. Deleted custom reasons can be retrieved by ID.
+public struct RetrieveInventoryAdjustmentReason: SquareAPIEndpoint {
+	public typealias inputType = RetrieveInventoryAdjustmentReasonRequest
+	public typealias outputType = RetrieveInventoryAdjustmentReasonResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/inventory/adjustment-reasons/retrieve"
+	}
+}
+
+/// Updates a custom inventory adjustment reason.
+public struct UpdateInventoryAdjustmentReason: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateInventoryAdjustmentReasonRequest
+	public typealias outputType = UpdateInventoryAdjustmentReasonResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/inventory/adjustment-reasons/update"
+	}
+}
+
 /// Deprecated version of [RetrieveInventoryAdjustment](api-endpoint:Inventory-RetrieveInventoryAdjustment) after the endpoint URL is updated to conform to the standard convention.
 @available(*,deprecated)
 public struct DeprecatedRetrieveInventoryAdjustment: SquareAPIEndpoint {
@@ -17,6 +100,17 @@ public struct DeprecatedRetrieveInventoryAdjustment: SquareAPIEndpoint {
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/inventory/adjustment/\(inputs.adjustment_id)"
 		return url
+	}
+}
+
+/// Applies an update to the provided adjustment.  On success: returns the newly updated adjustment. On failure: returns a list of related errors.
+public struct UpdateInventoryAdjustment: SquareAPIEndpoint {
+	public static var method: HTTPMethod { return .PUT }
+	public typealias inputType = UpdateInventoryAdjustmentRequest
+	public typealias outputType = UpdateInventoryAdjustmentResponse
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v2/inventory/adjustments/update"
 	}
 }
 
@@ -143,27 +237,6 @@ public struct RetrieveInventoryPhysicalCount: SquareAPIEndpoint {
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		let url = "/v2/inventory/physical-counts/\(inputs.physical_count_id)"
-		return url
-	}
-}
-
-/// Returns the [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) object with the provided `transfer_id`.
-public struct RetrieveInventoryTransfer: SquareAPIEndpoint {
-	public static var method: HTTPMethod { return .GET }
-	public typealias inputType = Empty
-	public typealias outputType = RetrieveInventoryTransferResponse
-	public typealias paramType = Params
-	public struct Params {
-		let transfer_id: String
-		/// Returns the [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) object with the provided `transfer_id`.
-		/// - Parameters:
-		///   - transfer_id: ID of the [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) to retrieve.
-		public init(transfer_id: String) {
-			self.transfer_id = transfer_id
-		}
-	}
-	public static func endpoint(for inputs: Params) throws -> String {
-		let url = "/v2/inventory/transfers/\(inputs.transfer_id)"
 		return url
 	}
 }

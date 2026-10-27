@@ -1,7 +1,7 @@
 
 /// Basic info about the API
 public struct SquareAPIInfo {
-	public static var version: String { return "2026-01-22" }
+	public static var version: String { return "2026-09-16" }
 
 	public static var host: String { return "connect.squareup.com" }
 }
@@ -15,6 +15,7 @@ public typealias MerchantCustomAttributeUpsertRequest = AnyCodable			// fix for 
 public typealias MerchantCustomAttributeDeleteRequest = AnyCodable			// fix for missing type from square spec
 public typealias MerchantCustomAttributeDeleteResponse = AnyCodable			// fix for missing type from square spec
 public typealias MerchantCustomAttributeUpsertResponse = AnyCodable			// fix for missing type from square spec
+public typealias CurrencyExchange = AnyCodable								// fix for missing type from square spec (Payment.buyer_currency_exchange; no field list anywhere, even Square's SDKs use Any)
 
 /// ACH-specific details about `BANK_ACCOUNT` type payments with the `transfer_type` of `ACH`.
 public struct ACHDetails: Codable, Equatable {
@@ -409,6 +410,23 @@ public struct AfterpayDetails: Codable, Equatable {
 	///   - email_address: Email address on the buyer's Afterpay account.
 	public init(email_address: String? = nil) {
 		self.email_address = email_address
+	}
+}
+
+/// One location's share of an application fee (on refunds, its contribution to the refunded fee). Missing from Square's spec; shape from Square's fee guides.
+public struct AppFeeAllocation: Codable, Equatable {
+	/// This location's share of the application fee. The allocations on a payment add up to `app_fee_money`.
+	public var amount_money: Money?
+	/// The location that receives this share of the application fee (on a refund, the location that pays this share of the refunded fee).
+	public var location_id: String?
+
+	/// One location's share of an application fee (on refunds, its contribution to the refunded fee). Missing from Square's spec; shape from Square's fee guides.
+	/// - Parameters:
+	///   - amount_money: This location's share of the application fee. The allocations on a payment add up to `app_fee_money`.
+	///   - location_id: The location that receives this share of the application fee (on a refund, the location that pays this share of the refunded fee).
+	public init(amount_money: Money? = nil, location_id: String? = nil) {
+		self.amount_money = amount_money
+		self.location_id = location_id
 	}
 }
 
@@ -929,16 +947,19 @@ public struct BatchRetrieveCatalogObjectsRequest: Codable, Equatable {
 	public var include_category_path_to_root: Bool?
 	/// Indicates whether to include (`true`) or not (`false`) in the response deleted objects, namely, those with the `is_deleted` attribute set to `true`.
 	public var include_deleted_objects: Bool?
+	/// Options to include related resources in the response.
+	public var include_options: IncludeOptions?
 	/// If `true`, the response will include additional objects that are related to the requested objects. Related objects are defined as any objects referenced by ID by the results in the `objects` field of the response. These objects are put in the `related_objects` field. Setting this to `true` is helpful when the objects are needed for immediate display to a user. This process only goes one level deep. Objects referenced by the related objects will not be included. For example,  if the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.  Default value: `false`
 	public var include_related_objects: Bool?
 	/// The IDs of the CatalogObjects to be retrieved.
 	public var object_ids: [String]
 
-	public init(object_ids: [String], catalog_version: Int? = nil, include_category_path_to_root: Bool? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil) {
+	public init(object_ids: [String], catalog_version: Int? = nil, include_category_path_to_root: Bool? = nil, include_deleted_objects: Bool? = nil, include_options: IncludeOptions? = nil, include_related_objects: Bool? = nil) {
 		self.object_ids = object_ids
 		self.catalog_version = catalog_version
 		self.include_category_path_to_root = include_category_path_to_root
 		self.include_deleted_objects = include_deleted_objects
+		self.include_options = include_options
 		self.include_related_objects = include_related_objects
 	}
 }
@@ -946,13 +967,16 @@ public struct BatchRetrieveCatalogObjectsRequest: Codable, Equatable {
 public struct BatchRetrieveCatalogObjectsResponse: Codable, Equatable {
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
+	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s referenced by the object in the `objects` field and specifically requested.
+	public var included_resources: IncludedResources?
 	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s returned.
 	public var objects: [CatalogObject]?
 	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s referenced by the object in the `objects` field.
 	public var related_objects: [CatalogObject]?
 
-	public init(errors: [SquareError]? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
+	public init(errors: [SquareError]? = nil, included_resources: IncludedResources? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
 		self.errors = errors
+		self.included_resources = included_resources
 		self.objects = objects
 		self.related_objects = related_objects
 	}
@@ -967,6 +991,10 @@ public struct BatchRetrieveInventoryChangesRequest: Codable, Equatable {
 	public var limit: Int?
 	/// The filter to return results by `Location` ID. The filter is only applicable when set. The default value is null.
 	public var location_ids: [String]?
+	/// The filter to return `ADJUSTMENT` query results by inventory adjustment reason. This filter is only applied when set. The request cannot include both `reason_ids` and `states`.
+	public var reason_ids: [InventoryAdjustmentReasonId]?
+	/// Specification of how returned inventory changes should be ordered.  Currently, inventory changes can only be ordered by the occurred_at field. The default sort order for occurred_at is ASC (changes are returned oldest-first by default).
+	public var sort: BatchRetrieveInventoryChangesSort?
 	/// The filter to return `ADJUSTMENT` query results by `InventoryState`. This filter is only applied when set. The default value is null.
 	public var states: [InventoryState]?
 	/// The filter to return results by `InventoryChangeType` values other than `TRANSFER`. The default value is `[PHYSICAL_COUNT, ADJUSTMENT]`.
@@ -976,11 +1004,13 @@ public struct BatchRetrieveInventoryChangesRequest: Codable, Equatable {
 	/// The filter to return results with their `created_at` or `calculated_at` value strictly before the given time as specified in an RFC 3339 timestamp. The default value is the UNIX epoch of (`1970-01-01T00:00:00Z`).
 	public var updated_before: Timestamp?
 
-	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, limit: Int? = nil, location_ids: [String]? = nil, states: [InventoryState]? = nil, types: [InventoryChangeType]? = nil, updated_after: Timestamp? = nil, updated_before: Timestamp? = nil) {
+	public init(catalog_object_ids: [String]? = nil, cursor: String? = nil, limit: Int? = nil, location_ids: [String]? = nil, reason_ids: [InventoryAdjustmentReasonId]? = nil, sort: BatchRetrieveInventoryChangesSort? = nil, states: [InventoryState]? = nil, types: [InventoryChangeType]? = nil, updated_after: Timestamp? = nil, updated_before: Timestamp? = nil) {
 		self.catalog_object_ids = catalog_object_ids
 		self.cursor = cursor
 		self.limit = limit
 		self.location_ids = location_ids
+		self.reason_ids = reason_ids
+		self.sort = sort
 		self.states = states
 		self.types = types
 		self.updated_after = updated_after
@@ -1000,6 +1030,30 @@ public struct BatchRetrieveInventoryChangesResponse: Codable, Equatable {
 		self.changes = changes
 		self.cursor = cursor
 		self.errors = errors
+	}
+}
+
+public struct BatchRetrieveInventoryChangesSort: Codable, Equatable {
+	/// The field to sort inventory changes by. See [Field](#type-field) for possible values
+	public var field: BatchRetrieveInventoryChangesSortField?
+	/// The order to sort inventory changes by. See [SortOrder](#type-sortorder) for possible values
+	public var order: SortOrder?
+
+	public init(field: BatchRetrieveInventoryChangesSortField? = nil, order: SortOrder? = nil) {
+		self.field = field
+		self.order = order
+	}
+}
+
+/// 
+public enum BatchRetrieveInventoryChangesSortField: String, Codable {
+	case OCCURRED_AT
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = BatchRetrieveInventoryChangesSortField(rawValue: raw) ?? .UNRECOGNIZED
 	}
 }
 
@@ -3395,19 +3449,6 @@ public struct CancelTransferOrderResponse: Codable, Equatable {
 	}
 }
 
-/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](api-endpoint:Transactions-CaptureTransaction) endpoint.
-public struct CaptureTransactionResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-
-	/// Defines the fields that are included in the response body of a request to the [CaptureTransaction](api-endpoint:Transactions-CaptureTransaction) endpoint.
-	/// - Parameters:
-	///   - errors: Any errors that occurred during the request.
-	public init(errors: [SquareError]? = nil) {
-		self.errors = errors
-	}
-}
-
 /// Represents the payment details of a card to be used for payments. These details are determined by the payment token generated by Web Payments SDK.
 public struct Card: Codable, Equatable {
 	/// The billing address for this card. `US` postal codes can be provided as a 5-digit zip code or 9-digit ZIP+4 (example: `12345-6789`). For a full list of field meanings by country, see [Working with Addresses](https://developer.squareup.com/docs/build-basics/common-data-types/working-with-addresses).
@@ -3574,6 +3615,10 @@ public enum CardBrand: String, Codable {
 	case EFTPOS
 	case FELICA
 	case EBT
+	case QUICPAY
+	case ID
+	case TRANSPORTATION_IC
+	case CARNET
 	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
 	case UNRECOGNIZED
 
@@ -3801,6 +3846,8 @@ public struct CardPaymentDetails: Codable, Equatable {
 	public var application_identifier: String?
 	/// For EMV payments, the human-readable name of the EMV application used for the payment.
 	public var application_name: String?
+	/// Additional information about a card_surcharge on the payment.
+	public var applied_card_surcharge_details: CardSurchargeDetails?
 	/// The status code returned by the card issuer that describes the payment's authorization status.
 	public var auth_result_code: String?
 	/// The status code returned from the Address Verification System (AVS) check. The code can be `AVS_ACCEPTED`, `AVS_REJECTED`, or `AVS_NOT_CHECKED`.
@@ -3827,12 +3874,15 @@ public struct CardPaymentDetails: Codable, Equatable {
 	public var verification_method: String?
 	/// For EMV payments, the results of the cardholder verification. The result can be `SUCCESS`, `FAILURE`, or `UNKNOWN`.
 	public var verification_results: String?
+	/// The type of digital wallet used for this card payment, if applicable. Currently only populated for in-person Apple Pay payments. Detection has no false positives but may have false negatives (some Apple Pay payments may not be detected).  For payments with `source_type` of `WALLET`, see `DigitalWalletDetails` instead.  Values: `APPLE_PAY`
+	public var wallet_type: String?
 
 	/// Reflects the current status of a card payment. Contains only non-confidential information.
 	/// - Parameters:
 	///   - application_cryptogram: For EMV payments, the cryptogram generated for the payment.
 	///   - application_identifier: For EMV payments, the application ID identifies the EMV application used for the payment.
 	///   - application_name: For EMV payments, the human-readable name of the EMV application used for the payment.
+	///   - applied_card_surcharge_details: Additional information about a card_surcharge on the payment.
 	///   - auth_result_code: The status code returned by the card issuer that describes the payment's authorization status.
 	///   - avs_status: The status code returned from the Address Verification System (AVS) check. The code can be `AVS_ACCEPTED`, `AVS_REJECTED`, or `AVS_NOT_CHECKED`.
 	///   - card: The credit card's non-confidential details.
@@ -3846,10 +3896,12 @@ public struct CardPaymentDetails: Codable, Equatable {
 	///   - status: The card payment's current state. The state can be AUTHORIZED, CAPTURED, VOIDED, or FAILED.
 	///   - verification_method: For EMV payments, the method used to verify the cardholder's identity. The method can be `PIN`, `SIGNATURE`, `PIN_AND_SIGNATURE`, `ON_DEVICE`, or `NONE`.
 	///   - verification_results: For EMV payments, the results of the cardholder verification. The result can be `SUCCESS`, `FAILURE`, or `UNKNOWN`.
-	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, card_payment_timeline: CardPaymentTimeline? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [SquareError]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil) {
+	///   - wallet_type: The type of digital wallet used for this card payment, if applicable. Currently only populated for in-person Apple Pay payments. Detection has no false positives but may have false negatives (some Apple Pay payments may not be detected).  For payments with `source_type` of `WALLET`, see `DigitalWalletDetails` instead.  Values: `APPLE_PAY`
+	public init(application_cryptogram: String? = nil, application_identifier: String? = nil, application_name: String? = nil, applied_card_surcharge_details: CardSurchargeDetails? = nil, auth_result_code: String? = nil, avs_status: String? = nil, card: Card? = nil, card_payment_timeline: CardPaymentTimeline? = nil, cvv_status: String? = nil, device_details: DeviceDetails? = nil, entry_method: String? = nil, errors: [SquareError]? = nil, refund_requires_card_presence: Bool? = nil, statement_description: String? = nil, status: String? = nil, verification_method: String? = nil, verification_results: String? = nil, wallet_type: String? = nil) {
 		self.application_cryptogram = application_cryptogram
 		self.application_identifier = application_identifier
 		self.application_name = application_name
+		self.applied_card_surcharge_details = applied_card_surcharge_details
 		self.auth_result_code = auth_result_code
 		self.avs_status = avs_status
 		self.card = card
@@ -3863,6 +3915,7 @@ public struct CardPaymentDetails: Codable, Equatable {
 		self.status = status
 		self.verification_method = verification_method
 		self.verification_results = verification_results
+		self.wallet_type = wallet_type
 	}
 }
 
@@ -3898,6 +3951,19 @@ public enum CardPrepaidType: String, Codable {
 	public init(from decoder: Decoder) throws {
 		let raw = try decoder.singleValueContainer().decode(String.self)
 		self = CardPrepaidType(rawValue: raw) ?? .UNRECOGNIZED
+	}
+}
+
+/// Details related to an attempt to apply a card surcharge to this payment.  When surcharge eligibility is not known in advance, such as when the card type (debit or credit) is required to make the eligibility determination, proposed_card_surcharge_money and proposed_additional_amount_money will match the values in the request, while card_surcharge_money and additional_amount_money are present only when the payment has a surcharge applied.
+public struct CardSurchargeDetails: Codable, Equatable {
+	/// A specific surcharge levied by the merchant, if a card payment is used, instead of cash or some other payment type. Should only include the base surcharge amount. Any additional fees related to the surcharge (e.g. taxes on the surcharge) should only be included in the additional_amount_money. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts). The currency code must match the currency associated with the business that is accepting the payment.
+	public var card_surcharge_money: Money?
+
+	/// Details related to an attempt to apply a card surcharge to this payment.  When surcharge eligibility is not known in advance, such as when the card type (debit or credit) is required to make the eligibility determination, proposed_card_surcharge_money and proposed_additional_amount_money will match the values in the request, while card_surcharge_money and additional_amount_money are present only when the payment has a surcharge applied.
+	/// - Parameters:
+	///   - card_surcharge_money: A specific surcharge levied by the merchant, if a card payment is used, instead of cash or some other payment type. Should only include the base surcharge amount. Any additional fees related to the surcharge (e.g. taxes on the surcharge) should only be included in the additional_amount_money. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts). The currency code must match the currency associated with the business that is accepting the payment.
+	public init(card_surcharge_money: Money? = nil) {
+		self.card_surcharge_money = card_surcharge_money
 	}
 }
 
@@ -4277,7 +4343,7 @@ public struct CatalogCategory: Codable, Equatable {
 	public var name: String?
 	/// Indicates whether the category is visible (`true`) or hidden (`false`) on all of the seller's Square Online sites.
 	public var online_visibility: Bool?
-	/// The ID of the parent category of this category instance.
+	/// The parent category of this category instance. This includes the parent category ID and an ordinal value that determines the category's relative position among sibling categories with the same parent.
 	public var parent_category: CatalogObjectCategory?
 	/// The path from the category to its root category. The first node of the path is the parent of the category and the last is the root category. The path is empty if the category is a root category.
 	public var path_to_root: [CategoryPathToRootNode]?
@@ -4294,7 +4360,7 @@ public struct CatalogCategory: Codable, Equatable {
 	///   - is_top_level: Indicates whether a category is a top level category, which does not have any parent_category.
 	///   - name: The category name. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	///   - online_visibility: Indicates whether the category is visible (`true`) or hidden (`false`) on all of the seller's Square Online sites.
-	///   - parent_category: The ID of the parent category of this category instance.
+	///   - parent_category: The parent category of this category instance. This includes the parent category ID and an ordinal value that determines the category's relative position among sibling categories with the same parent.
 	///   - path_to_root: The path from the category to its root category. The first node of the path is the parent of the category and the last is the root category. The path is empty if the category is a root category.
 	///   - root_category: The top-level category in a category hierarchy.
 	public init(availability_period_ids: [String]? = nil, category_type: CatalogCategoryType? = nil, channels: [String]? = nil, ecom_seo_data: CatalogEcomSeoData? = nil, image_ids: [String]? = nil, is_top_level: Bool? = nil, name: String? = nil, online_visibility: Bool? = nil, parent_category: CatalogObjectCategory? = nil, path_to_root: [CategoryPathToRootNode]? = nil, root_category: String? = nil) {
@@ -4732,7 +4798,7 @@ public struct CatalogItem: Codable, Equatable {
 	public var abbreviation: String?
 	/// The override to a product name to display to users
 	public var buyer_facing_name: String?
-	/// The list of categories.
+	/// The list of categories to which this item belongs. Each entry includes the category ID and an ordinal value that determines the item's relative position within that category.
 	public var categories: [CatalogObjectCategory]?
 	/// The ID of the item's category, if any. Deprecated since yyyy-mm-dd. Use `CatalogItem.categories`, instead.
 	public var category_id: String?
@@ -4787,7 +4853,7 @@ public struct CatalogItem: Codable, Equatable {
 	/// - Parameters:
 	///   - abbreviation: The text of the item's display label in the Square Point of Sale app. Only up to the first five characters of the string are used. This attribute is searchable, and its value length is of Unicode code points.
 	///   - buyer_facing_name: The override to a product name to display to users
-	///   - categories: The list of categories.
+	///   - categories: The list of categories to which this item belongs. Each entry includes the category ID and an ordinal value that determines the item's relative position within that category.
 	///   - category_id: The ID of the item's category, if any. Deprecated since yyyy-mm-dd. Use `CatalogItem.categories`, instead.
 	///   - channels: A list of IDs representing channels, such as a Square Online site, where the item can be made visible or available. This field is read only and cannot be edited.
 	///   - description: The item's description. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.  Deprecated at yyyy-mm-dd, this field is planned to retire in 6 months. You should migrate to use `description_html` to set the description of the [CatalogItem](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) instance.  The `description` and `description_html` field values are kept in sync. If you try to set the both fields, the `description_html` text value overwrites the `description` value. Updates in one field are also reflected in the other, except for when you use an early version before Square API yyyy-mm-dd and `description_html` is set to blank, setting the `description` value to null does not nullify `description_html`.
@@ -4982,7 +5048,7 @@ public struct CatalogItemModifierListInfo: Codable, Equatable {
 	public var modifier_list_id: String
 	/// A set of `CatalogModifierOverride` objects that override default modifier settings for this item.
 	public var modifier_overrides: [CatalogModifierOverride]?
-	/// The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
+	/// The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied to a `CatalogItem` instance.
 	public var ordinal: Int?
 
 	/// Controls how a modifier list is applied to a specific item. This object allows for item-specific customization of modifier list behavior and provides the ability to override global modifier list settings.
@@ -4995,7 +5061,7 @@ public struct CatalogItemModifierListInfo: Codable, Equatable {
 	///   - min_selected_modifiers: The minimum number of modifiers that must be selected from this modifier list. Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. When `max_selected_modifiers` is also -1, use the minimum and maximum selection values set on the `CatalogItemModifierList`. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
 	///   - modifier_list_id: The ID of the `CatalogModifierList` controlled by this `CatalogModifierListInfo`.
 	///   - modifier_overrides: A set of `CatalogModifierOverride` objects that override default modifier settings for this item.
-	///   - ordinal: The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied  to a `CatalogItem` instance.
+	///   - ordinal: The position of this `CatalogItemModifierListInfo` object within the `modifier_list_info` list applied to a `CatalogItem` instance.
 	public init(modifier_list_id: String, allow_quantities: CatalogModifierToggleOverrideType? = nil, enabled: Bool? = nil, hidden_from_customer_override: CatalogModifierToggleOverrideType? = nil, is_conversational: CatalogModifierToggleOverrideType? = nil, max_selected_modifiers: Int? = nil, min_selected_modifiers: Int? = nil, modifier_overrides: [CatalogModifierOverride]? = nil, ordinal: Int? = nil) {
 		self.modifier_list_id = modifier_list_id
 		self.allow_quantities = allow_quantities
@@ -5132,9 +5198,9 @@ public struct CatalogItemVariation: Codable, Equatable {
 	public var available_for_booking: Bool?
 	/// The IDs of images associated with this `CatalogItemVariation` instance. These images will be shown to customers in Square Online Store.
 	public var image_ids: [String]?
-	/// If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard.  This value is always an integer.
+	/// If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard. This value is always an integer.  Deprecated because this field has never been global.
 	public var inventory_alert_threshold: Int?
-	/// Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its `inventory_alert_threshold`. See [InventoryAlertType](#type-inventoryalerttype) for possible values
+	/// Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its `inventory_alert_threshold`.  Deprecated because this field has never been global. See [InventoryAlertType](#type-inventoryalerttype) for possible values
 	public var inventory_alert_type: InventoryAlertType?
 	/// The ID of the `CatalogItem` associated with this item variation.
 	public var item_id: String?
@@ -5166,19 +5232,21 @@ public struct CatalogItemVariation: Codable, Equatable {
 	public var stockable_conversion: CatalogStockConversion?
 	/// Tokens of employees that can perform the service represented by this variation. Only valid for variations of type `APPOINTMENTS_SERVICE`.
 	public var team_member_ids: [String]?
-	/// If `true`, inventory tracking is active for the variation.
+	/// If `true`, inventory tracking is active for the variation at all locations by default. This value can be overridden for specific locations using `ItemVariationLocationOverrides.track_inventory`. If unset at both levels, inventory tracking is disabled.
 	public var track_inventory: Bool?
 	/// The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard, Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps unless it is updated to fit the expected format.
 	public var upc: String?
 	/// Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
 	public var user_data: String?
+	/// Details of the vendor this product is purchased from. This field can be set only if the seller has an active subscription to either Square for Retail Premium or Square for Restaurants Premium.
+	public var vendor_information: [CatalogItemVariationVendorInformation]?
 
 	/// An item variation, representing a product for sale, in the Catalog object model. Each [item](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogItem) must have at least one item variation and can have at most 250 item variations.  An item variation can be sellable, stockable, or both if it has a unit of measure for its count for the sold number of the variation, the stocked number of the variation, or both. For example, when a variation representing wine is stocked and sold by the bottle, the variation is both stockable and sellable. But when a variation of the wine is sold by the glass, the sold units cannot be used as a measure of the stocked units. This by-the-glass variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at any time, the sellable count must be converted to stockable count. Typically, the seller defines this unit conversion. For example, 1 bottle equals 5 glasses. The Square API exposes the `stockable_conversion` property on the variation to specify the conversion. Thus, when two glasses of the wine are sold, the sellable count decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the conversion.
 	/// - Parameters:
 	///   - available_for_booking: If the `CatalogItem` that owns this item variation is of type `APPOINTMENTS_SERVICE`, a bool representing whether this service is available for booking.
 	///   - image_ids: The IDs of images associated with this `CatalogItemVariation` instance. These images will be shown to customers in Square Online Store.
-	///   - inventory_alert_threshold: If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard.  This value is always an integer.
-	///   - inventory_alert_type: Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its `inventory_alert_threshold`. See [InventoryAlertType](#type-inventoryalerttype) for possible values
+	///   - inventory_alert_threshold: If the inventory quantity for the variation is less than or equal to this value and `inventory_alert_type` is `LOW_QUANTITY`, the variation displays an alert in the merchant dashboard. This value is always an integer.  Deprecated because this field has never been global.
+	///   - inventory_alert_type: Indicates whether the item variation displays an alert when its inventory quantity is less than or equal to its `inventory_alert_threshold`.  Deprecated because this field has never been global. See [InventoryAlertType](#type-inventoryalerttype) for possible values
 	///   - item_id: The ID of the `CatalogItem` associated with this item variation.
 	///   - item_option_values: List of item option values associated with this item variation. Listed in the same order as the item options of the parent item.
 	///   - kitchen_name: (Optional) Name that the restaurant wants to display to their kitchen workers instead of the customer-facing name. e.g., customer name might be "Mega-Jumbo Triplesized" and the kitchen name is "Large container"
@@ -5194,10 +5262,11 @@ public struct CatalogItemVariation: Codable, Equatable {
 	///   - stockable: Whether stock is counted directly on this variation (TRUE) or only on its components (FALSE). When a variation is both stockable and sellable, the inventory count of a stockable variation keeps track of the number of units of this variation in stock and is not an indicator of the number of units of the variation that can be sold.
 	///   - stockable_conversion: The unit conversion rule, as prescribed by the [CatalogStockConversion](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogStockConversion) type, that describes how this non-stockable (i.e., sellable/receivable) item variation is converted to/from the stockable item variation sharing the same parent item. With the stock conversion, you can accurately track inventory when an item variation is sold in one unit, but stocked in another unit.
 	///   - team_member_ids: Tokens of employees that can perform the service represented by this variation. Only valid for variations of type `APPOINTMENTS_SERVICE`.
-	///   - track_inventory: If `true`, inventory tracking is active for the variation.
+	///   - track_inventory: If `true`, inventory tracking is active for the variation at all locations by default. This value can be overridden for specific locations using `ItemVariationLocationOverrides.track_inventory`. If unset at both levels, inventory tracking is disabled.
 	///   - upc: The universal product code (UPC) of the item variation, if any. This is a searchable attribute for use in applicable query filters.  The value of this attribute should be a number of 12-14 digits long.  This restriction is enforced on the Square Seller Dashboard, Square Point of Sale or Retail Point of Sale apps, where this attribute shows in the GTIN field. If a non-compliant UPC value is assigned to this attribute using the API, the value is not editable on the Seller Dashboard, Square Point of Sale or Retail Point of Sale apps unless it is updated to fit the expected format.
 	///   - user_data: Arbitrary user metadata to associate with the item variation. This attribute value length is of Unicode code points.
-	public init(available_for_booking: Bool? = nil, image_ids: [String]? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: InventoryAlertType? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, kitchen_name: String? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: CatalogPricingType? = nil, sellable: Bool? = nil, service_duration: Int? = nil, sku: String? = nil, stockable: Bool? = nil, stockable_conversion: CatalogStockConversion? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil) {
+	///   - vendor_information: Details of the vendor this product is purchased from. This field can be set only if the seller has an active subscription to either Square for Retail Premium or Square for Restaurants Premium.
+	public init(available_for_booking: Bool? = nil, image_ids: [String]? = nil, inventory_alert_threshold: Int? = nil, inventory_alert_type: InventoryAlertType? = nil, item_id: String? = nil, item_option_values: [CatalogItemOptionValueForItemVariation]? = nil, kitchen_name: String? = nil, location_overrides: [ItemVariationLocationOverrides]? = nil, measurement_unit_id: String? = nil, name: String? = nil, ordinal: Int? = nil, price_money: Money? = nil, pricing_type: CatalogPricingType? = nil, sellable: Bool? = nil, service_duration: Int? = nil, sku: String? = nil, stockable: Bool? = nil, stockable_conversion: CatalogStockConversion? = nil, team_member_ids: [String]? = nil, track_inventory: Bool? = nil, upc: String? = nil, user_data: String? = nil, vendor_information: [CatalogItemVariationVendorInformation]? = nil) {
 		self.available_for_booking = available_for_booking
 		self.image_ids = image_ids
 		self.inventory_alert_threshold = inventory_alert_threshold
@@ -5220,6 +5289,28 @@ public struct CatalogItemVariation: Codable, Equatable {
 		self.track_inventory = track_inventory
 		self.upc = upc
 		self.user_data = user_data
+		self.vendor_information = vendor_information
+	}
+}
+
+/// Information about the vendor of an item variation.
+public struct CatalogItemVariationVendorInformation: Codable, Equatable {
+	/// The unit cost of the linked product, when purchased from the linked vendor.
+	public var unit_cost_money: Money?
+	/// Unique identifier of this product in the specified vendor's' inventory system. When the product is added to a purchase order, the vendor code is pre-filled based on the selected vendor.
+	public var vendor_code: String?
+	/// ID of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) linked to a default cost of this product. When the product is added to a purchase order, the default cost is pre-filled. This field is not validated. Clients should gracefully handle cases where the vendor_id does not match any existing vendor.
+	public var vendor_id: String?
+
+	/// Information about the vendor of an item variation.
+	/// - Parameters:
+	///   - unit_cost_money: The unit cost of the linked product, when purchased from the linked vendor.
+	///   - vendor_code: Unique identifier of this product in the specified vendor's' inventory system. When the product is added to a purchase order, the vendor code is pre-filled based on the selected vendor.
+	///   - vendor_id: ID of the [Vendor](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Vendor) linked to a default cost of this product. When the product is added to a purchase order, the default cost is pre-filled. This field is not validated. Clients should gracefully handle cases where the vendor_id does not match any existing vendor.
+	public init(unit_cost_money: Money? = nil, vendor_code: String? = nil, vendor_id: String? = nil) {
+		self.unit_cost_money = unit_cost_money
+		self.vendor_code = vendor_code
+		self.vendor_id = vendor_id
 	}
 }
 
@@ -5242,6 +5333,8 @@ public struct CatalogMeasurementUnit: Codable, Equatable {
 
 /// A modifier that can be applied to items at the time of sale. For example, a cheese modifier for a burger, or a flavor modifier for a serving of ice cream.
 public struct CatalogModifier: Codable, Equatable {
+	/// Child `CatalogModifierList`s that this `CatalogModifier` nests for multi-step choices. When a customer or staff member selects this modifier, the relevant follow-up modifier list appears. For example, selecting "Hummus" reveals a secondary "Choose Hummus Flavor" set, and selecting a flavor could reveal a third-level portion size set.  Each entry references a child modifier list. Each modifier can nest up to 5 child modifier list, and supports up to 3 levels of nesting depth. The order in `child_modifier_list_ids` determines display order during checkout.
+	public var child_modifier_list_ids: [String]?
 	/// When `true`, this modifier is hidden from online ordering channels. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
 	public var hidden_online: Bool?
 	/// The ID of the image associated with this `CatalogModifier` instance. Currently this image is not displayed by Square, but is free to be displayed in 3rd party applications.
@@ -5263,6 +5356,7 @@ public struct CatalogModifier: Codable, Equatable {
 
 	/// A modifier that can be applied to items at the time of sale. For example, a cheese modifier for a burger, or a flavor modifier for a serving of ice cream.
 	/// - Parameters:
+	///   - child_modifier_list_ids: Child `CatalogModifierList`s that this `CatalogModifier` nests for multi-step choices. When a customer or staff member selects this modifier, the relevant follow-up modifier list appears. For example, selecting "Hummus" reveals a secondary "Choose Hummus Flavor" set, and selecting a flavor could reveal a third-level portion size set.  Each entry references a child modifier list. Each modifier can nest up to 5 child modifier list, and supports up to 3 levels of nesting depth. The order in `child_modifier_list_ids` determines display order during checkout.
 	///   - hidden_online: When `true`, this modifier is hidden from online ordering channels. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
 	///   - image_id: The ID of the image associated with this `CatalogModifier` instance. Currently this image is not displayed by Square, but is free to be displayed in 3rd party applications.
 	///   - kitchen_name: (Optional) Name that the restaurant wants to display to their kitchen workers instead of the customer-facing name. e.g., customer name might be "Double Baconize" and the kitchen name is "Add 2x bacon"
@@ -5272,7 +5366,8 @@ public struct CatalogModifier: Codable, Equatable {
 	///   - on_by_default: When `true`, this modifier is selected by default when displaying the modifier list. This setting can be overridden at the item level using `CatalogModifierListInfo.modifier_overrides`.
 	///   - ordinal: Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
 	///   - price_money: The modifier price.
-	public init(hidden_online: Bool? = nil, image_id: String? = nil, kitchen_name: String? = nil, location_overrides: [ModifierLocationOverrides]? = nil, modifier_list_id: String? = nil, name: String? = nil, on_by_default: Bool? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
+	public init(child_modifier_list_ids: [String]? = nil, hidden_online: Bool? = nil, image_id: String? = nil, kitchen_name: String? = nil, location_overrides: [ModifierLocationOverrides]? = nil, modifier_list_id: String? = nil, name: String? = nil, on_by_default: Bool? = nil, ordinal: Int? = nil, price_money: Money? = nil) {
+		self.child_modifier_list_ids = child_modifier_list_ids
 		self.hidden_online = hidden_online
 		self.image_id = image_id
 		self.kitchen_name = kitchen_name
@@ -5293,21 +5388,21 @@ public struct CatalogModifierList: Codable, Equatable {
 	public var hidden_from_customer: Bool?
 	/// The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
 	public var image_ids: [String]?
-	/// A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	/// A note for internal use by the business.  For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!" is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as an instruction for the business to follow.  For non text-based modifiers, this `internal_name` attribute can be used to include SKUs, internal codes, or supplemental descriptions for internal use.
 	public var internal_name: String?
 	/// True if modifiers belonging to this list can be used conversationally.
 	public var is_conversational: Bool?
-	/// The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	/// The maximum length, in Unicode points, of the text string of the text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
 	public var max_length: Int?
 	/// The maximum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No maximum limit. - -1: Default value, the attribute was not set by the client. Treated as no maximum limit. - &gt;0: The maximum total modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no maximum limit.
 	public var max_selected_modifiers: Int?
 	/// The minimum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. Treated as no selection required. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
 	public var min_selected_modifiers: Int?
-	/// The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects. See [CatalogModifierListModifierType](#type-catalogmodifierlistmodifiertype) for possible values
+	/// The type of the modifier.  When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier. When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects. See [CatalogModifierListModifierType](#type-catalogmodifierlistmodifiertype) for possible values
 	public var modifier_type: CatalogModifierListModifierType?
-	/// A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
+	/// A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`, for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER", "modifier_data": {{a CatalogModifier instance>}} } ```
 	public var modifiers: [CatalogObject]?
-	/// The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
+	/// The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	public var name: String?
 	/// The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
 	public var ordinal: Int?
@@ -5321,14 +5416,14 @@ public struct CatalogModifierList: Codable, Equatable {
 	///   - allow_quantities: When `true`, allows multiple quantities of the same modifier to be selected.
 	///   - hidden_from_customer: If `true`, modifiers from this list are hidden from customer receipts. The default value is `false`. This setting can be overridden with `CatalogItemModifierListInfo.hidden_from_customer_override`.
 	///   - image_ids: The IDs of images associated with this `CatalogModifierList` instance. Currently these images are not displayed on Square products, but may be displayed in 3rd-party applications.
-	///   - internal_name: A note for internal use by the business.     For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!"   is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as  an instruction for the business to follow.    For non text-based modifiers, this `internal_name` attribute can be  used to include SKUs, internal codes, or supplemental descriptions for internal use.
+	///   - internal_name: A note for internal use by the business.  For example, for a text-based modifier applied to a T-shirt item, if the buyer-supplied text of "Hello, Kitty!" is to be printed on the T-shirt, this `internal_name` attribute can be "Use italic face" as an instruction for the business to follow.  For non text-based modifiers, this `internal_name` attribute can be used to include SKUs, internal codes, or supplemental descriptions for internal use.
 	///   - is_conversational: True if modifiers belonging to this list can be used conversationally.
-	///   - max_length: The maximum length, in Unicode points, of the text string of the text-based modifier as represented by  this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
+	///   - max_length: The maximum length, in Unicode points, of the text string of the text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
 	///   - max_selected_modifiers: The maximum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No maximum limit. - -1: Default value, the attribute was not set by the client. Treated as no maximum limit. - &gt;0: The maximum total modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no maximum limit.
 	///   - min_selected_modifiers: The minimum number of modifiers that must be selected from this list. The value can be overridden with `CatalogItemModifierListInfo`.  Values:  - 0: No selection is required. - -1: Default value, the attribute was not set by the client. Treated as no selection required. - &gt;0: The required minimum modifier selections. This can be larger than the total `CatalogModifiers` when `allow_quantities` is enabled. - &lt; -1: Invalid. Treated as no selection required.
-	///   - modifier_type: The type of the modifier.   When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier.  When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects. See [CatalogModifierListModifierType](#type-catalogmodifierlistmodifiertype) for possible values
-	///   - modifiers: A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,  for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list  is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER",  "modifier_data": {{a CatalogModifier instance>}}  } ```
-	///   - name: The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of  Unicode code points.
+	///   - modifier_type: The type of the modifier.  When this `modifier_type` value is `TEXT`,  the `CatalogModifierList` represents a text-based modifier. When this `modifier_type` value is `LIST`, the `CatalogModifierList` contains a list of `CatalogModifier` objects. See [CatalogModifierListModifierType](#type-catalogmodifierlistmodifiertype) for possible values
+	///   - modifiers: A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`, for non text-based modifiers when the `modifier_type` attribute is `LIST`. Each element of this list is a `CatalogObject` instance of the `MODIFIER` type, containing the following attributes: ``` { "id": "{{catalog_modifier_id}}", "type": "MODIFIER", "modifier_data": {{a CatalogModifier instance>}} } ```
+	///   - name: The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable query filters, and its value length is of Unicode code points.
 	///   - ordinal: The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
 	///   - selection_type: __Deprecated__: Indicates whether a single (`SINGLE`) modifier or multiple (`MULTIPLE`) modifiers can be selected. Use `min_selected_modifiers` and `max_selected_modifiers` instead. See [CatalogModifierListSelectionType](#type-catalogmodifierlistselectiontype) for possible values
 	///   - text_required: Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based modifier as represented by this `CatalogModifierList` object with the `modifier_type` set to `TEXT`.
@@ -5424,7 +5519,7 @@ public enum CatalogModifierToggleOverrideType: String, Codable {
 
 /// The wrapper object for the catalog entries of a given object type.  Depending on the `type` attribute value, a `CatalogObject` instance assumes a type-specific data to yield the corresponding type of catalog object.  For example, if `type=ITEM`, the `CatalogObject` instance must have the ITEM-specific data set on the `item_data` attribute. The resulting `CatalogObject` instance is also a `CatalogItem` instance.  In general, if `type=<OBJECT_TYPE>`, the `CatalogObject` instance must have the `<OBJECT_TYPE>`-specific data set on the `<object_type>_data` attribute. The resulting `CatalogObject` instance is also a `Catalog<ObjectType>` instance.  For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](https://developer.squareup.com/docs/catalog-api/design-a-catalog) guide.
 public struct CatalogObject: Codable, Equatable {
-	/// A list of locations where the object is not present, even if `present_at_all_locations` is `true`. This can include locations that are deactivated.
+	/// Locations where the object is not present, used when `present_at_all_locations` is true.  When `present_at_all_locations` is false, this field is ignored since the object is already absent everywhere except those in `present_at_location_ids`. Can include deactivated locations. Empty strings are rejected.
 	public var absent_at_location_ids: [String]?
 	/// Structured data for a `CatalogAvailabilityPeriod`, set for CatalogObjects of type `AVAILABILITY_PERIOD`.
 	public var availability_period_data: CatalogAvailabilityPeriod?
@@ -5458,9 +5553,9 @@ public struct CatalogObject: Codable, Equatable {
 	public var modifier_data: CatalogModifier?
 	/// Structured data for a `CatalogModifierList`, set for CatalogObjects of type `MODIFIER_LIST`.
 	public var modifier_list_data: CatalogModifierList?
-	/// If `true`, this object is present at all locations (including future locations), except where specified in the `absent_at_location_ids` field. If `false`, this object is not present at any locations (including future locations), except where specified in the `present_at_location_ids` field. If not specified, defaults to `true`.
+	/// Controls whether this object is present at all locations, including future locations.  Most object types have independent location control, including `TAX`, `DISCOUNT`, and `MODIFIER_LIST`.  `ITEM` and `ITEM_VARIATION` have separate settings, but a variation can only be enabled at locations where its parent item is enabled. Disabling a variation everywhere is valid even when the parent item is enabled at specific locations.  `MODIFIER` objects nested within a `MODIFIER_LIST` inherit location settings from their parent. Some object types, including `CATEGORY`, `IMAGE`, and `CUSTOM_ATTRIBUTE_DEFINITION`, must always be globally enabled and cannot use location-specific fields.  The field operates in two modes. When true (the default), the object is available at all current and future locations except those in `absent_at_location_ids`. When false, the object is available only at locations in `present_at_location_ids`. The unused list in each mode is ignored.
 	public var present_at_all_locations: Bool?
-	/// A list of locations where the object is present, even if `present_at_all_locations` is `false`. This can include locations that are deactivated.
+	/// Locations where the object is present, used when `present_at_all_locations` is false.  When `present_at_all_locations` is true, this field is ignored since the object is already present everywhere. Can include deactivated locations. Empty strings are rejected.
 	public var present_at_location_ids: [String]?
 	/// Structured data for a `CatalogPricingRule`, set for CatalogObjects of type `PRICING_RULE`. A `CatalogPricingRule` object often works with a `CatalogProductSet` object or a `CatalogTimePeriod` object.
 	public var pricing_rule_data: CatalogPricingRule?
@@ -5480,12 +5575,12 @@ public struct CatalogObject: Codable, Equatable {
 	public var type: CatalogObjectType
 	/// Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) in RFC 3339 format, e.g., `"2016-08-15T23:59:33.123Z"` would indicate the UTC time (denoted by `Z`) of August 15, 2016 at 23:59:33 and 123 milliseconds.
 	public var updated_at: Timestamp?
-	/// The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
+	/// The version of the object. When updating an object, the version supplied should match the version in the database. If it does not, the server attempts a three-way merge. If the client's changes and the concurrent changes don't overlap, the merge succeeds silently. A `VERSION_MISMATCH` error is only returned when both sides changed the same field to different values.  Use the same API version (`Square-Version` header) for both reading and writing catalog objects. The server uses the API version on a write request to determine which missing fields the client intentionally cleared versus which fields the client simply could not see at that version. If a client reads an object at an older API version and writes it back at a newer version, fields that were introduced between those two versions will be absent from the request, and the server will interpret that absence as an intentional clear.
 	public var version: Int?
 
 	/// The wrapper object for the catalog entries of a given object type.  Depending on the `type` attribute value, a `CatalogObject` instance assumes a type-specific data to yield the corresponding type of catalog object.  For example, if `type=ITEM`, the `CatalogObject` instance must have the ITEM-specific data set on the `item_data` attribute. The resulting `CatalogObject` instance is also a `CatalogItem` instance.  In general, if `type=<OBJECT_TYPE>`, the `CatalogObject` instance must have the `<OBJECT_TYPE>`-specific data set on the `<object_type>_data` attribute. The resulting `CatalogObject` instance is also a `Catalog<ObjectType>` instance.  For a more detailed discussion of the Catalog data model, please see the [Design a Catalog](https://developer.squareup.com/docs/catalog-api/design-a-catalog) guide.
 	/// - Parameters:
-	///   - absent_at_location_ids: A list of locations where the object is not present, even if `present_at_all_locations` is `true`. This can include locations that are deactivated.
+	///   - absent_at_location_ids: Locations where the object is not present, used when `present_at_all_locations` is true.  When `present_at_all_locations` is false, this field is ignored since the object is already absent everywhere except those in `present_at_location_ids`. Can include deactivated locations. Empty strings are rejected.
 	///   - availability_period_data: Structured data for a `CatalogAvailabilityPeriod`, set for CatalogObjects of type `AVAILABILITY_PERIOD`.
 	///   - catalog_v1_ids: The Connect v1 IDs for this object at each location where it is present, where they differ from the object's Connect V2 ID. The field will only be present for objects that have been created or modified by legacy APIs.
 	///   - category_data: Structured data for a `CatalogCategory`, set for CatalogObjects of type `CATEGORY`.
@@ -5502,8 +5597,8 @@ public struct CatalogObject: Codable, Equatable {
 	///   - measurement_unit_data: Structured data for a `CatalogMeasurementUnit`, set for CatalogObjects of type `MEASUREMENT_UNIT`.
 	///   - modifier_data: Structured data for a `CatalogModifier`, set for CatalogObjects of type `MODIFIER`.
 	///   - modifier_list_data: Structured data for a `CatalogModifierList`, set for CatalogObjects of type `MODIFIER_LIST`.
-	///   - present_at_all_locations: If `true`, this object is present at all locations (including future locations), except where specified in the `absent_at_location_ids` field. If `false`, this object is not present at any locations (including future locations), except where specified in the `present_at_location_ids` field. If not specified, defaults to `true`.
-	///   - present_at_location_ids: A list of locations where the object is present, even if `present_at_all_locations` is `false`. This can include locations that are deactivated.
+	///   - present_at_all_locations: Controls whether this object is present at all locations, including future locations.  Most object types have independent location control, including `TAX`, `DISCOUNT`, and `MODIFIER_LIST`.  `ITEM` and `ITEM_VARIATION` have separate settings, but a variation can only be enabled at locations where its parent item is enabled. Disabling a variation everywhere is valid even when the parent item is enabled at specific locations.  `MODIFIER` objects nested within a `MODIFIER_LIST` inherit location settings from their parent. Some object types, including `CATEGORY`, `IMAGE`, and `CUSTOM_ATTRIBUTE_DEFINITION`, must always be globally enabled and cannot use location-specific fields.  The field operates in two modes. When true (the default), the object is available at all current and future locations except those in `absent_at_location_ids`. When false, the object is available only at locations in `present_at_location_ids`. The unused list in each mode is ignored.
+	///   - present_at_location_ids: Locations where the object is present, used when `present_at_all_locations` is false.  When `present_at_all_locations` is true, this field is ignored since the object is already present everywhere. Can include deactivated locations. Empty strings are rejected.
 	///   - pricing_rule_data: Structured data for a `CatalogPricingRule`, set for CatalogObjects of type `PRICING_RULE`. A `CatalogPricingRule` object often works with a `CatalogProductSet` object or a `CatalogTimePeriod` object.
 	///   - product_set_data: Structured data for a `CatalogProductSet`, set for CatalogObjects of type `PRODUCT_SET`.
 	///   - quick_amounts_settings_data: Structured data for a `CatalogQuickAmountsSettings`, set for CatalogObjects of type `QUICK_AMOUNTS_SETTINGS`.
@@ -5513,7 +5608,7 @@ public struct CatalogObject: Codable, Equatable {
 	///   - time_period_data: Structured data for a `CatalogTimePeriod`, set for CatalogObjects of type `TIME_PERIOD`.
 	///   - type: The type of this object. Each object type has expected properties expressed in a structured format within its corresponding `*_data` field below. See [CatalogObjectType](#type-catalogobjecttype) for possible values
 	///   - updated_at: Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) in RFC 3339 format, e.g., `"2016-08-15T23:59:33.123Z"` would indicate the UTC time (denoted by `Z`) of August 15, 2016 at 23:59:33 and 123 milliseconds.
-	///   - version: The version of the object. When updating an object, the version supplied must match the version in the database, otherwise the write will be rejected as conflicting.
+	///   - version: The version of the object. When updating an object, the version supplied should match the version in the database. If it does not, the server attempts a three-way merge. If the client's changes and the concurrent changes don't overlap, the merge succeeds silently. A `VERSION_MISMATCH` error is only returned when both sides changed the same field to different values.  Use the same API version (`Square-Version` header) for both reading and writing catalog objects. The server uses the API version on a write request to determine which missing fields the client intentionally cleared versus which fields the client simply could not see at that version. If a client reads an object at an older API version and writes it back at a newer version, fields that were introduced between those two versions will be absent from the request, and the server will interpret that absence as an intentional clear.
 	public init(id: String, type: CatalogObjectType, absent_at_location_ids: [String]? = nil, availability_period_data: CatalogAvailabilityPeriod? = nil, catalog_v1_ids: [CatalogV1Id]? = nil, category_data: CatalogCategory? = nil, custom_attribute_definition_data: CatalogCustomAttributeDefinition? = nil, custom_attribute_values: CatalogCustomAttributeValue? = nil, discount_data: CatalogDiscount? = nil, image_data: CatalogImage? = nil, is_deleted: Bool? = nil, item_data: CatalogItem? = nil, item_option_data: CatalogItemOption? = nil, item_option_value_data: CatalogItemOptionValue? = nil, item_variation_data: CatalogItemVariation? = nil, measurement_unit_data: CatalogMeasurementUnit? = nil, modifier_data: CatalogModifier? = nil, modifier_list_data: CatalogModifierList? = nil, present_at_all_locations: Bool? = nil, present_at_location_ids: [String]? = nil, pricing_rule_data: CatalogPricingRule? = nil, product_set_data: CatalogProductSet? = nil, quick_amounts_settings_data: CatalogQuickAmountsSettings? = nil, subscription_plan_data: CatalogSubscriptionPlan? = nil, subscription_plan_variation_data: CatalogSubscriptionPlanVariation? = nil, tax_data: CatalogTax? = nil, time_period_data: CatalogTimePeriod? = nil, updated_at: Timestamp? = nil, version: Int? = nil) {
 		self.id = id
 		self.type = type
@@ -5564,13 +5659,13 @@ public struct CatalogObjectBatch: Codable, Equatable {
 public struct CatalogObjectCategory: Codable, Equatable {
 	/// The ID of the object's category.
 	public var id: String?
-	/// The order of the object within the context of the category.
+	/// The position of this object within the specified category. When an item is assigned to a category, the ordinal determines the item's position relative to other items in the same category. When used for a parent category reference, the ordinal determines the category's position among its sibling categories.
 	public var ordinal: Int?
 
 	/// A category that can be assigned to an item or a parent category that can be assigned  to another category. For example, a clothing category can be assigned to a t-shirt item or  be made as the parent category to the pants category.
 	/// - Parameters:
 	///   - id: The ID of the object's category.
-	///   - ordinal: The order of the object within the context of the category.
+	///   - ordinal: The position of this object within the specified category. When an item is assigned to a category, the ordinal determines the item's position relative to other items in the same category. When used for a parent category reference, the ordinal determines the category's position among its sibling categories.
 	public init(id: String? = nil, ordinal: Int? = nil) {
 		self.id = id
 		self.ordinal = ordinal
@@ -5768,6 +5863,8 @@ public struct CatalogQuery: Codable, Equatable {
 	public var items_for_modifier_list_query: CatalogQueryItemsForModifierList?
 	/// A query expression to return items that have any of the specified taxes (as identified by the corresponding `CatalogTax` object IDs) enabled.
 	public var items_for_tax_query: CatalogQueryItemsForTax?
+	/// A query expression to return `CatalogModifier` objects that nest the specified modifier lists (via `child_modifier_list_ids`)
+	public var modifiers_for_child_list_query: CatalogQueryModifiersForChildList?
 	/// A prefix query expression to return objects with attribute values that have a prefix matching the specified string value. Value matching is case insensitive.
 	public var prefix_query: CatalogQueryPrefix?
 	/// A range query expression to return objects with numeric values that lie in the specified range.
@@ -5786,17 +5883,19 @@ public struct CatalogQuery: Codable, Equatable {
 	///   - items_for_item_options_query: A query expression to return items that contains the specified item options (as identified the corresponding `CatalogItemOption` IDs).
 	///   - items_for_modifier_list_query: A query expression to return items that have any of the given modifier list (as identified by the corresponding `CatalogModifierList`s IDs) enabled.
 	///   - items_for_tax_query: A query expression to return items that have any of the specified taxes (as identified by the corresponding `CatalogTax` object IDs) enabled.
+	///   - modifiers_for_child_list_query: A query expression to return `CatalogModifier` objects that nest the specified modifier lists (via `child_modifier_list_ids`)
 	///   - prefix_query: A prefix query expression to return objects with attribute values that have a prefix matching the specified string value. Value matching is case insensitive.
 	///   - range_query: A range query expression to return objects with numeric values that lie in the specified range.
 	///   - set_query: A set query expression to return objects with attribute name and value matching the specified attribute name and any of the specified attribute values exactly. Value matching is case insensitive.
 	///   - sorted_attribute_query: A query expression to sort returned query result by the given attribute.
 	///   - text_query: A text query expression to return objects whose searchable attributes contain all of the given keywords, irrespective of their order. For example, if a `CatalogItem` contains custom attribute values of `{"name": "t-shirt"}` and `{"description": "Small, Purple"}`, the query filter of `{"keywords": ["shirt", "sma", "purp"]}` returns this item.
-	public init(exact_query: CatalogQueryExact? = nil, item_variations_for_item_option_values_query: CatalogQueryItemVariationsForItemOptionValues? = nil, items_for_item_options_query: CatalogQueryItemsForItemOptions? = nil, items_for_modifier_list_query: CatalogQueryItemsForModifierList? = nil, items_for_tax_query: CatalogQueryItemsForTax? = nil, prefix_query: CatalogQueryPrefix? = nil, range_query: CatalogQueryRange? = nil, set_query: CatalogQuerySet? = nil, sorted_attribute_query: CatalogQuerySortedAttribute? = nil, text_query: CatalogQueryText? = nil) {
+	public init(exact_query: CatalogQueryExact? = nil, item_variations_for_item_option_values_query: CatalogQueryItemVariationsForItemOptionValues? = nil, items_for_item_options_query: CatalogQueryItemsForItemOptions? = nil, items_for_modifier_list_query: CatalogQueryItemsForModifierList? = nil, items_for_tax_query: CatalogQueryItemsForTax? = nil, modifiers_for_child_list_query: CatalogQueryModifiersForChildList? = nil, prefix_query: CatalogQueryPrefix? = nil, range_query: CatalogQueryRange? = nil, set_query: CatalogQuerySet? = nil, sorted_attribute_query: CatalogQuerySortedAttribute? = nil, text_query: CatalogQueryText? = nil) {
 		self.exact_query = exact_query
 		self.item_variations_for_item_option_values_query = item_variations_for_item_option_values_query
 		self.items_for_item_options_query = items_for_item_options_query
 		self.items_for_modifier_list_query = items_for_modifier_list_query
 		self.items_for_tax_query = items_for_tax_query
+		self.modifiers_for_child_list_query = modifiers_for_child_list_query
 		self.prefix_query = prefix_query
 		self.range_query = range_query
 		self.set_query = set_query
@@ -5871,6 +5970,19 @@ public struct CatalogQueryItemsForTax: Codable, Equatable {
 	///   - tax_ids: A set of `CatalogTax` IDs to be used to find associated `CatalogItem`s.
 	public init(tax_ids: [String]) {
 		self.tax_ids = tax_ids
+	}
+}
+
+/// Query to find `CatalogModifier` objects that reference a given `CatalogModifierList` in their `child_modifier_list_ids` field.
+public struct CatalogQueryModifiersForChildList: Codable, Equatable {
+	/// The `CatalogModifierList` IDs to find parent `CatalogModifier`s for. Returns `CatalogModifier` objects where `child_modifier_list_ids` contains any of these IDs.
+	public var child_modifier_list_ids: [String]
+
+	/// Query to find `CatalogModifier` objects that reference a given `CatalogModifierList` in their `child_modifier_list_ids` field.
+	/// - Parameters:
+	///   - child_modifier_list_ids: The `CatalogModifierList` IDs to find parent `CatalogModifier`s for. Returns `CatalogModifier` objects where `child_modifier_list_ids` contains any of these IDs.
+	public init(child_modifier_list_ids: [String]) {
+		self.child_modifier_list_ids = child_modifier_list_ids
 	}
 }
 
@@ -8011,6 +8123,40 @@ public struct CreateGiftCardResponse: Codable, Equatable {
 	}
 }
 
+/// Represents an input to a call to [CreateInventoryAdjustmentReason](api-endpoint:Inventory-CreateInventoryAdjustmentReason).
+public struct CreateInventoryAdjustmentReasonRequest: Codable, Equatable {
+	/// The custom inventory adjustment reason to create. Only custom adjustment reasons can be created.
+	public var adjustment_reason: InventoryAdjustmentReason
+	/// A client-supplied, universally unique identifier to make this [CreateInventoryAdjustmentReason](api-endpoint:Inventory-CreateInventoryAdjustmentReason) request idempotent.
+	public var idempotency_key: String
+
+	/// Represents an input to a call to [CreateInventoryAdjustmentReason](api-endpoint:Inventory-CreateInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The custom inventory adjustment reason to create. Only custom adjustment reasons can be created.
+	///   - idempotency_key: A client-supplied, universally unique identifier to make this [CreateInventoryAdjustmentReason](api-endpoint:Inventory-CreateInventoryAdjustmentReason) request idempotent.
+	public init(adjustment_reason: InventoryAdjustmentReason, idempotency_key: String) {
+		self.adjustment_reason = adjustment_reason
+		self.idempotency_key = idempotency_key
+	}
+}
+
+/// Represents an output from a call to [CreateInventoryAdjustmentReason](api-endpoint:Inventory-CreateInventoryAdjustmentReason).
+public struct CreateInventoryAdjustmentReasonResponse: Codable, Equatable {
+	/// The successfully created inventory adjustment reason.
+	public var adjustment_reason: InventoryAdjustmentReason?
+	/// Errors encountered when the request fails.
+	public var errors: [SquareError]?
+
+	/// Represents an output from a call to [CreateInventoryAdjustmentReason](api-endpoint:Inventory-CreateInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The successfully created inventory adjustment reason.
+	///   - errors: Errors encountered when the request fails.
+	public init(adjustment_reason: InventoryAdjustmentReason? = nil, errors: [SquareError]? = nil) {
+		self.adjustment_reason = adjustment_reason
+		self.errors = errors
+	}
+}
+
 /// Represents a [CreateInvoiceAttachment](api-endpoint:Invoices-CreateInvoiceAttachment) request.
 public struct CreateInvoiceAttachmentRequest: Codable, Equatable {
 	/// The description of the attachment to display on the invoice.
@@ -8458,6 +8604,8 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	public var accept_partial_authorization: Bool?
 	/// The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
 	public var amount_money: Money?
+	/// Details pertaining to recipients of the application fee. The sum of the amounts in the app_fee_allocations must equal the app_fee_money amount, if present. If populated, an allocation must be present for every party that expects to receive a portion of the application fee, including the application developer.
+	public var app_fee_allocations: [AppFeeAllocation]?
 	/// The amount of money that the developer is taking as a fee for facilitating the payment on behalf of the seller.  The amount cannot be more than 90% of the total amount of the payment.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The fee currency code must match the currency associated with the seller that is accepting the payment. The application must be from a developer account in the same country and using the same currency code as the seller.  For more information about the application fee scenario, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	public var app_fee_money: Money?
 	/// If set to `true`, this payment will be completed when possible. If set to `false`, this payment is held in an approved state until either explicitly completed (captured) or canceled (voided). For more information, see [Delayed capture](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).  Default: true
@@ -8509,6 +8657,7 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	/// - Parameters:
 	///   - accept_partial_authorization: If set to `true` and charging a Square Gift Card, a payment might be returned with `amount_money` equal to less than what was requested. For example, a request for $20 when charging a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card payment. This field cannot be `true` when `autocomplete = true`.  For more information, see [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-payments#partial-payment-gift-card).  Default: false
 	///   - amount_money: The amount of money to accept for this payment, not including `tip_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is accepting the payment.
+	///   - app_fee_allocations: Details pertaining to recipients of the application fee. The sum of the amounts in the app_fee_allocations must equal the app_fee_money amount, if present. If populated, an allocation must be present for every party that expects to receive a portion of the application fee, including the application developer.
 	///   - app_fee_money: The amount of money that the developer is taking as a fee for facilitating the payment on behalf of the seller.  The amount cannot be more than 90% of the total amount of the payment.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The fee currency code must match the currency associated with the seller that is accepting the payment. The application must be from a developer account in the same country and using the same currency code as the seller.  For more information about the application fee scenario, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	///   - autocomplete: If set to `true`, this payment will be completed when possible. If set to `false`, this payment is held in an approved state until either explicitly completed (captured) or canceled (voided). For more information, see [Delayed capture](https://developer.squareup.com/docs/payments-api/take-payments/card-payments#delayed-capture-of-a-card-payment).  Default: true
 	///   - billing_address: The buyer's billing address.
@@ -8532,11 +8681,12 @@ public struct CreatePaymentRequest: Codable, Equatable {
 	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with this payment.
 	///   - tip_money: The amount designated as a tip, in addition to `amount_money`.  The amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  Tips for external vendors such as a 3rd party delivery courier must be recorded using Order.service_charges.  The currency code must match the currency associated with the business that is accepting the payment.
 	///   - verification_token: An identifying token generated by [payments.verifyBuyer()](https://developer.squareup.com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer). Verification tokens encapsulate customer device information and 3-D Secure challenge results to indicate that Square has verified the buyer identity.  For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
-	public init(idempotency_key: String, source_id: String, accept_partial_authorization: Bool? = nil, amount_money: Money? = nil, app_fee_money: Money? = nil, autocomplete: Bool? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, buyer_phone_number: String? = nil, cash_details: CashPaymentDetails? = nil, customer_details: CustomerDetails? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, external_details: ExternalPaymentDetails? = nil, location_id: String? = nil, note: String? = nil, offline_payment_details: OfflinePaymentDetails? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, statement_description_identifier: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, verification_token: String? = nil) {
+	public init(idempotency_key: String, source_id: String, accept_partial_authorization: Bool? = nil, amount_money: Money? = nil, app_fee_allocations: [AppFeeAllocation]? = nil, app_fee_money: Money? = nil, autocomplete: Bool? = nil, billing_address: Address? = nil, buyer_email_address: String? = nil, buyer_phone_number: String? = nil, cash_details: CashPaymentDetails? = nil, customer_details: CustomerDetails? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, external_details: ExternalPaymentDetails? = nil, location_id: String? = nil, note: String? = nil, offline_payment_details: OfflinePaymentDetails? = nil, order_id: String? = nil, reference_id: String? = nil, shipping_address: Address? = nil, statement_description_identifier: String? = nil, team_member_id: String? = nil, tip_money: Money? = nil, verification_token: String? = nil) {
 		self.idempotency_key = idempotency_key
 		self.source_id = source_id
 		self.accept_partial_authorization = accept_partial_authorization
 		self.amount_money = amount_money
+		self.app_fee_allocations = app_fee_allocations
 		self.app_fee_money = app_fee_money
 		self.autocomplete = autocomplete
 		self.billing_address = billing_address
@@ -11098,6 +11248,36 @@ public struct DeleteDisputeEvidenceResponse: Codable, Equatable {
 	}
 }
 
+/// Represents an input to a call to [DeleteInventoryAdjustmentReason](api-endpoint:Inventory-DeleteInventoryAdjustmentReason).
+public struct DeleteInventoryAdjustmentReasonRequest: Codable, Equatable {
+	/// The identifier of the custom inventory adjustment reason to soft delete.
+	public var reason_id: InventoryAdjustmentReasonId
+
+	/// Represents an input to a call to [DeleteInventoryAdjustmentReason](api-endpoint:Inventory-DeleteInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - reason_id: The identifier of the custom inventory adjustment reason to soft delete.
+	public init(reason_id: InventoryAdjustmentReasonId) {
+		self.reason_id = reason_id
+	}
+}
+
+/// Represents an output from a call to [DeleteInventoryAdjustmentReason](api-endpoint:Inventory-DeleteInventoryAdjustmentReason).
+public struct DeleteInventoryAdjustmentReasonResponse: Codable, Equatable {
+	/// The successfully soft-deleted inventory adjustment reason.
+	public var adjustment_reason: InventoryAdjustmentReason?
+	/// Errors encountered when the request fails.
+	public var errors: [SquareError]?
+
+	/// Represents an output from a call to [DeleteInventoryAdjustmentReason](api-endpoint:Inventory-DeleteInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The successfully soft-deleted inventory adjustment reason.
+	///   - errors: Errors encountered when the request fails.
+	public init(adjustment_reason: InventoryAdjustmentReason? = nil, errors: [SquareError]? = nil) {
+		self.adjustment_reason = adjustment_reason
+		self.errors = errors
+	}
+}
+
 /// Represents a [DeleteInvoiceAttachment](api-endpoint:Invoices-DeleteInvoiceAttachment) response.
 public struct DeleteInvoiceAttachmentResponse: Codable, Equatable {
 	/// Information about errors encountered during the request.
@@ -11482,7 +11662,7 @@ public enum DeviceAttributesDeviceType: String, Codable {
 }
 
 public struct DeviceCheckoutOptions: Codable, Equatable {
-	/// Controls whether the mobile client applies Auto Card Surcharge (ACS) during checkout. If true, ACS is applied based on Dashboard configuration. If false, ACS is not applied regardless of that configuration. For more information, see [Add a Card Surcharge](https://developer.squareupstaging.com/docs/terminal-api/additional-payment-checkout-features#add-a-card-surcharge).
+	/// Controls whether the mobile client applies Auto Card Surcharge (ACS) during checkout. If true, ACS is applied based on Dashboard configuration. If false, ACS is not applied regardless of that configuration. For more information, see [Add a Card Surcharge](https://developer.squareup.com/docs/terminal-api/additional-payment-checkout-features#add-a-card-surcharge).
 	public var allow_auto_card_surcharge: Bool?
 	/// Indicates that signature collection is desired during checkout. Defaults to false.
 	public var collect_signature: Bool?
@@ -11877,6 +12057,8 @@ public struct DigitalWalletDetails: Codable, Equatable {
 	public var cash_app_details: CashAppDetails?
 	/// Information about errors encountered during the payment.
 	public var errors: [SquareError]?
+	/// Brand-specific details for payments with the `brand` of `LIGHTNING`.
+	public var lightning_details: LightningDetails?
 	/// The status of the `WALLET` payment. The status can be `AUTHORIZED`, `CAPTURED`, `VOIDED`, or `FAILED`.
 	public var status: String?
 
@@ -11885,11 +12067,13 @@ public struct DigitalWalletDetails: Codable, Equatable {
 	///   - brand: The brand used for the `WALLET` payment. The brand can be `CASH_APP`, `PAYPAY`, `ALIPAY`, `RAKUTEN_PAY`, `AU_PAY`, `D_BARAI`, `MERPAY`, `WECHAT_PAY`, `LIGHTNING` or `UNKNOWN`.
 	///   - cash_app_details: Brand-specific details for payments with the `brand` of `CASH_APP`.
 	///   - errors: Information about errors encountered during the payment.
+	///   - lightning_details: Brand-specific details for payments with the `brand` of `LIGHTNING`.
 	///   - status: The status of the `WALLET` payment. The status can be `AUTHORIZED`, `CAPTURED`, `VOIDED`, or `FAILED`.
-	public init(brand: String? = nil, cash_app_details: CashAppDetails? = nil, errors: [SquareError]? = nil, status: String? = nil) {
+	public init(brand: String? = nil, cash_app_details: CashAppDetails? = nil, errors: [SquareError]? = nil, lightning_details: LightningDetails? = nil, status: String? = nil) {
 		self.brand = brand
 		self.cash_app_details = cash_app_details
 		self.errors = errors
+		self.lightning_details = lightning_details
 		self.status = status
 	}
 }
@@ -12622,6 +12806,19 @@ public enum EcomVisibility: String, Codable {
 	}
 }
 
+/// Details specific to electronic money payments.
+public struct ElectronicMoneyDetails: Codable, Equatable {
+	/// Details specific to FeliCa payments.
+	public var felica_details: FelicaDetails?
+
+	/// Details specific to electronic money payments.
+	/// - Parameters:
+	///   - felica_details: Details specific to FeliCa payments.
+	public init(felica_details: FelicaDetails? = nil) {
+		self.felica_details = felica_details
+	}
+}
+
 /// An employee object that is used by the external API.  DEPRECATED at version yyyy-mm-dd. Replaced by [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember).
 public struct Employee: Codable, Equatable {
 	/// A read-only timestamp in RFC 3339 format.
@@ -12991,6 +13188,8 @@ public enum ErrorCode: String, Codable {
 	case CARD_TOKEN_USED
 	/// The requested payment amount is too high for the provided payment source.
 	case AMOUNT_TOO_HIGH
+	/// The requested payment amount is too low for the provided payment source.
+	case AMOUNT_TOO_LOW
 	/// The API request references an unsupported instrument type.
 	case UNSUPPORTED_INSTRUMENT_TYPE
 	/// The requested refund amount exceeds the amount available to refund.
@@ -13047,10 +13246,24 @@ public enum ErrorCode: String, Codable {
 	case CARD_MISMATCH
 	/// Generic plaid error
 	case PLAID_ERROR
-	/// Plaid error - ITEM_LOGIN_REQUIRED
+	/// Plaid error - ITEM_LOGIN_REQUIRED: Additional input from the user is required to continue getting data for this Item.
 	case PLAID_ERROR_ITEM_LOGIN_REQUIRED
 	/// Plaid error - RATE_LIMIT
 	case PLAID_ERROR_RATE_LIMIT
+	/// Plaid error - INVALID_ACCESS_TOKEN: The supplied access token is invalid, expired, or has been revoked by the user.
+	case PLAID_ERROR_INVALID_ACCESS_TOKEN
+	/// Plaid error - INVALID_ACCOUNT_ID: The supplied account_id is not valid, underlying account might have been closed by the Bank or User might have revoked Oauth tokens.
+	case PLAID_ERROR_INVALID_ACCOUNT_ID
+	/// Plaid error - NO_ACCOUNTS: No open accounts associated with the Item, user may have closed or revoked access to their account.
+	case PLAID_ERROR_NO_ACCOUNTS
+	/// Plaid error - ITEM_NOT_FOUND: Item requested cannot be found. User may have removed account, had access removed, or Plaid deleted in response to a data deletion request from user.
+	case PLAID_ERROR_ITEM_NOT_FOUND
+	/// Plaid error - INSUFFICIENT_CREDENTIALS: User abandoned the bank OAuth flow without completing it.
+	case PLAID_ERROR_INSUFFICIENT_CREDENTIALS
+	/// Plaid error - ITEM_NOT_SUPPORTED: Plaid is unable to support this user's accounts due to restrictions in place at the financial institution.
+	case PLAID_ERROR_ITEM_NOT_SUPPORTED
+	/// Plaid error - PRODUCT_NOT_READY: Plaid hasn't finished obtaining the data needed to fulfill your request
+	case PLAID_ERROR_PRODUCT_NOT_READY
 	/// The provided merchant or location is not enabled to accept the requested payment source.
 	case PAYMENT_SOURCE_NOT_ENABLED_FOR_TARGET
 	/// The card was declined.
@@ -13073,6 +13286,8 @@ public enum ErrorCode: String, Codable {
 	case RESERVATION_DECLINED
 	/// The body parameter is not recognized by the requested endpoint.
 	case UNKNOWN_BODY_PARAMETER
+	/// The cart is not eligible for EBT payment.
+	case CART_INELIGIBLE_FOR_EBT
 	/// Not Found - a general error occurred.
 	case NOT_FOUND
 	/// Square could not find the associated Apple Pay certificate.
@@ -13108,8 +13323,8 @@ public enum ErrorCode: String, Codable {
 	/// undocumented: PayOrder rejects when the listed payments do not sum to the order total
 	case ORDER_TOTAL_MISMATCH
 	case ISSUER_INSTALLMENT_ERROR
-	case VERSION_MISMATCH
 	case ORDER_EXPIRED
+	case VERSION_MISMATCH
 	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
 	case UNRECOGNIZED
 
@@ -13205,6 +13420,8 @@ public enum ExcludeStrategy: String, Codable {
 	case LEAST_EXPENSIVE
 	/// The most expensive matched product is excluded from the pricing rule. If multiple products have the same price and all qualify as least expensive, one will be excluded at random.  This guarantees that the most expensive product is purchased at full price.
 	case MOST_EXPENSIVE
+	/// Like MOST_EXPENSIVE, the most expensive matched product is excluded and purchased at full price. However, instead of maximizing the discount value on the remaining products (standard BOGO), the discount is applied to the CHEAPEST remaining eligible product.  Used by the "lowest-value free item" coupon shape where the intent is to make the least expensive item free, not the most valuable one.
+	case MOST_EXPENSIVE_LOWEST_VALUE
 	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
 	case UNRECOGNIZED
 
@@ -13236,6 +13453,42 @@ public struct ExternalPaymentDetails: Codable, Equatable {
 		self.type = type
 		self.source_fee_money = source_fee_money
 		self.source_id = source_id
+	}
+}
+
+/// Details for Felica payments.
+public struct FelicaDetails: Codable, Equatable {
+	/// The Felica sub-brand of the payment. See [FelicaBrand](#type-felicabrand) for possible values
+	public var felica_brand: FelicaDetailsFelicaBrand?
+	/// The masked card number for a Felica payment.
+	public var felica_masked_card_number: String?
+	/// The terminal id for a Felica payment.
+	public var terminal_id: String?
+
+	/// Details for Felica payments.
+	/// - Parameters:
+	///   - felica_brand: The Felica sub-brand of the payment. See [FelicaBrand](#type-felicabrand) for possible values
+	///   - felica_masked_card_number: The masked card number for a Felica payment.
+	///   - terminal_id: The terminal id for a Felica payment.
+	public init(felica_brand: FelicaDetailsFelicaBrand? = nil, felica_masked_card_number: String? = nil, terminal_id: String? = nil) {
+		self.felica_brand = felica_brand
+		self.felica_masked_card_number = felica_masked_card_number
+		self.terminal_id = terminal_id
+	}
+}
+
+/// A Felica card's "sub-brand"--the actual brand on the Felica card
+public enum FelicaDetailsFelicaBrand: String, Codable {
+	case UNKNOWN
+	case FELICA_ID
+	case FELICA_TRANSPORTATION
+	case FELICA_QP
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = FelicaDetailsFelicaBrand(rawValue: raw) ?? .UNRECOGNIZED
 	}
 }
 
@@ -13283,6 +13536,8 @@ public struct Fulfillment: Codable, Equatable {
 	public var delivery_details: FulfillmentDeliveryDetails?
 	/// A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.  Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself.  An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
 	public var entries: [FulfillmentFulfillmentEntry]?
+	/// Contains details for an in-store fulfillment. These details are required when the fulfillment type is `IN_STORE`.
+	public var in_store_details: FulfillmentInStoreDetails?
 	/// Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries. See [FulfillmentFulfillmentLineItemApplication](#type-fulfillmentfulfillmentlineitemapplication) for possible values
 	public var line_item_application: FulfillmentFulfillmentLineItemApplication?
 	/// Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
@@ -13302,6 +13557,7 @@ public struct Fulfillment: Codable, Equatable {
 	/// - Parameters:
 	///   - delivery_details: Describes delivery details of an order fulfillment.
 	///   - entries: A list of entries pertaining to the fulfillment of an order. Each entry must reference a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to fulfill.  Multiple entries can reference the same line item `uid`, as long as the total quantity among all fulfillment entries referencing a single line item does not exceed the quantity of the order's line item itself.  An order cannot be marked as `COMPLETED` before all fulfillments are `COMPLETED`, `CANCELED`, or `FAILED`. Fulfillments can be created and completed independently before order completion.
+	///   - in_store_details: Contains details for an in-store fulfillment. These details are required when the fulfillment type is `IN_STORE`.
 	///   - line_item_application: Describes what order line items this fulfillment applies to. It can be `ALL` or `ENTRY_LIST` with a supplied list of fulfillment entries. See [FulfillmentFulfillmentLineItemApplication](#type-fulfillmentfulfillmentlineitemapplication) for possible values
 	///   - metadata: Application-defined data attached to this fulfillment. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - pickup_details: Contains details for a pickup fulfillment. These details are required when the fulfillment type is `PICKUP`.
@@ -13309,9 +13565,10 @@ public struct Fulfillment: Codable, Equatable {
 	///   - state: The state of the fulfillment. See [FulfillmentState](#type-fulfillmentstate) for possible values
 	///   - type: The type of the fulfillment. See [FulfillmentType](#type-fulfillmenttype) for possible values
 	///   - uid: A unique ID that identifies the fulfillment only within this order.
-	public init(delivery_details: FulfillmentDeliveryDetails? = nil, entries: [FulfillmentFulfillmentEntry]? = nil, line_item_application: FulfillmentFulfillmentLineItemApplication? = nil, metadata: String? = nil, pickup_details: FulfillmentPickupDetails? = nil, shipment_details: FulfillmentShipmentDetails? = nil, state: FulfillmentState? = nil, type: FulfillmentType? = nil, uid: String? = nil) {
+	public init(delivery_details: FulfillmentDeliveryDetails? = nil, entries: [FulfillmentFulfillmentEntry]? = nil, in_store_details: FulfillmentInStoreDetails? = nil, line_item_application: FulfillmentFulfillmentLineItemApplication? = nil, metadata: String? = nil, pickup_details: FulfillmentPickupDetails? = nil, shipment_details: FulfillmentShipmentDetails? = nil, state: FulfillmentState? = nil, type: FulfillmentType? = nil, uid: String? = nil) {
 		self.delivery_details = delivery_details
 		self.entries = entries
+		self.in_store_details = in_store_details
 		self.line_item_application = line_item_application
 		self.metadata = metadata
 		self.pickup_details = pickup_details
@@ -13475,6 +13732,43 @@ public enum FulfillmentFulfillmentLineItemApplication: String, Codable {
 	public init(from decoder: Decoder) throws {
 		let raw = try decoder.singleValueContainer().decode(String.self)
 		self = FulfillmentFulfillmentLineItemApplication(rawValue: raw) ?? .UNRECOGNIZED
+	}
+}
+
+/// Contains the details necessary to fulfill an in-store order.
+public struct FulfillmentInStoreDetails: Codable, Equatable {
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var canceled_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was completed. This field is automatically set when the fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var completed_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var in_progress_at: Timestamp?
+	/// A note to provide additional instructions about the in-store fulfillment displayed in the Square Point of Sale application and set by the API.
+	public var note: String?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var placed_at: Timestamp?
+	/// The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was moved to the `PREPARED` state, which indicates that the fulfillment is ready. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	public var prepared_at: Timestamp?
+	/// Information about the person to receive this in-store fulfillment.
+	public var recipient: FulfillmentRecipient?
+
+	/// Contains the details necessary to fulfill an in-store order.
+	/// - Parameters:
+	///   - canceled_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was canceled. This field is automatically set when the fulfillment `state` changes to `CANCELED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - completed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was completed. This field is automatically set when the fulfillment `state` changes to `COMPLETED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - in_progress_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicates when the seller started processing the fulfillment. This field is automatically set when the fulfillment `state` changes to `RESERVED`. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - note: A note to provide additional instructions about the in-store fulfillment displayed in the Square Point of Sale application and set by the API.
+	///   - placed_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was placed. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - prepared_at: The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates) indicating when the fulfillment was moved to the `PREPARED` state, which indicates that the fulfillment is ready. The timestamp must be in RFC 3339 format (for example, "2016-09-04T23:59:33.123Z").
+	///   - recipient: Information about the person to receive this in-store fulfillment.
+	public init(canceled_at: Timestamp? = nil, completed_at: Timestamp? = nil, in_progress_at: Timestamp? = nil, note: String? = nil, placed_at: Timestamp? = nil, prepared_at: Timestamp? = nil, recipient: FulfillmentRecipient? = nil) {
+		self.canceled_at = canceled_at
+		self.completed_at = completed_at
+		self.in_progress_at = in_progress_at
+		self.note = note
+		self.placed_at = placed_at
+		self.prepared_at = prepared_at
+		self.recipient = recipient
 	}
 }
 
@@ -13716,14 +14010,14 @@ public enum FulfillmentState: String, Codable {
 public enum FulfillmentType: String, Codable {
 	/// Undocumented new type
 	case SIMPLE
-	/// yet another undocumented new type
-	case IN_STORE
 	/// A recipient to pick up the fulfillment from a physical [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
 	case PICKUP
 	/// A shipping carrier to ship the fulfillment.
 	case SHIPMENT
 	/// A courier to deliver the fulfillment.
 	case DELIVERY
+	/// A customer to receive the fulfillment within the seller's physical [location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location).
+	case IN_STORE
 	/// A digital fulfillment (gift cards, digital goods) — undocumented in the spec but returned by the live API
 	case DIGITAL
 	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
@@ -14962,6 +15256,51 @@ public struct GiftCardUpdatedEventObject: Codable, Equatable {
 	}
 }
 
+/// Options to include related resources of the requested `CatalogObject`s. Related resources will be included in `IncludedResources` in the response.
+public struct IncludeOptions: Codable, Equatable {
+	/// Resources to include in the response. See [IncludeType](#type-includetype) for possible values
+	public var include: [IncludeType]?
+
+	/// Options to include related resources of the requested `CatalogObject`s. Related resources will be included in `IncludedResources` in the response.
+	/// - Parameters:
+	///   - include: Resources to include in the response. See [IncludeType](#type-includetype) for possible values
+	public init(include: [IncludeType]? = nil) {
+		self.include = include
+	}
+}
+
+/// Related resources of requested `CatalogObject`s to include as part of the response.
+public enum IncludeType: String, Codable {
+	/// Return all nested `CatalogModifierList`s for `CatalogItem`, `CatalogModifier` and `CatalogModifierList` objects.
+	case INCLUDE_NESTED_MODIFIERS
+	/// Return all ancestor `CatalogModifierList`s for nested `CatalogModifierList`s objects.
+	case INCLUDE_ANCESTOR_MODIFIERS
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = IncludeType(rawValue: raw) ?? .UNRECOGNIZED
+	}
+}
+
+/// Related resources of the response `CatalogObject`s requested using `IncludeOptions`
+public struct IncludedResources: Codable, Equatable {
+	/// Ancestor `CatalogModifierList`s as requested via INCLUDE_ANCESTOR_MODIFIERS
+	public var ancestor_modifiers: [CatalogObject]?
+	/// Nested `CatalogModifierList`s as requested via `INCLUDE_NESTED_MODIFIERS`.
+	public var nested_modifiers: [CatalogObject]?
+
+	/// Related resources of the response `CatalogObject`s requested using `IncludeOptions`
+	/// - Parameters:
+	///   - ancestor_modifiers: Ancestor `CatalogModifierList`s as requested via INCLUDE_ANCESTOR_MODIFIERS
+	///   - nested_modifiers: Nested `CatalogModifierList`s as requested via `INCLUDE_NESTED_MODIFIERS`.
+	public init(ancestor_modifiers: [CatalogObject]? = nil, nested_modifiers: [CatalogObject]? = nil) {
+		self.ancestor_modifiers = ancestor_modifiers
+		self.nested_modifiers = nested_modifiers
+	}
+}
+
 /// Represents a change in state or quantity of product inventory at a particular time and location.
 public struct InventoryAdjustment: Codable, Equatable {
 	/// An adjustment group bundling the related adjustments of item variations through stock conversions in a single inventory event.
@@ -14970,24 +15309,30 @@ public struct InventoryAdjustment: Codable, Equatable {
 	public var catalog_object_id: String?
 	/// The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
 	public var catalog_object_type: String?
+	/// The total amount paid by the merchant to the supplying vendor for these units of the product. This field is only applicable for stock receive adjustments that introduce stock into the system (from_state is NONE or UNLINKED_RETURN). May be empty. This field will only accept writes if the merchant has an active subscription for either Retail Plus, Restaurants Plus, or Restaurants Premium.
+	public var cost_money: Money?
 	/// An RFC 3339-formatted timestamp that indicates when the inventory adjustment is received.
 	public var created_at: Timestamp?
 	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Employee) responsible for the inventory adjustment.
 	public var employee_id: String?
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked before the adjustment.
+	public var from_location_id: String?
 	/// The [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of the related quantity of items before the adjustment. See [InventoryState](#type-inventorystate) for possible values
 	public var from_state: InventoryState?
 	/// The Square-generated ID of the goods receipt that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	public var goods_receipt_id: String?
 	/// A unique ID generated by Square for the `InventoryAdjustment`.
 	public var id: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked.
-	public var location_id: String?
 	/// A client-generated RFC 3339-formatted timestamp that indicates when the inventory adjustment took place. For inventory adjustment updates, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
 	public var occurred_at: Timestamp?
+	/// The Square-generated ID of the InventoryPhysicalCount (recount) that generated this adjustment, if applicable. The quantity of an adjustment generated by a physical count cannot be edited.
+	public var physical_count_id: String?
 	/// The Square-generated ID of the purchase order that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	public var purchase_order_id: String?
 	/// The number of items affected by the adjustment as a decimal string. Can support up to 5 digits after the decimal point.
 	public var quantity: String?
+	/// Identifies the reason for this inventory adjustment.
+	public var reason_id: InventoryAdjustmentReasonId?
 	/// An optional ID provided by the application to tie the `InventoryAdjustment` to an external system.
 	public var reference_id: String?
 	/// The Square-generated ID of the [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Refund) that caused the adjustment. Only relevant for refund-related state transitions.
@@ -14996,54 +15341,68 @@ public struct InventoryAdjustment: Codable, Equatable {
 	public var source: SourceApplication?
 	/// The Square-generated ID of the [Team Member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) responsible for the inventory adjustment.
 	public var team_member_id: String?
+	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked after the adjustment.
+	public var to_location_id: String?
 	/// The [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of the related quantity of items after the adjustment. See [InventoryState](#type-inventorystate) for possible values
 	public var to_state: InventoryState?
 	/// The total price paid for goods associated with the adjustment. Present if and only if `to_state` is `SOLD`. Always non-negative.
 	public var total_price_money: Money?
 	/// The Square-generated ID of the [Transaction](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Transaction) that caused the adjustment. Only relevant for payment-related state transitions.
 	public var transaction_id: String?
+	/// The Square-generated ID of the Vendor from which the merchant purchased this product. This field is only applicable for stock receive adjustments that introduce stock into the system (from_state is NONE or UNLINKED_RETURN). This field will only accept writes if the merchant has an active subscription for either Retail Plus, Restaurants Plus, or Restaurants Premium.
+	public var vendor_id: String?
 
 	/// Represents a change in state or quantity of product inventory at a particular time and location.
 	/// - Parameters:
 	///   - adjustment_group: An adjustment group bundling the related adjustments of item variations through stock conversions in a single inventory event.
 	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
 	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
+	///   - cost_money: The total amount paid by the merchant to the supplying vendor for these units of the product. This field is only applicable for stock receive adjustments that introduce stock into the system (from_state is NONE or UNLINKED_RETURN). May be empty. This field will only accept writes if the merchant has an active subscription for either Retail Plus, Restaurants Plus, or Restaurants Premium.
 	///   - created_at: An RFC 3339-formatted timestamp that indicates when the inventory adjustment is received.
 	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Employee) responsible for the inventory adjustment.
+	///   - from_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked before the adjustment.
 	///   - from_state: The [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of the related quantity of items before the adjustment. See [InventoryState](#type-inventorystate) for possible values
 	///   - goods_receipt_id: The Square-generated ID of the goods receipt that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	///   - id: A unique ID generated by Square for the `InventoryAdjustment`.
-	///   - location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked.
 	///   - occurred_at: A client-generated RFC 3339-formatted timestamp that indicates when the inventory adjustment took place. For inventory adjustment updates, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
+	///   - physical_count_id: The Square-generated ID of the InventoryPhysicalCount (recount) that generated this adjustment, if applicable. The quantity of an adjustment generated by a physical count cannot be edited.
 	///   - purchase_order_id: The Square-generated ID of the purchase order that caused the adjustment. Only relevant for state transitions from the Square for Retail app.
 	///   - quantity: The number of items affected by the adjustment as a decimal string. Can support up to 5 digits after the decimal point.
+	///   - reason_id: Identifies the reason for this inventory adjustment.
 	///   - reference_id: An optional ID provided by the application to tie the `InventoryAdjustment` to an external system.
 	///   - refund_id: The Square-generated ID of the [Refund](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Refund) that caused the adjustment. Only relevant for refund-related state transitions.
 	///   - source: Information about the application that caused the inventory adjustment.
 	///   - team_member_id: The Square-generated ID of the [Team Member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) responsible for the inventory adjustment.
+	///   - to_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items is being tracked after the adjustment.
 	///   - to_state: The [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) of the related quantity of items after the adjustment. See [InventoryState](#type-inventorystate) for possible values
 	///   - total_price_money: The total price paid for goods associated with the adjustment. Present if and only if `to_state` is `SOLD`. Always non-negative.
 	///   - transaction_id: The Square-generated ID of the [Transaction](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Transaction) that caused the adjustment. Only relevant for payment-related state transitions.
-	public init(adjustment_group: InventoryAdjustmentGroup? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_state: InventoryState? = nil, goods_receipt_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, purchase_order_id: String? = nil, quantity: String? = nil, reference_id: String? = nil, refund_id: String? = nil, source: SourceApplication? = nil, team_member_id: String? = nil, to_state: InventoryState? = nil, total_price_money: Money? = nil, transaction_id: String? = nil) {
+	///   - vendor_id: The Square-generated ID of the Vendor from which the merchant purchased this product. This field is only applicable for stock receive adjustments that introduce stock into the system (from_state is NONE or UNLINKED_RETURN). This field will only accept writes if the merchant has an active subscription for either Retail Plus, Restaurants Plus, or Restaurants Premium.
+	public init(adjustment_group: InventoryAdjustmentGroup? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, cost_money: Money? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_location_id: String? = nil, from_state: InventoryState? = nil, goods_receipt_id: String? = nil, id: String? = nil, occurred_at: Timestamp? = nil, physical_count_id: String? = nil, purchase_order_id: String? = nil, quantity: String? = nil, reason_id: InventoryAdjustmentReasonId? = nil, reference_id: String? = nil, refund_id: String? = nil, source: SourceApplication? = nil, team_member_id: String? = nil, to_location_id: String? = nil, to_state: InventoryState? = nil, total_price_money: Money? = nil, transaction_id: String? = nil, vendor_id: String? = nil) {
 		self.adjustment_group = adjustment_group
 		self.catalog_object_id = catalog_object_id
 		self.catalog_object_type = catalog_object_type
+		self.cost_money = cost_money
 		self.created_at = created_at
 		self.employee_id = employee_id
+		self.from_location_id = from_location_id
 		self.from_state = from_state
 		self.goods_receipt_id = goods_receipt_id
 		self.id = id
-		self.location_id = location_id
 		self.occurred_at = occurred_at
+		self.physical_count_id = physical_count_id
 		self.purchase_order_id = purchase_order_id
 		self.quantity = quantity
+		self.reason_id = reason_id
 		self.reference_id = reference_id
 		self.refund_id = refund_id
 		self.source = source
 		self.team_member_id = team_member_id
+		self.to_location_id = to_location_id
 		self.to_state = to_state
 		self.total_price_money = total_price_money
 		self.transaction_id = transaction_id
+		self.vendor_id = vendor_id
 	}
 }
 
@@ -15062,6 +15421,96 @@ public struct InventoryAdjustmentGroup: Codable, Equatable {
 		self.id = id
 		self.root_adjustment_id = root_adjustment_id
 		self.to_state = to_state
+	}
+}
+
+/// Represents an inventory adjustment reason.
+public struct InventoryAdjustmentReason: Codable, Equatable {
+	/// An RFC 3339-formatted timestamp that indicates when the custom adjustment reason was created. This field is empty for standard adjustment reasons.
+	public var created_at: Timestamp?
+	/// Indicates whether this inventory adjustment reason increases or decreases inventory. This field is set for custom reasons and for standard seller-selectable reasons. It is empty for system-generated inventory events. See [Direction](#type-direction) for possible values
+	public var direction: InventoryAdjustmentReasonDirection?
+	/// The identifier for this inventory adjustment reason.
+	public var id: InventoryAdjustmentReasonId
+	/// Indicates whether this custom inventory adjustment reason has been deleted. Deleted custom reasons can still be retrieved by ID, but are omitted from list responses unless deleted reasons are explicitly included. To restore a deleted custom reason, call [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason). This field is always `false` for standard and system-generated adjustment reasons.
+	public var is_deleted: Bool?
+	/// The seller-facing name for a custom inventory adjustment reason. This field is empty for standard and system-generated adjustment reasons.
+	public var name: String?
+	/// An RFC 3339-formatted timestamp that indicates when the custom adjustment reason was last updated. This field is empty for standard adjustment reasons.
+	public var updated_at: Timestamp?
+
+	/// Represents an inventory adjustment reason.
+	/// - Parameters:
+	///   - created_at: An RFC 3339-formatted timestamp that indicates when the custom adjustment reason was created. This field is empty for standard adjustment reasons.
+	///   - direction: Indicates whether this inventory adjustment reason increases or decreases inventory. This field is set for custom reasons and for standard seller-selectable reasons. It is empty for system-generated inventory events. See [Direction](#type-direction) for possible values
+	///   - id: The identifier for this inventory adjustment reason.
+	///   - is_deleted: Indicates whether this custom inventory adjustment reason has been deleted. Deleted custom reasons can still be retrieved by ID, but are omitted from list responses unless deleted reasons are explicitly included. To restore a deleted custom reason, call [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason). This field is always `false` for standard and system-generated adjustment reasons.
+	///   - name: The seller-facing name for a custom inventory adjustment reason. This field is empty for standard and system-generated adjustment reasons.
+	///   - updated_at: An RFC 3339-formatted timestamp that indicates when the custom adjustment reason was last updated. This field is empty for standard adjustment reasons.
+	public init(id: InventoryAdjustmentReasonId, created_at: Timestamp? = nil, direction: InventoryAdjustmentReasonDirection? = nil, is_deleted: Bool? = nil, name: String? = nil, updated_at: Timestamp? = nil) {
+		self.id = id
+		self.created_at = created_at
+		self.direction = direction
+		self.is_deleted = is_deleted
+		self.name = name
+		self.updated_at = updated_at
+	}
+}
+
+/// 
+public enum InventoryAdjustmentReasonDirection: String, Codable {
+	case INCREASE
+	case DECREASE
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InventoryAdjustmentReasonDirection(rawValue: raw) ?? .UNRECOGNIZED
+	}
+}
+
+/// Identifies a standard or custom inventory adjustment reason.
+public struct InventoryAdjustmentReasonId: Codable, Equatable {
+	/// The Square-generated ID of the custom adjustment reason. This field is only set when `type` is `CUSTOM`.
+	public var custom_reason_id: String?
+	/// The adjustment reason type. See [Type](#type-type) for possible values
+	public var type: InventoryAdjustmentReasonIdType
+
+	/// Identifies a standard or custom inventory adjustment reason.
+	/// - Parameters:
+	///   - custom_reason_id: The Square-generated ID of the custom adjustment reason. This field is only set when `type` is `CUSTOM`.
+	///   - type: The adjustment reason type. See [Type](#type-type) for possible values
+	public init(type: InventoryAdjustmentReasonIdType, custom_reason_id: String? = nil) {
+		self.type = type
+		self.custom_reason_id = custom_reason_id
+	}
+}
+
+/// The type of inventory adjustment reason.  Custom reasons use `CUSTOM` and include a `custom_reason_id`. Standard seller-selectable reasons use `RECEIVED`, `DAMAGED`, `THEFT`, `LOST`, `RETURNED`, `SPOILAGE_WASTE`, `SAMPLES_PROMOTIONAL`, `INTERNAL_USE`, `VENDOR_RETURN`, or `PRODUCTION_WASTE`.  The writable standard reasons with direction `INCREASE` are `RECEIVED` and `RETURNED`. The writable standard reasons with direction `DECREASE` are `DAMAGED`, `THEFT`, `LOST`, `SPOILAGE_WASTE`, `SAMPLES_PROMOTIONAL`, `INTERNAL_USE`, `VENDOR_RETURN`, and `PRODUCTION_WASTE`.  The `SALE`, `RECOUNT`, `TRANSFER`, `IN_TRANSIT`, and `CANCELED_SALE` values identify system-generated inventory events. These values can be returned by Square, but cannot be used when writing inventory adjustments.
+public enum InventoryAdjustmentReasonIdType: String, Codable {
+	case RECEIVED
+	case DAMAGED
+	case THEFT
+	case LOST
+	case RETURNED
+	case SPOILAGE_WASTE
+	case SAMPLES_PROMOTIONAL
+	case INTERNAL_USE
+	case VENDOR_RETURN
+	case PRODUCTION_WASTE
+	case SALE
+	case RECOUNT
+	case TRANSFER
+	case IN_TRANSIT
+	case CANCELED_SALE
+	case CUSTOM
+	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
+	case UNRECOGNIZED
+
+	public init(from decoder: Decoder) throws {
+		let raw = try decoder.singleValueContainer().decode(String.self)
+		self = InventoryAdjustmentReasonIdType(rawValue: raw) ?? .UNRECOGNIZED
 	}
 }
 
@@ -15090,8 +15539,6 @@ public struct InventoryChange: Codable, Equatable {
 	public var measurement_unit_id: String?
 	/// Contains details about the physical count when `type` is `PHYSICAL_COUNT`, and is unset for all other change types.
 	public var physical_count: InventoryPhysicalCount?
-	/// Contains details about the inventory transfer when `type` is `TRANSFER`, and is unset for all other change types.  _Note:_ An [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) object can only be set in the input to the [BatchChangeInventory](api-endpoint:Inventory-BatchChangeInventory) endpoint when the seller has an active Retail Plus subscription.
-	public var transfer: InventoryTransfer?
 	/// Indicates how the inventory change is applied. See [InventoryChangeType](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryChangeType) for all possible values. See [InventoryChangeType](#type-inventorychangetype) for possible values
 	public var type: InventoryChangeType?
 
@@ -15101,14 +15548,12 @@ public struct InventoryChange: Codable, Equatable {
 	///   - measurement_unit: The [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
 	///   - measurement_unit_id: The ID of the [CatalogMeasurementUnit](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogMeasurementUnit) object representing the catalog measurement unit associated with the inventory change.
 	///   - physical_count: Contains details about the physical count when `type` is `PHYSICAL_COUNT`, and is unset for all other change types.
-	///   - transfer: Contains details about the inventory transfer when `type` is `TRANSFER`, and is unset for all other change types.  _Note:_ An [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer) object can only be set in the input to the [BatchChangeInventory](api-endpoint:Inventory-BatchChangeInventory) endpoint when the seller has an active Retail Plus subscription.
 	///   - type: Indicates how the inventory change is applied. See [InventoryChangeType](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryChangeType) for all possible values. See [InventoryChangeType](#type-inventorychangetype) for possible values
-	public init(adjustment: InventoryAdjustment? = nil, measurement_unit: CatalogMeasurementUnit? = nil, measurement_unit_id: String? = nil, physical_count: InventoryPhysicalCount? = nil, transfer: InventoryTransfer? = nil, type: InventoryChangeType? = nil) {
+	public init(adjustment: InventoryAdjustment? = nil, measurement_unit: CatalogMeasurementUnit? = nil, measurement_unit_id: String? = nil, physical_count: InventoryPhysicalCount? = nil, type: InventoryChangeType? = nil) {
 		self.adjustment = adjustment
 		self.measurement_unit = measurement_unit
 		self.measurement_unit_id = measurement_unit_id
 		self.physical_count = physical_count
-		self.transfer = transfer
 		self.type = type
 	}
 }
@@ -15119,8 +15564,6 @@ public enum InventoryChangeType: String, Codable {
 	case PHYSICAL_COUNT
 	/// The change occurred as part of the normal lifecycle of goods (e.g., as an inventory adjustment).
 	case ADJUSTMENT
-	/// The change occurred as part of an inventory transfer.
-	case TRANSFER
 	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
 	case UNRECOGNIZED
 
@@ -15130,7 +15573,7 @@ public enum InventoryChangeType: String, Codable {
 	}
 }
 
-/// Represents Square-estimated quantity of items in a particular state at a particular seller location based on the known history of physical counts and inventory adjustments.
+/// Represents Square-estimated quantity of items in a particular state at a particular seller location based on the known history of physical counts and inventory adjustments. The absence of an inventory count indicates that the catalog object hasn't interacted with the given inventory state at the given location.
 public struct InventoryCount: Codable, Equatable {
 	/// An RFC 3339-formatted timestamp that indicates when the most recent physical count or adjustment affecting the estimated count is received.
 	public var calculated_at: Timestamp?
@@ -15147,7 +15590,7 @@ public struct InventoryCount: Codable, Equatable {
 	/// The current [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) for the related quantity of items. See [InventoryState](#type-inventorystate) for possible values
 	public var state: InventoryState?
 
-	/// Represents Square-estimated quantity of items in a particular state at a particular seller location based on the known history of physical counts and inventory adjustments.
+	/// Represents Square-estimated quantity of items in a particular state at a particular seller location based on the known history of physical counts and inventory adjustments. The absence of an inventory count indicates that the catalog object hasn't interacted with the given inventory state at the given location.
 	/// - Parameters:
 	///   - calculated_at: An RFC 3339-formatted timestamp that indicates when the most recent physical count or adjustment affecting the estimated count is received.
 	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
@@ -15222,6 +15665,8 @@ public struct InventoryCountUpdatedEventObject: Codable, Equatable {
 
 /// Represents the quantity of an item variation that is physically present at a specific location, verified by a seller or a seller's employee. For example, a physical count might come from an employee counting the item variations on hand or from syncing with an external system.
 public struct InventoryPhysicalCount: Codable, Equatable {
+	/// The Square-generated ID of the InventoryAdjustment that was generated by this physical count in order to adjust the current stock count to reflect the re-counted quantity. This field may be empty if the merchant does not have an active subscription for either Retail Plus, Restaurants Plus, or Restaurants Premium.
+	public var adjustment_id: String?
 	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
 	public var catalog_object_id: String?
 	/// The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
@@ -15249,6 +15694,7 @@ public struct InventoryPhysicalCount: Codable, Equatable {
 
 	/// Represents the quantity of an item variation that is physically present at a specific location, verified by a seller or a seller's employee. For example, a physical count might come from an employee counting the item variations on hand or from syncing with an external system.
 	/// - Parameters:
+	///   - adjustment_id: The Square-generated ID of the InventoryAdjustment that was generated by this physical count in order to adjust the current stock count to reflect the re-counted quantity. This field may be empty if the merchant does not have an active subscription for either Retail Plus, Restaurants Plus, or Restaurants Premium.
 	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
 	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
 	///   - created_at: An RFC 3339-formatted timestamp that indicates when the physical count is received.
@@ -15261,7 +15707,8 @@ public struct InventoryPhysicalCount: Codable, Equatable {
 	///   - source: Information about the application with which the physical count is submitted.
 	///   - state: The current [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) for the related quantity of items. See [InventoryState](#type-inventorystate) for possible values
 	///   - team_member_id: The Square-generated ID of the [Team Member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) responsible for the physical count.
-	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: InventoryState? = nil, team_member_id: String? = nil) {
+	public init(adjustment_id: String? = nil, catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, id: String? = nil, location_id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: InventoryState? = nil, team_member_id: String? = nil) {
+		self.adjustment_id = adjustment_id
 		self.catalog_object_id = catalog_object_id
 		self.catalog_object_type = catalog_object_type
 		self.created_at = created_at
@@ -15311,73 +15758,14 @@ public enum InventoryState: String, Codable {
 	case SUPPORTED_BY_NEWER_VERSION
 	/// The related quantity of items are in transit between locations. **READ-ONLY:** the Inventory API cannot currently be used to move quantities to or from this inventory state.
 	case IN_TRANSIT
+	/// The related quantity of items are untracked.
+	case UNTRACKED
 	/// fallback for values Square returns that this enum doesn't know (the live API outpaces the published spec)
 	case UNRECOGNIZED
 
 	public init(from decoder: Decoder) throws {
 		let raw = try decoder.singleValueContainer().decode(String.self)
 		self = InventoryState(rawValue: raw) ?? .UNRECOGNIZED
-	}
-}
-
-/// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
-public struct InventoryTransfer: Codable, Equatable {
-	/// The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
-	public var catalog_object_id: String?
-	/// The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
-	public var catalog_object_type: String?
-	/// An RFC 3339-formatted timestamp that indicates when Square received the transfer request.
-	public var created_at: Timestamp?
-	/// The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Employee) responsible for the inventory transfer.
-	public var employee_id: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items was tracked before the transfer.
-	public var from_location_id: String?
-	/// A unique ID generated by Square for the `InventoryTransfer`.
-	public var id: String?
-	/// A client-generated RFC 3339-formatted timestamp that indicates when the transfer took place. For write actions, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
-	public var occurred_at: Timestamp?
-	/// The number of items affected by the transfer as a decimal string. Can support up to 5 digits after the decimal point.
-	public var quantity: String?
-	/// An optional ID provided by the application to tie the `InventoryTransfer` to an external system.
-	public var reference_id: String?
-	/// Information about the application that initiated the inventory transfer.
-	public var source: SourceApplication?
-	/// The [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) for the quantity of items being transferred. See [InventoryState](#type-inventorystate) for possible values
-	public var state: InventoryState?
-	/// The Square-generated ID of the [Team Member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) responsible for the inventory transfer.
-	public var team_member_id: String?
-	/// The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items was tracked after the transfer.
-	public var to_location_id: String?
-
-	/// Represents the transfer of a quantity of product inventory at a particular time from one location to another.
-	/// - Parameters:
-	///   - catalog_object_id: The Square-generated ID of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.
-	///   - catalog_object_type: The [type](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObjectType) of the [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject) being tracked.   The Inventory API supports setting and reading the `"catalog_object_type": "ITEM_VARIATION"` field value.  In addition, it can also read the `"catalog_object_type": "ITEM"` field value that is set by the Square Restaurants app.
-	///   - created_at: An RFC 3339-formatted timestamp that indicates when Square received the transfer request.
-	///   - employee_id: The Square-generated ID of the [Employee](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Employee) responsible for the inventory transfer.
-	///   - from_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items was tracked before the transfer.
-	///   - id: A unique ID generated by Square for the `InventoryTransfer`.
-	///   - occurred_at: A client-generated RFC 3339-formatted timestamp that indicates when the transfer took place. For write actions, the `occurred_at` timestamp cannot be older than 24 hours or in the future relative to the time of the request.
-	///   - quantity: The number of items affected by the transfer as a decimal string. Can support up to 5 digits after the decimal point.
-	///   - reference_id: An optional ID provided by the application to tie the `InventoryTransfer` to an external system.
-	///   - source: Information about the application that initiated the inventory transfer.
-	///   - state: The [inventory state](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryState) for the quantity of items being transferred. See [InventoryState](#type-inventorystate) for possible values
-	///   - team_member_id: The Square-generated ID of the [Team Member](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) responsible for the inventory transfer.
-	///   - to_location_id: The Square-generated ID of the [Location](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Location) where the related quantity of items was tracked after the transfer.
-	public init(catalog_object_id: String? = nil, catalog_object_type: String? = nil, created_at: Timestamp? = nil, employee_id: String? = nil, from_location_id: String? = nil, id: String? = nil, occurred_at: Timestamp? = nil, quantity: String? = nil, reference_id: String? = nil, source: SourceApplication? = nil, state: InventoryState? = nil, team_member_id: String? = nil, to_location_id: String? = nil) {
-		self.catalog_object_id = catalog_object_id
-		self.catalog_object_type = catalog_object_type
-		self.created_at = created_at
-		self.employee_id = employee_id
-		self.from_location_id = from_location_id
-		self.id = id
-		self.occurred_at = occurred_at
-		self.quantity = quantity
-		self.reference_id = reference_id
-		self.source = source
-		self.state = state
-		self.team_member_id = team_member_id
-		self.to_location_id = to_location_id
 	}
 }
 
@@ -16355,7 +16743,7 @@ public struct ItemVariationLocationOverrides: Codable, Equatable {
 	public var sold_out: Bool?
 	/// The seller-assigned timestamp, of the RFC 3339 format, to indicate when this sold-out variation becomes available again at the specified location. Attempts by an application to set this attribute are ignored. When the current time is later than this attribute value, the affected item variation is no longer sold out.
 	public var sold_out_valid_until: Timestamp?
-	/// If `true`, inventory tracking is active for the `CatalogItemVariation` at this `Location`.
+	/// Indicates whether inventory tracking is active for the `CatalogItemVariation` at this `Location`. When set, this value explicitly overrides the global `track_inventory` setting. When unset, the location should use the global value. If both global and location-level values are unset, inventory tracking is disabled.
 	public var track_inventory: Bool?
 
 	/// Price and inventory alerting overrides for a `CatalogItemVariation` at a specific `Location`.
@@ -16367,7 +16755,7 @@ public struct ItemVariationLocationOverrides: Codable, Equatable {
 	///   - pricing_type: The pricing type (fixed or variable) for the `CatalogItemVariation` at the given `Location`. See [CatalogPricingType](#type-catalogpricingtype) for possible values
 	///   - sold_out: Indicates whether the overridden item variation is sold out at the specified location.  When inventory tracking is enabled on the item variation either globally or at the specified location, the item variation is automatically marked as sold out when its inventory count reaches zero. The seller can manually set the item variation as sold out even when the inventory count is greater than zero. Attempts by an application to set this attribute are ignored. Regardless how the sold-out status is set, applications should treat its inventory count as zero when this attribute value is `true`.
 	///   - sold_out_valid_until: The seller-assigned timestamp, of the RFC 3339 format, to indicate when this sold-out variation becomes available again at the specified location. Attempts by an application to set this attribute are ignored. When the current time is later than this attribute value, the affected item variation is no longer sold out.
-	///   - track_inventory: If `true`, inventory tracking is active for the `CatalogItemVariation` at this `Location`.
+	///   - track_inventory: Indicates whether inventory tracking is active for the `CatalogItemVariation` at this `Location`. When set, this value explicitly overrides the global `track_inventory` setting. When unset, the location should use the global value. If both global and location-level values are unset, inventory tracking is disabled.
 	public init(inventory_alert_threshold: Int? = nil, inventory_alert_type: InventoryAlertType? = nil, location_id: String? = nil, price_money: Money? = nil, pricing_type: CatalogPricingType? = nil, sold_out: Bool? = nil, sold_out_valid_until: Timestamp? = nil, track_inventory: Bool? = nil) {
 		self.inventory_alert_threshold = inventory_alert_threshold
 		self.inventory_alert_type = inventory_alert_type
@@ -17088,6 +17476,19 @@ public struct LaborTimecardUpdatedEventObject: Codable, Equatable {
 	}
 }
 
+/// Additional details about `WALLET` type payments with the `brand` of `LIGHTNING`.
+public struct LightningDetails: Codable, Equatable {
+	/// Payment URL for the lightning payment, a.k.a. the invoice.
+	public var payment_url: String?
+
+	/// Additional details about `WALLET` type payments with the `brand` of `LIGHTNING`.
+	/// - Parameters:
+	///   - payment_url: Payment URL for the lightning payment, a.k.a. the invoice.
+	public init(payment_url: String? = nil) {
+		self.payment_url = payment_url
+	}
+}
+
 /// A request to link a customer to a gift card.
 public struct LinkCustomerToGiftCardRequest: Codable, Equatable {
 	/// The ID of the customer to link to the gift card.
@@ -17586,6 +17987,23 @@ public struct ListGiftCardsResponse: Codable, Equatable {
 		self.cursor = cursor
 		self.errors = errors
 		self.gift_cards = gift_cards
+	}
+}
+
+/// Represents an output from a call to [ListInventoryAdjustmentReasons](api-endpoint:Inventory-ListInventoryAdjustmentReasons).
+public struct ListInventoryAdjustmentReasonsResponse: Codable, Equatable {
+	/// The standard, system-generated, and custom inventory adjustment reasons available to the seller.
+	public var adjustment_reasons: [InventoryAdjustmentReason]?
+	/// Errors encountered when the request fails.
+	public var errors: [SquareError]?
+
+	/// Represents an output from a call to [ListInventoryAdjustmentReasons](api-endpoint:Inventory-ListInventoryAdjustmentReasons).
+	/// - Parameters:
+	///   - adjustment_reasons: The standard, system-generated, and custom inventory adjustment reasons available to the seller.
+	///   - errors: Errors encountered when the request fails.
+	public init(adjustment_reasons: [InventoryAdjustmentReason]? = nil, errors: [SquareError]? = nil) {
+		self.adjustment_reasons = adjustment_reasons
+		self.errors = errors
 	}
 }
 
@@ -18152,6 +18570,8 @@ public struct Location: Codable, Equatable {
 	public var created_at: Timestamp?
 	/// The currency used for all transactions at this location, in ISO 4217 format. For example, the currency code for US dollars is `USD`. See [Currency](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Currency) for possible values. See [Currency](#type-currency) for possible values
 	public var currency: Currency?
+	/// The custom text that appears on receipts issued for this location. This text can also be configured in the Seller Dashboard (Receipts section).
+	public var custom_receipt_text: String?
 	/// The description of the location. For example, `Main Street location`.
 	public var description: String?
 	/// The Facebook profile URL of the location. The URL should begin with 'facebook.com/'. For example, `https://www.facebook.com/square`.
@@ -18176,6 +18596,8 @@ public struct Location: Codable, Equatable {
 	public var phone_number: String?
 	/// The URL of the Point of Sale background image for the location.
 	public var pos_background_url: String?
+	/// The return policy that appears on receipts issued for this location. This text can also be configured in the Seller Dashboard (Receipts section).
+	public var return_policy: String?
 	/// The status of the location. See [LocationStatus](#type-locationstatus) for possible values
 	public var status: LocationStatus?
 	/// The tax IDs for this location.
@@ -18200,6 +18622,7 @@ public struct Location: Codable, Equatable {
 	///   - country: The country of the location, in the two-letter format of ISO 3166. For example, `US` or `JP`.  See [Country](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Country) for possible values. See [Country](#type-country) for possible values
 	///   - created_at: The time when the location was created, in RFC 3339 format. For more information, see [Working with Dates](https://developer.squareup.com/docs/build-basics/working-with-dates).
 	///   - currency: The currency used for all transactions at this location, in ISO 4217 format. For example, the currency code for US dollars is `USD`. See [Currency](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Currency) for possible values. See [Currency](#type-currency) for possible values
+	///   - custom_receipt_text: The custom text that appears on receipts issued for this location. This text can also be configured in the Seller Dashboard (Receipts section).
 	///   - description: The description of the location. For example, `Main Street location`.
 	///   - facebook_url: The Facebook profile URL of the location. The URL should begin with 'facebook.com/'. For example, `https://www.facebook.com/square`.
 	///   - full_format_logo_url: The URL of a full-format logo image for the location. When configured in the Seller Dashboard (Receipts section), the logo appears on transactions (such as receipts and invoices) that Square generates on behalf of the seller. This image can be wider than it is tall and should be at least 1280x648 pixels.
@@ -18212,13 +18635,14 @@ public struct Location: Codable, Equatable {
 	///   - name: The name of the location. This information appears in the Seller Dashboard as the nickname. A location name must be unique within a seller account.
 	///   - phone_number: The phone number of the location. For example, `+1 855-700-6000`.
 	///   - pos_background_url: The URL of the Point of Sale background image for the location.
+	///   - return_policy: The return policy that appears on receipts issued for this location. This text can also be configured in the Seller Dashboard (Receipts section).
 	///   - status: The status of the location. See [LocationStatus](#type-locationstatus) for possible values
 	///   - tax_ids: The tax IDs for this location.
 	///   - timezone: The [IANA time zone](https://www.iana.org/time-zones) identifier for the time zone of the location. For example, `America/Los_Angeles`.
 	///   - twitter_username: The Twitter username of the location without the '@' symbol. For example, `Square`.
 	///   - type: The type of the location. See [LocationType](#type-locationtype) for possible values
 	///   - website_url: The website URL of the location.  For example, `https://squareup.com`.
-	public init(address: Address? = nil, business_email: String? = nil, business_hours: BusinessHours? = nil, business_name: String? = nil, capabilities: [LocationCapability]? = nil, coordinates: Coordinates? = nil, country: Country? = nil, created_at: Timestamp? = nil, currency: Currency? = nil, description: String? = nil, facebook_url: String? = nil, full_format_logo_url: String? = nil, id: String? = nil, instagram_username: String? = nil, language_code: String? = nil, logo_url: String? = nil, mcc: String? = nil, merchant_id: String? = nil, name: String? = nil, phone_number: String? = nil, pos_background_url: String? = nil, status: LocationStatus? = nil, tax_ids: TaxIds? = nil, timezone: String? = nil, twitter_username: String? = nil, type: LocationType? = nil, website_url: String? = nil) {
+	public init(address: Address? = nil, business_email: String? = nil, business_hours: BusinessHours? = nil, business_name: String? = nil, capabilities: [LocationCapability]? = nil, coordinates: Coordinates? = nil, country: Country? = nil, created_at: Timestamp? = nil, currency: Currency? = nil, custom_receipt_text: String? = nil, description: String? = nil, facebook_url: String? = nil, full_format_logo_url: String? = nil, id: String? = nil, instagram_username: String? = nil, language_code: String? = nil, logo_url: String? = nil, mcc: String? = nil, merchant_id: String? = nil, name: String? = nil, phone_number: String? = nil, pos_background_url: String? = nil, return_policy: String? = nil, status: LocationStatus? = nil, tax_ids: TaxIds? = nil, timezone: String? = nil, twitter_username: String? = nil, type: LocationType? = nil, website_url: String? = nil) {
 		self.address = address
 		self.business_email = business_email
 		self.business_hours = business_hours
@@ -18228,6 +18652,7 @@ public struct Location: Codable, Equatable {
 		self.country = country
 		self.created_at = created_at
 		self.currency = currency
+		self.custom_receipt_text = custom_receipt_text
 		self.description = description
 		self.facebook_url = facebook_url
 		self.full_format_logo_url = full_format_logo_url
@@ -18240,6 +18665,7 @@ public struct Location: Codable, Equatable {
 		self.name = name
 		self.phone_number = phone_number
 		self.pos_background_url = pos_background_url
+		self.return_policy = return_policy
 		self.status = status
 		self.tax_ids = tax_ids
 		self.timezone = timezone
@@ -21138,7 +21564,7 @@ public struct Order: Codable, Equatable {
 	public var rounding_adjustment: OrderRoundingAdjustment?
 	/// A list of service charges applied to the order.
 	public var service_charges: [OrderServiceCharge]?
-	/// The origination details of the order.
+	/// The latest source details of the order.  This field reflects the most recent source that interacted with or modified the order, and may change during the order lifecycle. For example: - An order created via API (source.name = "MyPOS") paid with Square Terminal may have source updated to reflect the Terminal application (which uses REGISTER, like POS) - An order updated or completed by a different application may have source updated to reflect that application.  To preserve the original source from order creation regardless of subsequent updates, use the `creation_source` field instead.
 	public var source: OrderSource?
 	/// The current state of the order. See [OrderState](#type-orderstate) for possible values
 	public var state: OrderState?
@@ -21184,7 +21610,7 @@ public struct Order: Codable, Equatable {
 	///   - rewards: A set-like list of Rewards that have been added to the Order.
 	///   - rounding_adjustment: A positive rounding adjustment to the total of the order. This adjustment is commonly used to apply cash rounding when the minimum unit of account is smaller than the lowest physical denomination of the currency.
 	///   - service_charges: A list of service charges applied to the order.
-	///   - source: The origination details of the order.
+	///   - source: The latest source details of the order.  This field reflects the most recent source that interacted with or modified the order, and may change during the order lifecycle. For example: - An order created via API (source.name = "MyPOS") paid with Square Terminal may have source updated to reflect the Terminal application (which uses REGISTER, like POS) - An order updated or completed by a different application may have source updated to reflect that application.  To preserve the original source from order creation regardless of subsequent updates, use the `creation_source` field instead.
 	///   - state: The current state of the order. See [OrderState](#type-orderstate) for possible values
 	///   - taxes: The list of all taxes associated with the order.  Taxes can be scoped to either `ORDER` or `LINE_ITEM`. For taxes with `LINE_ITEM` scope, an `OrderLineItemAppliedTax` must be added to each line item that the tax applies to. For taxes with `ORDER` scope, the server generates an `OrderLineItemAppliedTax` for every line item.  On reads, each tax in the list includes the total amount of that tax applied to the order.  __IMPORTANT__: If `LINE_ITEM` scope is set on any taxes in this field, using the deprecated `line_items.taxes` field results in an error. Use `line_items.applied_taxes` instead.
 	///   - tenders: The tenders that were used to pay for the order.
@@ -22103,6 +22529,8 @@ public struct OrderLineItemModifier: Codable, Equatable {
 	public var metadata: String?
 	/// The name of the item modifier.
 	public var name: String?
+	/// The `uid` of the parent modifier, if this modifier is nested under another modifier.
+	public var parent_modifier_uid: String?
 	/// The quantity of the line item modifier. The modifier quantity can be 0 or more. For example, suppose a restaurant offers a cheeseburger on the menu. When a buyer orders this item, the restaurant records the purchase by creating an `Order` object with a line item for a burger. The line item includes a line item modifier: the name is cheese and the quantity is 1. The buyer has the option to order extra cheese (or no cheese). If the buyer chooses the extra cheese option, the modifier quantity increases to 2. If the buyer does not want any cheese, the modifier quantity is set to 0.
 	public var quantity: String?
 	/// The total price of the item modifier for its line item. This is the modifier's `base_price_money` multiplied by the line item's quantity.
@@ -22117,15 +22545,17 @@ public struct OrderLineItemModifier: Codable, Equatable {
 	///   - catalog_version: The version of the catalog object that this modifier references.
 	///   - metadata: Application-defined data attached to this order. Metadata fields are intended to store descriptive references or associations with an entity in another system or store brief information about the object. Square does not process this field; it only stores and returns it in relevant API calls. Do not use metadata to store any sensitive information (such as personally identifiable information or card details).  Keys written by applications must be 60 characters or less and must be in the character set `[a-zA-Z0-9_-]`. Entries can also include metadata generated by Square. These keys are prefixed with a namespace, separated from the key with a ':' character.  Values have a maximum length of 255 characters.  An application can have up to 10 entries per metadata field.  Entries written by applications are private and can only be read or modified by the same application.  For more information, see  [Metadata](https://developer.squareup.com/docs/build-basics/metadata).
 	///   - name: The name of the item modifier.
+	///   - parent_modifier_uid: The `uid` of the parent modifier, if this modifier is nested under another modifier.
 	///   - quantity: The quantity of the line item modifier. The modifier quantity can be 0 or more. For example, suppose a restaurant offers a cheeseburger on the menu. When a buyer orders this item, the restaurant records the purchase by creating an `Order` object with a line item for a burger. The line item includes a line item modifier: the name is cheese and the quantity is 1. The buyer has the option to order extra cheese (or no cheese). If the buyer chooses the extra cheese option, the modifier quantity increases to 2. If the buyer does not want any cheese, the modifier quantity is set to 0.
 	///   - total_price_money: The total price of the item modifier for its line item. This is the modifier's `base_price_money` multiplied by the line item's quantity.
 	///   - uid: A unique ID that identifies the modifier only within this order.
-	public init(base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, metadata: String? = nil, name: String? = nil, quantity: String? = nil, total_price_money: Money? = nil, uid: String? = nil) {
+	public init(base_price_money: Money? = nil, catalog_object_id: String? = nil, catalog_version: Int? = nil, metadata: String? = nil, name: String? = nil, parent_modifier_uid: String? = nil, quantity: String? = nil, total_price_money: Money? = nil, uid: String? = nil) {
 		self.base_price_money = base_price_money
 		self.catalog_object_id = catalog_object_id
 		self.catalog_version = catalog_version
 		self.metadata = metadata
 		self.name = name
+		self.parent_modifier_uid = parent_modifier_uid
 		self.quantity = quantity
 		self.total_price_money = total_price_money
 		self.uid = uid
@@ -23118,6 +23548,8 @@ public struct PayOrderResponse: Codable, Equatable {
 public struct Payment: Codable, Equatable {
 	/// The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	public var amount_money: Money?
+	/// Details pertaining to recipients of the application fee.
+	public var app_fee_allocations: [AppFeeAllocation]?
 	/// The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	public var app_fee_money: Money?
 	/// Details about the application that took the payment.
@@ -23130,6 +23562,8 @@ public struct Payment: Codable, Equatable {
 	public var billing_address: Address?
 	/// Details about a Buy Now Pay Later payment. The details are only populated if the `source_type` is `BUY_NOW_PAY_LATER`. For more information, see  [Afterpay Payments](https://developer.squareup.com/docs/payments-api/take-payments/afterpay-payments).
 	public var buy_now_pay_later_details: BuyNowPayLaterDetails?
+	/// Details about the currency exchange for payments where the currency the buyer paid with differs from the currency the merchant received (e.g., bitcoin lightning payments).  This field will only be present when the buyer paid in a different currency than the one used in the payment's total_money/amount_money fields.
+	public var buyer_currency_exchange: CurrencyExchange?
 	/// The buyer's email address.
 	public var buyer_email_address: String?
 	/// Actions that can be performed on this payment: - `EDIT_AMOUNT_UP` - The payment amount can be edited up. - `EDIT_AMOUNT_DOWN` - The payment amount can be edited down. - `EDIT_TIP_AMOUNT_UP` - The tip amount can be edited up. - `EDIT_TIP_AMOUNT_DOWN` - The tip amount can be edited down. - `EDIT_DELAY_ACTION` - The delay_action can be edited.
@@ -23150,6 +23584,8 @@ public struct Payment: Codable, Equatable {
 	public var delayed_until: Timestamp?
 	/// Details about the device that took the payment.
 	public var device_details: DeviceDetails?
+	/// Details specific to electronic money payments.
+	public var electronic_money_details: ElectronicMoneyDetails?
 	/// __Deprecated__: Use `Payment.team_member_id` instead.  An optional ID of the employee associated with taking the payment.
 	public var employee_id: String?
 	/// Details about an external payment. The details are only populated  if the `source_type` is `EXTERNAL`.
@@ -23210,12 +23646,14 @@ public struct Payment: Codable, Equatable {
 	/// Represents a payment processed by the Square API.
 	/// - Parameters:
 	///   - amount_money: The amount processed for this payment, not including `tip_money`.  The amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
+	///   - app_fee_allocations: Details pertaining to recipients of the application fee.
 	///   - app_fee_money: The amount the developer is taking as a fee for facilitating the payment on behalf of the seller. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  The amount cannot be more than 90% of the `total_money` value.  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	///   - application_details: Details about the application that took the payment.
 	///   - approved_money: The amount of money approved for this payment. This value may change if Square chooses to obtain reauthorization as part of a call to [UpdatePayment](api-endpoint:Payments-UpdatePayment).
 	///   - bank_account_details: Details about a bank account payment. These details are only populated if the source_type is `BANK_ACCOUNT`.
 	///   - billing_address: The buyer's billing address.
 	///   - buy_now_pay_later_details: Details about a Buy Now Pay Later payment. The details are only populated if the `source_type` is `BUY_NOW_PAY_LATER`. For more information, see  [Afterpay Payments](https://developer.squareup.com/docs/payments-api/take-payments/afterpay-payments).
+	///   - buyer_currency_exchange: Details about the currency exchange for payments where the currency the buyer paid with differs from the currency the merchant received (e.g., bitcoin lightning payments).  This field will only be present when the buyer paid in a different currency than the one used in the payment's total_money/amount_money fields.
 	///   - buyer_email_address: The buyer's email address.
 	///   - capabilities: Actions that can be performed on this payment: - `EDIT_AMOUNT_UP` - The payment amount can be edited up. - `EDIT_AMOUNT_DOWN` - The payment amount can be edited down. - `EDIT_TIP_AMOUNT_UP` - The tip amount can be edited up. - `EDIT_TIP_AMOUNT_DOWN` - The tip amount can be edited down. - `EDIT_DELAY_ACTION` - The delay_action can be edited.
 	///   - card_details: Details about a card payment. These details are only populated if the source_type is `CARD`.
@@ -23226,6 +23664,7 @@ public struct Payment: Codable, Equatable {
 	///   - delay_duration: The duration of time after the payment's creation when Square automatically applies the `delay_action` to the payment. This automatic `delay_action` applies only to payments that do not reach a terminal state (COMPLETED, CANCELED, or FAILED) before the `delay_duration` time period.  This field is specified as a time duration, in RFC 3339 format.  Notes: This feature is only supported for card payments.  Default:  - Card-present payments: "PT36H" (36 hours) from the creation time. - Card-not-present payments: "P7D" (7 days) from the creation time.
 	///   - delayed_until: The read-only timestamp of when the `delay_action` is automatically applied, in RFC 3339 format.  Note that this field is calculated by summing the payment's `delay_duration` and `created_at` fields. The `created_at` field is generated by Square and might not exactly match the time on your local machine.
 	///   - device_details: Details about the device that took the payment.
+	///   - electronic_money_details: Details specific to electronic money payments.
 	///   - employee_id: __Deprecated__: Use `Payment.team_member_id` instead.  An optional ID of the employee associated with taking the payment.
 	///   - external_details: Details about an external payment. The details are only populated  if the `source_type` is `EXTERNAL`.
 	///   - id: A unique ID for the payment.
@@ -23254,14 +23693,16 @@ public struct Payment: Codable, Equatable {
 	///   - version: Version number
 	///   - version_token: Used for optimistic concurrency. This opaque token identifies a specific version of the `Payment` object.
 	///   - wallet_details: Details about an wallet payment. The details are only populated  if the `source_type` is `WALLET`.
-	public init(amount_money: Money? = nil, app_fee_money: Money? = nil, application_details: ApplicationDetails? = nil, approved_money: Money? = nil, bank_account_details: BankAccountPaymentDetails? = nil, billing_address: Address? = nil, buy_now_pay_later_details: BuyNowPayLaterDetails? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, device_details: DeviceDetails? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, is_offline_payment: Bool? = nil, location_id: String? = nil, note: String? = nil, offline_payment_details: OfflinePaymentDetails? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, square_account_details: SquareAccountDetails? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, terminal_checkout_id: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil, version_token: String? = nil, wallet_details: DigitalWalletDetails? = nil) {
+	public init(amount_money: Money? = nil, app_fee_allocations: [AppFeeAllocation]? = nil, app_fee_money: Money? = nil, application_details: ApplicationDetails? = nil, approved_money: Money? = nil, bank_account_details: BankAccountPaymentDetails? = nil, billing_address: Address? = nil, buy_now_pay_later_details: BuyNowPayLaterDetails? = nil, buyer_currency_exchange: CurrencyExchange? = nil, buyer_email_address: String? = nil, capabilities: [String]? = nil, card_details: CardPaymentDetails? = nil, cash_details: CashPaymentDetails? = nil, created_at: Timestamp? = nil, customer_id: String? = nil, delay_action: String? = nil, delay_duration: Timestamp? = nil, delayed_until: Timestamp? = nil, device_details: DeviceDetails? = nil, electronic_money_details: ElectronicMoneyDetails? = nil, employee_id: String? = nil, external_details: ExternalPaymentDetails? = nil, id: String? = nil, is_offline_payment: Bool? = nil, location_id: String? = nil, note: String? = nil, offline_payment_details: OfflinePaymentDetails? = nil, order_id: String? = nil, processing_fee: [ProcessingFee]? = nil, receipt_number: String? = nil, receipt_url: String? = nil, reference_id: String? = nil, refund_ids: [String]? = nil, refunded_money: Money? = nil, risk_evaluation: RiskEvaluation? = nil, shipping_address: Address? = nil, source_type: String? = nil, square_account_details: SquareAccountDetails? = nil, statement_description_identifier: String? = nil, status: String? = nil, team_member_id: String? = nil, terminal_checkout_id: String? = nil, tip_money: Money? = nil, total_money: Money? = nil, updated_at: Timestamp? = nil, version: Int? = nil, version_token: String? = nil, wallet_details: DigitalWalletDetails? = nil) {
 		self.amount_money = amount_money
+		self.app_fee_allocations = app_fee_allocations
 		self.app_fee_money = app_fee_money
 		self.application_details = application_details
 		self.approved_money = approved_money
 		self.bank_account_details = bank_account_details
 		self.billing_address = billing_address
 		self.buy_now_pay_later_details = buy_now_pay_later_details
+		self.buyer_currency_exchange = buyer_currency_exchange
 		self.buyer_email_address = buyer_email_address
 		self.capabilities = capabilities
 		self.card_details = card_details
@@ -23272,6 +23713,7 @@ public struct Payment: Codable, Equatable {
 		self.delay_duration = delay_duration
 		self.delayed_until = delayed_until
 		self.device_details = device_details
+		self.electronic_money_details = electronic_money_details
 		self.employee_id = employee_id
 		self.external_details = external_details
 		self.id = id
@@ -23699,6 +24141,8 @@ public enum PaymentOptionsDelayAction: String, Codable {
 public struct PaymentRefund: Codable, Equatable {
 	/// The amount of money refunded. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).
 	public var amount_money: Money
+	/// Details pertaining to contributors to the refund of the application fee.
+	public var app_fee_allocations: [AppFeeAllocation]?
 	/// The amount of money the application developer contributed to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	public var app_fee_money: Money?
 	/// The timestamp of when the refund was created, in RFC 3339 format.
@@ -23733,6 +24177,7 @@ public struct PaymentRefund: Codable, Equatable {
 	/// Represents a refund of a payment made using Square. Contains information about the original payment and the amount of money refunded.
 	/// - Parameters:
 	///   - amount_money: The amount of money refunded. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).
+	///   - app_fee_allocations: Details pertaining to contributors to the refund of the application fee.
 	///   - app_fee_money: The amount of money the application developer contributed to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).
 	///   - created_at: The timestamp of when the refund was created, in RFC 3339 format.
 	///   - destination_details: Contains information about the refund destination. This field is populated only if `destination_id` is defined in the `RefundPayment` request.
@@ -23748,9 +24193,10 @@ public struct PaymentRefund: Codable, Equatable {
 	///   - terminal_refund_id: An optional ID for a Terminal refund.
 	///   - unlinked: Flag indicating whether or not the refund is linked to an existing payment in Square.
 	///   - updated_at: The timestamp of when the refund was last updated, in RFC 3339 format.
-	public init(amount_money: Money, id: String, app_fee_money: Money? = nil, created_at: Timestamp? = nil, destination_details: DestinationDetails? = nil, destination_type: String? = nil, location_id: String? = nil, order_id: String? = nil, payment_id: String? = nil, processing_fee: [ProcessingFee]? = nil, reason: String? = nil, status: String? = nil, team_member_id: String? = nil, terminal_refund_id: String? = nil, unlinked: Bool? = nil, updated_at: Timestamp? = nil) {
+	public init(amount_money: Money, id: String, app_fee_allocations: [AppFeeAllocation]? = nil, app_fee_money: Money? = nil, created_at: Timestamp? = nil, destination_details: DestinationDetails? = nil, destination_type: String? = nil, location_id: String? = nil, order_id: String? = nil, payment_id: String? = nil, processing_fee: [ProcessingFee]? = nil, reason: String? = nil, status: String? = nil, team_member_id: String? = nil, terminal_refund_id: String? = nil, unlinked: Bool? = nil, updated_at: Timestamp? = nil) {
 		self.amount_money = amount_money
 		self.id = id
+		self.app_fee_allocations = app_fee_allocations
 		self.app_fee_money = app_fee_money
 		self.created_at = created_at
 		self.destination_details = destination_details
@@ -24749,6 +25195,8 @@ public struct RefundCreatedEventObject: Codable, Equatable {
 public struct RefundPaymentRequest: Codable, Equatable {
 	/// The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
 	public var amount_money: Money
+	/// Details pertaining to contributors to the refund of the application fee. The sum of the amounts in the app_fee_allocations must equal the app_fee_money amount, if present. If populated, an allocation must be present for every party that expects to contribute a portion of the refunded application fee, including the application developer.
+	public var app_fee_allocations: [AppFeeAllocation]?
 	/// The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	public var app_fee_money: Money?
 	/// Additional details required when recording an unlinked cash refund (`destination_id` is CASH).
@@ -24777,6 +25225,7 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	/// Describes a request to refund a payment using [RefundPayment](api-endpoint:Refunds-RefundPayment).
 	/// - Parameters:
 	///   - amount_money: The amount of money to refund.  This amount cannot be more than the `total_money` value of the payment minus the total amount of all previously completed refunds for this payment.  This amount must be specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents). For more information, see [Working with Monetary Amounts](https://developer.squareup.com/docs/build-basics/working-with-monetary-amounts).  The currency code must match the currency associated with the business that is charging the card.
+	///   - app_fee_allocations: Details pertaining to contributors to the refund of the application fee. The sum of the amounts in the app_fee_allocations must equal the app_fee_money amount, if present. If populated, an allocation must be present for every party that expects to contribute a portion of the refunded application fee, including the application developer.
 	///   - app_fee_money: The amount of money the developer contributes to help cover the refunded amount. This amount is specified in the smallest denomination of the applicable currency (for example, US dollar amounts are specified in cents).  The value cannot be more than the `amount_money`.  You can specify this parameter in a refund request only if the same parameter was also included when taking the payment. This is part of the application fee scenario the API supports. For more information, see [Take Payments and Collect Fees](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees).  To set this field, `PAYMENTS_WRITE_ADDITIONAL_RECIPIENTS` OAuth permission is required. For more information, see [Permissions](https://developer.squareup.com/docs/payments-api/take-payments-and-collect-fees#permissions).
 	///   - cash_details: Additional details required when recording an unlinked cash refund (`destination_id` is CASH).
 	///   - customer_id: The [Customer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/Customer) ID of the customer associated with the refund. This is required if the `destination_id` refers to a card on file created using the Cards API. Only allowed when `unlinked=true`.
@@ -24789,9 +25238,10 @@ public struct RefundPaymentRequest: Codable, Equatable {
 	///   - reason: A description of the reason for the refund.
 	///   - team_member_id: An optional [TeamMember](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/TeamMember) ID to associate with this refund.
 	///   - unlinked: Indicates that the refund is not linked to a Square payment. If set to true, `destination_id` and `location_id` must be supplied while `payment_id` must not be provided.
-	public init(amount_money: Money, idempotency_key: String, app_fee_money: Money? = nil, cash_details: DestinationDetailsCashRefundDetails? = nil, customer_id: String? = nil, destination_id: String? = nil, external_details: DestinationDetailsExternalRefundDetails? = nil, location_id: String? = nil, payment_id: String? = nil, payment_version_token: String? = nil, reason: String? = nil, team_member_id: String? = nil, unlinked: Bool? = nil) {
+	public init(amount_money: Money, idempotency_key: String, app_fee_allocations: [AppFeeAllocation]? = nil, app_fee_money: Money? = nil, cash_details: DestinationDetailsCashRefundDetails? = nil, customer_id: String? = nil, destination_id: String? = nil, external_details: DestinationDetailsExternalRefundDetails? = nil, location_id: String? = nil, payment_id: String? = nil, payment_version_token: String? = nil, reason: String? = nil, team_member_id: String? = nil, unlinked: Bool? = nil) {
 		self.amount_money = amount_money
 		self.idempotency_key = idempotency_key
+		self.app_fee_allocations = app_fee_allocations
 		self.app_fee_money = app_fee_money
 		self.cash_details = cash_details
 		self.customer_id = customer_id
@@ -24949,6 +25399,36 @@ public struct RemoveGroupFromCustomerResponse: Codable, Equatable {
 	/// - Parameters:
 	///   - errors: Any errors that occurred during the request.
 	public init(errors: [SquareError]? = nil) {
+		self.errors = errors
+	}
+}
+
+/// Represents an input to a call to [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason).
+public struct RestoreInventoryAdjustmentReasonRequest: Codable, Equatable {
+	/// The identifier of the soft-deleted custom inventory adjustment reason to restore.
+	public var reason_id: InventoryAdjustmentReasonId
+
+	/// Represents an input to a call to [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - reason_id: The identifier of the soft-deleted custom inventory adjustment reason to restore.
+	public init(reason_id: InventoryAdjustmentReasonId) {
+		self.reason_id = reason_id
+	}
+}
+
+/// Represents an output from a call to [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason).
+public struct RestoreInventoryAdjustmentReasonResponse: Codable, Equatable {
+	/// The successfully restored inventory adjustment reason.
+	public var adjustment_reason: InventoryAdjustmentReason?
+	/// Errors encountered when the request fails.
+	public var errors: [SquareError]?
+
+	/// Represents an output from a call to [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The successfully restored inventory adjustment reason.
+	///   - errors: Errors encountered when the request fails.
+	public init(adjustment_reason: InventoryAdjustmentReason? = nil, errors: [SquareError]? = nil) {
+		self.adjustment_reason = adjustment_reason
 		self.errors = errors
 	}
 }
@@ -25312,6 +25792,36 @@ public struct RetrieveGiftCardResponse: Codable, Equatable {
 	}
 }
 
+/// Represents an input to a call to [RetrieveInventoryAdjustmentReason](api-endpoint:Inventory-RetrieveInventoryAdjustmentReason).
+public struct RetrieveInventoryAdjustmentReasonRequest: Codable, Equatable {
+	/// The identifier of the inventory adjustment reason to retrieve.
+	public var reason_id: InventoryAdjustmentReasonId
+
+	/// Represents an input to a call to [RetrieveInventoryAdjustmentReason](api-endpoint:Inventory-RetrieveInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - reason_id: The identifier of the inventory adjustment reason to retrieve.
+	public init(reason_id: InventoryAdjustmentReasonId) {
+		self.reason_id = reason_id
+	}
+}
+
+/// Represents an output from a call to [RetrieveInventoryAdjustmentReason](api-endpoint:Inventory-RetrieveInventoryAdjustmentReason).
+public struct RetrieveInventoryAdjustmentReasonResponse: Codable, Equatable {
+	/// The successfully retrieved inventory adjustment reason. Deleted custom reasons can be retrieved by ID and have `is_deleted` set to `true`.
+	public var adjustment_reason: InventoryAdjustmentReason?
+	/// Errors encountered when the request fails.
+	public var errors: [SquareError]?
+
+	/// Represents an output from a call to [RetrieveInventoryAdjustmentReason](api-endpoint:Inventory-RetrieveInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The successfully retrieved inventory adjustment reason. Deleted custom reasons can be retrieved by ID and have `is_deleted` set to `true`.
+	///   - errors: Errors encountered when the request fails.
+	public init(adjustment_reason: InventoryAdjustmentReason? = nil, errors: [SquareError]? = nil) {
+		self.adjustment_reason = adjustment_reason
+		self.errors = errors
+	}
+}
+
 public struct RetrieveInventoryAdjustmentResponse: Codable, Equatable {
 	/// The requested [InventoryAdjustment](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryAdjustment).
 	public var adjustment: InventoryAdjustment?
@@ -25363,18 +25873,6 @@ public struct RetrieveInventoryPhysicalCountResponse: Codable, Equatable {
 	public init(count: InventoryPhysicalCount? = nil, errors: [SquareError]? = nil) {
 		self.count = count
 		self.errors = errors
-	}
-}
-
-public struct RetrieveInventoryTransferResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-	/// The requested [InventoryTransfer](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/InventoryTransfer).
-	public var transfer: InventoryTransfer?
-
-	public init(errors: [SquareError]? = nil, transfer: InventoryTransfer? = nil) {
-		self.errors = errors
-		self.transfer = transfer
 	}
 }
 
@@ -26277,6 +26775,8 @@ public struct SearchCatalogItemsRequest: Codable, Equatable {
 	public var custom_attribute_filters: [CustomAttributeFilter]?
 	/// The enabled-location query expression to return items and item variations having specified enabled locations.
 	public var enabled_location_ids: [String]?
+	/// Options to include related resources in the response.
+	public var include_options: IncludeOptions?
 	/// The maximum number of results to return per page. The default value is 100.
 	public var limit: Int?
 	/// The product types query expression to return items or item variations having the specified product types.
@@ -26295,17 +26795,19 @@ public struct SearchCatalogItemsRequest: Codable, Equatable {
 	///   - cursor: The pagination token, returned in the previous response, used to fetch the next batch of pending results.
 	///   - custom_attribute_filters: The customer-attribute filter to return items or item variations matching the specified custom attribute expressions. A maximum number of 10 custom attribute expressions are supported in a single call to the [SearchCatalogItems](api-endpoint:Catalog-SearchCatalogItems) endpoint.
 	///   - enabled_location_ids: The enabled-location query expression to return items and item variations having specified enabled locations.
+	///   - include_options: Options to include related resources in the response.
 	///   - limit: The maximum number of results to return per page. The default value is 100.
 	///   - product_types: The product types query expression to return items or item variations having the specified product types.
 	///   - sort_order: The order to sort the results by item names. The default sort order is ascending (`ASC`). See [SortOrder](#type-sortorder) for possible values
 	///   - stock_levels: The stock-level query expression to return item variations with the specified stock levels. See [SearchCatalogItemsRequestStockLevel](#type-searchcatalogitemsrequeststocklevel) for possible values
 	///   - text_filter: The text filter expression to return items or item variations containing specified text in the `name`, `description`, or `abbreviation` attribute value of an item, or in the `name`, `sku`, or `upc` attribute value of an item variation.
-	public init(archived_state: ArchivedState? = nil, category_ids: [String]? = nil, cursor: String? = nil, custom_attribute_filters: [CustomAttributeFilter]? = nil, enabled_location_ids: [String]? = nil, limit: Int? = nil, product_types: [CatalogItemProductType]? = nil, sort_order: SortOrder? = nil, stock_levels: [SearchCatalogItemsRequestStockLevel]? = nil, text_filter: String? = nil) {
+	public init(archived_state: ArchivedState? = nil, category_ids: [String]? = nil, cursor: String? = nil, custom_attribute_filters: [CustomAttributeFilter]? = nil, enabled_location_ids: [String]? = nil, include_options: IncludeOptions? = nil, limit: Int? = nil, product_types: [CatalogItemProductType]? = nil, sort_order: SortOrder? = nil, stock_levels: [SearchCatalogItemsRequestStockLevel]? = nil, text_filter: String? = nil) {
 		self.archived_state = archived_state
 		self.category_ids = category_ids
 		self.cursor = cursor
 		self.custom_attribute_filters = custom_attribute_filters
 		self.enabled_location_ids = enabled_location_ids
+		self.include_options = include_options
 		self.limit = limit
 		self.product_types = product_types
 		self.sort_order = sort_order
@@ -26335,6 +26837,8 @@ public struct SearchCatalogItemsResponse: Codable, Equatable {
 	public var cursor: String?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
+	/// Related resources included in the response as requested via include_options
+	public var included_resources: IncludedResources?
 	/// Returned items matching the specified query expressions.
 	public var items: [CatalogObject]?
 	/// Ids of returned item variations matching the specified query expression.
@@ -26344,11 +26848,13 @@ public struct SearchCatalogItemsResponse: Codable, Equatable {
 	/// - Parameters:
 	///   - cursor: Pagination token used in the next request to return more of the search result.
 	///   - errors: Any errors that occurred during the request.
+	///   - included_resources: Related resources included in the response as requested via include_options
 	///   - items: Returned items matching the specified query expressions.
 	///   - matched_variation_ids: Ids of returned item variations matching the specified query expression.
-	public init(cursor: String? = nil, errors: [SquareError]? = nil, items: [CatalogObject]? = nil, matched_variation_ids: [String]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, included_resources: IncludedResources? = nil, items: [CatalogObject]? = nil, matched_variation_ids: [String]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
+		self.included_resources = included_resources
 		self.items = items
 		self.matched_variation_ids = matched_variation_ids
 	}
@@ -26363,6 +26869,8 @@ public struct SearchCatalogObjectsRequest: Codable, Equatable {
 	public var include_category_path_to_root: Bool?
 	/// If `true`, deleted objects will be included in the results. Defaults to `false`. Deleted objects will have their `is_deleted` field set to `true`. If `include_deleted_objects` is `true`, then the `include_category_path_to_root` request parameter must be `false`. Both properties cannot be `true` at the same time.
 	public var include_deleted_objects: Bool?
+	/// Options to include related resources in the response.
+	public var include_options: IncludeOptions?
 	/// If `true`, the response will include additional objects that are related to the requested objects. Related objects are objects that are referenced by object ID by the objects in the response. This is helpful if the objects are being fetched for immediate display to a user. This process only goes one level deep. Objects referenced by the related objects will not be included. For example:  If the `objects` field of the response contains a CatalogItem, its associated CatalogCategory objects, CatalogTax objects, CatalogImage objects and CatalogModifierLists will be returned in the `related_objects` field of the response. If the `objects` field of the response contains a CatalogItemVariation, its parent CatalogItem will be returned in the `related_objects` field of the response.  Default value: `false`
 	public var include_related_objects: Bool?
 	/// A limit on the number of results to be returned in a single page. The limit is advisory - the implementation may return more or fewer results. If the supplied limit is negative, zero, or is higher than the maximum limit of 1,000, it will be ignored.
@@ -26372,11 +26880,12 @@ public struct SearchCatalogObjectsRequest: Codable, Equatable {
 	/// A query to be used to filter or sort the results. If no query is specified, the entire catalog will be returned.
 	public var query: CatalogQuery?
 
-	public init(begin_time: Timestamp? = nil, cursor: String? = nil, include_category_path_to_root: Bool? = nil, include_deleted_objects: Bool? = nil, include_related_objects: Bool? = nil, limit: Int? = nil, object_types: [CatalogObjectType]? = nil, query: CatalogQuery? = nil) {
+	public init(begin_time: Timestamp? = nil, cursor: String? = nil, include_category_path_to_root: Bool? = nil, include_deleted_objects: Bool? = nil, include_options: IncludeOptions? = nil, include_related_objects: Bool? = nil, limit: Int? = nil, object_types: [CatalogObjectType]? = nil, query: CatalogQuery? = nil) {
 		self.begin_time = begin_time
 		self.cursor = cursor
 		self.include_category_path_to_root = include_category_path_to_root
 		self.include_deleted_objects = include_deleted_objects
+		self.include_options = include_options
 		self.include_related_objects = include_related_objects
 		self.limit = limit
 		self.object_types = object_types
@@ -26389,6 +26898,8 @@ public struct SearchCatalogObjectsResponse: Codable, Equatable {
 	public var cursor: String?
 	/// Any errors that occurred during the request.
 	public var errors: [SquareError]?
+	/// A list of [CatalogObject](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/CatalogObject)s referenced by the object in the `objects` field and specifically requested.
+	public var included_resources: IncludedResources?
 	/// When the associated product catalog was last updated. Will match the value for `end_time` or `cursor` if either field is included in the `SearchCatalog` request.
 	public var latest_time: String?
 	/// The CatalogObjects returned.
@@ -26396,9 +26907,10 @@ public struct SearchCatalogObjectsResponse: Codable, Equatable {
 	/// A list of CatalogObjects referenced by the objects in the `objects` field.
 	public var related_objects: [CatalogObject]?
 
-	public init(cursor: String? = nil, errors: [SquareError]? = nil, latest_time: String? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
+	public init(cursor: String? = nil, errors: [SquareError]? = nil, included_resources: IncludedResources? = nil, latest_time: String? = nil, objects: [CatalogObject]? = nil, related_objects: [CatalogObject]? = nil) {
 		self.cursor = cursor
 		self.errors = errors
+		self.included_resources = included_resources
 		self.latest_time = latest_time
 		self.objects = objects
 		self.related_objects = related_objects
@@ -26954,21 +27466,13 @@ public enum SearchOrdersSortField: String, Codable {
 
 /// A filter based on order `source` information.
 public struct SearchOrdersSourceFilter: Codable, Equatable {
-	/// Filters by the [Source](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderSource) `applicationId`. The filter returns any orders with a `source.applicationId` that matches any of the listed source applicationIds.  Max: 100 source applicationIds.
-	public var source_application_ids: [String]?
-	/// Filters by the [Source](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderSource) `clientOu`. The filter returns any orders with a `source.clientOu` that matches any of the listed source clientOus.  Max: 100 source clientOus.
-	public var source_client_ous: [String]?
 	/// Filters by the [Source](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderSource) `name`. The filter returns any orders with a `source.name` that matches any of the listed source names.  Max: 10 source names.
 	public var source_names: [String]?
 
 	/// A filter based on order `source` information.
 	/// - Parameters:
-	///   - source_application_ids: Filters by the [Source](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderSource) `applicationId`. The filter returns any orders with a `source.applicationId` that matches any of the listed source applicationIds.  Max: 100 source applicationIds.
-	///   - source_client_ous: Filters by the [Source](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderSource) `clientOu`. The filter returns any orders with a `source.clientOu` that matches any of the listed source clientOus.  Max: 100 source clientOus.
 	///   - source_names: Filters by the [Source](https://developer.squareup.com/reference/square_yyyy-mm-dd/objects/OrderSource) `name`. The filter returns any orders with a `source.name` that matches any of the listed source names.  Max: 10 source names.
-	public init(source_application_ids: [String]? = nil, source_client_ous: [String]? = nil, source_names: [String]? = nil) {
-		self.source_application_ids = source_application_ids
-		self.source_client_ous = source_client_ous
+	public init(source_names: [String]? = nil) {
 		self.source_names = source_names
 	}
 }
@@ -31043,6 +31547,64 @@ public struct UpdateCustomerResponse: Codable, Equatable {
 	}
 }
 
+/// Represents an input to a call to [UpdateInventoryAdjustmentReason](api-endpoint:Inventory-UpdateInventoryAdjustmentReason).
+public struct UpdateInventoryAdjustmentReasonRequest: Codable, Equatable {
+	/// The requested custom inventory adjustment reason update. Only the `name` field can be updated. Deleted custom reasons cannot be updated. To restore a deleted custom reason, call [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason).
+	public var adjustment_reason: InventoryAdjustmentReason
+	/// The identifier of the custom inventory adjustment reason to update.
+	public var reason_id: InventoryAdjustmentReasonId
+
+	/// Represents an input to a call to [UpdateInventoryAdjustmentReason](api-endpoint:Inventory-UpdateInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The requested custom inventory adjustment reason update. Only the `name` field can be updated. Deleted custom reasons cannot be updated. To restore a deleted custom reason, call [RestoreInventoryAdjustmentReason](api-endpoint:Inventory-RestoreInventoryAdjustmentReason).
+	///   - reason_id: The identifier of the custom inventory adjustment reason to update.
+	public init(adjustment_reason: InventoryAdjustmentReason, reason_id: InventoryAdjustmentReasonId) {
+		self.adjustment_reason = adjustment_reason
+		self.reason_id = reason_id
+	}
+}
+
+/// Represents an output from a call to [UpdateInventoryAdjustmentReason](api-endpoint:Inventory-UpdateInventoryAdjustmentReason).
+public struct UpdateInventoryAdjustmentReasonResponse: Codable, Equatable {
+	/// The successfully updated inventory adjustment reason.
+	public var adjustment_reason: InventoryAdjustmentReason?
+	/// Errors encountered when the request fails.
+	public var errors: [SquareError]?
+
+	/// Represents an output from a call to [UpdateInventoryAdjustmentReason](api-endpoint:Inventory-UpdateInventoryAdjustmentReason).
+	/// - Parameters:
+	///   - adjustment_reason: The successfully updated inventory adjustment reason.
+	///   - errors: Errors encountered when the request fails.
+	public init(adjustment_reason: InventoryAdjustmentReason? = nil, errors: [SquareError]? = nil) {
+		self.adjustment_reason = adjustment_reason
+		self.errors = errors
+	}
+}
+
+public struct UpdateInventoryAdjustmentRequest: Codable, Equatable {
+	/// Represents the updates being written to a past/existing inventory adjustment. This works using sparse updates, meaning that any fields omitted from the inputted InventoryAdjustment will retain their values.  Only updates to the quantity, cost_money, vendor_id, and reason_id fields of an InventoryAdjustment can be made here. Note that the quantity field must be provided, but it can be identical to the current quantity if there are no desired quantity changes. cost_money and vendor_id can only be written to adjustments that add stock to the system (from_state of NONE or UNLINKED_RETURN) and to untracked sale adjustments. reason_id can be changed to any reason that is valid for the adjustment's state transition. The reason of a system-generated adjustment (for example, SALE or RECOUNT) cannot be changed. Adjustments generated by Square from other records cannot be updated. This includes inferred adjustments created by physical counts, transfer-like cross-location adjustments, and component adjustments. Adjustments linked to purchase orders cannot be updated. Adjustments linked to sales can only have cost_money and vendor_id updated, and only for untracked sales. Restock adjustments linked to an itemized return can have their quantity updated, up to the quantity remaining on the return. Adjustments older than one year cannot be updated.
+	public var adjustment: InventoryAdjustment
+	/// A client-supplied, universally unique identifier (UUID) for the request.  See [Idempotency](https://developer.squareup.com/docs/build-basics/common-api-patterns/idempotency) in the [Build Basics](https://developer.squareup.com/docs/buildbasics) section for more information.
+	public var idempotency_key: String
+
+	public init(adjustment: InventoryAdjustment, idempotency_key: String) {
+		self.adjustment = adjustment
+		self.idempotency_key = idempotency_key
+	}
+}
+
+public struct UpdateInventoryAdjustmentResponse: Codable, Equatable {
+	/// The newly updated adjustment.
+	public var adjustment: InventoryAdjustment?
+	/// Any errors that occurred during the request.
+	public var errors: [SquareError]?
+
+	public init(adjustment: InventoryAdjustment? = nil, errors: [SquareError]? = nil) {
+		self.adjustment = adjustment
+		self.errors = errors
+	}
+}
+
 /// Describes a `UpdateInvoice` request.
 public struct UpdateInvoiceRequest: Codable, Equatable {
 	/// The list of fields to clear. Although this field is currently supported, we recommend using null values or the `remove` field when possible. For examples, see [Update an Invoice](https://developer.squareup.com/docs/invoices-api/update-invoices).
@@ -32668,19 +33230,6 @@ public enum VisibilityFilter: String, Codable {
 	public init(from decoder: Decoder) throws {
 		let raw = try decoder.singleValueContainer().decode(String.self)
 		self = VisibilityFilter(rawValue: raw) ?? .UNRECOGNIZED
-	}
-}
-
-/// Defines the fields that are included in the response body of a request to the [VoidTransaction](api-endpoint:Transactions-VoidTransaction) endpoint.
-public struct VoidTransactionResponse: Codable, Equatable {
-	/// Any errors that occurred during the request.
-	public var errors: [SquareError]?
-
-	/// Defines the fields that are included in the response body of a request to the [VoidTransaction](api-endpoint:Transactions-VoidTransaction) endpoint.
-	/// - Parameters:
-	///   - errors: Any errors that occurred during the request.
-	public init(errors: [SquareError]? = nil) {
-		self.errors = errors
 	}
 }
 
